@@ -1,1 +1,1 @@
-# BioProject02
+# BioProject02 - SpatialPathoAgent
