@@ -159,7 +159,7 @@ Atlassian 공식 MCP 서버를 설정하면 Claude Code가 Confluence 페이지 
       "command": "npx",
       "args": ["-y", "@atlassian/mcp-atlassian", "--transport", "stdio"],
       "env": {
-        "ATLASSIAN_URL": "https://<your-domain>.atlassian.net",
+        "ATLASSIAN_URL": "https://biospin-ai.atlassian.net",
         "ATLASSIAN_EMAIL": "<본인 atlassian 이메일>",
         "ATLASSIAN_TOKEN": "<위에서 발급한 API token>"
       }
@@ -243,8 +243,9 @@ JIRA BIOP02 (이슈 할당)
 | jamie | jamie-openclaw-bot |
 | kkkim | kakyung.kim-openclaw-bot |
 | gglee | ggyu-claw |
-| sjpark | sjpark-openclaw-bot |
+| sjpark | sezinie-openclaw-bot |
 | braveji | yong-openclaw-bot |
+| jhans | (미설정 — Sprint 1 전 braveji 생성 예정) |
 
 ---
 

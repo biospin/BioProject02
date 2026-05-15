@@ -182,8 +182,9 @@ JIRA (BIOP02)
 | jamie | jamie-openclaw-bot |
 | kkkim | kakyung.kim-openclaw-bot |
 | gglee | ggyu-claw |
-| sjpark | sjpark-openclaw-bot |
+| sjpark | sezinie-openclaw-bot |
 | braveji | yong-openclaw-bot |
+| jhans | (미설정 — Sprint 1 전 braveji 생성 예정) |
 
 ## Governance
 
