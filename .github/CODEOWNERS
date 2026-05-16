@@ -1,0 +1,11 @@
+# SpatialPathoAgent — CODEOWNERS
+# PR 머지 시 해당 경로 담당자의 리뷰가 자동 요청됩니다.
+# GitHub org: biospin
+
+/agents/data/                 @biospin/JamieLyu
+/agents/embedding/            @biospin/kakyungkim
+/agents/modeling/             @biospin/sezinie000
+/agents/therapeutic_evidence/ @biospin/JeonghanSeo
+/agents/critic/               @biospin/Geongyu
+/schemas/                     @biospin/braveji18
+/guide/                       @biospin/braveji18
