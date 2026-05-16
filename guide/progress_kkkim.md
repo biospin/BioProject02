@@ -1,5 +1,30 @@
 # kkkim 작업 진행 로그
 
+## 2026-05-18 (Sprint 0)
+
+### 완료한 작업
+
+| JIRA | 태스크 | 커밋 |
+|---|---|---|
+| BIOP02-27 | tile_config.yaml + tile_wsi.py 구현 | bc637de |
+
+**tile_config.yaml** (`agents/embedding/configs/`)
+- 256×256 @ 20× (target_mpp=0.5), Otsu tissue_threshold=0.1, downsample_factor=64, per_patient_cap=5000
+
+**tile_wsi.py** (`agents/embedding/scripts/`)
+- openslide 기반, MPP 메타데이터로 20× 레벨 자동 선택 (없으면 L1 fallback)
+- 순수 numpy/PIL Otsu 구현 (cv2 미사용)
+- coords.npy (N, 2) int64 — level-0 픽셀 좌표 (openslide.read_region 규약)
+- coords.json 메타데이터 companion 자동 저장
+- 브랜치: `feat/BIOP02-27-kkkim-tile-wsi`
+- 단위 테스트 통과 (Otsu, binary closing, cap 로직, config 파싱)
+
+**보류 중**
+- 실제 슬라이드(.svs)로 1-slide pilot 미실행 — `/data/raw/tcga/sample.svs` 존재 확인 후 서버에서 실행 필요
+- GitHub push 대기 (초대 수락 후: `git push origin feat/BIOP02-27-kkkim-tile-wsi`)
+
+---
+
 ## 2026-05-17 (Sprint 0)
 
 ### 완료한 작업
@@ -36,7 +61,7 @@
 
 | JIRA | 태스크 | 기한 | 비고 |
 |---|---|---|---|
-| BIOP02-27 | tile_config.yaml + tile_wsi.py | 5/19 | 다음 작업 |
+| BIOP02-27 | 1-slide pilot 실행 (서버에서) | 5/19 | push 후 서버 접속해서 실행 |
 | — | schemas/hypothesis.schema.json v0.1 | 5/21 | gglee draft 받은 후 진행 |
 | — | README.md (agents/embedding/) | BIOP02-26,27,28 완료 후 | 한꺼번에 작성 |
 
@@ -44,9 +69,9 @@
 
 ### 보류 중
 
-- **GitHub push 대기**: braveji에게 kakyungkim 계정 write 권한 요청 중
-  - 로컬 커밋 2개가 push되지 않은 상태 (13ce19d, e3badf7)
-  - 권한 받는 즉시: `git push origin main`
+- **GitHub push 대기**: 초대 재전송 수락 후 push 예정
+  - 로컬 커밋 미push 상태 (main: 13ce19d, e3badf7 / feat 브랜치: bc637de)
+  - 수락 후: `git push origin main` 이후 `git push origin feat/BIOP02-27-kkkim-tile-wsi`
 
 ---
 
@@ -62,8 +87,8 @@ cd ~/project/BioProject02
 # 3. braveji가 권한 줬으면 push 먼저
 git push origin main
 
-# 4. 다음 작업 시작 (BIOP02-27)
-git checkout -b feat/BIOP02-27-kkkim-tile-wsi
+# 4. 브랜치 이동 (이미 생성됨)
+git checkout feat/BIOP02-27-kkkim-tile-wsi
 
 # 5. Claude Code 실행
 claude
