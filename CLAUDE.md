@@ -34,8 +34,19 @@ Goal: H&E WSI → morphology embedding → molecular phenotype prediction → De
 
 - **Server:** A100 80GB × 1, 24 CPU, 188 GiB RAM, 2 TB root — `61.109.239.220`, SSH key only
 - **Data layout:** raw WSI = S3 read-only | `/data/cache/` = LRU 200 GB (processed/tiled) | embeddings = permanent
-- **GPU slots:** 09–13 / 13–17 / 17–21 / 21–01 (calendar + Slack reservation until `gpu.lock` wrapper is ready)
+- **GPU slots:** 09–13 / 13–17 / 17–21 / 21–01 — reserve in `#biop02-alerts` before use (until `gpu.lock` wrapper is ready)
 - **Workspace:** `/workspace/agents/<role>/` per person
+
+**Slack channels:**
+
+| 채널 | 용도 |
+|---|---|
+| `#biop02-general` | 공지, 전체 공유 |
+| `#biop02-dev` | OpenClaw 알림 수신 + 작업 진행 공유 |
+| `#biop02-experiments` | 실험 결과 공유 (Critic pass 후만) |
+| `#biop02-alerts` | GPU 슬롯 예약, 서버 장애 알림 |
+
+**Atlassian MCP (Claude Code에서 Confluence·JIRA 직접 조작):** `guide/start-project.md` §7 참조. API token은 `~/.claude/settings.json`에만 저장 — 절대 git commit 금지.
 
 ## Repository Structure (target)
 
@@ -79,25 +90,82 @@ All licenses are academic non-commercial — project is **academic research only
 
 Fallback while awaiting approval: `torch.randn(N, 1024)` dummy embeddings to unblock Modeling Agent.
 
-## Key Commands (Sprint 0 skeleton)
+## Key Commands
 
 ```bash
 # SSH access
 ssh -p <port> <username>@61.109.239.220
 
+# Environment setup (embedding agent)
+bash agents/embedding/setup.sh   # installs openslide-tools, libvips, pyvips, timm, huggingface_hub
+
 # WSI tiling pilot
-time python scripts/tile_wsi.py --slide /data/raw/tcga/sample.svs \
-    --config configs/tile_config.yaml --out outputs/pilot/coords.npy
+time python agents/embedding/scripts/tile_wsi.py --slide /data/raw/tcga/sample.svs \
+    --config agents/embedding/configs/tile_config.yaml --out outputs/pilot/coords.npy
 
 # Feature extraction (after HF approval)
-time python scripts/extract_uni.py --slide /data/raw/tcga/sample.svs \
+time python agents/embedding/scripts/extract_uni.py --slide /data/raw/tcga/sample.svs \
     --coords outputs/pilot/coords.npy --out_dir outputs/pilot/
 
 # GPU monitoring
 watch -n 1 nvidia-smi
 
 # Dummy embedding (unblocks Modeling Agent)
-python scripts/extract_dummy.py  # outputs torch.randn(N, 1024)
+python agents/embedding/scripts/extract_dummy.py  # outputs torch.randn(N, 1024)
+```
+
+## Git & JIRA Workflow
+
+### Branch Naming
+
+```
+<type>/<BIOP02-이슈번호>-<username>-<짧은설명>
+```
+
+| prefix | 용도 |
+|---|---|
+| `feat/` | 새 기능 (코드/스크립트) |
+| `docs/` | 문서, schema, checklist |
+| `fix/` | 버그 수정 |
+| `infra/` | setup.sh, Dockerfile, gpu.lock 등 |
+
+예: `feat/BIOP02-27-kkkim-tile-wsi`
+
+### JIRA Smart Commits
+
+커밋 메시지에 이슈 번호를 포함하면 JIRA 상태가 자동 업데이트됩니다.
+
+```bash
+git commit -m "BIOP02-27 #in-progress tile_wsi.py 256×256 tiling 구현"
+git commit -m "BIOP02-27 #done tile_wsi.py Otsu mask + per-patient cap 5000 완성"
+git commit -m "BIOP02-27 #comment 1 slide pilot: 8.3min, 4821 patches, 19MB"
+```
+
+## Experiment Tracking
+
+Every experiment directory `experiments/<username>/<YYYYMMDD_설명>/` must contain:
+- `config.yaml`, `model.pt`, `metrics.json`, `predictions.npy`, `critic_report.json`
+- git commit hash recorded inside `metrics.json`
+
+`metrics.json` required fields: `auc`, `auprc`, `balanced_accuracy`, `n_train`, `n_val`, `model`, `embedding_model`, `commit_hash`
+
+Experiment results may only be shared in `#biop02-experiments` after `critic_status: pass`.
+
+## Agent Dependency Chain
+
+```
+jamie (manifest + split_policy_v0)
+  └→ kkkim (어떤 슬라이드 tiling할지 결정)
+  └→ sjpark (MLP 학습 시작 조건)
+
+kkkim (임베딩 완료)
+  └→ sjpark (dummy → 실제 임베딩 교체)
+
+sjpark (MLP 결과)
+  └→ gglee (critic_report.json 작성 시작)
+
+gglee (critic_status: pass)
+  └→ braveji (결과 공유 + experiments registry 등록)
 ```
 
 ## Critic Cross-Review Rules
@@ -105,6 +173,15 @@ python scripts/extract_dummy.py  # outputs torch.randn(N, 1024)
 - **Owner ≠ Reviewer.** Never self-review your own results.
 - All hypothesis outputs require `claim_level` + `critic_status` fields.
 - Results may not be shared without Critic pass.
+
+**Cross-review pairings (5/22 미팅 후 확정):**
+
+| 작성자 | Critic 담당 |
+|---|---|
+| sjpark (모델링 결과) | gglee |
+| kkkim (임베딩 결과) | jamie 또는 sjpark |
+| jamie (데이터/split) | braveji 또는 gglee |
+| jhans (TE 결과) | gglee |
 
 **7-point Critic checklist:**
 1. Data leakage check

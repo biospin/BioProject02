@@ -1,0 +1,209 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "schemas/hypothesis.schema.json",
+  "title": "SpatialPathoAgent Hypothesis Output v0.1",
+  "description": "H&E WSI → phenotype prediction → ranked therapeutic hypothesis. BRCA-only, academic research, hypothesis_only output.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "created_at",
+    "commit_hash",
+    "slide",
+    "embedding",
+    "phenotype",
+    "hypothesis",
+    "claim_level",
+    "critic_status"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "const": "0.1"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when this output was generated"
+    },
+    "commit_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{7,40}$",
+      "description": "Git commit hash of the pipeline code that produced this output"
+    },
+    "slide": {
+      "type": "object",
+      "required": ["slide_id", "patient_id", "cohort"],
+      "properties": {
+        "slide_id": {
+          "type": "string",
+          "description": "Unique slide identifier (e.g., TCGA-BRCA barcode)"
+        },
+        "patient_id": {
+          "type": "string"
+        },
+        "cohort": {
+          "type": "string",
+          "enum": ["TCGA-BRCA", "CPTAC-BRCA"]
+        },
+        "svs_path": {
+          "type": "string",
+          "description": "Relative or S3 path to source WSI"
+        }
+      },
+      "additionalProperties": false
+    },
+    "embedding": {
+      "type": "object",
+      "required": ["model", "feature_dim", "n_tiles", "coords_path", "embedding_path"],
+      "properties": {
+        "model": {
+          "type": "string",
+          "enum": ["UNI", "CONCH", "EXAONE-Path-2.0", "Virchow", "UNI2-h", "dummy"],
+          "description": "Foundation model used for feature extraction"
+        },
+        "feature_dim": {
+          "type": "integer",
+          "description": "Embedding vector dimension (e.g., 1024 for UNI)"
+        },
+        "n_tiles": {
+          "type": "integer",
+          "description": "Number of tiles after Otsu filtering and per-patient cap"
+        },
+        "tile_config": {
+          "type": "object",
+          "properties": {
+            "tile_size":       { "type": "integer" },
+            "target_mpp":      { "type": "number"  },
+            "per_patient_cap": { "type": "integer" }
+          },
+          "additionalProperties": false
+        },
+        "coords_path": {
+          "type": "string",
+          "description": "Path to coords.npy — int64 (N, 2), level-0 pixel space"
+        },
+        "embedding_path": {
+          "type": "string",
+          "description": "Path to embedding .npy — float32 (N, feature_dim)"
+        }
+      },
+      "additionalProperties": false
+    },
+    "phenotype": {
+      "type": "object",
+      "required": ["model", "predictions"],
+      "properties": {
+        "model": {
+          "type": "string",
+          "description": "Phenotype prediction model identifier (e.g., MLP_v0.1, DSMIL_v1.0)"
+        },
+        "predictions": {
+          "type": "object",
+          "properties": {
+            "er_status":  { "$ref": "#/$defs/binary_prediction" },
+            "pr_status":  { "$ref": "#/$defs/binary_prediction" },
+            "her2_status":{ "$ref": "#/$defs/binary_prediction" },
+            "pam50": {
+              "type": "object",
+              "description": "PAM50 subtype probabilities (must sum to ~1.0)",
+              "properties": {
+                "LumA":   { "type": "number", "minimum": 0, "maximum": 1 },
+                "LumB":   { "type": "number", "minimum": 0, "maximum": 1 },
+                "HER2E":  { "type": "number", "minimum": 0, "maximum": 1 },
+                "Basal":  { "type": "number", "minimum": 0, "maximum": 1 },
+                "Normal": { "type": "number", "minimum": 0, "maximum": 1 }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        "metrics": {
+          "type": "object",
+          "description": "Validation metrics for the phenotype model (populate when available)",
+          "properties": {
+            "auc":                { "type": "number", "minimum": 0, "maximum": 1 },
+            "auprc":              { "type": "number", "minimum": 0, "maximum": 1 },
+            "balanced_accuracy":  { "type": "number", "minimum": 0, "maximum": 1 },
+            "n_train":            { "type": "integer" },
+            "n_val":              { "type": "integer" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "hypothesis": {
+      "type": "array",
+      "description": "Ranked therapeutic hypotheses derived from phenotype predictions",
+      "items": {
+        "type": "object",
+        "required": ["rank", "drug_class", "rationale", "confidence", "data_source"],
+        "properties": {
+          "rank": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "1 = highest confidence"
+          },
+          "drug_class": {
+            "type": "string",
+            "description": "Drug class or pathway target (e.g., CDK4/6 inhibitor, PARP inhibitor)"
+          },
+          "rationale": {
+            "type": "string",
+            "description": "Plain-language reasoning linking phenotype to hypothesis"
+          },
+          "confidence": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "description": "Confidence score derived from phenotype probability and DepMap/GDSC correlation"
+          },
+          "data_source": {
+            "type": "string",
+            "enum": ["DepMap-PRISM", "GDSC", "both"]
+          },
+          "supporting_endpoints": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Phenotype endpoints that support this hypothesis (e.g., [\"er_status\", \"pam50.LumA\"])"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "claim_level": {
+      "type": "string",
+      "const": "hypothesis_only",
+      "description": "Fixed to hypothesis_only. Drug response prediction framing is prohibited."
+    },
+    "critic_status": {
+      "type": "string",
+      "enum": ["pass", "caution", "reject", "pending"],
+      "description": "Scientific Critic validation status. Results may only be shared when 'pass'."
+    },
+    "critic_report_path": {
+      "type": "string",
+      "description": "Relative path to the associated critic_report.json"
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "binary_prediction": {
+      "type": "object",
+      "required": ["prob_positive", "predicted_label"],
+      "properties": {
+        "prob_positive": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "predicted_label": {
+          "type": "integer",
+          "enum": [0, 1]
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
