@@ -130,6 +130,13 @@ def tile_slide(slide_path: str, config: dict, out_path: str) -> dict:
     level_ds   = slide.level_downsamples[target_level]
     print(f"  Level {target_level}: dims={level_dims}  mpp={actual_mpp:.3f} (target {target_mpp})")
 
+    # How many native pixels to read per tile to achieve target_mpp after resize.
+    # e.g. actual=0.25, target=0.5 → scale=2 → read 512×512, resize to 256×256.
+    scale     = target_mpp / actual_mpp
+    read_size = max(tile_size, round(tile_size * scale))
+    if abs(scale - 1.0) > 0.05:
+        print(f"  MPP scale: {scale:.2f}x  read_size={read_size} → resize to {tile_size}")
+
     print("  Computing tissue mask …")
     mask, mask_ds = compute_tissue_mask(slide, downsample_factor)
     mask_h, mask_w = mask.shape
@@ -137,20 +144,20 @@ def tile_slide(slide_path: str, config: dict, out_path: str) -> dict:
     # Conversion factor: one pixel at target level → this many pixels in mask
     level_to_mask = level_ds / mask_ds
 
-    n_x = level_dims[0] // tile_size
-    n_y = level_dims[1] // tile_size
+    n_x = level_dims[0] // read_size
+    n_y = level_dims[1] // read_size
 
     valid_coords = []
     for ty in tqdm(range(n_y), desc="  Scanning rows", unit="row"):
         for tx in range(n_x):
-            x_lv = tx * tile_size
-            y_lv = ty * tile_size
+            x_lv = tx * read_size
+            y_lv = ty * read_size
 
             # Corresponding window in the mask image
             mx  = int(x_lv * level_to_mask)
             my  = int(y_lv * level_to_mask)
-            mw  = max(1, int(tile_size * level_to_mask))
-            mh  = max(1, int(tile_size * level_to_mask))
+            mw  = max(1, int(read_size * level_to_mask))
+            mh  = max(1, int(read_size * level_to_mask))
             mx2 = min(mx + mw, mask_w)
             my2 = min(my + mh, mask_h)
 
@@ -183,7 +190,9 @@ def tile_slide(slide_path: str, config: dict, out_path: str) -> dict:
         "target_level"   : target_level,
         "target_mpp"     : target_mpp,
         "actual_mpp"     : round(actual_mpp, 4),
+        "scale"          : round(scale, 4),
         "tile_size"      : tile_size,
+        "read_size"      : read_size,
         "level_dims"     : list(level_dims),
         "n_tiles"        : int(len(coords)),
         "n_before_cap"   : n_before_cap,

@@ -1,7 +1,8 @@
 # Claude — settings/local은 제외, commands(팀 공유 슬래시 커맨드)는 포함
-.claude/
+.claude/*
 !.claude/commands/
 !.claude/commands/**
+CLAUDE.local.md
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
