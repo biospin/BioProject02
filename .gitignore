@@ -2,6 +2,7 @@
 .claude/
 !.claude/commands/
 !.claude/commands/**
+CLAUDE.local.md
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
