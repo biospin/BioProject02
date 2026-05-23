@@ -94,6 +94,18 @@ time ~/miniconda3/bin/python agents/embedding/scripts/extract_dummy.py \
 | wall-clock 시간 | **0.2 s** |
 | 파일 크기 | 20 MB |
 
+### 5.3 UNI v1 실제 임베딩
+
+| 항목 | 값 |
+|---|---|
+| 모델 | UNI v1 (`MahmoodLab/UNI`, timm `hf-hub:`) |
+| 임베딩 shape | (5000, 1024) |
+| 출력 파일 | `TCGA-3C-AALI-01Z-00-DX1.F6E9A5DF-..._uni_embeddings.npy` |
+| wall-clock 시간 | **125.6 s (2분 6초)** |
+| 배치 크기 | 64 tiles/batch, ~1.54 s/batch |
+| GPU | A100 80GB (cuda) |
+| 300장 전체 추산 | ~10시간 |
+
 ---
 
 ## 6. 산출물 경로 (서버)
@@ -107,7 +119,8 @@ time ~/miniconda3/bin/python agents/embedding/scripts/extract_dummy.py \
   └── TCGA-3C-AALI-01Z-00-DX1_coords.json  (418 B)
 
 /workspace/data/cache/biop02/pilot_embeddings/
-  └── TCGA-3C-AALI-01Z-00-DX1_dummy_embeddings.npy  (20 MB, shape: 5000×1024)
+  ├── TCGA-3C-AALI-01Z-00-DX1_dummy_embeddings.npy          (20 MB, shape: 5000×1024)
+  └── TCGA-3C-AALI-01Z-00-DX1..._uni_embeddings.npy         (20 MB, shape: 5000×1024)
 ```
 
 ---
@@ -161,5 +174,5 @@ time ~/miniconda3/bin/python agents/embedding/scripts/extract_dummy.py \
 | Tiling 실행 | ✅ 완료 (5.6 s, 5,000 tiles, scale=2.0 보정) |
 | tile_wsi.py MPP scale 보정 | ✅ 완료 (read_size=512 → resize to 256) |
 | 더미 임베딩 생성 | ✅ 완료 (0.2 s, shape 5000×1024) |
+| UNI v1 실제 임베딩 추출 | ✅ 완료 (125.6 s, shape 5000×1024, GPU A100) |
 | PILOT_REPORT.md 작성 | ✅ 완료 |
-| BIOP02-30 Done | ⬜ 커밋/PR 후 처리 |
