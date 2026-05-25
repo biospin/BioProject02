@@ -7,6 +7,49 @@
 
 ---
 
+## 0. Sprint 0 demo evidence
+
+2026-05-22 Sprint 0 closeout에서 kkkim이 실시간으로 보여주기로 되어 있던 항목은 아래 3개입니다. 미팅에는 늦게 외부에서 참여해서 화면 공유 시연은 못 했지만, 같은 내용을 재현 가능한 evidence로 정리합니다.
+
+| 미팅 데모 항목 | Evidence | 상태 |
+|---|---|---|
+| `setup.sh` 실행 결과 | `agents/embedding/setup.sh` 설치 확인 단계에서 `pyvips`, `torch + CUDA`, `timm`, `huggingface_hub`, `openslide`, `numpy`, `PIL` import 확인 | 완료 |
+| `tile_wsi.py` 1-slide pilot `coords.npy` | 1.6 GB TCGA-BRCA pilot WSI에서 14,198개 후보 중 5,000개 조직 타일 좌표 저장, `coords.npy` shape `5000 x 2` | 완료 |
+| `extract_dummy.py` output shape | `coords.npy`를 입력으로 dummy embedding 생성, output shape `5000 x 1024` | 완료 |
+
+재현 명령:
+
+```bash
+cd ~/project/BioProject02
+export LD_LIBRARY_PATH=~/miniconda3/lib:${LD_LIBRARY_PATH:-}
+
+# 1. 환경 설치/검증
+bash agents/embedding/setup.sh
+
+# 2. 1-slide tiling pilot
+time ~/miniconda3/bin/python agents/embedding/scripts/tile_wsi.py \
+  --slide /workspace/data/cache/biop02/pilot_wsi/TCGA-3C-AALI-01Z-00-DX1.F6E9A5DF-D8FB-45CF-B4BD-C6B76294C291.svs \
+  --config agents/embedding/configs/tile_config.yaml \
+  --out /workspace/data/cache/biop02/pilot_tiles/TCGA-3C-AALI-01Z-00-DX1_coords.npy
+
+# 3. dummy embedding 생성
+time ~/miniconda3/bin/python agents/embedding/scripts/extract_dummy.py \
+  --coords /workspace/data/cache/biop02/pilot_tiles/TCGA-3C-AALI-01Z-00-DX1_coords.npy \
+  --out_dir /workspace/data/cache/biop02/pilot_embeddings/
+```
+
+핵심 산출물:
+
+| 산출물 | 경로 | 확인 포인트 |
+|---|---|---|
+| Pilot WSI | `/workspace/data/cache/biop02/pilot_wsi/TCGA-3C-AALI-01Z-00-DX1.F6E9A5DF-D8FB-45CF-B4BD-C6B76294C291.svs` | 1.6 GB, Aperio 40x |
+| Tile coordinates | `/workspace/data/cache/biop02/pilot_tiles/TCGA-3C-AALI-01Z-00-DX1_coords.npy` | shape `5000 x 2`, level-0 pixel coordinates |
+| Tile metadata | `/workspace/data/cache/biop02/pilot_tiles/TCGA-3C-AALI-01Z-00-DX1_coords.json` | `n_tiles=5000`, `n_before_cap=14198`, `scale=2.0`, `capped=true` |
+| Dummy embeddings | `/workspace/data/cache/biop02/pilot_embeddings/TCGA-3C-AALI-01Z-00-DX1_dummy_embeddings.npy` | shape `5000 x 1024`, 20 MB |
+| UNI v1 embeddings | `/workspace/data/cache/biop02/pilot_embeddings/TCGA-3C-AALI-01Z-00-DX1..._uni_embeddings.npy` | shape `5000 x 1024`, 125.6 s on A100 |
+
+다음 사람이 확인할 때는 이 파일의 `4. 실행 명령`, `5. 측정 결과`, `6. 산출물 경로`만 보면 됩니다. Modeling Agent는 dummy 또는 UNI embedding의 `5000 x 1024` matrix를 그대로 MLP 입력으로 사용할 수 있습니다.
+
 ## 1. Pilot 슬라이드
 
 | 항목 | 값 |
