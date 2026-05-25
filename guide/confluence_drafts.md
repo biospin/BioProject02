@@ -1,6 +1,6 @@
 # Confluence 작업 완료 초안
 
-> 이 파일의 내용을 Confluence에 붙여넣거나, Claude Code에서 "Confluence에 써줘"라고 요청하면 자동 업로드됩니다.
+> 이 파일의 내용은 Confluence에 직접 붙여넣을 수 있습니다. Claude 또는 Codex에서 Atlassian MCP 설정을 완료한 경우 "Confluence에 써줘"라고 요청하면 자동 업로드할 수 있고, MCP 미설정 시에는 수동으로 붙여넣습니다.
 > 위치: VC 스페이스 > 프로젝트 진행-AI전용 > 프로젝트#02 > BIOP02-1 하위
 
 ---
