@@ -23,3 +23,32 @@
 - BIOP02-28 페이지가 작성 형식의 기준입니다.
 - 초안이 `guide/confluence_drafts.md`에 없으면 git log와 코드를 직접 읽어 작성합니다.
 - atlassian MCP가 설정되어 있어야 합니다 (`~/.claude/mcp.json`). 설정 방법: `guide/start-project.md §7`.
+
+## Atlassian DNS 오류 대응
+
+Confluence API 호출 중 아래 오류가 발생하면 로컬 DNS가 `biospin-ai.atlassian.net`을 못 푸는 상태일 수 있습니다.
+
+```text
+curl: (6) Could not resolve host: biospin-ai.atlassian.net
+```
+
+이 경우 재시도만 반복하지 말고 다음 절차를 따릅니다.
+
+```bash
+# 1. 로컬 DNS 확인
+getent hosts biospin-ai.atlassian.net
+
+# 2. 실패하면 Cloudflare DNS-over-HTTPS로 IP 조회
+curl -sS -H "accept: application/dns-json" \
+  "https://1.1.1.1/dns-query?name=biospin-ai.atlassian.net&type=A"
+
+# 3. 반환된 IP를 사용해 curl --resolve로 Confluence API 호출
+curl --resolve biospin-ai.atlassian.net:443:<IP> \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  ...
+```
+
+API 성공 후 응답에서 `id`, `type`, `status`, `_links.webui`를 확인합니다.
+
+실제 성공 사례: `13.227.180.4`로 `--resolve` 지정 후 Sprint 0 closeout 페이지 댓글 등록 성공, HTTP 200, comment id `34275356`.
+
