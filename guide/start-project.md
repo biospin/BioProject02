@@ -173,26 +173,28 @@ Atlassian 공식 MCP 서버를 설정하면 Claude Code 또는 Codex가 Confluen
 }
 ```
 
-### Step 2B — Codex MCP 서버 설정 (`~/.codex/config.toml`)
+### Step 2B — Codex MCP 서버 설정
 
-Codex는 MCP 설정을 `~/.codex/config.toml` 또는 신뢰한 프로젝트의 `.codex/config.toml`에서 읽습니다. 토큰 값은 파일에 직접 쓰지 말고 환경변수로 전달합니다.
-
-```toml
-[mcp_servers.atlassian]
-command = "npx"
-args = ["-y", "@atlassian/mcp-atlassian", "--transport", "stdio"]
-env_vars = ["ATLASSIAN_URL", "ATLASSIAN_EMAIL", "ATLASSIAN_TOKEN"]
-```
-
-쉘 환경에는 본인 계정 값만 설정합니다.
+Codex는 Atlassian 공식 remote MCP 서버를 OAuth로 등록한다. 예전 `@atlassian/mcp-atlassian` npm 패키지 방식은 npm registry에서 패키지를 찾지 못해 실패할 수 있다.
 
 ```bash
-export ATLASSIAN_URL="https://biospin-ai.atlassian.net"
-export ATLASSIAN_EMAIL="<본인 atlassian 이메일>"
-export ATLASSIAN_TOKEN="<위에서 발급한 API token>"
+codex mcp add atlassian --url https://mcp.atlassian.com/v1/mcp
+codex mcp login atlassian
 ```
 
-Codex 재시작 후 TUI에서 `/mcp`로 `atlassian` 서버가 활성화됐는지 확인합니다.
+`codex mcp login atlassian`이 출력하는 URL을 브라우저에서 열어 승인한다. 서버 SSH 환경에서 실행 중이면 callback URL이 서버의 `127.0.0.1:<PORT>`로 열리므로, 브라우저가 있는 로컬 PC에서 같은 포트로 SSH tunnel을 먼저 열어야 한다.
+
+```bash
+# login URL의 redirect_uri 포트가 39907인 예시
+ssh -N -L 39907:127.0.0.1:39907 -p <SSH_PORT> <username>@<server_host>
+```
+
+터널을 연 터미널은 닫지 않고 유지한 뒤 OAuth URL을 다시 연다. 완료 후 확인:
+
+```bash
+codex mcp list
+# atlassian ... Auth OAuth
+```
 
 ### Step 2C — Token 만료 시 Claude/Codex 재설정
 
