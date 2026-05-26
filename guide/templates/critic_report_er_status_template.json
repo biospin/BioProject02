@@ -1,0 +1,73 @@
+{
+  "schema_version": "0.1",
+  "created_at": "YYYY-MM-DDTHH:MM:SS+09:00",
+  "reviewer": "kkkim",
+  "owner": "sjpark",
+  "experiment": {
+    "experiment_id": "experiments/sjpark/YYYYMMDD_er_status_mlp",
+    "task": "ER status binary MLP baseline review",
+    "endpoint": "er_status",
+    "commit_hash": "REPLACE_WITH_7_TO_40_HEX",
+    "config_path": "experiments/sjpark/YYYYMMDD_er_status_mlp/config.yaml",
+    "metrics_path": "experiments/sjpark/YYYYMMDD_er_status_mlp/metrics.json",
+    "predictions_path": "experiments/sjpark/YYYYMMDD_er_status_mlp/predictions.npy",
+    "embedding_manifest_path": "/data/embeddings/biop02/embedding_manifest.csv",
+    "split_policy_path": "REPLACE_WITH_SPLIT_POLICY_PATH"
+  },
+  "checks": {
+    "data_leakage": {
+      "status": "caution",
+      "evidence": [
+        "Confirm train/val/test split is patient-level, not slide-level.",
+        "Confirm duplicate slides from the same case do not cross splits."
+      ],
+      "notes": "Fill after checking split_policy_v0 and predictions index."
+    },
+    "baseline_comparison": {
+      "status": "caution",
+      "evidence": [
+        "Require random, subtype-only, and pixel-mean baselines in metrics.json or companion table."
+      ],
+      "notes": "Pass only if MLP is compared against all three agreed baselines."
+    },
+    "counterfactual_check": {
+      "status": "not_applicable",
+      "evidence": [],
+      "notes": "For first ER-status MLP baseline, mark caution/reject if no feature-removal or sanity check is provided and claims exceed baseline scope."
+    },
+    "cross_dataset_check": {
+      "status": "not_applicable",
+      "evidence": [],
+      "notes": "Sprint 1 ER-status baseline may be TCGA-only. Require explicit note if CPTAC is not yet available."
+    },
+    "biological_plausibility": {
+      "status": "caution",
+      "evidence": [
+        "ER status is biologically plausible as a BRCA phenotype endpoint."
+      ],
+      "notes": "No therapeutic hypothesis should be inferred from this baseline alone."
+    },
+    "drp_framing": {
+      "status": "pass",
+      "evidence": [
+        "No drug response prediction, personalized therapy, or patient-specific optimal treatment wording in report outputs."
+      ],
+      "notes": "Recheck README/report text before final pass."
+    },
+    "claim_level": {
+      "status": "pass",
+      "evidence": [
+        "claim_level is hypothesis_only."
+      ],
+      "notes": "Do not change without written exception."
+    }
+  },
+  "critic_status": "caution",
+  "claim_level": "hypothesis_only",
+  "summary": "Template only. Replace with review findings after sjpark ER-status MLP artifacts are available.",
+  "required_followups": [
+    "Fill evidence paths and metric values from sjpark experiment artifacts.",
+    "Verify owner != reviewer.",
+    "Set critic_status to pass only after all required checks pass or justified not_applicable."
+  ]
+}

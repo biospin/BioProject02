@@ -46,7 +46,25 @@ Goal: H&E WSI → morphology embedding → molecular phenotype prediction → De
 | `#biop02-experiments` | 실험 결과 공유 (Critic pass 후만) |
 | `#biop02-alerts` | GPU 슬롯 예약, 서버 장애 알림 |
 
-**Atlassian MCP (Claude Code에서 Confluence·JIRA 직접 조작):** `guide/start-project.md` §7 참조. API token은 `~/.claude/settings.json`에만 저장 — 절대 git commit 금지.
+**Atlassian MCP (Claude Code에서 Confluence·JIRA 직접 조작):** `guide/start-project.md` §7 참조. API token은 `~/.claude/settings.json` 또는 개인 shell 환경변수에만 저장 — 절대 git commit 금지.
+
+**Atlassian DNS 오류 대응:** Confluence/JIRA API 호출 중 `curl: (6) Could not resolve host: biospin-ai.atlassian.net`가 발생하면 재시도만 반복하지 말고 아래 우회 절차를 따른다.
+
+```bash
+# 1. 로컬 DNS 확인
+getent hosts biospin-ai.atlassian.net
+
+# 2. 실패하면 Cloudflare DNS-over-HTTPS로 IP 조회
+curl -sS -H "accept: application/dns-json" \
+  "https://1.1.1.1/dns-query?name=biospin-ai.atlassian.net&type=A"
+
+# 3. 반환된 IP로 curl --resolve 사용
+curl --resolve biospin-ai.atlassian.net:443:<IP> \
+  -u "$ATLASSIAN_EMAIL:$ATLASSIAN_TOKEN" \
+  ...
+```
+
+성공 후에는 응답의 `id`, `type`, `status`, `_links.webui`를 확인한다. 실제 성공 사례: `13.227.180.4`로 `--resolve` 지정 후 Confluence comment 등록 HTTP 200, comment id `34275356`.
 
 ## Repository Structure (target)
 

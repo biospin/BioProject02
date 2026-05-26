@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "schemas/critic_report.schema.json",
+  "title": "SpatialPathoAgent Critic Report v0.1",
+  "description": "Seven-item scientific critic report for BRCA-only phenotype experiments. Results may be shared only when critic_status is pass.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "created_at",
+    "reviewer",
+    "owner",
+    "experiment",
+    "checks",
+    "critic_status",
+    "claim_level",
+    "summary"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "const": "0.1"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "reviewer": {"type": "string", "description": "Critic reviewer username. Must differ from experiment owner."},
+    "owner": {"type": "string", "description": "Experiment owner username."},
+    "experiment": {
+      "type": "object",
+      "required": ["experiment_id", "task", "endpoint", "commit_hash", "metrics_path", "predictions_path"],
+      "properties": {
+        "experiment_id": {"type": "string"},
+        "task": {"type": "string"},
+        "endpoint": {"type": "string"},
+        "commit_hash": {"type": "string", "pattern": "^[0-9a-f]{7,40}$"},
+        "config_path": {"type": "string"},
+        "metrics_path": {"type": "string"},
+        "predictions_path": {"type": "string"},
+        "embedding_manifest_path": {"type": "string"},
+        "split_policy_path": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "checks": {
+      "type": "object",
+      "required": [
+        "data_leakage",
+        "baseline_comparison",
+        "counterfactual_check",
+        "cross_dataset_check",
+        "biological_plausibility",
+        "drp_framing",
+        "claim_level"
+      ],
+      "properties": {
+        "data_leakage": {"$ref": "#/$defs/check"},
+        "baseline_comparison": {"$ref": "#/$defs/check"},
+        "counterfactual_check": {"$ref": "#/$defs/check"},
+        "cross_dataset_check": {"$ref": "#/$defs/check"},
+        "biological_plausibility": {"$ref": "#/$defs/check"},
+        "drp_framing": {"$ref": "#/$defs/check"},
+        "claim_level": {"$ref": "#/$defs/check"}
+      },
+      "additionalProperties": false
+    },
+    "critic_status": {"type": "string", "enum": ["pass", "caution", "reject"]},
+    "claim_level": {"type": "string", "const": "hypothesis_only"},
+    "summary": {"type": "string"},
+    "required_followups": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "check": {
+      "type": "object",
+      "required": ["status", "evidence", "notes"],
+      "properties": {
+        "status": {"type": "string", "enum": ["pass", "caution", "reject", "not_applicable"]},
+        "evidence": {"type": "array", "items": {"type": "string"}},
+        "notes": {"type": "string"}
+      },
+      "additionalProperties": false
+    }
+  }
+}
