@@ -192,13 +192,13 @@ gglee (critic_status: pass)
 - All hypothesis outputs require `claim_level` + `critic_status` fields.
 - Results may not be shared without Critic pass.
 
-**Cross-review pairings (5/22 미팅 후 확정):**
+**Cross-review pairings (Week 10 / 5/22 미팅 확정):**
 
 | 작성자 | Critic 담당 |
 |---|---|
-| sjpark (모델링 결과) | gglee |
-| kkkim (임베딩 결과) | jamie 또는 sjpark |
-| jamie (데이터/split) | braveji 또는 gglee |
+| sjpark (모델링 결과) | kkkim |
+| kkkim (임베딩 결과) | jamie |
+| jamie (데이터/split) | braveji |
 | jhans (TE 결과) | gglee |
 
 **7-point Critic checklist:**
