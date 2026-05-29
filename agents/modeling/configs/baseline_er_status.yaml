@@ -1,0 +1,20 @@
+task: er_status
+embedding_model: dummy
+embedding_dim: 1024
+
+model:
+  hidden_dims: [512, 256]
+  dropout: 0.3
+
+train:
+  epochs: 10
+  lr: 1.0e-3
+  batch_size: 1        # one slide per step (MIL convention)
+  seed: 42
+
+data:
+  embedding_manifest: /data/embeddings/biop02/embedding_manifest.csv
+  label_col: er_status
+  n_dummy_slides: 20   # used when manifest is unavailable (smoke test)
+
+output_dir: /workspace/agents/modeling/experiments
