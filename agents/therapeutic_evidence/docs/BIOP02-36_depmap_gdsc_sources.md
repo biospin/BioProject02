@@ -1,6 +1,6 @@
 # BIOP02-36: DepMap PRISM + GDSC 데이터 소스 조사 (v0.1)
 
-**Ticket**: BIOP02-36 | **Author**: 서정한 (@jhans) | **Status**: Draft v0.1 | **Last updated**: 2026-05-28
+**Ticket**: BIOP02-36 / BIOP02-45 | **Author**: 서정한 (@jhans) | **Status**: Draft v0.2 | **Last updated**: 2026-05-29
 
 **Scope**: 모델링/치료 근거(therapeutic evidence) 연결을 위한 in vitro 약물 감수성 데이터 소스 1차 정리. BRCA(유방암) 필터링 가능 여부 확인 포함.
 
@@ -276,6 +276,64 @@ brca = fit[fit["COSMIC_ID"].isin(brca_cosmic)]
 
 > 두 데이터셋의 IC50/AUC를 직접 비교하지 말 것 — 실험 프로토콜(농도 범위, dose point 수, viability assay 종류)이 다르다. **z-score 또는 rank-based 비교**가 안전하다 (Haibe-Kains et al. 2013 참고).
 
+### 3.4 BIOP02 프로젝트 사용 컬럼 확정 (v0.2)
+
+`schemas/hypothesis.schema.json` 역추적 기준: `hypothesis[].confidence` (sensitivity score), `drug_class` (MOA/pathway), `rationale` (target), `data_source` 필드를 채우는 데 필요한 최소 컬럼만 선별.
+
+#### Cell line 식별 및 BRCA 필터링
+
+| 출처 | 컬럼 | 용도 |
+|---|---|---|
+| DepMap `Model.csv` | `ModelID` | 전체 join 키 (ACH-XXXXXX) |
+| DepMap `Model.csv` | `OncotreeLineage` | BRCA 1차 필터 (`== "Breast"`) |
+| DepMap `Model.csv` | `SangerModelID` | GDSC 조인 키 (SIDM*) — **primary** |
+| DepMap `Model.csv` | `COSMICID` | GDSC 조인 키 fallback |
+| GDSC2 fitted | `SANGER_MODEL_ID` | DepMap `SangerModelID`와 매핑 |
+| GDSC2 fitted | `COSMIC_ID` | fallback 조인 |
+| GDSC2 fitted | `TCGA_DESC` | BRCA 필터 (`== "BRCA"`) — 보완용 |
+
+#### 약물 감수성 지표 (→ `hypothesis[].confidence` 계산)
+
+| 출처 | 컬럼 | 용도 | 비고 |
+|---|---|---|---|
+| PRISM secondary matrix | `AUC` (컬럼별) | BRCA cell line 내 drug sensitivity | 행=ModelID, 열=BroadID |
+| GDSC2 fitted | `LN_IC50` | 감수성 primary 지표 | 자연로그 µM |
+| GDSC2 fitted | `Z_SCORE` | cross-drug 정규화 비교 — **PRISM↔GDSC 통합 시 권장** | 이미 정규화됨 |
+| GDSC2 fitted | `AUC` | 보완 지표 | PRISM AUC와 정의 다름 — 직접 비교 금지 |
+
+> **통합 전략**: 두 DB 모두 drug별 BRCA cell line z-score로 변환 후 rank 기반 합산 → `confidence` 산출.
+
+#### 약물 어노테이션 (→ `drug_class`, `rationale`)
+
+| 출처 | 컬럼 | hypothesis 필드 |
+|---|---|---|
+| PRISM compound list | `MOA` | `drug_class` (1차) |
+| PRISM compound list | `target` | `rationale` (표적 근거) |
+| PRISM compound list | `Drug.Name` | 표시명 |
+| PRISM compound list | `pubchem_cid` | GDSC drug cross-link 키 (**primary**) |
+| PRISM compound list | `InChIKey` | cross-link fallback |
+| GDSC `screened_compounds` | `PATHWAY_NAME` | `drug_class` (보완) |
+| GDSC `screened_compounds` | `PUTATIVE_TARGET` | `rationale` (보완) |
+| GDSC `screened_compounds` | `PUBCHEM` | PRISM `pubchem_cid`와 매핑 |
+
+#### 컬럼 확정 요약 (로드할 최소 컬럼 목록)
+
+```python
+# DepMap Model.csv
+DEPMAP_MODEL_COLS = ["ModelID", "OncotreeLineage", "SangerModelID", "COSMICID"]
+
+# PRISM secondary — matrix는 전체 로드 후 BRCA ModelID로 행 필터링
+# PRISM compound list
+PRISM_COMPOUND_COLS = ["IDs", "Drug.Name", "MOA", "target", "pubchem_cid", "InChIKey"]
+
+# GDSC2 fitted dose-response
+GDSC2_COLS = ["SANGER_MODEL_ID", "COSMIC_ID", "TCGA_DESC",
+              "DRUG_ID", "DRUG_NAME", "LN_IC50", "AUC", "Z_SCORE"]
+
+# GDSC screened compounds
+GDSC_COMPOUND_COLS = ["DRUG_ID", "DRUG_NAME", "PATHWAY_NAME", "PUTATIVE_TARGET", "PUBCHEM"]
+```
+
 ---
 
 ## 4. 라이선스 & 접근 제한 요약
@@ -313,4 +371,4 @@ brca = fit[fit["COSMIC_ID"].isin(brca_cosmic)]
 
 ---
 
-*v0.1 — 1차 데이터 소스 인벤토리. 실측·세포주 교집합·정확한 파일 헤더는 v0.2에서 확정.*
+*v0.2 — §3.4 BIOP02 프로젝트 사용 컬럼 확정 추가 (BIOP02-45). 실측(BRCA 교집합 count, 파일 헤더 검증)은 v0.3에서.*
