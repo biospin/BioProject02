@@ -153,24 +153,24 @@ Atlassian 공식 MCP 서버를 설정하면 Claude Code 또는 Codex가 Confluen
 
 토큰은 생성 직후 한 번만 확인할 수 있습니다. 대화창, Slack, repo 파일에 붙여넣지 않습니다.
 
-### Step 2A — Claude Code MCP 서버 설정 (`~/.claude/settings.json`)
+### Step 2A — Claude Code MCP 서버 설정 (OAuth)
 
-각자 본인 계정 정보로 **글로벌 설정**에 추가합니다 (프로젝트 repo에 커밋하지 말 것 — 토큰 유출 위험).
+Claude Code도 Atlassian 공식 remote MCP 서버를 OAuth로 등록합니다. 예전 `@atlassian/mcp-atlassian` npm 패키지 방식은 npm registry에 패키지가 없어(404) `✗ Failed to connect` 상태가 되므로 사용하지 않습니다. 이 방식은 **MCP용 API token이 필요 없습니다** (Step 1의 token은 OpenClaw·직접 curl 호출용으로만 사용).
 
-```json
-{
-  "mcpServers": {
-    "atlassian": {
-      "command": "npx",
-      "args": ["-y", "@atlassian/mcp-atlassian", "--transport", "stdio"],
-      "env": {
-        "ATLASSIAN_URL": "https://biospin-ai.atlassian.net",
-        "ATLASSIAN_EMAIL": "<본인 atlassian 이메일>",
-        "ATLASSIAN_TOKEN": "<위에서 발급한 API token>"
-      }
-    }
-  }
-}
+```bash
+# user 스코프로 1회 등록 (모든 프로젝트에서 사용 가능)
+claude mcp add --transport sse atlassian https://mcp.atlassian.com/v1/sse -s user
+
+# 이미 깨진 atlassian 서버가 있으면 먼저 제거
+#   claude mcp remove atlassian -s local   # 또는 -s user
+```
+
+등록 후 Claude Code 대화에서 `/mcp` → `atlassian` 선택 → **Authenticate** → 브라우저에서 Atlassian(biospin-ai 워크스페이스) 로그인·승인. 상태 확인:
+
+```bash
+claude mcp get atlassian
+#   Status: ! Needs authentication  → /mcp 인증 전
+#   Status: ✓ Connected             → 인증 완료, 사용 가능
 ```
 
 ### Step 2B — Codex MCP 서버 설정
