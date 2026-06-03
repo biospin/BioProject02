@@ -52,19 +52,32 @@ def make_dummy_dataset(n_slides: int, embedding_dim: int, seed: int):
     return dataset
 
 
-def load_manifest_dataset(manifest_path: str, label_col: str):
+LABEL_MAP = {"positive": 1.0, "negative": 0.0}
+
+def load_manifest_dataset(manifest_path: str, label_col: str, split: str = None):
+    """
+    kkkim manifest 형식 지원:
+    - split 컬럼으로 train/val/test 분리 (없으면 전체 반환)
+    - 레이블: "Positive"→1, "Negative"→0, 나머지(Equivocal/Indeterminate 등) 제외
+    """
     import csv
     dataset = []
+    skipped = 0
     with open(manifest_path, newline="") as f:
         reader = csv.DictReader(f)
         for row in reader:
+            if split and row.get("split", "").lower() != split:
+                continue
             emb_path = row.get("embedding_path", "")
-            label_val = row.get(label_col, "")
-            if not emb_path or not label_val:
+            label_raw = row.get(label_col, "").strip().lower()
+            if not emb_path or label_raw not in LABEL_MAP:
+                skipped += 1
                 continue
             emb = torch.tensor(np.load(emb_path))
-            label = torch.tensor(float(label_val))
+            label = torch.tensor(LABEL_MAP[label_raw])
             dataset.append((emb, label))
+    if skipped:
+        print(f"  [skip] {skipped} rows (Equivocal/Indeterminate/missing)")
     return dataset
 
 
@@ -75,16 +88,18 @@ def train(config: dict, smoke_test: bool):
 
     dim = config["embedding_dim"]
 
-    if smoke_test or not Path(config["data"]["embedding_manifest"]).exists():
+    manifest = config["data"]["embedding_manifest"]
+    if smoke_test or not Path(manifest).exists():
         print("Smoke-test mode: using dummy embeddings")
         dataset = make_dummy_dataset(config["data"]["n_dummy_slides"], dim, config["train"]["seed"])
+        n = len(dataset)
+        split_idx = int(n * 0.8)
+        train_set, val_set = dataset[:split_idx], dataset[split_idx:]
     else:
-        print(f"Loading manifest: {config['data']['embedding_manifest']}")
-        dataset = load_manifest_dataset(config["data"]["embedding_manifest"], config["data"]["label_col"])
-
-    n = len(dataset)
-    split = int(n * 0.8)
-    train_set, val_set = dataset[:split], dataset[split:]
+        print(f"Loading manifest: {manifest}")
+        label_col = config["data"]["label_col"]
+        train_set = load_manifest_dataset(manifest, label_col, split="train")
+        val_set   = load_manifest_dataset(manifest, label_col, split="val")
     print(f"Slides: train={len(train_set)} val={len(val_set)}")
 
     model = SlideMLP(

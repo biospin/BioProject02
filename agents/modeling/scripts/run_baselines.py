@@ -28,16 +28,24 @@ def make_dummy_dataset(n_slides: int = 20, dim: int = 1024, seed: int = 42):
     return X, y
 
 
-def load_manifest_dataset(manifest_path: str, label_col: str):
+LABEL_MAP = {"positive": 1.0, "negative": 0.0}
+
+def load_manifest_dataset(manifest_path: str, label_col: str, split: str = None):
     X, y = [], []
+    skipped = 0
     with open(manifest_path, newline="") as f:
         for row in csv.DictReader(f):
+            if split and row.get("split", "").lower() != split:
+                continue
             emb_path = row.get("embedding_path", "")
-            label_val = row.get(label_col, "")
-            if not emb_path or not label_val:
+            label_raw = row.get(label_col, "").strip().lower()
+            if not emb_path or label_raw not in LABEL_MAP:
+                skipped += 1
                 continue
             X.append(np.load(emb_path))
-            y.append(float(label_val))
+            y.append(LABEL_MAP[label_raw])
+    if skipped:
+        print(f"  [skip] {skipped} rows (Equivocal/Indeterminate/missing)")
     return X, np.array(y, dtype=np.float32)
 
 
@@ -52,13 +60,13 @@ def main():
     if args.smoke_test or not args.manifest or not Path(args.manifest).exists():
         print("Smoke-test mode: using dummy embeddings")
         X, y = make_dummy_dataset()
+        n = len(X)
+        sp = int(n * 0.8)
+        X_train, X_val = X[:sp], X[sp:]
+        y_train, y_val = y[:sp], y[sp:]
     else:
-        X, y = load_manifest_dataset(args.manifest, args.label_col)
-
-    n = len(X)
-    split = int(n * 0.8)
-    X_train, X_val = X[:split], X[split:]
-    y_train, y_val = y[:split], y[split:]
+        X_train, y_train = load_manifest_dataset(args.manifest, args.label_col, split="train")
+        X_val,   y_val   = load_manifest_dataset(args.manifest, args.label_col, split="val")
     print(f"Slides: train={len(X_train)} val={len(X_val)}\n")
 
     baselines = [

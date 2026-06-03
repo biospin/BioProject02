@@ -13,8 +13,8 @@ train:
   seed: 42
 
 data:
-  embedding_manifest: /data/embeddings/biop02/embedding_manifest.csv
-  label_col: er_status
+  embedding_manifest: /workspace/data/cache/biop02/embedding_manifest_dummy.csv
+  label_col: er
   n_dummy_slides: 20   # used when manifest is unavailable (smoke test)
 
 output_dir: /workspace/agents/modeling/experiments
