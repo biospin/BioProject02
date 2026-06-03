@@ -111,6 +111,8 @@ def train(config: dict, smoke_test: bool):
     optimizer = torch.optim.Adam(model.parameters(), lr=config["train"]["lr"])
     criterion = nn.BCEWithLogitsLoss()
 
+    from sklearn.metrics import roc_auc_score, average_precision_score, balanced_accuracy_score
+
     best_val_loss = float("inf")
     for epoch in range(1, config["train"]["epochs"] + 1):
         model.train()
@@ -141,6 +143,28 @@ def train(config: dict, smoke_test: bool):
         if avg_val < best_val_loss:
             best_val_loss = avg_val
 
+    # val set 전체 예측으로 최종 지표 계산
+    model.eval()
+    all_proba, all_pred, all_label = [], [], []
+    with torch.no_grad():
+        for emb, label in val_set:
+            emb = emb.to(device)
+            logit = model(emb)
+            proba = torch.sigmoid(logit).item()
+            pred = int(proba > 0.5)
+            all_proba.append(proba)
+            all_pred.append(pred)
+            all_label.append(int(label.item()))
+
+    auc = auprc = bal_acc = None
+    if len(set(all_label)) > 1:
+        auc     = round(float(roc_auc_score(all_label, all_proba)), 4)
+        auprc   = round(float(average_precision_score(all_label, all_proba)), 4)
+        bal_acc = round(float(balanced_accuracy_score(all_label, all_pred)), 4)
+        print(f"\nVal metrics — AUC={auc}  AUPRC={auprc}  BalAcc={bal_acc}")
+    else:
+        print("\n[warn] val set에 클래스가 1개뿐 — AUC/AUPRC 계산 불가")
+
     out_dir = Path(config["output_dir"]) / f"{config['task']}_smoke" if smoke_test else Path(config["output_dir"]) / config["task"]
     out_dir.mkdir(parents=True, exist_ok=True)
 
@@ -154,15 +178,17 @@ def train(config: dict, smoke_test: bool):
         "n_train": len(train_set),
         "n_val": len(val_set),
         "best_val_loss": round(best_val_loss, 4),
-        "auc": None,
-        "auprc": None,
-        "balanced_accuracy": None,
+        "auc": auc,
+        "auprc": auprc,
+        "balanced_accuracy": bal_acc,
         "commit_hash": get_git_commit_hash(),
+        "claim_level": "hypothesis_only",
+        "critic_status": "pending",
         "wandb_run_id": None,
         "mlflow_run_id": None,
     }
     (out_dir / "metrics.json").write_text(json.dumps(metrics, indent=2))
-    print(f"\nSaved: {out_dir}/model.pt + metrics.json")
+    print(f"Saved: {out_dir}/model.pt + metrics.json")
     return metrics
 
 
