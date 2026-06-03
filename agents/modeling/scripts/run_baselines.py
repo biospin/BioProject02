@@ -11,6 +11,7 @@ Real mode:
 """
 
 import argparse
+import datetime
 import json
 import csv
 import numpy as np
@@ -52,12 +53,16 @@ def load_manifest_dataset(manifest_path: str, label_col: str, split: str = None)
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--manifest", default="")
-    parser.add_argument("--label_col", default="er_status")
+    parser.add_argument("--label_col", default="er")
     parser.add_argument("--smoke_test", action="store_true")
-    parser.add_argument("--out_dir", default="/workspace/agents/modeling/experiments/baselines")
+    parser.add_argument("--username", default="sjpark")
+    parser.add_argument("--task", default="er_status")
+    parser.add_argument("--output_dir", default="/workspace/agents/modeling/experiments")
     args = parser.parse_args()
 
-    if args.smoke_test or not args.manifest or not Path(args.manifest).exists():
+    smoke_test = args.smoke_test or not args.manifest or not Path(args.manifest).exists()
+
+    if smoke_test:
         print("Smoke-test mode: using dummy embeddings")
         X, y = make_dummy_dataset()
         n = len(X)
@@ -83,9 +88,26 @@ def main():
         results.append(m)
         print(f"[{name:12s}]  AUC={m['auc']}  AUPRC={m['auprc']}  BalAcc={m['balanced_accuracy']}")
 
-    out_dir = Path(args.out_dir)
+    # 실험 디렉토리: experiments/<username>/<YYYYMMDD_task_baselines>/
+    date_str = datetime.datetime.now().strftime("%Y%m%d")
+    suffix = f"{date_str}_{args.task}_baselines" + ("_smoke" if smoke_test else "")
+    out_dir = Path(args.output_dir) / args.username / suffix
     out_dir.mkdir(parents=True, exist_ok=True)
-    (out_dir / "trivial_baselines.json").write_text(json.dumps(results, indent=2))
+
+    output = {
+        "schema_version": "0.1",
+        "created_at": datetime.datetime.utcnow().isoformat() + "Z",
+        "task": args.task,
+        "label_col": args.label_col,
+        "manifest": args.manifest,
+        "smoke_test": smoke_test,
+        "n_train": len(X_train),
+        "n_val": len(X_val),
+        "claim_level": "hypothesis_only",
+        "critic_status": "pending",
+        "baselines": results,
+    }
+    (out_dir / "trivial_baselines.json").write_text(json.dumps(output, indent=2))
     print(f"\nSaved: {out_dir}/trivial_baselines.json")
 
 
