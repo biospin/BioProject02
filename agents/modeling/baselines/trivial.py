@@ -44,9 +44,15 @@ class MeanEmbedBaseline:
         return np.stack([x.mean(axis=0) for x in X])
 
     def fit(self, X: list[np.ndarray], y: np.ndarray):
+        if len(np.unique(y)) < 2:
+            self.clf = None
+            self._fallback_prob = float(y.mean())
+            return
         self.clf.fit(self._pool(X), y)
 
     def predict_proba(self, X: list[np.ndarray]) -> np.ndarray:
+        if self.clf is None:
+            return np.full(len(X), getattr(self, '_fallback_prob', 0.5), dtype=np.float32)
         return self.clf.predict_proba(self._pool(X))[:, 1].astype(np.float32)
 
 
