@@ -1,0 +1,15 @@
+{
+  "task": "er_status",
+  "model": "SlideMLP",
+  "embedding_model": "uni_v1",
+  "smoke_test": false,
+  "n_train": null,
+  "n_val": null,
+  "auc": null,
+  "auprc": null,
+  "balanced_accuracy": null,
+  "best_val_loss": null,
+  "commit_hash": null,
+  "wandb_run_id": null,
+  "mlflow_run_id": null
+}

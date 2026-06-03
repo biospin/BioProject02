@@ -1,0 +1,18 @@
+{
+  "schema_version": "0.1",
+  "experiment_dir": "experiments/<username>/<YYYYMMDD_설명>",
+  "reviewer": null,
+  "review_date": null,
+  "claim_level": "hypothesis_only",
+  "critic_status": null,
+  "checklist": {
+    "data_leakage": null,
+    "baseline_comparison": null,
+    "counterfactual_check": null,
+    "cross_dataset_check": null,
+    "biological_plausibility": null,
+    "drp_framing_check": null,
+    "claim_level_check": null
+  },
+  "notes": ""
+}
