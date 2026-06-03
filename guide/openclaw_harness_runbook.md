@@ -66,19 +66,19 @@ openclaw mcp list
 동작하는 하니스(예: `claude`)로 교체한다.
 
 ```bash
-# 기존 설정 확인
-openclaw agents show main
+# 현재 에이전트 목록 확인
+openclaw agents list
 
 # 삭제 후 claude 하니스로 재생성
 openclaw agents delete main
 openclaw agents add main --harness claude
 
-# 확인
-openclaw agents show main
-# harness: claude  ← 이렇게 나와야 정상
+# 재등록 확인
+openclaw agents list
+# main 항목이 출력되면 정상
 ```
 
-> **참고:** `openclaw agents --help`로 하위 명령 목록 확인. 버전에 따라 `add` 대신 `create`일 수 있음.
+> **참고:** `openclaw agents --help` 기준 서브커맨드: `add` / `bind` / `bindings` / `delete` / `list` / `set-identity` / `unbind`. `show`는 없음.
 
 ---
 
