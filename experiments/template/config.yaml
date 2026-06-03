@@ -1,0 +1,19 @@
+task: er_status
+embedding_model: uni_v1
+embedding_dim: 1024
+
+data:
+  embedding_manifest: agents/data/manifests/embedding_manifest.csv
+  label_col: er_status
+  n_dummy_slides: 100
+
+model:
+  hidden_dims: [512, 128]
+  dropout: 0.3
+
+train:
+  epochs: 30
+  lr: 1.0e-4
+  seed: 42
+
+output_dir: experiments/template

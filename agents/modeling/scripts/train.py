@@ -14,6 +14,7 @@ Real mode (after embedding manifest is ready):
 import argparse
 import json
 import random
+import subprocess
 import time
 from pathlib import Path
 
@@ -25,6 +26,13 @@ import yaml
 import sys
 sys.path.insert(0, str(Path(__file__).parents[2]))
 from modeling.baselines.mlp import SlideMLP
+
+
+def get_git_commit_hash() -> str:
+    try:
+        return subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
+    except Exception:
+        return "unknown"
 
 
 def set_seed(seed: int):
@@ -134,7 +142,9 @@ def train(config: dict, smoke_test: bool):
         "auc": None,
         "auprc": None,
         "balanced_accuracy": None,
-        "commit_hash": None,
+        "commit_hash": get_git_commit_hash(),
+        "wandb_run_id": None,
+        "mlflow_run_id": None,
     }
     (out_dir / "metrics.json").write_text(json.dumps(metrics, indent=2))
     print(f"\nSaved: {out_dir}/model.pt + metrics.json")
