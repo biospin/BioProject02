@@ -1,8 +1,8 @@
 # OpenClaw 에이전트 하니스 설정 런북 (BIOP02-85)
 
-**담당:** braveji | **대상 서버:** 61.109.239.220 (port 2205) | **작성일:** 2026-06-03
+**담당:** braveji | **대상 서버:** 61.109.239.220 (port 2205) | **버전:** OpenClaw 2026.5.18 (50a2481)
 
-이 런북은 OpenClaw gateway에서 에이전트 하니스 교체 → 모델 키 설정 → Atlassian MCP OAuth → cron 등록까지 순서대로 실행하는 절차를 기술한다.
+이 런북은 OpenClaw gateway에서 에이전트 하니스 교체 → API 키 설정 → Atlassian MCP 등록 → cron 등록까지 순서대로 실행하는 절차를 기술한다.
 
 ---
 
@@ -17,20 +17,42 @@
 
 ---
 
-## Step 0 — 서버 접속
+## Step 0 — 서버 접속 및 환경 확인
 
 ```bash
 ssh -p 2205 braveji@61.109.239.220
 ```
 
-접속 후 kkkim의 OpenClaw gateway가 동작 중인 workspace로 이동:
+접속 후 OpenClaw 버전과 Node.js 환경 확인:
 
 ```bash
-# OpenClaw가 설치된 경로 확인
+# Node.js v22.12+ 필요 (nvm으로 관리)
+node -v       # v22.x.x 이어야 함
 which openclaw
-openclaw --version
+openclaw --version   # OpenClaw 2026.5.18 (50a2481)
+openclaw doctor      # 환경 종합 점검
+```
 
-# 현재 에이전트/cron 목록 확인
+Node.js가 v22 미만이면:
+
+```bash
+nvm install 22
+nvm use 22
+nvm alias default 22
+hash -r
+```
+
+OpenClaw가 없거나 버전이 낮으면:
+
+```bash
+npm install -g openclaw@latest
+hash -r
+openclaw --version
+```
+
+현재 에이전트 · cron · MCP 목록 확인:
+
+```bash
 openclaw agent list
 openclaw cron list
 openclaw mcp list
@@ -41,76 +63,61 @@ openclaw mcp list
 ## Step 1 — 에이전트 main 하니스 교체 (codex → claude)
 
 현재 `main` 에이전트가 미등록 하니스 `codex`를 가리켜 실행 실패하는 상태다.
-Claude Code CLI(`claude`)로 교체한다.
+동작하는 하니스(예: `claude`)로 교체한다.
 
 ```bash
-# 기존 main 에이전트 설정 확인
+# 기존 설정 확인
 openclaw agent show main
 
-# claude 하니스로 재등록
-# (openclaw agent update 또는 set 명령 — 버전에 따라 다름)
-openclaw agent set main --harness claude
-
-# 또는 삭제 후 재생성 방식:
+# 삭제 후 claude 하니스로 재생성
 openclaw agent delete main
-openclaw agent add main --harness claude --description "BIOP02 팀 AI 에이전트"
+openclaw agent add main --harness claude
 
 # 확인
 openclaw agent show main
+# harness: claude  ← 이렇게 나와야 정상
 ```
 
-> **참고:** OpenClaw 버전에 따라 명령어가 다를 수 있다. `openclaw agent --help`로 확인.
+> **참고:** `openclaw agent --help`로 하위 명령 목록 확인. 버전에 따라 `add` 대신 `create`일 수 있음.
 
 ---
 
-## Step 2 — ANTHROPIC_API_KEY gateway 설정
+## Step 2 — ANTHROPIC_API_KEY 설정
 
-OpenClaw가 Claude API를 호출할 수 있도록 모델 provider 키를 등록한다.
+OpenClaw gateway가 Claude API를 호출할 수 있도록 API 키를 등록한다.
 
 ```bash
-# 방법 A: openclaw 환경변수 직접 설정
-openclaw config set ANTHROPIC_API_KEY "sk-ant-..."
-
-# 방법 B: gateway 실행 환경의 ~/.bashrc에 추가
+# ~/.bashrc에 추가 (권장)
 echo 'export ANTHROPIC_API_KEY="sk-ant-..."' >> ~/.bashrc
 source ~/.bashrc
 
-# 설정 확인 (키 값은 마스킹됨)
-openclaw config list | grep ANTHROPIC
+# 설정 확인 (키 값은 직접 출력하지 말 것)
+echo ${ANTHROPIC_API_KEY:0:10}...   # sk-ant-api 앞 10자만 출력
 ```
 
-> ⚠️ API 키는 절대 git에 커밋하지 않는다. 환경변수 또는 openclaw config 명령으로만 관리.
+반영 후 gateway 재시작:
+
+```bash
+openclaw gateway restart
+openclaw gateway status   # running 확인
+```
+
+> ⚠️ API 키는 절대 git에 커밋하지 않는다. `~/.bashrc`는 `chmod 600 ~/.bashrc`로 보호.
 
 ---
 
-## Step 3 — Atlassian MCP OAuth 완료
+## Step 3 — Atlassian MCP 등록
 
-Atlassian MCP는 이미 `openclaw mcp set atlassian`으로 등록되어 있으나 OAuth 인증이 미완료된 상태다.
-
-```bash
-# 현재 MCP 상태 확인
-openclaw mcp list
-
-# OAuth 로그인 시작
-openclaw mcp login atlassian
-```
-
-`openclaw mcp login atlassian`이 출력하는 인증 URL을 브라우저에서 열어 승인한다.
-
-서버(headless)에서 실행 중이라면 callback 포트가 로컬로 오지 않으므로 SSH 터널 필요:
+> ⚠️ OpenClaw `mcp` 명령에는 **`login` 서브커맨드가 없다** — 등록(`set`)만 한다.
+> 실제 JIRA 호출 시점에 런타임 OAuth가 처리된다.
 
 ```bash
-# 로컬 PC에서: login URL의 redirect_uri 포트(예: 39907)를 터널
-ssh -N -L 39907:127.0.0.1:39907 -p 2205 braveji@61.109.239.220
-```
+# Atlassian 공식 Remote MCP 서버 등록
+openclaw mcp set atlassian '{"url":"https://mcp.atlassian.com/v1/mcp","transport":"streamable-http"}'
 
-터널 유지 후 OAuth URL을 다시 브라우저에서 열어 승인.
-
-완료 후 확인:
-
-```bash
-openclaw mcp list
-# atlassian ... Auth: OAuth  Status: connected
+# 확인
+openclaw mcp list          # - atlassian  이 나와야 정상
+openclaw config validate   # Config valid
 ```
 
 ---
@@ -140,13 +147,14 @@ openclaw cron add \
 ```bash
 openclaw cron list
 # biop02-jira-digest  0 9 * * *  Asia/Seoul  main  ...
+
+# 즉시 실행으로 동작 테스트
+openclaw cron run biop02-jira-digest
 ```
 
 ---
 
-## Step 5 — 전체 팀원 cron 확장 (선택)
-
-kkkim 다이제스트 검증 후 나머지 팀원에게도 동일한 cron을 추가한다.
+## Step 5 — 전체 팀원 cron 확장 (kkkim 검증 후)
 
 | 팀원 | Slack App | Slack User ID | SSH Port |
 |---|---|---|---|
@@ -156,7 +164,7 @@ kkkim 다이제스트 검증 후 나머지 팀원에게도 동일한 cron을 추
 | braveji | yong-openclaw-bot | (확인 필요) | 2205 |
 | jhans | (미설정) | — | 2206 |
 
-각 팀원 Slack User ID는 Slack 프로필 → ⋮ → Copy member ID로 확인.
+각 팀원 Slack User ID: Slack 프로필 → ⋮ → **Copy member ID**로 확인.
 
 ---
 
@@ -174,24 +182,57 @@ kkkim 다이제스트 검증 후 나머지 팀원에게도 동일한 cron을 추
 
 ## 문제 해결
 
-### openclaw agent 실행 실패
-```bash
-# 로그 확인
-openclaw logs --agent main --tail 50
+### gateway가 실행 안 될 때 (daemon 설치 불가 환경)
 
-# 하니스 재확인
-openclaw agent show main
+공유 서버에서 daemon 설치 실패 시 `tmux`로 백그라운드 실행:
+
+```bash
+tmux new -s openclaw
+openclaw gateway --port 18789 --verbose
+# Ctrl+b → d  (세션 분리)
+
+# 재접속
+tmux attach -t openclaw
 ```
 
-### Atlassian MCP OAuth 만료
+### nvm: command not found
+
 ```bash
-openclaw mcp logout atlassian
-openclaw mcp login atlassian  # 재인증
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+nvm use 22
 ```
 
-### cron 미실행
+### NPM_CONFIG_PREFIX 충돌
+
 ```bash
-# 수동 실행으로 테스트
-openclaw cron run biop02-jira-digest
+unset NPM_CONFIG_PREFIX
+nvm use 22
+```
+
+### MCP `Failed to connect`
+
+SSE 엔드포인트(`/v1/sse`) 또는 `npx @atlassian/mcp-atlassian` 방식은 동작하지 않는다.
+반드시 `streamable-http` + `/v1/mcp`를 사용해야 한다:
+
+```bash
+openclaw mcp list   # 기존 atlassian 항목 확인
+openclaw mcp remove atlassian
+openclaw mcp set atlassian '{"url":"https://mcp.atlassian.com/v1/mcp","transport":"streamable-http"}'
+openclaw config validate
+```
+
+### DNS 오류 (Could not resolve host)
+
+```bash
+# Cloudflare DoH로 IP 확인 후 --resolve 우회 (CLAUDE.md 참조)
+curl -sS -H "accept: application/dns-json" \
+  "https://1.1.1.1/dns-query?name=mcp.atlassian.com&type=A"
+```
+
+### cron 미실행 시 로그 확인
+
+```bash
+openclaw cron run biop02-jira-digest   # 수동 실행
 openclaw logs --cron biop02-jira-digest --tail 30
 ```
