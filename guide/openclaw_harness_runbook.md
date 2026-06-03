@@ -12,7 +12,7 @@
 |---|---|
 | Slack 봇 `kakyung.kim-openclaw-bot` | ✅ enabled, gateway reachable |
 | Atlassian MCP OpenClaw 등록 | ✅ 등록됨 (OAuth 미완료) |
-| 에이전트 main 하니스 | ❌ `codex` 가리킴 → 실행 실패 |
+| 에이전트 main 모델 | ❌ `codex` 가리킴 → 실행 실패 |
 | 모델 provider 키 | ❌ 미설정 |
 
 ---
@@ -60,25 +60,26 @@ openclaw mcp list
 
 ---
 
-## Step 1 — 에이전트 main 하니스 교체 (codex → claude)
+## Step 1 — 에이전트 main 재생성 (모델 claude-sonnet-4-6으로 교체)
 
-현재 `main` 에이전트가 미등록 하니스 `codex`를 가리켜 실행 실패하는 상태다.
-동작하는 하니스(예: `claude`)로 교체한다.
+현재 `main` 에이전트가 미등록 모델 `codex`를 가리켜 실행 실패하는 상태다.
+삭제 후 Claude 모델(`--model`)로 재생성한다.
 
 ```bash
 # 현재 에이전트 목록 확인
 openclaw agents list
 
-# 삭제 후 claude 하니스로 재생성
+# 삭제 후 Claude 모델로 재생성
 openclaw agents delete main
-openclaw agents add main --harness claude
+openclaw agents add main --model claude-sonnet-4-6
 
 # 재등록 확인
 openclaw agents list
 # main 항목이 출력되면 정상
 ```
 
-> **참고:** `openclaw agents --help` 기준 서브커맨드: `add` / `bind` / `bindings` / `delete` / `list` / `set-identity` / `unbind`. `show`는 없음.
+> **참고:** `openclaw agents add` 옵션: `--model <id>` / `--workspace <dir>` / `--agent-dir <dir>` / `--bind <channel>`. `--harness`는 없음.
+> 모델 ID는 `claude-sonnet-4-6` (Sonnet 4.6) 또는 `claude-opus-4-8` (Opus 4.8) 중 선택.
 
 ---
 
