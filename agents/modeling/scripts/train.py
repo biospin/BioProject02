@@ -167,10 +167,10 @@ def train(config: dict, smoke_test: bool):
     else:
         print("\n[warn] val set에 클래스가 1개뿐 — AUC/AUPRC 계산 불가")
 
-    # 실험 디렉토리: experiments/<username>/<YYYYMMDD_task>/
+    # 실험 디렉토리: experiments/<username>/<task>_<tag>/
     username = config.get("username", "sjpark")
-    date_str = datetime.datetime.now().strftime("%Y%m%d")
-    suffix   = f"{date_str}_{config['task']}" + ("_smoke" if smoke_test else "")
+    tag      = config.get("tag", datetime.datetime.now().strftime("%Y%m%d"))
+    suffix   = f"{config['task']}_{tag}" + ("_smoke" if smoke_test else "")
     out_dir  = Path(config["output_dir"]) / username / suffix
     out_dir.mkdir(parents=True, exist_ok=True)
 
@@ -215,11 +215,14 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", required=True)
     parser.add_argument("--smoke_test", action="store_true")
+    parser.add_argument("--tag", default="", help="실험 태그 (예: dummy_v1, uni_v1). 미지정 시 날짜 사용")
     args = parser.parse_args()
 
     with open(args.config) as f:
         config = yaml.safe_load(f)
     config["_config_path"] = args.config
+    if args.tag:
+        config["tag"] = args.tag
 
     t0 = time.time()
     metrics = train(config, args.smoke_test)

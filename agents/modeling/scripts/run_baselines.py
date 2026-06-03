@@ -57,6 +57,7 @@ def main():
     parser.add_argument("--smoke_test", action="store_true")
     parser.add_argument("--username", default="sjpark")
     parser.add_argument("--task", default="er_status")
+    parser.add_argument("--tag", default="", help="실험 태그 (예: dummy_v1, uni_v1). 미지정 시 날짜 사용")
     parser.add_argument("--output_dir", default="/workspace/agents/modeling/experiments")
     args = parser.parse_args()
 
@@ -88,9 +89,9 @@ def main():
         results.append(m)
         print(f"[{name:12s}]  AUC={m['auc']}  AUPRC={m['auprc']}  BalAcc={m['balanced_accuracy']}")
 
-    # 실험 디렉토리: experiments/<username>/<YYYYMMDD_task_baselines>/
-    date_str = datetime.datetime.now().strftime("%Y%m%d")
-    suffix = f"{date_str}_{args.task}_baselines" + ("_smoke" if smoke_test else "")
+    # 실험 디렉토리: experiments/<username>/<task>_<tag>_baselines/
+    tag = args.tag if args.tag else datetime.datetime.now().strftime("%Y%m%d")
+    suffix = f"{args.task}_{tag}_baselines" + ("_smoke" if smoke_test else "")
     out_dir = Path(args.output_dir) / args.username / suffix
     out_dir.mkdir(parents=True, exist_ok=True)
 
