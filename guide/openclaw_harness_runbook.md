@@ -53,7 +53,7 @@ openclaw --version
 현재 에이전트 · cron · MCP 목록 확인:
 
 ```bash
-openclaw agent list
+openclaw agents list
 openclaw cron list
 openclaw mcp list
 ```
@@ -67,18 +67,18 @@ openclaw mcp list
 
 ```bash
 # 기존 설정 확인
-openclaw agent show main
+openclaw agents show main
 
 # 삭제 후 claude 하니스로 재생성
-openclaw agent delete main
-openclaw agent add main --harness claude
+openclaw agents delete main
+openclaw agents add main --harness claude
 
 # 확인
-openclaw agent show main
+openclaw agents show main
 # harness: claude  ← 이렇게 나와야 정상
 ```
 
-> **참고:** `openclaw agent --help`로 하위 명령 목록 확인. 버전에 따라 `add` 대신 `create`일 수 있음.
+> **참고:** `openclaw agents --help`로 하위 명령 목록 확인. 버전에 따라 `add` 대신 `create`일 수 있음.
 
 ---
 
