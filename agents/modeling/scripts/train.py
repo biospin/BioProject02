@@ -12,8 +12,10 @@ Real mode (after embedding manifest is ready):
 """
 
 import argparse
+import datetime
 import json
 import random
+import shutil
 import subprocess
 import time
 from pathlib import Path
@@ -165,12 +167,27 @@ def train(config: dict, smoke_test: bool):
     else:
         print("\n[warn] val set에 클래스가 1개뿐 — AUC/AUPRC 계산 불가")
 
-    out_dir = Path(config["output_dir"]) / f"{config['task']}_smoke" if smoke_test else Path(config["output_dir"]) / config["task"]
+    # 실험 디렉토리: experiments/<username>/<YYYYMMDD_task>/
+    username = config.get("username", "sjpark")
+    date_str = datetime.datetime.now().strftime("%Y%m%d")
+    suffix   = f"{date_str}_{config['task']}" + ("_smoke" if smoke_test else "")
+    out_dir  = Path(config["output_dir"]) / username / suffix
     out_dir.mkdir(parents=True, exist_ok=True)
 
     torch.save(model.state_dict(), out_dir / "model.pt")
 
+    # predictions.npy 저장 (val set: proba, pred, label)
+    predictions = np.array(list(zip(all_proba, all_pred, all_label)), dtype=np.float32)
+    np.save(out_dir / "predictions.npy", predictions)
+
+    # config.yaml 복사
+    if config.get("_config_path"):
+        shutil.copy(config["_config_path"], out_dir / "config.yaml")
+
+    commit_hash = get_git_commit_hash()
     metrics = {
+        "schema_version": "0.1",
+        "created_at": datetime.datetime.utcnow().isoformat() + "Z",
         "task": config["task"],
         "model": "SlideMLP",
         "embedding_model": config["embedding_model"],
@@ -181,14 +198,16 @@ def train(config: dict, smoke_test: bool):
         "auc": auc,
         "auprc": auprc,
         "balanced_accuracy": bal_acc,
-        "commit_hash": get_git_commit_hash(),
+        "commit_hash": commit_hash,
         "claim_level": "hypothesis_only",
         "critic_status": "pending",
         "wandb_run_id": None,
         "mlflow_run_id": None,
     }
     (out_dir / "metrics.json").write_text(json.dumps(metrics, indent=2))
-    print(f"Saved: {out_dir}/model.pt + metrics.json")
+    print(f"Saved: {out_dir}/")
+    print(f"  model.pt / metrics.json / predictions.npy" +
+          (" / config.yaml" if config.get("_config_path") else ""))
     return metrics
 
 
@@ -200,6 +219,7 @@ def main():
 
     with open(args.config) as f:
         config = yaml.safe_load(f)
+    config["_config_path"] = args.config
 
     t0 = time.time()
     metrics = train(config, args.smoke_test)

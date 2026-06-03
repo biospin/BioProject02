@@ -1,4 +1,5 @@
 task: er_status
+username: sjpark
 embedding_model: dummy
 embedding_dim: 1024
 
