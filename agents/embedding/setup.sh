@@ -34,7 +34,10 @@ $CONDA_PIP install --quiet torch torchvision \
 $CONDA_PIP install --quiet openslide-python openslide-bin
 
 # 파운데이션 모델 관련
-$CONDA_PIP install --quiet timm huggingface_hub
+$CONDA_PIP install --quiet timm huggingface_hub transformers
+# CONCH (MahmoodLab/CONCH) — HF 승인 후 설치
+$CONDA_PIP install --quiet git+https://github.com/mahmoodlab/CONCH.git || \
+    echo "  [warn] CONCH 설치 실패 — HF 접근 권한 확인 후 수동 설치: pip install git+https://github.com/mahmoodlab/CONCH.git"
 
 # 유틸리티
 $CONDA_PIP install --quiet numpy tqdm pillow
