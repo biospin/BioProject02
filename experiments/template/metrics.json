@@ -11,5 +11,9 @@
   "best_val_loss": null,
   "commit_hash": null,
   "wandb_run_id": null,
-  "mlflow_run_id": null
+  "mlflow_run_id": null,
+  "schema_version": "0.1",
+  "created_at": "<ISO 8601 UTC e.g. 2026-06-03T12:00:00Z>",
+  "claim_level": "hypothesis_only",
+  "critic_status": "pending"
 }
