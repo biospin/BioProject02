@@ -14,6 +14,7 @@ import argparse
 import datetime
 import json
 import csv
+import sys
 import numpy as np
 from pathlib import Path
 
@@ -115,6 +116,7 @@ def main():
         "n_train": len(X_train),
         "n_val": len(X_val),
         "commit_hash": commit_hash,
+        "run_command": " ".join(sys.argv),
         "claim_level": "hypothesis_only",
         "critic_status": "pending",
         "baselines": results,
