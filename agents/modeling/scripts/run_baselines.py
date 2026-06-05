@@ -58,6 +58,7 @@ def main():
     parser.add_argument("--username", default="sjpark")
     parser.add_argument("--task", default="er_status")
     parser.add_argument("--tag", default="", help="실험 태그 (예: dummy_v1, uni_v1). 미지정 시 날짜 사용")
+    parser.add_argument("--commit_hash", default="", help="git commit hash (서버 실행 시 로컬에서 명시적으로 전달)")
     parser.add_argument("--output_dir", default="/workspace/agents/modeling/experiments")
     args = parser.parse_args()
 
@@ -95,6 +96,15 @@ def main():
     out_dir = Path(args.output_dir) / args.username / suffix
     out_dir.mkdir(parents=True, exist_ok=True)
 
+    import subprocess
+    def get_git_hash():
+        try:
+            return subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip()
+        except Exception:
+            return "unknown"
+
+    commit_hash = args.commit_hash if args.commit_hash else get_git_hash()
+
     output = {
         "schema_version": "0.1",
         "created_at": datetime.datetime.utcnow().isoformat() + "Z",
@@ -104,6 +114,7 @@ def main():
         "smoke_test": smoke_test,
         "n_train": len(X_train),
         "n_val": len(X_val),
+        "commit_hash": commit_hash,
         "claim_level": "hypothesis_only",
         "critic_status": "pending",
         "baselines": results,

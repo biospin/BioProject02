@@ -184,7 +184,7 @@ def train(config: dict, smoke_test: bool):
     if config.get("_config_path"):
         shutil.copy(config["_config_path"], out_dir / "config.yaml")
 
-    commit_hash = get_git_commit_hash()
+    commit_hash = config.get("_commit_hash") or get_git_commit_hash()
     metrics = {
         "schema_version": "0.1",
         "created_at": datetime.datetime.utcnow().isoformat() + "Z",
@@ -216,6 +216,7 @@ def main():
     parser.add_argument("--config", required=True)
     parser.add_argument("--smoke_test", action="store_true")
     parser.add_argument("--tag", default="", help="실험 태그 (예: dummy_v1, uni_v1). 미지정 시 날짜 사용")
+    parser.add_argument("--commit_hash", default="", help="git commit hash (서버 실행 시 로컬에서 명시적으로 전달)")
     args = parser.parse_args()
 
     with open(args.config) as f:
@@ -223,6 +224,8 @@ def main():
     config["_config_path"] = args.config
     if args.tag:
         config["tag"] = args.tag
+    if args.commit_hash:
+        config["_commit_hash"] = args.commit_hash
 
     t0 = time.time()
     metrics = train(config, args.smoke_test)
