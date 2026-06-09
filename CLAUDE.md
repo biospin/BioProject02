@@ -218,7 +218,7 @@ critic_status: pass
 - `❌` Expressions: "patient-specific optimal treatment prediction", "personalized therapy"
 - `❌` Recommending ICI / Pembrolizumab via cell-line transfer
 - `❌` Critic agent setting its own thresholds / controls (anti-self-reference)
-- `❌` TCGA WSI full download (Paper A scope = ~150 slide subset)
+- `❌` raw WSI 전량 영구 보관 — 스트리밍 다운로드 → 임베딩 추출 후 raw `.svs` 삭제(LRU). 영구 보존은 manifest·coords·embeddings·logs (Paper A scope = manifest 기반 **~1010 DX-slide BRCA cohort**, 2026-06-10 Leader 확정)
 - `❌` Pan-cancer expansion — BRCA-only through Paper B
 
 ## Sprint Schedule
@@ -237,7 +237,7 @@ Weekly sync: **every Friday**, 60 min. Leader: kkkim. Orchestrator/minutes: brav
 
 ## Data Sources
 
-- **TCGA-BRCA** — ~150 slides (open access slides + clinical, Paper A scope). Controlled access (somatic mutations) requires dbGaP with PI signature.
+- **TCGA-BRCA** — **~1010 slides** (manifest 기반 DX-slide BRCA cohort, open access slides + clinical, Paper A scope; NAS 원본 1133장 중 DX+임상 결합 subset, 2026-06-10 Leader 확정). Controlled access (somatic mutations) requires dbGaP with PI signature.
 - **CPTAC-BRCA** — IDC `gs://` bucket, ~120 paired samples for external validation.
 - **DepMap PRISM + GDSC** — cell line × drug sensitivity (Paper B / Therapeutic Evidence).
 
