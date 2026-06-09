@@ -93,7 +93,66 @@
 - 학회논문은 `10.xxxx` DOI 날조 금지 — proceedings/arXiv로 인용.
 - CrossRef 확인됨: UNI, Prov-GigaPath, Virchow, CONCH, Campanella, CLAM, Naik 2020, Gamble 2021, Shamai 2024, Kather 2020, Tafavvoghi 2024, Farahmand 2022, Corsello 2020, Iorio 2016, Liu 2018, TCGA 2012, Parker 2009, Mertins 2016, Cerami 2012, Gao 2013.
 
+---
+
+# 추가 6영역 (v0.2, 2026-06-09) — C(레드오션 정교화)·D(치료가설 근거)에서 도출
+
+novelty 종합·실험 설계는 [`../novelty_positioning.md`](../novelty_positioning.md) 참조. 아래는 영역별 핵심(상위 위주, 초록은 1–2문장 압축; 전체 인덱스는 papers.csv).
+
+## 6. 엄밀성 — site 교란·누수·일반화 (RIGOR) ★우리 최강 방어축
+- **howard-2021-site-signatures** (상, Nat Commun): TCGA가 제출기관별 histology 시그니처를 인코딩, 색정규화·증강으로도 안 지워짐 → 생존/변이/병기 예측 지표 부풀림. **quadratic-programming site-preserved split** 제안. *모든 ER/PR/HER2/PAM50 모델에 site-disjoint split 적용.*
+- **bussola-2020-patientlevel** (상, medRxiv): 슬라이드/타일 pooling 후 random split = 누수. patient-level 분리가 최소요건. *split_policy_v0 정당화.*
+- **dolezal-2022-uncertainty** (중, Nat Commun): dropout 신뢰도 threshold(train에서만 설정)로 high-confidence subset 보고 + 다기관 외부검증. *TCGA→CPTAC 외부검증 템플릿.*
+- **murchan-2024-combat** (중): patch 임베딩에 ComBat 배치보정(train에서만 fit). site-disjoint split 보완책.
+- **wagner-2023-reproducibility** (중, Mod Pathol): cpath 161편 중 ~42편만 코드 공개. 재현성 체크리스트 → 우리 experiment artifact 정책 동기.
+- **yagis-2021-mri-leakage** (하): slice vs subject split이 정확도 29–55% 부풀림(타 모달리티 교차증거).
+- **otalora-2019-stain-invariant** (하): domain-adversarial staining-invariant 학습. 증강/정규화는 site-split의 보완(대체 아님).
+
+## 7. 치료가설 근거 — DepMap/GDSC 외 (HYPO)
+- **subramanian-2017-lincs** (상, Cell): LINCS L1000 130만+ perturbation profile, clue.io 연결성 점수. *예측 표현형 시그니처를 역전시키는 약물 랭킹 = 민감도 전이와 독립적인 2번째 경로.*
+- **lamb-2006-cmap** (상, Science): Connectivity Map 원형, KS 기반 연결성 점수. 시그니처-역전 패러다임의 방법론적 기원.
+- **seashore-2015-ctrp** (중, Cancer Discov): CTRP — 860 cell line × 481 compound. *GDSC/PRISM와 독립인 3번째 일관성 DB.*
+- **rees-2016-ctrp-moa** (중, Nat Chem Biol·unverified): basal 발현↔민감도 상관으로 MOA. CTRP 동반 인용.
+- **vlachogiannis-2018-pdo** (중, Science): 환자유래 organoid가 임상반응 추적(GI). *cell-line 외 직교 모델계 — BRCA 아님, 방법론 선례로만.*
+- **holbeck-2017-almanac** (하): NCI-ALMANAC 약물 조합. 조합 가설 확장 시만.
+
+## 8. Actionability·경로 지식베이스 (KB) — Critic #5 생물학적 타당성
+- **chakravarty-2017-oncokb** (상, JCO PO): 체세포 변이→FDA/가이드라인 약물(Level 1–4). *actionability oracle. 단 토큰/라이선스 gated.*
+- **griffith-2017-civic** (상, Nat Genet): 오픈(CC0) 변이-약물-질병 evidence + provenance. OncoKB 교차검증 공개 소스.
+- **ochoa-2023-opentargets** (상, NAR): target-disease 연관 점수 + tractability. "이 유전자가 이 질환의 신뢰할 표적인가" 정량 grounding.
+- **freshour-2021-dgidb** (중, NAR): drug-gene interaction 41소스. 표현형 driver→약물 매핑 확장.
+- **liberzon-2015-msigdb** (중, Cell Sys): Hallmark 50 gene set. pathway-activity 어휘.
+- **gillespie-2022-reactome** (중, NAR): 큐레이션 human pathway. 약물 표적↔표현형 유전자 공유 경로 검증.
+- **whirlcarrillo-2021-pharmgkb** (하)·**kanehisa-2000-kegg** (하): PGx / KEGG pathway·drug 보조.
+
+## 9. 불확실성·해석성 (UQ) — 가설 게이팅
+- **olsson-2022-conformal** (상, Nat Commun): conformal prediction으로 유한표본 coverage 보장, 신뢰불가 예측 flag(재학습 불필요). *저신뢰 표현형 가설 기각.*
+- **dolezal-2022-uncertainty** (상): MC-dropout 신뢰도 게이팅(§6 참조).
+- **guo-2017-calibration** (상, ICML): temperature scaling — 신뢰도 thresholding 전 최소 recalibration.
+- **lakshminarayanan-2017-ensembles** (중)·**gal-2016-dropout** (중): deep ensemble / MC-dropout 불확실성 baseline.
+- **wang-2025-truecam** (중, arXiv·preprint): FM WSI(UNI/CONCH)+OOD+conformal 통합 — **가장 가까운 blueprint, 인용+차별화 필수**.
+- **angelopoulos-2021-conformal-intro** (중): conformal 구현 레시피.
+- **graziani-2018-rcv** (중)·**kim-2018-tcav** (하): concept attribution(형태→분자상태 해석). 단 attention map은 필요조건일 뿐(오위치 가능) → 탐색적 flag로 제시.
+
+## 10. Stain 정규화·전처리 (PREP)
+- **macenko-2009** (상): de-facto 정규화 baseline(OD+SVD). robustness ablation 기준.
+- **tellez-2019** (상, Med Image Anal): 정규화 vs 증강 결정적 비교 — **heavy stain augmentation이 단일 최선**, 증강+정규화 조합이 최고. *정규화 단독 의존 회피 근거.*
+- **vahadane-2016** (중): 구조보존 정규화(2nd ablation 옵션). **reinhard-2001** (중): 최저비용 정규화(FM center-robustness +16% 보고).
+- **dejong-2025-robustness** (하, arXiv): 10개 FM 모두 medical-center 시그니처 인코딩(UNI 포함), Robustness Index. site-aware split 정당화.
+
+## 11. AI 에이전트·LLM-as-judge (AGENT) — 시스템/Critic 포지셔닝
+- **gottweis-2025-coscientist** (상·SCOOP-FRAMING, arXiv): Google AI co-scientist — 전문 에이전트 generate-debate-evolve+토너먼트. *"멀티에이전트+critic 가설생성" framing을 선점·포섭. 우리는 도메인 거버넌스로만 차별화, 패러다임 발명 주장 금지.*
+- **lu-2024-aiscientist** (상): Sakana 완전자동 연구 — 자율성 대조군(우리는 의도적 hypothesis-only·인간 거버넌스).
+- **zheng-2023-llmjudge** (상, NeurIPS): LLM-as-judge 검증 + 편향(position/verbosity/self-enhancement). *Critic=LLM-judge 정당화 + owner≠reviewer 근거.*
+- **panickssery-2024-selfpreference** (상, NeurIPS): LLM이 자기 출력을 인식·선호(인과 증거). *anti-self-reference 규칙의 가장 강한 단일 근거.*
+- **qi-2024-biohypo** (중)·**su-2024-virsci** (중): 생의학 가설생성/멀티에이전트 idea novelty. 시스템-as-novelty는 crowded → 공학·거버넌스 기여로.
+- **li-2024-judge-survey** (중)·**hkust-2025-sciagent-survey** (중)·**eval-2025-sakana** (하)·**guo-2024-multiagent-survey** (하): 서베이/비판 맥락.
+
+> ⚠️ AGENT 영역 arXiv 다수 = preprint(DOI unverified). 미래 날짜 arXiv ID(2601.x 등 환각) 인용 금지 — 조사에서 제외 확인됨.
+
+---
+
 ## 다음 단계
-1. 추가 주제 조사(아래 §추가 주제) → 리스트 보강
-2. 상위 우선순위(특히 SCOOP 후보 + 우리 백본/baseline)부터 BioProject01 멀티렌즈 상세분석으로 확장
-3. 타겟 저널 확정 후 related-work 초안에 연결
+1. ✅ 추가 6주제 조사 완료 → 리스트 보강(v0.2)
+2. 상위 우선순위(SCOOP 후보 Dawood·Tafavvoghi + 백본 UNI·CLAM + 엄밀성 Howard + 경로 Subramanian·OncoKB)부터 BioProject01 멀티렌즈 상세분석
+3. ✅ 타겟 저널 = npj Precision Oncology / novelty·실험 = novelty_positioning.md

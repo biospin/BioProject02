@@ -50,3 +50,47 @@ camelyon16-bejnordi-2017,DATA,Diagnostic Assessment of DL Algorithms for LN Meta
 pcam-veeling-2018,DATA,Rotation Equivariant CNNs for Digital Pathology (PatchCamelyon),Veeling BS et al.,2018,MICCAI 2018,10.1007/978-3-030-00934-2_24,하,,https://link.springer.com/chapter/10.1007/978-3-030-00934-2_24
 bach-aresta-2019,DATA,BACH: Grand Challenge on Breast Cancer Histology Images,Aresta G et al.,2019,Medical Image Analysis,10.1016/j.media.2019.05.010,하,,https://www.sciencedirect.com/science/article/abs/pii/S1361841518307941
 breakhis-spanhol-2016,DATA,A Dataset for Breast Cancer Histopathological Image Classification (BreakHis),Spanhol FA et al.,2016,IEEE TBME,10.1109/TBME.2015.2496264,하,,https://web.inf.ufpr.br/vri/databases/breast-cancer-histopathological-database-breakhis/
+howard-2021-site-signatures,RIGOR,The impact of site-specific digital histology signatures on DL model accuracy and bias,Howard FM et al.,2021,Nature Communications,10.1038/s41467-021-24698-1,상,,https://www.nature.com/articles/s41467-021-24698-1
+bussola-2020-patientlevel,RIGOR,Patient-level data segregation is crucial in clinical ML,Bussola N et al.,2020,medRxiv,10.1101/2020.04.23.20076406,상,,https://www.medrxiv.org/content/10.1101/2020.04.23.20076406v1
+murchan-2024-combat,RIGOR,Deep feature batch correction using ComBat in computational pathology,Murchan P et al.,2024,J Pathol Inform,unverified,중,,https://pmc.ncbi.nlm.nih.gov/articles/PMC11470259/
+wagner-2023-reproducibility,RIGOR,Built to Last? Reproducibility and Reusability of DL in Computational Pathology,Wagner SJ et al.,2023,Modern Pathology,unverified,중,,https://www.modernpathology.org/article/S0893-3952(23)00255-7/fulltext
+yagis-2021-mri-leakage,RIGOR,Effect of data leakage in brain MRI classification using 2D CNNs,Yagis E et al.,2021,Scientific Reports,10.1038/s41598-021-01681-w,하,,https://www.nature.com/articles/s41598-021-01681-w
+otalora-2019-stain-invariant,RIGOR,Staining Invariant Features for Improving Generalization of DCNNs in Pathology,Otalora S et al.,2019,Front Bioeng Biotechnol,unverified,하,,https://pmc.ncbi.nlm.nih.gov/articles/PMC6716536/
+subramanian-2017-lincs,HYPO,A Next Generation Connectivity Map: L1000 Platform,Subramanian A et al.,2017,Cell,10.1016/j.cell.2017.10.049,상,,https://www.cell.com/cell/fulltext/S0092-8674(17)31309-0
+lamb-2006-cmap,HYPO,The Connectivity Map: gene-expression signatures connect molecules/genes/disease,Lamb J et al.,2006,Science,10.1126/science.1132939,상,,https://www.science.org/doi/abs/10.1126/science.1132939
+seashore-2015-ctrp,HYPO,Harnessing Connectivity in a Large-Scale Small-Molecule Sensitivity Dataset (CTRP),Seashore-Ludlow B et al.,2015,Cancer Discovery,10.1158/2159-8290.CD-15-0235,중,,https://aacrjournals.org/cancerdiscovery/article/5/11/1210/4735
+rees-2016-ctrp-moa,HYPO,Correlating chemical sensitivity and basal gene expression reveals MOA (CTRP),Rees MG et al.,2016,Nature Chemical Biology,unverified,중,,https://pmc.ncbi.nlm.nih.gov/articles/PMC3954635/
+vlachogiannis-2018-pdo,HYPO,Patient-derived organoids model treatment response of metastatic GI cancers,Vlachogiannis G et al.,2018,Science,10.1126/science.aao2774,중,,https://www.science.org/doi/10.1126/science.aao2774
+holbeck-2017-almanac,HYPO,NCI-ALMANAC: screening resource for anticancer drug pairs,Holbeck SL et al.,2017,Cancer Research,unverified,하,,https://aacrjournals.org/cancerres/article/77/13/3564/617080
+chakravarty-2017-oncokb,KB,OncoKB: A Precision Oncology Knowledge Base,Chakravarty D et al.,2017,JCO Precision Oncology,10.1200/PO.17.00011,상,,https://ascopubs.org/doi/10.1200/PO.17.00011
+griffith-2017-civic,KB,CIViC: community knowledgebase for clinical interpretation of variants in cancer,Griffith M et al.,2017,Nature Genetics,10.1038/ng.3774,상,,https://www.nature.com/articles/ng.3774
+ochoa-2023-opentargets,KB,The next-generation Open Targets Platform,Ochoa D et al.,2023,Nucleic Acids Research,10.1093/nar/gkac1046,상,,https://academic.oup.com/nar/article/51/D1/D1353/6833237
+freshour-2021-dgidb,KB,Integration of the Drug-Gene Interaction Database (DGIdb 4.0),Freshour SL et al.,2021,Nucleic Acids Research,10.1093/nar/gkaa1084,중,,https://academic.oup.com/nar/article/49/D1/D1144/6006193
+liberzon-2015-msigdb,KB,The Molecular Signatures Database Hallmark Gene Set Collection,Liberzon A et al.,2015,Cell Systems,10.1016/j.cels.2015.12.004,중,,https://www.cell.com/cell-systems/fulltext/S2405-4712(15)00218-5
+gillespie-2022-reactome,KB,The Reactome Pathway Knowledgebase 2022,Gillespie M et al.,2022,Nucleic Acids Research,10.1093/nar/gkab1028,중,,https://academic.oup.com/nar/article/50/D1/D687/6426058
+whirlcarrillo-2021-pharmgkb,KB,Evidence-Based Framework for Evaluating Pharmacogenomics Knowledge (PharmGKB),Whirl-Carrillo M et al.,2021,Clin Pharmacol Ther,10.1002/cpt.2350,하,,https://ascpt.onlinelibrary.wiley.com/doi/10.1002/cpt.2350
+kanehisa-2000-kegg,KB,KEGG: Kyoto Encyclopedia of Genes and Genomes,Kanehisa M & Goto S,2000,Nucleic Acids Research,10.1093/nar/28.1.27,하,,https://academic.oup.com/nar/article/28/1/27/2384332
+olsson-2022-conformal,UQ,Estimating diagnostic uncertainty in AI pathology using conformal prediction,Olsson H et al.,2022,Nature Communications,10.1038/s41467-022-34945-8,상,,https://www.nature.com/articles/s41467-022-34945-8
+dolezal-2022-uncertainty,UQ,Uncertainty-informed DL enables high-confidence predictions for digital histopathology,Dolezal JM et al.,2022,Nature Communications,10.1038/s41467-022-34025-x,상,,https://www.nature.com/articles/s41467-022-34025-x
+guo-2017-calibration,UQ,On Calibration of Modern Neural Networks (temperature scaling),Guo C et al.,2017,ICML 2017,unverified,상,,https://proceedings.mlr.press/v70/guo17a/guo17a.pdf
+lakshminarayanan-2017-ensembles,UQ,Simple and Scalable Predictive Uncertainty Estimation using Deep Ensembles,Lakshminarayanan B et al.,2017,NeurIPS 2017,unverified,중,,https://arxiv.org/abs/1612.01474
+gal-2016-dropout,UQ,Dropout as a Bayesian Approximation (MC-dropout),Gal Y & Ghahramani Z,2016,ICML 2016,unverified,중,,https://proceedings.mlr.press/v48/gal16.html
+wang-2025-truecam,UQ,TRUECAM: Conformalized Uncertainty-Aware AI for WSI (UNI/CONCH),Wang T et al.,2025,arXiv 2501.00053,unverified,중,,https://arxiv.org/abs/2501.00053
+angelopoulos-2021-conformal-intro,UQ,A Gentle Introduction to Conformal Prediction and Distribution-Free UQ,Angelopoulos AN & Bates S,2021,arXiv 2107.07511,unverified,중,,https://arxiv.org/abs/2107.07511
+graziani-2018-rcv,UQ,Regression Concept Vectors for Bidirectional Explanations in Histopathology,Graziani M et al.,2018,MICCAI 2018 iMIMIC,unverified,중,,https://arxiv.org/abs/1904.04520
+kim-2018-tcav,UQ,Interpretability Beyond Feature Attribution: TCAV,Kim B et al.,2018,ICML 2018,unverified,하,,https://proceedings.mlr.press/v80/kim18d.html
+macenko-2009,PREP,A Method for Normalizing Histology Slides for Quantitative Analysis,Macenko M et al.,2009,IEEE ISBI 2009,10.1109/ISBI.2009.5193250,상,,https://ieeexplore.ieee.org/document/5193250
+tellez-2019,PREP,Quantifying effects of data augmentation and stain color normalization in CNNs,Tellez D et al.,2019,Medical Image Analysis,10.1016/j.media.2019.101544,상,,https://arxiv.org/abs/1902.06543
+vahadane-2016,PREP,Structure-Preserving Color Normalization and Sparse Stain Separation,Vahadane A et al.,2016,IEEE TMI,10.1109/TMI.2016.2529665,중,,https://pubmed.ncbi.nlm.nih.gov/27164577/
+reinhard-2001,PREP,Color Transfer between Images,Reinhard E et al.,2001,IEEE CG&A,10.1109/38.946629,중,,https://doi.org/10.1109/38.946629
+dejong-2025-robustness,PREP,Current Pathology Foundation Models are unrobust to Medical Center Differences,de Jong E et al.,2025,arXiv 2501.18055,unverified,하,,https://arxiv.org/abs/2501.18055
+gottweis-2025-coscientist,AGENT,Towards an AI co-scientist,Gottweis J et al.,2025,arXiv 2502.18864,unverified,상,SCOOP-FRAMING,https://arxiv.org/abs/2502.18864
+lu-2024-aiscientist,AGENT,The AI Scientist: Towards Fully Automated Open-Ended Scientific Discovery,Lu C et al.,2024,arXiv 2408.06292,unverified,상,,https://arxiv.org/abs/2408.06292
+zheng-2023-llmjudge,AGENT,Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena,Zheng L et al.,2023,NeurIPS 2023,unverified,상,,https://arxiv.org/abs/2306.05685
+panickssery-2024-selfpreference,AGENT,LLM Evaluators Recognize and Favor Their Own Generations,Panickssery A et al.,2024,NeurIPS 2024,unverified,상,,https://proceedings.neurips.cc/paper_files/paper/2024/hash/7f1f0218e45f5414c79c0679633e47bc-Abstract-Conference.html
+qi-2024-biohypo,AGENT,Large Language Models as Biomedical Hypothesis Generators,Qi B et al.,2024,COLM 2024,unverified,중,,https://arxiv.org/abs/2407.08940
+su-2024-virsci,AGENT,Many Heads Are Better Than One: Multi-Agent Scientific Idea Generation,Su H et al.,2024,ACL 2025,unverified,중,,https://arxiv.org/abs/2410.09403
+li-2024-judge-survey,AGENT,From Generation to Judgment: LLM-as-a-Judge survey,Li H et al.,2024,arXiv 2411.16594,unverified,중,,https://arxiv.org/abs/2411.16594
+hkust-2025-sciagent-survey,AGENT,Towards Scientific Intelligence: Survey of LLM-based Scientific Agents,Various,2025,arXiv 2503.24047,unverified,중,,https://arxiv.org/abs/2503.24047
+eval-2025-sakana,AGENT,Evaluating Sakana's AI Scientist for Autonomous Research,Various,2025,arXiv 2502.14297,unverified,하,,https://arxiv.org/abs/2502.14297
+guo-2024-multiagent-survey,AGENT,LLM based Multi-Agents: A Survey of Progress and Challenges,Guo T et al.,2024,IJCAI 2024,unverified,하,,https://arxiv.org/abs/2402.01680
