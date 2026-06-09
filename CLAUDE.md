@@ -24,10 +24,10 @@ Goal: H&E WSI → morphology embedding → molecular phenotype prediction → De
 | Username | github id | atlassian id | slack id  | slack app name for openclaw | SSH Port | Role |
 |---|---|---|---|---|---|---|
 | jamie (jmryu) | JamieLyu | jamie.orangecounty@gmail.com | jamie.orangecounty@gmail.com | jamie-openclaw-bot |2201 | Data Agent — TCGA/CPTAC manifests, labels, splits |
-| kkkim (gkkim) | kakyungkim | kakyung.kim@gmail.com | kakyung.kim@gmail.com | kakyung.kim-openclaw-bot | 2202 | Embedding Agent — WSI tiling, foundation model extraction |
-| gglee (gklee) | Geongyu | rjsrb365@gmail.com | rjsrb365@gmail.com | ggyu-claw | 2203 | Scientific Critic + Project Leader |
-| sjpark | sezinie000 | sezinie000@gmail.com | sezinie000@gmail.com | sezinie-openclaw-bot | 2204 | Modeling Agent — phenotype prediction (MLP, attention MIL) |
-| braveji (ykji) | braveji18 | biospinleader@gmail.com  | biospinleader@gmail.com | yong-openclaw-bot |  2205 | Orchestrator — pipeline coordination, infra, schemas |
+| kkkim (gkkim) | kakyungkim | kakyung.kim@gmail.com | kakyung.kim@gmail.com | kakyung.kim-openclaw-bot | 2202 | **Project Leader** + Embedding Agent — WSI tiling, foundation model extraction (Data manifest/다운로드 역할 흡수) |
+| ~~gglee (gklee)~~ | Geongyu | rjsrb365@gmail.com | rjsrb365@gmail.com | ggyu-claw | 2203 | (이탈 2026-06-09 — Leader→kkkim, Critic→braveji 재배정) |
+| sjpark | sezinie000 | sezinie000@gmail.com | sezinie000@gmail.com | sezinie-openclaw-bot | 2204 | Modeling Agent — phenotype prediction (MLP, attention MIL); Critic 바이오 sub-check 분담 |
+| braveji (ykji) | braveji18 | biospinleader@gmail.com  | biospinleader@gmail.com | yong-openclaw-bot |  2205 | Orchestrator + **Scientific Critic (총괄)** — pipeline coordination, infra, schemas; 7-point/critic_status owns, 바이오 sub-check(#4/#5)는 sjpark/jhans에 분담 |
 | jhans | JeonghanSeo | phoenicx16@gmail.com | phoenicx16@gmail.com |  | 2206 |  Therapeutic Evidence Agent — DepMap/GDSC drug linking |
 
 ## Infrastructure
@@ -80,7 +80,7 @@ agents/
     baselines/mlp.py
     configs/baseline_er_status.yaml
   therapeutic_evidence/   # jhans — DepMap/GDSC schema, drug linking
-  critic/         # gglee — checklist, anti-patterns, validation
+  critic/         # braveji (총괄) — checklist, anti-patterns, validation
     checklist_v1.md
     anti_patterns.md
 schemas/
@@ -180,10 +180,10 @@ kkkim (임베딩 완료)
   └→ sjpark (dummy → 실제 임베딩 교체)
 
 sjpark (MLP 결과)
-  └→ gglee (critic_report.json 작성 시작)
+  └→ Critic (braveji 총괄, 바이오 sub-check = sjpark/jhans 분담) → critic_report.json
 
-gglee (critic_status: pass)
-  └→ braveji (결과 공유 + experiments registry 등록)
+critic_status: pass
+  └→ braveji (Orchestrator: 결과 공유 + experiments registry 등록)
 ```
 
 ## Critic Cross-Review Rules
@@ -191,15 +191,16 @@ gglee (critic_status: pass)
 - **Owner ≠ Reviewer.** Never self-review your own results.
 - All hypothesis outputs require `claim_level` + `critic_status` fields.
 - Results may not be shared without Critic pass.
+- **Scientific Critic = braveji (총괄).** braveji가 7-point 체크리스트와 최종 `critic_status`를 owns하되, Orchestrator 권한으로 바이오 판단(#4 cross-dataset, #5 biological plausibility)을 sjpark/jhans에 분담한다. sub-reviewer는 해당 산출물 owner가 아니어야 한다(Owner≠Reviewer). braveji 본인 Orchestrator 산출물은 타인이 검토.
 
-**Cross-review pairings (Week 10 / 5/22 미팅 확정):**
+**Cross-review pairings (2026-06-09 갱신 — gglee 이탈, Critic=braveji 총괄):**
 
 | 작성자 | Critic 담당 |
 |---|---|
 | sjpark (모델링 결과) | kkkim |
 | kkkim (임베딩 결과) | jamie |
 | jamie (데이터/split) | braveji |
-| jhans (TE 결과) | gglee |
+| jhans (TE 결과) | braveji 총괄 (생물학적 타당성 sub-check: sjpark) |
 
 **7-point Critic checklist:**
 1. Data leakage check
@@ -232,7 +233,7 @@ gglee (critic_status: pass)
 | Sprint 7 | 8/14 – 8/28 | Paper A draft + all 7 Critic items passed |
 | Sprint 8 | 8/28 – 9/11 | Paper A submission |
 
-Weekly sync: **every Friday**, 60 min. Leader: gglee. Orchestrator/minutes: braveji.
+Weekly sync: **every Friday**, 60 min. Leader: kkkim. Orchestrator/minutes: braveji.
 
 ## Data Sources
 
