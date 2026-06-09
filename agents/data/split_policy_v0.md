@@ -195,7 +195,11 @@ write_split_meta(out_rows, path="agents/data/manifests/split_manifest_meta.json"
 | 역할 | 담당 | 상태 |
 |---|---|---|
 | Data-owner (작성/잠금) | kkkim | ☐ pending |
-| Split critic (cross-review, owner≠reviewer) | braveji 또는 gglee | ☐ pending |
+| Split critic (cross-review, owner≠reviewer) | braveji (Critic 총괄) — 바이오 sub-check sjpark | ☐ pending |
 
 서명 전: 이 문서 = **v0 draft**, manifest split = 잠정.
 서명 후: fold 정의 + `split_hash` 동결, 변경 시 새 버전.
+
+## 10. Leader 결정 반영 (2026-06-10, kkkim)
+- **Subset = 전체 1010 (full BRCA cohort)** — Paper A 범위를 1010으로 확정. ⚠️ CLAUDE.md "~150 subset" 금지조항(line 220/239) override → 거버넌스 갱신 필요. site-disjoint split 검정력 확보.
+- **PAM50 소스 = cBioPortal TCGA-BRCA PAM50** (1순위, 분류기 정의 Parker 2009 인용); 커버리지 부족 시 TCGA RNA-seq + genefu(Parker centroids) fallback. → §4·§7 라벨 정책에 반영.

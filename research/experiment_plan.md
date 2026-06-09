@@ -199,8 +199,8 @@ FAS = (# attributable 오류) / (# 전체 오류)
 
 ---
 
-## Open scope decision (Leader = kkkim 승인 필요)
+## Leader 결정 반영 (2026-06-10, kkkim)
 
-1. **Paper A subset 크기 확정:** ~150 (CLAUDE.md 하한) vs **~250 권고** (Exp2 probe·Exp3 ranking 검정력). site-disjoint는 site 수에 민감 → subset이 너무 작으면 Exp2 site-probe가 underpowered. **methodologist 권고 = ~250**, 단 GPU/시간 예산은 kkkim 결정.
-2. **Exp3 포함 여부 (Paper A vs Paper B):** Arm E(SlideGraph∞)가 최대 GPU 항목. Paper A를 Exp1+2+4로 빠르게 내고 Exp3를 method paper로 분리할지 결정.
-3. **PAM50 소스 고정:** biotab에 PAM50 없음 → TCGA-BRCA 2012 vs cBioPortal 중 단일 소스 선택 (split_policy §4).
+1. **Paper A subset = 전체 1010 (full BRCA cohort).** Exp2 site-probe·Exp3 ranking 검정력 최대화 + 충분한 site 수 확보. 영향: GPU 임베딩 추출 ~34 GPU-h/모델(스트리밍, 디스크 부담 적음), 라벨 완전성 점검 부담↑. ⚠️ **CLAUDE.md 금지조항("TCGA WSI full download, Paper A scope ~150 subset", line 220/239)과 충돌 → Leader 결정으로 override, 거버넌스 갱신 필요.**
+2. **Exp3 = 보류(나중 결정).** Paper A는 **Exp1+Exp2+Exp4**로 우선 진행. Exp3(병목 vs SlideGraph∞ end-to-end, 최대 GPU 항목)는 GPU 확보·중간 결과 보고 Paper A 포함 vs 별도 method paper 추후 결정. 설계는 본 문서에 유지.
+3. **PAM50 소스 = cBioPortal TCGA-BRCA PAM50 (1순위)**, 분류기 정의는 **Parker 2009** 인용. 커버리지 부족분은 **TCGA RNA-seq + genefu(Parker centroids) 직접 산출** fallback. (TCGA-BRCA 2012 부속표는 표본 적어 1010 미커버 → 1순위 아님.) split_policy §4 라벨 정책에 반영.
