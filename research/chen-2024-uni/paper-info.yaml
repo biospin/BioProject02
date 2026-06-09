@@ -1,0 +1,52 @@
+paper_id: chen-2024-uni
+title: "Towards a general-purpose foundation model for computational pathology"
+authors: "Chen RJ, Ding T, Lu MY, Williamson DFK, Jaume G, Song AH, et al. (Mahmood Lab)"
+year: 2024
+venue: "Nature Medicine"
+doi: "10.1038/s41591-024-02857-3"
+url: "https://www.nature.com/articles/s41591-024-02857-3"
+pmc: "PMC11403354"
+code: "https://github.com/mahmoodlab/UNI"
+model_repo: "MahmoodLab/uni"   # HuggingFace gated, released 03/2024
+license: "CC-BY-NC-ND 4.0"     # academic non-commercial only
+
+importance_level: "상"
+perspective: "our primary embedding backbone"
+
+# BIOP02 role: UNI is CLAUDE.md priority-1 tile-embedding backbone.
+biop02_role: "primary tile-embedding backbone (256x256 @ 20x, no stain-norm), basis for Exp1 FM-vs-ImageNet comparison"
+
+key_facts:
+  architecture: "DINOv2 self-supervised ViT-Large/16"
+  embedding_dim: 1024
+  pretrain_tiles: 100130900       # >100M tiles (exact figure reported)
+  pretrain_wsis: 100426           # >100k diagnostic H&E WSIs
+  tissue_types: 20
+  tile_size_px: 256               # 512 used for high-res fine-tuning
+  magnification: "20x"
+  normalization: "ImageNet mean/std; NO dedicated H&E stain normalization"
+  input_size_px: 224              # transform resize/center-crop to 224 at inference
+  downstream_tasks: 34
+  pretrain_dataset: "Mass-100K"
+
+headline_results:
+  camelyon16_auroc: 0.966
+  ot43_top5_acc: 0.938
+  ot43_auroc: 0.976
+  prostate_isup_kappa: 0.946
+  few_shot: "4-shot UNI; next-best encoder needs up to 8x as many examples/class"
+  scaling: "+4.2% Mass-1K->22K, +3.7% Mass-22K->100K"
+
+related_papers:
+  - lu-2021-clam            # MIL aggregator over UNI tile features
+  - xu-2024-provgigapath    # competing slide-level FM, same top cluster
+  - campanella-2025-clinicalbench  # independent benchmark placing UNI in top cluster
+  - virchow-v1              # Apache-2.0 alternative backbone
+  - neidlinger-2024         # independent FM benchmark
+
+independent_benchmarks:
+  note: "Campanella 2025 / Neidlinger 2024 place UNI in top cluster with Prov-GigaPath, Virchow2, H-optimus-0"
+
+workflow:
+  created: "2026-06-09"
+  last_updated: "2026-06-09"

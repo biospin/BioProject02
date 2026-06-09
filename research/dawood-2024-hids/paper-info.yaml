@@ -1,0 +1,87 @@
+document_type: paper
+title: "Cancer drug sensitivity prediction from routine histology images"
+authors:
+  - Muhammad Dawood
+  - Quoc Dang Vu
+  - Lawrence S. Young
+  - Kim Branson
+  - Louise Jones
+  - Nasir Rajpoot
+  - Fayyaz ul Amir Afsar Minhas
+year: 2024
+venue: "npj Precision Oncology"
+doi: "10.1038/s41698-023-00491-9"
+keywords:
+  - computational pathology
+  - drug sensitivity prediction
+  - H&E whole-slide imaging
+  - graph neural network
+  - SlideGraph
+  - CTRP
+  - TCGA-BRCA
+  - breast cancer
+version:
+  type: published (Version of Record)
+  peer_reviewed: true
+topics:
+  - histology-to-drug-sensitivity (HiDS)
+  - end-to-end deep learning on WSI
+  - cell-line-to-patient transfer (CTRP imputation)
+  - graph-based weakly-supervised learning
+citation:
+  key: dawood-2024-hids
+  short_id: HiDS
+sources:
+  paper:
+    url: "https://www.nature.com/articles/s41698-023-00491-9"
+    doi: "10.1038/s41698-023-00491-9"
+    status: verified (WebFetch via PMC10771481)
+  code:
+    - "https://github.com/engrodawood/HiDS"
+    - "http://tiademos.dcs.warwick.ac.uk/bokeh_app?demo=HiDS"  # interactive demo
+  data:
+    - "https://portal.gdc.cancer.gov/"   # TCGA-BRCA WSIs
+    - "CTRP (Cancer Therapeutics Response Portal) — drug response / AUC-DRC"
+    - "CCLE-style cell-line gene expression (ridge regression source)"
+categorization:
+  domain:
+    - computational pathology
+    - precision oncology
+    - drug response transfer learning
+  use_case:
+    - predict per-compound sensitivity directly from H&E WSI
+    - cell-line CTRP → patient imputation as label source
+  importance:
+    level: 상
+    perspective: >
+      HIGHEST scoop risk for BIOP02. Same journal (npj Precision Oncology),
+      same task family (H&E WSI → drug sensitivity on TCGA-BRCA, breast-only),
+      same CTRP/cell-line-to-patient transfer concept. This is the end-to-end
+      baseline we explicitly reimplement in Exp3 and differentiate against.
+priority:
+  level: P0
+  reason: >
+    Direct overlap on journal + task + cohort. Defines the "must differentiate"
+    boundary for our interpretable-phenotype, multi-route, externally-validated,
+    hypothesis-only design. Anchor for Exp3 (end-to-end baseline reproduction).
+related:
+  - paper_id: tafavvoghi-2024-jpi
+    relation: sibling-survey
+    note: >
+      TCGA-BRCA H&E deep-learning survey context; positions HiDS within the
+      breast-histology DL landscape we are scoped against.
+  - paper_id: geeleher-2014-transfer
+    relation: methodological-ancestor
+    note: >
+      Foundational cell-line-expression → patient drug-response transfer (ridge
+      regression on expression); HiDS reuses this label-imputation idea but maps
+      it onto image features instead of patient expression.
+  - paper_id: seashore-2015-ctrp
+    relation: data-source
+    note: >
+      CTRP (Cancer Therapeutics Response Portal) — origin of the 427-compound
+      AUC-DRC sensitivity labels HiDS imputes; same resource we use for the
+      DepMap PRISM/GDSC/CTRP therapeutic-evidence route.
+workflow:
+  created: "2026-06-09"
+  last_updated: "2026-06-09"
