@@ -242,6 +242,8 @@ FAS = (# attributable 오류) / (# 전체 오류)
 - **Exp3 = Paper A 포함**(보류 해제).
 - **Exp7 = 포함**(전이 연료 한정, categorical 병목 유지). 구멍 #1(richness↔auditability) 해소.
 
+**GPU 재측정(v0.2).** Exp3 포함 + 외부 코호트 4개 추가로 자원이 변동 → 상세는 [`work_breakdown_v02.md` §2](work_breakdown_v02.md). 요약: **A100 80GB 단일로 충분**(다중 GPU 불필요), 코어 ~7–10 GPU-day, 그중 **Exp3 GNN(~2–5일) + 1회 임베딩(~4.5일)이 지배**. 신규 치료실험(Exp-OUTCOME/AXES/SHUFFLE/TNBC/CRITIC)·Exp7 = GPU≈0(CPU/임베딩 재사용). BCNB 외부검증 포함은 +1.5일(swing), Exp6 LoRA(선택)은 VRAM ≥24GB.
+
 **필수 보강 (대부분 GPU 0):**
 - **F2 — Exp4 phenotype-shuffle null**: 라벨 셔플 시 다중경로 수렴이 붕괴해야(거짓 수렴률 통제). PRISM/GDSC/CTRP는 collinear → "독립 경로"는 viability↔LINCS readout뿐으로 한정 서술.
 - **F3 — 실제 결과 앵커**: TCGA-CDR **PFI/DFI**로 수렴 치료축을 생존 층화(or retrospective pCR/trastuzumab, Farahmand 2022) — 치료층 최소 falsifiability.
