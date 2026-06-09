@@ -233,3 +233,21 @@ FAS = (# attributable 오류) / (# 전체 오류)
 1. **Paper A subset = 전체 1010 (full BRCA cohort).** Exp2 site-probe·Exp3 ranking 검정력 최대화 + 충분한 site 수 확보. 영향: GPU 임베딩 추출 ~34 GPU-h/모델(스트리밍, 디스크 부담 적음), 라벨 완전성 점검 부담↑. ⚠️ **CLAUDE.md 금지조항("TCGA WSI full download, Paper A scope ~150 subset", line 220/239)과 충돌 → Leader 결정으로 override, 거버넌스 갱신 필요.**
 2. **Exp3 = 보류(나중 결정).** Paper A는 **Exp1+Exp2+Exp4**로 우선 진행. Exp3(병목 vs SlideGraph∞ end-to-end, 최대 GPU 항목)는 GPU 확보·중간 결과 보고 Paper A 포함 vs 별도 method paper 추후 결정. 설계는 본 문서에 유지.
 3. **PAM50 소스 = cBioPortal TCGA-BRCA PAM50 (1순위)**, 분류기 정의는 **Parker 2009** 인용. 커버리지 부족분은 **TCGA RNA-seq + genefu(Parker centroids) 직접 산출** fallback. (TCGA-BRCA 2012 부속표는 표본 적어 1010 미커버 → 1순위 아님.) split_policy §4 라벨 정책에 반영.
+
+---
+
+## v0.2 — 외부 어드버서리 리뷰 기반 추가/보강 (2026-06-10)
+
+상세 종합·평결은 [`critique_and_revised_direction.md`](critique_and_revised_direction.md). 핵심: 치료층은 검증불가·scoop·trivial → **헤드라인 = Exp1+Exp2+Exp3(엄밀성·auditability)**, 치료는 경계모듈. ⚠️ **Leader 결정 대기**(헤드라인 재프레임 / Exp3 보류해제 / Exp7 포함여부).
+
+**필수 보강 (대부분 GPU 0):**
+- **F2 — Exp4 phenotype-shuffle null**: 라벨 셔플 시 다중경로 수렴이 붕괴해야(거짓 수렴률 통제). PRISM/GDSC/CTRP는 collinear → "독립 경로"는 viability↔LINCS readout뿐으로 한정 서술.
+- **F3 — 실제 결과 앵커**: TCGA-CDR **PFI/DFI**로 수렴 치료축을 생존 층화(or retrospective pCR/trastuzumab, Farahmand 2022) — 치료층 최소 falsifiability.
+- **F4 — Exp5 Critic ground truth를 가설 생성 KB와 분리**(OncoKB로 채점+OncoKB로 정의 = 순환 제거).
+- **F1 — Exp3 Paper A 포함 권고**(reviewer 단일 최중요). 현재 "보류" 결정과 충돌 → 재결정.
+
+**Exp7 (선택, 전이연료 한정) — H&E → 발현 시그니처/pathway-activity 회귀.**
+frozen UNI + 경량 회귀 head로 proliferation/immune/ESR1/ERBB2/Hallmark(ssGSEA) score 예측. metric=per-sig Spearman r + bootstrap CI + BH-FDR. ⚠️ **ssGSEA/GSVA는 train-only fit**(샘플상대 → 누수 채널). ⚠️ 이게 *병목*이 되면 auditability(Exp3) 죽음 → **categorical 병목은 유지, 시그니처는 전이 연료로만 분리**. Schmauch/Dawood 중복(instrumental, novelty 아님). GPU ~0.
+
+**Exp8 (가설 showcase, subgroup AUROC 아님) — TNBC/Basal 수렴 케이스.**
+정의 = IHC-TNBC ∩ PAM50-Basal **합의셋**(불일치 13–22%는 Exp3/5 audit 케이스). site-disjoint test에 TNBC ~15–20명뿐 → **subgroup AUROC 주장 불가**. 대신 수렴 가설이 **TNBC-actionable 축(PARP/platinum/LAR anti-androgen)** 농축되는지(Fisher/hypergeom +CI). 검정력은 drug-ranking enrichment에 있음. GPU 0.
