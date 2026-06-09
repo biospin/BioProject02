@@ -211,34 +211,36 @@ FAS = (# attributable 오류) / (# 전체 오류)
 
 ---
 
-## 최소 논문 세트 & 최고 레버리지
+## 최소 논문 세트 & 최고 레버리지 (Leader 결정 반영, 2026-06-10)
 
-- **Minimum viable paper (Paper A) = Exp1 + Exp2 + Exp4.**
+- **Paper A 척추 = Exp1 + Exp2 + Exp3 + Exp4 + Exp7.** (Exp3·Exp7 포함은 Leader 확정.)
   - Exp1: substrate 정량화 (두 scoop 대비 개선 측정).
   - Exp2: site-통제 정직 평가 (reviewer shield, 거의 무료) — **없으면 desk-reject 위험**.
-  - Exp4: 다중경로 수렴 (단일 novelty 축, GPU 불필요).
-  - 이 세트만으로 "honest, externally-validated, convergence-grounded hypothesis protocol" 주장 성립.
+  - Exp3: bottleneck vs end-to-end auditability (**benchmark→method 격상**, thesis 실증).
+  - Exp4: 다중경로 수렴 (+ F2 phenotype-shuffle null) — 치료층 핵심 novelty 축.
+  - Exp7: H&E→발현 시그니처 (치료 route2·CRISPR/LINCS 수렴의 **전이 연료**, 병목 아님).
 
-- **Exp3 가 benchmark→method 논문으로 격상**시킴 (auditability thesis 실증). 여력 있으면 포함.
+- **치료층 = 헤드라인 유지(Leader 결정).** 단 falsifiable 보강 필수 — 실제 결과 앵커(F3) + 비-collinear 독립 readout(F2) + 비순환 Critic(F4). 상세 = [`therapeutic_layer_strengthening.md`](therapeutic_layer_strengthening.md). Exp8(TNBC showcase)은 subgroup AUROC 금지·enrichment만.
 
-- **단일 최고 레버리지 수 = Exp2 평가체제 + Exp3 (bottleneck vs end-to-end).**
-  - Exp2는 *모든 다른 숫자의 신뢰성*을 떠받치는 토대 (싸고 필수).
-  - Exp3는 *thesis 자체*("auditable이 실제로 의미 있다")를 실증.
-  - 자원 제약 시 우선순위: **Exp2 → Exp4 → Exp1 → Exp3 → Exp5.** (**Exp6 LoRA ablation = 선택, 최후순위 / GPU·여력 시에만**)
+- **단일 최고 레버리지 = Exp2(평가 토대) + Exp3(auditability thesis).**
+  - 자원 제약 시 우선순위: **Exp2 → Exp3 → Exp4 → Exp1 → Exp7 → Exp5.** (**Exp6 LoRA ablation = 선택, 최후순위 / GPU·여력 시에만**)
 
 ---
 
 ## Leader 결정 반영 (2026-06-10, kkkim)
 
 1. **Paper A subset = 전체 1010 (full BRCA cohort).** Exp2 site-probe·Exp3 ranking 검정력 최대화 + 충분한 site 수 확보. 영향: GPU 임베딩 추출 ~34 GPU-h/모델(스트리밍, 디스크 부담 적음), 라벨 완전성 점검 부담↑. ⚠️ **CLAUDE.md 금지조항("TCGA WSI full download, Paper A scope ~150 subset", line 220/239)과 충돌 → Leader 결정으로 override, 거버넌스 갱신 필요.**
-2. **Exp3 = 보류(나중 결정).** Paper A는 **Exp1+Exp2+Exp4**로 우선 진행. Exp3(병목 vs SlideGraph∞ end-to-end, 최대 GPU 항목)는 GPU 확보·중간 결과 보고 Paper A 포함 vs 별도 method paper 추후 결정. 설계는 본 문서에 유지.
+2. ~~**Exp3 = 보류(나중 결정).**~~ → **번복(2026-06-10): Exp3 = Paper A 포함 확정.** reviewer 단일 최중요 권고 수용 — benchmark→method 격상의 유일 수단. GPU 최대 항목(SlideGraph∞ end-to-end arm)이나 Paper A 척추. (상세 [`critique_and_revised_direction.md` Leader 결정 #2](critique_and_revised_direction.md).)
 3. **PAM50 소스 = cBioPortal TCGA-BRCA PAM50 (1순위)**, 분류기 정의는 **Parker 2009** 인용. 커버리지 부족분은 **TCGA RNA-seq + genefu(Parker centroids) 직접 산출** fallback. (TCGA-BRCA 2012 부속표는 표본 적어 1010 미커버 → 1순위 아님.) split_policy §4 라벨 정책에 반영.
 
 ---
 
 ## v0.2 — 외부 어드버서리 리뷰 기반 추가/보강 (2026-06-10)
 
-상세 종합·평결은 [`critique_and_revised_direction.md`](critique_and_revised_direction.md). 핵심: 치료층은 검증불가·scoop·trivial → **헤드라인 = Exp1+Exp2+Exp3(엄밀성·auditability)**, 치료는 경계모듈. ⚠️ **Leader 결정 대기**(헤드라인 재프레임 / Exp3 보류해제 / Exp7 포함여부).
+상세 종합·평결은 [`critique_and_revised_direction.md`](critique_and_revised_direction.md). 리뷰어 평결: 치료층은 검증불가·scoop·trivial → 강등 권고. **✅ Leader(kkkim) 결정 확정(2026-06-10):**
+- **치료층 유지(강등 거부)** — 단 falsifiable하게 보강. 보강 데이터·방법·아이디어 = [`therapeutic_layer_strengthening.md`](therapeutic_layer_strengthening.md).
+- **Exp3 = Paper A 포함**(보류 해제).
+- **Exp7 = 포함**(전이 연료 한정, categorical 병목 유지). 구멍 #1(richness↔auditability) 해소.
 
 **필수 보강 (대부분 GPU 0):**
 - **F2 — Exp4 phenotype-shuffle null**: 라벨 셔플 시 다중경로 수렴이 붕괴해야(거짓 수렴률 통제). PRISM/GDSC/CTRP는 collinear → "독립 경로"는 viability↔LINCS readout뿐으로 한정 서술.
@@ -246,7 +248,7 @@ FAS = (# attributable 오류) / (# 전체 오류)
 - **F4 — Exp5 Critic ground truth를 가설 생성 KB와 분리**(OncoKB로 채점+OncoKB로 정의 = 순환 제거).
 - **F1 — Exp3 Paper A 포함 권고**(reviewer 단일 최중요). 현재 "보류" 결정과 충돌 → 재결정.
 
-**Exp7 (선택, 전이연료 한정) — H&E → 발현 시그니처/pathway-activity 회귀.**
+**Exp7 (✅ 포함 확정, 전이연료 한정) — H&E → 발현 시그니처/pathway-activity 회귀.**
 frozen UNI + 경량 회귀 head로 proliferation/immune/ESR1/ERBB2/Hallmark(ssGSEA) score 예측. metric=per-sig Spearman r + bootstrap CI + BH-FDR. ⚠️ **ssGSEA/GSVA는 train-only fit**(샘플상대 → 누수 채널). ⚠️ 이게 *병목*이 되면 auditability(Exp3) 죽음 → **categorical 병목은 유지, 시그니처는 전이 연료로만 분리**. Schmauch/Dawood 중복(instrumental, novelty 아님). GPU ~0.
 
 **Exp8 (가설 showcase, subgroup AUROC 아님) — TNBC/Basal 수렴 케이스.**
