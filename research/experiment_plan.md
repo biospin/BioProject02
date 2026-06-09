@@ -1,4 +1,4 @@
-# BIOP02 Experiment Plan — Exp1–Exp5 (v0.1)
+# BIOP02 Experiment Plan — Exp1–Exp6 (v0.2)
 
 작성 2026-06-10 (research-methodologist). Ground = research/novelty_positioning.md + 각 paper의 methodology-brief.
 타겟 저널 = **npj Precision Oncology**. 이 문서는 Scientific Critic 검토 대상.
@@ -182,6 +182,35 @@ FAS = (# attributable 오류) / (# 전체 오류)
 
 ---
 
+## Exp6 (선택 / GPU-gated) — LoRA 백본 적응 ablation: "적응 vs site-shortcut"
+
+> 본실험 아님. 여력·GPU 확보 시 돌리는 **선택 ablation**. 결과가 어느 쪽이든 **frozen-FM 설계의 정당성/한계를 실측**해 rigor 논지를 보강한다.
+
+**가설.** UNI를 BRCA에 LoRA로 적응시키면 둘 중 하나다 — (a) site-disjoint 평가에서 **표현형 AUC가 의미있게 상승**(적응의 진짜 가치), 또는 (b) 표현형은 그대로인데 **site-probe AUROC만 상승**(Howard식 shortcut만 학습). 어느 쪽이든 "frozen이 옳은가?"에 **숫자로** 답한다.
+
+**설계.**
+- Arm F0 = frozen UNI + 표현형 헤드 (= Exp1 기준선).
+- Arm F1 = UNI + **LoRA**(rank r≈8–16, attn/mlp proj) 적응 + 동일 헤드.
+- 동일 **site-disjoint split**(split_policy_v0), 동일 라벨·헤드·seed. 슬라이드당 타일 샘플링(예 512) + grad checkpointing + mixed precision.
+
+**측정 (frozen F0 vs LoRA F1).**
+1. 표현형 AUROC/F1 (ER/PR/HER2/PAM50), DeLong CI.
+2. **site-probe AUROC**(Exp2-A) F0 vs F1 — 적응이 site 신호를 키우는지.
+3. Δ분해: site-통제 하 표현형 이득(진짜) vs site-AUROC 증가(shortcut).
+
+**해석 / success.**
+- F1이 표현형은 안 올리고 **site-AUROC만↑** → "frozen이 맞다"는 강한 증거 (rigor 보강, 우리 설계 선택 정당화).
+- F1이 **site-통제 하에서도 표현형↑** → 적응이 가치 있음 → 추가 기여 후보(단, site-AUROC가 같이 안 올라야 함).
+
+**GPU 요구 (LoRA 한정).**
+- **VRAM ≈ 24 GB, 1장** (mixed precision + grad checkpointing + 타일 샘플링). full fine-tune의 40–80GB 불필요 — base는 frozen(fp16 ~0.6GB), 학습 파라미터는 LoRA 어댑터(수 M)뿐, **활성값이 주 비용**이라 24GB로 충분.
+- 시간: 추가 **~1–2 GPU-day** (수 epoch × 샘플 타일). 본실험(Exp1/2/4, 추론 ~34 GPU-h)과 **별개**.
+- ⚠️ 모임께 보낼 GPU 요청에서 이 옵션을 열어두려면 **권장 VRAM을 16 → 24GB**로 올려야 함.
+
+**리스크.** 1010장은 ViT-L 적응엔 작음 → rank 작게, early stop, site-disjoint val 엄수(과적합·shortcut 통제).
+
+---
+
 ## 최소 논문 세트 & 최고 레버리지
 
 - **Minimum viable paper (Paper A) = Exp1 + Exp2 + Exp4.**
@@ -195,7 +224,7 @@ FAS = (# attributable 오류) / (# 전체 오류)
 - **단일 최고 레버리지 수 = Exp2 평가체제 + Exp3 (bottleneck vs end-to-end).**
   - Exp2는 *모든 다른 숫자의 신뢰성*을 떠받치는 토대 (싸고 필수).
   - Exp3는 *thesis 자체*("auditable이 실제로 의미 있다")를 실증.
-  - 자원 제약 시 우선순위: **Exp2 → Exp4 → Exp1 → Exp3 → Exp5.**
+  - 자원 제약 시 우선순위: **Exp2 → Exp4 → Exp1 → Exp3 → Exp5.** (**Exp6 LoRA ablation = 선택, 최후순위 / GPU·여력 시에만**)
 
 ---
 
