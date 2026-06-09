@@ -1,0 +1,21 @@
+document_type: paper
+title: "Patient-derived organoids model treatment response of metastatic gastrointestinal cancers"
+authors: "Vlachogiannis G et al."
+year: 2018
+venue: "Science"
+doi: "10.1126/science.aao2774"  # unverified
+topics: [HYPO]
+citation:
+  key: vlachogiannis-2018-pdo
+  short_id: vlachogiannis2018
+sources:
+  paper:
+    url: "https://www.science.org/doi/10.1126/science.aao2774"
+categorization:
+  importance:
+    level: 중
+    perspective: "환자유래 organoid가 임상반응을 추적 — cell-line 외 직교 모델계의 방법론 선례(BRCA 아님, 개념적 인용)."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

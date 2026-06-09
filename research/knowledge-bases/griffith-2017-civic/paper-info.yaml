@@ -1,0 +1,21 @@
+document_type: paper
+title: "CIViC is a community knowledgebase for expert crowdsourcing the clinical interpretation of variants in cancer"
+authors: "Griffith M et al."
+year: 2017
+venue: "Nature Genetics"
+doi: "10.1038/ng.3774"  # unverified
+topics: [KB]
+citation:
+  key: griffith-2017-civic
+  short_id: griffith2017
+sources:
+  paper:
+    url: "https://www.nature.com/articles/ng.3774"
+categorization:
+  importance:
+    level: 상
+    perspective: "오픈(CC0) 변이-약물-질병 evidence + provenance — OncoKB의 공개 교차검증 actionability 소스."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

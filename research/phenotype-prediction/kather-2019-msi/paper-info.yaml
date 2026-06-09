@@ -1,0 +1,21 @@
+document_type: paper
+title: "Deep learning can predict microsatellite instability directly from histology in gastrointestinal cancer"
+authors: "Kather JN et al."
+year: 2019
+venue: "Nature Medicine"
+doi: "10.1038/s41591-019-0462-y"
+topics: [PHENO]
+citation:
+  key: kather-2019-msi
+  short_id: kather-2019
+sources:
+  paper:
+    url: "https://www.nature.com/articles/s41591-019-0462-y"
+categorization:
+  importance:
+    level: 중
+    perspective: "GI암 H&E에서 MSI(면역항암 적격) 예측. 'biomarker→치료적합성' 서사의 원형 — 단 ICI 권고 framing은 BIOP02 금지사항. scoop 인접."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: "summary"

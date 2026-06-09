@@ -1,0 +1,21 @@
+document_type: paper
+title: Simple and Scalable Predictive Uncertainty Estimation using Deep Ensembles
+authors: Lakshminarayanan B et al.
+year: 2017
+venue: NeurIPS 2017
+doi: "unverified"
+topics: [UQ]
+citation:
+  key: lakshminarayanan2017ensembles
+  short_id: lakshminarayanan-2017-ensembles
+sources:
+  paper:
+    url: https://arxiv.org/abs/1612.01474
+categorization:
+  importance:
+    level: 중
+    perspective: "deep ensemble 불확실성 baseline — BIOP02 게이팅 신호의 비-Bayesian 대조군."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

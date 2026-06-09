@@ -1,0 +1,5 @@
+# geeleher-2014-transfer — brief
+
+Geeleher 등(2014, Genome Biology)은 **임상 약물반응을 종양의 baseline 유전자 발현과 in vitro cell-line 약물 민감도만으로 예측**할 수 있음을 보인 방법론 원형 논문이다. cell line(GDSC/CCLE)에서 발현→민감도 ridge 회귀 모델을 학습한 뒤, 이를 환자 종양 발현 프로파일에 적용해 임상 코호트의 반응을 외삽하는 전이(transfer) 패러다임을 정립했다. 핵심 기여는 약물별 학습 라벨이 없는 종양에 대해서도 cell-line 지식을 다리 삼아 민감도를 imputation할 수 있음을 임상 검증과 함께 제시한 것이다. BIOP02 관련성(DRUG=약물민감도 전이 자원/DRP 대조): 본 논문은 H&E→분자표현형 이후 cell-line 민감도로 넘어가는 BIOP02 transfer bridge의 **개념적 조상**이며, 동일 전이 논리를 Dawood(2024)가 H&E 맥락으로 차용했다. BIOP02는 여기서 한 발 더 나아가 명시적 표현형을 중간단계로 두고, 약물 구조를 입력하지 않으며(=DRP 아님), 출력은 환자별 처방이 아니라 PRISM/GDSC 교차검증과 Critic 게이트를 거친 **hypothesis-only 랭킹**이라는 점에서 차별화된다. *DOI unverified — 인용 전 CrossRef 재확인 필요.*
+
+In short: Geeleher 2014 established the expression→cell-line sensitivity transfer that BIOP02's phenotype→sensitivity bridge descends from; BIOP02 differs by inserting an explicit phenotype stage, using no drug-structure input, and outputting only cross-validated hypothesis-only rankings. (unverified)

@@ -1,0 +1,21 @@
+document_type: paper
+title: "The Reactome Pathway Knowledgebase 2022"
+authors: "Gillespie M et al."
+year: 2022
+venue: "Nucleic Acids Research"
+doi: "10.1093/nar/gkab1028"  # unverified
+topics: [KB]
+citation:
+  key: gillespie-2022-reactome
+  short_id: gillespie2022
+sources:
+  paper:
+    url: "https://academic.oup.com/nar/article/50/D1/D687/6426058"
+categorization:
+  importance:
+    level: 중
+    perspective: "큐레이션 human pathway DB — 약물 표적과 표현형 유전자가 공유 경로를 갖는지 검증."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

@@ -1,0 +1,3 @@
+# coudray-2018-natmed — Brief
+
+**핵심 기여 (Korean+English).** Coudray 외(2018, Nature Medicine)의 DeepPATH는 non-small cell lung cancer(NSCLC) H&E whole-slide image에서 deep learning(Inception 기반 CNN)으로 조직형(LUAD vs LUSC vs normal)을 분류하고, 나아가 EGFR·KRAS·STK11 등 주요 driver mutation을 형태만으로 예측할 수 있음을 보인 초기 proof-of-concept다. 방법 요지는 WSI를 타일로 나눠 CNN으로 분류·예측한 뒤 슬라이드 수준으로 집계하는 형태다. BIOP02 관점에서 이 논문은 장기(폐 vs 유방)는 다르지만 **"genotype/mutation-from-morphology"라는 패러다임의 시초 PoC**로서 형태→분자상태 예측의 feasibility를 확립한 정전 인용이다. 직접 BRCA scoop은 아니나 PHENO 영역의 foundational prior art이므로, BIOP02가 형태→분자 예측 자체를 novelty로 삼지 않도록 경계하는 인용으로 활용한다. BIOP02의 기여는 형태→유전형 예측이 아니라 BRCA 표현형을 명시적 중간단계로 두고 DepMap/GDSC 치료가설로 전이하는 system·governance에 있다. DOI는 CrossRef 확인됨(`10.1038/s41591-018-0177-5`).

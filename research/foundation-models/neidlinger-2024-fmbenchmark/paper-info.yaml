@@ -1,0 +1,21 @@
+document_type: paper
+title: Benchmarking foundation models as feature extractors for weakly-supervised computational pathology
+authors: Neidlinger P et al.
+year: 2024
+venue: arXiv 2408.15823
+doi: unverified
+topics: [FM]
+citation:
+  key: neidlinger-2024-fmbenchmark
+  short_id: Neidlinger2024
+sources:
+  paper:
+    url: https://arxiv.org/abs/2408.15823
+categorization:
+  importance:
+    level: 중
+    perspective: "두 번째 독립 FM 벤치마크 — BIOP02 백본 선택 근거를 교차 검증하는 자료."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

@@ -1,0 +1,21 @@
+document_type: paper
+title: "The Cancer Cell Line Encyclopedia enables predictive modelling of anticancer drug sensitivity (CCLE)"
+authors: "Barretina J et al."
+year: 2012
+venue: "Nature"
+doi: "10.1038/nature11003"  # unverified
+topics: [DRUG]
+citation:
+  key: barretina-2012-ccle
+  short_id: barretina2012
+sources:
+  paper:
+    url: "https://www.nature.com/articles/nature11003"
+categorization:
+  importance:
+    level: 중
+    perspective: "CCLE 멀티오믹스+약리 cell line 자원 — DepMap 기반이자 BIOP02 전이의 cell-line 발현/유전체 참조층."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

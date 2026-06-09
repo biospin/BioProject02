@@ -1,0 +1,3 @@
+# Structure-Preserving Color Normalization (Vahadane et al., 2016, IEEE TMI)
+
+Vahadane 등은 sparse stain separation에 기반한 **구조보존(structure-preserving) 색 정규화** 방법을 제안했다. stain 농도를 sparse·non-negative 행렬 분해로 분리해 조직 구조를 보존하면서 색을 표준화하는 것이 핵심으로, Macenko 대비 stain 분리의 안정성과 구조 보존 측면에서 개선을 노린다. BIOP02 관점에서 Vahadane는 **전처리 정규화의 2nd ablation 옵션**이다. H&E WSI 타일링 → 임베딩 전 단계에서 macenko-2009를 기준선으로 두고 대안 정규화로 비교하는 ablation에 쓰며, reinhard-2001(최저비용)과 함께 정규화 선택지를 구성한다. 단 tellez-2019의 결론대로 정규화 단독에 의존하기보다 heavy stain augmentation과 병용해야 하고, 색 정규화만으로 기관별 site signature(howard-2021)가 제거되지 않으므로 site-aware split의 보완책으로 다룬다. 우리는 hypothesis-only 시스템이므로 이 방법은 임베딩 전 전처리에만 적용한다. DOI는 검증됨(10.1109/TMI.2016.2529665).

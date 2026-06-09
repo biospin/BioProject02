@@ -1,0 +1,21 @@
+document_type: paper
+title: A Method for Normalizing Histology Slides for Quantitative Analysis
+authors: Macenko M et al.
+year: 2009
+venue: IEEE ISBI 2009
+doi: 10.1109/ISBI.2009.5193250
+topics: [PREP]
+citation:
+  key: macenko-2009
+  short_id: Macenko2009
+sources:
+  paper:
+    url: https://ieeexplore.ieee.org/document/5193250
+categorization:
+  importance:
+    level: 상
+    perspective: "BIOP02 stain 정규화의 de-facto baseline — robustness ablation의 기준 방법."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

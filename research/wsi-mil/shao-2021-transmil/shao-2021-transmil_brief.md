@@ -1,0 +1,3 @@
+# TransMIL (Shao et al., 2021, NeurIPS)
+
+TransMIL은 기존 MIL의 인스턴스 i.i.d. 가정을 깨고 **타일 간 상관(correlation)을 명시적으로 모델링**하는 transformer-MIL 집계자다. self-attention에 위치 인코딩(PPEG, pyramid position encoding generator)과 Nyström 근사를 결합해 대규모 WSI의 수많은 타일을 효율적으로 처리하면서 상호작용을 포착한다. BIOP02 관점에서 TransMIL은 **표준 transformer-MIL 비교군**이다. H&E WSI 타일 임베딩 → 슬라이드-레벨 BRCA 표현형(ER/PR/HER2/PAM50) 집계에서, 1차 baseline인 ABMIL/CLAM의 단순 attention pooling으로 충분한지 vs 타일 간 상관 모델링이 이득을 주는지를 검증하는 비교 축으로 쓴다. **DOI는 unverified**(NeurIPS proceedings — DOI 없음)이므로 proceedings URL로 인용하며 가짜 DOI 날조를 금한다. 우리는 약물 구조 입력 없는 hypothesis-only 시스템이므로 이 집계자는 표현형 예측 중간단계에만 활용한다.

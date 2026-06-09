@@ -1,0 +1,21 @@
+document_type: paper
+title: On Calibration of Modern Neural Networks
+authors: Guo C et al.
+year: 2017
+venue: ICML 2017
+doi: "unverified"
+topics: [UQ]
+citation:
+  key: guo2017calibration
+  short_id: guo-2017-calibration
+sources:
+  paper:
+    url: https://proceedings.mlr.press/v70/guo17a/guo17a.pdf
+categorization:
+  importance:
+    level: 상
+    perspective: "temperature scaling으로 신뢰도 재보정 — BIOP02 confidence thresholding 전 최소 전처리."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

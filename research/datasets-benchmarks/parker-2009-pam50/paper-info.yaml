@@ -1,0 +1,21 @@
+document_type: paper
+title: "Supervised Risk Predictor of Breast Cancer Based on Intrinsic Subtypes (PAM50)"
+authors: "Parker JS et al."
+year: 2009
+venue: "Journal of Clinical Oncology"
+doi: "10.1200/JCO.2008.18.1370"
+topics: [DATA]
+citation:
+  key: parker-2009-pam50
+  short_id: parker-2009
+sources:
+  paper:
+    url: "https://ascopubs.org/doi/10.1200/JCO.2008.18.1370"
+categorization:
+  importance:
+    level: 상
+    perspective: "PAM50 — 50유전자 intrinsic subtype 분류기. BIOP02 PAM50 라벨 정의의 기준 문헌."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: "summary"

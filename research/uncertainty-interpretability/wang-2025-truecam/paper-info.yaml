@@ -1,0 +1,21 @@
+document_type: paper
+title: "TRUECAM: Conformalized Uncertainty-Aware AI for Whole Slide Image Analysis"
+authors: Wang T et al.
+year: 2025
+venue: arXiv 2501.00053
+doi: "unverified"
+topics: [UQ]
+citation:
+  key: wang2025truecam
+  short_id: wang-2025-truecam
+sources:
+  paper:
+    url: https://arxiv.org/abs/2501.00053
+categorization:
+  importance:
+    level: 중
+    perspective: "FM WSI(UNI/CONCH) + OOD + conformal 통합 — BIOP02에 가장 가까운 blueprint, 인용+차별화 필수."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

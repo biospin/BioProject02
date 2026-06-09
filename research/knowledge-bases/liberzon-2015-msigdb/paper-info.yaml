@@ -1,0 +1,21 @@
+document_type: paper
+title: "The Molecular Signatures Database (MSigDB) Hallmark Gene Set Collection"
+authors: "Liberzon A et al."
+year: 2015
+venue: "Cell Systems"
+doi: "10.1016/j.cels.2015.12.004"  # unverified
+topics: [KB]
+citation:
+  key: liberzon-2015-msigdb
+  short_id: liberzon2015
+sources:
+  paper:
+    url: "https://www.cell.com/cell-systems/fulltext/S2405-4712(15)00218-5"
+categorization:
+  importance:
+    level: 중
+    perspective: "Hallmark 50 gene set — BIOP02 분자표현형을 pathway-activity 어휘로 표현하는 표준 경로 사전."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

@@ -1,0 +1,21 @@
+document_type: paper
+title: "The cBio Cancer Genomics Portal: an open platform for exploring multidimensional cancer genomics data"
+authors: "Cerami E et al."
+year: 2012
+venue: "Cancer Discovery"
+doi: "10.1158/2159-8290.CD-12-0095"
+topics: [DATA]
+citation:
+  key: cbioportal-cerami-2012
+  short_id: cerami-2012
+sources:
+  paper:
+    url: "https://aacrjournals.org/cancerdiscovery/article/2/5/401/3246"
+categorization:
+  importance:
+    level: 중
+    perspective: "cBioPortal — TCGA/CPTAC mutation·CNA·발현·임상/IHC 라벨 접근층(+API). BIOP02 라벨 수집 인프라 (Gao 2013과 함께 인용)."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: "summary"

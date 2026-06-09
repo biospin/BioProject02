@@ -1,0 +1,21 @@
+document_type: paper
+title: "Regression Concept Vectors for Bidirectional Explanations in Histopathology"
+authors: Graziani M et al.
+year: 2018
+venue: MICCAI 2018 iMIMIC
+doi: "unverified"
+topics: [UQ]
+citation:
+  key: graziani2018rcv
+  short_id: graziani-2018-rcv
+sources:
+  paper:
+    url: https://arxiv.org/abs/1904.04520
+categorization:
+  importance:
+    level: 중
+    perspective: "concept attribution으로 형태→분자상태 해석 — BIOP02 표현형 예측의 해석성(탐색적 flag) 근거."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

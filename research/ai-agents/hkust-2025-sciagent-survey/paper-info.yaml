@@ -1,0 +1,21 @@
+document_type: paper
+title: "Towards Scientific Intelligence: A Survey of LLM-based Scientific Agents"
+authors: Various
+year: 2025
+venue: arXiv 2503.24047
+doi: "unverified"
+topics: [AGENT]
+citation:
+  key: hkust2025sciagentsurvey
+  short_id: hkust-2025-sciagent-survey
+sources:
+  paper:
+    url: https://arxiv.org/abs/2503.24047
+categorization:
+  importance:
+    level: 중
+    perspective: "LLM 과학 에이전트 서베이 — BIOP02 멀티에이전트 파이프라인의 학술적 맥락·landscape 위치 설정."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

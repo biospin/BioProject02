@@ -1,0 +1,21 @@
+document_type: paper
+title: "Classification and mutation prediction from non-small cell lung cancer histopathology images using deep learning (DeepPATH)"
+authors: "Coudray N et al."
+year: 2018
+venue: "Nature Medicine"
+doi: "10.1038/s41591-018-0177-5"
+topics: [PHENO]
+citation:
+  key: coudray-2018-natmed
+  short_id: coudray-2018
+sources:
+  paper:
+    url: "https://www.nature.com/articles/s41591-018-0177-5"
+categorization:
+  importance:
+    level: 중
+    perspective: "폐암 H&E에서 driver mutation 예측(DeepPATH). genotype-from-morphology 시초 PoC — 장기는 다르나 형태→유전형 패러다임 인용 (scoop 인접)."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: "summary"

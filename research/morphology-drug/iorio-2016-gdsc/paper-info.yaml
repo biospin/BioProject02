@@ -1,0 +1,21 @@
+document_type: paper
+title: "A Landscape of Pharmacogenomic Interactions in Cancer (GDSC)"
+authors: "Iorio F et al."
+year: 2016
+venue: "Cell"
+doi: "10.1016/j.cell.2016.06.017"  # unverified
+topics: [DRUG]
+citation:
+  key: iorio-2016-gdsc
+  short_id: iorio2016
+sources:
+  paper:
+    url: "https://www.cell.com/fulltext/S0092-8674(16)30746-2"
+categorization:
+  importance:
+    level: 상
+    perspective: "GDSC pharmacogenomic landscape의 정의 논문 — cell line이 종양 oncogenic 변이를 재현함을 보여 약물민감도 전이의 생물학적 근거를 제공."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

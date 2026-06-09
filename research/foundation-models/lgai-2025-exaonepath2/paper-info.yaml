@@ -1,0 +1,21 @@
+document_type: paper
+title: "EXAONE Path 2.0: Pathology Foundation Model with End-to-End Supervision"
+authors: LG AI Research
+year: 2025
+venue: arXiv 2507.06639
+doi: unverified
+topics: [FM]
+citation:
+  key: lgai-2025-exaonepath2
+  short_id: LGAI2025
+sources:
+  paper:
+    url: https://arxiv.org/abs/2507.06639
+categorization:
+  importance:
+    level: 중
+    perspective: "end-to-end 슬라이드 감독 백본 후보(768d, CLAUDE.md 3순위) — BIOP02 임베딩의 NC-라이선스 학술 옵션."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

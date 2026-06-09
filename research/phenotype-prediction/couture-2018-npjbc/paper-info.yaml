@@ -1,0 +1,21 @@
+document_type: paper
+title: "Image analysis with deep learning to predict breast cancer grade, ER status, histologic subtype, and intrinsic subtype"
+authors: "Couture HD et al."
+year: 2018
+venue: "npj Breast Cancer"
+doi: "10.1038/s41523-018-0079-1"
+topics: [PHENO]
+citation:
+  key: couture-2018-npjbc
+  short_id: couture-2018
+sources:
+  paper:
+    url: "https://www.nature.com/articles/s41523-018-0079-1"
+categorization:
+  importance:
+    level: 상
+    perspective: "형태→intrinsic subtype 정전 prior art; H&E가 PAM50 subtype 정보를 담음을 처음 보임 → BIOP02 PHENO의 직접 scoop 후보, baseline 비교 대상."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: "summary"

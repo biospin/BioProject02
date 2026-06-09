@@ -1,0 +1,3 @@
+# cbioportal-cerami-2012 — Brief
+
+**핵심 기여 (Korean+English).** Cerami 외(2012, Cancer Discovery)는 cBio Cancer Genomics Portal(cBioPortal)을 소개한 원 논문으로, TCGA를 포함한 대규모 암 유전체 데이터(mutation, copy-number alteration, gene expression, 임상/IHC 메타데이터)를 통합·시각화·다운로드할 수 있는 open platform을 제공한다. 방법 요지는 이질적 멀티오믹스 데이터를 표준화된 스키마로 모아 웹 UI와 프로그래밍 접근(API)으로 노출하는 것이다. BIOP02 관점에서 이 논문은 **라벨 수집 인프라**로 DATA 영역에서 중요하다 — TCGA-BRCA/CPTAC의 ER/PR/HER2 IHC, PAM50, BRCA1/2 변이, 임상 endpoint를 일관된 형식으로 가져오는 데이터 접근층을 제공하며, BIOP02의 Data Agent가 manifest·라벨을 구성하는 실무 도구다. 일반적으로 후속 인프라 논문 Gao 외(2013, Science Signaling, `cbioportal-gao-2013`)와 함께 묶어 인용한다. 본 논문은 코호트/벤치마크 자체가 아니라 라벨 provenance·접근 도구이므로, split policy나 leakage 통제는 별도 RIGOR 근거로 보장해야 한다. DOI는 CrossRef 확인됨(`10.1158/2159-8290.CD-12-0095`).

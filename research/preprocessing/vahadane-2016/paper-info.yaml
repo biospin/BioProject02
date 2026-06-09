@@ -1,0 +1,21 @@
+document_type: paper
+title: Structure-Preserving Color Normalization and Sparse Stain Separation
+authors: Vahadane A et al.
+year: 2016
+venue: IEEE TMI
+doi: 10.1109/TMI.2016.2529665
+topics: [PREP]
+citation:
+  key: vahadane-2016
+  short_id: Vahadane2016
+sources:
+  paper:
+    url: https://pubmed.ncbi.nlm.nih.gov/27164577/
+categorization:
+  importance:
+    level: 중
+    perspective: "BIOP02 전처리의 2nd ablation 옵션 — 구조보존 색 정규화로 Macenko 대안 비교."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

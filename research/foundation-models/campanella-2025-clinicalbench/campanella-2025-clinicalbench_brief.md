@@ -1,0 +1,3 @@
+# Clinical Benchmark of Pathology FMs (Campanella et al., 2025, Nature Communications)
+
+이 논문은 공개된 self-supervised 병리 foundation model들을 임상 과제(biomarker·치료결과 예측 등)에서 체계적으로 비교한 벤치마크 연구다. 핵심 결과로 **UNI와 Prov-GigaPath가 biomarker 및 치료결과 예측에서 일관되게 강세**를 보였다고 보고한다. BIOP02 관점에서 이 논문은 새로운 백본이 아니라 **백본 선택의 근거(decision basis)**로 인용된다. 우리 파이프라인은 H&E WSI → FM 임베딩 → BRCA 분자 표현형(ER/PR/HER2/PAM50) → DepMap/GDSC 치료가설로 이어지므로, 임베딩 단계에서 어떤 FM을 쓸지 결정할 때 이 벤치마크와 neidlinger-2024를 교차 참조해 Virchow2/Prov-GigaPath/UNI/H-optimus-0 상위 클러스터를 확인했다. CLAUDE.md의 UNI 1순위 선택을 뒷받침하는 외부 근거이기도 하다. 우리는 hypothesis-only 시스템이므로 이 자료는 feature extractor 선정 정당화에만 쓰고 성능 수치를 임의로 인용하지 않는다. DOI는 검증됨(10.1038/s41467-025-58796-1).

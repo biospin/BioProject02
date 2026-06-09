@@ -1,0 +1,21 @@
+document_type: paper
+title: "The Connectivity Map: using gene-expression signatures to connect small molecules, genes, and disease"
+authors: "Lamb J et al."
+year: 2006
+venue: "Science"
+doi: "10.1126/science.1132939"  # unverified
+topics: [HYPO]
+citation:
+  key: lamb-2006-cmap
+  short_id: lamb2006
+sources:
+  paper:
+    url: "https://www.science.org/doi/abs/10.1126/science.1132939"
+categorization:
+  importance:
+    level: 상
+    perspective: "Connectivity Map 원형(시그니처-역전 연결성 점수) — BIOP02 표현형 시그니처를 역전시키는 약물 랭킹의 방법론적 기원."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

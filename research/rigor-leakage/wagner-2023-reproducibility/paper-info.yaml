@@ -1,0 +1,21 @@
+document_type: paper
+title: "Built to Last? Reproducibility and Reusability of Deep Learning in Computational Pathology"
+authors: Wagner SJ et al.
+year: 2023
+venue: Modern Pathology
+doi: "unverified"
+topics: [RIGOR]
+citation:
+  key: wagner2023reproducibility
+  short_id: wagner-2023-reproducibility
+sources:
+  paper:
+    url: https://www.modernpathology.org/article/S0893-3952(23)00255-7/fulltext
+categorization:
+  importance:
+    level: 중
+    perspective: "cpath 재현성 결핍을 정량화 — BIOP02 experiment artifact 5종 정책의 동기."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

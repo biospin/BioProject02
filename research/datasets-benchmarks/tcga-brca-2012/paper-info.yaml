@@ -1,0 +1,21 @@
+document_type: paper
+title: "Comprehensive molecular portraits of human breast tumours"
+authors: "TCGA Network"
+year: 2012
+venue: "Nature"
+doi: "10.1038/nature11412"
+topics: [DATA]
+citation:
+  key: tcga-brca-2012
+  short_id: tcga-brca-2012
+sources:
+  paper:
+    url: "https://www.nature.com/articles/nature11412"
+categorization:
+  importance:
+    level: 상
+    perspective: "TCGA-BRCA 코호트 정의 — WSI + ER/PR/HER2/PAM50 라벨, 4개 subtype. BIOP02 주 학습 코호트의 marker paper."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: "summary"

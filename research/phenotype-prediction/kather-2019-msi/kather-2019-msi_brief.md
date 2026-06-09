@@ -1,0 +1,3 @@
+# kather-2019-msi — Brief
+
+**핵심 기여 (Korean+English).** Kather 외(2019, Nature Medicine)는 gastrointestinal(GI, 주로 대장·위) 암의 H&E 조직 이미지에서 deep learning으로 microsatellite instability(MSI) 상태를 직접 예측할 수 있음을 보였다. MSI는 immune checkpoint inhibitor(ICI) 적격성을 결정하는 임상 biomarker이므로, 본 연구는 **"형태→biomarker→치료 적합성"이라는 서사의 원형**을 제시했다. 방법 요지는 TCGA 등 코호트의 타일 단위 CNN 분류와 슬라이드 집계로 MSI-high/MSS를 구분하는 것이다. BIOP02 관점에서 이 논문은 형태 기반 biomarker가 치료 결정과 연결되는 paradigm의 대표 prior art로 인용 가치가 있으나 — **중요 주의: BIOP02 금지사항(Prohibition)상 cell-line 전이를 통한 ICI/Pembrolizumab 권고는 금지**되어 있어, 본 논문의 "MSI→ICI" framing을 우리 치료가설로 차용해서는 안 된다. 즉 본 논문은 biomarker→치료 연결의 선례로만 인용하고, BIOP02는 hypothesis-only·DepMap/GDSC 민감도 전이·DRP 아님이라는 점에서 명확히 선을 그어야 한다(장기도 GI vs BRCA로 다름). DOI는 CrossRef 확인됨(`10.1038/s41591-019-0462-y`).

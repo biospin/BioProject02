@@ -1,0 +1,73 @@
+paper_id: olsson-2022-conformal
+title: "Estimating diagnostic uncertainty in artificial intelligence assisted pathology using conformal prediction"
+authors: "Olsson H, Kartasalo K, Mulliqi N, et al. (incl. Egevad L, Eklund M)"
+year: 2022
+venue: "Nature Communications"
+doi: "10.1038/s41467-022-34945-8"
+url: "https://www.nature.com/articles/s41467-022-34945-8"
+pmc: "PMC9755280"        # Nat Commun 2022 Dec 15;13:7761
+code: "https://github.com/heolss/Conformal_analyses"
+zenodo: "10.5281/zenodo.7147740"
+license: "open access (CC-BY); patient WSI data NOT public (privacy)"
+
+importance_level: "상"
+perspective: "uncertainty-gated abstention for hypothesis emission"
+
+# BIOP02 role: distribution-free, finite-sample coverage guarantee to decide
+# WHEN a BRCA phenotype prediction is trustworthy enough to emit a therapeutic
+# hypothesis. Directly addresses the HER2-E F1 ceiling: abstain instead of
+# emitting a low-confidence hypothesis. Pathology-native precedent (prostate).
+biop02_role: "uncertainty-gated abstention layer on phenotype head; suppress low-confidence (esp. HER2-E) hypotheses; pathology-native conformal precedent for npj Precision Oncology"
+
+key_facts:
+  method: "Mondrian inductive conformal prediction (ICP), class-conditional"
+  nonconformity_measure: "1 - predicted class probability"
+  calibration_set: "10% of training = 837 biopsies from 123 men"
+  significance_levels:
+    cancer_detection_epsilon: 0.001       # 99.9% confidence
+    isup_grading_confidence: [0.67, 0.80] # 67% and 80% confidence
+  coverage_guarantee: "marginal, distribution-free, finite-sample (validity under exchangeability)"
+  cancer_type: "prostate adenocarcinoma"
+  tasks: ["binary cancer detection (benign/malignant)", "ISUP grading 1-5"]
+  model_architecture: "2 ensembles x 30 Inception-V3 (ImageNet-pretrained) -> gradient-boosted trees slide-level classifier"
+  cohort: "STHLM3 diagnostic study"
+  training_biopsies: 7788          # 1192 men; 6951 train + 837 calibration
+  scanners_train: ["Hamamatsu C9600-12", "Aperio ScanScope AT2"]
+  test_biopsies_total: 3059        # 676 men across 6 test sets
+
+headline_results:
+  # ANCHOR VERIFIED against PMC full text (do not edit without re-grounding)
+  cancer_detect_err_with_cp: "1/794 = 0.1%"     # 99.9% confidence, same-lab Test set 1
+  cancer_detect_err_without_cp: "14/794 = 2%"
+  cancer_detect_flagged_unreliable: "175/794 = 22%"  # multiple-label prediction sets
+  isup_err_with_cp_67conf: "98/350 = 28% (+10 empty, 72/350=20% multiple)"
+  isup_err_without_cp: "117/350 = 33%"
+  atypical_err_with_cp: "3/179 = 2% (vs 44/179 = 25% without); 143/179 = 80% flagged"
+  external_scanner_drift: "CP flags systematic distribution shift on as few as 49 external observations"
+
+test_sets:
+  - "Test set 1: same lab/scanner baseline (794 biopsies, 123 men)"
+  - "Test set 2: Imagebase reference (87 biopsies, 23 pathologists)"
+  - "Test set 3: external scanner (449 biopsies)"
+  - "Test set 4: external lab/scanner (330 biopsies)"
+  - "Test set 5: external prospective, Stavanger Univ Hospital (1220 biopsies)"
+  - "Test set 6: rare/atypical morphologies (179 biopsies)"
+
+limitations:
+  - "No prospective deployment validation"
+  - "Simple nonconformity measure; advanced CP could yield tighter prediction regions"
+  - "Prostate-only; cross-domain generalization untested"
+  - "Marginal (not conditional) coverage; per-subgroup validity not guaranteed"
+
+related_papers:
+  - dolezal-2022-uncertainty     # FM/H&E uncertainty quantification (thresholded confidence)
+  - guo-2017-calibration         # temperature scaling, calibrates softmax pre-CP
+  - wang-2025-truecam            # nearest FM + conformal blueprint (preprint)
+
+pairs_with:
+  - "Guo 2017 temperature scaling (calibrated probs feed nonconformity measure)"
+  - "Gal 2016 MC-dropout (epistemic uncertainty; complementary to CP coverage)"
+
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"

@@ -1,0 +1,21 @@
+document_type: paper
+title: "Integrative Analysis of Complex Cancer Genomics and Clinical Profiles Using cBioPortal"
+authors: "Gao J et al."
+year: 2013
+venue: "Science Signaling"
+doi: "10.1126/scisignal.2004088"
+topics: [DATA]
+citation:
+  key: cbioportal-gao-2013
+  short_id: gao-2013
+sources:
+  paper:
+    url: "https://www.science.org/doi/10.1126/scisignal.2004088"
+categorization:
+  importance:
+    level: 중
+    perspective: "cBioPortal 통합분석 후속 — TCGA/CPTAC 라벨·API 접근층. BIOP02 라벨 수집 인프라 (Cerami 2012와 함께 인용)."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: "summary"

@@ -1,0 +1,3 @@
+# H-optimus-0 (Saillard et al. / Bioptimus, 2024, Model release)
+
+H-optimus-0는 Bioptimus가 공개한 11억 파라미터 규모의 ViT-Giant 병리 foundation model로, 여러 벤치마크에서 상위권 성능을 보고하며 **MIT 라이선스**로 완전 개방돼 있다. peer-review 논문 없이 모델 릴리스 형태로 배포되므로 인용 시 모델 카드로 참조해야 한다. BIOP02 관점에서 H-optimus-0는 **임베딩 백본 후보이자 개방-라이선스 baseline**이다. H&E WSI → 임베딩 → BRCA 분자 표현형(ER/PR/HER2/PAM50) 예측 파이프라인에서 feature extractor로 쓸 수 있으며, 벤치마크(campanella-2025, neidlinger-2024) 수렴 신호에서 Virchow2/Prov-GigaPath/UNI와 함께 상위 클러스터에 든다. 라이선스가 관대해 출판·재현 측면에서 유리한 비교군이 된다. **DOI는 unverified**(모델 릴리스, peer-review 논문 부재)이므로 인용 시 HuggingFace 모델 페이지로 표기한다. 우리는 hypothesis-only 시스템이므로 이 모델은 형태→표현형 중간단계의 임베딩 추출에만 사용한다.

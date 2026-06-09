@@ -1,0 +1,21 @@
+document_type: paper
+title: "Deep learning-enabled breast cancer hormonal receptor status determination from base-level H&E stains"
+authors: "Naik N et al."
+year: 2020
+venue: "Nature Communications"
+doi: "10.1038/s41467-020-19334-3"
+topics: [PHENO]
+citation:
+  key: naik-2020-natcommun
+  short_id: naik-2020
+sources:
+  paper:
+    url: "https://www.nature.com/articles/s41467-020-19334-3"
+categorization:
+  importance:
+    level: 상
+    perspective: "MIL로 H&E WSI에서 ER(+PR) status 예측 (TCGA-BRCA + 외부 코호트). BIOP02의 ER/PR attention-MIL과 직접 겹치는 가장 가까운 scoop 후보."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: "summary"

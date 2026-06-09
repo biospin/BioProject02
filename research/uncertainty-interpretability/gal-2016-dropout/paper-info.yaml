@@ -1,0 +1,21 @@
+document_type: paper
+title: "Dropout as a Bayesian Approximation: Representing Model Uncertainty in Deep Learning"
+authors: Gal Y & Ghahramani Z
+year: 2016
+venue: ICML 2016
+doi: "unverified"
+topics: [UQ]
+citation:
+  key: gal2016dropout
+  short_id: gal-2016-dropout
+sources:
+  paper:
+    url: https://proceedings.mlr.press/v48/gal16.html
+categorization:
+  importance:
+    level: 중
+    perspective: "MC-dropout 불확실성 추정의 이론적 토대 — BIOP02 게이팅 신호(dolezal-2022 채택)의 방법론 근거."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

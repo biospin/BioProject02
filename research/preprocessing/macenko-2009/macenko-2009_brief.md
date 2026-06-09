@@ -1,0 +1,3 @@
+# Macenko Stain Normalization (Macenko et al., 2009, IEEE ISBI)
+
+Macenko 방법은 H&E 슬라이드의 stain color를 정규화하는 고전적 기법으로, optical density(OD) 공간으로 변환한 뒤 SVD로 stain 벡터를 추정해 색을 표준 기준에 맞춘다. 계산이 단순하고 안정적이어서 계산병리에서 **de-facto stain 정규화 baseline**으로 자리잡았다. BIOP02 관점에서 Macenko는 **전처리 단계의 정규화 기준선이자 robustness ablation 기준**이다. H&E WSI 타일링 → FM 임베딩 전 단계에서 색 변이(스캐너·기관별 차이)를 줄이는 표준 방법으로 적용하며, vahadane-2016·reinhard-2001 같은 대안 정규화와 비교하는 ablation의 기준점이 된다. 다만 tellez-2019가 보였듯 정규화 단독 의존은 권장되지 않고 heavy stain augmentation과 병용해야 하며, 색 정규화로도 기관별 site signature(howard-2021)는 완전히 제거되지 않으므로 site-aware split의 보완책으로만 다룬다. DOI는 검증됨(10.1109/ISBI.2009.5193250).

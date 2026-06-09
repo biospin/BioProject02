@@ -1,0 +1,21 @@
+document_type: paper
+title: "Deep learning trained on H&E tumor ROIs predicts HER2 status and trastuzumab treatment response"
+authors: "Farahmand S et al."
+year: 2022
+venue: "Modern Pathology"
+doi: "10.1038/s41379-021-00911-w"
+topics: [PHENO]
+citation:
+  key: farahmand-2022-modpathol
+  short_id: farahmand-2022
+sources:
+  paper:
+    url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC10221954/"
+categorization:
+  importance:
+    level: 중
+    perspective: "HER2 상태 + trastuzumab 반응 예측(AUC 0.80). biomarker→치료결과 결합 — BIOP02 치료가설 목표와 부분 겹침(SCOOP-THERAPY). 차이=cell-line 전이·hypothesis-only·다약물 랭킹."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: "summary"

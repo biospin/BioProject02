@@ -1,0 +1,21 @@
+document_type: paper
+title: "pRRophetic: an R package for prediction of clinical chemotherapeutic response from tumor gene expression levels"
+authors: "Geeleher P et al."
+year: 2014
+venue: "PLOS ONE"
+doi: "10.1371/journal.pone.0107468"  # unverified
+topics: [DRUG]
+citation:
+  key: geeleher-2014-prrophetic
+  short_id: geeleher2014p
+sources:
+  paper:
+    url: "https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0107468"
+categorization:
+  importance:
+    level: 중
+    perspective: "발현→cell-line 민감도 imputation 표준 R 도구 — BIOP02 표현형→약물 전이 구현의 참조 베이스라인."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

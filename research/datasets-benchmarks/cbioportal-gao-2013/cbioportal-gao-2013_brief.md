@@ -1,0 +1,3 @@
+# cbioportal-gao-2013 — Brief
+
+**핵심 기여 (Korean+English).** Gao 외(2013, Science Signaling)는 cBioPortal의 통합 분석(integrative analysis) 기능을 확장·정식화한 후속 논문으로, 복잡한 암 유전체 데이터와 임상 프로파일을 교차 분석하고 프로그래밍 방식(REST API, R/Python 접근)으로 대량 추출할 수 있는 기능을 기술한다. 방법 요지는 Cerami 외(2012)가 도입한 포털 위에 cross-cancer 쿼리·임상 상관 분석·API 접근층을 더한 것이다. BIOP02 관점에서 이 논문은 **TCGA-BRCA/CPTAC의 ER/PR/HER2 IHC, PAM50, 변이, 임상 endpoint 라벨을 자동으로 수집하는 라벨 인프라**로 DATA 영역에서 활용된다. 일반적으로 원 포털 논문 Cerami 외(2012, `cbioportal-cerami-2012`)와 **함께 묶어 인용**하는 것이 관례다(둘이 cBioPortal의 표준 인용 쌍). 본 논문 역시 코호트/벤치마크가 아니라 라벨 provenance·접근 도구이므로, patient-level·site-disjoint split 등 leakage 통제는 별도 RIGOR 근거(Howard 2021, Bussola 2020)로 보장해야 한다. DOI는 CrossRef 확인됨(`10.1126/scisignal.2004088`).

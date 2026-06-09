@@ -1,0 +1,21 @@
+document_type: paper
+title: "Clinical drug response can be predicted using baseline gene expression levels and in vitro drug sensitivity in cell lines"
+authors: "Geeleher P et al."
+year: 2014
+venue: "Genome Biology"
+doi: "10.1186/gb-2014-15-3-r47"  # unverified
+topics: [DRUG]
+citation:
+  key: geeleher-2014-transfer
+  short_id: geeleher2014t
+sources:
+  paper:
+    url: "https://genomebiology.biomedcentral.com/articles/10.1186/gb-2014-15-3-r47"
+categorization:
+  importance:
+    level: 상
+    perspective: "종양 발현→cell-line 약물민감도 전이 방법론의 원형 — BIOP02 표현형→민감도 bridge의 개념적 조상."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

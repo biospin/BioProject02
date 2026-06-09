@@ -1,0 +1,21 @@
+document_type: paper
+title: "LLM Evaluators Recognize and Favor Their Own Generations"
+authors: Panickssery A et al.
+year: 2024
+venue: NeurIPS 2024
+doi: "unverified"
+topics: [AGENT]
+citation:
+  key: panickssery2024selfpreference
+  short_id: panickssery-2024-selfpreference
+sources:
+  paper:
+    url: https://proceedings.neurips.cc/paper_files/paper/2024/hash/7f1f0218e45f5414c79c0679633e47bc-Abstract-Conference.html
+categorization:
+  importance:
+    level: 상
+    perspective: "LLM이 자기 출력을 인식·선호함을 인과적으로 입증 — BIOP02 anti-self-reference 규칙의 최강 단일 근거."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

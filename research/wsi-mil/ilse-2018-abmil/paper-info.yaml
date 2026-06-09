@@ -1,0 +1,21 @@
+document_type: paper
+title: Attention-based Deep Multiple Instance Learning
+authors: Ilse M et al.
+year: 2018
+venue: ICML 2018
+doi: unverified
+topics: [MIL]
+citation:
+  key: ilse-2018-abmil
+  short_id: Ilse2018
+sources:
+  paper:
+    url: https://proceedings.mlr.press/v80/ilse18a.html
+categorization:
+  importance:
+    level: 상
+    perspective: "BIOP02의 1차 attention-MIL baseline — MLP→attention MIL 진행과 정확히 일치하는 gated-attention pooling 정전."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

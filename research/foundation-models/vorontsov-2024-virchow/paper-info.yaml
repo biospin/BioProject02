@@ -1,0 +1,21 @@
+document_type: paper
+title: A foundation model for clinical-grade computational pathology and rare cancers detection
+authors: Vorontsov E et al.
+year: 2024
+venue: Nature Medicine
+doi: 10.1038/s41591-024-03141-0
+topics: [FM]
+citation:
+  key: vorontsov-2024-virchow
+  short_id: Vorontsov2024
+sources:
+  paper:
+    url: https://www.nature.com/articles/s41591-024-03141-0
+categorization:
+  importance:
+    level: 상
+    perspective: "Apache 2.0 라이선스의 대규모 ViT-H 백본 후보 — 출판 친화적이며 BIOP02 임베딩 단계의 관대-라이선스 옵션."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

@@ -1,0 +1,21 @@
+document_type: paper
+title: "A deep learning model to predict RNA-Seq expression of tumours from whole slide images (HE2RNA)"
+authors: "Schmauch B et al."
+year: 2020
+venue: "Nature Communications"
+doi: "10.1038/s41467-020-17678-4"
+topics: [PHENO]
+citation:
+  key: schmauch-2020-he2rna
+  short_id: schmauch-2020
+sources:
+  paper:
+    url: "https://www.nature.com/articles/s41467-020-17678-4"
+categorization:
+  importance:
+    level: 중
+    perspective: "HE2RNA — WSI에서 RNA-Seq 발현 예측, 학습표현이 소규모 코호트로 전이. PAM50(발현정의)·전이 개념과 직접 평행 — scoop 인접."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: "summary"

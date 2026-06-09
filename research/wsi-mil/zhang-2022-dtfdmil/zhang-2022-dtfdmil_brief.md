@@ -1,0 +1,3 @@
+# DTFD-MIL (Zhang et al., 2022, CVPR)
+
+DTFD-MIL(Double-Tier Feature Distillation MIL)은 슬라이드 수가 적은 소코호트 문제를 완화하기 위해 각 WSI를 여러 **pseudo-bag**으로 분할해 학습 표본을 늘리고, 두 단계(이중 티어)의 feature distillation으로 정보 손실을 보정하는 집계자다. BIOP02 관점에서 DTFD-MIL은 **소코호트에 직접 관련된 MIL 비교군**이다. Paper A 범위가 약 150 슬라이드 BRCA subset(TCGA WSI 전체 다운로드 금지)인 만큼, pseudo-bag으로 sample 부족을 완화하는 이 설계는 우리 데이터 규모에 특히 적합하다. H&E WSI 타일 임베딩 → 슬라이드-레벨 BRCA 표현형(ER/PR/HER2/PAM50) 집계에서 ABMIL(1차 baseline)·CLAM·TransMIL과 비교해 소표본 robustness를 점검한다. **DOI는 unverified**(CVPR proceedings — DOI 없음)이므로 CVF proceedings URL로 인용하며 가짜 DOI 날조를 금한다. 우리는 hypothesis-only 시스템이므로 이 집계자는 표현형 예측 중간단계에만 활용한다.

@@ -1,0 +1,21 @@
+document_type: paper
+title: A whole-slide foundation model for digital pathology from real-world data
+authors: Xu H et al.
+year: 2024
+venue: Nature
+doi: 10.1038/s41586-024-07441-w
+topics: [FM]
+citation:
+  key: xu-2024-provgigapath
+  short_id: Xu2024
+sources:
+  paper:
+    url: https://www.nature.com/articles/s41586-024-07441-w
+categorization:
+  importance:
+    level: 상
+    perspective: "슬라이드 인코더(LongNet) 내장 백본 후보 — BIOP02의 ER/PR/HER2/PAM50 슬라이드-레벨 표현형 예측에 강력한 임베딩 옵션."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary
