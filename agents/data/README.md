@@ -46,8 +46,20 @@ python agents/data/scripts/build_manifest.py \
     --clinical  /path/to/clinical_patient_brca.txt \
     --out       agents/data/manifests/tcga_brca_manifest.csv
 
-# 3) manifest 기반 스트리밍 다운로드+tiling+임베딩 (다음 단계, agents/data/scripts/download_*.py)
+# 3) manifest 기반 스트리밍: NAS 다운로드 → tiling → 임베딩 → raw 삭제 (한 장씩, 디스크 최소)
+python agents/data/scripts/stream_download_embed.py \
+    --manifest agents/data/manifests/tcga_brca_manifest.csv \
+    --config   agents/embedding/configs/tile_config.yaml \
+    --cache-dir /data/cache/biop02/raw \
+    --tile-dir  /data/cache/biop02/tiles \
+    --embedding-dir /data/embeddings/biop02/uni_v1 \
+    --output-manifest /data/embeddings/biop02/stream_status.csv \
+    --embedding-model uni        # conch/exaone는 feat/BIOP02-31 머지 후 사용 가능
 ```
+
+스트리밍 원칙: raw `.svs`는 임베딩 추출 직후 삭제 → 동시 디스크 사용 수십 GB,
+1010장 처리 후 남는 건 임베딩 ~20GB. resumable(임베딩 존재 시 skip), 슬라이드마다
+상태 CSV flush(크래시 시 최대 1장만 손실).
 
 생성된 `*_inventory.csv` / `*_manifest.csv`는 **반드시 git 커밋**한다 (수 MB, 손실 방지 핵심).
 
