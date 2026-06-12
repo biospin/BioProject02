@@ -173,15 +173,20 @@ def process_row(row: dict[str, str], args: argparse.Namespace) -> dict[str, Any]
             return result
 
         extractor = {
-            "uni": "agents/embedding/scripts/extract_uni.py",
-            "dummy": "agents/embedding/scripts/extract_dummy.py",
+            "uni":    "agents/embedding/scripts/extract_uni.py",
+            "conch":  "agents/embedding/scripts/extract_conch.py",
+            "exaone": "agents/embedding/scripts/extract_exaone.py",
+            "dummy":  "agents/embedding/scripts/extract_dummy.py",
         }[args.embedding_model]
 
         expected_suffix = {
-            "uni": "_uni_embeddings.npy",
-            "dummy": "_dummy_embeddings.npy",
+            "uni":    "_uni_embeddings.npy",
+            "conch":  "_conch_embeddings.npy",
+            "exaone": "_exaone_embeddings.npy",
+            "dummy":  "_dummy_embeddings.npy",
         }[args.embedding_model]
-        expected_stem = slide_path.stem if args.embedding_model == "uni" else slide_id
+        gpu_models = {"uni", "conch", "exaone"}
+        expected_stem = slide_path.stem if args.embedding_model in gpu_models else slide_id
         expected_embedding = embedding_dir / f"{expected_stem}{expected_suffix}"
 
         need_embed = args.overwrite or not expected_embedding.exists()
@@ -194,7 +199,7 @@ def process_row(row: dict[str, str], args: argparse.Namespace) -> dict[str, Any]
                 "--out_dir",
                 str(embedding_dir),
             ]
-            if args.embedding_model == "uni":
+            if args.embedding_model in gpu_models:
                 cmd.extend(["--batch_size", str(args.batch_size), "--device", args.device])
             code, elapsed = _run(cmd, args.dry_run)
             result["embedding_seconds"] = f"{elapsed:.1f}"
@@ -223,7 +228,7 @@ def main() -> None:
     parser.add_argument("--tile_dir", required=True, help="Directory for coords.npy/json outputs")
     parser.add_argument("--embedding_dir", required=True, help="Directory for embedding .npy outputs")
     parser.add_argument("--output_manifest", required=True, help="CSV manifest to write for downstream agents")
-    parser.add_argument("--embedding_model", choices=["uni", "dummy", "none"], default="uni")
+    parser.add_argument("--embedding_model", choices=["uni", "conch", "exaone", "dummy", "none"], default="uni")
     parser.add_argument("--batch_size", type=int, default=64, help="UNI batch size")
     parser.add_argument("--device", default="cuda", help="UNI device: cuda or cpu")
     parser.add_argument("--overwrite", action="store_true", help="Recompute outputs even if files exist")
