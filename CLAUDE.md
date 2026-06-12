@@ -25,9 +25,9 @@ Goal: H&E WSI → morphology embedding → molecular phenotype prediction → De
 |---|---|---|---|---|---|---|
 | jamie (jmryu) | JamieLyu | jamie.orangecounty@gmail.com | jamie.orangecounty@gmail.com | jamie-openclaw-bot |2201 | Data Agent — TCGA/CPTAC manifests, labels, splits |
 | kkkim (gkkim) | kakyungkim | kakyung.kim@gmail.com | kakyung.kim@gmail.com | kakyung.kim-openclaw-bot | 2202 | Embedding Agent — WSI tiling, foundation model extraction |
-| gglee (gklee) | Geongyu | rjsrb365@gmail.com | rjsrb365@gmail.com | ggyu-claw | 2203 | Scientific Critic + Project Leader |
+| gglee (gklee) | Geongyu | rjsrb365@gmail.com | rjsrb365@gmail.com | ggyu-claw | 2203 | Scientific Critic (보조) |
 | sjpark | sezinie000 | sezinie000@gmail.com | sezinie000@gmail.com | sezinie-openclaw-bot | 2204 | Modeling Agent — phenotype prediction (MLP, attention MIL) |
-| braveji (ykji) | braveji18 | biospinleader@gmail.com  | biospinleader@gmail.com | yong-openclaw-bot |  2205 | Orchestrator — pipeline coordination, infra, schemas |
+| braveji (ykji) | braveji18 | biospinleader@gmail.com  | biospinleader@gmail.com | yong-openclaw-bot |  2205 | Orchestrator + Scientific Critic + Project Leader |
 | jhans | JeonghanSeo | phoenicx16@gmail.com | phoenicx16@gmail.com |  | 2206 |  Therapeutic Evidence Agent — DepMap/GDSC drug linking |
 
 ## Infrastructure
@@ -80,7 +80,7 @@ agents/
     baselines/mlp.py
     configs/baseline_er_status.yaml
   therapeutic_evidence/   # jhans — DepMap/GDSC schema, drug linking
-  critic/         # gglee — checklist, anti-patterns, validation
+  critic/         # braveji — checklist, anti-patterns, validation
     checklist_v1.md
     anti_patterns.md
 schemas/
@@ -180,9 +180,9 @@ kkkim (임베딩 완료)
   └→ sjpark (dummy → 실제 임베딩 교체)
 
 sjpark (MLP 결과)
-  └→ gglee (critic_report.json 작성 시작)
+  └→ braveji (critic_report.json 작성 시작)
 
-gglee (critic_status: pass)
+braveji (critic_status: pass)
   └→ braveji (결과 공유 + experiments registry 등록)
 ```
 
@@ -199,7 +199,7 @@ gglee (critic_status: pass)
 | sjpark (모델링 결과) | kkkim |
 | kkkim (임베딩 결과) | jamie |
 | jamie (데이터/split) | braveji |
-| jhans (TE 결과) | gglee |
+| jhans (TE 결과) | braveji |
 
 **7-point Critic checklist:**
 1. Data leakage check
@@ -232,7 +232,7 @@ gglee (critic_status: pass)
 | Sprint 7 | 8/14 – 8/28 | Paper A draft + all 7 Critic items passed |
 | Sprint 8 | 8/28 – 9/11 | Paper A submission |
 
-Weekly sync: **every Friday**, 60 min. Leader: gglee. Orchestrator/minutes: braveji.
+Weekly sync: **every Friday**, 60 min. Leader: braveji. Minutes: braveji.
 
 ## Data Sources
 
