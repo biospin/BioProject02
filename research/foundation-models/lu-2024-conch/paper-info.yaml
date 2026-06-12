@@ -1,0 +1,21 @@
+document_type: paper
+title: A visual-language foundation model for computational pathology
+authors: Lu MY et al.
+year: 2024
+venue: Nature Medicine
+doi: 10.1038/s41591-024-02856-4
+topics: [FM]
+citation:
+  key: lu-2024-conch
+  short_id: Lu2024
+sources:
+  paper:
+    url: https://www.nature.com/articles/s41591-024-02856-4
+categorization:
+  importance:
+    level: 중
+    perspective: "vision-language 백본 후보 — BIOP02 임베딩 대안이나 순수 백본으론 UNI보다 약함, zero-shot/텍스트 검색 옵션."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

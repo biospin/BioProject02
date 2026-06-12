@@ -1,0 +1,21 @@
+document_type: paper
+title: "Genomics of Drug Sensitivity in Cancer (GDSC): a resource for therapeutic biomarker discovery in cancer cells"
+authors: "Yang W et al."
+year: 2013
+venue: "Nucleic Acids Research"
+doi: "10.1093/nar/gks1111"  # unverified
+topics: [DRUG]
+citation:
+  key: yang-2013-gdsc
+  short_id: yang2013
+sources:
+  paper:
+    url: "https://academic.oup.com/nar/article/41/D1/D955/1059448"
+categorization:
+  importance:
+    level: 중
+    perspective: "GDSC 데이터베이스 원 논문 — Iorio 2016과 함께 GDSC provenance를 명시하는 자원 인용."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

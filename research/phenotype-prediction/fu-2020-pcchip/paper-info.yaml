@@ -1,0 +1,21 @@
+document_type: paper
+title: "Pan-cancer computational histopathology reveals mutations, tumor composition and prognosis (PC-CHiP)"
+authors: "Fu Y et al."
+year: 2020
+venue: "Nature Cancer"
+doi: "10.1038/s43018-020-0085-8"
+topics: [PHENO]
+citation:
+  key: fu-2020-pcchip
+  short_id: fu-2020
+sources:
+  paper:
+    url: "https://www.nature.com/articles/s43018-020-0085-8"
+categorization:
+  importance:
+    level: 중
+    perspective: "PC-CHiP, 17,355 TCGA 슬라이드·28암종. 학습 형태특징이 genomic aberration·발현·예후와 상관 — 형태→분자상관 mechanistic 근거 (scoop 인접)."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: "summary"

@@ -1,0 +1,21 @@
+document_type: paper
+title: "H-optimus-0: an open-source ViT-Giant pathology foundation model"
+authors: Saillard C et al. (Bioptimus)
+year: 2024
+venue: Model release
+doi: unverified
+topics: [FM]
+citation:
+  key: saillard-2024-hoptimus0
+  short_id: Saillard2024
+sources:
+  paper:
+    url: https://huggingface.co/bioptimus/H-optimus-0
+categorization:
+  importance:
+    level: 중
+    perspective: "MIT 라이선스 개방 ViT-Giant 백본 후보 — BIOP02 임베딩의 개방-라이선스 baseline 옵션(peer-review 논문 없음)."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

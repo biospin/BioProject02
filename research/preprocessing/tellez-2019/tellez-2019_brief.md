@@ -1,0 +1,3 @@
+# Augmentation vs Stain Normalization (Tellez et al., 2019, Medical Image Analysis)
+
+Tellez 등은 계산병리 CNN에서 **data augmentation과 stain color normalization의 효과를 체계적·정량적으로 비교**한 결정적 연구다. 핵심 결론은 heavy stain augmentation이 단일 기법으로는 가장 효과적이며, augmentation과 normalization을 함께 쓰는 조합이 최고 성능을 낸다는 것이다. 이는 정규화 단독에 의존하는 관행에 대한 강한 반례다. BIOP02 관점에서 이 논문은 **전처리 정책의 근거 자료**다. H&E WSI 타일링 → 임베딩 파이프라인에서 색 정규화(macenko-2009 등)에만 의존하지 말고 heavy stain augmentation을 함께 적용해야 한다는 의사결정을 뒷받침하며, 기관별 색 변이로 인한 일반화 저하(TCGA train → CPTAC test)를 줄이는 전략의 핵심 인용이 된다. dejong-2025·howard-2021과 함께 site-aware 전처리·split을 정당화한다. 우리는 hypothesis-only 시스템이므로 이 자료는 임베딩 전 전처리 robustness 설계에만 쓴다. DOI는 검증됨(10.1016/j.media.2019.101544).

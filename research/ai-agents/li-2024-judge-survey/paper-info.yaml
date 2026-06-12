@@ -1,0 +1,21 @@
+document_type: paper
+title: "From Generation to Judgment: Opportunities and Challenges of LLM-as-a-Judge"
+authors: Li H et al.
+year: 2024
+venue: arXiv 2411.16594
+doi: "unverified"
+topics: [AGENT]
+citation:
+  key: li2024judgesurvey
+  short_id: li-2024-judge-survey
+sources:
+  paper:
+    url: https://arxiv.org/abs/2411.16594
+categorization:
+  importance:
+    level: 중
+    perspective: "LLM-as-judge 서베이 — BIOP02 Critic 설계의 편향·신뢰성 체크리스트 맥락 제공."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

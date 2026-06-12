@@ -1,0 +1,21 @@
+document_type: paper
+title: "Pan-cancer image-based detection of clinically actionable genetic alterations"
+authors: "Kather JN et al."
+year: 2020
+venue: "Nature Cancer"
+doi: "10.1038/s43018-020-0087-6"
+topics: [PHENO]
+citation:
+  key: kather-2020-actionable
+  short_id: kather-2020
+sources:
+  paper:
+    url: "https://www.nature.com/articles/s43018-020-0087-6"
+categorization:
+  importance:
+    level: 중
+    perspective: "pan-cancer 5천+ 환자, H&E에서 mutation·subtype·발현 signature·biomarker(BRCA ER 포함) 추론. 형태→분자 feasibility 핵심 인용 — scoop 인접."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: "summary"

@@ -1,0 +1,21 @@
+document_type: paper
+title: "HEST-1k: A Dataset for Spatial Transcriptomics and Histology Image Analysis"
+authors: "Jaume G et al."
+year: 2024
+venue: "NeurIPS 2024"
+doi: "10.48550/arXiv.2406.16192"
+topics: [DATA]
+citation:
+  key: hest-1k-jaume-2024
+  short_id: hest-1k-2024
+sources:
+  paper:
+    url: "https://arxiv.org/abs/2406.16192"
+categorization:
+  importance:
+    level: 상
+    perspective: "HEST-1k — 1,229 ST+WSI 페어 + HEST-Benchmark(형태→발현). BIOP02 FM 임베딩의 외부 벤치마크 자원."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: "summary"

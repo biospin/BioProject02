@@ -1,0 +1,104 @@
+document_type: paper
+title: "The impact of site-specific digital histology signatures on deep learning model accuracy and bias"
+authors:
+  - "Frederick M. Howard"
+  - "James Dolezal"
+  - "Sara Kochanny"
+  - "Jefree Schulte"
+  - "Heather Chen"
+  - "Lara Heij"
+  - "Dezheng Huo"
+  - "Rita Nanda"
+  - "Olufunmilayo I. Olopade"
+  - "Jakob N. Kather"
+  - "Nicole Cipriani"
+  - "Robert L. Grossman"
+  - "Alexander T. Pearson"
+year: 2021
+venue: "Nature Communications"
+doi: "10.1038/s41467-021-24698-1"
+keywords:
+  - submitting-site signature / batch effect
+  - TCGA site confounding
+  - data leakage in computational pathology
+  - preserved-site cross-validation
+  - quadratic-programming fold assignment
+  - stain normalization limitations
+  - algorithmic bias / ancestry leakage
+  - H&E whole-slide imaging
+version:
+  type: published (Version of Record)
+  peer_reviewed: true
+  published:
+    date: "2021-07-20"
+    volume: "12"
+    article: "4423"
+topics:
+  - site-aware-splitting (data-leakage anchor)
+  - confounder / shortcut learning in WSI DL
+  - cross-validation fold construction (QP)
+  - fairness / demographic leakage via batch effect
+citation:
+  key: howard-2021-site-signatures
+  short_id: site-signatures
+sources:
+  paper:
+    url: "https://www.nature.com/articles/s41467-021-24698-1"
+    doi: "10.1038/s41467-021-24698-1"
+    status: verified (WebFetch via nature.com fulltext + Methods section)
+  code:
+    - "https://github.com/fmhoward/PreservedSiteCV"   # preserved-site CV (quadratic programming)
+  data:
+    - "https://portal.gdc.cancer.gov/"   # TCGA WSIs: BRCA, LUAD, LUSC, COAD/READ, KIRC, HNSC
+categorization:
+  domain:
+    - computational pathology
+    - machine-learning rigor / validation methodology
+    - algorithmic fairness in oncology
+  use_case:
+    - mandate site-disjoint (ideally site-preserved QP) splits for all phenotype models
+    - site-classifier probe to quantify residual batch effect (Exp2)
+    - reviewer-defense anchor for Critic check #1 (data leakage)
+  importance:
+    level: 상
+    perspective: >
+      BIOP02's STRONGEST rigor / leakage-defense anchor. THE canonical evidence
+      that TCGA H&E deep-learning models exploit submitting-site signatures that
+      survive stain normalization + augmentation, inflating accuracy for
+      survival / mutation / stage prediction and leaking patient ancestry via
+      site batch effect. Mandates site-aware splitting for our ER/PR/HER2/PAM50
+      models and underpins Exp2 (site-stratified vs random split + site-classifier
+      probe) — the shield Dawood/Tafavvoghi did NOT raise because they did not
+      control for site. Maps directly onto Scientific Critic checklist item #1.
+priority:
+  level: P0
+  reason: >
+    Defines the non-negotiable split protocol (split_policy_v0) and the single
+    most defensible methodological differentiator versus prior TCGA-BRCA H&E work.
+related:
+  - paper_id: bussola-2020-patientlevel
+    relation: methodological-sibling
+    note: >
+      Patient-level (not tile-level) partitioning to avoid leakage; Howard
+      extends the same leakage logic one level up — from patient to submitting site.
+  - paper_id: dejong-2025-robustness
+    relation: downstream-consequence
+    note: >
+      Robustness / generalization failures of WSI models; site signatures are a
+      concrete mechanism for the train-test optimism Howard quantifies.
+  - paper_id: tafavvoghi-2024-jpi
+    relation: contrast-survey
+    note: >
+      TCGA-BRCA H&E DL survey that does NOT enforce site-aware splitting; Howard
+      is the counter-evidence that lets us claim stronger validity than that
+      landscape (and than Dawood-2024-hids).
+workflow:
+  created: "2026-06-09"
+  last_updated: "2026-06-09"
+  analysis_status:
+    abstract: "done"
+    core: "done"
+    lens_academic: "done"
+    lens_industry: "done"
+    methodology_brief: "done"
+    slides: "skipped"

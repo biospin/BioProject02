@@ -1,0 +1,21 @@
+document_type: paper
+title: "Discovering the anticancer potential of non-oncology drugs by systematic viability profiling (PRISM)"
+authors: "Corsello SM et al."
+year: 2020
+venue: "Nature Cancer"
+doi: "10.1038/s43018-019-0018-6"  # unverified
+topics: [DRUG]
+citation:
+  key: corsello-2020-prism
+  short_id: corsello2020
+sources:
+  paper:
+    url: "https://www.nature.com/articles/s43018-019-0018-6"
+categorization:
+  importance:
+    level: 상
+    perspective: "DepMap PRISM 약물-세포주 viability 자원의 정의 논문 — BIOP02 표현형→약물민감도 전이의 1차 약물 랭킹 소스."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

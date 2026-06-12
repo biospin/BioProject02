@@ -1,0 +1,21 @@
+document_type: paper
+title: A clinical benchmark of public self-supervised pathology foundation models
+authors: Campanella G et al.
+year: 2025
+venue: Nature Communications
+doi: 10.1038/s41467-025-58796-1
+topics: [FM]
+citation:
+  key: campanella-2025-clinicalbench
+  short_id: Campanella2025
+sources:
+  paper:
+    url: https://www.nature.com/articles/s41467-025-58796-1
+categorization:
+  importance:
+    level: 상
+    perspective: "공개 FM 임상 벤치마크 — BIOP02 백본 선택의 근거 자료(UNI·Prov-GigaPath 일관 강세)."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

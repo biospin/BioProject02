@@ -1,0 +1,21 @@
+document_type: paper
+title: "Clinical utility of receptor status prediction and misdiagnosis identification via deep learning on H&E"
+authors: "Shamai G et al."
+year: 2024
+venue: "Communications Medicine"
+doi: "10.1038/s43856-024-00695-5"
+topics: [PHENO]
+citation:
+  key: shamai-2024-commsmed
+  short_id: shamai-2024
+sources:
+  paper:
+    url: "https://www.nature.com/articles/s43856-024-00695-5"
+categorization:
+  importance:
+    level: 상
+    perspective: "최신 ER/PR/HER2 from H&E + IHC 오진 탐지까지. BIOP02 PHENO의 현재 SOTA이자 가장 높은 baseline 기준선 — 직접 scoop."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: "summary"

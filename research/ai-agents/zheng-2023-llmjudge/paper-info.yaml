@@ -1,0 +1,21 @@
+document_type: paper
+title: "Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena"
+authors: Zheng L et al.
+year: 2023
+venue: NeurIPS 2023
+doi: "unverified"
+topics: [AGENT]
+citation:
+  key: zheng2023llmjudge
+  short_id: zheng-2023-llmjudge
+sources:
+  paper:
+    url: https://arxiv.org/abs/2306.05685
+categorization:
+  importance:
+    level: 상
+    perspective: "LLM-as-judge 타당성 + position/verbosity/self-enhancement 편향 — BIOP02 Critic=LLM-judge 정당화 및 owner≠reviewer 근거."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

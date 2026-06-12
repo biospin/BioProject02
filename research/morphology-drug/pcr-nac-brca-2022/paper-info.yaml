@@ -1,0 +1,21 @@
+document_type: paper
+title: "Deep learning with biopsy whole slide images for pretreatment prediction of pathological complete response to neoadjuvant chemotherapy in breast cancer"
+authors: "Li Y et al. (unverified)"
+year: 2022
+venue: "The Breast"
+doi: "unverified"
+topics: [DRUG]
+citation:
+  key: pcr-nac-brca-2022
+  short_id: pcrnac2022
+sources:
+  paper:
+    url: "https://pubmed.ncbi.nlm.nih.gov/36308926/"
+categorization:
+  importance:
+    level: 중
+    perspective: "biopsy WSI로 BRCA NAC pCR을 예측하는 대조 사례 — 관측된 반응 라벨 사용 vs BIOP02의 라벨 없는 cell-line 전이 가설을 구분."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

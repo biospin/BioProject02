@@ -1,0 +1,21 @@
+document_type: paper
+title: Quantifying effects of data augmentation and stain color normalization in CNNs
+authors: Tellez D et al.
+year: 2019
+venue: Medical Image Analysis
+doi: 10.1016/j.media.2019.101544
+topics: [PREP]
+citation:
+  key: tellez-2019
+  short_id: Tellez2019
+sources:
+  paper:
+    url: https://arxiv.org/abs/1902.06543
+categorization:
+  importance:
+    level: 상
+    perspective: "BIOP02 전처리 정책 근거 — heavy stain augmentation이 단일 최선, 정규화 단독 의존 회피 근거."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

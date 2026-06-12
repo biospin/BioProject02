@@ -1,0 +1,5 @@
+# pcr-nac-brca-2022 — brief
+
+본 연구(2022, The Breast; 저자/DOI unverified)는 **biopsy whole-slide image에 딥러닝을 적용해 유방암 신보조 화학요법(NAC)에 대한 병리학적 완전관해(pCR)를 치료 전 예측**한 사례다. 핵심 요지는 치료 전 H&E 형태로부터 실제 임상 반응 엔드포인트(pCR yes/no)를 직접 지도학습으로 예측한다는 점으로, 형태→치료반응 매핑의 직접적 prior art에 해당한다. BIOP02 관련성(DRUG=DRP/반응예측 대조): 본 논문은 **관측된 약물반응 라벨**(pCR)을 직접 사용하는 지도학습 패러다임으로, 이는 BIOP02와 핵심적으로 다르다 — BIOP02는 약물반응 라벨 없이 H&E→분자표현형을 거쳐 DepMap/GDSC cell-line 민감도로 **전이**해 hypothesis-only 치료가설을 랭킹한다. 즉 본 논문은 "관측 반응 라벨 직접학습 vs 라벨-free cell-line 전이 가설"의 대조군이자, 형태가 치료반응 정보를 담을 수 있다는 feasibility 근거로 인용된다. 약물 구조를 입력하지 않는 BIOP02는 mainstream DRP/반응예측과 framing이 구분된다. *저자·DOI·수치 unverified — 인용 전 PubMed/CrossRef 재확인 필요.*
+
+In short: This study supervises directly on observed pCR response labels, serving as BIOP02's contrast case — observed-response supervision vs BIOP02's label-free phenotype→cell-line sensitivity transfer producing hypothesis-only rankings — while supporting feasibility that morphology carries response signal. (author/DOI unverified)

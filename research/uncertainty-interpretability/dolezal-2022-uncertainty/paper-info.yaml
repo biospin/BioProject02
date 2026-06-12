@@ -1,0 +1,21 @@
+document_type: paper
+title: Uncertainty-informed deep learning enables high-confidence predictions for digital histopathology
+authors: Dolezal JM et al.
+year: 2022
+venue: Nature Communications
+doi: "10.1038/s41467-022-34025-x"
+topics: [UQ]
+citation:
+  key: dolezal2022uncertainty
+  short_id: dolezal-2022-uncertainty
+sources:
+  paper:
+    url: https://www.nature.com/articles/s41467-022-34025-x
+categorization:
+  importance:
+    level: 상
+    perspective: "train에서만 설정한 신뢰도 threshold로 high-confidence subset 보고 — BIOP02 가설 게이팅·TCGA→CPTAC 외부검증 템플릿."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

@@ -1,0 +1,21 @@
+document_type: paper
+title: Patient-level data segregation is crucial in clinical ML
+authors: Bussola N et al.
+year: 2020
+venue: medRxiv
+doi: "10.1101/2020.04.23.20076406"
+topics: [RIGOR]
+citation:
+  key: bussola2020patientlevel
+  short_id: bussola-2020-patientlevel
+sources:
+  paper:
+    url: https://www.medrxiv.org/content/10.1101/2020.04.23.20076406v1
+categorization:
+  importance:
+    level: 상
+    perspective: "환자 단위 분할이 누수 방지의 최소 요건임을 입증 — BIOP02 split_policy_v0의 직접 근거."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

@@ -1,0 +1,21 @@
+document_type: paper
+title: "Integration of the Drug-Gene Interaction Database (DGIdb 4.0) with open crowdsource efforts"
+authors: "Freshour SL et al."
+year: 2021
+venue: "Nucleic Acids Research"
+doi: "10.1093/nar/gkaa1084"  # unverified
+topics: [KB]
+citation:
+  key: freshour-2021-dgidb
+  short_id: freshour2021
+sources:
+  paper:
+    url: "https://academic.oup.com/nar/article/49/D1/D1144/6006193"
+categorization:
+  importance:
+    level: 중
+    perspective: "41개 소스 통합 drug-gene interaction DB — 표현형 driver 유전자→약물 매핑을 확장."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

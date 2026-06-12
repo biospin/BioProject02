@@ -1,0 +1,21 @@
+document_type: paper
+title: "DTFD-MIL: Double-Tier Feature Distillation MIL for WSI"
+authors: Zhang H et al.
+year: 2022
+venue: CVPR 2022
+doi: unverified
+topics: [MIL]
+citation:
+  key: zhang-2022-dtfdmil
+  short_id: Zhang2022
+sources:
+  paper:
+    url: https://openaccess.thecvf.com/content/CVPR2022/html/Zhang_DTFD-MIL_Double-Tier_Feature_Distillation_Multiple_Instance_Learning_for_Histopathology_Whole_CVPR_2022_paper.html
+categorization:
+  importance:
+    level: 중
+    perspective: "BIOP02 소코호트(~150슬라이드) 직접 관련 MIL — pseudo-bag으로 sample 부족 완화하는 이중티어 distillation."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

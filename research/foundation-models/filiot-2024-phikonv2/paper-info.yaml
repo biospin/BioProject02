@@ -1,0 +1,21 @@
+document_type: paper
+title: "Phikon-v2: A large and public feature extractor for biomarker prediction"
+authors: Filiot A et al.
+year: 2024
+venue: arXiv 2409.09173
+doi: unverified
+topics: [FM]
+citation:
+  key: filiot-2024-phikonv2
+  short_id: Filiot2024
+sources:
+  paper:
+    url: https://arxiv.org/abs/2409.09173
+categorization:
+  importance:
+    level: 중
+    perspective: "공개데이터 학습 ViT-L 백본 후보 — BIOP02 임베딩의 투명·재현 가능한 개방 baseline."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

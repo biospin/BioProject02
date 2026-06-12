@@ -1,0 +1,21 @@
+document_type: paper
+title: Color Transfer between Images
+authors: Reinhard E et al.
+year: 2001
+venue: IEEE CG&A
+doi: 10.1109/38.946629
+topics: [PREP]
+citation:
+  key: reinhard-2001
+  short_id: Reinhard2001
+sources:
+  paper:
+    url: https://doi.org/10.1109/38.946629
+categorization:
+  importance:
+    level: 중
+    perspective: "BIOP02 전처리의 최저비용 정규화 옵션 — FM center-robustness 개선 보고된 경량 색 전이."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

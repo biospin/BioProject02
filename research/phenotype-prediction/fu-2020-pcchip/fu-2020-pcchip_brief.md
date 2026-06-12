@@ -1,0 +1,3 @@
+# fu-2020-pcchip — Brief
+
+**핵심 기여 (Korean+English).** Fu 외(2020, Nature Cancer)의 PC-CHiP(pan-cancer computational histopathology)는 17,355개 TCGA H&E 슬라이드·28개 암종을 대상으로 transfer learning 기반 형태 특징(morphological features)을 추출하고, 이 특징들이 genomic aberration(돌연변이·CNA), gene expression, tumor composition, 그리고 예후(prognosis)와 통계적으로 상관함을 광범위하게 보였다. 방법 요지는 사전학습 CNN으로 슬라이드를 임베딩한 뒤 분자/임상 변수와의 연관을 회귀·상관 분석으로 정량화한 것이다. BIOP02 관점에서 이 논문은 **형태→분자 상관의 mechanistic·통계적 근거**를 제공하는 핵심 인용으로, 형태 임베딩이 분자표현형 정보를 담는다는 BIOP02 전제의 정당화 근거다. 직접 BRCA scoop은 아니지만 PHENO 영역의 광범위한 prior art이므로 novelty 주장 시 주의해야 한다(형태→분자 연관 자체는 이미 확립). BIOP02는 pan-cancer가 아닌 BRCA-only이며, 단순 상관이 아니라 명시적 표현형 중간단계 → 치료가설 전이 → Critic 게이트로 차별화한다. DOI는 CrossRef 확인됨(`10.1038/s43018-020-0085-8`).

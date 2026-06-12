@@ -1,0 +1,21 @@
+document_type: paper
+title: "Many Heads Are Better Than One: Improved Scientific Idea Generation by a LLM-Based Multi-Agent System (VirSci)"
+authors: Su H et al.
+year: 2024
+venue: ACL 2025
+doi: "unverified"
+topics: [AGENT]
+citation:
+  key: su2024virsci
+  short_id: su-2024-virsci
+sources:
+  paper:
+    url: https://arxiv.org/abs/2410.09403
+categorization:
+  importance:
+    level: 중
+    perspective: "멀티에이전트 협업이 단일 에이전트보다 idea novelty 향상 — BIOP02 멀티에이전트 framing의 선행근거이자 crowded 신호."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

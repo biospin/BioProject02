@@ -1,0 +1,21 @@
+document_type: paper
+title: "TransMIL: Transformer based Correlated MIL for WSI Classification"
+authors: Shao Z et al.
+year: 2021
+venue: NeurIPS 2021
+doi: unverified
+topics: [MIL]
+citation:
+  key: shao-2021-transmil
+  short_id: Shao2021
+sources:
+  paper:
+    url: https://proceedings.neurips.cc/paper/2021/hash/10c272d06794d3e5785d5e7c5356e9ff-Abstract.html
+categorization:
+  importance:
+    level: 상
+    perspective: "BIOP02의 transformer-MIL 비교군 — 타일 간 상관 모델링으로 단순 attention 대비 우위 여부 검증."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

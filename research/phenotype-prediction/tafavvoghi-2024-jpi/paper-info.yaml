@@ -1,0 +1,92 @@
+document_type: paper
+title: "Deep learning-based classification of breast cancer molecular subtypes from H&E whole-slide images"
+authors:
+  - Masoud Tafavvoghi
+  - Anders Sildnes
+  - Mehrdad Rakaee
+  - Nikita Shvetsov
+  - Lars Ailo Bongo
+  - Lill-Tove Rasmussen Busund
+  - Kajsa Møllersen
+year: 2024
+venue: "Journal of Pathology Informatics"
+doi: "10.1016/j.jpi.2024.100410"
+keywords:
+  - computational pathology
+  - breast cancer molecular subtyping
+  - H&E whole-slide imaging
+  - PAM50 (LumA / LumB / HER2-enriched / Basal-like)
+  - tumor tile segmentation
+  - one-vs-rest CNN
+  - XGBoost aggregation
+  - TCGA-BRCA
+  - CPTAC-BRCA
+version:
+  type: published (Version of Record)
+  peer_reviewed: true
+topics:
+  - H&E WSI → 4-class molecular subtype classification
+  - two-step pipeline (tumor-tile segmentation → subtype OvR)
+  - tile-count feature engineering + XGBoost meta-classifier
+  - CNN-based (NOT foundation-model) histology classification
+citation:
+  key: tafavvoghi-2024-jpi
+  short_id: JPI-MolSub
+sources:
+  paper:
+    url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC11667687/"
+    doi: "10.1016/j.jpi.2024.100410"
+    status: verified (WebFetch via PMC11667687)
+  code:
+    - "https://github.com/uit-hdl/BC_MolSubtyping"  # PyTorch, GNU GPLv3, train.py/test.py
+  data:
+    - "https://portal.gdc.cancer.gov/"            # TCGA-BRCA (980 WSIs)
+    - "https://proteomics.cancer.gov/programs/cptac"  # CPTAC-BRCA (382 WSIs)
+    - "HER2 Scoring Challenge (Warwick) — 71 WSIs"
+categorization:
+  domain:
+    - computational pathology
+    - breast cancer molecular subtyping
+    - precision oncology (diagnostic, not therapeutic)
+  use_case:
+    - predict 4-class PAM50-style subtype directly from H&E WSI
+    - tumor-tile segmentation as upstream filter for subtyping
+  importance:
+    level: 상
+    perspective: >
+      MOST DANGEROUS DIRECT BASELINE for BIOP02. Exact same 4-class molecular
+      subtype task (LumA/LumB/HER2-E/Basal), SAME cohorts (TCGA-BRCA + CPTAC-BRCA),
+      and PUBLIC runnable code (uit-hdl/BC_MolSubtyping). Their macro-F1 = 0.727
+      is the published SOTA BAR we must beat, not a weak internal baseline. We run
+      their code as our baseline and aim to surpass it under a HARDER site-stratified
+      split.
+priority:
+  level: P0
+  reason: >
+    Direct overlap on task + cohort + public code. Defines the quantitative bar
+    (macro-F1 0.727) and the exact differentiation surface (FM embedding +
+    attention-MIL vs CNN tile-count + XGBoost; site-stratified split vs no
+    confound control; uncertainty-aware HER2-E rejection).
+related:
+  - paper_id: dawood-2024-hids
+    relation: sibling-baseline
+    note: >
+      Same TCGA-BRCA H&E DL family and same target journal lineage (npj Precision
+      Oncology). Dawood = H&E→drug-sensitivity end-to-end (our Exp3 baseline);
+      Tafavvoghi = H&E→subtype classification (our Exp1/Exp2 baseline). Together
+      they bracket our phenotype-intermediate → therapeutic-hypothesis pipeline.
+  - paper_id: couture-2018-npjbc
+    relation: methodological-ancestor
+    note: >
+      Early H&E→breast-subtype (Basal-like vs non-Basal, ROI-level) classifier.
+      Tafavvoghi extends this lineage to full 4-class WSI-level subtyping; both
+      are CNN-era predecessors to our foundation-model approach.
+  - paper_id: chen-2024-uni
+    relation: methodological-contrast
+    note: >
+      UNI general-purpose pathology foundation model — the backbone we adopt and
+      that Tafavvoghi did NOT use. UNI+attention-MIL vs their per-tile CNN +
+      XGBoost tile-count is the core architectural differentiation we benchmark.
+workflow:
+  created: "2026-06-09"
+  last_updated: "2026-06-09"

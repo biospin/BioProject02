@@ -1,0 +1,91 @@
+document_type: paper
+title: "Data-efficient and weakly supervised computational pathology on whole-slide images"
+authors:
+  - Ming Y. Lu
+  - Drew F. K. Williamson
+  - Tiffany Y. Chen
+  - Richard J. Chen
+  - Matteo Barbieri
+  - Faisal Mahmood
+year: 2021
+venue: "Nature Biomedical Engineering"
+doi: "10.1038/s41551-020-00682-w"
+keywords:
+  - computational pathology
+  - weakly-supervised learning
+  - multiple instance learning (MIL)
+  - attention pooling
+  - clustering-constrained attention
+  - whole-slide image (WSI)
+  - tissue segmentation
+  - data efficiency
+version:
+  type: published (Version of Record)
+  peer_reviewed: true
+  preprint: "arXiv:2004.09666"
+topics:
+  - attention-based multiple instance learning (CLAM-SB / CLAM-MB)
+  - instance-level clustering as a feature-space constraint
+  - slide-label-only weak supervision (no ROI/patch annotation)
+  - multi-class subtyping support
+  - standard WSI preprocessing toolkit (segmentation + tiling + feature extraction)
+citation:
+  key: lu-2021-clam
+  short_id: CLAM
+sources:
+  paper:
+    url: "https://www.nature.com/articles/s41551-020-00682-w"
+    doi: "10.1038/s41551-020-00682-w"
+    preprint_url: "https://arxiv.org/abs/2004.09666"
+    status: verified (WebFetch — Nature behind IdP redirect; abstract + GitHub README + arXiv abstract grounded)
+  code:
+    - "https://github.com/mahmoodlab/CLAM"   # GPLv3, non-commercial academic
+  data:
+    - "TCGA (RCC subtyping, NSCLC subtyping cohorts)"
+    - "CAMELYON16/17-style lymph node metastasis (breast)"
+    - "Independent test cohorts incl. cell-phone microscopy images and biopsies"
+categorization:
+  domain:
+    - computational pathology
+    - weakly-supervised deep learning
+    - WSI preprocessing / tiling
+  use_case:
+    - slide-level classification from H&E without patch annotation
+    - tissue-segmentation + fixed-magnification tiling reference pipeline
+    - attention-MIL aggregation of tile features to slide-level prediction
+  importance:
+    level: 상
+    perspective: >
+      MIL baseline + preprocessing precedent. For BIOP02, CLAM serves a DUAL role:
+      (a) the de-facto pathology-grade attention-MIL comparator our slide-level
+      phenotype head (ER/PR/HER2/PAM50, esp. multi-class PAM50 via CLAM-MB) must
+      be benchmarked against, and (b) the canonical preprocessing precedent
+      (Otsu-based tissue segmentation + fixed-magnification 256x256 tiling +
+      frozen-encoder feature extraction) that our own Otsu-mask tiling parallels.
+      It is a building block, NOT our novelty.
+priority:
+  level: P1
+  reason: >
+    Not a scoop risk (no drug/phenotype-transfer claim), but a mandatory
+    baseline and a reusable toolkit. Anchors both the modeling progression
+    (MLP baseline -> attention MIL) and the tiling/preprocessing design.
+related:
+  - paper_id: ilse-2018-abmil
+    relation: methodological-ancestor
+    note: >
+      ABMIL (Ilse 2018) is the gated-attention pooling CLAM builds on. In BIOP02
+      ABMIL is the PRIMARY minimal attention-MIL baseline; CLAM extends it with
+      instance-level clustering + multi-branch multi-class heads.
+  - paper_id: shao-2021-transmil
+    relation: sibling-baseline
+    note: >
+      TransMIL replaces attention pooling with a transformer/correlation-aware
+      aggregator; alternative slide-level aggregator to compare alongside CLAM.
+  - paper_id: chen-2024-uni
+    relation: encoder-complement
+    note: >
+      UNI is the foundation-model tile encoder whose embeddings feed CLAM's
+      attention head; CLAM toolkit natively supports --model_name uni_v1.
+workflow:
+  created: "2026-06-09"
+  last_updated: "2026-06-09"

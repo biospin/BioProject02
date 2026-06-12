@@ -1,0 +1,21 @@
+document_type: paper
+title: "Large Language Models as Biomedical Hypothesis Generators: A Comprehensive Study"
+authors: Qi B et al.
+year: 2024
+venue: COLM 2024
+doi: "unverified"
+topics: [AGENT]
+citation:
+  key: qi2024biohypo
+  short_id: qi-2024-biohypo
+sources:
+  paper:
+    url: https://arxiv.org/abs/2407.08940
+categorization:
+  importance:
+    level: 중
+    perspective: "LLM 생의학 가설 생성의 novelty/타당성 평가 — BIOP02 가설 생성 컴포넌트가 crowded임을 보여 거버넌스 기여로 전환하는 근거."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

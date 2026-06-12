@@ -1,0 +1,3 @@
+# ABMIL (Ilse et al., 2018, ICML)
+
+ABMIL은 attention-based multiple instance learning의 정전(canonical) 논문으로, bag 내 인스턴스들을 **학습 가능하고 순열 불변(permutation-invariant)한 (gated) attention pooling**으로 집계해 bag-level 예측을 수행하고, 각 인스턴스의 attention weight로 해석성을 제공한다. 기존의 고정된 max/mean pooling을 학습 가능한 weighted pooling으로 대체한 것이 핵심 기여다. BIOP02 관점에서 ABMIL은 **1차 attention-MIL baseline**이다. CLAUDE.md의 모델 진행 원칙인 "MLP baseline → attention MIL"에서 attention MIL 단계와 정확히 일치하며, H&E WSI 타일 임베딩 → 슬라이드-레벨 BRCA 표현형(ER/PR/HER2/PAM50) 집계에 가장 먼저 적용할 표준 집계자다. CLAM(lu-2021)과 함께 표준 비교군을 형성하고, TransMIL·DTFD-MIL은 "단순 attention으로 충분한가"를 검증하는 상위 비교군이 된다. **DOI는 unverified**(ICML proceedings — DOI 없음)이므로 proceedings URL로 인용하며 가짜 DOI 날조를 금한다. 우리는 hypothesis-only 시스템이므로 이 집계자는 표현형 예측 중간단계에만 쓴다.

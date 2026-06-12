@@ -1,0 +1,21 @@
+document_type: paper
+title: Deep feature batch correction using ComBat in computational pathology
+authors: Murchan P et al.
+year: 2024
+venue: J Pathol Inform
+doi: "unverified"
+topics: [RIGOR]
+citation:
+  key: murchan2024combat
+  short_id: murchan-2024-combat
+sources:
+  paper:
+    url: https://pmc.ncbi.nlm.nih.gov/articles/PMC11470259/
+categorization:
+  importance:
+    level: 중
+    perspective: "patch 임베딩 ComBat 배치보정으로 site 교란을 완화 — site-disjoint split의 보완책."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

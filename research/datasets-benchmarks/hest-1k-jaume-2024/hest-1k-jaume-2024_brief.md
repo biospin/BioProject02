@@ -1,0 +1,3 @@
+# hest-1k-jaume-2024 — Brief
+
+**핵심 기여 (Korean+English).** Jaume 외(2024, NeurIPS)의 HEST-1k는 1,229개의 spatial transcriptomics(ST)–histology(WSI) 페어 샘플로 구성된 대규모 공개 데이터셋과, 형태→유전자 발현 예측 능력을 평가하는 HEST-Benchmark를 함께 제공한다. 방법 요지는 다양한 공개 ST 데이터를 통합·정제해 패치 단위로 형태 임베딩과 spatial 발현을 정렬한 벤치마크를 만든 것이다. BIOP02 관점에서 이 논문은 **foundation model 임베딩을 평가·비교할 수 있는 외부(out-of-distribution) 벤치마크 자원**으로 DATA 영역에서 중요하다 — UNI/CONCH/Virchow 등 백본을 형태→발현 task에서 표준화된 방식으로 점검하고, 우리 임베딩 파이프라인의 품질을 BRCA 코호트 외부에서 sanity-check하는 용도로 활용 가능하다. 학습 코호트(TCGA-BRCA)나 외부검증 코호트(CPTAC)와 달리, HEST-1k는 BIOP02의 직접 train/test 코호트가 아니라 **임베딩 백본 선택·검증을 위한 벤치마크**로 위치한다. DOI는 arXiv DOI(`10.48550/arXiv.2406.16192`)로 기재되어 있으나 NeurIPS proceedings 정식 인용은 별도이며, csv 기준 "unverified"에 준해 인용 전 재확인 권장.

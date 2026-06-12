@@ -1,0 +1,21 @@
+document_type: paper
+title: "Correlating chemical sensitivity and basal gene expression reveals mechanism of action (CTRP)"
+authors: "Rees MG et al."
+year: 2016
+venue: "Nature Chemical Biology"
+doi: "unverified"
+topics: [HYPO]
+citation:
+  key: rees-2016-ctrp-moa
+  short_id: rees2016
+sources:
+  paper:
+    url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC3954635/"
+categorization:
+  importance:
+    level: 중
+    perspective: "basal 발현↔민감도 상관으로 MOA 추론(CTRP 동반) — 약물 가설에 작용기전 grounding 제공."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

@@ -1,0 +1,3 @@
+# Virchow2 (Zimmermann et al., 2024, arXiv)
+
+Virchow2는 Virchow를 확장한 후속 병리 foundation model로, **mixed-magnification** 학습 전략을 도입하고 약 310만 장의 WSI로 self-supervised 사전학습을 수행했다. 여러 공개 벤치마크에서 타일-레벨 평균 1위를 보고하며 현재 가장 강한 타일 인코더 중 하나로 평가된다. BIOP02 관점에서 Virchow2는 **임베딩 백본 후보**로, H&E WSI → 임베딩 → BRCA 분자 표현형(ER/PR/HER2/PAM50) 예측 파이프라인의 feature extractor 최상위 옵션이다. CLAUDE.md 및 벤치마크 수렴(campanella-2025, neidlinger-2024) 신호에서 Virchow2/Prov-GigaPath/UNI/H-optimus-0 상위 클러스터에 포함된다. 다만 arXiv preprint로 **DOI가 unverified** 상태이며, 라이선스 확인이 필요하다는 점을 주의해야 한다(인용 전 CrossRef·라이선스 재확인 필수). 우리는 hypothesis-only 시스템이므로 이 모델은 형태→표현형 중간단계의 임베딩 추출에만 사용한다.

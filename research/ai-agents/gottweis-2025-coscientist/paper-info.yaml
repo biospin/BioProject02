@@ -1,0 +1,51 @@
+paper_id: gottweis-2025-coscientist
+title: "Towards an AI co-scientist"
+authors: "Gottweis J, Weng W-H, Daryin A, Tu T, et al. (Google / Google DeepMind, ~34 authors)"
+year: 2025
+venue: "arXiv preprint (not peer-reviewed)"
+arxiv: "2502.18864"
+doi: ""                 # arXiv preprint — DOI unverified, do NOT fabricate
+url: "https://arxiv.org/abs/2502.18864"
+code: ""                # no public code release reported (trusted-tester program only)
+license: ""             # not stated for the system
+
+importance_level: "상"
+perspective: "framing scoop — the paradigm reference we must position AGAINST, differentiating via domain-bound governance (not agentic-discovery invention)"
+
+# BIOP02 role: this is the highest-overlap prior art for the "multi-agent + critic
+# hypothesis generation" angle. We CANNOT claim the agentic-discovery paradigm.
+biop02_role: "framing-scoop reference; defines the agentic hypothesis-generation paradigm we apply, not invent. Our defensible delta = anti-DRP / hypothesis_only / owner≠reviewer governance bound to a concrete H&E→molecular→DepMap/GDSC pipeline"
+
+key_facts:
+  system_type: "multi-agent LLM framework on Gemini 2.0, asynchronous task-execution framework with test-time compute scaling"
+  specialized_agents:
+    - Generation       # hypothesis proposal, literature grounding, simulated debate
+    - Reflection       # review / critique of hypotheses (full, deep-verification, observation, tournament reviews)
+    - Ranking          # Elo-style tournament via pairwise scientific debate
+    - Evolution        # refine/recombine top hypotheses (simplify, extend, combine)
+    - Proximity        # similarity graph / dedup of hypotheses
+    - Meta-review      # synthesize tournament feedback into research overview
+  core_method: "generate-debate-evolve, inspired by the scientific method"
+  auto_eval: "tournament Elo rating; self-improvement loop; Elo correlates with output quality"
+  tool_access: "web search + specialized AI models + databases (agents call external tools)"
+  human_loop: "scientist-in-the-loop: research goal in natural language, can add own hypotheses, reviews, redirect"
+
+  wet_lab_validation:
+    drug_repurposing: "AML candidates — tumor inhibition at clinical concentrations in vitro"
+    target_discovery: "novel epigenetic targets for liver fibrosis — anti-fibrotic activity in human hepatic organoids"
+    amr: "recapitulated UNPUBLISHED finding on bacterial gene-transfer mechanism (cf-PICI)"
+
+# Why this is a SCOOP for us, and the honest delta
+scoop_note:
+  exact_overlap: "specialized agents + an explicit critic (Reflection) + tournament ranking + hypothesis-as-output, wet-lab validated"
+  what_we_CANNOT_claim: "inventing multi-agent hypothesis generation, generate-debate-evolve, Elo self-evaluation, or agentic scientific discovery as a paradigm"
+  defensible_delta: "domain-bound governance: anti-DRP framing lock, hypothesis_only claim-level enforcement, owner≠reviewer anti-self-reference, tied to one concrete H&E→phenotype→drug pipeline; honest framing = applied/governed/domain-specific"
+
+related_papers:
+  - lu-2024-aiscientist          # autonomous end-to-end ML-paper writing agent (sibling paradigm)
+  - zheng-2023-llmjudge          # LLM-as-judge — basis & bias of our Reflection/Critic gate
+  - panickssery-2024-selfpreference  # LLM self-preference bias → justifies owner≠reviewer rule
+
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"

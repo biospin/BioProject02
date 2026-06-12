@@ -1,0 +1,3 @@
+# EXAONE Path 2.0 (LG AI Research, 2025, arXiv)
+
+EXAONE Path 2.0는 LG AI Research가 공개한 병리 foundation model(768차원)로, 약 3.7만 장의 WSI를 **end-to-end 슬라이드 감독(slide-level supervision)** 방식으로 학습한 점이 특징이며 10개 biomarker 과제에서 SOTA를 보고했다. 학술 비영리(EXAONEPath NC) 라이선스로 academic-only인 BIOP02에 적합하다. BIOP02 관점에서 이 모델은 **임베딩 백본 후보**이며 CLAUDE.md의 3순위 백본(768d)으로 등재돼 있다. H&E WSI → 임베딩 → BRCA 분자 표현형(ER/PR/HER2/PAM50) 예측 파이프라인에서 feature extractor로 쓸 수 있고, end-to-end 슬라이드 감독 설계는 슬라이드-레벨 표현형 예측과 정렬이 좋다. **DOI는 unverified**(arXiv preprint)이므로 인용 전 재확인이 필요하다. 우리는 약물 구조 입력 없는 hypothesis-only 시스템이므로 이 모델은 형태→표현형 중간단계의 임베딩 추출에만 사용한다.

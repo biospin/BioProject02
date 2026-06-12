@@ -1,0 +1,21 @@
+document_type: paper
+title: "Virchow2: Scaling Self-Supervised Mixed Magnification Models in Pathology"
+authors: Zimmermann E et al.
+year: 2024
+venue: arXiv 2408.00738
+doi: unverified
+topics: [FM]
+citation:
+  key: zimmermann-2024-virchow2
+  short_id: Zimmermann2024
+sources:
+  paper:
+    url: https://arxiv.org/abs/2408.00738
+categorization:
+  importance:
+    level: 상
+    perspective: "타일-레벨 벤치마크 최상위 백본 후보 — BIOP02 임베딩 단계의 최고 성능 옵션이나 라이선스 확인 필요."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

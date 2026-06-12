@@ -1,0 +1,3 @@
+# FM Feature-Extractor Benchmark (Neidlinger et al., 2024, arXiv)
+
+이 논문은 병리 foundation model들을 **약지도(weakly-supervised) 계산병리** 과제에서 feature extractor로 비교한 두 번째 독립 벤치마크다. 결과적으로 Virchow2와 H-optimus-0가 평균 선두를 보였고 Prov-GigaPath·UNI가 근접한 것으로 보고했다. BIOP02 관점에서 이 논문은 새로운 모델이 아니라 **백본 선택 근거의 교차 검증 자료**다. campanella-2025와 함께 인용해 임베딩 단계 FM 선정(상위 클러스터 = Virchow2/Prov-GigaPath/UNI/H-optimus-0)의 외부 근거로 삼는다. 우리 파이프라인은 H&E WSI → FM 임베딩 → BRCA 분자 표현형(ER/PR/HER2/PAM50) → 치료가설로 이어지며, 두 독립 벤치마크가 같은 상위 클러스터로 수렴한다는 점이 백본 결정의 robustness를 뒷받침한다. **DOI는 unverified**(arXiv preprint)이므로 인용 전 재확인이 필요하다. 우리는 hypothesis-only 시스템이므로 이 자료는 feature extractor 선정 정당화에만 쓰고 성능 수치를 임의로 인용하지 않는다.

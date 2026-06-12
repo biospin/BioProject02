@@ -1,0 +1,21 @@
+document_type: paper
+title: "Defining a Cancer Dependency Map (DepMap)"
+authors: "Tsherniak A et al."
+year: 2017
+venue: "Cell"
+doi: "10.1016/j.cell.2017.06.010"  # unverified
+topics: [DRUG]
+citation:
+  key: tsherniak-2017-depmap
+  short_id: tsherniak2017
+sources:
+  paper:
+    url: "https://www.cell.com/cell/fulltext/S0092-8674(17)30651-7"
+categorization:
+  importance:
+    level: 중
+    perspective: "DepMap의 정의 논문(RNAi/CRISPR 의존성) — 약물민감도 전이를 보완하는 유전자 dependency framing."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

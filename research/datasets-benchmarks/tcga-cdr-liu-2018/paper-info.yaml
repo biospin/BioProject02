@@ -1,0 +1,113 @@
+document_type: paper
+title: "An Integrated TCGA Pan-Cancer Clinical Data Resource to Drive High-Quality Survival Outcome Analytics"
+authors:
+  - "Jianfang Liu"
+  - "Tara Lichtenberg"
+  - "Katherine A. Hoadley"
+  - "Laila M. Poisson"
+  - "Alexander J. Lazar"
+  - "Andrew D. Cherniack"
+  - "Albert J. Kovatich"
+  - "Christopher C. Benz"
+  - "Douglas A. Levine"
+  - "Adrian V. Lee"
+  - "Larsson Omberg"
+  - "Denise M. Wolf"
+  - "Craig D. Shriver"
+  - "Vesteinn Thorsson"
+  - "TCGA Research Network"
+  - "Hai Hu"
+year: 2018
+venue: "Cell"
+doi: "10.1016/j.cell.2018.02.052"
+keywords:
+  - TCGA Pan-Cancer Clinical Data Resource (TCGA-CDR)
+  - survival endpoint curation (OS / PFI / DFI / DSS)
+  - harmonized clinical outcome labels
+  - per-endpoint usability guidance
+  - 11160 patients / 33 cancer types
+  - censoring and follow-up adequacy
+  - leakage-safe outcome ground truth
+version:
+  type: published (Version of Record)
+  peer_reviewed: true
+  published:
+    date: "2018-04-05"
+    volume: "173"
+    issue: "2"
+    pages: "400-416.e11"
+topics:
+  - canonical curated survival-outcome label source for TCGA
+  - four clinical endpoints with definitions + recommended usage
+  - which endpoints are statistically valid per cancer type (incl. BRCA)
+  - upstream harmonization of raw clinical_patient_* files
+citation:
+  key: tcga-cdr-liu-2018
+  short_id: TCGA-CDR
+sources:
+  paper:
+    url: "https://www.cell.com/cell/fulltext/S0092-8674(18)30229-0"
+    pmc: "https://pmc.ncbi.nlm.nih.gov/articles/PMC6066282/"
+    doi: "10.1016/j.cell.2018.02.052"
+    status: verified (WebFetch via PMC6066282; cell.com fulltext returns HTTP 403)
+  data:
+    - "Table S1 (tab 'TCGA-CDR') — curated clinical data resource, 11,160 patients"  # supplementary
+    - "https://gdc.cancer.gov/about-data/publications/pancanatlas"  # GDC PanCanAtlas clinical
+    - "https://portal.gdc.cancer.gov/"  # GDC harmonized clinical
+categorization:
+  domain:
+    - clinical data curation / survival analytics
+    - precision oncology ground-truth labels
+    - TCGA pan-cancer resource
+  use_case:
+    - authoritative OS/PFI/DFI/DSS survival labels for TCGA-BRCA patients
+    - per-endpoint usability gate (which endpoint is valid to model for BRCA)
+    - upstream harmonized label source joined into agents/data manifest
+  importance:
+    level: 상
+    perspective: >
+      LEAKAGE-SAFE CLINICAL / SURVIVAL LABEL SOURCE for BIOP02. TCGA-CDR is the
+      harmonized, peer-reviewed upstream of the raw clinical_patient_brca.txt we
+      already touched: it standardizes four endpoints (OS, PFI, DFI, DSS) across
+      11,160 patients / 33 types and — critically — tells us WHICH endpoints are
+      statistically usable per cancer type. For BRCA it recommends PFI and DFI and
+      flags OS/DSS as event-poor (longer follow-up needed). This is the canonical
+      ground truth for our survival labels and the defensible answer to a Critic
+      asking "why this endpoint, why these censoring rules" — complementing the
+      IHC (ER/PR/HER2) and PAM50 phenotype labels with outcome labels.
+priority:
+  level: P0
+  reason: >
+    Defines the survival label schema and endpoint-validity gate for any
+    outcome-prediction work in BIOP02. Choosing OS for BRCA without TCGA-CDR's
+    guidance would be a quiet leakage/underpowering error; this paper is the
+    citation that locks endpoint selection (PFI/DFI for BRCA).
+related:
+  - paper_id: tcga-brca-2012
+    relation: cohort-source
+    note: >
+      TCGA-BRCA (Nature 2012) defines the breast cohort + molecular subtypes;
+      TCGA-CDR provides the harmonized survival outcomes for those same patients,
+      keyed by bcr_patient_barcode.
+  - paper_id: parker-2009-pam50
+    relation: complementary-label
+    note: >
+      PAM50 supplies the molecular-subtype phenotype labels; TCGA-CDR supplies the
+      orthogonal clinical-outcome (survival) labels. Together they form the dual
+      label set (phenotype + outcome) our H&E models predict / stratify on.
+  - paper_id: cptac-mertins-2016
+    relation: external-validation-cohort
+    note: >
+      CPTAC-BRCA is our external validation cohort; TCGA-CDR's endpoint definitions
+      and usability logic are the template for harmonizing CPTAC survival labels to
+      match (avoiding train/test label-definition drift).
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  analysis_status:
+    abstract: "done"
+    core: "done"
+    lens_academic: "done"
+    lens_industry: "done"
+    methodology_brief: "done"
+    slides: "skipped"

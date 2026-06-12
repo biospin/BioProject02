@@ -1,0 +1,21 @@
+document_type: paper
+title: Dual-stream MIL Network for WSI Classification with SSL contrastive
+authors: Li B et al.
+year: 2021
+venue: CVPR 2021
+doi: unverified
+topics: [MIL]
+citation:
+  key: li-2021-dsmil
+  short_id: Li2021
+sources:
+  paper:
+    url: https://openaccess.thecvf.com/content/CVPR2021/html/Li_Dual-Stream_Multiple_Instance_Learning_Network_for_Whole_Slide_Image_Classification_CVPR_2021_paper.html
+categorization:
+  importance:
+    level: 중
+    perspective: "BIOP02의 추가 MIL 비교군 — max-pool critical instance + attention 이중스트림 집계자."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

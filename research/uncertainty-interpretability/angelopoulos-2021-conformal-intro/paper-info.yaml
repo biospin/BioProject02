@@ -1,0 +1,21 @@
+document_type: paper
+title: A Gentle Introduction to Conformal Prediction and Distribution-Free Uncertainty Quantification
+authors: Angelopoulos AN & Bates S
+year: 2021
+venue: arXiv 2107.07511
+doi: "unverified"
+topics: [UQ]
+citation:
+  key: angelopoulos2021conformalintro
+  short_id: angelopoulos-2021-conformal-intro
+sources:
+  paper:
+    url: https://arxiv.org/abs/2107.07511
+categorization:
+  importance:
+    level: 중
+    perspective: "conformal prediction 구현 레시피 — BIOP02 가설 게이팅의 distribution-free coverage 보장 실무 가이드."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

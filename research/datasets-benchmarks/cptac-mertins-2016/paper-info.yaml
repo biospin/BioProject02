@@ -1,0 +1,21 @@
+document_type: paper
+title: "Proteogenomics connects somatic mutations to signalling in breast cancer (CPTAC-BRCA)"
+authors: "Mertins P et al."
+year: 2016
+venue: "Nature"
+doi: "10.1038/nature18003"
+topics: [DATA]
+citation:
+  key: cptac-mertins-2016
+  short_id: mertins-2016
+sources:
+  paper:
+    url: "https://www.nature.com/articles/nature18003"
+categorization:
+  importance:
+    level: 중
+    perspective: "CPTAC-BRCA proteogenomics. BIOP02 외부검증 코호트(TCGA train→CPTAC test); 영상은 NCI IDC."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: "summary"

@@ -1,0 +1,99 @@
+document_type: paper
+title: "A Next Generation Connectivity Map: L1000 Platform and the First 1,000,000 Profiles"
+authors:
+  - Aravind Subramanian
+  - Rajiv Narayan
+  - Steven M. Corsello
+  - David D. Peck
+  - Ted E. Natoli
+  - Xiaodong Lu
+  - Joshua Gould
+  - John F. Davis
+  - Andrew A. Tubelli
+  - Jacob K. Asiedu
+  - et al.
+  - Todd R. Golub
+year: 2017
+venue: "Cell"
+doi: "10.1016/j.cell.2017.10.049"
+keywords:
+  - LINCS
+  - L1000
+  - Connectivity Map
+  - CMap
+  - gene expression signature
+  - signature reversal
+  - perturbational profiling
+  - clue.io
+  - landmark genes
+  - drug repurposing
+version:
+  type: published (Version of Record)
+  peer_reviewed: true
+topics:
+  - reduced-representation transcriptomics (978 landmark genes, ~12,000 inferred)
+  - signature-query connectivity scoring (weighted KS / tau)
+  - large-scale perturbagen-to-expression compendium (1.3M profiles)
+  - clue.io query platform + API for signature-reversal drug ranking
+citation:
+  key: subramanian-2017-lincs
+  short_id: L1000
+sources:
+  paper:
+    url: "https://www.cell.com/cell/fulltext/S0092-8674(17)31309-0"
+    doi: "10.1016/j.cell.2017.10.049"
+    status: verified (WebFetch via PMC; Cell fulltext 403, PMC mirror used)
+  platform:
+    - "https://clue.io"   # CLUE — Connectivity Map Linked User Environment (query app + API + Docker)
+  data:
+    - "GEO GSE92742 (Level 1-5 L1000 phase I)"
+    - "GEO GSE70138 (L1000 phase II)"
+categorization:
+  domain:
+    - perturbational genomics
+    - drug repurposing / mechanism-of-action inference
+    - signature-based connectivity analysis
+  use_case:
+    - query an up/down disease or phenotype signature against L1000 reference
+    - rank perturbagens by signature reversal (negative connectivity)
+  importance:
+    level: 상
+    perspective: >
+      2nd, METHOD-INDEPENDENT hypothesis route for BIOP02. Our primary route is
+      DepMap PRISM / GDSC viability transfer (cell-line drug sensitivity). L1000
+      provides an ORTHOGONAL route: take the BRCA molecular-phenotype-associated
+      expression signature our model predicts, query it against clue.io, and rank
+      compounds by signature reversal — no drug structure, no viability label.
+      Convergence of the two independent routes (Exp4) is the core novelty claim;
+      a hit ranked highly by BOTH PRISM/GDSC viability AND L1000 reversal is far
+      more credible as a hypothesis than either route alone. Remains hypothesis-only.
+priority:
+  level: P0
+  reason: >
+    Defines and grounds the independent 2nd route. Without L1000 the multi-route
+    convergence argument (our differentiation vs single-route DRP papers like HiDS)
+    does not exist. Anchor for Exp4 (route convergence).
+related:
+  - paper_id: lamb-2006-cmap
+    relation: methodological-ancestor
+    note: >
+      Original Connectivity Map (Lamb 2006, Science). Introduced the
+      query-signature → ranked-perturbagen connectivity-score idea on Affymetrix
+      arrays. L1000 is its scaled successor (1.3M vs ~564 profiles, cheaper assay,
+      tau normalization).
+  - paper_id: corsello-2020-prism
+    relation: complementary-route
+    note: >
+      PRISM multiplexed viability screen — the PRIMARY (route 1) cell-line drug
+      sensitivity source we transfer from. L1000 reversal (route 2) is independent:
+      expression-signature based, not viability based. Same Broad ecosystem,
+      different readout — exactly what makes Exp4 convergence non-circular.
+  - paper_id: dawood-2024-hids
+    relation: contrast-baseline
+    note: >
+      Single-route end-to-end H&E → drug-sensitivity (CTRP) baseline. We
+      differentiate by adding this interpretable, method-independent L1000 route
+      and requiring cross-route convergence rather than one viability mapping.
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"

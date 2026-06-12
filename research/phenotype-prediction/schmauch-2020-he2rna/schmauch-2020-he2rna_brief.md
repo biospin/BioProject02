@@ -1,0 +1,3 @@
+# schmauch-2020-he2rna — Brief
+
+**핵심 기여 (Korean+English).** Schmauch 외(2020, Nature Communications)의 HE2RNA는 H&E whole-slide image에서 종양의 RNA-Seq gene expression을 직접 예측하는 deep learning 모델이다. 방법 요지는 WSI 타일 특징을 집계해 유전자별 발현값을 회귀 예측하고, TCGA pan-cancer로 학습한 표현이 소규모/외부 코호트로 전이(transfer)됨을 보인 것이다. 즉 형태→발현이라는 연속 표현형 예측을 확립한 연구다. BIOP02 관점에서 이 논문은 직접 ER/PR 분류 scoop은 아니지만, **PAM50(발현 기반 정의)·발현 매개 표현형·전이 학습 개념과 직접 평행**하는 중요한 인접 prior art다. BIOP02가 형태→분자표현형(발현/subtype)을 명시적 중간단계로 두는 설계의 feasibility 근거로 인용하기 좋으며, 동시에 "형태→발현"이 이미 잘 확립되어 있음을 보여 novelty가 method가 아니라 downstream 치료가설 전이·governance에 있음을 뒷받침한다. 발현 imputation은 우리의 DepMap/GDSC bridge(발현→cell-line 민감도)와도 개념적으로 연결된다. DOI는 CrossRef 확인됨(`10.1038/s41467-020-17678-4`).

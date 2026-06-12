@@ -1,0 +1,3 @@
+# Color Transfer (Reinhard et al., 2001, IEEE CG&A)
+
+Reinhard 등의 color transfer는 한 이미지의 색 통계(lαβ 색공간의 평균·표준편차)를 다른 이미지에 맞추는 단순·경량 기법으로, 원래 일반 영상용으로 제안됐으나 병리 stain 정규화에 널리 차용된다. 계산 비용이 가장 낮은 정규화 옵션이며, 리스트에 정리된 대로 FM center-robustness를 개선했다는 보고(+16%)도 있다. BIOP02 관점에서 Reinhard는 **전처리의 최저비용 정규화 옵션**이다. H&E WSI 타일링 → 임베딩 전 단계에서 macenko-2009·vahadane-2016과 비교하는 ablation의 경량 대안으로 쓰며, 비용 대비 robustness 이득을 점검한다. 단 tellez-2019 결론대로 정규화 단독 의존은 피하고 heavy stain augmentation과 병용하며, 색 정규화로도 기관별 site signature(howard-2021)는 완전히 제거되지 않으므로 site-aware split의 보완책으로만 다룬다. 우리는 hypothesis-only 시스템이므로 이 방법은 임베딩 전 전처리에만 적용한다. DOI는 검증됨(10.1109/38.946629).

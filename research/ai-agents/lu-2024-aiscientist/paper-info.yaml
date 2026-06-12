@@ -1,0 +1,21 @@
+document_type: paper
+title: "The AI Scientist: Towards Fully Automated Open-Ended Scientific Discovery"
+authors: Lu C et al.
+year: 2024
+venue: arXiv 2408.06292
+doi: "unverified"
+topics: [AGENT]
+citation:
+  key: lu2024aiscientist
+  short_id: lu-2024-aiscientist
+sources:
+  paper:
+    url: https://arxiv.org/abs/2408.06292
+categorization:
+  importance:
+    level: 상
+    perspective: "완전 자율 LLM 연구 파이프라인 — BIOP02 자율성 대조군(의도적 hypothesis-only·인간 거버넌스와 대비)."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

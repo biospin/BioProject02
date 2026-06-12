@@ -1,0 +1,3 @@
+# Prov-GigaPath (Xu et al., 2024, Nature)
+
+Prov-GigaPath는 실제 임상에서 수집된 약 17만 장의 WSI와 13억 개 타일로 사전학습한 whole-slide pathology foundation model이다. ViT 기반 타일 인코더에 더해 **LongNet 슬라이드 인코더**를 결합해 타일-레벨 표현뿐 아니라 슬라이드 전체 컨텍스트를 집계하는 점이 핵심 기여로, 26개 과제에서 SOTA를 보고했고 특히 mutation·biomarker 예측에서 강세를 보였다. BIOP02 관점에서 이 논문은 **임베딩 백본 후보**다. H&E WSI → 임베딩 단계에서 UNI(1순위)와 함께 안전한 선택지이며, 슬라이드 인코더가 내장돼 있어 ER/PR/HER2/PAM50 같은 슬라이드-레벨 분자 표현형 예측에 직접 활용할 여지가 크다. CLAUDE.md의 백본 후보군 및 벤치마크(campanella-2025, neidlinger-2024) 수렴 결과에서도 상위 클러스터에 든다. 우리는 drug-response가 아닌 hypothesis-only 시스템이므로, 이 모델은 형태→표현형 중간단계의 feature extractor로만 쓴다. DOI는 검증됨(10.1038/s41586-024-07441-w).

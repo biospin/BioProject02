@@ -1,0 +1,21 @@
+document_type: paper
+title: "The next-generation Open Targets Platform: reimagined, redesigned, rebuilt"
+authors: "Ochoa D et al."
+year: 2023
+venue: "Nucleic Acids Research"
+doi: "10.1093/nar/gkac1046"  # unverified
+topics: [KB]
+citation:
+  key: ochoa-2023-opentargets
+  short_id: ochoa2023
+sources:
+  paper:
+    url: "https://academic.oup.com/nar/article/51/D1/D1353/6833237"
+categorization:
+  importance:
+    level: 상
+    perspective: "target-disease 연관 점수 + tractability — '이 유전자가 이 질환의 신뢰할 표적인가'를 정량 grounding."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

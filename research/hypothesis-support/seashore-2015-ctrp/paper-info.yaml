@@ -1,0 +1,21 @@
+document_type: paper
+title: "Harnessing Connectivity in a Large-Scale Small-Molecule Sensitivity Dataset (CTRP)"
+authors: "Seashore-Ludlow B et al."
+year: 2015
+venue: "Cancer Discovery"
+doi: "10.1158/2159-8290.CD-15-0235"  # unverified
+topics: [HYPO]
+citation:
+  key: seashore-2015-ctrp
+  short_id: seashore2015
+sources:
+  paper:
+    url: "https://aacrjournals.org/cancerdiscovery/article/5/11/1210/4735"
+categorization:
+  importance:
+    level: 중
+    perspective: "CTRP cell line × compound 민감도 자원 — GDSC/PRISM와 독립인 세 번째 cross-DB 일관성 축."
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
+  tier: summary

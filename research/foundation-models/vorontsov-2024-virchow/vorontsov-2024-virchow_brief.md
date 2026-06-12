@@ -1,0 +1,3 @@
+# Virchow (Vorontsov et al., 2024, Nature Medicine)
+
+Virchow는 Memorial Sloan Kettering의 약 150만 장 WSI로 사전학습한 632M 파라미터 ViT-H 병리 foundation model로, clinical-grade 성능과 희귀암 검출을 목표로 한다. pan-cancer 환경에서 0.949 AUC를 보고했으며, 무엇보다 **Apache 2.0 라이선스**로 공개돼 다른 병리 FM 다수가 학술 비영리(CC-BY-NC-ND) 라이선스인 것과 대비된다. BIOP02 관점에서 Virchow는 **임베딩 백본 후보**이자 라이선스 친화성 측면에서 출판에 유리한 옵션이다. H&E WSI → 임베딩 → BRCA 분자 표현형(ER/PR/HER2/PAM50) 예측 파이프라인에서 타일 인코더로 쓸 수 있으며, CLAUDE.md의 백본 후보군과 벤치마크 수렴 신호(상위 클러스터)에도 부합한다. 우리는 약물 구조 입력 없는 hypothesis-only 시스템이므로 이 모델은 형태→표현형 중간단계의 feature extractor로만 활용한다. DOI는 검증됨(10.1038/s41591-024-03141-0).

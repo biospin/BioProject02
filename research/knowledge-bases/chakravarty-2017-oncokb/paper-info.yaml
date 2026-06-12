@@ -1,0 +1,94 @@
+document_type: paper
+title: "OncoKB: A Precision Oncology Knowledge Base"
+authors:
+  - Debyani Chakravarty
+  - Jianjiong Gao
+  - Sarah M. Phillips
+  - Ritika Kundra
+  - Hongxin Zhang
+  - "... (MSK OncoKB curation team)"
+  - Nikolaus Schultz   # corresponding
+year: 2017
+venue: "JCO Precision Oncology"
+doi: "10.1200/PO.17.00011"
+keywords:
+  - precision oncology
+  - knowledge base
+  - somatic mutation annotation
+  - levels of evidence
+  - actionability
+  - oncogenic effect
+  - cBioPortal
+  - MSK-IMPACT
+version:
+  type: published (Version of Record)
+  peer_reviewed: true
+topics:
+  - clinical-actionability leveling (Tx Level 1–4, R1/R2)
+  - variant oncogenicity annotation (Oncogenic / Likely Oncogenic / Likely Neutral / Inconclusive / Unknown)
+  - tumor-type-specific drug–alteration matching
+  - expert-curated evidence aggregation (FDA / NCCN / trials / literature)
+citation:
+  key: chakravarty-2017-oncokb
+  short_id: OncoKB
+sources:
+  paper:
+    url: "https://ascopubs.org/doi/10.1200/PO.17.00011"
+    pmc: "https://pmc.ncbi.nlm.nih.gov/articles/PMC5586540/"
+    doi: "10.1200/PO.17.00011"
+    status: verified (WebFetch via PMC5586540 + oncokb.org/levels)
+  resource:
+    - "https://www.oncokb.org/"            # primary KB (FDA-recognized)
+    - "https://api.oncokb.org/"            # Web API — token/license gated
+    - "https://faq.oncokb.org/licensing"   # academic free / commercial paid
+    - "https://www.oncokb.org/levels"      # Tx Levels of Evidence
+  data:
+    - "cBioPortal (https://www.cbioportal.org/) — OncoKB annotations embedded"
+categorization:
+  domain:
+    - precision oncology
+    - clinical variant interpretation
+    - actionability knowledge base
+  use_case:
+    - oracle to grade hypothesized BRCA alteration→drug links by evidence level
+    - biological-plausibility / actionability gate for Scientific Critic #5
+  importance:
+    level: 상
+    perspective: >
+      Actionability-grounding ORACLE for Critic #5 (pathway–drug link plausibility),
+      but GATED. OncoKB's leveled therapeutic annotations (Level 1–4, R1/R2) are the
+      de-facto FDA-recognized reference for "is this alteration→drug link real and how
+      strong." For BIOP02 it converts a hypothesized H&E→phenotype→drug edge into a
+      recognized evidence tier. CRITICAL HONESTY: the therapeutic levels are
+      token/license-gated (institutional email + 6-month token; commercial/hospital
+      = paid), so OPEN routes (Open Targets, DGIdb, CIViC) define our reachable floor —
+      OncoKB defines a ceiling we can cite but not freely redistribute. Do not present
+      the open floor as the ceiling; label the residual gap.
+priority:
+  level: P1
+  reason: >
+    Anchors Exp4 (multi-source convergence) and Exp5 (Critic-gate precision label).
+    Defines the gold actionability tier; open KBs approximate it. Used to quantify how
+    far open routes reach toward OncoKB levels and to flag the unreachable residual.
+related:
+  - paper_id: griffith-2017-civic
+    relation: open-counterpart
+    note: >
+      CIViC — crowd-sourced, fully open (CC0) clinical-interpretation KB with its own
+      evidence levels (A–E). Primary OPEN substitute for OncoKB's leveled actionability;
+      Exp4 convergence partner.
+  - paper_id: ochoa-2023-opentargets
+    relation: open-aggregator
+    note: >
+      Open Targets Platform — open target–disease association evidence (incl.
+      ChEMBL/clinical, genetics). Open route for drug–target grounding; reaches part of
+      OncoKB's coverage without a license.
+  - paper_id: freshour-2021-dgidb
+    relation: open-aggregator
+    note: >
+      DGIdb 4.0 — open drug–gene interaction aggregator. Open route for the drug→gene
+      edge; lacks tumor-type-specific evidence leveling, defining the residual gap vs
+      OncoKB.
+workflow:
+  created: "2026-06-10"
+  last_updated: "2026-06-10"
