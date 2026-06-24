@@ -20,15 +20,16 @@ Per manifest row (from list_idc_cptac.py):
 Resumable: rows whose embedding already exists are skipped. A status row is
 written to --output-manifest after every series so a crash loses at most one.
 
-⚠️ DICOM-WSI READER CAVEAT (verify on server, GPU box):
+DICOM-WSI READER (validated 2026-06-24, macmini, OpenSlide 4.0.1):
   CPTAC-BRCA in IDC is DICOM-WSI (a *series* = a folder of .dcm), not .svs.
-  tile_wsi.py opens slides with OpenSlide; reading DICOM-WSI needs OpenSlide
-  >= 4.0 (openslide-bin ships 4.x). OpenSlide opens a DICOM WSI from the path to
-  one instance file in the series (it discovers the rest in the same dir). This
-  adapter passes that representative .dcm via --slide. If tile_wsi/OpenSlide
-  cannot open it, fallbacks are: (a) upgrade openslide-bin, or (b) convert the
-  series to a pyramidal TIFF (e.g. wsidicom / dicom2tiff) before tiling. This is
-  the one integration point not yet validated end-to-end.
+  Reading DICOM-WSI needs OpenSlide >= 4.0 (openslide-bin ships 4.x). OpenSlide
+  opens a DICOM WSI from the path to one instance file in the series (it
+  discovers the rest in the same dir); this adapter passes the largest .dcm via
+  --slide. End-to-end validated with a real CPTAC slide (download -> OpenSlide
+  open, MPP 0.25 detected -> Otsu tiling -> dummy embed -> delete). On the GPU
+  box only --embedding-model uni/conch/exaone (torch) remains to confirm.
+  Fallback if OpenSlide can't open DICOM elsewhere: ensure openslide-bin 4.x, or
+  convert series to pyramidal TIFF (wsidicom / dicom2tiff) before tiling.
 
 Example:
   python agents/data/scripts/stream_download_embed_idc.py \

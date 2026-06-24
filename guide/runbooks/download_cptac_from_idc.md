@@ -58,16 +58,18 @@ python agents/data/scripts/stream_download_embed_idc.py \
 - 여러 모델 비교(UNI/CONCH/EXAONE) 시: 한 슬라이드에 필요한 모델을 다 뽑고 삭제하거나
   그 subset만 `--keep-raw`로 받아 재다운로드를 피한다.
 
-## ⚠️ 검증 안 된 통합 지점 — DICOM-WSI 리더
+## ✅ DICOM-WSI 리더 — 검증됨 (2026-06-24, macmini)
 
-CPTAC 시리즈는 `.svs`가 아니라 **DICOM-WSI**(폴더 안 여러 `.dcm`)다. `tile_wsi.py`는
-OpenSlide로 여는데, **DICOM 읽기는 OpenSlide ≥ 4.0** 필요(`openslide-bin`이 4.x 제공).
-어댑터는 시리즈 폴더에서 **가장 큰 `.dcm`(베이스 레벨)** 을 `--slide`로 넘긴다.
+CPTAC 시리즈는 `.svs`가 아니라 **DICOM-WSI**(폴더 안 여러 `.dcm`)다. **DICOM 읽기는
+OpenSlide ≥ 4.0** 필요(`openslide-bin`이 4.x 제공). 어댑터는 시리즈 폴더에서 **가장
+큰 `.dcm`(베이스 레벨)** 을 `--slide`로 넘긴다.
 
-`--limit 2`로 먼저 확인할 것:
-- tile_wsi가 좌표를 정상 생성하는가? (OpenSlide가 DICOM을 여는가)
-- 안 되면: (a) `openslide-bin` 업그레이드, (b) 시리즈를 피라미드 TIFF로 변환
-  (`wsidicom`/`dicom2tiff`) 후 타일링. → 필요 시 tile_wsi에 디렉토리 입력 지원 추가.
+**전체 흐름이 실제 CPTAC 슬라이드로 검증됨** (macmini, OpenSlide **4.0.1**, dummy 모델):
+- 다운로드(idc-index) → OpenSlide가 DICOM 정상 오픈 (L0 17280×19316, 3 levels, **MPP 0.25 정확 인식**, target 0.5 보정) → Otsu 타일 103개 → 임베딩 (103,1024) → raw 삭제 → status=done.
+- 즉 **다운로드/DICOM 타일링/삭제/resumable 코어는 검증 완료.** 서버에선 `--embedding-model uni`(GPU)만 추가로 확인하면 됨.
+
+> 만약 다른 환경에서 OpenSlide가 DICOM을 못 열면: (a) `openslide-bin` 4.x 확인,
+> (b) 시리즈를 피라미드 TIFF로 변환(`wsidicom`/`dicom2tiff`) 후 타일링.
 
 ## 3. 산출물 / 후속
 
