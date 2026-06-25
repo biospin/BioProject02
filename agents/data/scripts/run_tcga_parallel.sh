@@ -21,12 +21,6 @@ if [ ! -f "$M" ]; then
   exit 1
 fi
 
-if pgrep -af stream_download_embed | grep -q tcga_shard; then
-  echo "이미 tcga_shard 워커가 돌고 있어 중복 실행을 막습니다."
-  pgrep -af stream_download_embed | grep tcga_shard
-  exit 1
-fi
-
 mkdir -p "$DATA/logs" "$DATA/cache/biop02" "$DATA/embeddings/biop02/tcga/uni_v1"
 
 echo "[1/2] 인벤토리 ${K}분할"
@@ -36,9 +30,13 @@ for i in $(seq 0 $((K-1))); do
 done
 wc -l "$DATA"/tcga_shard*.csv
 
-echo "[2/2] ${K}워커 실행 (GPU1)"
+echo "[2/2] ${K}워커 실행 (GPU1) — 이미 도는 샤드는 skip(죽은 것만 재시작)"
 export LD_LIBRARY_PATH="$HOME/miniconda3/lib:${LD_LIBRARY_PATH:-}"
 for i in $(seq 0 $((K-1))); do
+  if pgrep -f "tcga_shard$i.csv" >/dev/null; then
+    echo "  shard $i 이미 실행중 — skip"
+    continue
+  fi
   CUDA_VISIBLE_DEVICES=1 nohup "$PY" agents/data/scripts/stream_download_embed.py \
     --manifest "$DATA/tcga_shard$i.csv" \
     --config agents/embedding/configs/tile_config.yaml \
