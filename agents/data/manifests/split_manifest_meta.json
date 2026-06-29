@@ -1,0 +1,42 @@
+{
+  "policy": "split_policy_v0",
+  "split_hash": "5995f29d3978b831",
+  "seed": 42,
+  "target_ratios": {
+    "train": 0.7,
+    "val": 0.15,
+    "test": 0.15
+  },
+  "achieved_slide_fractions": {
+    "test": 0.1495,
+    "train": 0.7,
+    "val": 0.1505
+  },
+  "patients_per_split": {
+    "test": 151,
+    "train": 707,
+    "val": 152
+  },
+  "sites_per_split": {
+    "test": 11,
+    "train": 16,
+    "val": 10
+  },
+  "er_balance_per_split": {
+    "train": {
+      "er_pos": 559,
+      "er_neg": 148
+    },
+    "val": {
+      "er_pos": 115,
+      "er_neg": 37
+    },
+    "test": {
+      "er_pos": 108,
+      "er_neg": 43
+    }
+  },
+  "n_slides": 1010,
+  "n_patients": 1010,
+  "n_sites": 37
+}

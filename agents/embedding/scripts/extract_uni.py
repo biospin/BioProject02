@@ -35,17 +35,41 @@ from tqdm import tqdm
 # Model loading
 # ---------------------------------------------------------------------------
 
-def load_uni(device: str) -> tuple:
-    """Load UNI v1 from HuggingFace hub. Returns (model, transform)."""
-    import timm
-
-    print("  Loading UNI v1 from HuggingFace (MahmoodLab/UNI) …")
-    model = timm.create_model(
-        "hf-hub:MahmoodLab/UNI",
-        pretrained=True,
-        init_values=1e-5,
-        dynamic_img_size=True,
+def _local_uni_path() -> str | None:
+    """Return cached pytorch_model.bin path if available, else None."""
+    import glob, os
+    pattern = os.path.expanduser(
+        "~/.cache/huggingface/hub/models--MahmoodLab--UNI/snapshots/*/pytorch_model.bin"
     )
+    hits = sorted(glob.glob(pattern))
+    return hits[-1] if hits else None
+
+
+def load_uni(device: str) -> tuple:
+    """Load UNI v1 from HuggingFace hub (or local cache when token is unavailable)."""
+    import timm
+    import torch
+
+    local_ckpt = _local_uni_path()
+    if local_ckpt:
+        print(f"  Loading UNI v1 from local cache: {local_ckpt}")
+        model = timm.create_model(
+            "vit_large_patch16_224",
+            pretrained=False,
+            init_values=1e-5,
+            dynamic_img_size=True,
+            num_classes=0,
+        )
+        state = torch.load(local_ckpt, map_location="cpu", weights_only=True)
+        model.load_state_dict(state, strict=True)
+    else:
+        print("  Loading UNI v1 from HuggingFace (MahmoodLab/UNI) …")
+        model = timm.create_model(
+            "hf-hub:MahmoodLab/UNI",
+            pretrained=True,
+            init_values=1e-5,
+            dynamic_img_size=True,
+        )
     model = model.to(device)
     model.eval()
 
