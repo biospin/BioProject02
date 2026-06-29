@@ -19,6 +19,10 @@ Run:
         [--batch_size 64] [--device cuda]
 """
 
+import os
+os.environ.setdefault("HF_HUB_OFFLINE", "1")        # gated repo: load from local cache only
+os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")
+
 import argparse
 import json
 import time
@@ -41,8 +45,13 @@ def _local_uni_path() -> str | None:
     pattern = os.path.expanduser(
         "~/.cache/huggingface/hub/models--MahmoodLab--UNI/snapshots/*/pytorch_model.bin"
     )
-    hits = sorted(glob.glob(pattern))
-    return hits[-1] if hits else None
+    import time as _t
+    for _ in range(8):                  # tolerate transient empty glob under 3-GPU concurrency
+        hits = sorted(glob.glob(pattern))
+        if hits:
+            return hits[-1]
+        _t.sleep(0.5)
+    return None
 
 
 def load_uni(device: str) -> tuple:
