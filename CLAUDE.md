@@ -32,9 +32,10 @@ Goal: H&E WSI → morphology embedding → molecular phenotype prediction → De
 
 ## Infrastructure
 
-- **Server:** A100 80GB × 1, 24 CPU, 188 GiB RAM, 2 TB root — `61.109.239.220`, SSH key only
-- **Data layout:** raw WSI = S3 read-only | `/data/cache/` = LRU 200 GB (processed/tiled) | embeddings = permanent
-- **GPU slots:** 09–13 / 13–17 / 17–21 / 21–01 — reserve in `#biop02-alerts` before use (until `gpu.lock` wrapper is ready)
+- **Server (현행):** RTX A6000 49GB × 3, 24 CPU, 188 GiB RAM — `121.126.38.195`, SSH key only. 기존 `61.109.239.220`(A100 80GB × 1)은 **현재 사용 불가**.
+- **SSH 포트:** 현행 서버에서 kkkim=2205 확인됨. 나머지 팀원 포트는 재확인 필요(아래 Team & Roles 표의 포트는 기존 서버 기준이라 다를 수 있음).
+- **Data layout:** raw WSI(NAS/로컬 캐시) → 타일·임베딩 처리. 공용 `/workspace/data/cache/biop02/`, 개인 대용량 `~/data/`(15 TB, LRU). embeddings = permanent.
+- **GPU:** A6000 3장(`cuda:0/1/2`). 사용 전 `#biop02-alerts`에 GPU 인덱스 예약(until `gpu.lock` wrapper is ready).
 - **Workspace:** `/workspace/agents/<role>/` per person
 
 **Slack channels:**
@@ -111,8 +112,8 @@ Fallback while awaiting approval: `torch.randn(N, 1024)` dummy embeddings to unb
 ## Key Commands
 
 ```bash
-# SSH access
-ssh -p <port> <username>@61.109.239.220
+# SSH access (현행 서버; kkkim 포트=2205)
+ssh -p <port> <username>@121.126.38.195
 
 # Environment setup (embedding agent)
 bash agents/embedding/setup.sh   # installs openslide-tools, libvips, pyvips, timm, huggingface_hub
