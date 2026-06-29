@@ -38,7 +38,7 @@ Goal: H&E WSI → morphology embedding → molecular phenotype prediction → De
 - **GPU:** A6000 3장(`cuda:0/1/2`). 사용 전 `#biop02-alerts`에 GPU 인덱스 예약(until `gpu.lock` wrapper is ready).
 - **스토리지:** `/workspace`·`/data` = SATA SSD 447 GB(공용, ext4) | `~/data` = **HDD 14.6 TB**(개인, ext4, 회전식). raw WSI·임베딩이 HDD에 있어 타일 읽기 I/O가 병목.
 - **소프트웨어:** Ubuntu 22.04.4(Docker), NVIDIA 드라이버 535.309.01, CUDA 12.4, torch 2.6.0+cu124. 외부 IP=SSH IP(NAT 없음), 리전=한국(IP 121.126.x).
-- **제공처/비용/계약:** 미확인 — 클라우드 플랫폼 env 단서 없음(베어메탈/국내 호스팅 추정). 담당자 확인 필요.
+- **제공처/비용:** **모두의연구소(Modulabs) 제공(추정), 비용 무료.** 조건: **논문 Acknowledgments에 GPU 자원 제공처로 명시.** 계약기간·연장·idle 정책은 미확인(담당자 확인 권장).
 - **Workspace:** `/workspace/agents/<role>/` per person
 
 **Slack channels:**
