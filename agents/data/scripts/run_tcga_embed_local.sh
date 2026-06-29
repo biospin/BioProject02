@@ -46,8 +46,9 @@ echo "[2/2] ${K}워커 실행 — 이미 실행 중인 shard는 skip"
 export LD_LIBRARY_PATH="$HOME/miniconda3/lib:${LD_LIBRARY_PATH:-}"
 
 for i in $(seq 0 $((K-1))); do
-  if pgrep -f "tcga_embed_gpu$i" >/dev/null 2>&1; then
-    echo "  GPU $i 이미 실행 중 — skip"
+  PIDFILE="$LOG_DIR/tcga_embed_gpu$i.pid"
+  if [ -f "$PIDFILE" ] && kill -0 "$(cat "$PIDFILE" 2>/dev/null)" 2>/dev/null; then
+    echo "  GPU $i 워커(PID $(cat "$PIDFILE")) 이미 실행 중 — skip"
     continue
   fi
 
@@ -98,6 +99,7 @@ for coords_path in coords_list:
 print(f"GPU $i 완료: done={done} skipped={skipped} failed={failed}", flush=True)
 PYEOF
 
+  echo $! > "$LOG_DIR/tcga_embed_gpu$i.pid"
   echo "  GPU $i 시작됨 (PID $!), 로그: $LOG_DIR/tcga_embed_gpu$i.log"
 done
 
