@@ -202,16 +202,18 @@ def main() -> None:
                 if rc != 0:
                     res["status"] = "embed_failed"; res["error"] = f"extractor rc={rc}"
                     results.append(res); _write(Path(args.output_manifest), results); continue
-                # extract_*.py names output by the representative .dcm stem, which can
-                # collide across DICOM series → rename to the unique slide_id path so
-                # different slides never overwrite each other (resumable uses `emb`).
-                actual = emb_dir / f"{Path(slide).stem}{EMB_SUFFIX[args.embedding_model]}"
-                if actual.resolve() != emb.resolve():
-                    if actual.exists():
-                        actual.replace(emb)
-                    else:
-                        res["status"] = "embed_no_output"; res["error"] = f"missing {actual.name}"
-                        results.append(res); _write(Path(args.output_manifest), results); continue
+                # GPU extractors (uni/conch/exaone) name output by the representative
+                # .dcm stem, which can collide across DICOM series → rename to the unique
+                # slide_id path so slides never overwrite each other. dummy already names
+                # by the coords (slide_id) stem, so no rename there.
+                if args.embedding_model in GPU_MODELS:
+                    actual = emb_dir / f"{Path(slide).stem}{EMB_SUFFIX[args.embedding_model]}"
+                    if actual.resolve() != emb.resolve():
+                        if actual.exists():
+                            actual.replace(emb)
+                        else:
+                            res["status"] = "embed_no_output"; res["error"] = f"missing {actual.name}"
+                            results.append(res); _write(Path(args.output_manifest), results); continue
                 res["embedding_path"] = str(emb)
 
             # 4) delete raw series to keep peak disk small
