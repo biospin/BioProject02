@@ -23,12 +23,12 @@ Goal: H&E WSI → morphology embedding → molecular phenotype prediction → De
 
 | Username | github id | atlassian id | slack id  | slack app name for openclaw | SSH Port | Role |
 |---|---|---|---|---|---|---|
-| jamie (jmryu) | JamieLyu | jamie.orangecounty@gmail.com | jamie.orangecounty@gmail.com | jamie-openclaw-bot |2201 | Data Agent — TCGA/CPTAC manifests, labels, splits |
-| kkkim (gkkim) | kakyungkim | kakyung.kim@gmail.com | kakyung.kim@gmail.com | kakyung.kim-openclaw-bot | 2202 | **Project Leader** + Embedding Agent — WSI tiling, foundation model extraction (Data manifest/다운로드 역할 흡수) |
-| ~~gglee (gklee)~~ | Geongyu | rjsrb365@gmail.com | rjsrb365@gmail.com | ggyu-claw | 2203 | (이탈 2026-06-09 — Leader→kkkim, Critic→braveji 재배정) |
-| sjpark | sezinie000 | sezinie000@gmail.com | sezinie000@gmail.com | sezinie-openclaw-bot | 2204 | Modeling Agent — phenotype prediction (MLP, attention MIL); Critic 바이오 sub-check 분담 |
-| braveji (ykji) | braveji18 | biospinleader@gmail.com  | biospinleader@gmail.com | yong-openclaw-bot |  2205 | Orchestrator + **Scientific Critic (총괄)** — pipeline coordination, infra, schemas; 7-point/critic_status owns, 바이오 sub-check(#4/#5)는 sjpark/jhans에 분담 |
-| jhans | JeonghanSeo | phoenicx16@gmail.com | phoenicx16@gmail.com |  | 2206 |  Therapeutic Evidence Agent — DepMap/GDSC drug linking |
+| jamie (jmryu) | JamieLyu | jamie.orangecounty@gmail.com | jamie.orangecounty@gmail.com | jamie-openclaw-bot |2203 | Data Agent — TCGA/CPTAC manifests, labels, splits |
+| kkkim (gkkim) | kakyungkim | kakyung.kim@gmail.com | kakyung.kim@gmail.com | kakyung.kim-openclaw-bot | 2205 | **Project Leader** + Embedding Agent — WSI tiling, foundation model extraction (Data manifest/다운로드 역할 흡수) |
+| ~~gglee (gklee)~~ | Geongyu | rjsrb365@gmail.com | rjsrb365@gmail.com | ggyu-claw | 2202 | (이탈 2026-06-09 — Leader→kkkim, Critic→braveji 재배정) |
+| sjpark | sezinie000 | sezinie000@gmail.com | sezinie000@gmail.com | sezinie-openclaw-bot | 2206 | Modeling Agent — phenotype prediction (MLP, attention MIL); Critic 바이오 sub-check 분담 |
+| braveji (ykji) | braveji18 | biospinleader@gmail.com  | biospinleader@gmail.com | yong-openclaw-bot |  2201 | Orchestrator + **Scientific Critic (총괄)** — pipeline coordination, infra, schemas; 7-point/critic_status owns, 바이오 sub-check(#4/#5)는 sjpark/jhans에 분담 |
+| jhans | JeonghanSeo | phoenicx16@gmail.com | phoenicx16@gmail.com |  | 2204 |  Therapeutic Evidence Agent — DepMap/GDSC drug linking |
 
 ## Infrastructure
 

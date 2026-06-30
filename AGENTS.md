@@ -8,12 +8,12 @@
 
 | Username | 이름 | 역할 | SSH 포트 | Workspace 경로 |
 |---|---|---|---|---|
-| kkkim   | 김가경 | **Project Leader** + Embedding Agent (Data manifest/다운로드 역할 흡수) | 2202 | `/workspace/agents/embedding/` |
-| braveji | 지용기 | Orchestrator + **Scientific Critic (총괄)** | 2205 | `/workspace/agents/orchestrator/` |
-| jamie   | 류재면 | Data Agent | 2201 | `/workspace/agents/data/` |
-| sjpark  | 박세진 | Modeling Agent; Critic 바이오 sub-check 분담 | 2204 | `/workspace/agents/modeling/` |
-| jhans   | 서정한 | Therapeutic Evidence Agent | 2206 | `/workspace/agents/therapeutic_evidence/` |
-| ~~gglee~~   | ~~이건규~~ | (이탈 2026-06-09) | 2203 | — |
+| kkkim   | 김가경 | **Project Leader** + Embedding Agent (Data manifest/다운로드 역할 흡수) | 2205 | `/workspace/agents/embedding/` |
+| braveji | 지용기 | Orchestrator + **Scientific Critic (총괄)** | 2201 | `/workspace/agents/orchestrator/` |
+| jamie   | 류재면 | Data Agent | 2203 | `/workspace/agents/data/` |
+| sjpark  | 박세진 | Modeling Agent; Critic 바이오 sub-check 분담 | 2206 | `/workspace/agents/modeling/` |
+| jhans   | 서정한 | Therapeutic Evidence Agent | 2204 | `/workspace/agents/therapeutic_evidence/` |
+| ~~gglee~~   | ~~이건규~~ | (이탈 2026-06-09) | 2202 | — |
 
 **분담 원칙:** kkkim이 Project Leader 겸임 (2026-06-09 확정). braveji = Orchestrator + Scientific Critic 총괄. gglee 이탈로 5인 체제.
 
