@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "schemas/cv_registry.schema.json",
+  "title": "SpatialPathoAgent Cross-Validation Registry Entry v0.1",
+  "description": "One entry in the cross-dataset validation registry (train TCGA-BRCA -> test CPTAC-BRCA). One JSON object per line in experiments/registry/cross_validation_registry.jsonl. An entry may only be marked shareable after critic_status is pass (Critic owner = braveji; bio sub-checks #4/#5 delegated to jhans/sjpark).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "entry_id",
+    "created_at",
+    "owner",
+    "endpoint",
+    "model",
+    "embedding_model",
+    "train_dataset",
+    "test_dataset",
+    "split_policy",
+    "n_train",
+    "n_val",
+    "n_test",
+    "internal_metrics",
+    "external_metrics",
+    "experiment_dir",
+    "commit_hash",
+    "critic_status",
+    "claim_level"
+  ],
+  "properties": {
+    "schema_version": {"type": "string", "const": "0.1"},
+    "entry_id": {
+      "type": "string",
+      "description": "Stable id, convention: cv-<YYYYMMDD>-<endpoint>-<embedding>-<model> e.g. cv-20260703-er-uni-mlp",
+      "pattern": "^cv-[0-9]{8}-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+$"
+    },
+    "created_at": {"type": "string", "format": "date-time"},
+    "owner": {
+      "type": "string",
+      "description": "Experiment owner username (produced the model). Must differ from the Critic reviewer (Owner != Reviewer)."
+    },
+    "reviewer": {
+      "type": ["string", "null"],
+      "description": "Critic reviewer username. Owner != Reviewer. Null until reviewed."
+    },
+    "endpoint": {
+      "type": "string",
+      "enum": ["er_status", "pr_status", "her2_status", "pam50"]
+    },
+    "model": {
+      "type": "string",
+      "description": "Model architecture, e.g. SlideMLP, AttentionMIL, DSMIL, TransMIL, CLAM"
+    },
+    "embedding_model": {
+      "type": "string",
+      "enum": ["uni_v1", "conch", "exaone_path2", "virchow_v1", "uni2_h", "dummy"]
+    },
+    "embedding_dim": {"type": ["integer", "null"], "minimum": 1},
+    "train_dataset": {"type": "string", "const": "TCGA-BRCA"},
+    "test_dataset": {"type": "string", "const": "CPTAC-BRCA"},
+    "split_policy": {
+      "type": "string",
+      "description": "Reference to the locked split policy, e.g. split_policy_v0 (site-disjoint train 707 / val 152 / test 151)."
+    },
+    "n_train": {"type": "integer", "minimum": 1},
+    "n_val": {"type": "integer", "minimum": 1},
+    "n_test": {"type": "integer", "minimum": 1, "description": "External CPTAC-BRCA test slides/patients."},
+    "internal_metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "TCGA-BRCA held-out validation metrics (in-domain).",
+      "required": ["auc", "auprc", "balanced_accuracy"],
+      "properties": {
+        "auc": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "auprc": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "balanced_accuracy": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "n": {"type": ["integer", "null"], "minimum": 1}
+      }
+    },
+    "external_metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "CPTAC-BRCA external test metrics (out-of-domain).",
+      "required": ["auc", "auprc", "balanced_accuracy"],
+      "properties": {
+        "auc": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "auprc": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "balanced_accuracy": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "n": {"type": ["integer", "null"], "minimum": 1}
+      }
+    },
+    "generalization_gap": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "description": "internal minus external. Positive = performance drop on external cohort.",
+      "properties": {
+        "auc_delta": {"type": ["number", "null"]},
+        "auprc_delta": {"type": ["number", "null"]},
+        "balanced_accuracy_delta": {"type": ["number", "null"]}
+      }
+    },
+    "baselines": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "description": "Trivial baselines on the external cohort (Critic #2). External AUC must beat these to claim signal.",
+      "properties": {
+        "random_auc": {"type": ["number", "null"]},
+        "subtype_only_auc": {"type": ["number", "null"]},
+        "pixel_mean_auc": {"type": ["number", "null"]}
+      }
+    },
+    "experiment_dir": {
+      "type": "string",
+      "description": "Path to the experiment dir holding the 5 artifacts (config.yaml, model.pt, metrics.json, predictions.npy, critic_report.json), e.g. experiments/sjpark/20260703_er_uni_mlp_cptac/"
+    },
+    "predictions_path": {"type": ["string", "null"]},
+    "critic_report_path": {"type": ["string", "null"]},
+    "commit_hash": {"type": "string", "pattern": "^[0-9a-f]{7,40}$"},
+    "critic_status": {
+      "type": "string",
+      "enum": ["pending", "pass", "caution", "reject"],
+      "description": "Only entries with pass may be shared in #biop02-experiments."
+    },
+    "claim_level": {"type": "string", "const": "hypothesis_only"},
+    "notes": {"type": ["string", "null"]}
+  }
+}
