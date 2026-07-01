@@ -54,6 +54,16 @@ guide/
 **실험 디렉토리 필수 5개 아티팩트 + git commit hash:**
 모든 실험 디렉토리에 `config.yaml / model.pt / metrics.json / predictions.npy / critic_report.json` 및 실행 시점 git commit hash를 함께 기록해야 합니다.
 
+### 팀 공유 데이터 경로 규칙 (중요)
+
+각 팀원 SSH 계정은 **별도 Docker 컨테이너**입니다. `/home/<user>/`는 컨테이너 로컬 디스크라 **다른 계정에서는 보이지 않습니다**(권한을 열어도 마운트가 없음). 컨테이너 간 공유되는 볼륨은 `/workspace`뿐입니다.
+
+- **공유 데이터(임베딩·manifest·split·label)는 반드시 `/workspace/data/cache/biop02/`에 실파일로 둡니다.** `/home/<user>/`로의 심링크 금지(타 계정에서 깨짐). 과거엔 공유 볼륨을 못 써서 홈 심링크를 차선으로 썼으나 이제 `/workspace`가 표준입니다.
+- manifest의 `embedding_path`는 **`/workspace/...` 절대경로**로 작성합니다(개인 홈 경로 금지).
+- 폴더 네이밍: 임베딩 `<model>_<version>/`(예 `uni_v1/`, `conch_v1/`, `exaone_v2/`), manifest `embedding_manifest_<model>.csv`, split `split_policy_v<n>.csv`.
+- 새 공유 폴더: `chmod 2775`(setgid) + `chgrp project`, 파일 `g+r` 유지.
+- 영구 공유 = manifest·coords·embeddings·logs·split/label만. raw `.svs`는 각자 스트리밍→추출→삭제(개인 LRU).
+
 ---
 
 ## 3. 브랜치 및 커밋 규칙
