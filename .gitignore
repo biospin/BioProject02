@@ -228,3 +228,8 @@ __marimo__/
 
 # EXAONE Path 2.0 cloned HF repo + weights (550MB pytorch_model.bin — 영구 tracking 금지)
 agents/embedding/exaone_path2/
+
+# 세션 인수인계 파일 — 프로젝트 폴더에서 주기적으로 갱신하되 git에는 올리지 않음
+HANDOFF.md
+TODO.md
+SESSION_LOG.md
