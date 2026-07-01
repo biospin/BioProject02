@@ -12,7 +12,7 @@
 |---|---|
 | Slack 봇 `kakyung.kim-openclaw-bot` | ✅ enabled, gateway reachable |
 | Atlassian MCP OpenClaw 등록 | ✅ 등록됨 (OAuth 미완료) |
-| 에이전트 main 모델 | ❌ `codex` 가리킴 → 실행 실패 |
+| 에이전트 main 모델 | ⚠️ `codex` — provider 인증 미설정으로 실행 실패 (모델은 codex 유지) |
 | 모델 provider 키 | ❌ 미설정 |
 
 ---
@@ -60,18 +60,18 @@ openclaw mcp list
 
 ---
 
-## Step 1 — 에이전트 main 재생성 (모델 claude-sonnet-4-6으로 교체)
+## Step 1 — 에이전트 main 재생성 (모델 codex로 설정)
 
-현재 `main` 에이전트가 미등록 모델 `codex`를 가리켜 실행 실패하는 상태다.
-삭제 후 Claude 모델(`--model`)로 재생성한다.
+OpenClaw gateway는 Claude 계열 모델(`claude-sonnet-4-6` 등)에 연결할 수 없으므로 `main` 에이전트를 **codex 모델**로 설정한다.
+기존 실행 실패의 원인은 모델 선택이 아니라 provider 인증 미설정이므로, 아래 재생성 후 Step 2에서 codex 인증을 잡는다.
 
 ```bash
 # 현재 에이전트 목록 확인
 openclaw agents list
 
-# 삭제 후 Claude 모델로 재생성
+# 삭제 후 codex 모델로 재생성
 openclaw agents delete main
-openclaw agents add main --model claude-sonnet-4-6
+openclaw agents add main --model codex
 
 # 재등록 확인
 openclaw agents list
@@ -79,21 +79,21 @@ openclaw agents list
 ```
 
 > **참고:** `openclaw agents add` 옵션: `--model <id>` / `--workspace <dir>` / `--agent-dir <dir>` / `--bind <channel>`. `--harness`는 없음.
-> 모델 ID는 `claude-sonnet-4-6` (Sonnet 4.6) 또는 `claude-opus-4-8` (Opus 4.8) 중 선택.
+> 모델 ID는 `codex`. OpenClaw gateway가 Claude 계열 모델에 연결 불가하여 codex를 사용한다.
 
 ---
 
-## Step 2 — ANTHROPIC_API_KEY 설정
+## Step 2 — OPENAI_API_KEY 설정
 
-OpenClaw gateway가 Claude API를 호출할 수 있도록 API 키를 등록한다.
+OpenClaw gateway가 codex 모델을 호출할 수 있도록 OpenAI API 키를 등록한다.
 
 ```bash
 # ~/.bashrc에 추가 (권장)
-echo 'export ANTHROPIC_API_KEY="sk-ant-..."' >> ~/.bashrc
+echo 'export OPENAI_API_KEY="sk-..."' >> ~/.bashrc
 source ~/.bashrc
 
 # 설정 확인 (키 값은 직접 출력하지 말 것)
-echo ${ANTHROPIC_API_KEY:0:10}...   # sk-ant-api 앞 10자만 출력
+echo ${OPENAI_API_KEY:0:7}...   # 앞 7자만 출력
 ```
 
 반영 후 gateway 재시작:
