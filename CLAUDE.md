@@ -32,13 +32,15 @@ Goal: H&E WSI → morphology embedding → molecular phenotype prediction → De
 
 ## Infrastructure
 
-- **Server (현행):** RTX A6000 49GB × 3, 32 vCPU, 503 GiB RAM — `121.126.38.195`, SSH key only (컨테이너/overlay 환경). 기존 `61.109.239.220`(A100 80GB × 1, 24 CPU, 188 GiB)은 **현재 사용 불가**.
+- **Server (현행):** RTX A6000 49GB × 3, 32 vCPU, 503 GiB RAM — `121.126.38.195` (내부망 `192.168.0.85`), SSH key only (컨테이너/overlay 환경).
+- **Bastion (점프 호스트):** `61.109.239.220` (구 A100 서버 주소) — 본서버 접속 경유지: `ssh -J bastion@61.109.239.220 -p <port> <user>@192.168.0.85`
 - **SSH 포트:** 현행 서버에서 kkkim=2205 확인됨. 나머지 팀원 포트는 재확인 필요(아래 Team & Roles 표의 포트는 기존 서버 기준이라 다를 수 있음).
 - **Data layout:** raw WSI(NAS/로컬 캐시) → 타일·임베딩 처리. 공용 `/workspace/data/cache/biop02/`, 개인 대용량 `~/data/`(15 TB, LRU). embeddings = permanent.
 - **GPU:** A6000 3장(`cuda:0/1/2`). 사용 전 `#biop02-alerts`에 GPU 인덱스 예약(until `gpu.lock` wrapper is ready).
 - **스토리지:** `/workspace`·`/data` = SATA SSD 447 GB(공용, ext4) | `~/data` = **HDD 14.6 TB**(개인, ext4, 회전식). raw WSI·임베딩이 HDD에 있어 타일 읽기 I/O가 병목.
 - **소프트웨어:** Ubuntu 22.04.4(Docker), NVIDIA 드라이버 535.309.01, CUDA 12.4, torch 2.6.0+cu124. 외부 IP=SSH IP(NAT 없음), 리전=한국(IP 121.126.x).
 - **제공처/비용:** **모두의연구소(Modulabs) 제공(추정), 비용 무료.** 조건: **논문 Acknowledgments에 GPU 자원 제공처로 명시.** 계약기간·연장·idle 정책은 미확인(담당자 확인 권장).
+- **공동 JupyterLab (협업):** 실시간 동시편집 + 채팅. 각자 본인 계정 접속(kkkim 계정 공유 X). 터널 `ssh -L 8899:localhost:8899 -J bastion@61.109.239.220 -p <port> <user>@192.168.0.85` → `http://localhost:8899` (비밀번호는 Slack 공유). 공용 작업폴더 `/home/kkkim/collab_workspace`. SSH 세션 종료 시 터널도 끊기므로 사용 중 터미널 유지.
 - **Workspace:** `/workspace/agents/<role>/` per person
 
 **Slack channels:**
@@ -115,8 +117,8 @@ Fallback while awaiting approval: `torch.randn(N, 1024)` dummy embeddings to unb
 ## Key Commands
 
 ```bash
-# SSH access (현행 서버; kkkim 포트=2205)
-ssh -p <port> <username>@121.126.38.195
+# SSH access (bastion 경유; kkkim 포트=2205)
+ssh -J bastion@61.109.239.220 -p <port> <username>@192.168.0.85
 
 # Environment setup (embedding agent)
 bash agents/embedding/setup.sh   # installs openslide-tools, libvips, pyvips, timm, huggingface_hub
