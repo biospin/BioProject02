@@ -56,6 +56,10 @@ def make_dummy_dataset(n_slides: int, embedding_dim: int, seed: int):
 
 LABEL_MAP = {"positive": 1.0, "negative": 0.0}
 
+PAM50_MAP = {"luma": 0, "lumb": 1, "basal": 2, "her2": 3, "normal": 4}
+PAM50_CLASSES = ["LumA", "LumB", "Basal", "HER2", "Normal"]
+
+
 def load_manifest_dataset(manifest_path: str, label_col: str, split: str = None):
     """
     kkkim manifest 형식 지원:
@@ -63,6 +67,8 @@ def load_manifest_dataset(manifest_path: str, label_col: str, split: str = None)
     - 레이블: "Positive"→1, "Negative"→0, 나머지(Equivocal/Indeterminate 등) 제외
     """
     import csv
+    is_pam50 = label_col.lower() == "pam50"
+    label_lookup = PAM50_MAP if is_pam50 else LABEL_MAP
     dataset = []
     skipped = 0
     with open(manifest_path, newline="") as f:
@@ -72,14 +78,15 @@ def load_manifest_dataset(manifest_path: str, label_col: str, split: str = None)
                 continue
             emb_path = row.get("embedding_path", "")
             label_raw = row.get(label_col, "").strip().lower()
-            if not emb_path or label_raw not in LABEL_MAP:
+            if not emb_path or label_raw not in label_lookup:
                 skipped += 1
                 continue
             emb = torch.tensor(np.load(emb_path))
-            label = torch.tensor(LABEL_MAP[label_raw])
+            label_val = label_lookup[label_raw]
+            label = torch.tensor(label_val, dtype=torch.long if is_pam50 else torch.float32)
             dataset.append((emb, label))
     if skipped:
-        print(f"  [skip] {skipped} rows (Equivocal/Indeterminate/missing)")
+        print(f"  [skip] {skipped} rows (unknown label/missing)")
     return dataset
 
 
@@ -104,14 +111,18 @@ def train(config: dict, smoke_test: bool):
         val_set   = load_manifest_dataset(manifest, label_col, split="val")
     print(f"Slides: train={len(train_set)} val={len(val_set)}")
 
+    num_classes = config.get("num_classes", 1)
+    is_multiclass = num_classes > 1
+
     model = SlideMLP(
         input_dim=dim,
         hidden_dims=config["model"]["hidden_dims"],
         dropout=config["model"]["dropout"],
+        num_classes=num_classes,
     ).to(device)
 
     optimizer = torch.optim.Adam(model.parameters(), lr=config["train"]["lr"])
-    criterion = nn.BCEWithLogitsLoss()
+    criterion = nn.CrossEntropyLoss() if is_multiclass else nn.BCEWithLogitsLoss()
 
     from sklearn.metrics import roc_auc_score, average_precision_score, balanced_accuracy_score
 
@@ -123,7 +134,7 @@ def train(config: dict, smoke_test: bool):
             emb, label = emb.to(device), label.to(device)
             optimizer.zero_grad()
             logit = model(emb)
-            loss = criterion(logit, label.unsqueeze(0))
+            loss = criterion(logit.unsqueeze(0) if is_multiclass else logit, label.unsqueeze(0))
             loss.backward()
             optimizer.step()
             train_loss += loss.item()
@@ -134,8 +145,8 @@ def train(config: dict, smoke_test: bool):
             for emb, label in val_set:
                 emb, label = emb.to(device), label.to(device)
                 logit = model(emb)
-                val_loss += criterion(logit, label.unsqueeze(0)).item()
-                pred = (torch.sigmoid(logit) > 0.5).float()
+                val_loss += criterion(logit.unsqueeze(0) if is_multiclass else logit, label.unsqueeze(0)).item()
+                pred = logit.argmax() if is_multiclass else (torch.sigmoid(logit) > 0.5).float()
                 correct += (pred == label).sum().item()
 
         avg_val = val_loss / max(len(val_set), 1)
@@ -152,16 +163,24 @@ def train(config: dict, smoke_test: bool):
         for emb, label in val_set:
             emb = emb.to(device)
             logit = model(emb)
-            proba = torch.sigmoid(logit).item()
-            pred = int(proba > 0.5)
+            if is_multiclass:
+                proba = torch.softmax(logit, dim=-1).cpu().numpy().tolist()
+                pred = int(logit.argmax().item())
+            else:
+                proba = torch.sigmoid(logit).item()
+                pred = int(proba > 0.5)
             all_proba.append(proba)
             all_pred.append(pred)
             all_label.append(int(label.item()))
 
     auc = auprc = bal_acc = None
     if len(set(all_label)) > 1:
-        auc     = round(float(roc_auc_score(all_label, all_proba)), 4)
-        auprc   = round(float(average_precision_score(all_label, all_proba)), 4)
+        if is_multiclass:
+            auc = round(float(roc_auc_score(all_label, np.array(all_proba), multi_class="ovr", average="macro")), 4)
+            auprc = None
+        else:
+            auc   = round(float(roc_auc_score(all_label, all_proba)), 4)
+            auprc = round(float(average_precision_score(all_label, all_proba)), 4)
         bal_acc = round(float(balanced_accuracy_score(all_label, all_pred)), 4)
         print(f"\nVal metrics — AUC={auc}  AUPRC={auprc}  BalAcc={bal_acc}")
     else:
@@ -176,9 +195,18 @@ def train(config: dict, smoke_test: bool):
 
     torch.save(model.state_dict(), out_dir / "model.pt")
 
-    # predictions.npy 저장 (val set: proba, pred, label)
-    predictions = np.array(list(zip(all_proba, all_pred, all_label)), dtype=np.float32)
-    np.save(out_dir / "predictions.npy", predictions)
+    # predictions.npy 저장
+    if is_multiclass:
+        # multiclass: dict로 저장 (proba shape N×C, pred/label shape N)
+        np.savez(
+            out_dir / "predictions.npz",
+            proba=np.array(all_proba, dtype=np.float32),
+            pred=np.array(all_pred, dtype=np.int32),
+            label=np.array(all_label, dtype=np.int32),
+        )
+    else:
+        predictions = np.array(list(zip(all_proba, all_pred, all_label)), dtype=np.float32)
+        np.save(out_dir / "predictions.npy", predictions)
 
     # config.yaml 복사
     if config.get("_config_path"):
