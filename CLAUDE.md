@@ -34,7 +34,7 @@ Goal: H&E WSI → morphology embedding → molecular phenotype prediction → De
 
 - **Server (현행):** RTX A6000 49GB × 3, 32 vCPU, 503 GiB RAM — `121.126.38.195` (내부망 `192.168.0.85`), SSH key only (컨테이너/overlay 환경).
 - **Bastion (점프 호스트):** `61.109.239.220` (구 A100 서버 주소) — 본서버 접속 경유지: `ssh -J bastion@61.109.239.220 -p <port> <user>@192.168.0.85`
-- **SSH 포트:** 현행 서버에서 kkkim=2205 확인됨. 나머지 팀원 포트는 재확인 필요(아래 Team & Roles 표의 포트는 기존 서버 기준이라 다를 수 있음).
+- **SSH 포트:** 팀원별 포트는 위 Team & Roles 표 기준 (2026-06-30 현행 서버로 정정: braveji 2201 / jamie 2203 / kkkim 2205 / jhans 2204 / sjpark 2206).
 - **Data layout:** raw WSI(NAS/로컬 캐시) → 타일·임베딩 처리. 공용 `/workspace/data/cache/biop02/`, 개인 대용량 `~/data/`(15 TB, LRU). embeddings = permanent.
 - **GPU:** A6000 3장(`cuda:0/1/2`). 사용 전 `#biop02-alerts`에 GPU 인덱스 예약(until `gpu.lock` wrapper is ready).
 - **스토리지:** `/workspace`·`/data` = SATA SSD 447 GB(공용, ext4) | `~/data` = **HDD 14.6 TB**(개인, ext4, 회전식). raw WSI·임베딩이 HDD에 있어 타일 읽기 I/O가 병목.
