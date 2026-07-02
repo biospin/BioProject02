@@ -1,0 +1,19 @@
+{
+  "schema_version": "0.1",
+  "created_at": "2026-07-02T08:28:54.217451Z",
+  "task": "her2_status",
+  "model": "SlideMLP",
+  "embedding_model": "uni",
+  "smoke_test": false,
+  "n_train": 496,
+  "n_val": 112,
+  "best_val_loss": 0.6758,
+  "auc": 0.5509,
+  "auprc": 0.4348,
+  "balanced_accuracy": 0.5366,
+  "commit_hash": "879422e498f9f64d71802df8a16ce6c133af4dd2",
+  "claim_level": "hypothesis_only",
+  "critic_status": "pending",
+  "wandb_run_id": null,
+  "mlflow_run_id": null
+}

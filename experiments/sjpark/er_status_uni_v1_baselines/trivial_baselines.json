@@ -1,0 +1,37 @@
+{
+  "schema_version": "0.1",
+  "created_at": "2026-07-02T03:26:34.659559Z",
+  "task": "er_status",
+  "label_col": "er",
+  "manifest": "/workspace/data/cache/biop02/embedding_manifest_uni.csv",
+  "smoke_test": false,
+  "n_train": 707,
+  "n_val": 152,
+  "commit_hash": "7adc8f8dac26227a2753273e8e52d2b7d2b8260f",
+  "run_command": "agents/modeling/scripts/run_baselines.py --manifest /workspace/data/cache/biop02/embedding_manifest_uni.csv --label_col er --task er_status --tag uni_v1 --commit_hash 7adc8f8dac26227a2753273e8e52d2b7d2b8260f",
+  "claim_level": "hypothesis_only",
+  "critic_status": "pending",
+  "baselines": [
+    {
+      "baseline": "random",
+      "auc": 0.5262,
+      "auprc": 0.7916,
+      "balanced_accuracy": 0.4693,
+      "n": 152
+    },
+    {
+      "baseline": "majority",
+      "auc": 0.5,
+      "auprc": 0.7566,
+      "balanced_accuracy": 0.5,
+      "n": 152
+    },
+    {
+      "baseline": "mean_embed",
+      "auc": 0.8162,
+      "auprc": 0.9354,
+      "balanced_accuracy": 0.651,
+      "n": 152
+    }
+  ]
+}
