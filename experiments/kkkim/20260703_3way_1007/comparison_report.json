@@ -1,0 +1,187 @@
+{
+  "exp": "BIOP02-48_model_comparison",
+  "claim_level": "sanity",
+  "cohort": "TCGA-BRCA slide-level",
+  "models": [
+    "UNI",
+    "CONCH",
+    "EXAONE_pm",
+    "EXAONE_sg"
+  ],
+  "dims": {
+    "UNI": 1024,
+    "CONCH": 512,
+    "EXAONE_pm": 768,
+    "EXAONE_sg": 768
+  },
+  "probe": "LogisticRegression(class_weight=balanced) | StratifiedGroupKFold(5) by case_id",
+  "note": "Per label all models scored on the identical intersection slide set. UNI/CONCH = mean-pooled tile embeddings (256^2@20x, Otsu, cap 5000). EXAONE = internal tiling+Macenko@0.5mpp; representation noted in model name (patch_mean = apples-to-apples pooling, slide_global = EXAONE's own aggregation). So deltas conflate model + tiling pipeline, not model alone.",
+  "phenotype": {
+    "er_status": {
+      "n": 1007,
+      "UNI": {
+        "auroc": 0.8723,
+        "ci95": [
+          0.8457,
+          0.8965
+        ],
+        "n": 1007,
+        "n_patients": 1007
+      },
+      "CONCH": {
+        "auroc": 0.8577,
+        "ci95": [
+          0.8291,
+          0.8858
+        ],
+        "n": 1007,
+        "n_patients": 1007
+      },
+      "EXAONE_pm": {
+        "auroc": 0.8466,
+        "ci95": [
+          0.8171,
+          0.8775
+        ],
+        "n": 1007,
+        "n_patients": 1007
+      },
+      "EXAONE_sg": {
+        "auroc": 0.9249,
+        "ci95": [
+          0.9021,
+          0.9464
+        ],
+        "n": 1007,
+        "n_patients": 1007
+      },
+      "winner": "EXAONE_sg"
+    },
+    "pr_status": {
+      "n": 1002,
+      "UNI": {
+        "auroc": 0.7694,
+        "ci95": [
+          0.7375,
+          0.797
+        ],
+        "n": 1002,
+        "n_patients": 1002
+      },
+      "CONCH": {
+        "auroc": 0.7615,
+        "ci95": [
+          0.7286,
+          0.7951
+        ],
+        "n": 1002,
+        "n_patients": 1002
+      },
+      "EXAONE_pm": {
+        "auroc": 0.7657,
+        "ci95": [
+          0.7302,
+          0.7979
+        ],
+        "n": 1002,
+        "n_patients": 1002
+      },
+      "EXAONE_sg": {
+        "auroc": 0.8527,
+        "ci95": [
+          0.8242,
+          0.8784
+        ],
+        "n": 1002,
+        "n_patients": 1002
+      },
+      "winner": "EXAONE_sg"
+    },
+    "her2_status": {
+      "n": 698,
+      "UNI": {
+        "auroc": 0.5983,
+        "ci95": [
+          0.5494,
+          0.6465
+        ],
+        "n": 698,
+        "n_patients": 698
+      },
+      "CONCH": {
+        "auroc": 0.5903,
+        "ci95": [
+          0.5355,
+          0.6416
+        ],
+        "n": 698,
+        "n_patients": 698
+      },
+      "EXAONE_pm": {
+        "auroc": 0.6593,
+        "ci95": [
+          0.6123,
+          0.7079
+        ],
+        "n": 698,
+        "n_patients": 698
+      },
+      "EXAONE_sg": {
+        "auroc": 0.6967,
+        "ci95": [
+          0.6485,
+          0.7435
+        ],
+        "n": 698,
+        "n_patients": 698
+      },
+      "winner": "EXAONE_sg"
+    },
+    "pam50": {
+      "n": 1006,
+      "UNI": {
+        "auroc": 0.7241,
+        "ci95": [
+          0.7057,
+          0.7448
+        ],
+        "n": 1006,
+        "n_patients": 1006
+      },
+      "CONCH": {
+        "auroc": 0.7277,
+        "ci95": [
+          0.7072,
+          0.7489
+        ],
+        "n": 1006,
+        "n_patients": 1006
+      },
+      "EXAONE_pm": {
+        "auroc": 0.7267,
+        "ci95": [
+          0.706,
+          0.748
+        ],
+        "n": 1006,
+        "n_patients": 1006
+      },
+      "EXAONE_sg": {
+        "auroc": 0.7085,
+        "ci95": [
+          0.6865,
+          0.7322
+        ],
+        "n": 1006,
+        "n_patients": 1006
+      },
+      "winner": "CONCH"
+    }
+  },
+  "site_confound": {
+    "UNI": 0.9977,
+    "CONCH": 0.9782,
+    "EXAONE_pm": null,
+    "EXAONE_sg": null
+  }
+}

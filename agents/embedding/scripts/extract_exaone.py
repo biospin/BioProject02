@@ -60,11 +60,72 @@ def main():
     ap.add_argument("--num-shards", type=int, default=1)
     ap.add_argument("--target-mpp", type=float, default=0.5)
     ap.add_argument("--batch-size", type=int, default=128)
+    ap.add_argument("--max-megapixels", type=float, default=0.0,
+                    help="if >0, read a coarser pyramid level when level-0 exceeds "
+                    "this many megapixels (memory-bounded mode for ultra-high-mag "
+                    "60-80x slides whose full-res level-0 blows up CPU RAM: A66H "
+                    "level-0 = 70549 Mpx -> ~1TB). Effective mpp is scaled by the "
+                    "level downsample so physical tile size is preserved. 0 = always "
+                    "level-0, byte-identical to the default path used for the 998.")
     args = ap.parse_args()
 
     repo = Path(args.repo_dir).expanduser().resolve()
     sys.path.insert(0, str(repo))
-    from exaonepath import EXAONEPathV20  # noqa: E402
+    from exaonepath import EXAONEPathV20, PadToDivisible  # noqa: E402
+    import math as _math  # noqa: E402
+    from cucim import CuImage  # noqa: E402
+    from torchvision.transforms import functional as _TF  # noqa: E402
+    from utils.wsi_utils import load_slide_img, segment_tissue  # noqa: E402
+    from utils.tensor_utils import tile as _tile  # noqa: E402
+
+    class MemBoundedEXAONE(EXAONEPathV20):
+        """EXAONEPathV20 that reads a coarser pyramid level when level-0 would
+        exceed ``max_megapixels`` megapixels, so ultra-high-mag (60-80x) slides
+        whose full-res level-0 exhausts CPU RAM can still be embedded. The
+        effective mpp is scaled by the chosen level's downsample so the physical
+        tile size (and thus what the model sees) is preserved. Overrides only the
+        slide-loading step; the forward/aggregation is unchanged. With
+        max_megapixels<=0 the stock level-0 behaviour is used (identical to the
+        998 slides already extracted)."""
+        max_megapixels = 0.0
+
+        def _load_wsi(self, svs_path, target_mpp):
+            svs_path = str(svs_path)
+            with CuImage(svs_path) as wsi_obj:
+                try:
+                    mpp = float(wsi_obj.metadata["aperio"]["MPP"])
+                except KeyError:
+                    print(f"Warning: MPP metadata not found, using {target_mpp}", flush=True)
+                    mpp = target_mpp
+                level, ds = 0, 1.0
+                if self.max_megapixels and self.max_megapixels > 0:
+                    res = wsi_obj.resolutions
+                    dims = res["level_dimensions"]; downs = res["level_downsamples"]
+                    level, ds = len(dims) - 1, float(downs[-1])  # fallback: coarsest
+                    for L in range(len(dims)):
+                        w, h = dims[L]
+                        if (w * h) / 1e6 <= self.max_megapixels:
+                            level, ds = L, float(downs[L]); break
+                    if level != 0:
+                        print(f"  [mem-bounded] level0={dims[0][0]}x{dims[0][1]} "
+                              f"-> level{level} ds={ds} mpp_eff={mpp*ds:.4f}", flush=True)
+                img = load_slide_img(wsi_obj, level=level)
+                height, width = img.shape[:2]
+                mask_tensor = torch.from_numpy(segment_tissue(Path(svs_path), seg_level=-1)[0])
+                mask_tensor = _TF.resize(mask_tensor.unsqueeze(0), [height, width]).squeeze(0)
+                x = torch.from_numpy(img).permute(2, 0, 1)
+            mpp_eff = mpp * ds
+            small_tile_size = _math.ceil(self.small_tile_size * (target_mpp / mpp_eff))
+            large_tile_size = (self.large_tile_size // self.small_tile_size) * small_tile_size
+            pad_image = PadToDivisible(large_tile_size, 255)
+            pad_mask = PadToDivisible(large_tile_size, 0)
+            x = pad_image(x)
+            padded_size = (x.size(-1), x.size(-2))
+            x = _tile(x, small_tile_size)
+            mask_padded = pad_mask(mask_tensor.unsqueeze(0))
+            mask_tile = _tile(mask_padded, small_tile_size).squeeze(1)
+            is_tile_valid = mask_tile.sum(dim=(1, 2)) > 0
+            return x, is_tile_valid, padded_size, small_tile_size, large_tile_size
 
     out_dir = Path(args.out_dir).expanduser()
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -86,7 +147,12 @@ def main():
 
     # load model once
     t0 = time.time()
-    model = EXAONEPathV20()
+    if args.max_megapixels and args.max_megapixels > 0:
+        model = MemBoundedEXAONE()
+        model.max_megapixels = args.max_megapixels
+        print(f"{tag} mem-bounded mode: max_megapixels={args.max_megapixels}", flush=True)
+    else:
+        model = EXAONEPathV20()
     sd = torch.load(str(repo / "pytorch_model.bin"), map_location=model.device, weights_only=True)
     model.load_state_dict(sd, strict=True)
     model.eval()
