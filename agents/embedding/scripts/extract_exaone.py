@@ -50,7 +50,10 @@ def slide_id_from_path(p: Path) -> str:
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--slides-dir", required=True)
+    ap.add_argument("--slides-dir", help="dir of *.svs (glob+shard mode)")
+    ap.add_argument("--slides-file", help="text file, one .svs path per line "
+                    "(explicit-list mode; overrides --slides-dir/--shard-idx). "
+                    "Lets us reprocess/quarantine specific slides without index shifts.")
     ap.add_argument("--repo-dir", required=True, help="EXAONE repo dir (exaonepath.py + pytorch_model.bin)")
     ap.add_argument("--out-dir", required=True)
     ap.add_argument("--shard-idx", type=int, default=0)
@@ -66,11 +69,20 @@ def main():
     out_dir = Path(args.out_dir).expanduser()
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    slides = sorted(Path(args.slides_dir).expanduser().glob("*.svs"))
-    shard = [s for i, s in enumerate(slides) if i % args.num_shards == args.shard_idx]
-    tag = f"[shard {args.shard_idx}/{args.num_shards}]"
-    print(f"{tag} total={len(slides)} this-shard={len(shard)} "
-          f"CUDA_VISIBLE_DEVICES={os.environ.get('CUDA_VISIBLE_DEVICES','?')}", flush=True)
+    if args.slides_file:
+        with open(args.slides_file) as f:
+            shard = [Path(ln.strip()).expanduser() for ln in f if ln.strip()]
+        tag = f"[list {Path(args.slides_file).name}]"
+        print(f"{tag} explicit-list n={len(shard)} "
+              f"CUDA_VISIBLE_DEVICES={os.environ.get('CUDA_VISIBLE_DEVICES','?')}", flush=True)
+    else:
+        if not args.slides_dir:
+            ap.error("one of --slides-dir or --slides-file is required")
+        slides = sorted(Path(args.slides_dir).expanduser().glob("*.svs"))
+        shard = [s for i, s in enumerate(slides) if i % args.num_shards == args.shard_idx]
+        tag = f"[shard {args.shard_idx}/{args.num_shards}]"
+        print(f"{tag} total={len(slides)} this-shard={len(shard)} "
+              f"CUDA_VISIBLE_DEVICES={os.environ.get('CUDA_VISIBLE_DEVICES','?')}", flush=True)
 
     # load model once
     t0 = time.time()
