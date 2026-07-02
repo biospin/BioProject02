@@ -176,8 +176,10 @@ def train(config: dict, smoke_test: bool):
     auc = auprc = bal_acc = None
     if len(set(all_label)) > 1:
         if is_multiclass:
-            auc = round(float(roc_auc_score(all_label, np.array(all_proba), multi_class="ovr", average="macro")), 4)
-            auprc = None
+            from sklearn.preprocessing import label_binarize
+            y_bin = label_binarize(all_label, classes=list(range(num_classes)))
+            auc   = round(float(roc_auc_score(all_label, np.array(all_proba), multi_class="ovr", average="macro")), 4)
+            auprc = round(float(average_precision_score(y_bin, np.array(all_proba), average="macro")), 4)
         else:
             auc   = round(float(roc_auc_score(all_label, all_proba)), 4)
             auprc = round(float(average_precision_score(all_label, all_proba)), 4)
