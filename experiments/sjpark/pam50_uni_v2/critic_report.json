@@ -1,0 +1,90 @@
+{
+  "schema_version": "0.1",
+  "created_at": "2026-07-03T00:00:00Z",
+  "reviewer": "braveji",
+  "owner": "sjpark",
+  "experiment": {
+    "experiment_id": "pam50_uni_v2",
+    "task": "pam50",
+    "endpoint": "PAM50 5-class classification (LumA / LumB / Basal / HER2-E / Normal)",
+    "commit_hash": "faed11eb7e67652c3d0066a54dba72e3131bef89",
+    "config_path": "experiments/sjpark/pam50_uni_v2/config.yaml",
+    "metrics_path": "experiments/sjpark/pam50_uni_v2/metrics.json",
+    "predictions_path": "experiments/sjpark/pam50_uni_v2/predictions.npz",
+    "embedding_manifest_path": "/workspace/data/cache/biop02/embedding_manifest_uni.csv",
+    "split_policy_path": "agents/data/split_policy_v0.md"
+  },
+  "checks": {
+    "data_leakage": {
+      "status": "caution",
+      "evidence": [
+        "split_policy_v0.md DRAFT 상태 — ER/PR/HER2 리뷰와 동일 이슈",
+        "n_train=707 / n_val=151 — ER 실험과 동일한 split 사용으로 추정",
+        "patient-overlap assert 로그 미제출"
+      ],
+      "notes": "ER 리뷰의 data leakage 이슈 동일하게 적용. PAM50 라벨은 전사체 기반으로 학습/검증 셋에 독립적이나 IHC와 correlation 존재."
+    },
+    "baseline_comparison": {
+      "status": "caution",
+      "evidence": [
+        "PAM50 전용 trivial_baselines.json 없음 — baseline 수치 미제출",
+        "5-class random baseline: balanced_accuracy ≈ 0.20",
+        "SlideMLP balanced_accuracy 0.4308 → random 대비 +0.23 (유의미한 gap 추정)",
+        "PAM50 macro-AUC 0.7113 — 5-class 분류로서 합리적 수준",
+        "AUPRC 0.4156 — 클래스 불균형(LumA 다수, HER2-E/Normal 소수) 반영",
+        "pam50_uni_v1 대비 v2는 AUPRC 필드 추가 외 수치 동일"
+      ],
+      "notes": "공식 trivial_baselines.json 없어 random 대비 우위는 추정에 그침. PAM50 5-class에서 balanced_acc 0.43은 random(0.20) 대비 2배 이상으로 모델이 의미 있는 패턴을 학습한 것으로 추정. 단, subtype_only(clinical IHC 기반) 및 mean_embed baseline 없이 pass 판정 불가. PAM50 클래스별 AUC 분해(per-class AUC) 제출 요청."
+    },
+    "counterfactual_check": {
+      "status": "caution",
+      "evidence": [
+        "label shuffle test 미실행",
+        "5-class PAM50 label shuffle 후 balanced_acc ≈ 0.20 확인 필요"
+      ],
+      "notes": "5-class의 경우 label shuffle이 특히 중요 — 클래스 불균형으로 인해 다수 클래스(LumA)만 예측해도 높은 accuracy를 보일 수 있음."
+    },
+    "cross_dataset_check": {
+      "status": "not_applicable",
+      "evidence": ["Paper A 표현형 예측 단계"],
+      "notes": "Paper A 범위. CPTAC 외부 검증에서 PAM50 예측 교차 검증 예정."
+    },
+    "biological_plausibility": {
+      "status": "pass",
+      "evidence": [
+        "PAM50 subtypes (LumA/LumB/Basal/HER2-E/Normal)는 H&E 형태학과 연관성 있음 (핵 등급, 세포 형태 등)",
+        "Basal-like 아형의 특징적 형태학 (high grade, pushing margins) — 문헌 선례 있음 (Lu 2021 CLAM)",
+        "Luminal A의 특징적 저등급 핵 형태 — H&E에서 관찰 가능",
+        "ICI 추천 없음"
+      ],
+      "notes": "PAM50 예측의 H&E 기반 타당성은 문헌으로 뒷받침됨. Basal/LumA 아형은 특히 형태학적 차이가 크므로 이 두 클래스에서 높은 AUC 예상."
+    },
+    "drp_framing": {
+      "status": "pass",
+      "evidence": [
+        "task: 'pam50' (표현형 예측)",
+        "claim_level: 'hypothesis_only'",
+        "금지 표현 미발견"
+      ],
+      "notes": "DRP 프레이밍 문제 없음."
+    },
+    "claim_level": {
+      "status": "pass",
+      "evidence": [
+        "claim_level: 'hypothesis_only' 명시",
+        "단일 코호트 val set 결과"
+      ],
+      "notes": "단일 코호트 결과이며 claim 수준 적절."
+    }
+  },
+  "critic_status": "caution",
+  "claim_level": "hypothesis_only",
+  "summary": "PAM50 5-class SlideMLP(UNI v1) macro-AUC 0.7113, balanced_acc 0.4308. random baseline(0.20) 대비 유의미한 성능으로 추정되나 공식 baseline 파일 없어 확인 불가. AUPRC 0.4156은 클래스 불균형 감안 시 합리적. HER2-E/Normal 소수 클래스 성능이 전체 성능을 낮출 것으로 예상 — per-class AUC 제출 필요. 전체 판정: caution.",
+  "required_followups": [
+    "[sjpark] PAM50 전용 trivial_baselines.json 생성 (random/subtype_only/mean_embed, bootstrap CI 포함)",
+    "[sjpark] per-class AUC 분해 제출 (LumA/LumB/Basal/HER2-E/Normal 각각)",
+    "[sjpark] label shuffle test (5-class balanced_acc ≈ 0.20 확인)",
+    "[sjpark/kkkim] patient-overlap assert 및 split_policy lock — 공통 followup",
+    "[sjpark] CLAM-SB 전환 시 PAM50 재실험 — attention map으로 subtype별 형태 특징 탐색"
+  ]
+}
