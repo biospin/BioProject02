@@ -89,17 +89,27 @@ def train(config: dict, smoke_test: bool):
     dim = config["embedding_dim"]
     manifest = config["data"]["embedding_manifest"]
 
+    test_manifest = config.get("_test_manifest")
+
     if smoke_test or not Path(manifest).exists():
         print("Smoke-test mode: using dummy embeddings")
         dataset = make_dummy_dataset(config["data"]["n_dummy_slides"], dim, config["train"]["seed"])
         n = len(dataset)
         split_idx = int(n * 0.8)
         train_set, val_set = dataset[:split_idx], dataset[split_idx:]
+        ext_test_set = None
     else:
         print(f"Loading manifest: {manifest}")
         label_col = config["data"]["label_col"]
         train_set = load_manifest_dataset(manifest, label_col, split="train")
         val_set   = load_manifest_dataset(manifest, label_col, split="val")
+        # 외부 검증 (CPTAC cross-dataset)
+        if test_manifest and Path(test_manifest).exists():
+            print(f"Loading test manifest: {test_manifest}")
+            ext_test_set = load_manifest_dataset(test_manifest, label_col, split="cptac_external")
+            print(f"External test: {len(ext_test_set)} slides")
+        else:
+            ext_test_set = None
 
     print(f"Slides: train={len(train_set)} val={len(val_set)}")
 
@@ -114,6 +124,10 @@ def train(config: dict, smoke_test: bool):
     criterion = nn.BCEWithLogitsLoss()
 
     best_val_loss = float("inf")
+    best_state = None
+    patience = config["train"].get("patience", 5)
+    no_improve = 0
+
     for epoch in range(1, config["train"]["epochs"] + 1):
         model.train()
         train_loss = 0.0
@@ -142,6 +156,17 @@ def train(config: dict, smoke_test: bool):
 
         if avg_val < best_val_loss:
             best_val_loss = avg_val
+            best_state = {k: v.cpu().clone() for k, v in model.state_dict().items()}
+            no_improve = 0
+        else:
+            no_improve += 1
+            if no_improve >= patience:
+                print(f"  [early stop] patience={patience} 도달, epoch {epoch}에서 중단")
+                break
+
+    if best_state is not None:
+        model.load_state_dict(best_state)
+        print(f"Best model 복원 (val_loss={best_val_loss:.4f})")
 
     # val set 최종 지표
     from sklearn.metrics import roc_auc_score, average_precision_score, balanced_accuracy_score
@@ -160,7 +185,25 @@ def train(config: dict, smoke_test: bool):
         auc     = round(float(roc_auc_score(all_label, all_proba)), 4)
         auprc   = round(float(average_precision_score(all_label, all_proba)), 4)
         bal_acc = round(float(balanced_accuracy_score(all_label, all_pred)), 4)
-        print(f"\nVal metrics — AUC={auc}  AUPRC={auprc}  BalAcc={bal_acc}")
+        print(f"\nVal metrics (TCGA) — AUC={auc}  AUPRC={auprc}  BalAcc={bal_acc}")
+
+    # 외부 검증 (CPTAC cross-dataset)
+    ext_auc = ext_auprc = ext_bal_acc = None
+    if ext_test_set:
+        model.eval()
+        ext_proba, ext_pred, ext_label = [], [], []
+        with torch.no_grad():
+            for emb, label in ext_test_set:
+                logit, _ = model(emb.to(device))
+                proba = torch.sigmoid(logit).item()
+                ext_proba.append(proba)
+                ext_pred.append(int(proba > 0.5))
+                ext_label.append(int(label.item()))
+        if len(set(ext_label)) > 1:
+            ext_auc     = round(float(roc_auc_score(ext_label, ext_proba)), 4)
+            ext_auprc   = round(float(average_precision_score(ext_label, ext_proba)), 4)
+            ext_bal_acc = round(float(balanced_accuracy_score(ext_label, ext_pred)), 4)
+            print(f"Test metrics (CPTAC) — AUC={ext_auc}  AUPRC={ext_auprc}  BalAcc={ext_bal_acc}")
 
     tag    = config.get("tag", datetime.datetime.now().strftime("%Y%m%d"))
     suffix = f"{config['task']}_clam_{tag}" + ("_smoke" if smoke_test else "")
@@ -189,6 +232,10 @@ def train(config: dict, smoke_test: bool):
         "auc": auc,
         "auprc": auprc,
         "balanced_accuracy": bal_acc,
+        "ext_test_manifest": test_manifest,
+        "ext_auc": ext_auc,
+        "ext_auprc": ext_auprc,
+        "ext_balanced_accuracy": ext_bal_acc,
         "commit_hash": commit_hash,
         "claim_level": "hypothesis_only",
         "critic_status": "pending",
@@ -206,6 +253,7 @@ def main():
     parser.add_argument("--smoke_test", action="store_true")
     parser.add_argument("--tag", default="")
     parser.add_argument("--commit_hash", default="")
+    parser.add_argument("--test_manifest", default="", help="외부 검증 manifest (CPTAC cross-dataset)")
     args = parser.parse_args()
 
     with open(args.config) as f:
@@ -215,6 +263,8 @@ def main():
         config["tag"] = args.tag
     if args.commit_hash:
         config["_commit_hash"] = args.commit_hash
+    if args.test_manifest:
+        config["_test_manifest"] = args.test_manifest
 
     t0 = time.time()
     train(config, args.smoke_test)

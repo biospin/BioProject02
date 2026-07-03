@@ -9,8 +9,9 @@ model:
   dropout: 0.25
 
 train:
-  epochs: 20
+  epochs: 50
   lr: 2.0e-4
+  patience: 7
   seed: 42
 
 data:
