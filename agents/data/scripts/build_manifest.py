@@ -90,7 +90,7 @@ def read_pam50(path: Path) -> dict[str, str]:
         for row in csv.DictReader(fh):
             low = {(k or "").strip().lower(): (v or "").strip() for k, v in row.items()}
             cid = low.get("case_id") or low.get("bcr_patient_barcode") or ""
-            val = low.get("pam50") or low.get("subtype") or ""
+            val = low.get("pam50") or low.get("subtype") or low.get("pam50_subtype") or ""
             if cid:
                 m["-".join(cid.split("-")[:3])] = val
     return m

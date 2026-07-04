@@ -1,0 +1,97 @@
+{
+  "schema_version": "0.1",
+  "created_at": "2026-07-03T00:00:00Z",
+  "reviewer": "braveji",
+  "owner": "sjpark",
+  "experiment": {
+    "experiment_id": "er_status_uni_v1",
+    "task": "er_status",
+    "endpoint": "ER IHC binary classification (positive / negative)",
+    "commit_hash": "7adc8f8dac26227a2753273e8e52d2b7d2b8260f",
+    "config_path": "experiments/sjpark/er_status_uni_v1/config.yaml",
+    "metrics_path": "experiments/sjpark/er_status_uni_v1/metrics.json",
+    "predictions_path": "experiments/sjpark/er_status_uni_v1/predictions.npy",
+    "embedding_manifest_path": "/workspace/data/cache/biop02/embedding_manifest_uni.csv",
+    "split_policy_path": "agents/data/split_policy_v0.md"
+  },
+  "checks": {
+    "data_leakage": {
+      "status": "caution",
+      "evidence": [
+        "split_policy_v0.md 존재 확인 — 단, 상태 DRAFT (kkkim sign-off 미완료, 2026-07-03 기준)",
+        "n_train=707 / n_val=152 — 환자 단위 분리로 추정되나 patient-overlap assert 로그 미제출",
+        "site-disjoint split 적용 여부 불명확 (site_classifier_probe.py 결과 없음)"
+      ],
+      "notes": "split_policy_v0 lock이 완료되지 않은 상태에서 실험이 진행됨. 현재 split이 patient-level로 구성됐을 가능성이 높으나, (1) patient-overlap assert 로그와 (2) site classifier probe AUC를 제출해야 pass 전환 가능. 단, split 구현 자체는 올바른 방향으로 추정되므로 caution 처리."
+    },
+    "baseline_comparison": {
+      "status": "caution",
+      "evidence": [
+        "SlideMLP AUC 0.8209 (95% CI 0.7404–0.8918)",
+        "random AUC 0.5262 → SlideMLP +0.2947 (충분한 gap)",
+        "majority AUC 0.5000 → SlideMLP +0.3209 (충분한 gap)",
+        "mean_embed AUC 0.8162 → SlideMLP +0.0047 (극히 미미한 gap)",
+        "mean_embed AUPRC 0.9354 > SlideMLP AUPRC 0.9295 — 모델이 AUPRC에서 mean_embed에 뒤짐",
+        "mean_embed에 대한 bootstrap CI 미제출 — 통계적 유의성 불명확"
+      ],
+      "notes": "random/majority 대비 성능은 명확하게 우수함. 그러나 mean_embed(슬라이드 임베딩 평균)와 AUC 차이가 +0.0047에 불과하고 AUPRC는 오히려 낮음. 이는 SlideMLP가 UNI v1 임베딩의 평균값 이상의 discriminative feature를 학습하지 못하고 있을 가능성을 시사함. mean_embed bootstrap CI 생성 후 통계적 유의성 확인 필수. Attention MIL(CLAM-SB)로의 전환이 이 문제를 해결할 것으로 기대됨."
+    },
+    "counterfactual_check": {
+      "status": "caution",
+      "evidence": [
+        "label shuffle test 결과 없음",
+        "embedding ablation 결과 없음",
+        "MLP 구조상 attention score가 없어 patch-level counterfactual 어려움"
+      ],
+      "notes": "MLP는 attention 기반 해석이 불가능하므로 (1) label shuffle test(학습 라벨 무작위 셔플 후 재학습 → AUC ≈ 0.5 확인) 최소한 실행 필요. CLAM-SB 전환 후 attention map 기반 counterfactual로 대체 가능. 현재 단계에서는 caution 처리하고 CLAM-SB 단계에서 보완."
+    },
+    "cross_dataset_check": {
+      "status": "not_applicable",
+      "evidence": [
+        "Paper A 표현형 예측 단계 — DepMap/GDSC 전이 없음",
+        "CPTAC-BRCA 외부 검증은 Sprint 3 (BIOP02-54)에서 별도 진행"
+      ],
+      "notes": "Paper A 범위 내 표현형 예측 태스크로 cross-dataset(DepMap vs GDSC) 체크 불필요. CPTAC 외부 검증은 Sprint 3 교차검증 registry(BIOP02-57)에서 별도 평가."
+    },
+    "biological_plausibility": {
+      "status": "pass",
+      "evidence": [
+        "태스크: ER IHC 이진 분류 — 임상적으로 확립된 표현형",
+        "ER 상태는 Luminal A/B 판정과 내분비 치료(Tamoxifen/Fulvestrant) 결정의 핵심 바이오마커",
+        "H&E 형태학에서 ER 상태 예측은 Couture 2018 (npj BC), Kather 2020 등에서 선례 있음",
+        "ICI/Pembrolizumab 추천 없음",
+        "약물 전이 없음 (Paper A 범위)"
+      ],
+      "notes": "ER 이진 분류는 생물학적으로 타당한 태스크. H&E 형태와 ER 발현 간 연관성은 문헌으로 뒷받침됨. 이 단계에서 drug-pathway 연결 없으므로 plausibility 체크는 pass."
+    },
+    "drp_framing": {
+      "status": "pass",
+      "evidence": [
+        "task 필드: 'er_status' (표현형 예측, DRP 아님)",
+        "claim_level: 'hypothesis_only'",
+        "metrics.json 및 config.yaml에서 금지 표현('drug response prediction', 'personalized therapy', 'patient-specific treatment') 미발견"
+      ],
+      "notes": "DRP 프레이밍 문제 없음. 표현형 예측 태스크로 올바르게 정의됨."
+    },
+    "claim_level": {
+      "status": "pass",
+      "evidence": [
+        "claim_level: 'hypothesis_only' 명시",
+        "AUC 0.82는 단일 코호트(TCGA-BRCA val set) 결과",
+        "외부 검증(CPTAC) 미포함 — 일반화 주장 없음"
+      ],
+      "notes": "단일 코호트 val set 결과이며 claim_level이 hypothesis_only로 올바르게 기재됨. CPTAC 외부 검증 이전에는 일반화 주장 금지."
+    }
+  },
+  "critic_status": "caution",
+  "claim_level": "hypothesis_only",
+  "summary": "ER status SlideMLP(UNI v1)는 random/majority baseline 대비 명확한 성능 우위를 보이나, mean_embed(임베딩 평균) 대비 AUC 차이가 +0.0047에 불과하고 AUPRC는 오히려 낮음. 이는 MLP aggregation이 UNI v1 임베딩의 정보량 이상을 추출하지 못하고 있음을 시사함. split_policy_v0 lock 미완료 및 patient-overlap assert 로그 미제출도 data leakage #1에서 caution 사유. Counterfactual(label shuffle) 미실행. 전체 판정: caution. CLAM-SB Attention MIL 전환 후 재평가 권고.",
+  "required_followups": [
+    "[sjpark] patient-overlap assert 로그 제출 (train∩val case_id == 0 확인)",
+    "[kkkim] split_policy_v0 sign-off 완료 (lock 해시 metrics.json에 기록)",
+    "[sjpark] site_classifier_probe.py 실행 후 AUC 수치 제출",
+    "[sjpark] mean_embed bootstrap 95% CI 생성 → SlideMLP와 통계적 유의성 비교",
+    "[sjpark] label shuffle test 실행 (셔플 후 AUC ≈ 0.5 확인)",
+    "[sjpark] CLAM-SB Attention MIL 결과 제출 시 재리뷰 진행 (BIOP02-53)"
+  ]
+}

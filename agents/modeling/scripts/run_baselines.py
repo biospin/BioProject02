@@ -20,7 +20,7 @@ from pathlib import Path
 
 import sys
 sys.path.insert(0, str(Path(__file__).parents[2]))
-from modeling.baselines.trivial import RandomBaseline, MajorityBaseline, MeanEmbedBaseline, evaluate
+from modeling.baselines.trivial import RandomBaseline, SubtypeOnlyBaseline, MeanEmbedBaseline, evaluate, bootstrap_auc_ci
 
 
 def make_dummy_dataset(n_slides: int = 20, dim: int = 1024, seed: int = 42):
@@ -32,8 +32,8 @@ def make_dummy_dataset(n_slides: int = 20, dim: int = 1024, seed: int = 42):
 
 LABEL_MAP = {"positive": 1.0, "negative": 0.0}
 
-def load_manifest_dataset(manifest_path: str, label_col: str, split: str = None):
-    X, y = [], []
+def load_manifest_dataset(manifest_path: str, label_col: str, split: str = None, aux_col: str = None):
+    X, y, aux = [], [], []
     skipped = 0
     with open(manifest_path, newline="") as f:
         for row in csv.DictReader(f):
@@ -46,9 +46,11 @@ def load_manifest_dataset(manifest_path: str, label_col: str, split: str = None)
                 continue
             X.append(np.load(emb_path))
             y.append(LABEL_MAP[label_raw])
+            if aux_col:
+                aux.append(row.get(aux_col, "").strip())
     if skipped:
         print(f"  [skip] {skipped} rows (Equivocal/Indeterminate/missing)")
-    return X, np.array(y, dtype=np.float32)
+    return X, np.array(y, dtype=np.float32), aux if aux_col else None
 
 
 def main():
@@ -60,10 +62,13 @@ def main():
     parser.add_argument("--task", default="er_status")
     parser.add_argument("--tag", default="", help="실험 태그 (예: dummy_v1, uni_v1). 미지정 시 날짜 사용")
     parser.add_argument("--commit_hash", default="", help="git commit hash (서버 실행 시 로컬에서 명시적으로 전달)")
+    parser.add_argument("--aux_col", default="pam50", help="subtype-only baseline용 보조 레이블 컬럼 (기본: pam50)")
+    parser.add_argument("--bootstrap_ci", action="store_true", help="AUC bootstrap 95% CI 계산")
     parser.add_argument("--output_dir", default="/workspace/agents/modeling/experiments")
     args = parser.parse_args()
 
     smoke_test = args.smoke_test or not args.manifest or not Path(args.manifest).exists()
+    aux_col = args.aux_col if not smoke_test else None
 
     if smoke_test:
         print("Smoke-test mode: using dummy embeddings")
@@ -72,24 +77,29 @@ def main():
         sp = int(n * 0.8)
         X_train, X_val = X[:sp], X[sp:]
         y_train, y_val = y[:sp], y[sp:]
+        sub_train = sub_val = None
     else:
-        X_train, y_train = load_manifest_dataset(args.manifest, args.label_col, split="train")
-        X_val,   y_val   = load_manifest_dataset(args.manifest, args.label_col, split="val")
+        X_train, y_train, sub_train = load_manifest_dataset(args.manifest, args.label_col, split="train", aux_col=aux_col)
+        X_val,   y_val,   sub_val   = load_manifest_dataset(args.manifest, args.label_col, split="val",   aux_col=aux_col)
     print(f"Slides: train={len(X_train)} val={len(X_val)}\n")
 
     baselines = [
-        ("random",     RandomBaseline()),
-        ("majority",   MajorityBaseline()),
-        ("mean_embed", MeanEmbedBaseline()),
+        ("random",       RandomBaseline()),
+        ("subtype_only", SubtypeOnlyBaseline()),
+        ("mean_embed",   MeanEmbedBaseline()),
     ]
 
     results = []
     for name, clf in baselines:
-        clf.fit(X_train, y_train)
-        proba = clf.predict_proba(X_val)
-        m = evaluate(name, proba, y_val)
+        if name == "subtype_only" and sub_train is None:
+            print(f"[{name:12s}]  skip (smoke_test 또는 aux_col 없음)")
+            continue
+        clf.fit(X_train, y_train, sub_train)
+        proba = clf.predict_proba(X_val, sub_val)
+        m = evaluate(name, proba, y_val, add_ci=args.bootstrap_ci)
         results.append(m)
-        print(f"[{name:12s}]  AUC={m['auc']}  AUPRC={m['auprc']}  BalAcc={m['balanced_accuracy']}")
+        ci_str = f"  CI95={m['auc_ci_95']}" if args.bootstrap_ci and 'auc_ci_95' in m else ""
+        print(f"[{name:12s}]  AUC={m['auc']}  AUPRC={m['auprc']}  BalAcc={m['balanced_accuracy']}{ci_str}")
 
     # 실험 디렉토리: experiments/<username>/<task>_<tag>_baselines/
     tag = args.tag if args.tag else datetime.datetime.now().strftime("%Y%m%d")

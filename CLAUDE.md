@@ -24,7 +24,7 @@ Goal: H&E WSI → morphology embedding → molecular phenotype prediction → De
 | Username | github id | atlassian id | slack id  | slack app name for openclaw | SSH Port | Role |
 |---|---|---|---|---|---|---|
 | jamie (jmryu) | JamieLyu | jamie.orangecounty@gmail.com | jamie.orangecounty@gmail.com | jamie-openclaw-bot |2203 | Data Agent — TCGA/CPTAC manifests, labels, splits |
-| kkkim | kakyungkim | kakyung.kim@gmail.com | kakyung.kim@gmail.com | kakyung.kim-openclaw-bot | 2205 | **Project Leader** + Embedding Agent — WSI tiling, foundation model extraction (Data manifest/다운로드 역할 흡수) |
+| kkkim (gkkim) | kakyungkim | kakyung.kim@gmail.com | kakyung.kim@gmail.com | kakyung.kim-openclaw-bot | 2205 | **Project Leader** + Embedding Agent — WSI tiling, foundation model extraction (Data manifest/다운로드 역할 흡수) |
 | ~~gglee (gklee)~~ | Geongyu | rjsrb365@gmail.com | rjsrb365@gmail.com | ggyu-claw | 2202 | (이탈 2026-06-09 — Leader→kkkim, Critic→braveji 재배정) |
 | sjpark | sezinie000 | sezinie000@gmail.com | sezinie000@gmail.com | sezinie-openclaw-bot | 2206 | Modeling Agent — phenotype prediction (MLP, attention MIL); Critic 바이오 sub-check 분담 |
 | braveji (ykji) | braveji18 | biospinleader@gmail.com  | biospinleader@gmail.com | yong-openclaw-bot |  2201 | Orchestrator + **Scientific Critic (총괄)** — pipeline coordination, infra, schemas; 7-point/critic_status owns, 바이오 sub-check(#4/#5)는 sjpark/jhans에 분담 |
@@ -32,9 +32,15 @@ Goal: H&E WSI → morphology embedding → molecular phenotype prediction → De
 
 ## Infrastructure
 
-- **Server:** A100 80GB × 1, 24 CPU, 188 GiB RAM, 2 TB root — `61.109.239.220`, SSH key only
-- **Data layout:** raw WSI = S3 read-only | `/data/cache/` = LRU 200 GB (processed/tiled) | embeddings = permanent
-- **GPU slots:** 09–13 / 13–17 / 17–21 / 21–01 — reserve in `#biop02-alerts` before use (until `gpu.lock` wrapper is ready)
+- **Server (현행):** RTX A6000 49GB × 3, 32 vCPU, 503 GiB RAM — `121.126.38.195` (내부망 `192.168.0.85`), SSH key only (컨테이너/overlay 환경).
+- **Bastion (점프 호스트):** `61.109.239.220` (구 A100 서버 주소) — 본서버 접속 경유지: `ssh -J bastion@61.109.239.220 -p <port> <user>@192.168.0.85`
+- **SSH 포트:** 팀원별 포트는 위 Team & Roles 표 기준 (2026-06-30 현행 서버로 정정: braveji 2201 / jamie 2203 / kkkim 2205 / jhans 2204 / sjpark 2206).
+- **Data layout:** raw WSI(NAS/로컬 캐시) → 타일·임베딩 처리. 공용 `/workspace/data/cache/biop02/`, 개인 대용량 `~/data/`(15 TB, LRU). embeddings = permanent.
+- **GPU:** A6000 3장(`cuda:0/1/2`). 사용 전 `#biop02-alerts`에 GPU 인덱스 예약(until `gpu.lock` wrapper is ready).
+- **스토리지:** `/workspace`·`/data` = SATA SSD 447 GB(공용, ext4) | `~/data` = **HDD 14.6 TB**(개인, ext4, 회전식). raw WSI·임베딩이 HDD에 있어 타일 읽기 I/O가 병목.
+- **소프트웨어:** Ubuntu 22.04.4(Docker), NVIDIA 드라이버 535.309.01, CUDA 12.4, torch 2.6.0+cu124. 외부 IP=SSH IP(NAT 없음), 리전=한국(IP 121.126.x).
+- **제공처/비용:** **모두의연구소(Modulabs) 제공(추정), 비용 무료.** 조건: **논문 Acknowledgments에 GPU 자원 제공처로 명시.** 계약기간·연장·idle 정책은 미확인(담당자 확인 권장).
+- **공동 JupyterLab (협업):** 실시간 동시편집 + 채팅. 각자 본인 계정 접속(kkkim 계정 공유 X). 터널 `ssh -L 8899:localhost:8899 -J bastion@61.109.239.220 -p <port> <user>@192.168.0.85` → `http://localhost:8899` (비밀번호는 Slack 공유). 공용 작업폴더 `/home/kkkim/collab_workspace`. SSH 세션 종료 시 터널도 끊기므로 사용 중 터미널 유지.
 - **Workspace:** `/workspace/agents/<role>/` per person
 
 ### 팀 공유 데이터 경로 규칙 (중요)
@@ -121,8 +127,8 @@ Fallback while awaiting approval: `torch.randn(N, 1024)` dummy embeddings to unb
 ## Key Commands
 
 ```bash
-# SSH access
-ssh -p <port> <username>@61.109.239.220
+# SSH access (bastion 경유; kkkim 포트=2205)
+ssh -J bastion@61.109.239.220 -p <port> <username>@192.168.0.85
 
 # Environment setup (embedding agent)
 bash agents/embedding/setup.sh   # installs openslide-tools, libvips, pyvips, timm, huggingface_hub

@@ -1,0 +1,21 @@
+task: her2_status
+username: sjpark
+embedding_model: uni
+embedding_dim: 1024
+
+model:
+  hidden_dims: [512, 256]
+  dropout: 0.3
+
+train:
+  epochs: 10
+  lr: 1.0e-3
+  batch_size: 1
+  seed: 42
+
+data:
+  embedding_manifest: /workspace/data/cache/biop02/embedding_manifest_uni.csv
+  label_col: her2
+  n_dummy_slides: 20
+
+output_dir: /workspace/agents/modeling/experiments
