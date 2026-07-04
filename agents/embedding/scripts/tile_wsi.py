@@ -61,24 +61,70 @@ def _binary_close(arr: np.ndarray, radius: int = 7) -> np.ndarray:
     return np.array(img)
 
 
-def compute_tissue_mask(slide, downsample_factor: int):
+def _thumbnail_from_level0(slide_path: str, target_ds: float) -> np.ndarray:
+    """
+    Build a grayscale thumbnail at ~target_ds downsample by reading level 0 in
+    horizontal strips and resizing each. Fallback for slides whose downsampled
+    pyramid levels have corrupt JPEG2000 codestreams (OpenJPEG "Expected a SOC
+    marker") — level 0 is intact, so we derive the mask from it directly.
+
+    Re-opens the slide from path because the handle that hit the decode error is
+    poisoned (subsequent calls on it keep raising).
+    """
+    import openslide
+
+    slide = openslide.OpenSlide(slide_path)
+    try:
+        w0, h0 = slide.level_dimensions[0]
+        out_w = max(1, int(round(w0 / target_ds)))
+        out_h = max(1, int(round(h0 / target_ds)))
+        # ~256 output rows per strip → bounded RAM (w0 × 256·target_ds × 4 bytes)
+        strip_h0 = max(int(target_ds), int(256 * target_ds))
+        thumb = Image.new("L", (out_w, out_h))
+        y0 = 0
+        while y0 < h0:
+            h = min(strip_h0, h0 - y0)
+            region = slide.read_region((0, y0), 0, (w0, h)).convert("L")
+            oh = max(1, int(round(h / target_ds)))
+            region = region.resize((out_w, oh), Image.BILINEAR)
+            thumb.paste(region, (0, int(round(y0 / target_ds))))
+            y0 += h
+        return np.array(thumb)
+    finally:
+        slide.close()
+
+
+def compute_tissue_mask(slide, downsample_factor: int, slide_path: str | None = None):
     """
     Return (mask, mask_downsample) where mask is a uint8 binary image
     (255 = tissue) at the thumbnail resolution.
 
     Uses Otsu on grayscale: background (bright) vs tissue (darker).
+
+    If the chosen downsampled level is unreadable (corrupt JPEG2000 frame), the
+    thumbnail is rebuilt from level 0 — provided slide_path is given.
     """
+    import openslide
+
     mask_level = slide.get_best_level_for_downsample(downsample_factor)
-    dims = slide.level_dimensions[mask_level]
-    thumb = slide.read_region((0, 0), mask_level, dims).convert("L")
-    gray = np.array(thumb)
+    target_ds = float(slide.level_downsamples[mask_level])
+    try:
+        dims = slide.level_dimensions[mask_level]
+        thumb = slide.read_region((0, 0), mask_level, dims).convert("L")
+        gray = np.array(thumb)
+    except openslide.OpenSlideError as e:
+        if slide_path is None:
+            raise
+        print(f"  [warn] mask level {mask_level} unreadable ({e}); "
+              f"rebuilding mask from level 0 at downsample {target_ds:.0f}×")
+        gray = _thumbnail_from_level0(slide_path, target_ds)
 
     thresh = _otsu_threshold(gray)
     # H&E tissue is darker than the bright glass background
     binary = ((gray < thresh).astype(np.uint8)) * 255
     binary = _binary_close(binary, radius=7)
 
-    return binary, slide.level_downsamples[mask_level]
+    return binary, target_ds
 
 
 # ---------------------------------------------------------------------------
@@ -138,7 +184,7 @@ def tile_slide(slide_path: str, config: dict, out_path: str) -> dict:
         print(f"  MPP scale: {scale:.2f}x  read_size={read_size} → resize to {tile_size}")
 
     print("  Computing tissue mask …")
-    mask, mask_ds = compute_tissue_mask(slide, downsample_factor)
+    mask, mask_ds = compute_tissue_mask(slide, downsample_factor, slide_path=slide_path)
     mask_h, mask_w = mask.shape
 
     # Conversion factor: one pixel at target level → this many pixels in mask

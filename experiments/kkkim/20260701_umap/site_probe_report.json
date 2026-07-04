@@ -1,0 +1,60 @@
+{
+  "exp": "Exp2-A_site_classifier_probe",
+  "macro_ovr_auroc": 0.9977,
+  "ci95": [
+    0.9958,
+    0.9989
+  ],
+  "shuffle_baseline_auroc": 0.4999,
+  "howard_reference": [
+    0.964,
+    0.998
+  ],
+  "n_slides": 971,
+  "n_sites": 19,
+  "n_patients": 971,
+  "cv_folds": 5,
+  "min_site": 10,
+  "per_site_auroc": {
+    "A1": 1.0,
+    "A2": 0.989,
+    "A7": 0.9876,
+    "A8": 1.0,
+    "AC": 0.9987,
+    "AN": 1.0,
+    "AO": 1.0,
+    "AR": 0.9991,
+    "B6": 0.9994,
+    "BH": 0.997,
+    "C8": 0.9999,
+    "D8": 0.9998,
+    "E2": 0.9996,
+    "E9": 1.0,
+    "EW": 0.9996,
+    "GM": 0.9872,
+    "LL": 1.0,
+    "OL": 0.999,
+    "S3": 0.9998
+  },
+  "dropped_sites": {
+    "3C": 3,
+    "4H": 1,
+    "5L": 2,
+    "5T": 1,
+    "AQ": 7,
+    "GI": 2,
+    "HN": 2,
+    "JL": 2,
+    "LD": 5,
+    "LQ": 1,
+    "MS": 1,
+    "OK": 1,
+    "PE": 3,
+    "UL": 1,
+    "UU": 1,
+    "WT": 2,
+    "XX": 2,
+    "Z7": 2
+  },
+  "interpretation": "AUROC >> 0.5 ⇒ embeddings encode submitting-site → site-disjoint split justified, random-split phenotype numbers inflated (report site-disjoint as primary)."
+}

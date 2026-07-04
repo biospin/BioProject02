@@ -1,0 +1,131 @@
+{
+  "exp": "BIOP02-48_uni_vs_conch",
+  "claim_level": "sanity",
+  "cohort": "TCGA-BRCA slide-level mean-pooled",
+  "uni_dim": 1024,
+  "conch_dim": 512,
+  "probe": "LogisticRegression(class_weight=balanced) | StratifiedGroupKFold(5) by case_id",
+  "phenotype": {
+    "er_status": {
+      "UNI": {
+        "auroc": 0.8551,
+        "ci95": [
+          0.8279,
+          0.8824
+        ],
+        "n": 1010,
+        "n_patients": 1010,
+        "positives": 782,
+        "task": "binary"
+      },
+      "CONCH": {
+        "auroc": 0.8419,
+        "ci95": [
+          0.8113,
+          0.8718
+        ],
+        "n": 1010,
+        "n_patients": 1010,
+        "positives": 782,
+        "task": "binary"
+      },
+      "delta_uni_minus_conch": 0.0132,
+      "winner": "UNI"
+    },
+    "pr_status": {
+      "UNI": {
+        "auroc": 0.7695,
+        "ci95": [
+          0.7386,
+          0.7981
+        ],
+        "n": 1005,
+        "n_patients": 1005,
+        "positives": 672,
+        "task": "binary"
+      },
+      "CONCH": {
+        "auroc": 0.7611,
+        "ci95": [
+          0.7275,
+          0.7929
+        ],
+        "n": 1005,
+        "n_patients": 1005,
+        "positives": 672,
+        "task": "binary"
+      },
+      "delta_uni_minus_conch": 0.0084,
+      "winner": "UNI"
+    },
+    "her2_status": {
+      "UNI": {
+        "auroc": 0.5983,
+        "ci95": [
+          0.5494,
+          0.6465
+        ],
+        "n": 698,
+        "n_patients": 698,
+        "positives": 159,
+        "task": "binary"
+      },
+      "CONCH": {
+        "auroc": 0.5903,
+        "ci95": [
+          0.5355,
+          0.6416
+        ],
+        "n": 698,
+        "n_patients": 698,
+        "positives": 159,
+        "task": "binary"
+      },
+      "delta_uni_minus_conch": 0.008,
+      "winner": "UNI"
+    },
+    "pam50": {
+      "UNI": {
+        "auroc": 0.7358,
+        "ci95": [
+          0.7164,
+          0.7568
+        ],
+        "n": 1009,
+        "n_patients": 1009,
+        "positives": null,
+        "task": "multiclass_ovr_macro"
+      },
+      "CONCH": {
+        "auroc": 0.7341,
+        "ci95": [
+          0.7144,
+          0.7543
+        ],
+        "n": 1009,
+        "n_patients": 1009,
+        "positives": null,
+        "task": "multiclass_ovr_macro"
+      },
+      "delta_uni_minus_conch": 0.0017,
+      "winner": "UNI"
+    }
+  },
+  "site_confound": {
+    "UNI": {
+      "macro_ovr_auroc": 0.9977,
+      "ci95": [
+        0.9958,
+        0.9989
+      ]
+    },
+    "CONCH": {
+      "macro_ovr_auroc": 0.9782,
+      "ci95": [
+        0.97,
+        0.9842
+      ]
+    }
+  },
+  "interpretation": "Phenotype AUROC: higher = more linearly-decodable molecular signal in the slide embedding (model-selection signal, not a prediction claim). Site AUROC: lower = less submitting-site batch confound. Probe is patient-grouped so no patient leaks across folds."
+}
