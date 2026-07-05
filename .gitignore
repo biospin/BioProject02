@@ -1,7 +1,12 @@
-# Claude — settings/local은 제외, commands(팀 공유 슬래시 커맨드)는 포함
+# Claude — settings/local은 제외; commands + 논문생산 하네스(agents/skills)는 팀 공유
 .claude/*
 !.claude/commands/
 !.claude/commands/**
+!.claude/agents/
+!.claude/agents/**
+!.claude/skills/
+!.claude/skills/**
+!.claude/PAPER-HARNESS-LICENSE
 CLAUDE.local.md
 
 # Byte-compiled / optimized / DLL files

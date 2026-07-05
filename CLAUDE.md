@@ -293,3 +293,39 @@ JIRA (BIOP02)
 - `v3.1` master plan (goals/principles) takes precedence over `PROJECT_PLAN.md` (operational schedule) on conflicts.
 - CLI choice (Claude Code / Codex / OpenCode) is each person's own — output schemas are unified.
 - Modeling progression: MLP baseline → attention MIL. No skipping ahead.
+
+---
+
+## Agent routing & artifact contract (논문 생산 하네스)
+
+> 논문 집필·발표 단계용 재사용 스캐폴드(Designed by Ka-Kyung Kim, CC BY 4.0) 설치본. 전체 랩 지도·멤버 JD = **`docs/HARNESS.md`**. 도메인 분석 슬롯 = **`spatialpatho-analyst`**(기존 `agents/<role>/` 파이프라인 대표). 브랜치에 project-scope 설치.
+> ⚠️ 이건 **논문 *생산* 레이어**로, 기존 **분석 파이프라인**(`agents/data|embedding|modeling|therapeutic_evidence|critic/`)을 대체하지 않고 그 위에 얹힌다. BioProject02는 분석 진행 단계 → 집필-단계 산출물(FINDINGS/manuscript/figures) 미존재, 관련 FILL은 팀 확정 대기. **headline 숫자·주장은 지어내지 않는다(가정 금지).**
+
+### 자연어 라우팅
+요청에 agent 이름이 없어도 배정. 프로젝트 agent는 `.claude/agents/`. 여러 단계를 엮는 요청("풀 파이프라인 / 프리프린트 업데이트해 제출 준비 / 분석→집필→그림→검수 / 그림만 다시 / 리뷰만 / critic 지적 반영")은 **`paper-production-orchestrator`** Skill(메인 루프 실행).
+
+| 요청 (자연어) | 첫 agent |
+| --- | --- |
+| "분석 돌려줘 / 재실행 / eval·통계 / 임베딩·모델 성능 / 오류 분석" | `spatialpatho-analyst` |
+| "프리프린트/저널/블로그 초안·섹션 써줘" | `manuscript-writer` |
+| "그림 만들어줘 / 그림 번호 정리" | `manuscript-writer` (runs figure script) |
+| "선행연구 / related work / 스쿱 확인" | `literature-scout` |
+| "차별화 각도 / 뭘 새로 해야 하나" | `novelty-strategist` |
+| "가설·실험설계·분석계획 점검·감사" | `research-methodologist` |
+| "제출 전 적대적 자체검토 / 그림 QA" | `paper-critic` (+ `agents/critic/` 체크리스트 병행) |
+| "정식 venue 리뷰 시뮬레이션" | `reviewer` (전역, 선택) |
+| "발표자료/슬라이드/발제" | `presenter` |
+| "로고·아이콘·브랜드·그림 미감" | `design` |
+| "여러 단계를 어떤 순서로 엮을지 계획만" | `paper-orchestrator` (계획만; 실행은 메인 루프) |
+
+### 산출물 계약
+| 단계 | Writer | 산출물 | 다음이 읽음 |
+| --- | --- | --- | --- |
+| 분석·eval | `spatialpatho-analyst` | `<FILL: eval outputs>` + `<FILL: consolidated results summary (미존재)>` | 집필·검수 |
+| 집필+그림 | manuscript-writer | `<FILL: manuscript (미존재)>`, `<FILL: figures dir>` | 검수·리뷰·발표 |
+| 검증 게이트 | (커밋/공개 전) | `<FILL: headline AUC/AUPRC 재계산 → summary 대조>` | 사람 |
+| 리뷰 | paper-critic / reviewer | `<FILL: peer review note path>` | 집필(수정) |
+| 발표 | presenter | 슬라이드/발제 | 사람 |
+| 상태 핸드오프 | (전원) | `HANDOFF.md`, `TODO.md`, `SESSION_LOG.md` | 다음 세션 |
+
+**사람 승인 게이트:** 공개는 **저자·소속·저자순서·corresponding email·IP·GPU 제공처(Modulabs) 확정** 전까지 보류; 커밋/푸시는 사람이 한다; **팀 프로젝트라 저자-대면 내용은 팀 합의 필요.**
