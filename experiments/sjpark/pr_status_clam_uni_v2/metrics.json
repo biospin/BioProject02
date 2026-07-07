@@ -19,5 +19,9 @@
   "claim_level": "hypothesis_only",
   "critic_status": "pending",
   "wandb_run_id": null,
-  "mlflow_run_id": null
+  "mlflow_run_id": null,
+  "auc_ci_95": [
+    0.6832,
+    0.8638
+  ]
 }
