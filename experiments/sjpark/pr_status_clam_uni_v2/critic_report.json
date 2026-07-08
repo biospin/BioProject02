@@ -1,0 +1,88 @@
+{
+  "schema_version": "0.1",
+  "created_at": "2026-07-08T11:15:00+09:00",
+  "reviewer": "braveji",
+  "owner": "sjpark",
+  "experiment": {
+    "experiment_id": "experiments/sjpark/pr_status_clam_uni_v2",
+    "task": "pr_status",
+    "endpoint": "PR IHC binary",
+    "commit_hash": "0e0a1e1f8f02d472e65728a25701c57f4ac48462",
+    "config_path": "experiments/sjpark/pr_status_clam_uni_v2/config.yaml",
+    "metrics_path": "experiments/sjpark/pr_status_clam_uni_v2/metrics.json",
+    "predictions_path": "experiments/sjpark/pr_status_clam_uni_v2/predictions.npy",
+    "embedding_manifest_path": "/workspace/data/cache/biop02/embedding_manifest_uni.csv",
+    "split_policy_path": "agents/data/split_policy_v0.md"
+  },
+  "checks": {
+    "data_leakage": {
+      "status": "caution",
+      "evidence": [
+        "split_policy_v0.md 상태 = DRAFT (kkkim data-owner sign-off 미완료, lock 안 됨)",
+        "metrics.json에 split lock 해시 미기록",
+        "patient-overlap assert 로그 / site_classifier_probe 결과 미제출"
+      ],
+      "notes": "split 방향(patient-level, site 고려)은 정책 문서상 올바르나, sign-off·lock·해시 기록이 없어 CLAUDE.md 'locked after sign-off' 요건 미충족. caution."
+    },
+    "baseline_comparison": {
+      "status": "caution",
+      "evidence": [
+        "CLAM-SB AUC 0.7765 [95%CI 0.683-0.864], AUPRC 0.8343",
+        "PR용 v2 trivial_baselines.json 파일 없음 — subtype_only/pixel-mean 비교 불가"
+      ],
+      "notes": "필수 baseline(random/subtype-only/pixel-mean) 자체가 누락되어 #2 판정 불가. baseline 산출 후 재평가. caution."
+    },
+    "counterfactual_check": {
+      "status": "caution",
+      "evidence": [
+        "auc_full 0.7765 → auc_top_removed 0.7578 (drop 0.0186, 3개 태스크 중 최선)",
+        "mean_abs_proba_delta_top 0.0409 vs random 0.0020"
+      ],
+      "notes": "AUC drop 0.0186로 ER/HER2보다 나으나 여전히 modest. 근거 보강 권장."
+    },
+    "cross_dataset_check": {
+      "status": "caution",
+      "evidence": [
+        "CPTAC 외부평가 존재: ext_auc=0.7776, ext_auprc=0.7595",
+        "experiments/registry/cross_validation_registry.jsonl 비어있음(0줄, BIOP02-57 미완)",
+        "CPTAC 라벨이 공식(jamie)인지 임시(kkkim 395/653)인지 미확인"
+      ],
+      "notes": "외부 결과는 산출됐으나 (1) registry 미기재 (2) 라벨 공식성 미확인으로 최종 pass 불가. 공식 라벨 확인 + registry 기재 후 재판정. sub-check=jhans (non-owner)."
+    },
+    "biological_plausibility": {
+      "status": "pass",
+      "evidence": [
+        "PR 상태는 H&E 형태와 연관 — 생물학적으로 타당",
+        "약물/ICI 추천 없음"
+      ],
+      "notes": "plausible. sub-check=jhans."
+    },
+    "drp_framing": {
+      "status": "pass",
+      "evidence": [
+        "metrics.json/config.yaml에 'drug response prediction'/'personalized therapy'/'patient-specific treatment' 등 금지표현 없음",
+        "task 필드가 표현형(er_status/pr_status/her2_status/pam50)"
+      ],
+      "notes": "DRP 프레이밍 없음."
+    },
+    "claim_level": {
+      "status": "pass",
+      "evidence": [
+        "claim_level: hypothesis_only",
+        "critic_status: pending (owner self-pass 안 함)",
+        "commit_hash 기록됨"
+      ],
+      "notes": "주장 수준 적절. 단일/외부 코호트 결과를 과일반화하지 않음."
+    }
+  },
+  "critic_status": "caution",
+  "claim_level": "hypothesis_only",
+  "summary": "PR CLAM-SB(UNI v2): val AUC 0.7765, CPTAC ext 0.778로 안정적. 그러나 PR용 baseline 파일이 없어 #2 비교 자체가 불가, counterfactual은 modest, split lock 미완료. 전체 caution.",
+  "required_followups": [
+    "[sjpark] PR v2 baseline(random/subtype_only/pixel-mean) 산출 후 #2 재평가",
+    "[kkkim] split_policy_v0 sign-off + lock 해시를 metrics.json에 기록",
+    "[sjpark] patient-overlap assert 로그 제출 (train∩val case_id==0)",
+    "[jhans] CPTAC 라벨 공식(jamie) 여부 확인 + cross_validation_registry.jsonl 기재 (BIOP02-57)",
+    "[kkkim] 모델링 결과 정식 peer review (Owner≠Reviewer)"
+  ]
+}
