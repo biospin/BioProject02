@@ -230,3 +230,6 @@ __marimo__/
 
 # macOS
 .DS_Store
+
+# EXAONE Path 2.0 로컬 레포+가중치 (550M, NC 라이선스, 재현가능 — 커밋 금지)
+agents/embedding/exaone_path2/
