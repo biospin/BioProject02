@@ -1,0 +1,79 @@
+{
+  "schema_version": "0.1",
+  "created_at": "2026-07-08T10:30:00+09:00",
+  "reviewer": "braveji",
+  "owner": "sjpark",
+  "experiment": {
+    "experiment_id": "experiments/sjpark/er_status_uni_v1",
+    "task": "ER status binary MLP baseline (UNI v1)",
+    "endpoint": "er_status",
+    "commit_hash": "7adc8f8dac26227a2753273e8e52d2b7d2b8260f",
+    "config_path": "experiments/sjpark/er_status_uni_v1/config.yaml",
+    "metrics_path": "experiments/sjpark/er_status_uni_v1/metrics.json",
+    "predictions_path": "experiments/sjpark/er_status_uni_v1/predictions.npy",
+    "embedding_manifest_path": "/workspace/data/cache/biop02/embedding_manifest_uni.csv"
+  },
+  "checks": {
+    "data_leakage": {
+      "status": "caution",
+      "evidence": [
+        "metrics.json: n_train=707, n_val=152 (consistent across ER/PR/PAM50 runs).",
+        "split_policy_v0 is site-disjoint (707/152/151) — good structural signal."
+      ],
+      "notes": "Patient-level disjointness not yet verified against predictions index + split file on the reviewer machine. jamie to confirm predictions patient IDs are disjoint from train."
+    },
+    "baseline_comparison": {
+      "status": "caution",
+      "evidence": [
+        "trivial_baselines.json: random AUC=0.5262, majority AUC=0.5000, mean_embed AUC=0.8162.",
+        "MLP ER AUC=0.8209 vs strongest trivial baseline mean_embed=0.8162 -> delta = +0.0047 (n_val=152), within noise.",
+        "Required baselines are random / subtype-only / pixel-mean; actual set = random / majority / mean_embed -> subtype-only and pixel-mean are MISSING (mean_embed is embedding-mean, not pixel-mean)."
+      ],
+      "notes": "Does NOT pass. The MLP barely exceeds the embedding-mean baseline and the CLAUDE.md-required subtype-only baseline (ER<->PAM50 correlation concern) is absent. To reach pass: add subtype-only + pixel-mean baselines and a DeLong/bootstrap significance test for MLP vs mean_embed; if the gap is not significant, report honestly that UNI embedding is the signal and the MLP adds little."
+    },
+    "counterfactual_check": {
+      "status": "not_applicable",
+      "evidence": [],
+      "notes": "MLP baseline stage — no feature-attribution claim. Counterfactual/attention ablation is deferred to the MIL stage (BIOP02-56)."
+    },
+    "cross_dataset_check": {
+      "status": "not_applicable",
+      "evidence": [],
+      "notes": "ER MLP is TCGA-only by design at Sprint 1. External (CPTAC) evaluation is BIOP02-53/57; sub-check owner = jhans."
+    },
+    "biological_plausibility": {
+      "status": "caution",
+      "evidence": [
+        "Morphology -> ER status is biologically plausible (ER status has known histologic correlates in BRCA)."
+      ],
+      "notes": "Plausible, but the assigned #5 sub-reviewer (sjpark) is the experiment owner -> self-review prohibited. Reassign #5 to a non-owner (jhans). No therapeutic hypothesis may be inferred from this baseline."
+    },
+    "drp_framing": {
+      "status": "pass",
+      "evidence": [
+        "metrics.json and config.yaml contain no DRP / personalized-therapy / patient-specific-optimal-treatment wording."
+      ],
+      "notes": "Recheck any companion report text before final pass."
+    },
+    "claim_level": {
+      "status": "pass",
+      "evidence": [
+        "metrics.json: claim_level=hypothesis_only.",
+        "metrics.json: critic_status=pending (owner did not self-set pass).",
+        "commit_hash recorded (7adc8f8)."
+      ],
+      "notes": "Do not escalate claim_level without written exception."
+    }
+  },
+  "critic_status": "caution",
+  "claim_level": "hypothesis_only",
+  "summary": "Verified Critic review of the ER-status UNI v1 MLP (JIRA BIOP02-50 comment 10857). Reported numbers checked against committed metrics.json/trivial_baselines.json (commit faed11e). Blocker is Critic #2: the MLP (AUC 0.8209) exceeds the strongest trivial baseline mean_embed (0.8162) by only +0.0047 on n_val=152, and the required subtype-only and pixel-mean baselines are missing. Overall critic_status = caution (NOT pass). Not for #biop02-experiments until #2 is resolved.",
+  "required_followups": [
+    "Add subtype-only baseline (PAM50 -> ER) and a pixel-mean baseline; report both.",
+    "Add DeLong (or bootstrap 95% CI) significance test for MLP AUC vs mean_embed AUC.",
+    "Reassign biological_plausibility (#5) sub-check to a non-owner (jhans), not sjpark.",
+    "Verify patient-level split disjointness against predictions index (jamie).",
+    "Formal peer review by the designated reviewer for sjpark modeling results = kkkim (Owner != Reviewer).",
+    "Re-evaluate critic_status to pass only after baseline_comparison reaches pass."
+  ]
+}
