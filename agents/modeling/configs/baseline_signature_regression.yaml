@@ -1,0 +1,22 @@
+task: immune_signature_regression
+username: sjpark
+embedding_model: uni
+embedding_dim: 1024
+
+model:
+  hidden_dims: [512, 256]
+  dropout: 0.3
+
+train:
+  epochs: 30
+  lr: 1.0e-3
+  patience: 5
+  seed: 42
+  n_dummy_slides: 20
+
+data:
+  embedding_manifest: /workspace/data/cache/biop02/embedding_manifest_uni.csv
+  # signature 컬럼(proliferation/immune/ESR1/ERBB2/Hallmark_EMT)이 manifest에
+  # 없으면 자동으로 슬라이드별 결정론적 dummy 타깃 사용 (jamie 발현데이터 도착 전)
+
+output_dir: /workspace/agents/modeling/experiments
