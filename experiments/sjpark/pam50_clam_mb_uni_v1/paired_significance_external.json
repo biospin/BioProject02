@@ -1,0 +1,11 @@
+{
+  "n": 395,
+  "auc_clam_mb": 0.7216,
+  "auc_mean_embed": 0.6616,
+  "diff_clam_minus_mean_embed": 0.0598,
+  "diff_ci_95": [0.0098, 0.1144],
+  "p_value_approx": 0.021,
+  "significant_at_0.05": true,
+  "note": "PAM50은 label 자체가 subtype이므로 subtype_only baseline 적용 불가 — mean_embed(pixel-mean proxy)가 비교 기준",
+  "interpretation": "CLAM-MB가 mean_embed보다 CPTAC 외부셋에서 유의하게 우수함 (ER/PR/HER2의 subtype_only 역전 패턴과 반대)"
+}
