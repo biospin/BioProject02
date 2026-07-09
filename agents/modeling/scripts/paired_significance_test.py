@@ -73,17 +73,23 @@ def paired_bootstrap_diff(y_true, proba_a, proba_b, n_bootstrap=2000, seed=42):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--clam_predictions", required=True, help="predictions.npy (proba,pred,label)")
-    parser.add_argument("--manifest", required=True)
+    parser.add_argument("--manifest", required=True, help="train fit용 manifest (subtype_only는 여기서 학습)")
     parser.add_argument("--label_col", required=True)
     parser.add_argument("--aux_col", default="pam50")
+    parser.add_argument("--test_manifest", default="", help="평가용 manifest (미지정 시 --manifest 사용, CPTAC 외부평가 시 지정)")
+    parser.add_argument("--test_split", default="val", help="평가 split (내부=val 기본, 외부평가 시 cptac_external)")
+    parser.add_argument("--test_label_col", default="", help="평가 manifest 라벨 컬럼명이 다를 경우 오버라이드")
     parser.add_argument("--out", required=True)
     args = parser.parse_args()
 
     clam_preds = np.load(args.clam_predictions)
     clam_proba, clam_label = clam_preds[:, 0], clam_preds[:, 2]
 
+    test_manifest = args.test_manifest or args.manifest
+    test_label_col = args.test_label_col or args.label_col
+
     train_labels, train_aux = load_split(args.manifest, args.label_col, args.aux_col, "train")
-    val_labels, val_aux = load_split(args.manifest, args.label_col, args.aux_col, "val")
+    val_labels, val_aux = load_split(test_manifest, test_label_col, args.aux_col, args.test_split)
 
     assert len(val_labels) == len(clam_label), (
         f"슬라이드 수 불일치: manifest val={len(val_labels)} vs predictions.npy={len(clam_label)}"

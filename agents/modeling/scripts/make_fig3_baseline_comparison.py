@@ -107,9 +107,10 @@ def main():
         ax.grid(axis="y", alpha=0.3)
 
     fig.suptitle(
-        "Fig 3 — Phenotype Prediction: Baseline vs Model Comparison (TCGA-BRCA, UNI v1)\n"
-        "Error bars: bootstrap 95% CI (n=1000). Dashed line: random chance (AUC=0.5).",
-        fontsize=12,
+        "Fig 3 — Phenotype Prediction: Baseline vs Model Comparison (TCGA-BRCA internal val, UNI v1)\n"
+        "Error bars: bootstrap 95% CI (n=1000). Dashed line: random chance (AUC=0.5).\n"
+        "Caveat: internal validation only — CPTAC external test shows subtype_only beats CLAM for ER/PR/HER2 (see Fig 4, BIOP02-68).",
+        fontsize=11,
     )
     plt.tight_layout(rect=[0, 0, 1, 0.92])
 
@@ -124,6 +125,11 @@ def main():
         summary[task] = [
             {"model": m[0], "auc": m[1], "auc_ci_95": m[2]} for m in models
         ]
+    summary["_caveat"] = (
+        "Internal TCGA-BRCA val only. CPTAC external test (BIOP02-53 self-critic, "
+        "paired_significance_external.json) shows subtype_only significantly beats CLAM "
+        "for ER/PR/HER2 (opposite of this internal ranking) — see Fig 4 (BIOP02-68)."
+    )
     summary_path = out_path.with_suffix(".json")
     summary_path.write_text(json.dumps(summary, indent=2, ensure_ascii=False))
     print(f"Saved: {summary_path}")

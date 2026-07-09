@@ -166,5 +166,6 @@
         0.8084
       ]
     }
-  ]
+  ],
+  "_caveat": "Internal TCGA-BRCA val only. CPTAC external test (BIOP02-53 self-critic, paired_significance_external.json) shows subtype_only significantly beats CLAM for ER/PR/HER2 (opposite of this internal ranking) — see Fig 4 (BIOP02-68)."
 }
