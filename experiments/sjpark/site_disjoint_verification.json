@@ -1,0 +1,11 @@
+{
+  "purpose": "BIOP02-53 braveji Critic 요청 대응 — site-disjoint split이 실제 적용되었는지 검증",
+  "manifest": "/workspace/data/cache/biop02/embedding_manifest_uni.csv",
+  "method": "TCGA barcode(TCGA-{TSS}-{participant}-...)에서 TSS(site) 코드 추출 후 split간 집합 교집 확인 + case_id 집합 교집 확인",
+  "n_slides": {"train": 707, "val": 152, "test": 151},
+  "n_unique_sites": {"train": 16, "val": 10, "test": 11},
+  "site_overlap": {"train_val": 0, "train_test": 0, "val_test": 0},
+  "case_id_overlap": {"train_val": 0, "train_test": 0, "val_test": 0},
+  "verdict": "site-disjoint + patient-disjoint 모두 확인됨 — TCGA train/val/test 간 동일 사이트 슬라이드 누출 없음",
+  "caveat": "이 검증은 TCGA 내부 split 간 직접 leakage만 배제한다. TCGA 사이트들이 공유하는 염색/스캐닝 프로토콜 관련 artifact가 subtype과 상관되어 있고 그게 CPTAC과는 다른 배치/프로토콜이라면, site-disjoint split만으로는 이 문제를 배제하지 못한다. ER/PR/HER2의 CPTAC external 역전(BIOP02-53 self-critic, paired_significance_external.json)은 이 가설과 정합."
+}

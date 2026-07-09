@@ -6,5 +6,11 @@
   "auc_random_removed": 0.7585,
   "mean_abs_proba_delta_top": 0.0248,
   "mean_abs_proba_delta_random": 0.0017,
-  "faithfulness_confirmed": true
+  "faithfulness_confirmed": true,
+  "auc_full_minus_top_removed_ci_95": [
+    -0.0126,
+    0.0116
+  ],
+  "auc_full_minus_top_removed_p_approx": 0.917,
+  "auc_drop_significant": false
 }

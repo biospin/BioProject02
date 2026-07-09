@@ -143,6 +143,27 @@ def main():
     mean_abs_delta_top = float(np.mean([s["delta_top"] for s in per_slide]))
     mean_abs_delta_random = float(np.mean([s["delta_random"] for s in per_slide]))
 
+    # AUC(full) - AUC(top_removed) paired bootstrap CI — Critic 지적(braveji, BIOP02-53):
+    # 점추정치가 미세하게 역전(top_removed가 full보다 근소하게 높음)될 때
+    # 이게 노이즈인지 실제 역전인지 CI로 확인 (같은 리샘플 인덱스로 paired)
+    rng = np.random.default_rng(args.seed)
+    n = len(rows)
+    diffs = []
+    for _ in range(2000):
+        idx = rng.choice(n, n, replace=True)
+        yt = labels[idx]
+        if len(np.unique(yt)) < 2:
+            continue
+        try:
+            a = roc_auc_score(yt, proba_full_arr[idx], multi_class="ovr", average="macro")
+            b = roc_auc_score(yt, proba_top_arr[idx], multi_class="ovr", average="macro")
+            diffs.append(a - b)
+        except ValueError:
+            continue
+    diffs = np.array(diffs)
+    diff_ci = [round(float(np.percentile(diffs, 2.5)), 4), round(float(np.percentile(diffs, 97.5)), 4)] if len(diffs) else None
+    diff_p_approx = round(float(2 * min((diffs > 0).mean(), (diffs < 0).mean())), 4) if len(diffs) else None
+
     summary = {
         "n_slides": len(rows),
         "remove_frac": args.remove_frac,
@@ -152,9 +173,13 @@ def main():
         "mean_abs_proba_delta_top": round(mean_abs_delta_top, 4),
         "mean_abs_proba_delta_random": round(mean_abs_delta_random, 4),
         "faithfulness_confirmed": mean_abs_delta_top > mean_abs_delta_random,
+        "auc_full_minus_top_removed_ci_95": diff_ci,
+        "auc_full_minus_top_removed_p_approx": diff_p_approx,
+        "auc_drop_significant": bool(diff_ci and not (diff_ci[0] <= 0 <= diff_ci[1])),
     }
 
     print(f"AUC full/top/random: {summary['auc_full']} / {summary['auc_top_removed']} / {summary['auc_random_removed']}")
+    print(f"AUC(full)-AUC(top_removed) CI95={diff_ci}  p_approx={diff_p_approx}  significant={summary['auc_drop_significant']}")
     print(f"Mean |Δproba| top={summary['mean_abs_proba_delta_top']}  random={summary['mean_abs_proba_delta_random']}")
     print(f"Faithfulness confirmed: {summary['faithfulness_confirmed']}")
 
