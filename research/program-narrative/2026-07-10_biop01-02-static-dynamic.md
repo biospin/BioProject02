@@ -6,7 +6,7 @@
 ---
 
 ## 0. 한 문장
-> **치료효과 예측은 두 축이 필요하다 — 정적 phenotype(BIOP02, 값싼 H&E→아형)와 조절 동역학(BIOP01, velocity·전사율 α). 둘은 ER+ 내분비 저항에서 정확히 만난다.**
+> **치료효과 예측은 두 축이 필요하다 — 정적 phenotype(BIOP02, 값싼 H&E→아형)와 조절 동역학(BIOP01, chromatin-lag은 비재현임을 반증하고 세운 robust·예측 가능한 전사율 α). 둘은 ER+ 내분비 저항에서 정확히 만난다.**
 
 ## 1. 두 프로젝트 (사실)
 - **BIOP02 (정적/공간):** H&E → foundation embedding → BRCA 분자아형 → 치료축 라우팅. 결과 = **cost-of-substitution 지도**(basal→H&E triage 안전 · HER2→분자검사 필수 · **ER+→불확실**).
