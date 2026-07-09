@@ -19,10 +19,10 @@
   "auc": 0.7589,
   "auprc": 0.4806,
   "balanced_accuracy": 0.4012,
-  "ext_test_manifest": null,
-  "ext_auc": null,
-  "ext_auprc": null,
-  "ext_balanced_accuracy": null,
+  "ext_test_manifest": "/workspace/data/cache/biop02/embedding_manifest_cptac_uni.csv",
+  "ext_auc": 0.7216,
+  "ext_auprc": 0.4181,
+  "ext_balanced_accuracy": 0.3395,
   "commit_hash": "266d4c7bf815cbb77ac54b0888d16843d5fdf152",
   "claim_level": "hypothesis_only",
   "critic_status": "pending",
@@ -31,5 +31,11 @@
   "auc_ci_95": [
     0.7098,
     0.8084
-  ]
+  ],
+  "ext_auc_ci_95": [
+    0.6777,
+    0.7673
+  ],
+  "ext_n_test": 395,
+  "ext_label_source": "official (BIOP02-55, cBioPortal brca_cptac_2020)"
 }

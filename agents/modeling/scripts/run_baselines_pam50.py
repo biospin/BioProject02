@@ -29,7 +29,7 @@ from modeling.baselines.trivial import (
     evaluate_multiclass,
 )
 
-PAM50_MAP = {"luma": 0, "lumb": 1, "basal": 2, "her2": 3, "normal": 4}
+PAM50_MAP = {"luma": 0, "lumb": 1, "basal": 2, "her2": 3, "normal": 4, "normal-like": 4}
 
 
 def load_manifest(manifest_path: str, split: str):

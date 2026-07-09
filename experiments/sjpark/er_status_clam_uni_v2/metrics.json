@@ -27,5 +27,6 @@
   "ext_auc_ci_95": [
     0.8612,
     0.9263
-  ]
+  ],
+  "ext_label_source": "official (BIOP02-55, cBioPortal brca_cptac_2020)"
 }

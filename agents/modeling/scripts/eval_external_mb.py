@@ -28,7 +28,10 @@ import sys
 sys.path.insert(0, str(Path(__file__).parents[2]))
 from modeling.baselines.attention_mil import CLAMMB
 
-PAM50_MAP = {"luma": 0, "lumb": 1, "basal": 2, "her2": 3, "normal": 4}
+PAM50_MAP = {
+    "luma": 0, "lumb": 1, "basal": 2, "her2": 3,
+    "normal": 4, "normal-like": 4,  # CPTAC(cBioPortal)는 "Normal-like" 표기 사용 (TCGA는 "Normal")
+}
 
 
 def load_manifest(manifest_path, split, label_col="pam50"):

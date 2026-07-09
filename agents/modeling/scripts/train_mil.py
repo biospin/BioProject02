@@ -36,7 +36,7 @@ from modeling.baselines.attention_mil import CLAMSB, CLAMMB
 
 LABEL_MAP = {"positive": 1.0, "negative": 0.0}
 
-PAM50_MAP = {"luma": 0, "lumb": 1, "basal": 2, "her2": 3, "normal": 4}
+PAM50_MAP = {"luma": 0, "lumb": 1, "basal": 2, "her2": 3, "normal": 4, "normal-like": 4}
 PAM50_CLASSES = ["LumA", "LumB", "Basal", "HER2", "Normal"]
 
 

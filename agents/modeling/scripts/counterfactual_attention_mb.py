@@ -28,7 +28,7 @@ import sys
 sys.path.insert(0, str(Path(__file__).parents[2]))
 from modeling.baselines.attention_mil import CLAMMB
 
-PAM50_MAP = {"luma": 0, "lumb": 1, "basal": 2, "her2": 3, "normal": 4}
+PAM50_MAP = {"luma": 0, "lumb": 1, "basal": 2, "her2": 3, "normal": 4, "normal-like": 4}
 
 
 def load_manifest(manifest_path, split):
