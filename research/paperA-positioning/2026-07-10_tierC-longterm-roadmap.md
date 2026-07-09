@@ -75,3 +75,23 @@ H&E는 "분자 아형을 되맞히는" 데선 crowded·천장 비김. **bulk 분
 - 착수 전 확인: Zenodo 레코드별 라이선스, Path2Space 코드/가중치 공개 여부(공개면 우리 add-on 비용 급감).
 
 **결론:** A(발표)·B(pCR)에 이어 **C도 standalone으론 막힘** — 스쿱/데이터. C는 "발표 후 보조 검증"으로만 살려둔다. 3개 트랙 전수 확인 결과 **Paper A(cost-of-substitution)가 유일한 헤드라인**.
+
+### 7.1 C 검증 add-on 실행안 (기록 — **DEFERRED, Paper A 코어 후 착수**)
+
+**목적:** Paper A의 subtype 치료결정 지도를 **공간적으로 뒷받침하는 보조 그림**. 헤드라인 아님, hypothesis_only, 순수 기술적(비-ICI·비-response — Path2Space 재현 회피).
+
+**가설(검증용):** H&E-예측 아형/치료축이 **공간 TME 구조와 일관**되면, cost 지도의 "형태학이 보는 것/못 보는 것"이 생물학적으로 뒷받침됨. 특히 **HER2 축이 형태학적으로 안 보이는 것**이 공간 데이터에서도 확인되는가.
+
+**접근(택1, 비용순):**
+1. **HEST-1k breast(외부 sanity, 최소비용):** HF `MahmoodLab/hest`(CC-BY-NC-SA, UNI/CONCH 동일 랩→도구 호환). breast Visium/Xenium 소수 샘플에 우리 임베딩 파이프라인 적용 → H&E 임베딩 vs 공간 셀타입 조성 상관. n 작음(≈4~20) → **sanity/보조만**.
+2. **공개 H&E→ST 모델로 TCGA-BRCA 주석(add-on 그림):** Path2Space 등 **가중치 공개 시** 우리 TCGA-BRCA WSI에 추론 → 아형별 공간 TME 특징 → cost 지도와 대조(예: chemo-안전 축=면역-hot? HER2-무용 축=특정 공간패턴?). **주의: response 예측은 안 함**(스쿱·DRP 금지).
+
+**데이터/도구:** 기존 TCGA-BRCA WSI+임베딩(재사용), HEST-1k(HF), Path2Space 코드/가중치(공개 여부 미확인).
+
+**Go 조건:** (i) Path2Space(또는 대안 H&E→ST)의 **가중치·코드 공개** 확인 → 있으면 접근 2, 없으면 접근 1만. (ii) Paper A 코어(receptor 라우팅 완성) 후 착수.
+
+**산출:** Paper A supplementary 1개 그림(공간 뒷받침) + 1문단. 별도 논문 아님.
+
+**스코프 가드:** hypothesis_only·BRCA-only·DRP 금지·ICI/pembro 금지. 기술적 상관·조성만, 반응/추천 금지.
+
+**상태:** 기록 완료, **미착수.** 재개 트리거 = Paper A receptor 라우팅 확정 + Path2Space 가중치 공개 확인.
