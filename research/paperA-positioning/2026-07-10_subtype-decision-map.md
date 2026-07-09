@@ -29,6 +29,7 @@
 ## 3. 정직한 caveat (양 극단만 단단, 가운데는 물렁)
 1. **예비=PAM50 라우팅.** 모델이 Normal-like 과예측 → luminal 30%가 '무치료'로 샘. ER 분류기 자체는 AUROC 0.89로 좋으니 **receptor-status 라우팅에서 endocrine 비용이 더 낮게 나올 수 있음** → "luminal ≈ 안전" 확인/기각은 그때.
 2. **세포주 지도가 내분비약 못 잡음**(positive control endocrine 1/8 vs antiHER2 3/3·chemo 7/7). endocrine 축 이중 불확실. → **HER2·basal 결론은 단단, luminal만 유보.**
+   - **[D1 흡수]** 이건 분류기 탓만이 아니라 **치료증거 인프라의 구조적 한계** — 세포주 약물감수성은 targeted(HER2)·cytotoxic(chemo)엔 유효하나 **ER+ 내분비 backbone(BRCA ~70%)엔 체계적 부적합**. A를 강화하는 일반화 기여. 상세: `experiments/kkkim/20260710_cost_of_substitution/endocrine_limitation.md`.
 3. claim_level=sanity, hypothesis_only. Critic 미통과(공유 게이트 전).
 
 ## 4. 슬라이드 골격 (발표용 6장)
