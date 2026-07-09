@@ -35,7 +35,7 @@
         "MLP 대비 CLAM 개선: 0.7125 → 0.7765 (+0.064), AUPRC 0.8188 → 0.8343",
         "subtype_only(PAM50) AUC 0.8085 (CI 0.7234–0.8886) vs CLAM 0.7765: diff=-0.032, p=0.358, CI[-0.106, 0.038] → 통계적으로 유의하지 않음"
       ],
-      "notes": "diff ≥ 0.03 충족, CI 중첩으로 caution. 실질 개선(+0.091)은 의미 있으며 CPTAC 외부에서 동일 AUC(0.7776)로 일반화 gap 거의 없음. subtype_only(PAM50 분자 데이터)보다 낮지만 통계적으로 동등."
+      "notes": "diff ≥ 0.03 충족, CI 중첩으로 caution. 중요: CPTAC 외부에서 subtype_only(0.9117) vs CLAM(0.7776): diff=-0.1343, CI[-0.179,-0.092], p≈0 — 유의한 역전. TCGA val에서는 p=0.358(not significant)였으나 외부에서 완전히 뒤집힘. PR은 ER보다 역전 폭이 더 큼(-0.134 vs -0.067). 이는 PR CLAM이 TCGA 사이트 특이적 패턴을 더 많이 학습했을 가능성 시사."
     },
     "counterfactual_check": {
       "status": "caution",
@@ -56,7 +56,7 @@
         "라벨 출처: official (BIOP02-55, cBioPortal brca_cptac_2020) — 공식 라벨 확인됨",
         "CPTAC는 학습/튜닝에 미사용 외부 코호트"
       ],
-      "notes": "PR CLAM은 TCGA val과 CPTAC external 성능이 거의 동일(+0.001) — 과적합 없이 강한 일반화. Paper A에서 PR 태스크의 핵심 외부 검증 결과. BIOP02-57 registry 기재 필요."
+      "notes": "PR CLAM의 절대 AUC는 val(0.7765)≈ext(0.7776)으로 일관. 그러나 CPTAC external에서 subtype_only(PAM50, 0.9117) vs CLAM(0.7776): p≈0, CI[-0.179,-0.092] — 유의하게 역전. TCGA val p=0.358(not significant)와 정반대. 이 역전은 ER(-0.067)보다 PR(-0.134)에서 더 크게 나타남. Paper A 해석 시 주의 필요. BIOP02-57 registry 기재 필요."
     },
     "biological_plausibility": {
       "status": "pass",
@@ -89,7 +89,7 @@
   },
   "critic_status": "caution",
   "claim_level": "hypothesis_only",
-  "summary": "PR CLAM-SB(UNI v2) val AUC 0.7765, CPTAC ext AUC 0.7776 — generalization gap 거의 없이 외부 검증 강함(본 리뷰 최고 일반화 결과). MLP(0.7125) 대비 +0.064 개선, 외부 공식 라벨 확인됨. mean_embed CI 중첩 및 label shuffle 미실행으로 caution. split lock 미완료. 전체 판정: caution.",
+  "summary": "PR CLAM-SB(UNI v2) val AUC 0.7765, CPTAC ext AUC 0.7776. 절대 성능 gap 거의 없음(+0.001). 그러나 CPTAC external에서 subtype_only(0.9117) vs CLAM(0.7776): diff=-0.134, p≈0 — 유의하게 역전. ER(-0.067)보다 더 큰 역전 폭. TCGA val에서 tied(p=0.36)였으나 외부에서 완전히 뒤집힘 — PR CLAM의 사이트 아티팩트 학습 가능성 상당. 전체 판정: caution (이전보다 이슈 심각도 높음).",
   "required_followups": [
     "[kkkim] split_policy_v0 sign-off + lock 해시 기록",
     "[sjpark] patient-overlap assert 로그 제출",

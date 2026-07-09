@@ -36,7 +36,7 @@
         "MLP 대비 CLAM 개선: 0.8209 → 0.9013 (+0.0804), AUPRC 0.9295 → 0.9632 — Attention MIL이 유의미하게 우수함",
         "subtype_only(PAM50 기반) AUC 0.9181 (CI 0.8767–0.9553) vs CLAM 0.9013: paired test p=0.613, diff CI [-0.088, 0.045] → 통계적 차이 없음 (tied with molecular baseline)"
       ],
-      "notes": "checklist 기준(diff≥0.03 AND CI 비중첩) 중 diff 조건은 충족하나 CI 중첩으로 caution. 실질적으로는 +0.085로 의미 있는 개선이며 소규모 val set(n=152) 특성상 CI 폭이 넓음. subtype_only(PAM50)는 분자 데이터 사용으로 H&E 모델 대비 부당한 비교이며, 통계적 동등성은 H&E 모델이 분자 정보에 준하는 예측력 확보를 의미함."
+      "notes": "checklist 기준(diff≥0.03 AND CI 비중첩) 중 diff 조건은 충족하나 CI 중첩으로 caution. 중요: CPTAC 외부 검증에서 subtype_only(PAM50 0.9615) vs CLAM(0.894): diff=-0.067, CI[-0.094,-0.042], p≈0 — 유의하게 역전. TCGA 내부(p=0.613, not significant)와 외부(p≈0)가 정반대 결론. sjpark self-critic: TCGA 내부 성능이 site/batch 특유 subtype 상관 아티팩트를 학습했을 가능성 시사(site_confound AUC 0.9977과 연관). subtype_only는 분자 데이터로 H&E와 직접 비교 부당하나, 내부↔외부 역전 자체가 CLAM 일반화의 한계를 드러냄."
     },
     "counterfactual_check": {
       "status": "caution",
@@ -51,7 +51,9 @@
       "status": "pass",
       "evidence": [
         "CPTAC-BRCA 외부 검증 AUC 0.894 (CI 0.8612–0.9263), n_test=387",
-        "CPTAC AUC 0.894 vs val AUC 0.9013: 차이 0.007 → 일반화 손실 최소",
+        "CPTAC AUC 0.894 vs val AUC 0.9013: 절대 성능 차이 0.007 → 일반화 손실 최소",
+        "단, CPTAC에서 subtype_only(PAM50) AUC 0.9615 — CLAM 대비 +0.067, p≈0, CI[-0.094,-0.042] → 유의한 역전",
+        "TCGA val: CLAM vs subtype_only p=0.613(tied) → CPTAC ext: p≈0(역전) — 내외부 불일치"
         "라벨 출처: official (BIOP02-55, cBioPortal brca_cptac_2020) — jamie 공식 라벨 확인됨",
         "CPTAC는 학습/튜닝에 전혀 사용되지 않은 진정한 external hold-out"
       ],
@@ -87,7 +89,7 @@
   },
   "critic_status": "caution",
   "claim_level": "hypothesis_only",
-  "summary": "ER CLAM-SB(UNI v2) val AUC 0.9013, CPTAC 0.894 — MLP 대비 크게 개선되고 외부 검증도 강함. 그러나 (1) site_confound 0.9977로 site-disjoint split 적용 확인 필요, (2) mean_embed 대비 CI 중첩으로 통계적 유의성 미확정, (3) label shuffle 미실행. 전체 판정: caution. split lock + patient-overlap log + label shuffle 제출 시 pass 전환 검토 가능.",
+  "summary": "ER CLAM-SB(UNI v2) val AUC 0.9013, CPTAC 0.894. MLP 대비 크게 개선. 그러나 CPTAC 외부에서 subtype_only(0.9615) vs CLAM(0.894) p≈0로 유의 역전 — TCGA val에서 tied(p=0.61)였던 결과와 정반대. site_confound 0.9977과 결합하면 CLAM이 사이트 아티팩트 기반 subtype 상관을 부분적으로 학습했을 가능성 있음. split lock + label shuffle + site-disjoint 적용 확인 필요. 전체 판정: caution (이전보다 이슈 심각도 높음).",
   "required_followups": [
     "[kkkim] split_policy_v0 sign-off + lock 해시를 metrics.json에 기록",
     "[sjpark] patient-overlap assert 로그 제출 (train∩val case_id == 0)",
