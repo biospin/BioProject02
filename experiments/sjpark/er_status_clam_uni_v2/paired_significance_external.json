@@ -1,0 +1,13 @@
+{
+  "n": 387,
+  "auc_clam": 0.894,
+  "auc_subtype_only": 0.9615,
+  "diff_clam_minus_subtype": -0.067,
+  "diff_ci_95": [
+    -0.0935,
+    -0.0419
+  ],
+  "p_value_approx": 0.0,
+  "significant_at_0.05": true,
+  "interpretation": "subtype_only\uac00 CLAM\ubcf4\ub2e4 \uc720\uc758\ud558\uac8c \uc6b0\uc218\ud568"
+}
