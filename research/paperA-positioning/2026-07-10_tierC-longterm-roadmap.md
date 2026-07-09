@@ -57,3 +57,21 @@ H&E는 "분자 아형을 되맞히는" 데선 crowded·천장 비김. **bulk 분
 - [ ] 협업 가능 랩(공간 데이터 보유) 탐색 여부 결정
 
 > 이 문서는 계획만. 실행은 발표/Paper A 이후 별도 착수. 관련: `2026-07-10_novelty-scoop-analysis.md`(A·B 근거), `2026-07-10_research-plan.md`(Tier A 실험).
+
+---
+
+## 7. Phase 0 정찰 결과 (2026-07-10 실측) — **NO-GO (standalone 트랙)**
+
+**핵심: 저비용 H&E→공간 bridge는 데이터가 막혔거나 이미 스쿱됨.**
+- **공개 유방 IMC 대코호트에 paired H&E 없음(검증):** Danenberg 2022(693환자, 37마커 IMC)·Jackson 2020(352환자)은 **TMA 코어**라 H&E는 병리사 영역선택용일 뿐 co-registered H&E 미공개. → bridge 불가, direct-IMC(신규 파이프라인·H&E 재사용 0)만 가능.
+- **paired H&E+단세포공간이 공개된 곳(10x Xenium / HEST-1k breast)은 n≈4 환자** — 코호트 학습 불가.
+- **정확한 play가 이미 출판:** **Path2Space (Cell 2026-04)** — H&E→공간전사체, **976 TCGA-BRCA에 추론**, TME 아형+생존, **화학·trastuzumab 반응 예측**. 우리가 노린 "외부 paired 학습→TCGA 추론→치료 연결"의 직격 스쿱. (bioRxiv 2024.10.16.618609 / DOI 10.1016/j.cell.2026.04.023)
+- 인접 스쿱: HEST-1k 벤치(NeurIPS 2024, Mahmood), HistoPlexer(H&E→IMC, 단 melanoma), BC immune-phenotype from H&E(arXiv 2404.16397).
+
+**Phase 1 판정: NO-GO** (standalone 신규 modality 트랙). 남은 whitespace = 얇음(비-ICI·비-response 순수 기술적 spatial-immune→pathway-drug 연관, hypothesis_only) → Path2Space 뒤에서 방어 가능한지 불확실.
+
+**대안(권고):** Tier C를 **검증 add-on**으로 격하 — 발표/Paper A의 **보조 그림**으로만 사용(예: 공개 H&E→ST 모델로 우리 TCGA-BRCA 임베딩을 주석해 subtype 지도를 공간적으로 뒷받침). 헤드라인 트랙 아님.
+- 데이터 진입점(최소): **HEST-1k breast**(HF, CC-BY-NC-SA, UNI/CONCH 동일 랩 → 도구 호환) — 벤치 규모지만 add-on엔 충분.
+- 착수 전 확인: Zenodo 레코드별 라이선스, Path2Space 코드/가중치 공개 여부(공개면 우리 add-on 비용 급감).
+
+**결론:** A(발표)·B(pCR)에 이어 **C도 standalone으론 막힘** — 스쿱/데이터. C는 "발표 후 보조 검증"으로만 살려둔다. 3개 트랙 전수 확인 결과 **Paper A(cost-of-substitution)가 유일한 헤드라인**.
