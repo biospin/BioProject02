@@ -114,6 +114,18 @@ def train(config: dict, smoke_test: bool):
         label_col = config["data"]["label_col"]
         train_set = load_manifest_dataset(manifest, label_col, split="train")
         val_set   = load_manifest_dataset(manifest, label_col, split="val")
+        if config.get("_shuffle_labels"):
+            # BIOP02-53 braveji Critic followup — negative-control sanity check.
+            # train label만 무작위 순열(val/external은 실제 라벨 유지) 후 재학습 —
+            # 진짜 신호가 없다면 val AUC는 ~0.5로 붕괴해야 함. 붕괴하지 않으면
+            # train/val 간 leakage 또는 embedding에 라벨 유출 경로가 있다는 뜻.
+            shuffle_rng = np.random.default_rng(config["train"]["seed"])
+            embs = [e for e, _ in train_set]
+            labels = [l for _, l in train_set]
+            perm = shuffle_rng.permutation(len(labels))
+            shuffled_labels = [labels[i] for i in perm]
+            train_set = list(zip(embs, shuffled_labels))
+            print(f"[label-shuffle] train label {len(train_set)}개 무작위 순열 적용 (val/ext는 실제 라벨 유지)")
         # 외부 검증 (CPTAC cross-dataset)
         if test_manifest and Path(test_manifest).exists():
             print(f"Loading test manifest: {test_manifest}")
@@ -281,6 +293,7 @@ def train(config: dict, smoke_test: bool):
         "smoke_test": smoke_test,
         "n_train": len(train_set),
         "n_val": len(val_set),
+        "label_shuffle_sanity_check": bool(config.get("_shuffle_labels", False)),
         "best_val_loss": round(best_val_loss, 4),
         "auc": auc,
         "auprc": auprc,
@@ -307,6 +320,7 @@ def main():
     parser.add_argument("--tag", default="")
     parser.add_argument("--commit_hash", default="")
     parser.add_argument("--test_manifest", default="", help="외부 검증 manifest (CPTAC cross-dataset)")
+    parser.add_argument("--shuffle_labels", action="store_true", help="train label 무작위 순열 (leakage sanity check, BIOP02-53 braveji followup)")
     args = parser.parse_args()
 
     with open(args.config) as f:
@@ -318,6 +332,8 @@ def main():
         config["_commit_hash"] = args.commit_hash
     if args.test_manifest:
         config["_test_manifest"] = args.test_manifest
+    if args.shuffle_labels:
+        config["_shuffle_labels"] = True
 
     t0 = time.time()
     train(config, args.smoke_test)
