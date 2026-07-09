@@ -233,3 +233,7 @@ __marimo__/
 
 # EXAONE Path 2.0 로컬 레포+가중치 (550M, NC 라이선스, 재현가능 — 커밋 금지)
 agents/embedding/exaone_path2/
+
+# 블로그 공용 툴 심링크(개인 ~/.claude/assets 경로 — 팀 비이식, BIOP01 선례=미추적)
+blog/build_index.py
+blog/sync_blog_to_workspace.sh
