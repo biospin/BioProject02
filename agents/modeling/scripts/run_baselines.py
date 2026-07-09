@@ -65,6 +65,10 @@ def main():
     parser.add_argument("--aux_col", default="pam50", help="subtype-only baseline용 보조 레이블 컬럼 (기본: pam50)")
     parser.add_argument("--bootstrap_ci", action="store_true", help="AUC bootstrap 95% CI 계산")
     parser.add_argument("--output_dir", default="/workspace/agents/modeling/experiments")
+    parser.add_argument("--ext_manifest", default="", help="CPTAC 등 외부 test manifest 경로 — 지정 시 동일하게 fit된 baseline을 외부셋에도 평가 (CLAM 외부검증과 동일 조건 비교용)")
+    parser.add_argument("--ext_split", default="cptac_external")
+    parser.add_argument("--ext_label_col", default="", help="외부 manifest 라벨 컬럼명이 다를 경우 오버라이드 (미지정 시 --label_col 사용)")
+    parser.add_argument("--ext_aux_col", default="", help="외부 manifest subtype 컬럼명이 다를 경우 오버라이드 (미지정 시 --aux_col 사용)")
     args = parser.parse_args()
 
     smoke_test = args.smoke_test or not args.manifest or not Path(args.manifest).exists()
@@ -101,6 +105,27 @@ def main():
         ci_str = f"  CI95={m['auc_ci_95']}" if args.bootstrap_ci and 'auc_ci_95' in m else ""
         print(f"[{name:12s}]  AUC={m['auc']}  AUPRC={m['auprc']}  BalAcc={m['balanced_accuracy']}{ci_str}")
 
+    ext_results = None
+    ext_n_test = None
+    if args.ext_manifest and Path(args.ext_manifest).exists():
+        ext_label_col = args.ext_label_col or args.label_col
+        ext_aux_col = args.ext_aux_col or args.aux_col
+        X_ext, y_ext, sub_ext = load_manifest_dataset(args.ext_manifest, ext_label_col, split=args.ext_split, aux_col=ext_aux_col)
+        ext_n_test = len(X_ext)
+        print(f"\n외부(CPTAC) 평가: n_test={ext_n_test} (label_col={ext_label_col}, split={args.ext_split})")
+        if ext_n_test == 0:
+            print(f"[warn] 0장 — ext_label_col({ext_label_col}) 또는 ext_split({args.ext_split}) 확인 필요")
+        else:
+            ext_results = []
+            for name, clf in baselines:
+                if name == "subtype_only" and sub_train is None:
+                    continue
+                proba_ext = clf.predict_proba(X_ext, sub_ext)
+                m_ext = evaluate(name, proba_ext, y_ext, add_ci=args.bootstrap_ci)
+                ext_results.append(m_ext)
+                ci_str = f"  CI95={m_ext['auc_ci_95']}" if args.bootstrap_ci and 'auc_ci_95' in m_ext else ""
+                print(f"[ext:{name:8s}]  AUC={m_ext['auc']}  AUPRC={m_ext['auprc']}  BalAcc={m_ext['balanced_accuracy']}{ci_str}")
+
     # 실험 디렉토리: experiments/<username>/<task>_<tag>_baselines/
     tag = args.tag if args.tag else datetime.datetime.now().strftime("%Y%m%d")
     suffix = f"{args.task}_{tag}_baselines" + ("_smoke" if smoke_test else "")
@@ -131,6 +156,11 @@ def main():
         "critic_status": "pending",
         "baselines": results,
     }
+    if args.ext_manifest:
+        output["ext_manifest"] = args.ext_manifest
+        output["ext_split"] = args.ext_split
+        output["ext_n_test"] = ext_n_test
+        output["ext_baselines"] = ext_results
     (out_dir / "trivial_baselines.json").write_text(json.dumps(output, indent=2))
     print(f"\nSaved: {out_dir}/trivial_baselines.json")
 
