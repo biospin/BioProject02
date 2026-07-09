@@ -237,3 +237,6 @@ agents/embedding/exaone_path2/
 # 블로그 공용 툴 심링크(개인 ~/.claude/assets 경로 — 팀 비이식, BIOP01 선례=미추적)
 blog/build_index.py
 blog/sync_blog_to_workspace.sh
+# 대용량 raw 다운로드(세포주 omics·GDSC·IMPRESS) — 재현가능, 커밋 제외
+experiments/kkkim/20260710_cellline_counts/data/
+experiments/kkkim/20260710_pcr_impress/data/
