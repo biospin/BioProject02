@@ -136,3 +136,59 @@ outB = {
 }
 (HERE / "patient_routing_cost.json").write_text(json.dumps(outB, indent=2, ensure_ascii=False))
 print("\nwrote patient_routing_cost.json")
+
+# ============================================================
+# (B') receptor-status 라우팅 — sjpark 예측(slide_id 인덱스) 도착 즉시 자동 실행
+#   기대 입력(sjpark 제공, JIRA BIOP02-53 11006):
+#     experiments/sjpark/cptac_ext_predictions_indexed.csv
+#     컬럼: slide_id, er_pred_prob, her2_pred_prob  (0~1 확률; PR/PAM50 있으면 무시 안 함)
+#   측정 라벨: 승격된 CPTAC 매니페스트(er/her2 = "Positive"/"Negative", has_er/has_her2)
+#   라우팅(임상 계층): HER2+ -> antiHER2 ; elif ER+ -> endocrine ; else -> chemo
+# ============================================================
+import csv as _csv
+PRED_CSV = HERE.parent.parent / "sjpark" / "cptac_ext_predictions_indexed.csv"
+MANIFEST = Path("/workspace/data/cache/biop02/embedding_manifest_cptac_uni.csv")
+
+def route(er_pos, her2_pos):
+    if her2_pos: return "antiHER2"
+    if er_pos:   return "endocrine"
+    return "chemo"
+
+print("\n=== (B') receptor-status 라우팅 (sjpark slide_id-indexed 예측) ===")
+if not PRED_CSV.exists():
+    print(f"AWAITING sjpark predictions: {PRED_CSV}")
+    print("  (JIRA BIOP02-53 comment 11006 — ER 예측 재생성 + slide_id 인덱스 도착 시 자동 실행)")
+    print("  기대 컬럼: slide_id, er_pred_prob, her2_pred_prob")
+else:
+    meas = {r["slide_id"]: r for r in _csv.DictReader(open(MANIFEST))}
+    preds = {r["slide_id"]: r for r in _csv.DictReader(open(PRED_CSV))}
+    THR = 0.5
+    rr = []
+    for sid, pr in preds.items():
+        m = meas.get(sid)
+        if not m or m.get("has_er") != "1" or m.get("has_her2") != "1":
+            continue
+        m_axis = route(m["er"] == "Positive", m["her2"] == "Positive")
+        p_axis = route(float(pr["er_pred_prob"]) >= THR, float(pr["her2_pred_prob"]) >= THR)
+        rr.append({"true_axis": m_axis, "pred_axis": p_axis, "cost": tdist(m_axis, p_axis)})
+    byr = collections.defaultdict(list)
+    for r in rr: byr[r["true_axis"]].append(r)
+    print(f"n routed = {len(rr)} (has_er & has_her2)")
+    stat = {}
+    for a in ["endocrine", "antiHER2", "chemo"]:
+        rs = byr[a]; n = len(rs)
+        mc = float(np.mean([r["cost"] for r in rs])) if n else float("nan")
+        mis = float(np.mean([r["cost"] > 0 for r in rs])) if n else float("nan")
+        stat[a] = {"n": n, "mean_cost": round(mc, 3), "misroute_rate": round(mis, 3)}
+        print(f"  {a:10} n={n:4d} mean_cost={mc:.3f} mis-route={mis*100:.1f}%")
+    he = np.array([r["cost"] for r in byr["antiHER2"]]); en = np.array([r["cost"] for r in byr["endocrine"]])
+    if len(he) and len(en):
+        boots = [rng.choice(he, len(he)).mean() - rng.choice(en, len(en)).mean() for _ in range(2000)]
+        lo, hi = np.percentile(boots, [2.5, 97.5]); ct = float(he.mean() - en.mean())
+        print(f"  [헤드라인] cost(antiHER2)-cost(endocrine)={ct:.3f} 95%CI[{lo:.3f},{hi:.3f}] "
+              f"0배제:{'YES' if lo>0 else 'NO'}")
+        stat["headline_contrast"] = {"value": round(ct, 3), "ci95": [round(float(lo), 3), round(float(hi), 3)], "excludes_zero": bool(lo > 0)}
+    (HERE / "patient_routing_cost_receptor.json").write_text(
+        json.dumps({"exp": "C1_step2B_receptor_routing", "routing": "HER2+>antiHER2; ER+>endocrine; else chemo",
+                    "pred_source": str(PRED_CSV), "per_axis": stat}, indent=2, ensure_ascii=False))
+    print("  wrote patient_routing_cost_receptor.json")
