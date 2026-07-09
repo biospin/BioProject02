@@ -102,3 +102,15 @@ H&E는 "분자 아형을 되맞히는" 데선 crowded·천장 비김. **bulk 분
 **스코프 가드:** hypothesis_only·BRCA-only·DRP 금지·ICI/pembro 금지. 기술적 상관·조성만, 반응/추천 금지.
 
 **상태:** 기록 완료, **미착수.** 재개 트리거 = Paper A receptor 라우팅 확정 + Path2Space 가중치 공개 확인.
+
+### 7.2 B×C 접점 (미래 기회, 기록만 — DEFERRED)
+
+**발견(2026-07-10):** Path2Space(H&E→공간전사체)의 **참조/검증 코호트에 IMPRESS·TransNEO 포함** — 우리 **B 트랙(IMPRESS pCR-from-H&E)과 같은 슬라이드셋.**
+
+**엮을 수 있는 미래 실험(hypothesis_only·비-ICI 준수):**
+- IMPRESS 슬라이드에 Path2Space 추론 → **공간 TME/면역 특징** 산출 → 우리 B의 FM-임베딩 pCR 모델과 결합 → "공간 맥락이 pCR 예측을 개선/설명하는가?"
+- 즉 **B(pCR from H&E) + C(H&E→공간)** 가 IMPRESS라는 공통 데이터에서 만남 → B를 공간 해석층으로 보강하는 add-on.
+
+**주의/제약:** Path2Space가 이미 IMPRESS로 화학/trastuzumab 반응을 다룸 → **우리 각은 "response 예측 재현"이 아니라** (i) pCR 특정 + (ii) 우리 FM-임베딩과의 **결합/상보성**, hypothesis_only. Path2Space와 차별화 필수(안 그러면 스쿱).
+
+**상태:** 기록만. 트리거 = B(IMPRESS pCR) 본체 진행 + C add-on 가중치 확인 후. B·C 둘 다 Paper A 이후.
