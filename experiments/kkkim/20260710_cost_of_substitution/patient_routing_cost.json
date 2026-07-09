@@ -1,0 +1,40 @@
+{
+  "exp": "C1_cost_step2B_patient_routing_PAM50",
+  "routing_source": "PAM50 CLAM-MB predictions_ext.npz (자기완결: proba/pred/label)",
+  "note": "PAM50 예측→치료축 라우팅. cost=오라우팅 시 치료거리(step2A). ★ 모델이 HER2-enriched를 한 번도 예측 안 함 → 진짜 HER2 환자 전원 항HER2축 이탈. receptor-status 라우팅(ER 예측 수정 후, JIRA 11006)은 robustness로 병행 예정.",
+  "n_routed": 382,
+  "normal_like_excluded": 13,
+  "per_axis": {
+    "endocrine": {
+      "n": 220,
+      "mean_cost": 0.378,
+      "misroute_rate": 0.514,
+      "dropped_rate": 0.3
+    },
+    "antiHER2": {
+      "n": 39,
+      "mean_cost": 0.718,
+      "misroute_rate": 1.0,
+      "dropped_rate": 0.077
+    },
+    "chemo": {
+      "n": 123,
+      "mean_cost": 0.105,
+      "misroute_rate": 0.138,
+      "dropped_rate": 0.13
+    }
+  },
+  "headline_contrast_antiHER2_minus_endocrine": {
+    "value": 0.34,
+    "ci95": [
+      0.276,
+      0.402
+    ],
+    "excludes_zero": true
+  },
+  "caveat": [
+    "PAM50-축 매핑(HER2E≈antiHER2)은 receptor-status와 근사",
+    "Normal-like 예측=무치료 최대페널티 처리",
+    "단일 라우팅(PAM50); ER/HER2 receptor 라우팅 병행 필요"
+  ]
+}

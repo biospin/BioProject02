@@ -1,0 +1,23 @@
+{
+  "exp": "C1_cost_step2A_therapeutic_distance",
+  "note": "cost = 오라우팅빈도(confusion, 예측 도착 후) x 치료거리(아래, 지금 확정). 치료거리=1-Kendall_tau on discriminating drugs. 높을수록 그 축 혼동이 비쌈.",
+  "n_discriminating_drugs": 170,
+  "axis_pair_distance": {
+    "endocrine__antiHER2": {
+      "kendall_tau": 0.605,
+      "top10_overlap": 0.4,
+      "therapeutic_distance": 0.395
+    },
+    "endocrine__chemo": {
+      "kendall_tau": 0.305,
+      "top10_overlap": 0.1,
+      "therapeutic_distance": 0.695
+    },
+    "antiHER2__chemo": {
+      "kendall_tau": 0.235,
+      "top10_overlap": 0.1,
+      "therapeutic_distance": 0.765
+    }
+  },
+  "predicted_routing_pending": "sjpark slide_id-indexed predictions (JIRA BIOP02-53 comment 11006)"
+}
