@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "schemas/cv_registry.schema.json",
-  "title": "SpatialPathoAgent Cross-Validation Registry Entry v0.1",
+  "title": "SpatialPathoAgent Cross-Validation Registry Entry v0.1 (rev: +auc_ci_95, +ext_label_source, +mean_embed_auc)",
   "description": "One entry in the cross-dataset validation registry (train TCGA-BRCA -> test CPTAC-BRCA). One JSON object per line in experiments/registry/cross_validation_registry.jsonl. An entry may only be marked shareable after critic_status is pass (Critic owner = braveji; bio sub-checks #4/#5 delegated to jhans/sjpark).",
   "type": "object",
   "additionalProperties": false,
@@ -64,6 +64,10 @@
     "n_train": {"type": "integer", "minimum": 1},
     "n_val": {"type": "integer", "minimum": 1},
     "n_test": {"type": "integer", "minimum": 1, "description": "External CPTAC-BRCA test slides/patients."},
+    "ext_label_source": {
+      "type": ["string", "null"],
+      "description": "Provenance of the external (CPTAC) labels, e.g. 'official (BIOP02-55, cBioPortal brca_cptac_2020)' vs a provisional source. Entries on provisional labels stay critic_status<=caution until official labels confirm."
+    },
     "internal_metrics": {
       "type": "object",
       "additionalProperties": false,
@@ -73,6 +77,13 @@
         "auc": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
         "auprc": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
         "balanced_accuracy": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "auc_ci_95": {
+          "type": ["array", "null"],
+          "description": "Bootstrap 95% CI for AUC as [lower, upper] (Critic #2).",
+          "items": {"type": "number", "minimum": 0, "maximum": 1},
+          "minItems": 2,
+          "maxItems": 2
+        },
         "n": {"type": ["integer", "null"], "minimum": 1}
       }
     },
@@ -85,6 +96,13 @@
         "auc": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
         "auprc": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
         "balanced_accuracy": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "auc_ci_95": {
+          "type": ["array", "null"],
+          "description": "Bootstrap 95% CI for external AUC as [lower, upper] (Critic #2).",
+          "items": {"type": "number", "minimum": 0, "maximum": 1},
+          "minItems": 2,
+          "maxItems": 2
+        },
         "n": {"type": ["integer", "null"], "minimum": 1}
       }
     },
@@ -105,6 +123,7 @@
       "properties": {
         "random_auc": {"type": ["number", "null"]},
         "subtype_only_auc": {"type": ["number", "null"]},
+        "mean_embed_auc": {"type": ["number", "null"], "description": "Mean-embedding (patch-mean) logistic baseline — the pixel/embedding-mean trivial baseline actually used in this project."},
         "pixel_mean_auc": {"type": ["number", "null"]}
       }
     },
