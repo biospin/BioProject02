@@ -90,6 +90,13 @@ H&E는 "분자 아형을 되맞히는" 데선 crowded·천장 비김. **bulk 분
 
 **Go 조건:** (i) Path2Space(또는 대안 H&E→ST)의 **가중치·코드 공개** 확인 → 있으면 접근 2, 없으면 접근 1만. (ii) Paper A 코어(receptor 라우팅 완성) 후 착수.
 
+**[게이트 확인 결과, 2026-07-10 — CONDITIONAL-GO]**
+- ✅ **코드 공개:** Path2Space Zenodo(records **20171390**/14729337) + GitHub 2종(`path2space-extended`, `path2space-companion`), 문서·튜토리얼 포함. **라이선스 = 비상업 학술 전용**(우리 publication-only scope 부합; 상업 금지).
+- ⚠️ **가중치(trained checkpoint) 포함 여부 미확정** — 이 실행환경에서 zenodo.org·github 타임아웃으로 파일목록 직접 확인 불가. 검색 스니펫은 "resources for running Path2Space(+튜토리얼)"이라 **포함 가능성 시사하나 확증 못 함.** → 네트워크 열린 머신에서 **Zenodo 레코드 열기/GitHub clone으로 checkpoint(.pt/.ckpt) 유무 1회 확인** 필요.
+- **판정:** **conditional-go.** 가중치 번들 시 → 우리 TCGA-BRCA WSI에 추론(저비용 add-on). 미포함 시 → 공개 ST 데이터(GSE210616 TNBC·HER2+ Zenodo·10x 등)로 **재학습 가능하나 고비용**(GPU, Paper A와 경쟁).
+- 참고: Path2Space의 참조 코호트에 **IMPRESS·TransNEO 포함**(우리 B 트랙 IMPRESS와 겹침).
+- **결론:** enabler(코드·라이선스)는 존재 → C add-on은 **실현 가능**, 단 착수는 예정대로 Paper A 코어 후 + 가중치 유무 1회 확인 후.
+
 **산출:** Paper A supplementary 1개 그림(공간 뒷받침) + 1문단. 별도 논문 아님.
 
 **스코프 가드:** hypothesis_only·BRCA-only·DRP 금지·ICI/pembro 금지. 기술적 상관·조성만, 반응/추천 금지.
