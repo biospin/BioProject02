@@ -64,11 +64,14 @@ def main():
     parser.add_argument("--config", required=True)
     parser.add_argument("--test_manifest", required=True)
     parser.add_argument("--test_split", default="cptac_external")
+    parser.add_argument("--label_col", default="", help="외부 manifest의 라벨 컬럼명이 학습 config와 다를 때 오버라이드 (예: er_status)")
     parser.add_argument("--out_dir", required=True)
     args = parser.parse_args()
 
     with open(args.config) as f:
         config = yaml.safe_load(f)
+
+    label_col = args.label_col or config["data"]["label_col"]
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
     model = CLAMSB(
@@ -80,8 +83,11 @@ def main():
     model.load_state_dict(torch.load(args.model, map_location=device))
     model.eval()
 
-    rows = load_manifest(args.test_manifest, config["data"]["label_col"], args.test_split)
-    print(f"외부 검증 슬라이드: {len(rows)}장")
+    rows = load_manifest(args.test_manifest, label_col, args.test_split)
+    print(f"외부 검증 슬라이드: {len(rows)}장 (label_col={label_col})")
+    if len(rows) == 0:
+        print(f"[warn] 0장 — label_col({label_col}) 또는 split({args.test_split}) 값 확인 필요")
+        return
 
     proba, pred, label = [], [], []
     with torch.no_grad():
@@ -92,7 +98,7 @@ def main():
             p = torch.sigmoid(logit).item()
             proba.append(p)
             pred.append(int(p > 0.5))
-            label.append(LABEL_MAP[row[config["data"]["label_col"]].strip().lower()])
+            label.append(LABEL_MAP[row[label_col].strip().lower()])
 
     proba, pred, label = np.array(proba), np.array(pred), np.array(label)
 
