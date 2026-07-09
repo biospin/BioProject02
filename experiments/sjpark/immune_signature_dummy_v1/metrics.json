@@ -1,0 +1,61 @@
+{
+  "schema_version": "0.1",
+  "created_at": "2026-07-08T08:54:48.918250Z",
+  "task": "immune_signature_regression",
+  "model": "SlideMLP-regression",
+  "embedding_model": "uni",
+  "smoke_test": false,
+  "using_dummy_targets": true,
+  "signature_names": [
+    "proliferation",
+    "immune",
+    "ESR1",
+    "ERBB2",
+    "Hallmark_EMT"
+  ],
+  "n_train": 707,
+  "n_val": 152,
+  "best_val_loss": 0.986,
+  "per_signature": [
+    {
+      "signature": "proliferation",
+      "spearman_r": 0.0074,
+      "p_value": 0.9282,
+      "p_value_bh_fdr": 0.9282,
+      "significant_fdr_0.05": false
+    },
+    {
+      "signature": "immune",
+      "spearman_r": -0.1105,
+      "p_value": 0.1755,
+      "p_value_bh_fdr": 0.2924,
+      "significant_fdr_0.05": false
+    },
+    {
+      "signature": "ESR1",
+      "spearman_r": 0.0592,
+      "p_value": 0.469,
+      "p_value_bh_fdr": 0.5862,
+      "significant_fdr_0.05": false
+    },
+    {
+      "signature": "ERBB2",
+      "spearman_r": 0.1141,
+      "p_value": 0.1615,
+      "p_value_bh_fdr": 0.2924,
+      "significant_fdr_0.05": false
+    },
+    {
+      "signature": "Hallmark_EMT",
+      "spearman_r": 0.112,
+      "p_value": 0.1695,
+      "p_value_bh_fdr": 0.2924,
+      "significant_fdr_0.05": false
+    }
+  ],
+  "commit_hash": "802ef9b24fd6b1705fd99e72584e7bece33c75a3",
+  "claim_level": "hypothesis_only",
+  "critic_status": "pending",
+  "wandb_run_id": null,
+  "mlflow_run_id": null
+}

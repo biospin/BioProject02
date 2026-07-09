@@ -1,0 +1,10 @@
+{
+  "n_slides": 151,
+  "remove_frac": 0.1,
+  "auc_full": 0.7589,
+  "auc_top_removed": 0.7596,
+  "auc_random_removed": 0.7585,
+  "mean_abs_proba_delta_top": 0.0248,
+  "mean_abs_proba_delta_random": 0.0017,
+  "faithfulness_confirmed": true
+}

@@ -31,10 +31,13 @@ from sklearn.metrics import roc_auc_score, average_precision_score, balanced_acc
 
 import sys
 sys.path.insert(0, str(Path(__file__).parents[2]))
-from modeling.baselines.attention_mil import CLAMSB
+from modeling.baselines.attention_mil import CLAMSB, CLAMMB
 
 
 LABEL_MAP = {"positive": 1.0, "negative": 0.0}
+
+PAM50_MAP = {"luma": 0, "lumb": 1, "basal": 2, "her2": 3, "normal": 4, "normal-like": 4}
+PAM50_CLASSES = ["LumA", "LumB", "Basal", "HER2", "Normal"]
 
 
 def set_seed(seed: int):
@@ -50,18 +53,23 @@ def get_git_hash() -> str:
         return "unknown"
 
 
-def make_dummy_dataset(n_slides: int, dim: int, seed: int):
+def make_dummy_dataset(n_slides: int, dim: int, seed: int, num_classes: int = 1):
     rng = np.random.default_rng(seed)
     dataset = []
     for i in range(n_slides):
         n_tiles = rng.integers(100, 500)
         emb = torch.tensor(rng.standard_normal((n_tiles, dim)).astype(np.float32))
-        label = torch.tensor(float(i % 2))
+        if num_classes > 1:
+            label = torch.tensor(i % num_classes, dtype=torch.long)
+        else:
+            label = torch.tensor(float(i % 2))
         dataset.append((emb, label))
     return dataset
 
 
 def load_manifest_dataset(manifest_path: str, label_col: str, split: str = None):
+    is_pam50 = label_col.lower() == "pam50"
+    label_lookup = PAM50_MAP if is_pam50 else LABEL_MAP
     dataset = []
     skipped = 0
     with open(manifest_path, newline="") as f:
@@ -70,14 +78,15 @@ def load_manifest_dataset(manifest_path: str, label_col: str, split: str = None)
                 continue
             emb_path = row.get("embedding_path", "")
             label_raw = row.get(label_col, "").strip().lower()
-            if not emb_path or label_raw not in LABEL_MAP:
+            if not emb_path or label_raw not in label_lookup:
                 skipped += 1
                 continue
             emb = torch.tensor(np.load(emb_path))
-            label = torch.tensor(LABEL_MAP[label_raw])
+            label_val = label_lookup[label_raw]
+            label = torch.tensor(label_val, dtype=torch.long if is_pam50 else torch.float32)
             dataset.append((emb, label))
     if skipped:
-        print(f"  [skip] {skipped} rows (Equivocal/Indeterminate/missing)")
+        print(f"  [skip] {skipped} rows (unknown label/missing)")
     return dataset
 
 
@@ -89,31 +98,56 @@ def train(config: dict, smoke_test: bool):
     dim = config["embedding_dim"]
     manifest = config["data"]["embedding_manifest"]
 
+    test_manifest = config.get("_test_manifest")
+    num_classes = config.get("num_classes", 1)
+    is_multiclass = num_classes > 1
+
     if smoke_test or not Path(manifest).exists():
         print("Smoke-test mode: using dummy embeddings")
-        dataset = make_dummy_dataset(config["data"]["n_dummy_slides"], dim, config["train"]["seed"])
+        dataset = make_dummy_dataset(config["data"]["n_dummy_slides"], dim, config["train"]["seed"], num_classes)
         n = len(dataset)
         split_idx = int(n * 0.8)
         train_set, val_set = dataset[:split_idx], dataset[split_idx:]
+        ext_test_set = None
     else:
         print(f"Loading manifest: {manifest}")
         label_col = config["data"]["label_col"]
         train_set = load_manifest_dataset(manifest, label_col, split="train")
         val_set   = load_manifest_dataset(manifest, label_col, split="val")
+        # 외부 검증 (CPTAC cross-dataset)
+        if test_manifest and Path(test_manifest).exists():
+            print(f"Loading test manifest: {test_manifest}")
+            ext_test_set = load_manifest_dataset(test_manifest, label_col, split="cptac_external")
+            print(f"External test: {len(ext_test_set)} slides")
+        else:
+            ext_test_set = None
 
     print(f"Slides: train={len(train_set)} val={len(val_set)}")
 
-    model = CLAMSB(
-        feature_dim=dim,
-        hidden_dim=config["model"]["hidden_dim"],
-        att_dim=config["model"]["att_dim"],
-        dropout=config["model"]["dropout"],
-    ).to(device)
+    if is_multiclass:
+        model = CLAMMB(
+            feature_dim=dim,
+            hidden_dim=config["model"]["hidden_dim"],
+            att_dim=config["model"]["att_dim"],
+            dropout=config["model"]["dropout"],
+            num_classes=num_classes,
+        ).to(device)
+    else:
+        model = CLAMSB(
+            feature_dim=dim,
+            hidden_dim=config["model"]["hidden_dim"],
+            att_dim=config["model"]["att_dim"],
+            dropout=config["model"]["dropout"],
+        ).to(device)
 
     optimizer = torch.optim.Adam(model.parameters(), lr=config["train"]["lr"])
-    criterion = nn.BCEWithLogitsLoss()
+    criterion = nn.CrossEntropyLoss() if is_multiclass else nn.BCEWithLogitsLoss()
 
     best_val_loss = float("inf")
+    best_state = None
+    patience = config["train"].get("patience", 5)
+    no_improve = 0
+
     for epoch in range(1, config["train"]["epochs"] + 1):
         model.train()
         train_loss = 0.0
@@ -121,7 +155,7 @@ def train(config: dict, smoke_test: bool):
             emb, label = emb.to(device), label.to(device)
             optimizer.zero_grad()
             logit, _ = model(emb)
-            loss = criterion(logit, label.unsqueeze(0))
+            loss = criterion(logit.unsqueeze(0) if is_multiclass else logit, label.unsqueeze(0))
             loss.backward()
             optimizer.step()
             train_loss += loss.item()
@@ -132,8 +166,8 @@ def train(config: dict, smoke_test: bool):
             for emb, label in val_set:
                 emb, label = emb.to(device), label.to(device)
                 logit, _ = model(emb)
-                val_loss += criterion(logit, label.unsqueeze(0)).item()
-                pred = (torch.sigmoid(logit) > 0.5).float()
+                val_loss += criterion(logit.unsqueeze(0) if is_multiclass else logit, label.unsqueeze(0)).item()
+                pred = logit.argmax() if is_multiclass else (torch.sigmoid(logit) > 0.5).float()
                 correct += (pred == label).sum().item()
 
         avg_val = val_loss / max(len(val_set), 1)
@@ -142,35 +176,95 @@ def train(config: dict, smoke_test: bool):
 
         if avg_val < best_val_loss:
             best_val_loss = avg_val
+            best_state = {k: v.cpu().clone() for k, v in model.state_dict().items()}
+            no_improve = 0
+        else:
+            no_improve += 1
+            if no_improve >= patience:
+                print(f"  [early stop] patience={patience} 도달, epoch {epoch}에서 중단")
+                break
+
+    if best_state is not None:
+        model.load_state_dict(best_state)
+        print(f"Best model 복원 (val_loss={best_val_loss:.4f})")
 
     # val set 최종 지표
     from sklearn.metrics import roc_auc_score, average_precision_score, balanced_accuracy_score
-    model.eval()
-    all_proba, all_pred, all_label = [], [], []
-    with torch.no_grad():
-        for emb, label in val_set:
-            logit, _ = model(emb.to(device))
-            proba = torch.sigmoid(logit).item()
-            all_proba.append(proba)
-            all_pred.append(int(proba > 0.5))
-            all_label.append(int(label.item()))
+    from sklearn.preprocessing import label_binarize
 
-    auc = auprc = bal_acc = None
-    if len(set(all_label)) > 1:
-        auc     = round(float(roc_auc_score(all_label, all_proba)), 4)
-        auprc   = round(float(average_precision_score(all_label, all_proba)), 4)
-        bal_acc = round(float(balanced_accuracy_score(all_label, all_pred)), 4)
-        print(f"\nVal metrics — AUC={auc}  AUPRC={auprc}  BalAcc={bal_acc}")
+    def _predict(dataset):
+        proba_list, pred_list, label_list = [], [], []
+        with torch.no_grad():
+            for emb, label in dataset:
+                logit, _ = model(emb.to(device))
+                if is_multiclass:
+                    proba = torch.softmax(logit, dim=-1).cpu().numpy().tolist()
+                    pred = int(logit.argmax().item())
+                else:
+                    proba = torch.sigmoid(logit).item()
+                    pred = int(proba > 0.5)
+                proba_list.append(proba)
+                pred_list.append(pred)
+                label_list.append(int(label.item()))
+        return proba_list, pred_list, label_list
+
+    def _compute_metrics(proba_list, pred_list, label_list):
+        if len(set(label_list)) <= 1:
+            return None, None, None
+        bal_acc = round(float(balanced_accuracy_score(label_list, pred_list)), 4)
+        try:
+            if is_multiclass:
+                auc = round(float(roc_auc_score(label_list, np.array(proba_list), multi_class="ovr", average="macro")), 4)
+                y_bin = label_binarize(label_list, classes=list(range(num_classes)))
+                auprc = round(float(average_precision_score(y_bin, np.array(proba_list), average="macro")), 4)
+            else:
+                auc   = round(float(roc_auc_score(label_list, proba_list)), 4)
+                auprc = round(float(average_precision_score(label_list, proba_list)), 4)
+        except ValueError as e:
+            print(f"  [warn] AUC/AUPRC 계산 불가 (클래스 부족): {e}")
+            auc = auprc = None
+        return auc, auprc, bal_acc
+
+    model.eval()
+    all_proba, all_pred, all_label = _predict(val_set)
+    auc, auprc, bal_acc = _compute_metrics(all_proba, all_pred, all_label)
+    if auc is not None:
+        print(f"\nVal metrics (TCGA) — AUC={auc}  AUPRC={auprc}  BalAcc={bal_acc}")
+
+    # 외부 검증 (CPTAC cross-dataset)
+    ext_auc = ext_auprc = ext_bal_acc = None
+    ext_proba = ext_pred = ext_label = None
+    if ext_test_set:
+        ext_proba, ext_pred, ext_label = _predict(ext_test_set)
+        ext_auc, ext_auprc, ext_bal_acc = _compute_metrics(ext_proba, ext_pred, ext_label)
+        if ext_auc is not None:
+            print(f"Test metrics (CPTAC) — AUC={ext_auc}  AUPRC={ext_auprc}  BalAcc={ext_bal_acc}")
 
     tag    = config.get("tag", datetime.datetime.now().strftime("%Y%m%d"))
-    suffix = f"{config['task']}_clam_{tag}" + ("_smoke" if smoke_test else "")
+    model_tag = "clam_mb" if is_multiclass else "clam"
+    suffix = f"{config['task']}_{model_tag}_{tag}" + ("_smoke" if smoke_test else "")
     out_dir = Path(config["output_dir"]) / config.get("username", "sjpark") / suffix
     out_dir.mkdir(parents=True, exist_ok=True)
 
     torch.save(model.state_dict(), out_dir / "model.pt")
 
-    predictions = np.array(list(zip(all_proba, all_pred, all_label)), dtype=np.float32)
-    np.save(out_dir / "predictions.npy", predictions)
+    if is_multiclass:
+        np.savez(
+            out_dir / "predictions.npz",
+            proba=np.array(all_proba, dtype=np.float32),
+            pred=np.array(all_pred, dtype=np.int32),
+            label=np.array(all_label, dtype=np.int32),
+        )
+        if ext_proba is not None:
+            np.savez(
+                out_dir / "predictions_ext.npz",
+                proba=np.array(ext_proba, dtype=np.float32),
+                pred=np.array(ext_pred, dtype=np.int32),
+                label=np.array(ext_label, dtype=np.int32),
+            )
+    else:
+        predictions = np.array(list(zip(all_proba, all_pred, all_label)), dtype=np.float32)
+        np.save(out_dir / "predictions.npy", predictions)
 
     if config.get("_config_path"):
         shutil.copy(config["_config_path"], out_dir / "config.yaml")
@@ -180,7 +274,9 @@ def train(config: dict, smoke_test: bool):
         "schema_version": "0.1",
         "created_at": datetime.datetime.utcnow().isoformat() + "Z",
         "task": config["task"],
-        "model": "CLAM-SB",
+        "model": "CLAM-MB" if is_multiclass else "CLAM-SB",
+        "num_classes": num_classes,
+        "class_names": PAM50_CLASSES if is_multiclass else None,
         "embedding_model": config["embedding_model"],
         "smoke_test": smoke_test,
         "n_train": len(train_set),
@@ -189,6 +285,10 @@ def train(config: dict, smoke_test: bool):
         "auc": auc,
         "auprc": auprc,
         "balanced_accuracy": bal_acc,
+        "ext_test_manifest": test_manifest,
+        "ext_auc": ext_auc,
+        "ext_auprc": ext_auprc,
+        "ext_balanced_accuracy": ext_bal_acc,
         "commit_hash": commit_hash,
         "claim_level": "hypothesis_only",
         "critic_status": "pending",
@@ -206,6 +306,7 @@ def main():
     parser.add_argument("--smoke_test", action="store_true")
     parser.add_argument("--tag", default="")
     parser.add_argument("--commit_hash", default="")
+    parser.add_argument("--test_manifest", default="", help="외부 검증 manifest (CPTAC cross-dataset)")
     args = parser.parse_args()
 
     with open(args.config) as f:
@@ -215,6 +316,8 @@ def main():
         config["tag"] = args.tag
     if args.commit_hash:
         config["_commit_hash"] = args.commit_hash
+    if args.test_manifest:
+        config["_test_manifest"] = args.test_manifest
 
     t0 = time.time()
     train(config, args.smoke_test)

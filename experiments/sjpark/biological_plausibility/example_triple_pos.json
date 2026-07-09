@@ -1,0 +1,60 @@
+{
+  "schema_version": "0.1",
+  "created_at": "2026-07-08T08:44:55.751738Z",
+  "commit_hash": "509623ea22aae14aea3457ec9381f37b0d20d6ed",
+  "slide": {
+    "slide_id": "TCGA-3C-AALI-01Z-00-DX1",
+    "patient_id": "TCGA-3C-AALI",
+    "cohort": "TCGA-BRCA"
+  },
+  "phenotype": {
+    "model": "SlideMLP/CLAM-SB (BIOP02-39/46/53)",
+    "predictions": {
+      "er_status": "Positive",
+      "pr_status": "Positive",
+      "her2_status": "Positive",
+      "pam50": "HER2"
+    }
+  },
+  "hypothesis": [
+    {
+      "rank": 1,
+      "drug_class": "Anti-HER2 therapy (trastuzumab-class)",
+      "rationale": "HER2 양성 표현형은 표준 종양학 가이드라인상 항HER2 표적 치료의 대상군으로 알려져 있음 (hypothesis_only — 개별 환자 처방 근거 아님).",
+      "confidence": 0.5,
+      "data_source": "GDSC",
+      "supporting_endpoints": [
+        "her2_status"
+      ]
+    },
+    {
+      "rank": 2,
+      "drug_class": "Endocrine therapy (SERM/aromatase inhibitor) ± CDK4/6 inhibitor",
+      "rationale": "ER/PR 양성 표현형은 호르몬 수용체 경로 의존성과 연관된 아형으로, 내분비 치료 계열이 표준적으로 고려되는 군으로 알려져 있음 (hypothesis_only).",
+      "confidence": 0.5,
+      "data_source": "DepMap-PRISM",
+      "supporting_endpoints": [
+        "er_status",
+        "pr_status"
+      ]
+    },
+    {
+      "rank": 3,
+      "drug_class": "[PAM50=HER2] subtype 특이적 세부 근거는 BIOP02-60(jhans) 확정 후 추가 예정",
+      "rationale": "PAM50 HER2 subtype에 대한 pathway-drug 연결은 아직 draft 수준. jhans 정식 검토 필요.",
+      "confidence": 0.0,
+      "data_source": "both",
+      "supporting_endpoints": [
+        "pam50"
+      ]
+    }
+  ],
+  "claim_level": "hypothesis_only",
+  "critic_status": "pending",
+  "critic_5_biological_plausibility": {
+    "status": "pass_draft",
+    "forbidden_phrase_violations": [],
+    "direction_consistency_issues": [],
+    "note": "BIOP02-60(jhans) 완료 전 draft 검증. 정식 DepMap/GDSC 연결 후 재검증 필요."
+  }
+}

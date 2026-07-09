@@ -1,0 +1,49 @@
+{
+  "schema_version": "0.1",
+  "created_at": "2026-07-03T13:52:07.979563Z",
+  "task": "pr_status",
+  "label_col": "pr",
+  "manifest": "/workspace/data/cache/biop02/embedding_manifest_uni.csv",
+  "smoke_test": false,
+  "n_train": 705,
+  "n_val": 151,
+  "commit_hash": "d6f68687a4743d4dfc5f67271f75bc1eddb94466",
+  "run_command": "agents/modeling/scripts/run_baselines.py --manifest /workspace/data/cache/biop02/embedding_manifest_uni.csv --label_col pr --task pr_status --tag clam_uni_v2 --aux_col pam50 --bootstrap_ci --commit_hash d6f68687a4743d4dfc5f67271f75bc1eddb94466",
+  "claim_level": "hypothesis_only",
+  "critic_status": "pending",
+  "baselines": [
+    {
+      "baseline": "random",
+      "auc": 0.5571,
+      "auprc": 0.7216,
+      "balanced_accuracy": 0.5095,
+      "n": 151,
+      "auc_ci_95": [
+        0.4626,
+        0.6545
+      ]
+    },
+    {
+      "baseline": "subtype_only",
+      "auc": 0.8085,
+      "auprc": 0.8471,
+      "balanced_accuracy": 0.8074,
+      "n": 151,
+      "auc_ci_95": [
+        0.7234,
+        0.8886
+      ]
+    },
+    {
+      "baseline": "mean_embed",
+      "auc": 0.6859,
+      "auprc": 0.7778,
+      "balanced_accuracy": 0.6641,
+      "n": 151,
+      "auc_ci_95": [
+        0.5933,
+        0.7728
+      ]
+    }
+  ]
+}

@@ -1,5 +1,40 @@
 # kkkim 작업 진행 로그
 
+## 2026-06-24
+
+### BIOP02-54 CPTAC-BRCA 임베딩 추출 — 코드/검증 완료, GPU 서버 복구 대기
+
+| JIRA | 태스크 | 커밋 |
+|---|---|---|
+| BIOP02-54 | CPTAC IDC 다운로드 어댑터 + 인벤토리 + DICOM 파이프라인 검증 | 0629100, 8918834 |
+
+브랜치: `feat/BIOP02-54-kkkim-cptac-embed` (push 완료)
+
+**만든 것**
+- `agents/data/scripts/list_idc_cptac.py` — idc-index로 CPTAC-BRCA SM 시리즈 조회 → 인벤토리 CSV
+- `agents/data/manifests/cptac_brca_idc_inventory.csv` — **653 슬라이드 / 198 환자 / 120.2 GB** (실측, idc-index)
+- `agents/data/scripts/stream_download_embed_idc.py` — IDC DICOM 스트리밍: 다운로드(idc-index s5cmd) → 타일 → 임베딩 → raw 삭제. NAS판 `stream_download_embed.py`의 삭제/resumable 코어 재사용, 다운로드부만 IDC로 교체.
+- `guide/runbooks/download_cptac_from_idc.md` — 실행 런북
+
+**핵심 발견:** CPTAC-BRCA는 IDC에서 `.svs`가 아니라 **DICOM-WSI**. tile_wsi(OpenSlide)는 **OpenSlide ≥ 4.0** 필요.
+
+**검증 완료 (macmini, OpenSlide 4.0.1):** 실제 슬라이드 `18BR017_01`로 전체 흐름 통과 — 다운로드 → DICOM 오픈(17280×19316, 3 levels, MPP 0.25) → Otsu 타일 103 → dummy 임베딩 (103,1024) → raw 삭제 → status=done. **다운로드/DICOM 타일링/삭제/resumable 코어 검증됨.**
+
+**남은 것 (GPU 서버에서):** `--embedding-model uni`(torch cu124)로 `--limit 2` 검증 후 전량 추출.
+
+### 인프라 — 신규 GPU 서버(HP-Z4-DSWS) 드라이버 교체 ⛔ 블로커
+
+- 기존 드라이버 **470 (CUDA 11.4)** 이 프로젝트 검증 환경(torch cu124, CUDA 12.4)과 불일치 → GPU 임베딩 불가.
+- `nvidia-driver-470 → 535` 교체: apt로 누적 드라이버(440/450/460/470) purge 후 `nvidia-driver-535` 설치, **DKMS 빌드 성공**(535.230.02, 5.14-oem·5.15-generic 양쪽).
+- ⛔ **재부팅 후 JupyterHub/SSH 등 서비스 미기동** → 원격 접속 불가(ping은 정상). 본체 콘솔 복구 대기(Chanran, 물리 접근 어려움).
+- 복구법: `Ctrl+Alt+F3` → `sudo systemctl restart jupyterhub ssh`, 멈추면 GRUB 이전 커널(5.14-oem). DKMS 양쪽 빌드라 복구 가능, 디스크/데이터 안전.
+- 주의: autoremove가 시스템 CUDA 11.0 툴킷도 제거함(팀 nvcc 영향 가능 — 필요 시 CUDA 12.x 재설치).
+
+### 보류
+- BIOP02-54 Jira/Confluence 등록은 임베딩 추출 완료 후 일괄 등록 예정.
+
+---
+
 ## 2026-05-18 (Sprint 0)
 
 ### 완료한 작업

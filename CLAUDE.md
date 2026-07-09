@@ -43,6 +43,16 @@ Goal: H&E WSI → morphology embedding → molecular phenotype prediction → De
 - **공동 JupyterLab (협업):** 실시간 동시편집 + 채팅. 각자 본인 계정 접속(kkkim 계정 공유 X). 터널 `ssh -L 8899:localhost:8899 -J bastion@61.109.239.220 -p <port> <user>@192.168.0.85` → `http://localhost:8899` (비밀번호는 Slack 공유). 공용 작업폴더 `/home/kkkim/collab_workspace`. SSH 세션 종료 시 터널도 끊기므로 사용 중 터미널 유지.
 - **Workspace:** `/workspace/agents/<role>/` per person
 
+### 팀 공유 데이터 경로 규칙 (중요)
+
+각 팀원 SSH 계정은 **별도 Docker 컨테이너**다(브리지망 `172.18.0.x`, hostname=본인 계정명). `/home/<user>/`는 해당 컨테이너 로컬 디스크(`/dev/sdb1`)라 **다른 계정에서는 보이지 않는다**(권한을 열어도 마운트 자체가 없음). `/workspace`(`/dev/sda2`)만 컨테이너 간 공유되는 볼륨이다.
+
+- **공유 대상 데이터(임베딩·manifest·split·label)는 반드시 `/workspace/data/cache/biop02/`에 실파일로 둔다.** 모든 계정에서 읽기 검증된 경로는 `/workspace`뿐이다. (과거엔 공유 볼륨 용량 등으로 활용이 어려워 `/home/<user>/shared` 심링크를 차선으로 썼으나, 이제 `/workspace`가 표준이다.)
+- manifest의 `embedding_path`는 **`/workspace/...` 절대경로**로 작성한다(개인 홈 경로 금지).
+- 폴더 네이밍: 임베딩 `<model>_<version>/`(예 `uni_v1/`, `conch_v1/`, `exaone_v2/`), manifest `embedding_manifest_<model>.csv`, split `split_policy_v<n>.csv`.
+- 새 공유 폴더는 `chmod 2775`(setgid) + `chgrp project` → 하위 파일이 group `project`를 자동 상속. 파일은 `g+r` 유지.
+- 영구 공유 = manifest·coords·embeddings·logs·split/label만. raw `.svs`는 각자 스트리밍→추출→삭제(개인 LRU)이므로 컨테이너 로컬에 둬도 무방(팀 공유·영구보관 금지).
+
 **Slack channels:**
 
 | 채널 | 용도 |

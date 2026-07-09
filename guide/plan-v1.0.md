@@ -12,7 +12,7 @@
 | 이건규 | gglee | Scientific Critic + 리더 | critic checklist, critic_report, 회의 진행, 최종 sign-off |
 | 지용기 | braveji (ykji) | Orchestrator | 인프라 셋업, AGENTS.md, 스키마 관리, 회의록 |
 | 류재면 | jamie (jmryu) | Data Agent | manifest CSV, 레이블, patient-split |
-| 김가경 | kkkim (gkkim) | Embedding Agent | WSI tiling, foundation model 특징 추출 |
+| 김가경 | kkkim | Embedding Agent | WSI tiling, foundation model 특징 추출 |
 | 박세진 | sjpark | Modeling Agent | MLP baseline → attention MIL |
 | 서정한 | jhans | Therapeutic Evidence Agent | DepMap/GDSC 약물 연결 (Paper B) |
 
@@ -51,7 +51,7 @@
 | CPTAC-BRCA 메모 1쪽 | 5/19 | IDC gs:// 버킷 접근 방법 확인 |
 | kkkim에게 TCGA 샘플 WSI 1장 경로 공유 | 5/19 | `/data/raw/tcga/sample.svs` 접근 가능 확인 |
 
-### kkkim (gkkim) — Embedding Agent
+### kkkim — Embedding Agent
 
 | 태스크 | 기한 | 완료 기준 |
 |---|---|---|

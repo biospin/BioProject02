@@ -9,6 +9,7 @@
   "n_val": 151,
   "best_val_loss": 1.3751,
   "auc": 0.7113,
+  "auc_ci_95": [0.6591, 0.766],
   "auprc": 0.4156,
   "balanced_accuracy": 0.4308,
   "commit_hash": "faed11eb7e67652c3d0066a54dba72e3131bef89",
