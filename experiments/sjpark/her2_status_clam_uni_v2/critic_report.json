@@ -1,12 +1,12 @@
 {
   "schema_version": "0.1",
-  "created_at": "2026-07-08T11:15:00+09:00",
+  "created_at": "2026-07-09T00:00:00+09:00",
   "reviewer": "braveji",
   "owner": "sjpark",
   "experiment": {
-    "experiment_id": "experiments/sjpark/her2_status_clam_uni_v2",
+    "experiment_id": "her2_status_clam_uni_v2",
     "task": "her2_status",
-    "endpoint": "HER2 IHC binary",
+    "endpoint": "HER2 IHC binary classification (positive / negative; equivocal 251장 제외)",
     "commit_hash": "0e0a1e1f8f02d472e65728a25701c57f4ac48462",
     "config_path": "experiments/sjpark/her2_status_clam_uni_v2/config.yaml",
     "metrics_path": "experiments/sjpark/her2_status_clam_uni_v2/metrics.json",
@@ -18,73 +18,86 @@
     "data_leakage": {
       "status": "caution",
       "evidence": [
-        "split_policy_v0.md 상태 = DRAFT (kkkim data-owner sign-off 미완료, lock 안 됨)",
-        "metrics.json에 split lock 해시 미기록",
-        "patient-overlap assert 로그 / site_classifier_probe 결과 미제출"
+        "split_policy_v0.md DRAFT (lock 해시 미기록)",
+        "patient-overlap assert 로그 미제출",
+        "n_train=496 (equivocal 251장 제외) — equivocal 제외 기준이 split 이전/이후 적용 여부 불명확",
+        "site_confound AUC 0.9977 — site-disjoint split 적용 확인 필요"
       ],
-      "notes": "split 방향(patient-level, site 고려)은 정책 문서상 올바르나, sign-off·lock·해시 기록이 없어 CLAUDE.md 'locked after sign-off' 요건 미충족. caution."
+      "notes": "HER2 특유의 추가 이슈: equivocal 케이스 제외가 split 이전에 적용됐으면 leakage 없음, split 이후이면 label leakage 가능성. equivocal 제외 순서 확인 필요."
     },
     "baseline_comparison": {
-      "status": "caution",
+      "status": "reject",
       "evidence": [
-        "CLAM-SB AUC 0.5992 [95%CI 0.483-0.711], AUPRC 0.4654",
-        "subtype_only 0.724 > 모델 0.5992 / mean_embed 0.5477",
-        "95%CI 하한 0.483 < 0.5 — 무작위 수준과 구분 안 됨"
+        "HER2 CLAM-SB val AUC 0.5992 (95% CI 0.483–0.7106) — CI가 0.5를 포함 → random과 통계적으로 구별 불가",
+        "random AUC 0.4797 (CI 0.374–0.599) — 모델 CI와 중첩이 큼",
+        "mean_embed AUC 0.5477 (CI 0.431–0.660) — 모델 CI [0.483–0.711]와 대부분 중첩",
+        "subtype_only(PAM50) AUC 0.724 (CI 0.620–0.824) >> 모델 0.5992 — 큰 격차",
+        "CPTAC 외부 검증 AUC 0.5297 (CI 0.440–0.619) — CI에 0.5 포함. 외부에서 완전히 random 수준",
+        "CPTAC AUPRC 0.1213 — 외부 코호트에서 사실상 붕괴",
+        "MLP → CLAM 개선: 0.5509 → 0.5992 (+0.048) — 개선 있으나 여전히 random 영역",
+        "best_val_loss = 0.666 ≈ binary cross-entropy 이론 상한 → 모델 학습 실패에 가까움"
       ],
-      "notes": "모델이 near-random이며 subtype_only에 크게 뒤짐. HER2는 H&E 형태로 예측 어려운 것으로 알려져 있어 음성 결과로 해석. #2는 caution(음성 결과로 정직히 기술, headline 금지)."
+      "notes": "HER2 CLAM AUC 95% CI가 0.5를 포함하며 외부 검증(CPTAC ext AUC 0.530)이 random 수준. H&E 형태학으로 HER2 유전자 증폭을 예측하는 것은 본질적으로 어렵다는 선행 연구(Kather 2020, Lu 2021)와 일치하는 과학적으로 예상된 음성 결과. checklist 기준 → reject."
     },
     "counterfactual_check": {
       "status": "caution",
       "evidence": [
-        "auc_full 0.5992 → auc_top_removed 0.5935 (drop 0.0057)",
-        "모델이 near-random이라 counterfactual 해석 제한적"
+        "attention ablation: auc_full 0.5992 → auc_top_removed 0.5935 → drop 0.0057",
+        "auc_drop_random = -0.0021 (random 제거 시 오히려 소폭 상승)",
+        "proba-level: mean_abs_proba_delta_top 0.0284 vs random 0.0028 (~10배)",
+        "ER/PR(~20배) 대비 낮은 proba faithfulness",
+        "label shuffle test 미실행"
       ],
-      "notes": "모델 성능 자체가 낮아 faithfulness 논의 의미 제한. caution."
+      "notes": "AUC가 random 수준이므로 counterfactual이 실질적 의미가 없음. 그럼에도 top attention이 proba에 영향을 주는 것은 모델이 일부 패턴을 포착하려 함을 시사. HER2 음성 결과 자체가 가장 중요한 발견."
     },
     "cross_dataset_check": {
-      "status": "caution",
+      "status": "reject",
       "evidence": [
-        "CPTAC 외부평가 존재: ext_auc=0.5297, ext_auprc=0.1213",
-        "experiments/registry/cross_validation_registry.jsonl 비어있음(0줄, BIOP02-57 미완)",
-        "CPTAC 라벨이 공식(jamie)인지 임시(kkkim 395/653)인지 미확인",
-        "ext AUPRC 0.1213로 외부에서 사실상 붕괴 — 음성 결과 재확인"
+        "CPTAC 외부 검증 AUC 0.5297 (CI 0.440–0.619) — CI에 0.5 포함 → random 수준",
+        "CPTAC balanced_acc 0.5 — 완전 random",
+        "CPTAC AUPRC 0.1213 — 극히 낮음 (클래스 불균형 고려해도 random 이하)"
       ],
-      "notes": "외부 결과는 산출됐으나 (1) registry 미기재 (2) 라벨 공식성 미확인으로 최종 pass 불가. 공식 라벨 확인 + registry 기재 후 재판정. sub-check=jhans (non-owner)."
+      "notes": "외부 검증에서도 random 수준 확인 — HER2 음성 결과가 CPTAC 코호트에서도 재현됨. 이는 TCGA 과적합이 아닌 태스크 고유의 어려움을 확인하는 중요한 결과."
     },
     "biological_plausibility": {
       "status": "pass",
       "evidence": [
-        "HER2 증폭은 H&E 형태에 약하게 반영 → near-random AUC는 생물학적으로 일관(정직한 음성)",
-        "약물/ICI 추천 없음"
+        "HER2 증폭은 유전자/단백질 수준 이벤트 — H&E 형태학에서 직접 관찰 어려움 (Kather 2020)",
+        "equivocal 케이스 제외로 클래스 불균형 심화",
+        "CLAM Attention MIL도 HER2 예측 개선에 제한적 — 음성 결과는 과학적으로 타당",
+        "3-way 비교에서도 EXAONE_sg 최고 AUC = 0.697 (여전히 moderate)",
+        "ICI/Pembrolizumab 추천 없음"
       ],
-      "notes": "음성 결과 자체는 생물학적으로 타당. Paper A에서 '형태학으로 HER2 예측 곤란' 사례로 기술. sub-check=jhans."
+      "notes": "이 결과는 실험 실패가 아닌 과학적으로 예상된 음성 결과(expected negative result). Paper A Limitation 섹션에서 정직하게 기술해야 함."
     },
     "drp_framing": {
       "status": "pass",
       "evidence": [
-        "metrics.json/config.yaml에 'drug response prediction'/'personalized therapy'/'patient-specific treatment' 등 금지표현 없음",
-        "task 필드가 표현형(er_status/pr_status/her2_status/pam50)"
+        "task: 'her2_status' (표현형 예측)",
+        "금지 표현 미발견",
+        "claim_level: 'hypothesis_only'"
       ],
       "notes": "DRP 프레이밍 없음."
     },
     "claim_level": {
       "status": "pass",
       "evidence": [
-        "claim_level: hypothesis_only",
-        "critic_status: pending (owner self-pass 안 함)",
-        "commit_hash 기록됨"
+        "claim_level: hypothesis_only 명시",
+        "metrics.json에 음성 결과 정직하게 기술",
+        "commit_hash 기록됨 (0e0a1e1)"
       ],
-      "notes": "주장 수준 적절. 단일/외부 코호트 결과를 과일반화하지 않음."
+      "notes": "음성 결과를 과장 없이 기술. Paper A에서 HER2 예측 한계를 '태스크 고유 한계'로 표현 권고."
     }
   },
-  "critic_status": "caution",
+  "critic_status": "reject",
   "claim_level": "hypothesis_only",
-  "summary": "HER2 CLAM-SB(UNI v2): val AUC 0.5992(CI 하한<0.5), ext 0.530으로 near-random. subtype_only(0.724) 대비 열위. H&E로 HER2 예측이 어렵다는 정직한 음성 결과로 기술 필요(headline 금지). 전체 caution.",
+  "summary": "HER2 CLAM-SB(UNI v2) val AUC 0.5992 (CI 0.48–0.71), CPTAC ext AUC 0.5297 — 두 코호트 모두 random 수준. CI가 0.5를 포함하며 CPTAC에서도 random 재확인. baseline_comparison reject + cross_dataset_check reject → 전체 critic_status: reject. 이전 MLP 리뷰(BIOP02-50 reject)와 동일한 결론을 CLAM에서도 확인. 이 결과는 #biop02-experiments 공유 불가이나 Paper A Limitation에 반드시 기술해야 함. EXAONE_sg 재실험 권고.",
   "required_followups": [
-    "[sjpark] HER2는 음성 결과로 명시 (AUC≈0.5, CI가 0.5 포함) — 과대 서술 금지",
-    "[kkkim] split_policy_v0 sign-off + lock 해시를 metrics.json에 기록",
-    "[sjpark] patient-overlap assert 로그 제출 (train∩val case_id==0)",
-    "[jhans] CPTAC 라벨 공식(jamie) 여부 확인 + cross_validation_registry.jsonl 기재 (BIOP02-57)",
-    "[kkkim] 모델링 결과 정식 peer review (Owner≠Reviewer)"
+    "[sjpark] equivocal 케이스 제외 순서 확인 (split 이전/이후)",
+    "[sjpark/kkkim] HER2 equivocal 처리 전략 재논의 (제외 유지 vs 3-class 분류)",
+    "[sjpark] EXAONE_sg 임베딩으로 HER2 재실험 (3-way 비교에서 EXAONE_sg HER2 AUC 0.697로 최고)",
+    "[braveji] Paper A Limitation에 HER2 음성 결과 및 H&E 한계 기술",
+    "[sjpark] label shuffle test 실행",
+    "[kkkim] split_policy_v0 sign-off"
   ]
 }
