@@ -1,0 +1,98 @@
+{
+  "intersection_definition": "DepMap 24Q4 Bowel (OncotreeLineage=Bowel; colon/rectal adenocarcinoma) INNER JOIN GDSC2-screened on SangerModelID",
+  "n_depmap_bowel": 99,
+  "n_intersection_gdsc": 49,
+  "tcga_desc_breakdown": {
+    "COREAD": 46,
+    "UNCLASSIFIED": 1,
+    "OV": 1
+  },
+  "note": "CRC axes are NOT partitioned: MSI / BRAF-V600E / KRAS-mut CO-OCCUR. Each counted independently over the same cohort; overlaps reported.",
+  "axes": {
+    "antiBRAF_V600E": {
+      "n": 7,
+      "threshold": 5,
+      "GO": true,
+      "label_basis": "DepMap 24Q4 OmicsSomaticMutations BRAF p.V600E/V600x"
+    },
+    "MSI_high": {
+      "n": 16,
+      "threshold": 5,
+      "GO": true,
+      "label_basis": "DepMap 24Q4 OmicsSignatures MSIScore>=20.0 (calibrated: canonical MSI-high HCT116/DLD1/LoVo/RKO/SW48/HCT15 all >=65; MSS SW480/SW620/HT29/COLO205 <=4; clean bimodal gap 4-65)"
+    },
+    "KRASmut": {
+      "n": 22,
+      "threshold": 5,
+      "GO": true,
+      "label_basis": "DepMap 24Q4 KRAS hotspot mut (anti-EGFR resistance / MEK-axis context)"
+    },
+    "KRAS_WT": {
+      "n": 27,
+      "threshold": 5,
+      "GO": true,
+      "label_basis": "KRAS wild-type (anti-EGFR-eligible context; NB cetuximab is antibody, absent from GDSC2)"
+    },
+    "chemo_baseline": {
+      "n": 49,
+      "threshold": 5,
+      "GO": true,
+      "label_basis": "whole CRC cohort = 5-FU/oxaliplatin/irinotecan baseline"
+    }
+  },
+  "overlaps": {
+    "BRAF_and_MSI": 3,
+    "KRASmut_and_MSI": 7,
+    "BRAF_and_KRASmut": 0
+  },
+  "msi_calibration": {
+    "threshold": 20.0,
+    "canonical_MSI_high_scores": {
+      "RKO": 90.5,
+      "LOVO": 88.6,
+      "LS180": 88.4,
+      "SW48": 84.6,
+      "HCT116": 89.1,
+      "HCT15": 65.0
+    },
+    "n_below_gap_max": 4.06
+  },
+  "gdsc_drugs_present": {
+    "BRAF": [
+      "Dabrafenib",
+      "Trametinib"
+    ],
+    "BRAF_ABSENT": [
+      "Vemurafenib",
+      "Encorafenib",
+      "Cetuximab(antibody)"
+    ],
+    "MEK_proxy": [
+      "Selumetinib",
+      "Trametinib"
+    ],
+    "chemo": [
+      "5-Fluorouracil",
+      "Oxaliplatin",
+      "Irinotecan",
+      "SN-38"
+    ]
+  },
+  "sources": {
+    "depmap": "DepMap 24Q4 Public figshare 27993248: Model.csv(51065297), OmicsSomaticMutations.csv(51065732), OmicsSignatures.csv(51065726, MSIScore)",
+    "gdsc": "GDSC2_fitted_dose_response_27Oct23.xlsx"
+  },
+  "caveats": [
+    "MSI/BRAF/KRAS axes co-occur (BRAF-V600E CRC is often MSI-high); independent counts, not a single-assignment table.",
+    "MSIScore threshold defensible: canonical MSI-high lines score >=65, MSS <=4, no CRC line falls in the 4-65 gap.",
+    "anti-EGFR (cetuximab) cannot be drug-validated in GDSC2 (antibody, absent); KRAS-WT axis is a mutation-status feasibility proxy only.",
+    "BRAF-V600E axis validation uses Dabrafenib/Trametinib (Vemurafenib/Encorafenib absent from GDSC2 27Oct23)."
+  ],
+  "go_nogo": "GO",
+  "go_nogo_per_axis": {
+    "antiBRAF_V600E": true,
+    "MSI_high": true,
+    "KRASmut": true,
+    "KRAS_WT": true
+  }
+}
