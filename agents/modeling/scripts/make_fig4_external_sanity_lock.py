@@ -56,12 +56,14 @@ TASKS = [
         "sig_auc_key": "auc_subtype_only",
     },
     {
+        # §4 준수 4-class (Normal 제외). 5-class 결과는 pam50_clam_mb_uni_v1/에 보존.
         "label": "PAM50",
-        "clam_dir": "pam50_clam_mb_uni_v1",
-        "baselines_dir": "pam50_uni_v1_ext_baselines",
+        "clam_dir": "pam50_clam_mb_uni_v1_4class",
+        "baselines_dir": "pam50_uni_v1_4class_baselines",
         "best_baseline_name": "mean_embed",
         "sig_diff_key": "diff_clam_minus_mean_embed",
         "sig_auc_key": "auc_mean_embed",
+        "null_file": "pam50_clam_mb_uni_v1_4class/label_shuffle_null.json",
     },
 ]
 
@@ -97,7 +99,12 @@ def main():
         base_auc, base_ci = get_baseline(baselines, task["best_baseline_name"])
 
         # 외부 shuffle null 밴드 (label을 섞은 모델이 도달하는 AUC 범위)
-        null_ext = (shuffle_null.get(task["label"], {}) or {}).get("external", {})
+        # 태스크별 null_file이 있으면 그것을, 없으면 공용 multiseed summary를 사용
+        if task.get("null_file"):
+            task_null = load_json(exp_dir / task["null_file"]) or {}
+            null_ext = (task_null.get(task["label"], {}) or {}).get("external", {})
+        else:
+            null_ext = (shuffle_null.get(task["label"], {}) or {}).get("external", {})
         null_lo, null_hi = null_ext.get("null_min"), null_ext.get("null_max")
 
         bars = [

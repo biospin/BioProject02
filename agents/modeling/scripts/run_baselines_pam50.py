@@ -29,10 +29,16 @@ from modeling.baselines.trivial import (
     evaluate_multiclass,
 )
 
-PAM50_MAP = {"luma": 0, "lumb": 1, "basal": 2, "her2": 3, "normal": 4, "normal-like": 4}
+PAM50_MAP_5 = {"luma": 0, "lumb": 1, "basal": 2, "her2": 3, "normal": 4, "normal-like": 4}
+PAM50_MAP_4 = {"luma": 0, "lumb": 1, "basal": 2, "her2": 3}  # §4 준수: Normal 제외
 
 
-def load_manifest(manifest_path: str, split: str):
+def pam50_map(num_classes):
+    return PAM50_MAP_4 if num_classes == 4 else PAM50_MAP_5
+
+
+def load_manifest(manifest_path: str, split: str, num_classes: int = 5):
+    PAM50_MAP = pam50_map(num_classes)
     X, y = [], []
     skipped = 0
     with open(manifest_path, newline="") as f:
@@ -68,13 +74,13 @@ def main():
     parser.add_argument("--output_dir", default="/workspace/agents/modeling/experiments")
     parser.add_argument("--ext_manifest", default="", help="CPTAC 등 외부 test manifest — 지정 시 동일 fit된 baseline을 외부셋에도 평가 (CLAM-MB 외부검증과 동일 조건 비교용)")
     parser.add_argument("--ext_split", default="cptac_external")
+    parser.add_argument("--num_classes", type=int, default=5, help="5=Normal 포함(기존), 4=§4 준수 Normal 제외")
     args = parser.parse_args()
 
-    X_train, y_train = load_manifest(args.manifest, split="train")
-    X_val, y_val = load_manifest(args.manifest, split="val")
-    print(f"Slides: train={len(X_train)} val={len(X_val)}\n")
-
-    num_classes = 5
+    num_classes = args.num_classes
+    X_train, y_train = load_manifest(args.manifest, split="train", num_classes=num_classes)
+    X_val, y_val = load_manifest(args.manifest, split="val", num_classes=num_classes)
+    print(f"Slides: train={len(X_train)} val={len(X_val)}  (num_classes={num_classes})\n")
     baselines = [
         ("random", MulticlassRandomBaseline(num_classes=num_classes)),
         ("majority", MulticlassMajorityBaseline(num_classes=num_classes)),
@@ -93,7 +99,7 @@ def main():
     ext_results = None
     ext_n_test = None
     if args.ext_manifest and Path(args.ext_manifest).exists():
-        X_ext, y_ext = load_manifest(args.ext_manifest, split=args.ext_split)
+        X_ext, y_ext = load_manifest(args.ext_manifest, split=args.ext_split, num_classes=num_classes)
         ext_n_test = len(X_ext)
         print(f"\n외부(CPTAC) 평가: n_test={ext_n_test} (split={args.ext_split})")
         if ext_n_test == 0:

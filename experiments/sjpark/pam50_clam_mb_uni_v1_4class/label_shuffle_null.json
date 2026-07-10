@@ -1,0 +1,31 @@
+{
+  "PAM50": {
+    "internal": {
+      "real_auc": 0.8053,
+      "null_min": 0.4232,
+      "null_max": 0.5933,
+      "null_values": [
+        0.5914,
+        0.534,
+        0.5933,
+        0.4232,
+        0.5322
+      ],
+      "real_above_null": true
+    },
+    "external": {
+      "real_auc": 0.8181,
+      "null_min": 0.4323,
+      "null_max": 0.5656,
+      "null_values": [
+        0.4323,
+        0.5105,
+        0.4764,
+        0.4388,
+        0.5656
+      ],
+      "real_above_null": true
+    }
+  },
+  "n_seeds": 5
+}

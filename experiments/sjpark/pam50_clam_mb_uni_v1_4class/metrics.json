@@ -1,0 +1,31 @@
+{
+  "schema_version": "0.1",
+  "created_at": "2026-07-10T08:55:34.524266Z",
+  "task": "pam50",
+  "model": "CLAM-MB",
+  "num_classes": 4,
+  "class_names": [
+    "LumA",
+    "LumB",
+    "Basal",
+    "HER2"
+  ],
+  "embedding_model": "uni",
+  "smoke_test": false,
+  "n_train": 628,
+  "n_val": 123,
+  "label_shuffle_sanity_check": false,
+  "best_val_loss": 1.2693,
+  "auc": 0.8053,
+  "auprc": 0.6281,
+  "balanced_accuracy": 0.5466,
+  "ext_test_manifest": "data/cache/biop02/embedding_manifest_cptac_uni.csv",
+  "ext_auc": 0.8181,
+  "ext_auprc": 0.564,
+  "ext_balanced_accuracy": 0.4506,
+  "commit_hash": "pending_4class",
+  "claim_level": "hypothesis_only",
+  "critic_status": "pending",
+  "wandb_run_id": null,
+  "mlflow_run_id": null
+}

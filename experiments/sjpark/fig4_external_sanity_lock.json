@@ -75,28 +75,22 @@
     "verdict": "NULL"
   },
   "PAM50": {
-    "internal_auc": 0.7589,
-    "internal_auc_ci_95": [
-      0.7098,
-      0.8084
-    ],
-    "external_auc": 0.7216,
-    "external_auc_ci_95": [
-      0.6777,
-      0.7673
-    ],
+    "internal_auc": 0.8053,
+    "internal_auc_ci_95": null,
+    "external_auc": 0.8181,
+    "external_auc_ci_95": null,
     "external_best_baseline": "mean_embed",
-    "external_best_baseline_auc": 0.6616,
+    "external_best_baseline_auc": 0.653,
     "external_best_baseline_ci_95": [
-      0.6234,
-      0.7017
+      0.6141,
+      0.6932
     ],
-    "shuffle_null_ext_min": 0.4996,
-    "shuffle_null_ext_max": 0.5606,
+    "shuffle_null_ext_min": 0.4323,
+    "shuffle_null_ext_max": 0.5656,
     "external_above_shuffle_null": true,
     "beats_external_baseline": true,
-    "paired_diff_clam_minus_baseline": 0.0598,
-    "p_value_approx": 0.021,
+    "paired_diff_clam_minus_baseline": 0.165,
+    "p_value_approx": 0.0,
     "verdict": "GENUINE"
   }
 }

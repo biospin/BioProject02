@@ -1,0 +1,86 @@
+{
+  "schema_version": "0.1",
+  "created_at": "2026-07-10T08:56:20.633080Z",
+  "task": "pam50",
+  "num_classes": 4,
+  "manifest": "data/cache/biop02/embedding_manifest_uni.csv",
+  "n_train": 628,
+  "n_val": 123,
+  "commit_hash": "pending_4class",
+  "run_command": "agents/modeling/scripts/run_baselines_pam50.py --manifest data/cache/biop02/embedding_manifest_uni.csv --tag uni_v1_4class --bootstrap_ci --num_classes 4 --ext_manifest data/cache/biop02/embedding_manifest_cptac_uni.csv --commit_hash pending_4class",
+  "claim_level": "hypothesis_only",
+  "critic_status": "pending",
+  "baselines": [
+    {
+      "baseline": "random",
+      "auc": 0.5326,
+      "auprc": 0.306,
+      "balanced_accuracy": 0.3189,
+      "n": 123,
+      "auc_ci_95": [
+        0.4556,
+        0.6085
+      ]
+    },
+    {
+      "baseline": "majority",
+      "auc": 0.5,
+      "auprc": 0.25,
+      "balanced_accuracy": 0.25,
+      "n": 123,
+      "auc_ci_95": [
+        0.5,
+        0.5
+      ]
+    },
+    {
+      "baseline": "mean_embed",
+      "auc": 0.7153,
+      "auprc": 0.4879,
+      "balanced_accuracy": 0.4751,
+      "n": 123,
+      "auc_ci_95": [
+        0.654,
+        0.7784
+      ]
+    }
+  ],
+  "ext_manifest": "data/cache/biop02/embedding_manifest_cptac_uni.csv",
+  "ext_split": "cptac_external",
+  "ext_n_test": 382,
+  "ext_baselines": [
+    {
+      "baseline": "random",
+      "auc": 0.5075,
+      "auprc": 0.2587,
+      "balanced_accuracy": 0.2451,
+      "n": 382,
+      "auc_ci_95": [
+        0.467,
+        0.5531
+      ]
+    },
+    {
+      "baseline": "majority",
+      "auc": 0.5,
+      "auprc": 0.25,
+      "balanced_accuracy": 0.25,
+      "n": 382,
+      "auc_ci_95": [
+        0.5,
+        0.5
+      ]
+    },
+    {
+      "baseline": "mean_embed",
+      "auc": 0.653,
+      "auprc": 0.3755,
+      "balanced_accuracy": 0.3611,
+      "n": 382,
+      "auc_ci_95": [
+        0.6141,
+        0.6932
+      ]
+    }
+  ]
+}

@@ -36,8 +36,18 @@ from modeling.baselines.attention_mil import CLAMSB, CLAMMB
 
 LABEL_MAP = {"positive": 1.0, "negative": 0.0}
 
-PAM50_MAP = {"luma": 0, "lumb": 1, "basal": 2, "her2": 3, "normal": 4, "normal-like": 4}
-PAM50_CLASSES = ["LumA", "LumB", "Basal", "HER2", "Normal"]
+PAM50_MAP_5 = {"luma": 0, "lumb": 1, "basal": 2, "her2": 3, "normal": 4, "normal-like": 4}
+PAM50_MAP_4 = {"luma": 0, "lumb": 1, "basal": 2, "her2": 3}  # §4 준수: Normal/Normal-like 제외
+PAM50_CLASSES_5 = ["LumA", "LumB", "Basal", "HER2", "Normal"]
+PAM50_CLASSES_4 = ["LumA", "LumB", "Basal", "HER2"]
+
+
+def pam50_map(num_classes):
+    return PAM50_MAP_4 if num_classes == 4 else PAM50_MAP_5
+
+
+def pam50_classes(num_classes):
+    return PAM50_CLASSES_4 if num_classes == 4 else PAM50_CLASSES_5
 
 
 def set_seed(seed: int):
@@ -67,9 +77,9 @@ def make_dummy_dataset(n_slides: int, dim: int, seed: int, num_classes: int = 1)
     return dataset
 
 
-def load_manifest_dataset(manifest_path: str, label_col: str, split: str = None):
+def load_manifest_dataset(manifest_path: str, label_col: str, split: str = None, num_classes: int = 1):
     is_pam50 = label_col.lower() == "pam50"
-    label_lookup = PAM50_MAP if is_pam50 else LABEL_MAP
+    label_lookup = pam50_map(num_classes) if is_pam50 else LABEL_MAP
     dataset = []
     skipped = 0
     with open(manifest_path, newline="") as f:
@@ -112,8 +122,8 @@ def train(config: dict, smoke_test: bool):
     else:
         print(f"Loading manifest: {manifest}")
         label_col = config["data"]["label_col"]
-        train_set = load_manifest_dataset(manifest, label_col, split="train")
-        val_set   = load_manifest_dataset(manifest, label_col, split="val")
+        train_set = load_manifest_dataset(manifest, label_col, split="train", num_classes=num_classes)
+        val_set   = load_manifest_dataset(manifest, label_col, split="val", num_classes=num_classes)
         if config.get("_shuffle_labels"):
             # BIOP02-53 braveji Critic followup — negative-control sanity check.
             # train label만 무작위 순열(val/external은 실제 라벨 유지) 후 재학습 —
@@ -130,7 +140,7 @@ def train(config: dict, smoke_test: bool):
         # 외부 검증 (CPTAC cross-dataset)
         if test_manifest and Path(test_manifest).exists():
             print(f"Loading test manifest: {test_manifest}")
-            ext_test_set = load_manifest_dataset(test_manifest, label_col, split="cptac_external")
+            ext_test_set = load_manifest_dataset(test_manifest, label_col, split="cptac_external", num_classes=num_classes)
             print(f"External test: {len(ext_test_set)} slides")
         else:
             ext_test_set = None
@@ -289,7 +299,7 @@ def train(config: dict, smoke_test: bool):
         "task": config["task"],
         "model": "CLAM-MB" if is_multiclass else "CLAM-SB",
         "num_classes": num_classes,
-        "class_names": PAM50_CLASSES if is_multiclass else None,
+        "class_names": pam50_classes(num_classes) if is_multiclass else None,
         "embedding_model": config["embedding_model"],
         "smoke_test": smoke_test,
         "n_train": len(train_set),

@@ -1,0 +1,13 @@
+{
+  "n": 382,
+  "auc_clam_mb": 0.8181,
+  "auc_mean_embed": 0.653,
+  "diff_clam_minus_mean_embed": 0.165,
+  "diff_ci_95": [
+    0.1218,
+    0.2064
+  ],
+  "p_value_approx": 0.0,
+  "significant_at_0.05": true,
+  "num_classes": 4
+}
