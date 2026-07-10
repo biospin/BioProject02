@@ -1,44 +1,36 @@
 {
-  "purpose": "BIOP02-56 braveji Critic 대응 — PAM50 §4 준수 4-class(Normal 제외) vs 기존 5-class 비교. 두 결과 모두 보존(별도 디렉토리).",
+  "purpose": "BIOP02-56 braveji Critic 대응 — PAM50 §4 준수 4-class(Normal 제외) 재실행. 기존 5-class는 별도 디렉토리로 보존.",
   "policy": "split_policy_v0 §4: PAM50 = 4-class(LumA/LumB/Basal/HER2), Normal-like 제외(형태학 신호 빈약, Tafavvoghi). 기존 5-class는 정책 위반.",
-  "class_support_excluded": {
-    "train_Normal": 79,
-    "val_Normal": 28,
-    "test_Normal": 20
+  "class_support_excluded": {"train_Normal": 79, "val_Normal": 28, "test_Normal": 20},
+
+  "critic_correction": {
+    "by": "braveji (BIOP02-56, 2026-07-10 19:10) — Critic 기각",
+    "retracted_claim": "이전 conclusion의 '내부 0.759→0.805 / 외부 0.722→0.818 상승', 'mean_embed gap +0.060→+0.165로 확대', 'Normal 제외로 형태학 신호가 선명해졌다'는 해석을 철회한다.",
+    "reason": "4-class macro-AUC와 5-class macro-AUC는 라벨 공간·표본·클래스 평균 대상이 모두 다른 별개 지표라 직접 비교 불가. Normal은 §4가 '형태학 신호 빈약'으로 제외한 가장 어려운 클래스이므로, macro 평균에서 빼면 모델이 개선되지 않아도 AUC가 기계적으로 상승한다(cross-label-space artifact). 따라서 버전 간 성능 비교·인과 주장은 성립하지 않는다.",
+    "still_valid": "각 버전 '자체 라벨 공간 안'의 판정은 유효 — 4-class에서 CLAM-MB가 random/mean_embed(trivial baseline)를 유의하게 상회하고 shuffle null 위 = GENUINE. 이는 동일 라벨 공간 비교라 문제없음."
   },
+
   "5class": {
     "dir": "experiments/sjpark/pam50_clam_mb_uni_v1",
-    "n_train": 707,
-    "num_classes": 5,
-    "policy_compliant": false,
-    "internal_auc": 0.7589,
-    "external_auc": 0.7216,
-    "mean_embed_internal": 0.6911,
-    "mean_embed_external": 0.6616,
-    "paired_ext_diff_clam_minus_mean_embed": 0.0598,
-    "paired_ext_p": 0.021,
-    "shuffle_null_ext": [
-      0.4996,
-      0.5606
-    ],
-    "verdict": "GENUINE"
+    "registry_entry": "cv-20260707-pam50-uni-clammb",
+    "n_train": 707, "num_classes": 5, "policy_compliant": false,
+    "internal_macro_auc": 0.7589, "external_macro_auc": 0.7216,
+    "mean_embed_internal": 0.6911, "mean_embed_external": 0.6616,
+    "paired_ext_diff_clam_minus_mean_embed": 0.0598, "paired_ext_p": 0.021,
+    "shuffle_null_ext": [0.4996, 0.5606], "within_labelspace_verdict": "GENUINE",
+    "note": "정책 위반 조건에서 얻은 유효한 실행. 삭제 아님 — registry는 caution→reject 전환 + superseded_by 표기 후 보존."
   },
   "4class": {
     "dir": "experiments/sjpark/pam50_clam_mb_uni_v1_4class",
-    "n_train": 628,
-    "num_classes": 4,
-    "policy_compliant": true,
-    "internal_auc": 0.8053,
-    "external_auc": 0.8181,
-    "mean_embed_internal": 0.7153,
-    "mean_embed_external": 0.653,
-    "paired_ext_diff_clam_minus_mean_embed": 0.165,
-    "paired_ext_p": 0.0,
-    "shuffle_null_ext": [
-      0.4323,
-      0.5656
-    ],
-    "verdict": "GENUINE"
+    "registry_entry": "cv-20260710-pam50-uni-clammb (신규 append)",
+    "n_train": 628, "num_classes": 4, "policy_compliant": true,
+    "internal_macro_auc": 0.8053, "external_macro_auc": 0.8181,
+    "mean_embed_internal": 0.7153, "mean_embed_external": 0.653,
+    "paired_ext_diff_clam_minus_mean_embed": 0.165, "paired_ext_p": 0.0,
+    "shuffle_null_ext": [0.4323, 0.5656], "within_labelspace_verdict": "GENUINE"
   },
-  "conclusion": "§4 준수 4-class에서 PAM50는 내부 0.759→0.805, 외부 0.722→0.818로 상승하고, mean_embed 대비 외부 gap이 +0.060(p=0.021)에서 +0.165(p≈0)로 오히려 더 커짐. Normal(약신호) 제외로 형태학 신호가 선명해진 것으로 해석. 두 버전 모두 shuffle null 위 = GENUINE. 정책 준수본이 헤드라인으로 더 강함."
+
+  "registry_handling": "append (braveji BIOP02-57): 5-class 엔트리 유지 + caution→reject(§4 위반) + superseded_by: cv-20260710, 4-class 신규 append. replace/삭제 아님. registry 파일 편집은 braveji 소관(Owner≠Reviewer).",
+
+  "conclusion": "4-class는 §4 준수본(record of truth)이며, 자체 라벨 공간 안에서 CLAM-MB가 trivial baseline을 유의하게 상회하고 shuffle null 위 = GENUINE. 단 4-class와 5-class macro-AUC의 직접 비교는 라벨 공간이 달라 성립하지 않으므로, '4-class가 더 강하다/신호가 선명해졌다'는 버전 간 비교 주장은 하지 않는다(braveji Critic 기각 수용)."
 }
