@@ -6,7 +6,7 @@
   "manifest": "data/cache/biop02/embedding_manifest_uni.csv",
   "n_train": 628,
   "n_val": 123,
-  "commit_hash": "pending_4class",
+  "commit_hash": "f5d0d9a8a7303366d1d59372fffa813971b6c25c",
   "run_command": "agents/modeling/scripts/run_baselines_pam50.py --manifest data/cache/biop02/embedding_manifest_uni.csv --tag uni_v1_4class --bootstrap_ci --num_classes 4 --ext_manifest data/cache/biop02/embedding_manifest_cptac_uni.csv --commit_hash pending_4class",
   "claim_level": "hypothesis_only",
   "critic_status": "pending",
