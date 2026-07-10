@@ -30,4 +30,4 @@
 - [ ] JIRA 에픽 확인/조정(생성됨: 아래).
 
 ## 7. 상태
-- Leader 승인: **2026-07-10.** 팀 헤드업: 대기. Phase 0 스캐폴드: 착수(별도 커밋). JIRA 에픽: 생성.
+- Leader 승인: **2026-07-10.** 팀 헤드업: **대기**(리더 액션). Phase 0 스캐폴드: **완료**(commit 010b587, `experiments/crosscancer/`). JIRA 에픽: **BIOP02-93** 생성(assignee kkkim).
