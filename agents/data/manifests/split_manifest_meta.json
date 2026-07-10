@@ -38,5 +38,21 @@
   },
   "n_slides": 1010,
   "n_patients": 1010,
-  "n_sites": 37
+  "n_sites": 37,
+  "lock": {
+    "status": "data-owner-locked",
+    "locked_by": "kkkim",
+    "locked_at": "2026-07-11",
+    "critic_cross_sign": "pending-braveji (owner≠reviewer)",
+    "hash_definition": "sha256(repr(sorted((case_id,split))))[:16] — build_manifest.split_hash()",
+    "reproduced_2026_07_11": true,
+    "embedding_manifests_verified": [
+      "uni",
+      "conch",
+      "exaone"
+    ],
+    "embedding_manifest_fold_mismatches": 0,
+    "folds_mirror": "agents/data/manifests/split_policy_v0_folds.json",
+    "metrics_stamped": 14
+  }
 }

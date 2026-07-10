@@ -16,6 +16,7 @@
   "ext_auprc": 0.1213,
   "ext_balanced_accuracy": 0.5,
   "commit_hash": "0e0a1e1f8f02d472e65728a25701c57f4ac48462",
+  "split_hash": "5995f29d3978b831",
   "claim_level": "hypothesis_only",
   "critic_status": "pending",
   "wandb_run_id": null,

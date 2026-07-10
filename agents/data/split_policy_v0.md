@@ -1,6 +1,6 @@
 # split_policy_v0 — TCGA-BRCA / CPTAC-BRCA Data Split Policy
 
-> **상태: v0 DRAFT — data-owner (kkkim) sign-off 필요.** 서명 전까지 manifest의 `split` 컬럼은 잠정.
+> **상태: data-owner LOCKED (2026-07-11, kkkim) — Critic cross-sign(braveji) pending.** data-owner가 fold 정의를 동결했고 `split_hash=5995f29d3978b831` 를 모든 `metrics.json`에 기록 완료. Critic 최종 서명(§9, owner≠reviewer)까지는 **완전한 lock 아님** — Critic-pass 게이트는 braveji 서명 후 개방.
 > Sign-off 후 fold 정의를 **동결(lock)**, 정의 해시를 모든 `metrics.json`에 기록한다 (CLAUDE.md "locked after sign-off, no changes").
 >
 > 근거: Bussola 2020 (patient-level), Yagis 2021 (leakage 29–55% 부풀림), Howard 2021 (site signature + PreservedSiteCV).
@@ -126,6 +126,21 @@ split 정의(JSON: case_id → fold) → sha256 →  split_hash
 - 이후 **모든** 실험의 `metrics.json` 에 `split_hash` 필드를 `commit_hash` 옆에 추가 기록.
 - 잠금 후 split 변경 = 새 버전(v0.1) + 새 해시 + 재-sign-off. 기존 실험과 비교 불가로 명시.
 
+### 6.1 Lock record (2026-07-11, data-owner kkkim)
+
+| 항목 | 값 / 검증 |
+|---|---|
+| **정본 split_hash** | `5995f29d3978b831` (source of truth) |
+| 해시 정의 | `build_manifest.split_hash()` = `sha256(repr(sorted((case_id, split))))[:16]`. **이 해시 외 2차 해시 미발급**(fold JSON은 사람용 미러). |
+| 재현 검증 | `agents/data/manifests/tcga_brca_manifest.csv` 에서 재계산 → **5995f29d3978b831 일치**(2026-07-11). |
+| lock criteria #1 patient-overlap==0 | ✅ (case_id ×split, 0건) |
+| lock criteria #2 site-disjoint==True | ✅ (tss_code ×split, 0건 교차; 37 site) |
+| lock criteria #3 class balance 검토 | ✅ er_balance = `split_manifest_meta.json` (train 559/148, val 115/37, test 108/43) — data-owner 검토 |
+| **학습 manifest 정합** | UNI/CONCH/EXAONE embedding manifest(`/workspace/data/cache/biop02/`) 3종 dedup case_id→fold **1010/1010 일치, fold 불일치 0** (2026-07-11 검증) → sjpark 전 실험이 잠긴 split 사용 확인. |
+| 산출물 | `agents/data/manifests/split_policy_v0_folds.json`(case_id→fold 미러), `split_manifest_meta.json`(해시·balance) |
+| metrics.json stamping | 실 실험 14개 = `5995f29d3978b831`, `experiments/template` = placeholder (2026-07-11). |
+| ⚠️ 미완 | **Critic cross-sign(braveji)** — owner≠reviewer, data-owner가 self-review 불가. §9 참조. |
+
 ---
 
 ## 7. Leakage checklist (binds Critic #1)
@@ -194,11 +209,11 @@ write_split_meta(out_rows, path="agents/data/manifests/split_manifest_meta.json"
 
 | 역할 | 담당 | 상태 |
 |---|---|---|
-| Data-owner (작성/잠금) | kkkim | ☐ pending |
-| Split critic (cross-review, owner≠reviewer) | braveji (Critic 총괄) — 바이오 sub-check sjpark | ☐ pending |
+| Data-owner (작성/잠금) | kkkim | ☑ **signed 2026-07-11** — fold 정의 동결, split_hash 5995f29d3978b831, §6.1 lock record. |
+| Split critic (cross-review, owner≠reviewer) | braveji (Critic 총괄) — 바이오 sub-check sjpark | ☐ **pending** — data-owner가 self-review 금지(anti-self-reference). BIOP02-41/53 게이트. |
 
-서명 전: 이 문서 = **v0 draft**, manifest split = 잠정.
-서명 후: fold 정의 + `split_hash` 동결, 변경 시 새 버전.
+data-owner 서명: fold 정의 + `split_hash` 동결(§6.1). 이후 split 변경 = v0.1 신규 해시 + 재서명.
+Critic 서명 전: manifest split은 동결됐으나 **Critic-pass 게이트(실험 공유)** 는 braveji 서명까지 보류.
 
 ## 10. Leader 결정 반영 (2026-06-10, kkkim)
 - **Subset = 전체 1010 (full BRCA cohort)** — Paper A 범위를 1010으로 확정. ⚠️ CLAUDE.md "~150 subset" 금지조항(line 220/239) override → 거버넌스 갱신 필요. site-disjoint split 검정력 확보.

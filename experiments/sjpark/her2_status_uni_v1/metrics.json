@@ -12,6 +12,7 @@
   "auprc": 0.4348,
   "balanced_accuracy": 0.5366,
   "commit_hash": "879422e498f9f64d71802df8a16ce6c133af4dd2",
+  "split_hash": "5995f29d3978b831",
   "claim_level": "hypothesis_only",
   "critic_status": "pending",
   "wandb_run_id": null,
@@ -20,5 +21,5 @@
     0.4306,
     0.6672
   ],
-  "interpretation": "HER2 AUC 0.5509 \u2248 random (CI95=[0.431, 0.667]). Equivocal 251\uc7a5 \uc81c\uc678\ub85c \ud559\uc2b5 \uc2ac\ub77c\uc774\ub4dc 496\uc7a5\uc73c\ub85c \uac10\uc18c, \ud074\ub798\uc2a4 \ubd88\uade0\ud615(Pos 132 vs Neg 476) \uc2ec\ud654. H&E \ud615\ud0dc\ud559\uc73c\ub85c HER2 \uc99d\ud3ed(\uc720\uc804\uc790/\ub2e8\ubc31\uc9c8 \uc218\uc900)\uc744 \ubc18\uc601\ud558\uae30 \uc5b4\ub824\uc6b4 \uac83\uacfc \uc77c\uad00\ub41c \uc74c\uc131 \uacb0\uacfc. Paper A: \ud615\ud0dc\ud559\uc73c\ub85c \uc608\uce21 \uace4\ub780\ud55c \uc0ac\ub840\ub85c \uc815\uc9c1\ud558\uac8c \uae30\uc220\ud560 \uac83."
+  "interpretation": "HER2 AUC 0.5509 ≈ random (CI95=[0.431, 0.667]). Equivocal 251장 제외로 학습 슬라이드 496장으로 감소, 클래스 불균형(Pos 132 vs Neg 476) 심화. H&E 형태학으로 HER2 증폭(유전자/단백질 수준)을 반영하기 어려운 것과 일관된 음성 결과. Paper A: 형태학으로 예측 곤란한 사례로 정직하게 기술할 것."
 }
