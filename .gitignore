@@ -231,12 +231,18 @@ __marimo__/
 # macOS
 .DS_Store
 
-# EXAONE Path 2.0 로컬 레포+가중치 (550M, NC 라이선스, 재현가능 — 커밋 금지)
+# EXAONE Path 2.0 로컬 레포+가중치 (550M pytorch_model.bin, NC 라이선스, 재현가능 — 커밋 금지)
 agents/embedding/exaone_path2/
 
 # 블로그 공용 툴 심링크(개인 ~/.claude/assets 경로 — 팀 비이식, BIOP01 선례=미추적)
 blog/build_index.py
 blog/sync_blog_to_workspace.sh
+
 # 대용량 raw 다운로드(세포주 omics·GDSC·IMPRESS) — 재현가능, 커밋 제외
 experiments/kkkim/20260710_cellline_counts/data/
 experiments/kkkim/20260710_pcr_impress/data/
+
+# 세션 인수인계 파일 — 프로젝트 폴더에서 주기적으로 갱신하되 git에는 올리지 않음
+HANDOFF.md
+TODO.md
+SESSION_LOG.md

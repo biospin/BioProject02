@@ -60,3 +60,51 @@ class CLAMSB(nn.Module):
         attended, weights = self.attention(h)      # (1, hidden_dim), (N, 1)
         logit = self.classifier(attended).squeeze(-1)  # (1,)
         return logit, weights
+
+
+class CLAMMB(nn.Module):
+    """CLAM Multi-Branch — multi-class phenotype prediction (e.g. PAM50, 5 classes).
+
+    Reference: Lu et al., Nature Biomedical Engineering, 2021 (CLAM-MB variant).
+    Unlike CLAM-SB, each class has its own gated-attention branch and its own
+    classifier head, so the model learns class-specific tile importance
+    (e.g. which tiles matter for "LumA" may differ from "Basal").
+    """
+
+    def __init__(
+        self,
+        feature_dim: int = 1024,
+        hidden_dim: int = 512,
+        att_dim: int = 256,
+        dropout: float = 0.25,
+        num_classes: int = 5,
+    ):
+        super().__init__()
+        self.num_classes = num_classes
+        self.encoder = nn.Sequential(
+            nn.Linear(feature_dim, hidden_dim),
+            nn.ReLU(),
+            nn.Dropout(dropout),
+        )
+        self.attention_branches = nn.ModuleList(
+            [GatedAttention(hidden_dim, att_dim, dropout) for _ in range(num_classes)]
+        )
+        self.classifiers = nn.ModuleList(
+            [nn.Linear(hidden_dim, 1) for _ in range(num_classes)]
+        )
+
+    def forward(self, x: torch.Tensor):
+        """
+        x: (N, feature_dim) tile embeddings
+        returns: logits (num_classes,), attention_weights (num_classes, N)
+        """
+        h = self.encoder(x)  # (N, hidden_dim)
+        logits, all_weights = [], []
+        for k in range(self.num_classes):
+            attended, weights = self.attention_branches[k](h)  # (1, hidden_dim), (N, 1)
+            logit_k = self.classifiers[k](attended).squeeze()   # scalar
+            logits.append(logit_k)
+            all_weights.append(weights.squeeze(-1))             # (N,)
+        logits = torch.stack(logits)          # (num_classes,)
+        all_weights = torch.stack(all_weights)  # (num_classes, N)
+        return logits, all_weights

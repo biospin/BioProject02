@@ -1,0 +1,88 @@
+{
+  "schema_version": "0.1",
+  "created_at": "2026-07-03T00:00:00Z",
+  "reviewer": "braveji",
+  "owner": "sjpark",
+  "experiment": {
+    "experiment_id": "pr_status_uni_v1",
+    "task": "pr_status",
+    "endpoint": "PR IHC binary classification (positive / negative)",
+    "commit_hash": "879422e498f9f64d71802df8a16ce6c133af4dd2",
+    "config_path": "experiments/sjpark/pr_status_uni_v1/config.yaml",
+    "metrics_path": "experiments/sjpark/pr_status_uni_v1/metrics.json",
+    "predictions_path": "experiments/sjpark/pr_status_uni_v1/predictions.npy",
+    "embedding_manifest_path": "/workspace/data/cache/biop02/embedding_manifest_uni.csv",
+    "split_policy_path": "agents/data/split_policy_v0.md"
+  },
+  "checks": {
+    "data_leakage": {
+      "status": "caution",
+      "evidence": [
+        "split_policy_v0.md DRAFT 상태 (kkkim sign-off 미완료) — ER 리뷰(BIOP02-42)와 동일 이슈",
+        "n_train=705 / n_val=151 — patient-level split 추정, overlap assert 로그 미제출",
+        "ER 실험(n_train=707)과 유사한 수치 → 동일 split 사용으로 추정"
+      ],
+      "notes": "ER 리뷰 시 제기된 split_policy lock 미완료 이슈 동일하게 적용. patient-overlap assert 로그 및 site_classifier_probe.py AUC 제출 시 pass 전환 가능."
+    },
+    "baseline_comparison": {
+      "status": "caution",
+      "evidence": [
+        "PR-specific trivial_baselines.json 없음 — random/subtype_only/mean_embed baseline 수치 미제출",
+        "ER v2 baseline 참조 시: random AUC ≈ 0.526, mean_embed AUC ≈ 0.816 (ER 태스크 기준)",
+        "PR SlideMLP AUC 0.7125 (CI 0.6225–0.7982) — ER AUC 0.8209 대비 낮음",
+        "PR AUPRC 0.8188 — ER AUPRC 0.9295 대비 낮음 (PR 클래스 불균형 심화 가능성)",
+        "PR 태스크 특성: PR은 ER보다 형태학적 예측 어려움 (문헌 선례 적음)"
+      ],
+      "notes": "PR 전용 baseline 파일이 없어 직접 비교 불가능. required_followup으로 PR 전용 trivial_baselines.json 생성 필요. 현재 AUC 0.7125는 random(~0.5) 대비 유의미하게 높을 것으로 추정되나, mean_embed 및 subtype_only와의 비교 없이 pass 판정 불가."
+    },
+    "counterfactual_check": {
+      "status": "caution",
+      "evidence": [
+        "label shuffle test 결과 없음",
+        "MLP 구조상 attention-based counterfactual 불가"
+      ],
+      "notes": "ER 리뷰와 동일하게 label shuffle test 미실행. CLAM-SB 전환 시 보완 예정."
+    },
+    "cross_dataset_check": {
+      "status": "not_applicable",
+      "evidence": [
+        "Paper A 표현형 예측 단계 — DepMap/GDSC 전이 없음"
+      ],
+      "notes": "Paper A 범위 내 표현형 예측 태스크. CPTAC 외부 검증은 Sprint 3 registry에서 별도 평가."
+    },
+    "biological_plausibility": {
+      "status": "pass",
+      "evidence": [
+        "PR IHC 이진 분류는 임상적으로 확립된 표현형 (ER+과 유사한 내분비 치료 관련성)",
+        "H&E 형태학과 PR 상태 연관성은 ER 대비 낮으나 일부 문헌에서 선례 있음",
+        "ICI 추천 없음, drug-pathway 연결 없음 (Paper A 범위)"
+      ],
+      "notes": "PR 예측은 생물학적으로 타당하나 ER보다 예측 어려움이 예상됨 (AUC 0.71 vs ER 0.82는 합리적 결과)."
+    },
+    "drp_framing": {
+      "status": "pass",
+      "evidence": [
+        "task: 'pr_status' (표현형 예측)",
+        "claim_level: 'hypothesis_only'",
+        "금지 표현 미발견"
+      ],
+      "notes": "DRP 프레이밍 문제 없음."
+    },
+    "claim_level": {
+      "status": "pass",
+      "evidence": [
+        "claim_level: 'hypothesis_only' 명시",
+        "단일 코호트 val set 결과, 외부 검증 미포함"
+      ],
+      "notes": "단일 코호트 결과이며 claim 수준 적절."
+    }
+  },
+  "critic_status": "caution",
+  "claim_level": "hypothesis_only",
+  "summary": "PR status SlideMLP(UNI v1) AUC 0.7125 (CI 0.62–0.80). ER(0.82)보다 낮은 성능은 PR 예측의 형태학적 어려움을 감안할 때 합리적. 그러나 PR 전용 trivial_baselines.json이 없어 mean_embed/subtype_only 대비 우위를 확인할 수 없음. split_policy lock 미완료 이슈도 동일하게 적용. 전체 판정: caution.",
+  "required_followups": [
+    "[sjpark] PR 전용 trivial_baselines.json 생성 (random/subtype_only/mean_embed, bootstrap CI 포함)",
+    "[sjpark/kkkim] patient-overlap assert 로그 및 split_policy lock — ER 리뷰 followup과 동일",
+    "[sjpark] label shuffle test 실행"
+  ]
+}

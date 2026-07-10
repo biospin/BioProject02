@@ -1,0 +1,86 @@
+{
+  "ER": {
+    "internal_auc": 0.9013,
+    "internal_auc_ci_95": [
+      0.8371,
+      0.9539
+    ],
+    "external_auc": 0.894,
+    "external_auc_ci_95": [
+      0.8612,
+      0.9263
+    ],
+    "external_best_baseline": "subtype_only",
+    "external_best_baseline_auc": 0.9615,
+    "external_best_baseline_ci_95": [
+      0.9424,
+      0.9775
+    ],
+    "paired_diff_clam_minus_baseline": -0.067,
+    "p_value_approx": 0.0,
+    "sanity_lock": "FAIL"
+  },
+  "PR": {
+    "internal_auc": 0.7765,
+    "internal_auc_ci_95": [
+      0.6832,
+      0.8638
+    ],
+    "external_auc": 0.7776,
+    "external_auc_ci_95": [
+      0.7291,
+      0.8245
+    ],
+    "external_best_baseline": "subtype_only",
+    "external_best_baseline_auc": 0.9117,
+    "external_best_baseline_ci_95": [
+      0.8822,
+      0.9419
+    ],
+    "paired_diff_clam_minus_baseline": -0.1343,
+    "p_value_approx": 0.0,
+    "sanity_lock": "FAIL"
+  },
+  "HER2": {
+    "internal_auc": 0.5992,
+    "internal_auc_ci_95": [
+      0.483,
+      0.7106
+    ],
+    "external_auc": 0.5297,
+    "external_auc_ci_95": [
+      0.4402,
+      0.6188
+    ],
+    "external_best_baseline": "subtype_only",
+    "external_best_baseline_auc": 0.7894,
+    "external_best_baseline_ci_95": [
+      0.7132,
+      0.8586
+    ],
+    "paired_diff_clam_minus_baseline": -0.2603,
+    "p_value_approx": 0.0,
+    "sanity_lock": "FAIL"
+  },
+  "PAM50": {
+    "internal_auc": 0.7589,
+    "internal_auc_ci_95": [
+      0.7098,
+      0.8084
+    ],
+    "external_auc": 0.7216,
+    "external_auc_ci_95": [
+      0.6777,
+      0.7673
+    ],
+    "external_best_baseline": "mean_embed",
+    "external_best_baseline_auc": 0.6616,
+    "external_best_baseline_ci_95": [
+      0.6234,
+      0.7017
+    ],
+    "paired_diff_clam_minus_baseline": 0.0598,
+    "p_value_approx": 0.021,
+    "sanity_lock": "PASS"
+  }
+}

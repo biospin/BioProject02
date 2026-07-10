@@ -1,0 +1,1011 @@
+slide_id,case_id,umap_x,umap_y,pam50,er_status,pr_status,her2_status,tss_code,split
+TCGA-3C-AALI-01Z-00-DX1,TCGA-3C-AALI,0.4136,-3.4055,HER2,Positive,Positive,Positive,3C,test
+TCGA-3C-AALJ-01Z-00-DX1,TCGA-3C-AALJ,0.6148,-3.2320,LumB,Positive,Positive,NA,3C,test
+TCGA-3C-AALK-01Z-00-DX1,TCGA-3C-AALK,-1.6172,0.5869,LumB,Positive,Positive,Positive,3C,test
+TCGA-4H-AAAK-01Z-00-DX1,TCGA-4H-AAAK,0.0165,-3.2668,Normal,Positive,Positive,NA,4H,test
+TCGA-5L-AAT0-01Z-00-DX1,TCGA-5L-AAT0,-1.2378,1.3787,Normal,Positive,Positive,Negative,5L,val
+TCGA-5L-AAT1-01Z-00-DX1,TCGA-5L-AAT1,0.5228,-7.9052,LumA,Positive,Positive,NA,5L,val
+TCGA-5T-A9QA-01Z-00-DX1,TCGA-5T-A9QA,-0.3349,-2.1962,LumB,Positive,Negative,NA,5T,test
+TCGA-A1-A0SB-01Z-00-DX1,TCGA-A1-A0SB,-1.6062,0.6440,Basal,Positive,Negative,Negative,A1,test
+TCGA-A1-A0SD-01Z-00-DX1,TCGA-A1-A0SD,-1.5634,0.7482,LumA,Positive,Positive,Negative,A1,test
+TCGA-A1-A0SE-01Z-00-DX1,TCGA-A1-A0SE,-1.5092,0.5576,LumB,Positive,Positive,Negative,A1,test
+TCGA-A1-A0SF-01Z-00-DX1,TCGA-A1-A0SF,-1.6152,0.4639,Normal,Positive,Positive,Negative,A1,test
+TCGA-A1-A0SH-01Z-00-DX1,TCGA-A1-A0SH,-1.3370,0.4329,Normal,Negative,Positive,NA,A1,test
+TCGA-A1-A0SI-01Z-00-DX1,TCGA-A1-A0SI,-1.6141,0.6436,HER2,Positive,Positive,Negative,A1,test
+TCGA-A1-A0SJ-01Z-00-DX1,TCGA-A1-A0SJ,-1.4924,0.5976,LumB,Positive,Positive,NA,A1,test
+TCGA-A1-A0SK-01Z-00-DX1,TCGA-A1-A0SK,1.4395,-1.2840,Basal,Negative,Negative,Negative,A1,test
+TCGA-A1-A0SM-01Z-00-DX1,TCGA-A1-A0SM,-1.5194,0.5039,HER2,Positive,Negative,Positive,A1,test
+TCGA-A1-A0SN-01Z-00-DX1,TCGA-A1-A0SN,-1.6236,0.6134,HER2,Positive,Positive,Positive,A1,test
+TCGA-A1-A0SP-01Z-00-DX1,TCGA-A1-A0SP,-0.9491,0.0495,Basal,Negative,Negative,Negative,A1,test
+TCGA-A1-A0SQ-01Z-00-DX1,TCGA-A1-A0SQ,-1.5296,0.5297,LumA,Positive,Positive,Negative,A1,test
+TCGA-A2-A04N-01Z-00-DX1,TCGA-A2-A04N,1.1571,-6.3651,LumA,Positive,Positive,[Not Evaluated],A2,train
+TCGA-A2-A04P-01Z-00-DX1,TCGA-A2-A04P,1.7668,-7.1501,Basal,Negative,Negative,[Not Evaluated],A2,train
+TCGA-A2-A04Q-01Z-00-DX1,TCGA-A2-A04Q,-1.1645,-5.8015,Basal,Negative,Negative,NA,A2,train
+TCGA-A2-A04R-01Z-00-DX1,TCGA-A2-A04R,1.6425,-5.1953,LumB,Positive,Positive,NA,A2,train
+TCGA-A2-A04T-01Z-00-DX1,TCGA-A2-A04T,1.8870,-7.0928,Basal,Negative,Negative,NA,A2,train
+TCGA-A2-A04U-01Z-00-DX1,TCGA-A2-A04U,1.8147,-4.4618,Basal,Negative,Negative,Negative,A2,train
+TCGA-A2-A04V-01Z-00-DX1,TCGA-A2-A04V,1.1060,-4.4556,LumA,Positive,Positive,NA,A2,train
+TCGA-A2-A04W-01Z-00-DX1,TCGA-A2-A04W,0.1806,-3.0377,HER2,Negative,Negative,Positive,A2,train
+TCGA-A2-A04X-01Z-00-DX1,TCGA-A2-A04X,1.3270,-7.1516,HER2,Positive,Positive,Positive,A2,train
+TCGA-A2-A04Y-01Z-00-DX1,TCGA-A2-A04Y,-0.1674,-6.7368,LumB,Positive,Positive,Negative,A2,train
+TCGA-A2-A0CK-01Z-00-DX1,TCGA-A2-A0CK,-0.2244,-7.6854,Normal,Positive,Positive,Negative,A2,train
+TCGA-A2-A0CL-01Z-00-DX1,TCGA-A2-A0CL,-1.2305,-5.7826,Basal,Positive,Positive,Negative,A2,train
+TCGA-A2-A0CM-01Z-00-DX1,TCGA-A2-A0CM,0.8458,-1.1159,Basal,Negative,Negative,Negative,A2,train
+TCGA-A2-A0CO-01Z-00-DX1,TCGA-A2-A0CO,-1.5434,-4.5533,LumA,Positive,Positive,Negative,A2,train
+TCGA-A2-A0CP-01Z-00-DX1,TCGA-A2-A0CP,0.6439,-6.9391,LumA,Positive,Positive,[Not Evaluated],A2,train
+TCGA-A2-A0CQ-01Z-00-DX1,TCGA-A2-A0CQ,0.9133,-3.0606,LumA,Positive,Positive,NA,A2,train
+TCGA-A2-A0CR-01Z-00-DX1,TCGA-A2-A0CR,-0.3567,-4.2184,Normal,Positive,Positive,Negative,A2,train
+TCGA-A2-A0CS-01Z-00-DX1,TCGA-A2-A0CS,0.3429,-3.0153,LumA,Positive,Positive,NA,A2,train
+TCGA-A2-A0CT-01Z-00-DX1,TCGA-A2-A0CT,1.5927,-7.1779,LumB,Positive,Negative,NA,A2,train
+TCGA-A2-A0CU-01Z-00-DX1,TCGA-A2-A0CU,1.7143,-6.6513,LumB,Positive,Positive,NA,A2,train
+TCGA-A2-A0CV-01Z-00-DX1,TCGA-A2-A0CV,0.4852,-3.2170,LumA,Positive,Positive,Negative,A2,train
+TCGA-A2-A0CW-01Z-00-DX1,TCGA-A2-A0CW,-0.0199,-4.3372,LumB,Positive,Positive,NA,A2,train
+TCGA-A2-A0CX-01Z-00-DX1,TCGA-A2-A0CX,1.4936,-7.1745,HER2,Positive,Negative,Positive,A2,train
+TCGA-A2-A0CY-01Z-00-DX1,TCGA-A2-A0CY,2.0988,-6.2101,HER2,Positive,Positive,Negative,A2,train
+TCGA-A2-A0CZ-01Z-00-DX1,TCGA-A2-A0CZ,-1.2996,-6.2945,Normal,Positive,Positive,Negative,A2,train
+TCGA-A2-A0D0-01Z-00-DX1,TCGA-A2-A0D0,2.0161,-7.3797,Basal,Negative,Negative,Negative,A2,train
+TCGA-A2-A0D3-01Z-00-DX1,TCGA-A2-A0D3,-1.3658,-5.8472,LumA,Positive,Positive,Negative,A2,train
+TCGA-A2-A0D4-01Z-00-DX1,TCGA-A2-A0D4,2.0519,-7.1737,LumB,Positive,Positive,Negative,A2,train
+TCGA-A2-A0EM-01Z-00-DX1,TCGA-A2-A0EM,1.2799,-7.3762,LumA,Positive,Positive,[Not Evaluated],A2,train
+TCGA-A2-A0EN-01Z-00-DX1,TCGA-A2-A0EN,0.0483,-7.4771,LumA,Positive,Positive,NA,A2,train
+TCGA-A2-A0EO-01Z-00-DX1,TCGA-A2-A0EO,1.3295,-4.7896,Normal,Positive,Positive,Negative,A2,train
+TCGA-A2-A0EP-01Z-00-DX1,TCGA-A2-A0EP,0.4883,-7.1411,Normal,Positive,Negative,Negative,A2,train
+TCGA-A2-A0EQ-01Z-00-DX1,TCGA-A2-A0EQ,1.8092,-7.1502,HER2,Negative,Negative,Positive,A2,train
+TCGA-A2-A0ER-01Z-00-DX1,TCGA-A2-A0ER,0.5761,-7.2174,LumB,Positive,Positive,NA,A2,train
+TCGA-A2-A0ES-01Z-00-DX1,TCGA-A2-A0ES,-1.6475,-5.4149,Normal,Positive,Positive,Negative,A2,train
+TCGA-A2-A0ET-01Z-00-DX1,TCGA-A2-A0ET,-0.9586,-2.6721,LumA,Positive,Positive,NA,A2,train
+TCGA-A2-A0EU-01Z-00-DX1,TCGA-A2-A0EU,1.1415,-7.6914,LumB,Positive,Positive,Negative,A2,train
+TCGA-A2-A0EV-01Z-00-DX1,TCGA-A2-A0EV,1.5545,-6.9832,Normal,Positive,Positive,Negative,A2,train
+TCGA-A2-A0EW-01Z-00-DX1,TCGA-A2-A0EW,-1.0797,1.5850,LumA,Positive,Positive,Negative,A2,train
+TCGA-A2-A0EX-01Z-00-DX1,TCGA-A2-A0EX,-1.8097,-4.8654,LumA,Positive,Positive,Negative,A2,train
+TCGA-A2-A0EY-01Z-00-DX1,TCGA-A2-A0EY,-0.3202,-3.1599,HER2,Positive,Negative,Positive,A2,train
+TCGA-A2-A0ST-01Z-00-DX1,TCGA-A2-A0ST,-1.5391,-5.5617,Basal,Negative,Negative,[Not Evaluated],A2,train
+TCGA-A2-A0SU-01Z-00-DX1,TCGA-A2-A0SU,1.3435,-8.1199,Normal,Positive,Positive,Negative,A2,train
+TCGA-A2-A0SV-01Z-00-DX1,TCGA-A2-A0SV,-0.5368,-4.1587,HER2,Positive,Positive,NA,A2,train
+TCGA-A2-A0SW-01Z-00-DX1,TCGA-A2-A0SW,0.2510,-0.4297,LumB,Positive,Negative,[Not Evaluated],A2,train
+TCGA-A2-A0SX-01Z-00-DX1,TCGA-A2-A0SX,-0.0692,-7.6386,Basal,Negative,Negative,Negative,A2,train
+TCGA-A2-A0SY-01Z-00-DX1,TCGA-A2-A0SY,-0.4520,-5.1559,LumA,Positive,Positive,[Not Evaluated],A2,train
+TCGA-A2-A0T0-01Z-00-DX1,TCGA-A2-A0T0,1.2750,-0.9148,Basal,Negative,Negative,Negative,A2,train
+TCGA-A2-A0T1-01Z-00-DX1,TCGA-A2-A0T1,0.9061,-3.1772,HER2,Negative,Negative,Positive,A2,train
+TCGA-A2-A0T2-01Z-00-DX1,TCGA-A2-A0T2,0.9191,-0.7731,Basal,Negative,Negative,Negative,A2,train
+TCGA-A2-A0T3-01Z-00-DX1,TCGA-A2-A0T3,-1.2658,-3.9365,LumB,Positive,Positive,NA,A2,train
+TCGA-A2-A0T4-01Z-00-DX1,TCGA-A2-A0T4,-1.7042,-4.4003,LumB,Positive,Positive,NA,A2,train
+TCGA-A2-A0T5-01Z-00-DX1,TCGA-A2-A0T5,0.3696,-3.1617,Basal,Positive,Positive,Negative,A2,train
+TCGA-A2-A0T6-01Z-00-DX1,TCGA-A2-A0T6,-0.6428,-2.9582,LumA,Positive,Positive,Negative,A2,train
+TCGA-A2-A0T7-01Z-00-DX1,TCGA-A2-A0T7,-0.2485,-3.1352,Basal,Positive,Positive,Negative,A2,train
+TCGA-A2-A0YC-01Z-00-DX1,TCGA-A2-A0YC,-0.7266,-5.2515,LumA,Positive,Positive,[Not Evaluated],A2,train
+TCGA-A2-A0YD-01Z-00-DX1,TCGA-A2-A0YD,-0.3650,-3.8018,Normal,Positive,Positive,[Not Evaluated],A2,train
+TCGA-A2-A0YE-01Z-00-DX1,TCGA-A2-A0YE,-0.0956,-4.6853,Basal,Negative,Negative,Negative,A2,train
+TCGA-A2-A0YF-01Z-00-DX1,TCGA-A2-A0YF,-1.7643,-5.1914,LumA,Positive,Negative,Negative,A2,train
+TCGA-A2-A0YG-01Z-00-DX1,TCGA-A2-A0YG,0.1236,-5.1719,HER2,Positive,Positive,Positive,A2,train
+TCGA-A2-A0YH-01Z-00-DX1,TCGA-A2-A0YH,0.0552,-4.0414,LumB,Positive,Positive,Negative,A2,train
+TCGA-A2-A0YI-01Z-00-DX1,TCGA-A2-A0YI,-1.4777,-2.7904,LumA,Positive,Positive,Negative,A2,train
+TCGA-A2-A0YJ-01Z-00-DX1,TCGA-A2-A0YJ,1.3786,-2.0605,Basal,Positive,Negative,Negative,A2,train
+TCGA-A2-A0YK-01Z-00-DX1,TCGA-A2-A0YK,-1.1859,-6.0714,Normal,Positive,Negative,Negative,A2,train
+TCGA-A2-A0YL-01Z-00-DX1,TCGA-A2-A0YL,-0.9793,-5.0549,Basal,Positive,Positive,Negative,A2,train
+TCGA-A2-A0YM-01Z-00-DX1,TCGA-A2-A0YM,0.1763,-6.2301,Basal,Negative,Negative,[Not Evaluated],A2,train
+TCGA-A2-A0YT-01Z-00-DX1,TCGA-A2-A0YT,-0.1196,-4.7264,LumB,Positive,Negative,[Not Evaluated],A2,train
+TCGA-A2-A1FV-01Z-00-DX1,TCGA-A2-A1FV,-1.6523,-4.4106,LumA,Positive,Positive,Negative,A2,train
+TCGA-A2-A1FW-01Z-00-DX1,TCGA-A2-A1FW,0.1399,-2.0397,LumB,Positive,Negative,Negative,A2,train
+TCGA-A2-A1FX-01Z-00-DX1,TCGA-A2-A1FX,0.3244,-1.7529,LumB,Positive,Positive,[Not Evaluated],A2,train
+TCGA-A2-A1FZ-01Z-00-DX1,TCGA-A2-A1FZ,1.9249,-7.6665,LumA,Positive,Positive,Negative,A2,train
+TCGA-A2-A1G0-01Z-00-DX1,TCGA-A2-A1G0,-1.0304,-3.3676,LumA,Positive,Positive,NA,A2,train
+TCGA-A2-A1G1-01Z-00-DX1,TCGA-A2-A1G1,1.1475,-0.8534,Basal,Negative,Negative,NA,A2,train
+TCGA-A2-A1G4-01Z-00-DX1,TCGA-A2-A1G4,1.9150,-6.6733,LumB,Positive,Positive,Negative,A2,train
+TCGA-A2-A1G6-01Z-00-DX1,TCGA-A2-A1G6,-1.7660,-5.0166,LumA,Negative,Negative,Negative,A2,train
+TCGA-A2-A259-01Z-00-DX1,TCGA-A2-A259,-1.5256,-5.3400,LumA,Positive,Positive,Negative,A2,train
+TCGA-A2-A25A-01Z-00-DX1,TCGA-A2-A25A,-0.1212,-3.5002,Normal,Positive,Positive,NA,A2,train
+TCGA-A2-A25B-01Z-00-DX1,TCGA-A2-A25B,-0.7673,-2.2992,LumB,Positive,Positive,NA,A2,train
+TCGA-A2-A25C-01Z-00-DX1,TCGA-A2-A25C,-0.9644,-2.4112,LumB,Positive,Positive,Negative,A2,train
+TCGA-A2-A25D-01Z-00-DX1,TCGA-A2-A25D,-1.0444,-3.7997,HER2,Positive,Negative,Negative,A2,train
+TCGA-A2-A25E-01Z-00-DX1,TCGA-A2-A25E,0.9584,-3.0976,LumB,Positive,Positive,NA,A2,train
+TCGA-A2-A25F-01Z-00-DX1,TCGA-A2-A25F,-0.6980,1.0123,Basal,Negative,Positive,Negative,A2,train
+TCGA-A2-A3KC-01Z-00-DX1,TCGA-A2-A3KC,-1.7505,-4.3473,LumB,Positive,Positive,NA,A2,train
+TCGA-A2-A3KD-01Z-00-DX1,TCGA-A2-A3KD,3.8448,-2.7538,Normal,Positive,Positive,Negative,A2,train
+TCGA-A2-A3XS-01Z-00-DX1,TCGA-A2-A3XS,1.0352,-3.3354,Basal,Negative,Negative,[Not Evaluated],A2,train
+TCGA-A2-A3XT-01Z-00-DX1,TCGA-A2-A3XT,1.7340,-4.5702,Basal,Negative,Negative,Negative,A2,train
+TCGA-A2-A3XU-01Z-00-DX1,TCGA-A2-A3XU,1.8686,-1.7477,Basal,Negative,Negative,[Not Evaluated],A2,train
+TCGA-A2-A3XV-01Z-00-DX1,TCGA-A2-A3XV,1.2204,-1.9253,HER2,Positive,Negative,NA,A2,train
+TCGA-A2-A3XW-01Z-00-DX1,TCGA-A2-A3XW,-0.6788,-1.0159,Basal,Positive,Negative,Negative,A2,train
+TCGA-A2-A3XX-01Z-00-DX1,TCGA-A2-A3XX,-0.8487,-6.0399,Basal,Negative,Negative,Negative,A2,train
+TCGA-A2-A3XY-01Z-00-DX1,TCGA-A2-A3XY,0.8848,-1.4915,Basal,Negative,Negative,Negative,A2,train
+TCGA-A2-A3XZ-01Z-00-DX1,TCGA-A2-A3XZ,-0.8686,-1.5077,HER2,Negative,Negative,Positive,A2,train
+TCGA-A2-A3Y0-01Z-00-DX1,TCGA-A2-A3Y0,1.4342,-1.9347,Basal,Positive,Negative,Negative,A2,train
+TCGA-A2-A4RW-01Z-00-DX1,TCGA-A2-A4RW,-1.8442,-4.2786,Normal,Positive,Positive,Negative,A2,train
+TCGA-A2-A4RX-01Z-00-DX1,TCGA-A2-A4RX,-0.7117,-6.0008,Basal,Positive,Positive,Negative,A2,train
+TCGA-A2-A4RY-01Z-00-DX1,TCGA-A2-A4RY,-1.8082,-4.7568,Normal,Positive,Positive,Negative,A2,train
+TCGA-A2-A4S0-01Z-00-DX1,TCGA-A2-A4S0,3.8216,-2.7775,LumA,Positive,Positive,Negative,A2,train
+TCGA-A2-A4S1-01Z-00-DX1,TCGA-A2-A4S1,-1.8713,-4.4429,Normal,Positive,Negative,Negative,A2,train
+TCGA-A2-A4S2-01Z-00-DX1,TCGA-A2-A4S2,-1.8881,-4.5204,LumA,Positive,Positive,Negative,A2,train
+TCGA-A2-A4S3-01Z-00-DX1,TCGA-A2-A4S3,-0.9126,-2.5821,LumB,Positive,Positive,Negative,A2,train
+TCGA-A7-A0CD-01Z-00-DX1,TCGA-A7-A0CD,0.0902,-6.8525,LumA,Positive,Positive,NA,A7,train
+TCGA-A7-A0CE-01Z-00-DX1,TCGA-A7-A0CE,1.6292,-1.2051,LumB,Negative,Negative,NA,A7,train
+TCGA-A7-A0CG-01Z-00-DX1,TCGA-A7-A0CG,-1.5446,-3.3180,Normal,Positive,Negative,Negative,A7,train
+TCGA-A7-A0CJ-01Z-00-DX1,TCGA-A7-A0CJ,-1.8050,-2.9782,LumB,Positive,Positive,Negative,A7,train
+TCGA-A7-A0D9-01Z-00-DX1,TCGA-A7-A0D9,-1.5525,-3.0881,LumB,Positive,Negative,Negative,A7,train
+TCGA-A7-A0DA-01Z-00-DX1,TCGA-A7-A0DA,0.1492,-1.4430,Basal,Negative,Negative,Negative,A7,train
+TCGA-A7-A0DB-01Z-00-DX1,TCGA-A7-A0DB,-1.6812,-2.8535,LumB,Positive,Positive,Negative,A7,train
+TCGA-A7-A0DC-01Z-00-DX1,TCGA-A7-A0DC,2.3138,-5.6388,LumB,Positive,Negative,Negative,A7,train
+TCGA-A7-A13D-01Z-00-DX1,TCGA-A7-A13D,0.6718,-1.3251,Basal,Negative,Positive,NA,A7,train
+TCGA-A7-A13E-01Z-00-DX1,TCGA-A7-A13E,-1.1574,-2.2090,LumB,Positive,Negative,NA,A7,train
+TCGA-A7-A13F-01Z-00-DX1,TCGA-A7-A13F,-1.2420,-2.7365,LumB,Positive,Positive,NA,A7,train
+TCGA-A7-A13G-01Z-00-DX1,TCGA-A7-A13G,-1.7434,-2.8327,LumB,Positive,Positive,Negative,A7,train
+TCGA-A7-A13H-01Z-00-DX1,TCGA-A7-A13H,-1.7230,-3.0104,LumA,Positive,Positive,NA,A7,train
+TCGA-A7-A26E-01Z-00-DX1,TCGA-A7-A26E,-1.3355,-2.7076,LumA,Positive,Positive,Negative,A7,train
+TCGA-A7-A26F-01Z-00-DX1,TCGA-A7-A26F,1.6635,-1.0441,Basal,Negative,Negative,NA,A7,train
+TCGA-A7-A26G-01Z-00-DX1,TCGA-A7-A26G,-1.8109,-3.2976,Basal,Negative,Negative,Negative,A7,train
+TCGA-A7-A26H-01Z-00-DX1,TCGA-A7-A26H,0.1283,-0.9736,LumA,Positive,Negative,NA,A7,train
+TCGA-A7-A26I-01Z-00-DX1,TCGA-A7-A26I,0.5340,-1.0578,Basal,Negative,Negative,NA,A7,train
+TCGA-A7-A26J-01Z-00-DX1,TCGA-A7-A26J,-1.1805,-2.3586,LumB,Positive,Positive,Negative,A7,train
+TCGA-A7-A2KD-01Z-00-DX1,TCGA-A7-A2KD,0.4414,-1.6488,LumB,Positive,Positive,Positive,A7,train
+TCGA-A7-A3IY-01Z-00-DX1,TCGA-A7-A3IY,3.8563,-2.7504,Normal,Positive,Positive,Negative,A7,train
+TCGA-A7-A3IZ-01Z-00-DX1,TCGA-A7-A3IZ,-1.8196,-2.9898,LumA,Positive,Negative,NA,A7,train
+TCGA-A7-A3J0-01Z-00-DX1,TCGA-A7-A3J0,-0.8785,-3.5764,LumA,Positive,Positive,Negative,A7,train
+TCGA-A7-A3J1-01Z-00-DX1,TCGA-A7-A3J1,-1.7637,-3.1378,LumA,Positive,Positive,Negative,A7,train
+TCGA-A7-A3RF-01Z-00-DX1,TCGA-A7-A3RF,3.8470,-2.7731,LumA,Positive,Positive,Negative,A7,train
+TCGA-A7-A425-01Z-00-DX1,TCGA-A7-A425,1.1383,-8.1240,Normal,Positive,Positive,NA,A7,train
+TCGA-A7-A426-01Z-00-DX1,TCGA-A7-A426,-1.5356,-3.0956,Normal,Positive,Positive,Negative,A7,train
+TCGA-A7-A4SA-01Z-00-DX1,TCGA-A7-A4SA,-1.5473,-3.1803,LumB,Positive,Negative,Negative,A7,train
+TCGA-A7-A4SB-01Z-00-DX1,TCGA-A7-A4SB,-1.3153,-2.8453,LumB,Positive,Positive,Negative,A7,train
+TCGA-A7-A4SC-01Z-00-DX1,TCGA-A7-A4SC,-1.7521,-4.9571,Normal,Positive,Negative,NA,A7,train
+TCGA-A7-A4SD-01Z-00-DX1,TCGA-A7-A4SD,1.2462,-1.5709,Basal,Negative,Negative,NA,A7,train
+TCGA-A7-A4SE-01Z-00-DX1,TCGA-A7-A4SE,0.4669,-0.9538,Basal,Negative,Negative,Negative,A7,train
+TCGA-A7-A4SF-01Z-00-DX1,TCGA-A7-A4SF,-1.0922,-2.3205,HER2,Positive,Negative,Positive,A7,train
+TCGA-A7-A56D-01Z-00-DX1,TCGA-A7-A56D,0.2312,-1.3799,Normal,Positive,Positive,Negative,A7,train
+TCGA-A7-A5ZV-01Z-00-DX1,TCGA-A7-A5ZV,1.7330,-0.9387,Basal,Negative,Negative,NA,A7,train
+TCGA-A7-A5ZW-01Z-00-DX1,TCGA-A7-A5ZW,-0.0793,-1.0476,LumA,Positive,Positive,Negative,A7,train
+TCGA-A7-A5ZX-01Z-00-DX1,TCGA-A7-A5ZX,-1.4554,-2.8050,LumA,Positive,Positive,Negative,A7,train
+TCGA-A7-A6VV-01Z-00-DX1,TCGA-A7-A6VV,0.3703,-1.0680,Basal,Negative,Negative,Negative,A7,train
+TCGA-A7-A6VW-01Z-00-DX1,TCGA-A7-A6VW,-0.4694,-0.6800,Basal,Negative,Negative,Negative,A7,train
+TCGA-A7-A6VX-01Z-00-DX1,TCGA-A7-A6VX,-1.7924,-2.8968,LumB,Positive,Positive,Negative,A7,train
+TCGA-A7-A6VY-01Z-00-DX1,TCGA-A7-A6VY,1.1974,-1.2805,Basal,Negative,Negative,Negative,A7,train
+TCGA-A8-A06N-01Z-00-DX1,TCGA-A8-A06N,8.3237,0.4393,LumA,Positive,Negative,Negative,A8,train
+TCGA-A8-A06O-01Z-00-DX1,TCGA-A8-A06O,8.6959,0.8878,LumB,Positive,Positive,Negative,A8,train
+TCGA-A8-A06P-01Z-00-DX1,TCGA-A8-A06P,8.7858,0.6589,LumA,Positive,Positive,Negative,A8,train
+TCGA-A8-A06Q-01Z-00-DX1,TCGA-A8-A06Q,8.3761,0.8205,LumB,Positive,Positive,Negative,A8,train
+TCGA-A8-A06R-01Z-00-DX1,TCGA-A8-A06R,8.3494,0.6285,LumB,Positive,Negative,Positive,A8,train
+TCGA-A8-A06T-01Z-00-DX1,TCGA-A8-A06T,8.1311,0.2185,LumA,Positive,Positive,Positive,A8,train
+TCGA-A8-A06U-01Z-00-DX1,TCGA-A8-A06U,7.9443,0.6831,LumB,Positive,Positive,Positive,A8,train
+TCGA-A8-A06X-01Z-00-DX1,TCGA-A8-A06X,8.4642,0.8224,LumB,Positive,Negative,Positive,A8,train
+TCGA-A8-A06Y-01Z-00-DX1,TCGA-A8-A06Y,8.6204,0.1568,LumA,Positive,Positive,Negative,A8,train
+TCGA-A8-A06Z-01Z-00-DX1,TCGA-A8-A06Z,8.0324,0.1564,LumA,Positive,Positive,Negative,A8,train
+TCGA-A8-A075-01Z-00-DX1,TCGA-A8-A075,8.4067,0.7208,LumB,Positive,Positive,Positive,A8,train
+TCGA-A8-A076-01Z-00-DX1,TCGA-A8-A076,8.4288,0.0450,HER2,Positive,Positive,Positive,A8,train
+TCGA-A8-A079-01Z-00-DX1,TCGA-A8-A079,8.6953,0.0729,LumB,Positive,Positive,Negative,A8,train
+TCGA-A8-A07B-01Z-00-DX1,TCGA-A8-A07B,8.7324,0.0970,LumB,Positive,Positive,Positive,A8,train
+TCGA-A8-A07C-01Z-00-DX1,TCGA-A8-A07C,7.9381,0.6948,Basal,Negative,Negative,Negative,A8,train
+TCGA-A8-A07E-01Z-00-DX1,TCGA-A8-A07E,8.3814,0.6309,Basal,Positive,Positive,Negative,A8,train
+TCGA-A8-A07F-01Z-00-DX1,TCGA-A8-A07F,8.9699,0.3266,LumA,Positive,Positive,Negative,A8,train
+TCGA-A8-A07G-01Z-00-DX1,TCGA-A8-A07G,8.5791,0.8554,LumA,Positive,Positive,Negative,A8,train
+TCGA-A8-A07I-01Z-00-DX1,TCGA-A8-A07I,8.6663,0.5983,HER2,Positive,Negative,Positive,A8,train
+TCGA-A8-A07J-01Z-00-DX1,TCGA-A8-A07J,8.7527,0.7050,LumA,Positive,Positive,Negative,A8,train
+TCGA-A8-A07L-01Z-00-DX1,TCGA-A8-A07L,8.8023,0.3572,LumB,Positive,Positive,Negative,A8,train
+TCGA-A8-A07O-01Z-00-DX1,TCGA-A8-A07O,7.9356,0.7305,HER2,Negative,Negative,Negative,A8,train
+TCGA-A8-A07P-01Z-00-DX1,TCGA-A8-A07P,8.4158,0.5987,LumA,Positive,Positive,Positive,A8,train
+TCGA-A8-A07R-01Z-00-DX1,TCGA-A8-A07R,8.6543,0.7653,Basal,Negative,Negative,Positive,A8,train
+TCGA-A8-A07S-01Z-00-DX1,TCGA-A8-A07S,8.4545,0.2474,LumB,Positive,Negative,Negative,A8,train
+TCGA-A8-A07U-01Z-00-DX1,TCGA-A8-A07U,8.1798,0.8098,Basal,Negative,Positive,Negative,A8,train
+TCGA-A8-A07W-01Z-00-DX1,TCGA-A8-A07W,8.6032,0.5498,LumB,Positive,Positive,Negative,A8,train
+TCGA-A8-A07Z-01Z-00-DX1,TCGA-A8-A07Z,8.0592,0.1298,LumB,Positive,Positive,Negative,A8,train
+TCGA-A8-A081-01Z-00-DX1,TCGA-A8-A081,7.9693,0.6096,HER2,Positive,Positive,Negative,A8,train
+TCGA-A8-A082-01Z-00-DX1,TCGA-A8-A082,8.2017,0.1386,LumB,Positive,Positive,Negative,A8,train
+TCGA-A8-A083-01Z-00-DX1,TCGA-A8-A083,7.9167,0.0394,LumA,Positive,Positive,Negative,A8,train
+TCGA-A8-A084-01Z-00-DX1,TCGA-A8-A084,8.8221,0.1599,LumB,Positive,Negative,Negative,A8,train
+TCGA-A8-A085-01Z-00-DX1,TCGA-A8-A085,8.2754,0.2754,LumB,Positive,Positive,Negative,A8,train
+TCGA-A8-A086-01Z-00-DX1,TCGA-A8-A086,8.7578,0.6634,LumB,Positive,Positive,Negative,A8,train
+TCGA-A8-A08A-01Z-00-DX1,TCGA-A8-A08A,8.5274,0.3187,LumA,Positive,Positive,Negative,A8,train
+TCGA-A8-A08B-01Z-00-DX1,TCGA-A8-A08B,8.1198,0.3475,HER2,Positive,Negative,Positive,A8,train
+TCGA-A8-A08C-01Z-00-DX1,TCGA-A8-A08C,8.5884,0.1302,LumA,Positive,Positive,Positive,A8,train
+TCGA-A8-A08F-01Z-00-DX1,TCGA-A8-A08F,8.2135,0.1365,LumB,Positive,Positive,Negative,A8,train
+TCGA-A8-A08G-01Z-00-DX1,TCGA-A8-A08G,8.2619,0.3376,LumB,Positive,Positive,Positive,A8,train
+TCGA-A8-A08H-01Z-00-DX1,TCGA-A8-A08H,8.8500,0.2992,Basal,Positive,Positive,Positive,A8,train
+TCGA-A8-A08I-01Z-00-DX1,TCGA-A8-A08I,8.0316,0.7678,LumB,Positive,Positive,Negative,A8,train
+TCGA-A8-A08J-01Z-00-DX1,TCGA-A8-A08J,8.4576,0.0604,HER2,Positive,Negative,Negative,A8,train
+TCGA-A8-A08L-01Z-00-DX1,TCGA-A8-A08L,8.4383,0.4431,HER2,Positive,Negative,Negative,A8,train
+TCGA-A8-A08O-01Z-00-DX1,TCGA-A8-A08O,8.8282,0.2078,LumB,Positive,Positive,Negative,A8,train
+TCGA-A8-A08P-01Z-00-DX1,TCGA-A8-A08P,8.3112,0.5750,LumB,Positive,Positive,Positive,A8,train
+TCGA-A8-A08R-01Z-00-DX1,TCGA-A8-A08R,8.2075,0.3986,Basal,Negative,Negative,Negative,A8,train
+TCGA-A8-A08S-01Z-00-DX1,TCGA-A8-A08S,8.4036,0.0152,LumB,Positive,Positive,Positive,A8,train
+TCGA-A8-A08T-01Z-00-DX1,TCGA-A8-A08T,8.7659,0.2157,LumA,Positive,Positive,Positive,A8,train
+TCGA-A8-A08X-01Z-00-DX1,TCGA-A8-A08X,8.3022,0.5725,HER2,Negative,Negative,Positive,A8,train
+TCGA-A8-A08Z-01Z-00-DX1,TCGA-A8-A08Z,8.7727,0.2645,Normal,Positive,Positive,Negative,A8,train
+TCGA-A8-A090-01Z-00-DX1,TCGA-A8-A090,8.8784,0.4888,LumB,Positive,Positive,Positive,A8,train
+TCGA-A8-A091-01Z-00-DX1,TCGA-A8-A091,8.7157,0.0786,LumA,Positive,Negative,Negative,A8,train
+TCGA-A8-A092-01Z-00-DX1,TCGA-A8-A092,8.6884,0.1710,LumB,Positive,Positive,Negative,A8,train
+TCGA-A8-A093-01Z-00-DX1,TCGA-A8-A093,8.9388,0.5154,LumA,Positive,Positive,Negative,A8,train
+TCGA-A8-A094-01Z-00-DX1,TCGA-A8-A094,8.4530,0.6210,HER2,Positive,Negative,Negative,A8,train
+TCGA-A8-A095-01Z-00-DX1,TCGA-A8-A095,8.5447,0.8393,LumB,Positive,Positive,Negative,A8,train
+TCGA-A8-A096-01Z-00-DX1,TCGA-A8-A096,8.5102,0.7221,LumA,Positive,Positive,Negative,A8,train
+TCGA-A8-A097-01Z-00-DX1,TCGA-A8-A097,8.7167,0.6896,HER2,Positive,Positive,Positive,A8,train
+TCGA-A8-A099-01Z-00-DX1,TCGA-A8-A099,8.1732,0.1586,LumA,Positive,Positive,Positive,A8,train
+TCGA-A8-A09A-01Z-00-DX1,TCGA-A8-A09A,8.7809,0.5846,LumB,Positive,Positive,Negative,A8,train
+TCGA-A8-A09B-01Z-00-DX1,TCGA-A8-A09B,8.8670,0.7578,LumA,Positive,Positive,Negative,A8,train
+TCGA-A8-A09C-01Z-00-DX1,TCGA-A8-A09C,8.9232,0.7117,LumA,Positive,Positive,Negative,A8,train
+TCGA-A8-A09D-01Z-00-DX1,TCGA-A8-A09D,8.4838,0.0155,LumB,Positive,Positive,Negative,A8,train
+TCGA-A8-A09E-01Z-00-DX1,TCGA-A8-A09E,8.1771,0.1939,LumB,Positive,Positive,Positive,A8,train
+TCGA-A8-A09G-01Z-00-DX1,TCGA-A8-A09G,9.0631,0.3592,HER2,Positive,Negative,Positive,A8,train
+TCGA-A8-A09I-01Z-00-DX1,TCGA-A8-A09I,8.4589,0.8689,HER2,Positive,Positive,Positive,A8,train
+TCGA-A8-A09K-01Z-00-DX1,TCGA-A8-A09K,8.3215,0.5737,LumA,Positive,Positive,Negative,A8,train
+TCGA-A8-A09M-01Z-00-DX1,TCGA-A8-A09M,8.5521,0.3632,LumA,Positive,Positive,Negative,A8,train
+TCGA-A8-A09N-01Z-00-DX1,TCGA-A8-A09N,8.9557,0.7156,LumB,Positive,Positive,Positive,A8,train
+TCGA-A8-A09Q-01Z-00-DX1,TCGA-A8-A09Q,7.9985,0.4715,LumB,Positive,Positive,Negative,A8,train
+TCGA-A8-A09R-01Z-00-DX1,TCGA-A8-A09R,8.4554,0.4272,HER2,Positive,Positive,Negative,A8,train
+TCGA-A8-A09T-01Z-00-DX1,TCGA-A8-A09T,8.8107,0.0760,LumA,Positive,Positive,Negative,A8,train
+TCGA-A8-A09V-01Z-00-DX1,TCGA-A8-A09V,9.0314,0.6985,LumA,Positive,Positive,Negative,A8,train
+TCGA-A8-A09W-01Z-00-DX1,TCGA-A8-A09W,9.0931,0.3416,LumB,Positive,Positive,Negative,A8,train
+TCGA-A8-A09X-01Z-00-DX1,TCGA-A8-A09X,8.2801,0.6322,HER2,Negative,Negative,Negative,A8,train
+TCGA-A8-A09Z-01Z-00-DX1,TCGA-A8-A09Z,7.9567,0.5894,LumA,Positive,Negative,Negative,A8,train
+TCGA-A8-A0A1-01Z-00-DX1,TCGA-A8-A0A1,8.9159,0.7297,LumA,Positive,Positive,Negative,A8,train
+TCGA-A8-A0A2-01Z-00-DX1,TCGA-A8-A0A2,8.7495,0.7401,LumA,Positive,Positive,Negative,A8,train
+TCGA-A8-A0A4-01Z-00-DX1,TCGA-A8-A0A4,8.8386,0.7145,LumB,Positive,Positive,Negative,A8,train
+TCGA-A8-A0A7-01Z-00-DX1,TCGA-A8-A0A7,8.1939,0.8146,HER2,Negative,Negative,Positive,A8,train
+TCGA-A8-A0A9-01Z-00-DX1,TCGA-A8-A0A9,8.8703,0.5436,LumA,Positive,Positive,Negative,A8,train
+TCGA-A8-A0AB-01Z-00-DX1,TCGA-A8-A0AB,9.0252,0.4541,LumB,Positive,Positive,Positive,A8,train
+TCGA-A8-A0AD-01Z-00-DX1,TCGA-A8-A0AD,8.6411,0.4472,LumA,Positive,Positive,Negative,A8,train
+TCGA-AC-A23C-01Z-00-DX1,TCGA-AC-A23C,-0.6354,-3.7280,LumB,Positive,Positive,Positive,AC,val
+TCGA-AC-A23E-01Z-00-DX1,TCGA-AC-A23E,-0.5125,-3.7074,Normal,Positive,Positive,[Not Evaluated],AC,val
+TCGA-AC-A23G-01Z-00-DX1,TCGA-AC-A23G,-0.7301,-3.6093,Normal,Positive,Positive,Positive,AC,val
+TCGA-AC-A23H-01Z-00-DX1,TCGA-AC-A23H,1.4483,-2.6648,LumB,Positive,Negative,Positive,AC,val
+TCGA-AC-A2B8-01Z-00-DX1,TCGA-AC-A2B8,-0.8441,-3.8737,LumA,Positive,Positive,Negative,AC,val
+TCGA-AC-A2BK-01Z-00-DX1,TCGA-AC-A2BK,1.6000,-1.6050,HER2,Negative,Negative,Negative,AC,val
+TCGA-AC-A2BM-01Z-00-DX1,TCGA-AC-A2BM,1.6738,-2.5939,Normal,Positive,Positive,[Not Evaluated],AC,val
+TCGA-AC-A2FB-01Z-00-DX1,TCGA-AC-A2FB,-1.2876,-3.3698,LumB,Positive,Positive,Positive,AC,val
+TCGA-AC-A2FE-01Z-00-DX1,TCGA-AC-A2FE,0.8116,-8.1643,LumA,Positive,Positive,[Not Evaluated],AC,val
+TCGA-AC-A2FF-01Z-00-DX1,TCGA-AC-A2FF,-0.4269,-7.2365,LumB,Positive,Positive,[Not Evaluated],AC,val
+TCGA-AC-A2FG-01Z-00-DX1,TCGA-AC-A2FG,-0.6008,-5.0716,LumA,Positive,Negative,[Not Evaluated],AC,val
+TCGA-AC-A2FK-01Z-00-DX1,TCGA-AC-A2FK,-0.6885,-3.7736,LumA,Positive,Positive,[Not Evaluated],AC,val
+TCGA-AC-A2FO-01Z-00-DX1,TCGA-AC-A2FO,0.3011,-6.8725,LumA,Positive,Negative,Negative,AC,val
+TCGA-AC-A2QH-01Z-00-DX1,TCGA-AC-A2QH,1.6208,-0.7982,Basal,Negative,Negative,Negative,AC,val
+TCGA-AC-A2QI-01Z-00-DX1,TCGA-AC-A2QI,-1.0645,-3.8631,LumA,Positive,Negative,Negative,AC,val
+TCGA-AC-A2QJ-01Z-00-DX1,TCGA-AC-A2QJ,1.6325,-0.7513,Basal,Negative,Negative,Negative,AC,val
+TCGA-AC-A3BB-01Z-00-DX1,TCGA-AC-A3BB,-1.3573,-3.4605,LumA,Positive,Positive,Negative,AC,val
+TCGA-AC-A3EH-01Z-00-DX1,TCGA-AC-A3EH,-0.6229,-4.9661,Normal,Positive,Negative,Negative,AC,val
+TCGA-AC-A3HN-01Z-00-DX1,TCGA-AC-A3HN,1.0762,-8.3043,Normal,Positive,Positive,Negative,AC,val
+TCGA-AC-A3OD-01Z-00-DX1,TCGA-AC-A3OD,-1.4605,-3.2768,LumB,Positive,Positive,Negative,AC,val
+TCGA-AC-A3QP-01Z-00-DX1,TCGA-AC-A3QP,-1.1403,-3.8427,LumA,Positive,Positive,NA,AC,val
+TCGA-AC-A3QQ-01Z-00-DX1,TCGA-AC-A3QQ,-1.7396,-2.9514,HER2,Positive,Positive,Positive,AC,val
+TCGA-AC-A3TM-01Z-00-DX1,TCGA-AC-A3TM,-0.2981,-3.2596,Basal,Positive,Positive,NA,AC,val
+TCGA-AC-A3TN-01Z-00-DX1,TCGA-AC-A3TN,-0.1686,-7.1192,LumA,Positive,Positive,Positive,AC,val
+TCGA-AC-A3W5-01Z-00-DX1,TCGA-AC-A3W5,-1.2706,-2.8450,HER2,Positive,Positive,[Not Evaluated],AC,val
+TCGA-AC-A3W6-01Z-00-DX1,TCGA-AC-A3W6,-1.8191,-4.3763,LumA,Positive,Positive,Negative,AC,val
+TCGA-AC-A3W7-01Z-00-DX1,TCGA-AC-A3W7,-1.6065,-4.1927,Normal,Positive,Negative,Negative,AC,val
+TCGA-AC-A3YI-01Z-00-DX1,TCGA-AC-A3YI,-0.2930,-6.4247,Normal,Positive,Positive,Positive,AC,val
+TCGA-AC-A3YJ-01Z-00-DX1,TCGA-AC-A3YJ,-0.4268,-5.6731,LumA,Positive,Positive,NA,AC,val
+TCGA-AC-A4ZE-01Z-00-DX1,TCGA-AC-A4ZE,-1.6956,-3.3573,LumA,Positive,Positive,Positive,AC,val
+TCGA-AC-A5EH-01Z-00-DX1,TCGA-AC-A5EH,-1.3213,-3.2110,HER2,Positive,Negative,Negative,AC,val
+TCGA-AC-A5EI-01Z-00-DX1,TCGA-AC-A5EI,-1.5488,1.5268,NA,Positive,Positive,Negative,AC,val
+TCGA-AC-A5XS-01Z-00-DX1,TCGA-AC-A5XS,-1.2900,-3.4638,LumB,Positive,Positive,Negative,AC,val
+TCGA-AC-A5XU-01Z-00-DX1,TCGA-AC-A5XU,0.7108,-1.6869,LumB,Positive,Positive,Negative,AC,val
+TCGA-AC-A62V-01Z-00-DX1,TCGA-AC-A62V,1.9495,-1.4037,LumB,Positive,Positive,[Not Evaluated],AC,val
+TCGA-AC-A62X-01Z-00-DX1,TCGA-AC-A62X,1.9400,-1.4006,Basal,Positive,Negative,[Not Evaluated],AC,val
+TCGA-AC-A62Y-01Z-00-DX1,TCGA-AC-A62Y,-1.6722,0.7858,LumA,Positive,Positive,Negative,AC,val
+TCGA-AC-A6IV-01Z-00-DX1,TCGA-AC-A6IV,-0.7282,-3.4255,Normal,Positive,Positive,NA,AC,val
+TCGA-AC-A6IW-01Z-00-DX1,TCGA-AC-A6IW,1.5339,-1.6841,Basal,Negative,Negative,Negative,AC,val
+TCGA-AC-A6IX-01Z-00-DX1,TCGA-AC-A6IX,1.4285,-7.6930,LumB,Positive,Positive,[Not Evaluated],AC,val
+TCGA-AC-A6NO-01Z-00-DX1,TCGA-AC-A6NO,1.7900,-3.4188,LumB,Positive,Positive,Negative,AC,val
+TCGA-AC-A7VB-01Z-00-DX1,TCGA-AC-A7VB,1.5987,-7.8405,LumB,Positive,Negative,[Not Evaluated],AC,val
+TCGA-AC-A7VC-01Z-00-DX1,TCGA-AC-A7VC,0.6394,-0.8136,Basal,Negative,Negative,Negative,AC,val
+TCGA-AC-A8OP-01Z-00-DX1,TCGA-AC-A8OP,1.2797,-7.5765,Normal,Positive,Positive,NA,AC,val
+TCGA-AC-A8OQ-01Z-00-DX1,TCGA-AC-A8OQ,0.0127,-5.2919,Basal,Negative,Negative,NA,AC,val
+TCGA-AC-A8OR-01Z-00-DX1,TCGA-AC-A8OR,3.8176,-2.7741,LumA,Positive,Positive,Negative,AC,val
+TCGA-AC-A8OS-01Z-00-DX1,TCGA-AC-A8OS,-1.4746,-3.3267,LumA,Positive,Positive,Positive,AC,val
+TCGA-AN-A03Y-01Z-00-DX1,TCGA-AN-A03Y,2.4438,1.2938,LumB,Positive,Positive,Negative,AN,test
+TCGA-AN-A041-01Z-00-DX1,TCGA-AN-A041,2.3410,1.1838,Normal,Positive,Negative,Positive,AN,test
+TCGA-AN-A046-01Z-00-DX1,TCGA-AN-A046,2.4112,1.2897,Normal,Positive,Positive,Negative,AN,test
+TCGA-AN-A0AJ-01Z-00-DX1,TCGA-AN-A0AJ,1.3119,-2.3564,LumB,Positive,Positive,Positive,AN,test
+TCGA-AN-A0AK-01Z-00-DX1,TCGA-AN-A0AK,1.0443,-2.6675,LumB,Positive,Negative,Positive,AN,test
+TCGA-AN-A0AL-01Z-00-DX1,TCGA-AN-A0AL,2.3909,-1.3516,Basal,Negative,Negative,Negative,AN,test
+TCGA-AN-A0AM-01Z-00-DX1,TCGA-AN-A0AM,1.5800,-2.1451,HER2,Positive,Negative,Negative,AN,test
+TCGA-AN-A0AR-01Z-00-DX1,TCGA-AN-A0AR,1.2962,-1.1378,Basal,Negative,Negative,Negative,AN,test
+TCGA-AN-A0AS-01Z-00-DX1,TCGA-AN-A0AS,1.3600,-3.0809,Normal,Positive,Negative,Negative,AN,test
+TCGA-AN-A0AT-01Z-00-DX1,TCGA-AN-A0AT,1.3042,-1.0654,Basal,Negative,Negative,Negative,AN,test
+TCGA-AN-A0FD-01Z-00-DX1,TCGA-AN-A0FD,2.4129,1.2919,LumB,Positive,Positive,Positive,AN,test
+TCGA-AN-A0FF-01Z-00-DX1,TCGA-AN-A0FF,1.1027,-2.5574,LumA,Positive,Positive,Negative,AN,test
+TCGA-AN-A0FJ-01Z-00-DX1,TCGA-AN-A0FJ,1.8343,-1.5009,Basal,Positive,Negative,Positive,AN,test
+TCGA-AN-A0FK-01Z-00-DX1,TCGA-AN-A0FK,1.0962,-2.8663,LumA,Positive,Positive,Positive,AN,test
+TCGA-AN-A0FL-01Z-00-DX1,TCGA-AN-A0FL,2.5355,-1.2888,Basal,Negative,Negative,Positive,AN,test
+TCGA-AN-A0FN-01Z-00-DX1,TCGA-AN-A0FN,-0.3564,-6.3210,Normal,Positive,Positive,Positive,AN,test
+TCGA-AN-A0FS-01Z-00-DX1,TCGA-AN-A0FS,-0.0006,-6.5559,LumA,Positive,Negative,Positive,AN,test
+TCGA-AN-A0FT-01Z-00-DX1,TCGA-AN-A0FT,1.3766,-3.2277,LumA,Positive,Positive,Positive,AN,test
+TCGA-AN-A0FV-01Z-00-DX1,TCGA-AN-A0FV,1.2828,-3.1202,HER2,Negative,Negative,Positive,AN,test
+TCGA-AN-A0FW-01Z-00-DX1,TCGA-AN-A0FW,-1.4639,-2.9555,LumB,Positive,NA,Negative,AN,test
+TCGA-AN-A0FX-01Z-00-DX1,TCGA-AN-A0FX,1.4375,-3.0370,Basal,Negative,Negative,Positive,AN,test
+TCGA-AN-A0FY-01Z-00-DX1,TCGA-AN-A0FY,1.5317,-3.0611,LumB,Positive,Positive,Negative,AN,test
+TCGA-AN-A0FZ-01Z-00-DX1,TCGA-AN-A0FZ,1.3254,-3.0823,Normal,Positive,Negative,Positive,AN,test
+TCGA-AN-A0G0-01Z-00-DX1,TCGA-AN-A0G0,1.4154,-1.3497,Basal,Negative,Negative,Negative,AN,test
+TCGA-AN-A0XL-01Z-00-DX1,TCGA-AN-A0XL,-0.5737,-4.2359,Normal,Positive,Positive,Negative,AN,test
+TCGA-AN-A0XN-01Z-00-DX1,TCGA-AN-A0XN,1.4799,-2.8228,Normal,Negative,Positive,Negative,AN,test
+TCGA-AN-A0XO-01Z-00-DX1,TCGA-AN-A0XO,0.1810,-3.9304,LumB,Positive,Negative,Negative,AN,test
+TCGA-AN-A0XP-01Z-00-DX1,TCGA-AN-A0XP,0.0606,-4.0795,LumA,Positive,Positive,Positive,AN,test
+TCGA-AN-A0XS-01Z-00-DX1,TCGA-AN-A0XS,0.1364,-3.9681,LumA,Negative,Positive,Negative,AN,test
+TCGA-AN-A0XT-01Z-00-DX1,TCGA-AN-A0XT,-1.3485,-2.7533,LumA,Positive,Negative,Negative,AN,test
+TCGA-AN-A0XU-01Z-00-DX1,TCGA-AN-A0XU,1.1772,-0.9133,Basal,Negative,Negative,Negative,AN,test
+TCGA-AN-A0XW-01Z-00-DX1,TCGA-AN-A0XW,1.9478,-0.7854,LumB,Positive,Positive,Positive,AN,test
+TCGA-AO-A03L-01Z-00-DX1,TCGA-AO-A03L,-0.7442,-0.3915,LumB,Positive,Positive,Positive,AO,train
+TCGA-AO-A03M-01Z-00-DX1,TCGA-AO-A03M,-0.7820,-0.5089,LumB,Positive,Positive,Negative,AO,train
+TCGA-AO-A03N-01Z-00-DX1,TCGA-AO-A03N,-0.7740,-0.5935,LumB,Positive,Positive,Negative,AO,train
+TCGA-AO-A03O-01Z-00-DX1,TCGA-AO-A03O,-0.4251,-0.3824,LumB,Positive,Positive,Negative,AO,train
+TCGA-AO-A03P-01Z-00-DX1,TCGA-AO-A03P,-0.5672,0.7519,LumA,Positive,Positive,Negative,AO,train
+TCGA-AO-A03R-01Z-00-DX1,TCGA-AO-A03R,-0.5769,0.9121,Basal,Positive,Positive,Negative,AO,train
+TCGA-AO-A03T-01Z-00-DX1,TCGA-AO-A03T,-0.6769,-0.4413,LumB,Positive,Positive,Negative,AO,train
+TCGA-AO-A03U-01Z-00-DX1,TCGA-AO-A03U,0.6495,-7.3596,Basal,Negative,Negative,Negative,AO,train
+TCGA-AO-A03V-01Z-00-DX1,TCGA-AO-A03V,-0.6988,0.6518,LumA,Positive,Positive,Negative,AO,train
+TCGA-AO-A0J2-01Z-00-DX1,TCGA-AO-A0J2,-0.6765,0.9743,HER2,Negative,Negative,NA,AO,train
+TCGA-AO-A0J3-01Z-00-DX1,TCGA-AO-A0J3,-0.6513,0.4073,LumB,Positive,Positive,NA,AO,train
+TCGA-AO-A0J4-01Z-00-DX1,TCGA-AO-A0J4,-0.6945,0.9662,Basal,Negative,Negative,Negative,AO,train
+TCGA-AO-A0J5-01Z-00-DX1,TCGA-AO-A0J5,0.2257,-7.4539,LumA,Positive,Negative,NA,AO,train
+TCGA-AO-A0J6-01Z-00-DX1,TCGA-AO-A0J6,-0.0989,-0.4386,Basal,Negative,Negative,Negative,AO,train
+TCGA-AO-A0J7-01Z-00-DX1,TCGA-AO-A0J7,-0.7397,-0.3275,LumB,Positive,Positive,Negative,AO,train
+TCGA-AO-A0J8-01Z-00-DX1,TCGA-AO-A0J8,-1.7736,-4.6436,LumA,Positive,Positive,Negative,AO,train
+TCGA-AO-A0J9-01Z-00-DX1,TCGA-AO-A0J9,-0.7473,-0.5071,LumB,Positive,Positive,[Not Evaluated],AO,train
+TCGA-AO-A0JA-01Z-00-DX1,TCGA-AO-A0JA,-0.6161,0.9534,LumB,Positive,Positive,Negative,AO,train
+TCGA-AO-A0JB-01Z-00-DX1,TCGA-AO-A0JB,-0.7587,-0.5693,Basal,Positive,Positive,Negative,AO,train
+TCGA-AO-A0JC-01Z-00-DX1,TCGA-AO-A0JC,-0.4694,-0.4582,Normal,Positive,Positive,Negative,AO,train
+TCGA-AO-A0JD-01Z-00-DX1,TCGA-AO-A0JD,-0.6427,-0.4831,Basal,Positive,Positive,Negative,AO,train
+TCGA-AO-A0JE-01Z-00-DX1,TCGA-AO-A0JE,-0.6971,-0.3240,HER2,Negative,Negative,Positive,AO,train
+TCGA-AO-A0JF-01Z-00-DX1,TCGA-AO-A0JF,0.1902,-7.3028,LumA,Positive,Positive,Negative,AO,train
+TCGA-AO-A0JG-01Z-00-DX1,TCGA-AO-A0JG,-0.6021,0.9404,LumA,Positive,Positive,Negative,AO,train
+TCGA-AO-A0JI-01Z-00-DX1,TCGA-AO-A0JI,-0.7055,-0.5884,LumA,Positive,Negative,Negative,AO,train
+TCGA-AO-A0JJ-01Z-00-DX1,TCGA-AO-A0JJ,0.9820,-7.4286,Normal,Positive,Positive,Negative,AO,train
+TCGA-AO-A0JL-01Z-00-DX1,TCGA-AO-A0JL,-0.7680,-0.4394,HER2,Negative,Negative,Negative,AO,train
+TCGA-AO-A0JM-01Z-00-DX1,TCGA-AO-A0JM,0.1781,-7.5190,HER2,Positive,Positive,Positive,AO,train
+TCGA-AO-A124-01Z-00-DX1,TCGA-AO-A124,-0.5542,0.9038,Basal,Negative,Negative,Negative,AO,train
+TCGA-AO-A125-01Z-00-DX1,TCGA-AO-A125,2.6466,-1.2486,LumA,Positive,Positive,Negative,AO,train
+TCGA-AO-A126-01Z-00-DX1,TCGA-AO-A126,-0.7000,-0.4668,LumA,Positive,Positive,Negative,AO,train
+TCGA-AO-A128-01Z-00-DX1,TCGA-AO-A128,0.0458,-0.1738,HER2,Negative,Negative,Negative,AO,train
+TCGA-AO-A129-01Z-00-DX1,TCGA-AO-A129,-0.6140,0.9076,Basal,Negative,Negative,Negative,AO,train
+TCGA-AO-A12A-01Z-00-DX1,TCGA-AO-A12A,-0.7696,-0.4792,Normal,Positive,Positive,Negative,AO,train
+TCGA-AO-A12B-01Z-00-DX1,TCGA-AO-A12B,0.5859,-7.4569,LumA,Positive,Positive,Negative,AO,train
+TCGA-AO-A12C-01Z-00-DX1,TCGA-AO-A12C,-0.7908,-0.5170,LumA,Positive,Positive,Positive,AO,train
+TCGA-AO-A12D-01Z-00-DX1,TCGA-AO-A12D,-0.7421,-0.5132,HER2,Negative,Negative,Positive,AO,train
+TCGA-AO-A12E-01Z-00-DX1,TCGA-AO-A12E,-0.8510,1.0693,LumB,Positive,Positive,Negative,AO,train
+TCGA-AO-A12F-01Z-00-DX1,TCGA-AO-A12F,1.5182,-0.5598,Basal,Negative,Negative,Negative,AO,train
+TCGA-AO-A12G-01Z-00-DX1,TCGA-AO-A12G,-0.5353,0.8698,Normal,Positive,Positive,Positive,AO,train
+TCGA-AO-A12H-01Z-00-DX1,TCGA-AO-A12H,3.8805,-2.8061,LumA,Positive,Positive,Negative,AO,train
+TCGA-AO-A1KO-01Z-00-DX1,TCGA-AO-A1KO,-1.3265,0.6321,Normal,Positive,Positive,Negative,AO,train
+TCGA-AO-A1KP-01Z-00-DX1,TCGA-AO-A1KP,-1.1459,0.4900,LumB,Positive,Positive,Negative,AO,train
+TCGA-AO-A1KQ-01Z-00-DX1,TCGA-AO-A1KQ,-0.9080,0.3230,LumB,Positive,Positive,Negative,AO,train
+TCGA-AO-A1KR-01Z-00-DX1,TCGA-AO-A1KR,-0.7067,0.4136,Basal,Negative,Negative,Negative,AO,train
+TCGA-AO-A1KS-01Z-00-DX1,TCGA-AO-A1KS,-1.0532,0.3700,LumB,Positive,Positive,NA,AO,train
+TCGA-AO-A1KT-01Z-00-DX1,TCGA-AO-A1KT,-1.2749,0.5536,HER2,Positive,Positive,NA,AO,train
+TCGA-AQ-A04H-01Z-00-DX1,TCGA-AQ-A04H,2.4895,-1.2817,LumB,Positive,Positive,NA,AQ,test
+TCGA-AQ-A04J-01Z-00-DX1,TCGA-AQ-A04J,1.2433,-2.2265,Basal,Negative,Negative,Negative,AQ,test
+TCGA-AQ-A04L-01Z-00-DX1,TCGA-AQ-A04L,-1.1339,-5.6030,LumA,Positive,Negative,Positive,AQ,test
+TCGA-AQ-A0Y5-01Z-00-DX1,TCGA-AQ-A0Y5,-1.1518,-5.5277,HER2,Positive,Positive,Positive,AQ,test
+TCGA-AQ-A54N-01Z-00-DX1,TCGA-AQ-A54N,1.7997,-1.4050,Basal,Negative,Negative,NA,AQ,test
+TCGA-AQ-A54O-01Z-00-DX1,TCGA-AQ-A54O,1.3475,-3.1383,Normal,Positive,Positive,Negative,AQ,test
+TCGA-AQ-A7U7-01Z-00-DX1,TCGA-AQ-A7U7,-0.7585,-5.8230,Normal,Positive,Positive,Negative,AQ,test
+TCGA-AR-A0TP-01Z-00-DX1,TCGA-AR-A0TP,2.0953,-1.5136,Basal,Positive,Negative,Negative,AR,train
+TCGA-AR-A0TQ-01Z-00-DX1,TCGA-AR-A0TQ,1.9018,-2.8810,HER2,Positive,Negative,NA,AR,train
+TCGA-AR-A0TR-01Z-00-DX1,TCGA-AR-A0TR,2.0550,-3.0089,LumA,Positive,Positive,NA,AR,train
+TCGA-AR-A0TS-01Z-00-DX1,TCGA-AR-A0TS,-0.7123,-5.3384,Basal,Negative,Negative,Negative,AR,train
+TCGA-AR-A0TT-01Z-00-DX1,TCGA-AR-A0TT,1.6231,-2.4342,LumB,Positive,Negative,Negative,AR,train
+TCGA-AR-A0TU-01Z-00-DX1,TCGA-AR-A0TU,1.6903,-1.1373,Basal,Negative,Negative,Negative,AR,train
+TCGA-AR-A0TV-01Z-00-DX1,TCGA-AR-A0TV,1.5853,-2.5076,LumB,Positive,Positive,NA,AR,train
+TCGA-AR-A0TW-01Z-00-DX1,TCGA-AR-A0TW,1.8431,-2.7030,LumA,Positive,Positive,NA,AR,train
+TCGA-AR-A0TX-01Z-00-DX1,TCGA-AR-A0TX,0.4395,-7.3916,HER2,Positive,Positive,Positive,AR,train
+TCGA-AR-A0TY-01Z-00-DX1,TCGA-AR-A0TY,1.4456,-3.2031,HER2,Positive,Negative,Negative,AR,train
+TCGA-AR-A0TZ-01Z-00-DX1,TCGA-AR-A0TZ,1.7322,-2.8961,LumB,Positive,Positive,NA,AR,train
+TCGA-AR-A0U0-01Z-00-DX1,TCGA-AR-A0U0,-0.3102,-5.5936,Basal,Negative,Negative,[Not Evaluated],AR,train
+TCGA-AR-A0U1-01Z-00-DX1,TCGA-AR-A0U1,1.7438,-2.2446,Basal,Negative,Negative,Negative,AR,train
+TCGA-AR-A0U2-01Z-00-DX1,TCGA-AR-A0U2,1.3643,-3.4397,LumB,Positive,Positive,Negative,AR,train
+TCGA-AR-A0U3-01Z-00-DX1,TCGA-AR-A0U3,1.4117,-2.3357,LumB,Positive,Positive,Negative,AR,train
+TCGA-AR-A0U4-01Z-00-DX1,TCGA-AR-A0U4,1.6727,-1.1204,Basal,Negative,Negative,Negative,AR,train
+TCGA-AR-A1AH-01Z-00-DX1,TCGA-AR-A1AH,1.6971,-1.5249,Basal,Positive,Negative,Negative,AR,train
+TCGA-AR-A1AI-01Z-00-DX1,TCGA-AR-A1AI,1.4382,-1.8792,Basal,Negative,Negative,NA,AR,train
+TCGA-AR-A1AJ-01Z-00-DX1,TCGA-AR-A1AJ,-0.1400,-5.6142,Basal,Positive,Negative,Negative,AR,train
+TCGA-AR-A1AK-01Z-00-DX1,TCGA-AR-A1AK,2.0251,-2.0971,Basal,Positive,Positive,Negative,AR,train
+TCGA-AR-A1AL-01Z-00-DX1,TCGA-AR-A1AL,-0.7437,-4.1348,Normal,Positive,Positive,Negative,AR,train
+TCGA-AR-A1AM-01Z-00-DX1,TCGA-AR-A1AM,-0.1730,-5.9373,LumA,Positive,Positive,NA,AR,train
+TCGA-AR-A1AN-01Z-00-DX1,TCGA-AR-A1AN,1.9398,-2.7762,LumA,Positive,Positive,Negative,AR,train
+TCGA-AR-A1AO-01Z-00-DX1,TCGA-AR-A1AO,-0.4192,-5.8662,Basal,Positive,Negative,Negative,AR,train
+TCGA-AR-A1AP-01Z-00-DX1,TCGA-AR-A1AP,-1.0992,1.6536,Normal,Positive,Positive,NA,AR,train
+TCGA-AR-A1AQ-01Z-00-DX1,TCGA-AR-A1AQ,1.5452,-2.0151,Basal,Negative,Negative,NA,AR,train
+TCGA-AR-A1AR-01Z-00-DX1,TCGA-AR-A1AR,1.7837,-1.0578,Basal,Negative,Negative,Negative,AR,train
+TCGA-AR-A1AS-01Z-00-DX1,TCGA-AR-A1AS,0.5316,-3.4696,LumB,Positive,Positive,Negative,AR,train
+TCGA-AR-A1AT-01Z-00-DX1,TCGA-AR-A1AT,1.6209,-2.2775,HER2,Positive,Positive,Positive,AR,train
+TCGA-AR-A1AU-01Z-00-DX1,TCGA-AR-A1AU,1.8034,-2.9409,Normal,Positive,Positive,NA,AR,train
+TCGA-AR-A1AV-01Z-00-DX1,TCGA-AR-A1AV,1.6042,-4.3935,LumA,Positive,Positive,Negative,AR,train
+TCGA-AR-A1AW-01Z-00-DX1,TCGA-AR-A1AW,1.5242,-2.0847,LumB,Positive,Positive,NA,AR,train
+TCGA-AR-A1AX-01Z-00-DX1,TCGA-AR-A1AX,1.7578,-3.0429,HER2,Positive,Positive,Positive,AR,train
+TCGA-AR-A1AY-01Z-00-DX1,TCGA-AR-A1AY,2.0073,-2.9189,Basal,Negative,Negative,Negative,AR,train
+TCGA-AR-A24H-01Z-00-DX1,TCGA-AR-A24H,1.7284,-7.7518,LumB,Positive,Positive,Negative,AR,train
+TCGA-AR-A24K-01Z-00-DX1,TCGA-AR-A24K,1.5599,-3.1478,LumB,Positive,Positive,NA,AR,train
+TCGA-AR-A24L-01Z-00-DX1,TCGA-AR-A24L,-0.2407,-6.2694,LumB,Positive,Positive,NA,AR,train
+TCGA-AR-A24M-01Z-00-DX1,TCGA-AR-A24M,-0.4722,-3.9974,LumA,Positive,Positive,Negative,AR,train
+TCGA-AR-A24N-01Z-00-DX1,TCGA-AR-A24N,1.7635,-2.9024,LumB,Positive,Positive,NA,AR,train
+TCGA-AR-A24O-01Z-00-DX1,TCGA-AR-A24O,-0.6778,-5.6351,Normal,Positive,Positive,Negative,AR,train
+TCGA-AR-A24P-01Z-00-DX1,TCGA-AR-A24P,-0.5630,-5.7710,LumB,Positive,Positive,NA,AR,train
+TCGA-AR-A24Q-01Z-00-DX1,TCGA-AR-A24Q,1.7027,-1.5893,Basal,Positive,Negative,Negative,AR,train
+TCGA-AR-A24R-01Z-00-DX1,TCGA-AR-A24R,1.8289,-2.9505,LumB,Positive,Positive,Negative,AR,train
+TCGA-AR-A24S-01Z-00-DX1,TCGA-AR-A24S,2.0387,-3.1357,LumB,Positive,Positive,Negative,AR,train
+TCGA-AR-A24T-01Z-00-DX1,TCGA-AR-A24T,-0.8433,-4.1587,LumA,Positive,Positive,NA,AR,train
+TCGA-AR-A24U-01Z-00-DX1,TCGA-AR-A24U,-0.1880,-5.8519,HER2,Negative,Negative,Positive,AR,train
+TCGA-AR-A24V-01Z-00-DX1,TCGA-AR-A24V,1.4454,-3.1960,Normal,Positive,Positive,Negative,AR,train
+TCGA-AR-A24W-01Z-00-DX1,TCGA-AR-A24W,-0.5947,-5.5762,LumA,Positive,Positive,Negative,AR,train
+TCGA-AR-A24X-01Z-00-DX1,TCGA-AR-A24X,1.7561,-2.9372,LumA,Positive,Positive,NA,AR,train
+TCGA-AR-A24Z-01Z-00-DX1,TCGA-AR-A24Z,1.8455,-2.8854,LumB,Positive,Positive,Negative,AR,train
+TCGA-AR-A250-01Z-00-DX1,TCGA-AR-A250,1.8241,-2.8808,HER2,Positive,Negative,NA,AR,train
+TCGA-AR-A251-01Z-00-DX1,TCGA-AR-A251,1.9760,-2.9162,Basal,Positive,Negative,NA,AR,train
+TCGA-AR-A252-01Z-00-DX1,TCGA-AR-A252,0.0197,-6.0995,Normal,Positive,Positive,Negative,AR,train
+TCGA-AR-A254-01Z-00-DX1,TCGA-AR-A254,1.8711,-2.8099,HER2,Positive,Positive,Positive,AR,train
+TCGA-AR-A255-01Z-00-DX1,TCGA-AR-A255,1.2868,-7.4505,LumB,Positive,Positive,Positive,AR,train
+TCGA-AR-A256-01Z-00-DX1,TCGA-AR-A256,1.3367,-7.0784,Basal,Negative,Negative,Negative,AR,train
+TCGA-AR-A2LE-01Z-00-DX1,TCGA-AR-A2LE,-0.5740,-4.9557,LumA,Positive,Negative,[Not Evaluated],AR,train
+TCGA-AR-A2LH-01Z-00-DX1,TCGA-AR-A2LH,-1.7353,-3.1723,Basal,Negative,Negative,NA,AR,train
+TCGA-AR-A2LJ-01Z-00-DX1,TCGA-AR-A2LJ,-1.5534,-3.3892,HER2,Positive,Positive,Positive,AR,train
+TCGA-AR-A2LK-01Z-00-DX1,TCGA-AR-A2LK,-0.3509,-3.6522,LumB,Positive,Positive,NA,AR,train
+TCGA-AR-A2LL-01Z-00-DX1,TCGA-AR-A2LL,1.8007,-3.0046,LumA,Positive,Positive,NA,AR,train
+TCGA-AR-A2LM-01Z-00-DX1,TCGA-AR-A2LM,-0.7092,-4.3525,LumA,Positive,Positive,[Not Evaluated],AR,train
+TCGA-AR-A2LN-01Z-00-DX1,TCGA-AR-A2LN,-0.9345,-6.3150,LumA,Positive,Positive,Negative,AR,train
+TCGA-AR-A2LO-01Z-00-DX1,TCGA-AR-A2LO,0.7128,-8.0710,Basal,Positive,Positive,NA,AR,train
+TCGA-AR-A2LQ-01Z-00-DX1,TCGA-AR-A2LQ,-0.4648,-6.2411,Basal,Positive,Positive,Negative,AR,train
+TCGA-AR-A2LR-01Z-00-DX1,TCGA-AR-A2LR,3.7403,-2.9687,Basal,Negative,Negative,Negative,AR,train
+TCGA-AR-A5QM-01Z-00-DX1,TCGA-AR-A5QM,-0.3179,-6.2617,Normal,Positive,Positive,NA,AR,train
+TCGA-AR-A5QN-01Z-00-DX1,TCGA-AR-A5QN,-0.9830,-3.5136,Normal,Positive,Positive,Positive,AR,train
+TCGA-AR-A5QP-01Z-00-DX1,TCGA-AR-A5QP,-0.9331,-4.0155,Basal,Positive,Positive,NA,AR,train
+TCGA-AR-A5QQ-01Z-00-DX1,TCGA-AR-A5QQ,1.8365,-1.0295,Basal,Negative,Negative,Negative,AR,train
+TCGA-B6-A0I1-01Z-00-DX1,TCGA-B6-A0I1,1.8393,-1.3080,Basal,Negative,Negative,[Not Evaluated],B6,test
+TCGA-B6-A0I5-01Z-00-DX1,TCGA-B6-A0I5,1.9418,-5.8420,LumB,Positive,Positive,[Not Evaluated],B6,test
+TCGA-B6-A0I6-01Z-00-DX1,TCGA-B6-A0I6,0.0671,-1.9306,Basal,Negative,Negative,[Not Evaluated],B6,test
+TCGA-B6-A0IA-01Z-00-DX1,TCGA-B6-A0IA,-0.0114,-3.5268,LumB,Positive,Positive,[Not Evaluated],B6,test
+TCGA-B6-A0IB-01Z-00-DX1,TCGA-B6-A0IB,-1.1310,1.6191,LumB,Positive,Positive,[Not Evaluated],B6,test
+TCGA-B6-A0IC-01Z-00-DX1,TCGA-B6-A0IC,2.2229,-5.8405,LumA,Positive,Positive,[Not Evaluated],B6,test
+TCGA-B6-A0IE-01Z-00-DX1,TCGA-B6-A0IE,-1.1157,-2.7293,LumB,Negative,Negative,[Not Evaluated],B6,test
+TCGA-B6-A0IG-01Z-00-DX1,TCGA-B6-A0IG,0.2575,-2.9047,HER2,Positive,Positive,[Not Evaluated],B6,test
+TCGA-B6-A0IH-01Z-00-DX1,TCGA-B6-A0IH,-0.8988,-4.9425,LumA,Positive,Positive,[Not Evaluated],B6,test
+TCGA-B6-A0IJ-01Z-00-DX1,TCGA-B6-A0IJ,1.7349,-0.8086,Basal,Positive,Positive,[Not Evaluated],B6,test
+TCGA-B6-A0IK-01Z-00-DX1,TCGA-B6-A0IK,1.4315,-7.0978,Basal,Negative,Negative,[Not Evaluated],B6,test
+TCGA-B6-A0IM-01Z-00-DX1,TCGA-B6-A0IM,0.4713,-2.8020,LumA,Positive,Positive,[Not Evaluated],B6,test
+TCGA-B6-A0IN-01Z-00-DX1,TCGA-B6-A0IN,-1.0933,-4.7251,LumB,Positive,Negative,[Not Evaluated],B6,test
+TCGA-B6-A0IO-01Z-00-DX1,TCGA-B6-A0IO,0.5498,-7.9939,Normal,Positive,NA,[Not Evaluated],B6,test
+TCGA-B6-A0IP-01Z-00-DX1,TCGA-B6-A0IP,-0.9996,-4.4210,Normal,Positive,Positive,[Not Evaluated],B6,test
+TCGA-B6-A0IQ-01Z-00-DX1,TCGA-B6-A0IQ,1.2487,-0.6899,Basal,Negative,Negative,[Not Evaluated],B6,test
+TCGA-B6-A0RE-01Z-00-DX1,TCGA-B6-A0RE,0.8685,-1.3492,Basal,Negative,Negative,[Not Evaluated],B6,test
+TCGA-B6-A0RG-01Z-00-DX1,TCGA-B6-A0RG,0.4647,-2.7397,LumB,Negative,Negative,[Not Evaluated],B6,test
+TCGA-B6-A0RH-01Z-00-DX1,TCGA-B6-A0RH,0.3715,-2.6932,HER2,Positive,Positive,[Not Evaluated],B6,test
+TCGA-B6-A0RI-01Z-00-DX1,TCGA-B6-A0RI,0.3372,-2.7213,LumB,Positive,Positive,[Not Evaluated],B6,test
+TCGA-B6-A0RL-01Z-00-DX1,TCGA-B6-A0RL,1.7985,-5.2527,LumB,Positive,Positive,[Not Evaluated],B6,test
+TCGA-B6-A0RM-01Z-00-DX1,TCGA-B6-A0RM,-1.1539,0.2745,LumA,Positive,Positive,[Not Evaluated],B6,test
+TCGA-B6-A0RN-01Z-00-DX1,TCGA-B6-A0RN,-1.6814,-5.3231,LumA,Negative,Negative,[Not Evaluated],B6,test
+TCGA-B6-A0RO-01Z-00-DX1,TCGA-B6-A0RO,-1.6977,-5.1569,LumA,Positive,Positive,[Not Evaluated],B6,test
+TCGA-B6-A0RP-01Z-00-DX1,TCGA-B6-A0RP,-1.1551,1.6504,LumA,Positive,Positive,[Not Evaluated],B6,test
+TCGA-B6-A0RQ-01Z-00-DX1,TCGA-B6-A0RQ,-1.6944,-4.3041,LumA,Positive,Positive,[Not Evaluated],B6,test
+TCGA-B6-A0RS-01Z-00-DX1,TCGA-B6-A0RS,-1.2647,0.3951,HER2,Negative,Negative,[Not Evaluated],B6,test
+TCGA-B6-A0RT-01Z-00-DX1,TCGA-B6-A0RT,1.8731,-7.2117,Basal,Negative,Negative,[Not Evaluated],B6,test
+TCGA-B6-A0RU-01Z-00-DX1,TCGA-B6-A0RU,0.8245,-8.1804,Basal,Negative,Negative,[Not Evaluated],B6,test
+TCGA-B6-A0RV-01Z-00-DX1,TCGA-B6-A0RV,-0.7848,-4.3014,LumB,Positive,Positive,[Not Evaluated],B6,test
+TCGA-B6-A0WS-01Z-00-DX1,TCGA-B6-A0WS,-1.1178,-4.6961,Normal,Positive,Positive,[Not Evaluated],B6,test
+TCGA-B6-A0WT-01Z-00-DX1,TCGA-B6-A0WT,-0.0342,-3.3408,Normal,Positive,Positive,[Not Evaluated],B6,test
+TCGA-B6-A0WV-01Z-00-DX1,TCGA-B6-A0WV,0.5104,-2.9596,LumB,Positive,Positive,[Not Evaluated],B6,test
+TCGA-B6-A0WW-01Z-00-DX1,TCGA-B6-A0WW,-0.1380,-3.3217,LumB,Positive,Positive,[Not Evaluated],B6,test
+TCGA-B6-A0WX-01Z-00-DX1,TCGA-B6-A0WX,-0.8986,-2.8763,Basal,Negative,Negative,[Not Evaluated],B6,test
+TCGA-B6-A0WY-01Z-00-DX1,TCGA-B6-A0WY,-0.3035,-2.9315,Basal,Positive,Negative,[Not Evaluated],B6,test
+TCGA-B6-A0WZ-01Z-00-DX1,TCGA-B6-A0WZ,1.3846,-6.5370,LumB,Positive,Positive,[Not Evaluated],B6,test
+TCGA-B6-A0X0-01Z-00-DX1,TCGA-B6-A0X0,1.2654,-6.0999,Normal,Positive,Positive,[Not Evaluated],B6,test
+TCGA-B6-A0X1-01Z-00-DX1,TCGA-B6-A0X1,1.4328,-0.9812,Basal,Negative,Negative,[Not Evaluated],B6,test
+TCGA-B6-A0X4-01Z-00-DX1,TCGA-B6-A0X4,1.6422,-5.2296,LumA,Positive,Positive,[Not Evaluated],B6,test
+TCGA-B6-A0X5-01Z-00-DX1,TCGA-B6-A0X5,1.9033,-5.8245,LumB,Positive,Positive,[Not Evaluated],B6,test
+TCGA-B6-A0X7-01Z-00-DX1,TCGA-B6-A0X7,0.6015,-8.1621,LumA,Positive,Positive,[Not Evaluated],B6,test
+TCGA-B6-A1KC-01Z-00-DX1,TCGA-B6-A1KC,1.8059,-6.4961,LumA,Positive,Negative,Negative,B6,test
+TCGA-B6-A1KF-01Z-00-DX1,TCGA-B6-A1KF,0.9442,-7.8312,HER2,Negative,Negative,NA,B6,test
+TCGA-B6-A1KI-01Z-00-DX1,TCGA-B6-A1KI,1.3976,-7.6003,LumA,Positive,Positive,NA,B6,test
+TCGA-B6-A1KN-01Z-00-DX1,TCGA-B6-A1KN,0.0822,-2.1393,HER2,Negative,Negative,[Not Evaluated],B6,test
+TCGA-B6-A2IU-01Z-00-DX1,TCGA-B6-A2IU,-0.9291,-3.8780,LumA,Positive,Positive,[Not Evaluated],B6,test
+TCGA-BH-A0AU-01Z-00-DX1,TCGA-BH-A0AU,0.7848,-7.2560,LumB,Positive,Positive,Positive,BH,train
+TCGA-BH-A0AV-01Z-00-DX1,TCGA-BH-A0AV,0.5251,-7.5618,Basal,Negative,Negative,NA,BH,train
+TCGA-BH-A0AW-01Z-00-DX1,TCGA-BH-A0AW,1.7826,-7.2683,HER2,Positive,Negative,Positive,BH,train
+TCGA-BH-A0AY-01Z-00-DX1,TCGA-BH-A0AY,2.2192,-6.9707,LumB,Positive,Positive,Negative,BH,train
+TCGA-BH-A0AZ-01Z-00-DX1,TCGA-BH-A0AZ,-0.3872,-2.4108,LumB,Positive,Positive,Negative,BH,train
+TCGA-BH-A0B0-01Z-00-DX1,TCGA-BH-A0B0,-1.1457,-6.3220,Normal,Positive,Positive,Negative,BH,train
+TCGA-BH-A0B1-01Z-00-DX1,TCGA-BH-A0B1,1.1701,-8.1050,LumB,Positive,Positive,Negative,BH,train
+TCGA-BH-A0B3-01Z-00-DX1,TCGA-BH-A0B3,1.7163,-7.7045,LumB,Negative,Negative,Negative,BH,train
+TCGA-BH-A0B4-01Z-00-DX1,TCGA-BH-A0B4,1.4774,-5.1580,LumB,Positive,Positive,NA,BH,train
+TCGA-BH-A0B5-01Z-00-DX1,TCGA-BH-A0B5,-1.4301,-5.9640,LumB,Positive,Positive,Negative,BH,train
+TCGA-BH-A0B6-01Z-00-DX1,TCGA-BH-A0B6,-1.4217,-5.6341,LumA,Positive,Positive,Positive,BH,train
+TCGA-BH-A0B7-01Z-00-DX1,TCGA-BH-A0B7,-1.8369,-5.1292,LumB,Positive,Positive,Positive,BH,train
+TCGA-BH-A0B8-01Z-00-DX1,TCGA-BH-A0B8,1.2541,-7.3603,LumB,Positive,Positive,NA,BH,train
+TCGA-BH-A0B9-01Z-00-DX1,TCGA-BH-A0B9,1.6872,-5.9365,Basal,Negative,Negative,Negative,BH,train
+TCGA-BH-A0BA-01Z-00-DX1,TCGA-BH-A0BA,-0.9797,-3.6614,LumB,Positive,Positive,Negative,BH,train
+TCGA-BH-A0BC-01Z-00-DX1,TCGA-BH-A0BC,-0.7458,-3.0410,LumB,Positive,Positive,Negative,BH,train
+TCGA-BH-A0BD-01Z-00-DX1,TCGA-BH-A0BD,1.5554,-7.4359,LumB,Positive,Positive,Negative,BH,train
+TCGA-BH-A0BF-01Z-00-DX1,TCGA-BH-A0BF,1.3472,-4.3327,HER2,Positive,Positive,Negative,BH,train
+TCGA-BH-A0BG-01Z-00-DX1,TCGA-BH-A0BG,1.2768,-4.2352,Basal,Negative,Negative,Negative,BH,train
+TCGA-BH-A0BJ-01Z-00-DX1,TCGA-BH-A0BJ,1.6341,-7.5145,LumB,Positive,Positive,Negative,BH,train
+TCGA-BH-A0BL-01Z-00-DX1,TCGA-BH-A0BL,-1.1486,1.6637,Basal,Negative,Negative,Negative,BH,train
+TCGA-BH-A0BM-01Z-00-DX1,TCGA-BH-A0BM,1.8878,-7.3985,LumB,Positive,Negative,Negative,BH,train
+TCGA-BH-A0BO-01Z-00-DX1,TCGA-BH-A0BO,0.7889,-7.4622,LumA,Positive,Positive,Negative,BH,train
+TCGA-BH-A0BP-01Z-00-DX1,TCGA-BH-A0BP,0.7025,-7.2255,Normal,Positive,Positive,Negative,BH,train
+TCGA-BH-A0BQ-01Z-00-DX1,TCGA-BH-A0BQ,-1.2247,-5.6348,LumB,Positive,Positive,Positive,BH,train
+TCGA-BH-A0BR-01Z-00-DX1,TCGA-BH-A0BR,0.3412,-7.4269,HER2,Positive,Positive,Negative,BH,train
+TCGA-BH-A0BS-01Z-00-DX1,TCGA-BH-A0BS,0.1143,-7.5387,LumB,Positive,Positive,NA,BH,train
+TCGA-BH-A0BT-01Z-00-DX1,TCGA-BH-A0BT,0.5285,-3.5577,LumB,Positive,Positive,Negative,BH,train
+TCGA-BH-A0BV-01Z-00-DX1,TCGA-BH-A0BV,0.0613,-2.0817,LumB,Positive,Positive,Negative,BH,train
+TCGA-BH-A0BW-01Z-00-DX1,TCGA-BH-A0BW,0.2259,-7.9576,LumB,Negative,Negative,NA,BH,train
+TCGA-BH-A0BZ-01Z-00-DX1,TCGA-BH-A0BZ,0.7540,-2.5968,LumB,Positive,Positive,Negative,BH,train
+TCGA-BH-A0C0-01Z-00-DX1,TCGA-BH-A0C0,1.8381,-5.8161,LumB,Positive,Positive,NA,BH,train
+TCGA-BH-A0C1-01Z-00-DX1,TCGA-BH-A0C1,1.0290,-7.2426,LumB,Positive,Positive,Negative,BH,train
+TCGA-BH-A0C3-01Z-00-DX1,TCGA-BH-A0C3,0.8941,-7.8157,LumB,Positive,Negative,Negative,BH,train
+TCGA-BH-A0C7-01Z-00-DX1,TCGA-BH-A0C7,0.0118,-2.2539,LumB,Positive,Negative,NA,BH,train
+TCGA-BH-A0DD-01Z-00-DX1,TCGA-BH-A0DD,0.1164,-0.8939,LumB,Positive,Positive,Positive,BH,train
+TCGA-BH-A0DE-01Z-00-DX1,TCGA-BH-A0DE,0.7397,-7.1364,LumA,Positive,Positive,Negative,BH,train
+TCGA-BH-A0DG-01Z-00-DX1,TCGA-BH-A0DG,-1.5493,-5.6017,LumB,Positive,Negative,Negative,BH,train
+TCGA-BH-A0DH-01Z-00-DX1,TCGA-BH-A0DH,1.4769,-7.0741,LumB,Positive,Positive,Negative,BH,train
+TCGA-BH-A0DI-01Z-00-DX1,TCGA-BH-A0DI,-1.4774,-5.9202,Normal,Positive,Positive,Negative,BH,train
+TCGA-BH-A0DK-01Z-00-DX1,TCGA-BH-A0DK,-0.0850,-1.9535,LumB,Positive,Positive,Negative,BH,train
+TCGA-BH-A0DL-01Z-00-DX1,TCGA-BH-A0DL,-0.8731,-0.2582,LumB,Positive,Negative,Negative,BH,train
+TCGA-BH-A0DO-01Z-00-DX1,TCGA-BH-A0DO,1.5659,-7.8021,LumB,Positive,Positive,Negative,BH,train
+TCGA-BH-A0DP-01Z-00-DX1,TCGA-BH-A0DP,1.2352,-7.9151,LumB,Positive,Positive,Negative,BH,train
+TCGA-BH-A0DQ-01Z-00-DX1,TCGA-BH-A0DQ,1.2231,-6.4743,LumB,Positive,Positive,Negative,BH,train
+TCGA-BH-A0DS-01Z-00-DX1,TCGA-BH-A0DS,1.6084,-7.3888,LumA,Positive,Positive,Negative,BH,train
+TCGA-BH-A0DT-01Z-00-DX1,TCGA-BH-A0DT,1.2637,-4.8936,LumB,Positive,Positive,Negative,BH,train
+TCGA-BH-A0DV-01Z-00-DX1,TCGA-BH-A0DV,-0.1238,-7.7305,LumB,Positive,Positive,Negative,BH,train
+TCGA-BH-A0DX-01Z-00-DX1,TCGA-BH-A0DX,0.8016,-7.3850,LumB,Positive,Positive,Negative,BH,train
+TCGA-BH-A0DZ-01Z-00-DX1,TCGA-BH-A0DZ,-0.8404,-2.6411,LumB,Positive,Positive,Positive,BH,train
+TCGA-BH-A0E0-01Z-00-DX1,TCGA-BH-A0E0,0.9002,-0.8258,LumB,Negative,Negative,Negative,BH,train
+TCGA-BH-A0E1-01Z-00-DX1,TCGA-BH-A0E1,2.5163,-1.3537,LumB,Positive,Positive,NA,BH,train
+TCGA-BH-A0E2-01Z-00-DX1,TCGA-BH-A0E2,1.6549,-6.8701,LumB,Positive,Positive,Negative,BH,train
+TCGA-BH-A0E6-01Z-00-DX1,TCGA-BH-A0E6,2.1606,-7.0582,Basal,Negative,Negative,NA,BH,train
+TCGA-BH-A0E7-01Z-00-DX1,TCGA-BH-A0E7,1.4502,-7.3853,LumA,Positive,Positive,Negative,BH,train
+TCGA-BH-A0E9-01Z-00-DX1,TCGA-BH-A0E9,-1.5575,-5.4010,Normal,Positive,Positive,Negative,BH,train
+TCGA-BH-A0EA-01Z-00-DX1,TCGA-BH-A0EA,-1.1138,1.5373,LumA,Positive,Positive,Negative,BH,train
+TCGA-BH-A0EB-01Z-00-DX1,TCGA-BH-A0EB,-0.1404,-2.0350,LumA,Positive,Positive,NA,BH,train
+TCGA-BH-A0EE-01Z-00-DX1,TCGA-BH-A0EE,1.5865,-0.8230,HER2,Negative,Negative,Positive,BH,train
+TCGA-BH-A0EI-01Z-00-DX1,TCGA-BH-A0EI,-1.4137,1.5580,Normal,Positive,Positive,Negative,BH,train
+TCGA-BH-A0GY-01Z-00-DX1,TCGA-BH-A0GY,1.3757,-4.8494,Basal,Positive,Positive,Negative,BH,train
+TCGA-BH-A0GZ-01Z-00-DX1,TCGA-BH-A0GZ,1.0661,-7.4434,Normal,Positive,Positive,NA,BH,train
+TCGA-BH-A0H0-01Z-00-DX1,TCGA-BH-A0H0,1.1294,-7.9396,LumB,Positive,Positive,Negative,BH,train
+TCGA-BH-A0H3-01Z-00-DX1,TCGA-BH-A0H3,0.3255,-7.9941,LumA,Positive,Positive,NA,BH,train
+TCGA-BH-A0H5-01Z-00-DX1,TCGA-BH-A0H5,0.2871,-7.7541,LumB,Positive,Positive,NA,BH,train
+TCGA-BH-A0H6-01Z-00-DX1,TCGA-BH-A0H6,1.2196,-7.7343,LumA,Positive,Positive,Negative,BH,train
+TCGA-BH-A0H7-01Z-00-DX1,TCGA-BH-A0H7,0.9438,-8.1276,LumB,Positive,Positive,Negative,BH,train
+TCGA-BH-A0H9-01Z-00-DX1,TCGA-BH-A0H9,2.1528,-7.0315,LumB,Positive,Positive,NA,BH,train
+TCGA-BH-A0HA-01Z-00-DX1,TCGA-BH-A0HA,-1.6599,-5.3585,LumB,Positive,Positive,NA,BH,train
+TCGA-BH-A0HB-01Z-00-DX1,TCGA-BH-A0HB,1.0293,-4.2882,LumB,Positive,Positive,NA,BH,train
+TCGA-BH-A0HF-01Z-00-DX1,TCGA-BH-A0HF,-1.1653,1.6419,Basal,Positive,Positive,Negative,BH,train
+TCGA-BH-A0HI-01Z-00-DX1,TCGA-BH-A0HI,1.1471,-7.1503,LumA,Positive,Positive,Negative,BH,train
+TCGA-BH-A0HK-01Z-00-DX1,TCGA-BH-A0HK,-1.6615,-3.4352,LumB,Positive,Negative,Negative,BH,train
+TCGA-BH-A0HL-01Z-00-DX1,TCGA-BH-A0HL,2.0907,-5.7448,LumA,Positive,Positive,NA,BH,train
+TCGA-BH-A0HN-01Z-00-DX1,TCGA-BH-A0HN,2.1411,-5.9043,LumA,Positive,Positive,NA,BH,train
+TCGA-BH-A0HO-01Z-00-DX1,TCGA-BH-A0HO,2.1428,-5.8625,LumA,Positive,Positive,Negative,BH,train
+TCGA-BH-A0HP-01Z-00-DX1,TCGA-BH-A0HP,-1.3265,-4.2872,LumB,Positive,Negative,Negative,BH,train
+TCGA-BH-A0HQ-01Z-00-DX1,TCGA-BH-A0HQ,1.2081,-7.8115,LumA,Positive,Positive,Negative,BH,train
+TCGA-BH-A0HU-01Z-00-DX1,TCGA-BH-A0HU,2.2230,-6.7803,LumB,Positive,Positive,Negative,BH,train
+TCGA-BH-A0HW-01Z-00-DX1,TCGA-BH-A0HW,2.1736,-5.9221,LumA,Positive,Negative,NA,BH,train
+TCGA-BH-A0HX-01Z-00-DX1,TCGA-BH-A0HX,-0.6992,-2.7921,LumB,Positive,Positive,Negative,BH,train
+TCGA-BH-A0HY-01Z-00-DX1,TCGA-BH-A0HY,1.1842,-8.0085,HER2,Positive,Negative,Positive,BH,train
+TCGA-BH-A0RX-01Z-00-DX1,TCGA-BH-A0RX,2.0705,-6.2169,Basal,Negative,Negative,Negative,BH,train
+TCGA-BH-A0W3-01Z-00-DX1,TCGA-BH-A0W3,1.1614,-8.2951,LumA,Positive,Positive,NA,BH,train
+TCGA-BH-A0W4-01Z-00-DX1,TCGA-BH-A0W4,1.1553,-8.3000,Normal,Positive,Positive,Negative,BH,train
+TCGA-BH-A0W5-01Z-00-DX1,TCGA-BH-A0W5,1.0636,-8.2777,Normal,Positive,Positive,NA,BH,train
+TCGA-BH-A0W7-01Z-00-DX1,TCGA-BH-A0W7,1.1615,-7.8392,LumB,Positive,Positive,Negative,BH,train
+TCGA-BH-A0WA-01Z-00-DX1,TCGA-BH-A0WA,-1.1198,-1.7779,Basal,Negative,Negative,Negative,BH,train
+TCGA-BH-A18F-01Z-00-DX1,TCGA-BH-A18F,1.8598,-7.7054,LumB,Positive,Positive,Negative,BH,train
+TCGA-BH-A18G-01Z-00-DX1,TCGA-BH-A18G,1.8577,-1.5290,Basal,Negative,Negative,Negative,BH,train
+TCGA-BH-A18H-01Z-00-DX1,TCGA-BH-A18H,1.0891,-8.2557,Normal,Positive,Positive,Positive,BH,train
+TCGA-BH-A18I-01Z-00-DX1,TCGA-BH-A18I,1.3167,-8.2865,Normal,Positive,Positive,Positive,BH,train
+TCGA-BH-A18J-01Z-00-DX1,TCGA-BH-A18J,0.0448,-2.9136,LumB,Positive,Positive,Negative,BH,train
+TCGA-BH-A18L-01Z-00-DX1,TCGA-BH-A18L,0.6712,-3.5733,LumB,Positive,Positive,Negative,BH,train
+TCGA-BH-A18M-01Z-00-DX1,TCGA-BH-A18M,-1.0054,1.4801,LumB,Positive,Positive,Positive,BH,train
+TCGA-BH-A18N-01Z-00-DX1,TCGA-BH-A18N,1.7535,-4.8967,LumB,Positive,Positive,Negative,BH,train
+TCGA-BH-A18P-01Z-00-DX1,TCGA-BH-A18P,0.4875,-4.8500,LumB,Positive,Negative,Positive,BH,train
+TCGA-BH-A18Q-01Z-00-DX1,TCGA-BH-A18Q,0.8414,-2.4158,LumB,Negative,Negative,Positive,BH,train
+TCGA-BH-A18S-01Z-00-DX1,TCGA-BH-A18S,2.1117,-6.0908,LumB,Positive,Positive,Negative,BH,train
+TCGA-BH-A18T-01Z-00-DX1,TCGA-BH-A18T,1.8934,-1.7350,Basal,Negative,Negative,Positive,BH,train
+TCGA-BH-A18U-01Z-00-DX1,TCGA-BH-A18U,1.5349,-4.5524,LumB,Positive,Positive,Positive,BH,train
+TCGA-BH-A18V-01Z-00-DX1,TCGA-BH-A18V,1.3703,-1.6981,LumB,Negative,Negative,Negative,BH,train
+TCGA-BH-A1EN-01Z-00-DX1,TCGA-BH-A1EN,3.7050,-2.6336,LumB,Negative,Negative,Positive,BH,train
+TCGA-BH-A1EO-01Z-00-DX1,TCGA-BH-A1EO,-1.4352,-5.9778,LumB,Positive,Positive,Negative,BH,train
+TCGA-BH-A1ES-01Z-00-DX1,TCGA-BH-A1ES,0.5621,-2.9392,LumB,Positive,Positive,Negative,BH,train
+TCGA-BH-A1ET-01Z-00-DX1,TCGA-BH-A1ET,0.3642,-3.7564,LumB,Positive,Positive,Negative,BH,train
+TCGA-BH-A1EU-01Z-00-DX1,TCGA-BH-A1EU,-0.5605,-3.8463,LumB,Positive,Positive,Negative,BH,train
+TCGA-BH-A1EV-01Z-00-DX1,TCGA-BH-A1EV,-0.5007,-2.0634,LumB,Positive,Positive,Positive,BH,train
+TCGA-BH-A1EW-01Z-00-DX1,TCGA-BH-A1EW,1.6279,-6.6939,LumB,Negative,Negative,Negative,BH,train
+TCGA-BH-A1EX-01Z-00-DX1,TCGA-BH-A1EX,0.1144,-7.2063,Normal,Positive,Positive,Positive,BH,train
+TCGA-BH-A1EY-01Z-00-DX1,TCGA-BH-A1EY,0.1646,-2.7170,LumA,Positive,Positive,Negative,BH,train
+TCGA-BH-A1F0-01Z-00-DX1,TCGA-BH-A1F0,1.3831,-1.8909,LumB,Negative,NA,Negative,BH,train
+TCGA-BH-A1F2-01Z-00-DX1,TCGA-BH-A1F2,-1.7885,-5.1516,LumB,Positive,Positive,Positive,BH,train
+TCGA-BH-A1F5-01Z-00-DX1,TCGA-BH-A1F5,-1.0093,-6.5588,LumA,Positive,Positive,Negative,BH,train
+TCGA-BH-A1F6-01Z-00-DX1,TCGA-BH-A1F6,0.8962,-7.0688,LumB,Negative,Negative,Negative,BH,train
+TCGA-BH-A1F8-01Z-00-DX1,TCGA-BH-A1F8,-1.7352,-5.3348,LumB,Positive,Positive,Positive,BH,train
+TCGA-BH-A1FB-01Z-00-DX1,TCGA-BH-A1FB,-1.7434,-5.3005,LumB,Positive,Positive,Negative,BH,train
+TCGA-BH-A1FC-01Z-00-DX1,TCGA-BH-A1FC,1.5749,-7.0851,LumB,Negative,Negative,Negative,BH,train
+TCGA-BH-A1FE-01Z-00-DX1,TCGA-BH-A1FE,-1.2443,-6.1744,LumB,Positive,Positive,[Not Evaluated],BH,train
+TCGA-BH-A1FG-01Z-00-DX1,TCGA-BH-A1FG,0.6723,-7.6161,LumB,Positive,Positive,Negative,BH,train
+TCGA-BH-A1FH-01Z-00-DX1,TCGA-BH-A1FH,-1.5474,-5.7500,LumB,Positive,Negative,[Not Evaluated],BH,train
+TCGA-BH-A1FJ-01Z-00-DX1,TCGA-BH-A1FJ,0.3764,-2.8404,LumB,Negative,Positive,[Not Evaluated],BH,train
+TCGA-BH-A1FL-01Z-00-DX1,TCGA-BH-A1FL,-1.4037,-4.1124,LumA,Positive,Positive,[Not Evaluated],BH,train
+TCGA-BH-A1FM-01Z-00-DX1,TCGA-BH-A1FM,0.1752,-2.9552,LumB,Positive,Negative,[Not Evaluated],BH,train
+TCGA-BH-A1FN-01Z-00-DX1,TCGA-BH-A1FN,0.3502,-2.7762,LumB,Positive,Positive,[Not Evaluated],BH,train
+TCGA-BH-A1FR-01Z-00-DX1,TCGA-BH-A1FR,1.9827,-6.6016,LumB,Positive,Positive,[Not Evaluated],BH,train
+TCGA-BH-A1FU-01Z-00-DX1,TCGA-BH-A1FU,-0.0010,-4.9353,LumB,Negative,Negative,[Not Evaluated],BH,train
+TCGA-BH-A201-01Z-00-DX1,TCGA-BH-A201,1.2264,-8.1548,Basal,Positive,Positive,Negative,BH,train
+TCGA-BH-A202-01Z-00-DX1,TCGA-BH-A202,1.7779,-6.7682,HER2,Positive,Positive,Positive,BH,train
+TCGA-BH-A209-01Z-00-DX1,TCGA-BH-A209,1.3605,-2.0599,LumB,Positive,Positive,[Not Evaluated],BH,train
+TCGA-BH-A28O-01Z-00-DX1,TCGA-BH-A28O,1.0763,-8.3222,Normal,Positive,Positive,Negative,BH,train
+TCGA-BH-A28Q-01Z-00-DX1,TCGA-BH-A28Q,-1.0090,-3.3962,LumA,Positive,Positive,Negative,BH,train
+TCGA-BH-A2L8-01Z-00-DX1,TCGA-BH-A2L8,-0.9524,-2.6095,Normal,Positive,Positive,Negative,BH,train
+TCGA-BH-A42T-01Z-00-DX1,TCGA-BH-A42T,1.1675,-8.0433,LumB,Positive,Positive,Positive,BH,train
+TCGA-BH-A42U-01Z-00-DX1,TCGA-BH-A42U,-0.3586,-6.1919,Normal,Negative,Negative,Negative,BH,train
+TCGA-BH-A42V-01Z-00-DX1,TCGA-BH-A42V,-1.1846,1.6325,Normal,Positive,Positive,Negative,BH,train
+TCGA-BH-A5IZ-01Z-00-DX1,TCGA-BH-A5IZ,1.7216,-7.7900,Basal,Positive,Negative,Negative,BH,train
+TCGA-BH-A5J0-01Z-00-DX1,TCGA-BH-A5J0,0.0941,-7.8214,Normal,Positive,Positive,Negative,BH,train
+TCGA-C8-A12L-01Z-00-DX1,TCGA-C8-A12L,1.3867,-0.6616,Basal,Negative,Negative,NA,C8,val
+TCGA-C8-A12M-01Z-00-DX1,TCGA-C8-A12M,1.2021,-1.6698,LumA,Positive,Negative,Negative,C8,val
+TCGA-C8-A12N-01Z-00-DX1,TCGA-C8-A12N,-0.0873,-1.9433,LumA,Positive,Positive,Negative,C8,val
+TCGA-C8-A12O-01Z-00-DX1,TCGA-C8-A12O,-0.1966,-1.9713,Basal,Positive,Positive,Negative,C8,val
+TCGA-C8-A12P-01Z-00-DX1,TCGA-C8-A12P,-1.6899,1.5528,HER2,Negative,Negative,Positive,C8,val
+TCGA-C8-A12Q-01Z-00-DX1,TCGA-C8-A12Q,0.1819,-2.3824,HER2,Negative,Negative,Positive,C8,val
+TCGA-C8-A12T-01Z-00-DX1,TCGA-C8-A12T,-0.2034,-1.8017,HER2,Positive,Positive,Positive,C8,val
+TCGA-C8-A12U-01Z-00-DX1,TCGA-C8-A12U,1.2066,-0.4706,LumB,Positive,Positive,Negative,C8,val
+TCGA-C8-A12V-01Z-00-DX1,TCGA-C8-A12V,1.1147,-0.5226,Basal,Negative,Negative,Negative,C8,val
+TCGA-C8-A12W-01Z-00-DX1,TCGA-C8-A12W,-0.0147,-1.9931,HER2,Positive,Positive,Negative,C8,val
+TCGA-C8-A12X-01Z-00-DX1,TCGA-C8-A12X,3.8867,-2.7611,LumA,Positive,Positive,Negative,C8,val
+TCGA-C8-A12Z-01Z-00-DX1,TCGA-C8-A12Z,1.0793,-0.1461,HER2,Negative,Negative,Positive,C8,val
+TCGA-C8-A130-01Z-00-DX1,TCGA-C8-A130,0.9587,-0.1241,HER2,Positive,Positive,NA,C8,val
+TCGA-C8-A131-01Z-00-DX1,TCGA-C8-A131,1.4400,-0.5274,Basal,Negative,Negative,Negative,C8,val
+TCGA-C8-A132-01Z-00-DX1,TCGA-C8-A132,0.9998,-0.0792,HER2,Positive,Positive,[Not Evaluated],C8,val
+TCGA-C8-A133-01Z-00-DX1,TCGA-C8-A133,-1.0257,1.5598,LumA,Positive,Positive,[Not Evaluated],C8,val
+TCGA-C8-A134-01Z-00-DX1,TCGA-C8-A134,1.2111,-0.3858,Basal,Negative,Negative,NA,C8,val
+TCGA-C8-A135-01Z-00-DX1,TCGA-C8-A135,0.9969,-0.1263,HER2,Negative,Negative,Positive,C8,val
+TCGA-C8-A137-01Z-00-DX1,TCGA-C8-A137,0.9666,-0.0704,HER2,Negative,Negative,Positive,C8,val
+TCGA-C8-A138-01Z-00-DX1,TCGA-C8-A138,1.0275,-0.0981,Basal,Positive,Negative,NA,C8,val
+TCGA-C8-A1HE-01Z-00-DX1,TCGA-C8-A1HE,-0.1788,-1.8090,LumA,Positive,Positive,NA,C8,val
+TCGA-C8-A1HF-01Z-00-DX1,TCGA-C8-A1HF,0.9336,-0.7354,HER2,Negative,Positive,Positive,C8,val
+TCGA-C8-A1HG-01Z-00-DX1,TCGA-C8-A1HG,0.5059,-1.8448,LumB,Positive,Positive,Negative,C8,val
+TCGA-C8-A1HI-01Z-00-DX1,TCGA-C8-A1HI,0.1337,-2.0073,Normal,Positive,Positive,Negative,C8,val
+TCGA-C8-A1HJ-01Z-00-DX1,TCGA-C8-A1HJ,1.2750,-0.5260,Basal,Negative,Negative,Negative,C8,val
+TCGA-C8-A1HK-01Z-00-DX1,TCGA-C8-A1HK,0.4039,-1.9264,HER2,Negative,Negative,Positive,C8,val
+TCGA-C8-A1HL-01Z-00-DX1,TCGA-C8-A1HL,0.2388,-2.2506,HER2,Positive,Negative,NA,C8,val
+TCGA-C8-A1HM-01Z-00-DX1,TCGA-C8-A1HM,1.2336,-0.4286,LumB,Positive,Positive,Negative,C8,val
+TCGA-C8-A1HN-01Z-00-DX1,TCGA-C8-A1HN,1.0221,-0.0559,LumB,Positive,Positive,NA,C8,val
+TCGA-C8-A1HO-01Z-00-DX1,TCGA-C8-A1HO,1.1545,-0.3109,LumA,Positive,Positive,Negative,C8,val
+TCGA-C8-A26V-01Z-00-DX1,TCGA-C8-A26V,1.2118,-0.3150,LumB,Positive,Positive,Negative,C8,val
+TCGA-C8-A26W-01Z-00-DX1,TCGA-C8-A26W,1.0063,-0.0779,LumB,Positive,Positive,NA,C8,val
+TCGA-C8-A26X-01Z-00-DX1,TCGA-C8-A26X,1.1151,-0.0674,HER2,Negative,Negative,Negative,C8,val
+TCGA-C8-A26Y-01Z-00-DX1,TCGA-C8-A26Y,1.3071,0.1348,HER2,Negative,Negative,Negative,C8,val
+TCGA-C8-A26Z-01Z-00-DX1,TCGA-C8-A26Z,-0.2528,-1.8804,LumA,Positive,Positive,Negative,C8,val
+TCGA-C8-A273-01Z-00-DX1,TCGA-C8-A273,0.2094,-2.2852,LumB,Positive,Positive,Negative,C8,val
+TCGA-C8-A274-01Z-00-DX1,TCGA-C8-A274,-0.3875,-2.2694,LumA,Positive,Positive,Negative,C8,val
+TCGA-C8-A278-01Z-00-DX1,TCGA-C8-A278,1.1969,-0.5742,HER2,Negative,Negative,Positive,C8,val
+TCGA-C8-A27A-01Z-00-DX1,TCGA-C8-A27A,1.1804,-0.3505,LumB,Positive,Positive,Negative,C8,val
+TCGA-C8-A27B-01Z-00-DX1,TCGA-C8-A27B,1.2414,-0.5100,Basal,Negative,Negative,Negative,C8,val
+TCGA-C8-A3M7-01Z-00-DX1,TCGA-C8-A3M7,-0.9508,-2.5349,Basal,Negative,Negative,Negative,C8,val
+TCGA-C8-A3M8-01Z-00-DX1,TCGA-C8-A3M8,1.1266,0.1615,LumB,Positive,Positive,Positive,C8,val
+TCGA-C8-A8HP-01Z-00-DX1,TCGA-C8-A8HP,1.2390,-0.3553,HER2,Negative,Negative,Positive,C8,val
+TCGA-C8-A8HQ-01Z-00-DX1,TCGA-C8-A8HQ,1.0122,-0.1050,LumB,Positive,Positive,Negative,C8,val
+TCGA-D8-A13Y-01Z-00-DX1,TCGA-D8-A13Y,1.1771,-3.5779,LumB,Positive,Positive,Negative,D8,train
+TCGA-D8-A13Z-01Z-00-DX1,TCGA-D8-A13Z,2.5784,-2.1976,Basal,Negative,Negative,Negative,D8,train
+TCGA-D8-A140-01Z-00-DX1,TCGA-D8-A140,0.8287,-7.4302,LumA,Positive,Positive,Positive,D8,train
+TCGA-D8-A141-01Z-00-DX1,TCGA-D8-A141,0.4075,-7.4699,Normal,Positive,Positive,Negative,D8,train
+TCGA-D8-A142-01Z-00-DX1,TCGA-D8-A142,2.6067,-2.1727,Basal,Negative,Negative,NA,D8,train
+TCGA-D8-A143-01Z-00-DX1,TCGA-D8-A143,1.7152,-1.1728,Basal,Negative,Negative,Negative,D8,train
+TCGA-D8-A145-01Z-00-DX1,TCGA-D8-A145,0.6416,-5.8292,Normal,Positive,Positive,NA,D8,train
+TCGA-D8-A146-01Z-00-DX1,TCGA-D8-A146,0.8389,-5.5374,LumA,Positive,Positive,Negative,D8,train
+TCGA-D8-A147-01Z-00-DX1,TCGA-D8-A147,1.2665,-2.4097,Basal,Negative,Negative,Negative,D8,train
+TCGA-D8-A1J8-01Z-00-DX1,TCGA-D8-A1J8,1.1483,-2.5274,LumB,Positive,Positive,Negative,D8,train
+TCGA-D8-A1J9-01Z-00-DX1,TCGA-D8-A1J9,0.7845,-5.3147,HER2,Positive,Negative,Positive,D8,train
+TCGA-D8-A1JA-01Z-00-DX1,TCGA-D8-A1JA,2.5419,-2.1258,HER2,Negative,Negative,Positive,D8,train
+TCGA-D8-A1JB-01Z-00-DX1,TCGA-D8-A1JB,0.7352,-5.8849,LumA,Positive,Positive,NA,D8,train
+TCGA-D8-A1JC-01Z-00-DX1,TCGA-D8-A1JC,-1.5041,1.4122,LumB,Positive,Positive,Negative,D8,train
+TCGA-D8-A1JD-01Z-00-DX1,TCGA-D8-A1JD,0.8026,-3.2816,LumB,Positive,Positive,Negative,D8,train
+TCGA-D8-A1JE-01Z-00-DX1,TCGA-D8-A1JE,0.9765,-3.2925,LumA,Positive,Positive,Negative,D8,train
+TCGA-D8-A1JF-01Z-00-DX1,TCGA-D8-A1JF,0.7767,-5.9867,HER2,Negative,Negative,Negative,D8,train
+TCGA-D8-A1JG-01Z-00-DX1,TCGA-D8-A1JG,2.5537,-2.1746,HER2,Negative,Negative,NA,D8,train
+TCGA-D8-A1JH-01Z-00-DX1,TCGA-D8-A1JH,0.6131,-5.2590,LumA,Positive,Positive,Negative,D8,train
+TCGA-D8-A1JI-01Z-00-DX1,TCGA-D8-A1JI,1.0750,-6.2016,LumA,Positive,Positive,Negative,D8,train
+TCGA-D8-A1JJ-01Z-00-DX1,TCGA-D8-A1JJ,1.0443,-3.7506,LumB,Positive,Positive,Negative,D8,train
+TCGA-D8-A1JK-01Z-00-DX1,TCGA-D8-A1JK,2.5861,-2.1564,Basal,Negative,Positive,Negative,D8,train
+TCGA-D8-A1JL-01Z-00-DX1,TCGA-D8-A1JL,2.0675,-1.7497,Basal,Negative,Negative,Negative,D8,train
+TCGA-D8-A1JM-01Z-00-DX1,TCGA-D8-A1JM,2.1250,-1.3277,HER2,Positive,Negative,Negative,D8,train
+TCGA-D8-A1JN-01Z-00-DX1,TCGA-D8-A1JN,-0.5486,-3.9675,LumA,Positive,Positive,NA,D8,train
+TCGA-D8-A1JP-01Z-00-DX1,TCGA-D8-A1JP,0.8454,-5.6797,LumB,Positive,Positive,Negative,D8,train
+TCGA-D8-A1JS-01Z-00-DX1,TCGA-D8-A1JS,0.3430,-6.1966,LumA,Positive,Positive,Negative,D8,train
+TCGA-D8-A1JT-01Z-00-DX1,TCGA-D8-A1JT,2.5528,-1.4145,LumA,Positive,Positive,NA,D8,train
+TCGA-D8-A1JU-01Z-00-DX1,TCGA-D8-A1JU,0.8072,-5.2319,LumA,Positive,Positive,Negative,D8,train
+TCGA-D8-A1X5-01Z-00-DX1,TCGA-D8-A1X5,1.0135,-3.4802,LumA,Positive,Positive,Positive,D8,train
+TCGA-D8-A1X6-01Z-00-DX1,TCGA-D8-A1X6,0.9544,-3.4512,LumA,Positive,Positive,Negative,D8,train
+TCGA-D8-A1X7-01Z-00-DX1,TCGA-D8-A1X7,3.7664,-2.8052,LumA,Positive,Positive,Negative,D8,train
+TCGA-D8-A1X8-01Z-00-DX1,TCGA-D8-A1X8,0.6948,-5.8918,LumA,Positive,NA,Negative,D8,train
+TCGA-D8-A1X9-01Z-00-DX1,TCGA-D8-A1X9,0.9735,-3.4210,LumB,Positive,Positive,NA,D8,train
+TCGA-D8-A1XA-01Z-00-DX1,TCGA-D8-A1XA,0.5657,-6.6197,LumA,Positive,Positive,NA,D8,train
+TCGA-D8-A1XB-01Z-00-DX1,TCGA-D8-A1XB,0.9331,-5.8449,LumA,Positive,Positive,Negative,D8,train
+TCGA-D8-A1XC-01Z-00-DX1,TCGA-D8-A1XC,3.4505,-2.6188,LumA,Positive,Positive,Negative,D8,train
+TCGA-D8-A1XD-01Z-00-DX1,TCGA-D8-A1XD,1.1233,-3.8792,Normal,Positive,Positive,Negative,D8,train
+TCGA-D8-A1XF-01Z-00-DX1,TCGA-D8-A1XF,0.8030,-5.7230,LumB,Positive,Positive,Negative,D8,train
+TCGA-D8-A1XG-01Z-00-DX1,TCGA-D8-A1XG,1.2713,-3.7298,Normal,Positive,Negative,Negative,D8,train
+TCGA-D8-A1XJ-01Z-00-DX1,TCGA-D8-A1XJ,3.5043,-2.6440,HER2,Positive,Positive,Positive,D8,train
+TCGA-D8-A1XK-01Z-00-DX1,TCGA-D8-A1XK,1.6841,-0.9160,Basal,Negative,Negative,Negative,D8,train
+TCGA-D8-A1XL-01Z-00-DX1,TCGA-D8-A1XL,-0.6328,0.3988,LumB,Positive,Positive,NA,D8,train
+TCGA-D8-A1XM-01Z-00-DX1,TCGA-D8-A1XM,0.8201,-6.6090,LumB,Positive,Positive,Negative,D8,train
+TCGA-D8-A1XO-01Z-00-DX1,TCGA-D8-A1XO,0.6222,-6.4735,LumA,Positive,Positive,Negative,D8,train
+TCGA-D8-A1XQ-01Z-00-DX1,TCGA-D8-A1XQ,2.0486,-1.8681,Basal,Negative,Negative,Negative,D8,train
+TCGA-D8-A1XR-01Z-00-DX1,TCGA-D8-A1XR,1.0532,-5.3254,LumA,Positive,Positive,Negative,D8,train
+TCGA-D8-A1XS-01Z-00-DX1,TCGA-D8-A1XS,0.9827,-5.6149,LumB,Positive,Positive,Positive,D8,train
+TCGA-D8-A1XT-01Z-00-DX1,TCGA-D8-A1XT,0.7843,-5.6777,HER2,Negative,Negative,Positive,D8,train
+TCGA-D8-A1XU-01Z-00-DX1,TCGA-D8-A1XU,0.8523,-5.8739,Normal,Positive,Positive,Negative,D8,train
+TCGA-D8-A1XV-01Z-00-DX1,TCGA-D8-A1XV,3.6155,-2.7192,LumA,Positive,Positive,NA,D8,train
+TCGA-D8-A1XW-01Z-00-DX1,TCGA-D8-A1XW,2.1659,-1.6620,Basal,Negative,Positive,Negative,D8,train
+TCGA-D8-A1XY-01Z-00-DX1,TCGA-D8-A1XY,1.1337,-5.9031,LumA,Positive,Positive,Positive,D8,train
+TCGA-D8-A1XZ-01Z-00-DX1,TCGA-D8-A1XZ,1.1411,-6.3563,LumB,Positive,Negative,Negative,D8,train
+TCGA-D8-A1Y0-01Z-00-DX1,TCGA-D8-A1Y0,1.1865,-6.9107,LumB,Positive,Positive,Negative,D8,train
+TCGA-D8-A1Y1-01Z-00-DX1,TCGA-D8-A1Y1,0.0958,-3.4645,LumB,Positive,Positive,Negative,D8,train
+TCGA-D8-A1Y2-01Z-00-DX1,TCGA-D8-A1Y2,0.8639,-5.5718,LumB,Positive,Positive,NA,D8,train
+TCGA-D8-A1Y3-01Z-00-DX1,TCGA-D8-A1Y3,1.0955,-3.5236,HER2,Positive,Positive,NA,D8,train
+TCGA-D8-A27E-01Z-00-DX1,TCGA-D8-A27E,0.6765,-6.6636,LumA,Positive,Positive,Negative,D8,train
+TCGA-D8-A27F-01Z-00-DX1,TCGA-D8-A27F,2.0052,-1.8475,Basal,Negative,Negative,Negative,D8,train
+TCGA-D8-A27G-01Z-00-DX1,TCGA-D8-A27G,0.7037,-6.0089,LumA,Positive,Positive,NA,D8,train
+TCGA-D8-A27H-01Z-00-DX1,TCGA-D8-A27H,0.6893,-6.1279,Basal,Negative,Negative,Negative,D8,train
+TCGA-D8-A27I-01Z-00-DX1,TCGA-D8-A27I,0.4710,-6.6752,Normal,Positive,Positive,Negative,D8,train
+TCGA-D8-A27K-01Z-00-DX1,TCGA-D8-A27K,1.0142,-3.4709,LumA,Positive,Positive,Negative,D8,train
+TCGA-D8-A27L-01Z-00-DX1,TCGA-D8-A27L,0.8621,-6.1529,LumA,Positive,Positive,Negative,D8,train
+TCGA-D8-A27M-01Z-00-DX1,TCGA-D8-A27M,1.1097,-6.7024,Basal,Negative,Negative,Negative,D8,train
+TCGA-D8-A27N-01Z-00-DX1,TCGA-D8-A27N,0.5992,-3.9020,HER2,Positive,Positive,Positive,D8,train
+TCGA-D8-A27P-01Z-00-DX1,TCGA-D8-A27P,1.0748,-6.8039,Normal,Positive,Positive,Negative,D8,train
+TCGA-D8-A27R-01Z-00-DX1,TCGA-D8-A27R,1.0492,-3.5200,HER2,Positive,Positive,NA,D8,train
+TCGA-D8-A27T-01Z-00-DX1,TCGA-D8-A27T,0.1557,-3.5497,LumA,Positive,Positive,Negative,D8,train
+TCGA-D8-A27V-01Z-00-DX1,TCGA-D8-A27V,0.5942,-5.6149,LumA,Positive,Positive,Negative,D8,train
+TCGA-D8-A27W-01Z-00-DX1,TCGA-D8-A27W,3.8163,-2.8300,LumB,Positive,Positive,NA,D8,train
+TCGA-D8-A3Z5-01Z-00-DX1,TCGA-D8-A3Z5,0.5236,-5.6503,LumA,Positive,Positive,Negative,D8,train
+TCGA-D8-A3Z6-01Z-00-DX1,TCGA-D8-A3Z6,0.5896,-5.5860,LumA,Positive,Positive,Negative,D8,train
+TCGA-D8-A4Z1-01Z-00-DX1,TCGA-D8-A4Z1,0.5061,-6.7543,LumA,Positive,Positive,Negative,D8,train
+TCGA-D8-A73U-01Z-00-DX1,TCGA-D8-A73U,0.7322,-6.7038,LumA,Positive,Positive,Negative,D8,train
+TCGA-D8-A73W-01Z-00-DX1,TCGA-D8-A73W,3.8205,-2.7927,LumA,Positive,Negative,Negative,D8,train
+TCGA-D8-A73X-01Z-00-DX1,TCGA-D8-A73X,0.9786,-5.9279,LumA,Positive,Positive,Negative,D8,train
+TCGA-E2-A105-01Z-00-DX1,TCGA-E2-A105,-0.2977,-7.2166,LumB,Positive,Positive,NA,E2,train
+TCGA-E2-A106-01Z-00-DX1,TCGA-E2-A106,-0.7319,-6.7284,LumA,Positive,Positive,NA,E2,train
+TCGA-E2-A107-01Z-00-DX1,TCGA-E2-A107,0.1520,-4.9989,LumB,Positive,Negative,NA,E2,train
+TCGA-E2-A108-01Z-00-DX1,TCGA-E2-A108,-0.4093,-7.3289,Basal,Positive,Positive,Negative,E2,train
+TCGA-E2-A109-01Z-00-DX1,TCGA-E2-A109,1.1763,-4.4774,LumB,Positive,Negative,NA,E2,train
+TCGA-E2-A10A-01Z-00-DX1,TCGA-E2-A10A,1.1559,-4.4443,LumA,Positive,Positive,Positive,E2,train
+TCGA-E2-A10B-01Z-00-DX1,TCGA-E2-A10B,1.1300,-4.0978,Normal,Positive,Positive,NA,E2,train
+TCGA-E2-A10C-01Z-00-DX1,TCGA-E2-A10C,-0.6023,-6.6963,LumB,Positive,Positive,Negative,E2,train
+TCGA-E2-A10E-01Z-00-DX1,TCGA-E2-A10E,-0.7527,-6.8199,LumA,Positive,Positive,NA,E2,train
+TCGA-E2-A10F-01Z-00-DX1,TCGA-E2-A10F,-1.0463,-6.4051,Normal,Positive,Positive,NA,E2,train
+TCGA-E2-A14N-01Z-00-DX1,TCGA-E2-A14N,0.9385,-1.2490,Basal,Negative,Negative,Negative,E2,train
+TCGA-E2-A14O-01Z-00-DX1,TCGA-E2-A14O,-0.3666,-6.9009,LumB,Positive,Positive,NA,E2,train
+TCGA-E2-A14P-01Z-00-DX1,TCGA-E2-A14P,1.3621,-3.7557,HER2,Negative,Negative,Positive,E2,train
+TCGA-E2-A14Q-01Z-00-DX1,TCGA-E2-A14Q,-0.8908,-6.0539,Normal,Positive,Positive,Negative,E2,train
+TCGA-E2-A14R-01Z-00-DX1,TCGA-E2-A14R,1.6322,-4.6341,Basal,Negative,Negative,Negative,E2,train
+TCGA-E2-A14S-01Z-00-DX1,TCGA-E2-A14S,-0.0858,-7.1696,LumB,Positive,Positive,NA,E2,train
+TCGA-E2-A14T-01Z-00-DX1,TCGA-E2-A14T,0.3160,-6.1638,LumB,Positive,Positive,Negative,E2,train
+TCGA-E2-A14U-01Z-00-DX1,TCGA-E2-A14U,-1.0176,-6.0481,LumA,Positive,Positive,NA,E2,train
+TCGA-E2-A14V-01Z-00-DX1,TCGA-E2-A14V,0.2300,-5.0383,HER2,Positive,Positive,Positive,E2,train
+TCGA-E2-A14W-01Z-00-DX1,TCGA-E2-A14W,-0.0314,-7.0548,LumB,Positive,Positive,[Not Evaluated],E2,train
+TCGA-E2-A14X-01Z-00-DX1,TCGA-E2-A14X,1.3161,-3.6252,Basal,Negative,Negative,Negative,E2,train
+TCGA-E2-A14Y-01Z-00-DX1,TCGA-E2-A14Y,2.0814,-1.8829,Basal,Positive,Positive,NA,E2,train
+TCGA-E2-A14Z-01Z-00-DX1,TCGA-E2-A14Z,-0.0301,-6.9219,Basal,Positive,Positive,Negative,E2,train
+TCGA-E2-A150-01Z-00-DX1,TCGA-E2-A150,0.8696,-5.0338,Basal,Negative,Negative,Negative,E2,train
+TCGA-E2-A152-01Z-00-DX1,TCGA-E2-A152,0.1379,-4.6377,HER2,Positive,Negative,Positive,E2,train
+TCGA-E2-A153-01Z-00-DX1,TCGA-E2-A153,-1.0459,-6.2341,LumB,Positive,Positive,Negative,E2,train
+TCGA-E2-A154-01Z-00-DX1,TCGA-E2-A154,-0.4100,-7.0983,LumA,Positive,Positive,Negative,E2,train
+TCGA-E2-A155-01Z-00-DX1,TCGA-E2-A155,1.2473,-3.5796,LumB,Positive,Negative,Negative,E2,train
+TCGA-E2-A156-01Z-00-DX1,TCGA-E2-A156,1.2312,-4.5625,LumA,Positive,Positive,Negative,E2,train
+TCGA-E2-A158-01Z-00-DX1,TCGA-E2-A158,0.4943,-7.3397,LumB,Negative,Negative,Negative,E2,train
+TCGA-E2-A159-01Z-00-DX1,TCGA-E2-A159,1.7576,-1.8518,Basal,Negative,Negative,[Not Evaluated],E2,train
+TCGA-E2-A15A-01Z-00-DX1,TCGA-E2-A15A,-0.9292,-5.8804,LumB,Positive,Positive,Negative,E2,train
+TCGA-E2-A15C-01Z-00-DX1,TCGA-E2-A15C,0.0318,-5.1256,LumA,Positive,Positive,NA,E2,train
+TCGA-E2-A15D-01Z-00-DX1,TCGA-E2-A15D,1.0333,-4.1989,LumA,Positive,Positive,NA,E2,train
+TCGA-E2-A15E-06Z-00-DX1,TCGA-E2-A15E,2.0361,-0.8695,LumB,Positive,Positive,[Not Evaluated],E2,train
+TCGA-E2-A15F-01Z-00-DX1,TCGA-E2-A15F,0.5059,-7.1344,Normal,Positive,Positive,Negative,E2,train
+TCGA-E2-A15G-01Z-00-DX1,TCGA-E2-A15G,-0.8279,-5.1572,LumA,Positive,Positive,Negative,E2,train
+TCGA-E2-A15H-01Z-00-DX1,TCGA-E2-A15H,-1.0846,-5.8177,HER2,Positive,Positive,NA,E2,train
+TCGA-E2-A15I-01Z-00-DX1,TCGA-E2-A15I,0.4032,-7.6935,LumB,Positive,Positive,NA,E2,train
+TCGA-E2-A15J-01Z-00-DX1,TCGA-E2-A15J,0.7149,-4.7617,LumA,Positive,Positive,NA,E2,train
+TCGA-E2-A15K-01Z-00-DX1,TCGA-E2-A15K,-0.2245,-7.1746,LumB,Positive,Positive,NA,E2,train
+TCGA-E2-A15L-01Z-00-DX1,TCGA-E2-A15L,0.1606,-4.9416,LumB,Positive,Positive,NA,E2,train
+TCGA-E2-A15M-01Z-00-DX1,TCGA-E2-A15M,0.2643,-7.1824,LumB,Positive,Positive,Negative,E2,train
+TCGA-E2-A15O-01Z-00-DX1,TCGA-E2-A15O,-0.1148,-6.9672,LumB,Positive,Positive,NA,E2,train
+TCGA-E2-A15P-01Z-00-DX1,TCGA-E2-A15P,-0.1885,-7.0191,LumA,Positive,Positive,Negative,E2,train
+TCGA-E2-A15R-01Z-00-DX1,TCGA-E2-A15R,-0.7860,-6.7133,LumA,Positive,Positive,NA,E2,train
+TCGA-E2-A15S-01Z-00-DX1,TCGA-E2-A15S,-0.9826,-6.2667,LumB,Positive,Negative,NA,E2,train
+TCGA-E2-A15T-01Z-00-DX1,TCGA-E2-A15T,3.6943,-2.6664,LumB,Positive,Positive,NA,E2,train
+TCGA-E2-A1AZ-01Z-00-DX1,TCGA-E2-A1AZ,1.5790,-4.4177,Basal,Negative,Negative,NA,E2,train
+TCGA-E2-A1B0-01Z-00-DX1,TCGA-E2-A1B0,0.8573,-4.9763,HER2,Negative,Negative,Positive,E2,train
+TCGA-E2-A1B1-01Z-00-DX1,TCGA-E2-A1B1,1.0886,-7.5774,HER2,Positive,Positive,NA,E2,train
+TCGA-E2-A1B4-01Z-00-DX1,TCGA-E2-A1B4,-0.4236,-7.4000,LumA,Positive,Positive,Negative,E2,train
+TCGA-E2-A1B5-01Z-00-DX1,TCGA-E2-A1B5,-0.2169,-6.4431,Normal,Positive,Positive,Negative,E2,train
+TCGA-E2-A1B6-01Z-00-DX1,TCGA-E2-A1B6,1.1334,-6.9578,Basal,Negative,Negative,NA,E2,train
+TCGA-E2-A1BC-01Z-00-DX1,TCGA-E2-A1BC,-0.1742,-7.6571,LumB,Positive,Positive,Negative,E2,train
+TCGA-E2-A1BD-01Z-00-DX1,TCGA-E2-A1BD,1.0786,-4.1468,Normal,Positive,Positive,NA,E2,train
+TCGA-E2-A1IE-01Z-00-DX1,TCGA-E2-A1IE,-0.1914,-7.3793,LumB,Positive,Positive,NA,E2,train
+TCGA-E2-A1IF-01Z-00-DX1,TCGA-E2-A1IF,0.4388,-3.2609,LumB,Positive,Positive,Negative,E2,train
+TCGA-E2-A1IG-01Z-00-DX1,TCGA-E2-A1IG,-0.4100,-2.7546,LumB,Positive,Positive,Negative,E2,train
+TCGA-E2-A1IH-01Z-00-DX1,TCGA-E2-A1IH,-0.1848,-7.4847,LumA,Positive,Positive,NA,E2,train
+TCGA-E2-A1II-01Z-00-DX1,TCGA-E2-A1II,1.2143,-1.1574,Basal,Negative,Positive,Negative,E2,train
+TCGA-E2-A1IJ-01Z-00-DX1,TCGA-E2-A1IJ,-0.8005,-6.7133,LumA,Positive,Positive,NA,E2,train
+TCGA-E2-A1IK-01Z-00-DX1,TCGA-E2-A1IK,3.7756,-2.7084,Normal,Positive,Positive,Negative,E2,train
+TCGA-E2-A1IL-01Z-00-DX1,TCGA-E2-A1IL,-0.7779,-6.8905,LumA,Positive,Positive,Negative,E2,train
+TCGA-E2-A1IN-01Z-00-DX1,TCGA-E2-A1IN,-0.5751,-6.6585,LumA,Positive,Positive,Negative,E2,train
+TCGA-E2-A1IO-01Z-00-DX1,TCGA-E2-A1IO,-0.2661,-7.2496,Normal,Positive,Positive,NA,E2,train
+TCGA-E2-A1IU-01Z-00-DX1,TCGA-E2-A1IU,-0.8969,-6.8945,LumA,Positive,Positive,Negative,E2,train
+TCGA-E2-A1L6-01Z-00-DX1,TCGA-E2-A1L6,-1.5779,-5.4981,Normal,Positive,Positive,Negative,E2,train
+TCGA-E2-A1L7-01Z-00-DX1,TCGA-E2-A1L7,-0.1302,-7.2945,LumB,Negative,Negative,Negative,E2,train
+TCGA-E2-A1L8-01Z-00-DX1,TCGA-E2-A1L8,-0.8338,-6.8858,LumA,Positive,Positive,NA,E2,train
+TCGA-E2-A1L9-01Z-00-DX1,TCGA-E2-A1L9,0.6566,-4.7153,Normal,Positive,Positive,Negative,E2,train
+TCGA-E2-A1LA-01Z-00-DX1,TCGA-E2-A1LA,-1.1299,-6.6088,LumB,Positive,Positive,NA,E2,train
+TCGA-E2-A1LB-01Z-00-DX1,TCGA-E2-A1LB,-0.5408,-7.1003,LumB,Negative,Negative,Positive,E2,train
+TCGA-E2-A1LE-01Z-00-DX1,TCGA-E2-A1LE,-0.9030,-6.7948,HER2,Negative,Negative,Positive,E2,train
+TCGA-E2-A1LG-01Z-00-DX1,TCGA-E2-A1LG,-0.1748,-7.7709,Basal,Negative,Negative,NA,E2,train
+TCGA-E2-A1LH-01Z-00-DX1,TCGA-E2-A1LH,-0.3834,-6.5673,LumB,Negative,Negative,Negative,E2,train
+TCGA-E2-A1LI-01Z-00-DX1,TCGA-E2-A1LI,-0.0404,-6.2312,Basal,Negative,Negative,NA,E2,train
+TCGA-E2-A1LK-01Z-00-DX1,TCGA-E2-A1LK,2.1208,-1.6475,Basal,Negative,Negative,NA,E2,train
+TCGA-E2-A1LL-01Z-00-DX1,TCGA-E2-A1LL,2.3799,-1.7962,Basal,Negative,Negative,Negative,E2,train
+TCGA-E2-A1LS-01Z-00-DX1,TCGA-E2-A1LS,-0.2806,-7.5250,LumB,Negative,Negative,Negative,E2,train
+TCGA-E2-A2P5-01Z-00-DX1,TCGA-E2-A2P5,0.0745,-3.1914,LumB,Positive,Positive,[Not Evaluated],E2,train
+TCGA-E2-A2P6-01Z-00-DX1,TCGA-E2-A2P6,-1.7088,-4.4021,LumB,Positive,Positive,[Not Evaluated],E2,train
+TCGA-E2-A3DX-01Z-00-DX1,TCGA-E2-A3DX,0.4977,-8.0257,LumA,Positive,Positive,[Not Evaluated],E2,train
+TCGA-E2-A56Z-01Z-00-DX1,TCGA-E2-A56Z,-0.6754,-6.9269,LumB,Positive,Positive,NA,E2,train
+TCGA-E2-A570-01Z-00-DX1,TCGA-E2-A570,-0.8104,-6.7634,LumB,Positive,Positive,NA,E2,train
+TCGA-E2-A572-01Z-00-DX1,TCGA-E2-A572,0.5245,-3.6991,Normal,Positive,Positive,NA,E2,train
+TCGA-E2-A573-01Z-00-DX1,TCGA-E2-A573,0.0236,-7.4508,Basal,Negative,Negative,NA,E2,train
+TCGA-E2-A574-01Z-00-DX1,TCGA-E2-A574,0.8901,-6.7448,Basal,Negative,Negative,NA,E2,train
+TCGA-E2-A576-01Z-00-DX1,TCGA-E2-A576,-0.0565,-7.2339,LumB,Positive,Positive,NA,E2,train
+TCGA-E2-A9RU-01Z-00-DX1,TCGA-E2-A9RU,1.2148,-3.3239,HER2,Positive,Negative,NA,E2,train
+TCGA-E9-A1N4-01Z-00-DX1,TCGA-E9-A1N4,2.4734,1.5282,LumB,Positive,Positive,Positive,E9,val
+TCGA-E9-A1N5-01Z-00-DX1,TCGA-E9-A1N5,2.5017,1.5562,LumB,Positive,Positive,Positive,E9,val
+TCGA-E9-A1N6-01Z-00-DX1,TCGA-E9-A1N6,2.4802,1.5915,LumB,Positive,Positive,Positive,E9,val
+TCGA-E9-A1N8-01Z-00-DX1,TCGA-E9-A1N8,2.5148,1.5420,Basal,Negative,[Not Evaluated],Negative,E9,val
+TCGA-E9-A1N9-01Z-00-DX1,TCGA-E9-A1N9,2.4492,1.5262,LumB,Negative,Positive,Positive,E9,val
+TCGA-E9-A1NA-01Z-00-DX1,TCGA-E9-A1NA,2.4690,1.4970,LumB,Positive,Positive,Positive,E9,val
+TCGA-E9-A1NC-01Z-00-DX1,TCGA-E9-A1NC,2.4963,1.6306,Basal,Negative,Positive,Positive,E9,val
+TCGA-E9-A1ND-01Z-00-DX1,TCGA-E9-A1ND,2.5048,1.5186,LumB,Negative,Negative,Positive,E9,val
+TCGA-E9-A1NE-01Z-00-DX1,TCGA-E9-A1NE,2.4910,1.5617,LumB,Positive,Positive,Negative,E9,val
+TCGA-E9-A1NF-01Z-00-DX1,TCGA-E9-A1NF,2.4866,1.6010,LumB,Positive,Positive,Negative,E9,val
+TCGA-E9-A1NG-01Z-00-DX1,TCGA-E9-A1NG,2.5037,1.6417,LumB,Positive,Positive,Negative,E9,val
+TCGA-E9-A1NH-01Z-00-DX1,TCGA-E9-A1NH,2.4720,1.6016,LumA,Positive,Positive,Negative,E9,val
+TCGA-E9-A1NI-01Z-00-DX1,TCGA-E9-A1NI,2.5035,1.5765,LumB,Positive,Positive,Negative,E9,val
+TCGA-E9-A1R2-01Z-00-DX1,TCGA-E9-A1R2,-0.5768,-2.0483,Normal,Positive,Negative,NA,E9,val
+TCGA-E9-A227-01Z-00-DX1,TCGA-E9-A227,-0.6425,-1.9747,Normal,Positive,Positive,Negative,E9,val
+TCGA-E9-A22A-01Z-00-DX1,TCGA-E9-A22A,0.1219,-2.6981,HER2,Positive,Negative,Negative,E9,val
+TCGA-E9-A22B-01Z-00-DX1,TCGA-E9-A22B,0.3991,-2.6758,Normal,Positive,Negative,Negative,E9,val
+TCGA-E9-A22D-01Z-00-DX1,TCGA-E9-A22D,0.6029,-2.3031,LumB,Positive,Positive,Positive,E9,val
+TCGA-E9-A22E-01Z-00-DX1,TCGA-E9-A22E,0.0403,-2.8723,Normal,Positive,Positive,Positive,E9,val
+TCGA-E9-A22G-01Z-00-DX1,TCGA-E9-A22G,1.4656,-1.4251,Basal,Negative,Negative,Positive,E9,val
+TCGA-E9-A22H-01Z-00-DX1,TCGA-E9-A22H,-0.1841,-3.2764,LumB,Positive,Positive,Positive,E9,val
+TCGA-E9-A295-01Z-00-DX1,TCGA-E9-A295,-0.0843,-3.1392,Normal,Positive,Positive,Positive,E9,val
+TCGA-E9-A3Q9-01Z-00-DX1,TCGA-E9-A3Q9,1.3258,-5.2910,LumA,Positive,Positive,NA,E9,val
+TCGA-E9-A3X8-01Z-00-DX1,TCGA-E9-A3X8,-0.4188,-2.8126,Normal,Positive,Positive,Positive,E9,val
+TCGA-E9-A54X-01Z-00-DX1,TCGA-E9-A54X,3.3652,-2.4646,LumA,Positive,Positive,Negative,E9,val
+TCGA-E9-A54Y-01Z-00-DX1,TCGA-E9-A54Y,-0.4861,-2.6357,LumB,Positive,Positive,Negative,E9,val
+TCGA-E9-A5FK-01Z-00-DX1,TCGA-E9-A5FK,-1.4487,-4.7031,Normal,Positive,Positive,Negative,E9,val
+TCGA-E9-A5FL-01Z-00-DX1,TCGA-E9-A5FL,2.3587,-1.9650,Basal,Negative,Negative,Negative,E9,val
+TCGA-E9-A6HE-01Z-00-DX1,TCGA-E9-A6HE,-0.9709,-3.8574,LumB,Positive,Positive,Negative,E9,val
+TCGA-EW-A1IW-01Z-00-DX1,TCGA-EW-A1IW,0.2624,-8.0920,LumB,Positive,Positive,Positive,EW,test
+TCGA-EW-A1IX-01Z-00-DX1,TCGA-EW-A1IX,-0.6210,-5.8197,LumA,Positive,Positive,Negative,EW,test
+TCGA-EW-A1IY-01Z-00-DX1,TCGA-EW-A1IY,1.9681,-6.7643,LumB,Positive,Positive,Negative,EW,test
+TCGA-EW-A1IZ-01Z-00-DX1,TCGA-EW-A1IZ,1.8829,-7.8620,LumB,Positive,Positive,Negative,EW,test
+TCGA-EW-A1J1-01Z-00-DX1,TCGA-EW-A1J1,0.4520,-1.6829,LumA,Positive,Positive,Negative,EW,test
+TCGA-EW-A1J2-01Z-00-DX1,TCGA-EW-A1J2,1.2199,-8.0094,LumA,Positive,Positive,Negative,EW,test
+TCGA-EW-A1J3-01Z-00-DX1,TCGA-EW-A1J3,1.2707,-8.1194,LumB,Positive,Positive,Positive,EW,test
+TCGA-EW-A1J5-01Z-00-DX1,TCGA-EW-A1J5,-0.9603,-2.6958,LumB,Positive,Positive,Negative,EW,test
+TCGA-EW-A1J6-01Z-00-DX1,TCGA-EW-A1J6,1.7865,-7.7820,LumB,Positive,Positive,Negative,EW,test
+TCGA-EW-A1OV-01Z-00-DX1,TCGA-EW-A1OV,1.9035,-7.7702,HER2,Negative,Negative,Negative,EW,test
+TCGA-EW-A1OW-01Z-00-DX1,TCGA-EW-A1OW,0.2677,-7.9993,Basal,Negative,Negative,Negative,EW,test
+TCGA-EW-A1OX-01Z-00-DX1,TCGA-EW-A1OX,3.8123,-2.7501,LumA,Positive,Positive,Negative,EW,test
+TCGA-EW-A1OY-01Z-00-DX1,TCGA-EW-A1OY,-0.4846,-5.2241,LumB,Positive,Positive,Negative,EW,test
+TCGA-EW-A1OZ-01Z-00-DX1,TCGA-EW-A1OZ,0.2975,-2.6248,HER2,Positive,Negative,NA,EW,test
+TCGA-EW-A1P0-01Z-00-DX1,TCGA-EW-A1P0,3.7964,-2.7840,LumA,Positive,Negative,Negative,EW,test
+TCGA-EW-A1P1-01Z-00-DX1,TCGA-EW-A1P1,0.2839,-7.9352,Basal,Negative,Negative,NA,EW,test
+TCGA-EW-A1P3-01Z-00-DX1,TCGA-EW-A1P3,0.3933,-2.4620,LumB,Positive,Positive,Negative,EW,test
+TCGA-EW-A1P4-01Z-00-DX1,TCGA-EW-A1P4,1.4879,-5.8662,Basal,Negative,Negative,Negative,EW,test
+TCGA-EW-A1P5-01Z-00-DX1,TCGA-EW-A1P5,1.2600,-8.1262,Normal,Positive,Positive,Negative,EW,test
+TCGA-EW-A1P6-01Z-00-DX1,TCGA-EW-A1P6,1.0657,-5.3824,LumA,Positive,Positive,Negative,EW,test
+TCGA-EW-A1P7-01Z-00-DX1,TCGA-EW-A1P7,0.1757,-8.0536,Basal,Negative,Negative,NA,EW,test
+TCGA-EW-A1P8-01Z-00-DX1,TCGA-EW-A1P8,1.8417,-4.8723,Basal,Negative,Negative,Negative,EW,test
+TCGA-EW-A1PA-01Z-00-DX1,TCGA-EW-A1PA,0.0051,-2.0290,LumB,Positive,Positive,Negative,EW,test
+TCGA-EW-A1PB-01Z-00-DX1,TCGA-EW-A1PB,1.6214,-1.3032,Basal,Negative,Negative,Negative,EW,test
+TCGA-EW-A1PC-01Z-00-DX1,TCGA-EW-A1PC,0.4072,-2.8848,HER2,Positive,Positive,Negative,EW,test
+TCGA-EW-A1PD-01Z-00-DX1,TCGA-EW-A1PD,0.7562,-8.0466,LumB,Positive,Positive,NA,EW,test
+TCGA-EW-A1PE-01Z-00-DX1,TCGA-EW-A1PE,0.9360,-5.3102,LumA,Positive,Positive,Negative,EW,test
+TCGA-EW-A1PF-01Z-00-DX1,TCGA-EW-A1PF,1.3556,-7.8186,Normal,Positive,Positive,Negative,EW,test
+TCGA-EW-A1PG-01Z-00-DX1,TCGA-EW-A1PG,0.6049,-8.0836,LumA,Positive,Positive,NA,EW,test
+TCGA-EW-A1PH-01Z-00-DX1,TCGA-EW-A1PH,1.5717,-8.0179,Basal,Negative,Negative,Negative,EW,test
+TCGA-EW-A2FR-01Z-00-DX1,TCGA-EW-A2FR,1.4459,-7.6702,HER2,Negative,Negative,NA,EW,test
+TCGA-EW-A2FS-01Z-00-DX1,TCGA-EW-A2FS,1.0385,-5.2777,Basal,Positive,Negative,Negative,EW,test
+TCGA-EW-A2FV-01Z-00-DX1,TCGA-EW-A2FV,1.4338,-4.9573,LumB,Positive,Positive,Negative,EW,test
+TCGA-EW-A2FW-01Z-00-DX1,TCGA-EW-A2FW,2.1080,-6.5024,LumB,Positive,Positive,Negative,EW,test
+TCGA-EW-A3E8-01Z-00-DX1,TCGA-EW-A3E8,-1.5044,-5.1059,LumA,Positive,Negative,Negative,EW,test
+TCGA-EW-A3U0-01Z-00-DX1,TCGA-EW-A3U0,1.9150,-7.1609,Basal,Negative,Negative,Negative,EW,test
+TCGA-EW-A423-01Z-00-DX1,TCGA-EW-A423,-1.8976,-3.1835,LumA,Positive,Positive,Negative,EW,test
+TCGA-EW-A424-01Z-00-DX1,TCGA-EW-A424,-0.4073,-3.0058,Normal,Positive,Positive,Positive,EW,test
+TCGA-EW-A6S9-01Z-00-DX1,TCGA-EW-A6S9,1.0089,-5.0982,HER2,Positive,Positive,Positive,EW,test
+TCGA-EW-A6SA-01Z-00-DX1,TCGA-EW-A6SA,1.0745,-8.3624,LumB,Positive,Negative,Negative,EW,test
+TCGA-EW-A6SB-01Z-00-DX1,TCGA-EW-A6SB,1.3417,-1.6482,Basal,Negative,Negative,Negative,EW,test
+TCGA-EW-A6SC-01Z-00-DX1,TCGA-EW-A6SC,1.6567,-7.8098,LumB,Positive,Positive,Negative,EW,test
+TCGA-EW-A6SD-01Z-00-DX1,TCGA-EW-A6SD,1.1872,-2.8333,HER2,Negative,Negative,[Not Evaluated],EW,test
+TCGA-GI-A2C8-01Z-00-DX1,TCGA-GI-A2C8,1.2319,-3.2898,LumB,Positive,Positive,Negative,GI,test
+TCGA-GI-A2C9-01Z-00-DX1,TCGA-GI-A2C9,-0.0390,-7.7934,LumB,Negative,Negative,Negative,GI,test
+TCGA-GM-A2D9-01Z-00-DX1,TCGA-GM-A2D9,0.0225,-6.7458,LumA,Positive,Positive,[Not Evaluated],GM,train
+TCGA-GM-A2DA-01Z-00-DX1,TCGA-GM-A2DA,-0.2654,-2.6671,HER2,Positive,Positive,NA,GM,train
+TCGA-GM-A2DB-01Z-00-DX1,TCGA-GM-A2DB,0.5029,-0.9294,Basal,Negative,Negative,Negative,GM,train
+TCGA-GM-A2DC-01Z-00-DX1,TCGA-GM-A2DC,0.6851,-7.1506,LumA,Positive,Positive,[Not Evaluated],GM,train
+TCGA-GM-A2DD-01Z-00-DX1,TCGA-GM-A2DD,-1.0139,-6.0455,Basal,Negative,Negative,NA,GM,train
+TCGA-GM-A2DF-01Z-00-DX1,TCGA-GM-A2DF,1.4840,-7.7141,Basal,Negative,Negative,Negative,GM,train
+TCGA-GM-A2DH-01Z-00-DX1,TCGA-GM-A2DH,1.3254,-5.7767,HER2,Negative,Negative,Negative,GM,train
+TCGA-GM-A2DI-01Z-00-DX1,TCGA-GM-A2DI,-0.8471,-6.1068,Normal,Negative,Negative,[Not Evaluated],GM,train
+TCGA-GM-A2DK-01Z-00-DX1,TCGA-GM-A2DK,1.1512,-4.6430,Normal,Positive,Negative,Negative,GM,train
+TCGA-GM-A2DL-01Z-00-DX1,TCGA-GM-A2DL,1.2694,-7.2064,LumB,Positive,Positive,Negative,GM,train
+TCGA-GM-A2DM-01Z-00-DX1,TCGA-GM-A2DM,2.2235,-5.7859,LumA,Positive,Positive,Negative,GM,train
+TCGA-GM-A2DN-01Z-00-DX1,TCGA-GM-A2DN,-0.9964,-0.1052,Basal,Positive,Positive,Negative,GM,train
+TCGA-GM-A2DO-01Z-00-DX1,TCGA-GM-A2DO,1.7126,-7.6906,LumB,Positive,Positive,Negative,GM,train
+TCGA-GM-A3NW-01Z-00-DX1,TCGA-GM-A3NW,1.1363,-7.8082,Normal,Negative,Positive,NA,GM,train
+TCGA-GM-A3NY-01Z-00-DX1,TCGA-GM-A3NY,1.1521,-7.7758,Normal,Positive,Positive,Negative,GM,train
+TCGA-GM-A3XG-01Z-00-DX1,TCGA-GM-A3XG,-0.8159,-6.3682,LumA,Positive,Positive,Negative,GM,train
+TCGA-GM-A3XL-01Z-00-DX1,TCGA-GM-A3XL,1.4800,-7.2839,Basal,Negative,Negative,[Not Evaluated],GM,train
+TCGA-GM-A3XN-01Z-00-DX1,TCGA-GM-A3XN,-0.7347,-6.3103,Normal,Positive,Positive,Negative,GM,train
+TCGA-GM-A4E0-01Z-00-DX1,TCGA-GM-A4E0,0.5748,-6.0645,Normal,Positive,Positive,[Not Evaluated],GM,train
+TCGA-HN-A2NL-01Z-00-DX1,TCGA-HN-A2NL,1.7160,-1.0248,Basal,Negative,Negative,Negative,HN,train
+TCGA-HN-A2OB-01Z-00-DX1,TCGA-HN-A2OB,-1.1027,-3.8918,LumA,Positive,Positive,Negative,HN,train
+TCGA-JL-A3YW-01Z-00-DX1,TCGA-JL-A3YW,1.8066,-7.1612,Basal,Positive,Positive,Positive,JL,test
+TCGA-JL-A3YX-01Z-00-DX1,TCGA-JL-A3YX,-0.9178,1.4214,LumB,Positive,Positive,Positive,JL,test
+TCGA-LD-A66U-01Z-00-DX1,TCGA-LD-A66U,0.3944,-4.8955,Normal,Positive,Positive,Negative,LD,val
+TCGA-LD-A74U-01Z-00-DX1,TCGA-LD-A74U,-1.3907,-3.5375,Normal,Positive,Negative,Negative,LD,val
+TCGA-LD-A7W5-01Z-00-DX1,TCGA-LD-A7W5,0.8036,-3.9184,Normal,Positive,Positive,Negative,LD,val
+TCGA-LD-A7W6-01Z-00-DX1,TCGA-LD-A7W6,0.3585,-4.5887,Normal,Positive,Positive,Negative,LD,val
+TCGA-LD-A9QF-01Z-00-DX1,TCGA-LD-A9QF,0.1416,-8.0923,HER2,Negative,Negative,Positive,LD,val
+TCGA-LL-A440-01Z-00-DX1,TCGA-LL-A440,1.4814,-7.5746,Normal,Positive,Positive,NA,LL,val
+TCGA-LL-A441-01Z-00-DX1,TCGA-LL-A441,1.8085,-7.8899,Basal,Negative,Negative,Negative,LL,val
+TCGA-LL-A442-01Z-00-DX1,TCGA-LL-A442,2.3370,-1.3348,LumA,Positive,Positive,NA,LL,val
+TCGA-LL-A50Y-01Z-00-DX1,TCGA-LL-A50Y,1.0691,-8.2896,LumA,Positive,Positive,NA,LL,val
+TCGA-LL-A5YL-01Z-00-DX1,TCGA-LL-A5YL,-0.8668,-3.2161,HER2,Positive,Negative,Positive,LL,val
+TCGA-LL-A5YM-01Z-00-DX1,TCGA-LL-A5YM,0.1356,-2.1962,LumB,Positive,Positive,NA,LL,val
+TCGA-LL-A5YN-01Z-00-DX1,TCGA-LL-A5YN,1.4325,-7.8965,HER2,Positive,Positive,NA,LL,val
+TCGA-LL-A5YO-01Z-00-DX1,TCGA-LL-A5YO,1.9151,-7.8108,HER2,Negative,Negative,Negative,LL,val
+TCGA-LL-A5YP-01Z-00-DX1,TCGA-LL-A5YP,0.3337,-1.3585,Basal,Positive,Negative,Negative,LL,val
+TCGA-LL-A6FP-01Z-00-DX1,TCGA-LL-A6FP,-0.9565,-6.0520,LumA,Positive,Positive,NA,LL,val
+TCGA-LL-A6FQ-01Z-00-DX1,TCGA-LL-A6FQ,-1.1000,-2.6521,Normal,Positive,Positive,Negative,LL,val
+TCGA-LL-A6FR-01Z-00-DX1,TCGA-LL-A6FR,1.1915,-3.6282,Basal,Negative,Positive,NA,LL,val
+TCGA-LL-A73Y-01Z-00-DX1,TCGA-LL-A73Y,1.7952,-7.8148,Basal,Negative,Negative,Negative,LL,val
+TCGA-LL-A73Z-01Z-00-DX1,TCGA-LL-A73Z,-1.8668,-3.0115,Basal,Positive,Positive,NA,LL,val
+TCGA-LL-A740-01Z-00-DX1,TCGA-LL-A740,-0.6197,-6.0202,Basal,Negative,Negative,NA,LL,val
+TCGA-LL-A7SZ-01Z-00-DX1,TCGA-LL-A7SZ,0.8248,-2.0400,HER2,Positive,Positive,Negative,LL,val
+TCGA-LL-A7T0-01Z-00-DX1,TCGA-LL-A7T0,1.1389,-1.9643,HER2,Positive,Positive,Positive,LL,val
+TCGA-LL-A8F5-01Z-00-DX1,TCGA-LL-A8F5,1.7155,-1.0820,Basal,Positive,Negative,Negative,LL,val
+TCGA-LL-A9Q3-01Z-00-DX1,TCGA-LL-A9Q3,-0.8512,-2.9731,LumA,Positive,Positive,Positive,LL,val
+TCGA-LQ-A4E4-01Z-00-DX1,TCGA-LQ-A4E4,-1.4409,-4.1099,LumB,Positive,Positive,[Not Evaluated],LQ,test
+TCGA-MS-A51U-01Z-00-DX1,TCGA-MS-A51U,-0.9975,0.9732,Normal,Positive,Positive,Negative,MS,val
+TCGA-OK-A5Q2-01Z-00-DX1,TCGA-OK-A5Q2,-0.1409,-3.6231,HER2,Positive,Positive,Negative,OK,train
+TCGA-OL-A5D6-01Z-00-DX1,TCGA-OL-A5D6,-0.2426,-3.1317,Basal,Negative,Negative,[Not Evaluated],OL,train
+TCGA-OL-A5D7-01Z-00-DX1,TCGA-OL-A5D7,1.1962,-1.4685,Basal,Negative,Negative,[Not Evaluated],OL,train
+TCGA-OL-A5D8-01Z-00-DX1,TCGA-OL-A5D8,1.3350,-3.1588,LumA,Positive,Positive,[Not Evaluated],OL,train
+TCGA-OL-A5DA-01Z-00-DX1,TCGA-OL-A5DA,-0.9607,-4.1276,LumA,Positive,Positive,[Not Evaluated],OL,train
+TCGA-OL-A5RU-01Z-00-DX1,TCGA-OL-A5RU,-1.6395,0.4199,LumA,Positive,Positive,[Not Evaluated],OL,train
+TCGA-OL-A5RV-01Z-00-DX1,TCGA-OL-A5RV,-1.5809,0.3989,LumA,Positive,Positive,[Not Evaluated],OL,train
+TCGA-OL-A5RW-01Z-00-DX1,TCGA-OL-A5RW,-1.5661,0.2843,Basal,Negative,Negative,[Not Evaluated],OL,train
+TCGA-OL-A5RX-01Z-00-DX1,TCGA-OL-A5RX,-1.6001,0.2088,LumA,Positive,Positive,[Not Evaluated],OL,train
+TCGA-OL-A5RY-01Z-00-DX1,TCGA-OL-A5RY,-1.6398,0.3756,Basal,Positive,Negative,[Not Evaluated],OL,train
+TCGA-OL-A5RZ-01Z-00-DX1,TCGA-OL-A5RZ,-0.8854,-5.1338,HER2,Positive,Negative,[Not Evaluated],OL,train
+TCGA-OL-A5S0-01Z-00-DX1,TCGA-OL-A5S0,-1.5613,0.2080,Basal,Positive,Negative,[Not Evaluated],OL,train
+TCGA-OL-A66H-01Z-00-DX1,TCGA-OL-A66H,-1.7690,1.5450,LumA,Positive,Positive,[Not Evaluated],OL,train
+TCGA-OL-A66I-01Z-00-DX1,TCGA-OL-A66I,-1.8135,1.5637,Basal,Negative,Negative,[Not Evaluated],OL,train
+TCGA-OL-A66J-01Z-00-DX1,TCGA-OL-A66J,-1.7316,1.5240,LumA,Positive,Positive,[Not Evaluated],OL,train
+TCGA-OL-A66K-01Z-00-DX1,TCGA-OL-A66K,-1.8088,1.5733,LumA,Positive,Positive,NA,OL,train
+TCGA-OL-A66L-01Z-00-DX1,TCGA-OL-A66L,-1.6689,1.4933,Normal,Positive,Positive,[Not Evaluated],OL,train
+TCGA-OL-A66N-01Z-00-DX1,TCGA-OL-A66N,-1.8102,1.5378,LumA,Positive,Negative,[Not Evaluated],OL,train
+TCGA-OL-A66O-01Z-00-DX1,TCGA-OL-A66O,-1.8131,1.5913,LumB,Positive,Positive,[Not Evaluated],OL,train
+TCGA-OL-A66P-01Z-00-DX1,TCGA-OL-A66P,-1.8389,1.6122,HER2,Negative,Negative,[Not Evaluated],OL,train
+TCGA-OL-A6VO-01Z-00-DX1,TCGA-OL-A6VO,-1.8625,1.5866,Basal,Negative,Negative,Negative,OL,train
+TCGA-OL-A6VQ-01Z-00-DX1,TCGA-OL-A6VQ,1.7556,-4.6654,Normal,Positive,Positive,[Not Evaluated],OL,train
+TCGA-OL-A97C-01Z-00-DX1,TCGA-OL-A97C,-0.6734,-5.4975,Basal,Negative,Negative,[Not Evaluated],OL,train
+TCGA-PE-A5DC-01Z-00-DX1,TCGA-PE-A5DC,0.6070,-2.1789,LumB,Positive,Positive,Positive,PE,train
+TCGA-PE-A5DD-01Z-00-DX1,TCGA-PE-A5DD,-0.0517,-3.0807,LumA,Positive,Negative,Positive,PE,train
+TCGA-PE-A5DE-01Z-00-DX1,TCGA-PE-A5DE,0.2678,-1.8861,Normal,Positive,Positive,Negative,PE,train
+TCGA-S3-A6ZF-01Z-00-DX1,TCGA-S3-A6ZF,-0.0891,-4.5265,LumB,Positive,Positive,NA,S3,train
+TCGA-S3-A6ZG-01Z-00-DX1,TCGA-S3-A6ZG,0.1304,-7.1174,LumB,Positive,Positive,Negative,S3,train
+TCGA-S3-A6ZH-01Z-00-DX1,TCGA-S3-A6ZH,0.9766,-3.2503,LumB,Positive,Positive,NA,S3,train
+TCGA-S3-AA0Z-01Z-00-DX1,TCGA-S3-AA0Z,-0.7189,-4.6986,Basal,Positive,Positive,NA,S3,train
+TCGA-S3-AA10-01Z-00-DX1,TCGA-S3-AA10,1.4949,-2.0421,Basal,Negative,Negative,Negative,S3,train
+TCGA-S3-AA11-01Z-00-DX1,TCGA-S3-AA11,0.3098,-7.1767,LumA,Positive,Positive,NA,S3,train
+TCGA-S3-AA12-01Z-00-DX1,TCGA-S3-AA12,0.8572,-2.9823,LumA,Positive,Negative,Negative,S3,train
+TCGA-S3-AA14-01Z-00-DX1,TCGA-S3-AA14,-0.8857,-5.6472,LumB,Positive,Positive,Positive,S3,train
+TCGA-S3-AA15-01Z-00-DX1,TCGA-S3-AA15,1.6590,-6.4912,Basal,Negative,Negative,Negative,S3,train
+TCGA-S3-AA17-01Z-00-DX1,TCGA-S3-AA17,-0.1976,-3.5977,LumB,Positive,Positive,NA,S3,train
+TCGA-UL-AAZ6-01Z-00-DX1,TCGA-UL-AAZ6,-0.6203,-5.0579,HER2,Positive,Positive,Positive,UL,train
+TCGA-UU-A93S-01Z-00-DX1,TCGA-UU-A93S,0.9469,-0.7335,HER2,Negative,Negative,Positive,UU,val
+TCGA-WT-AB41-01Z-00-DX1,TCGA-WT-AB41,-1.6346,-5.3198,Normal,Positive,Positive,[Not Evaluated],WT,val
+TCGA-WT-AB44-01Z-00-DX1,TCGA-WT-AB44,0.7470,-7.2435,LumA,Positive,Positive,Negative,WT,val
+TCGA-XX-A899-01Z-00-DX1,TCGA-XX-A899,0.3036,-6.5187,Normal,Positive,Positive,Negative,XX,val
+TCGA-XX-A89A-01Z-00-DX1,TCGA-XX-A89A,0.9870,-6.8077,Normal,Positive,Positive,Negative,XX,val
+TCGA-Z7-A8R5-01Z-00-DX1,TCGA-Z7-A8R5,-1.3579,-6.2736,Normal,Positive,Positive,Negative,Z7,train
+TCGA-Z7-A8R6-01Z-00-DX1,TCGA-Z7-A8R6,0.3026,-3.4620,LumB,Positive,Positive,Negative,Z7,train

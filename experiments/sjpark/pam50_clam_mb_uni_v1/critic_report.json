@@ -1,0 +1,103 @@
+{
+  "schema_version": "0.1",
+  "created_at": "2026-07-09T00:00:00+09:00",
+  "reviewer": "braveji",
+  "owner": "sjpark",
+  "experiment": {
+    "experiment_id": "pam50_clam_mb_uni_v1",
+    "task": "pam50",
+    "endpoint": "PAM50 5-class classification (LumA / LumB / Basal / HER2-E / Normal)",
+    "commit_hash": "266d4c7bf815cbb77ac54b0888d16843d5fdf152",
+    "config_path": "experiments/sjpark/pam50_clam_mb_uni_v1/config.yaml",
+    "metrics_path": "experiments/sjpark/pam50_clam_mb_uni_v1/metrics.json",
+    "predictions_path": "experiments/sjpark/pam50_clam_mb_uni_v1/predictions.npz",
+    "embedding_manifest_path": "/workspace/data/cache/biop02/embedding_manifest_uni.csv",
+    "split_policy_path": "agents/data/split_policy_v0.md"
+  },
+  "checks": {
+    "data_leakage": {
+      "status": "caution",
+      "evidence": [
+        "split_policy_v0.md DRAFT (lock 해시 미기록)",
+        "patient-overlap assert 로그 미제출",
+        "n_train=707 / n_val=151 — ER/PR과 동일 split 추정",
+        "site_confound UNI AUC 0.9977 — site-disjoint split 확인 필요"
+      ],
+      "notes": "다른 태스크와 동일한 data leakage 이슈. PAM50 5-class의 경우 클래스 분포가 고르지 않아 site별 클래스 불균형이 추가 confound 요인이 될 수 있음."
+    },
+    "baseline_comparison": {
+      "status": "caution",
+      "evidence": [
+        "PAM50 CLAM-MB val macro AUC 0.7589 (95% CI 0.7098–0.8084)",
+        "random macro AUC 0.4766 (CI 0.419–0.539) → CLAM +0.282 (큰 gap)",
+        "majority AUC 0.5, balanced_acc 0.20 → CLAM balanced_acc 0.4012 (+0.20)",
+        "mean_embed AUC 0.6911 (CI 0.6315–0.7426) → CLAM +0.068 (diff ≥ 0.03 충족)",
+        "CI 중첩: CLAM lower 0.7098 vs mean_embed upper 0.7426 → 미세한 중첩 (0.0328 overlap)",
+        "MLP 대비 CLAM 개선: 0.7113 → 0.7589 (+0.048), AUPRC 0.4156 → 0.4806",
+        "subtype_only baseline 없음 — PAM50는 subtype 자체이므로 subtype_only 비교 불필요(해당 없음)"
+      ],
+      "notes": "CI 중첩이 매우 미세(0.033). 실질적으로 CLAM이 mean_embed를 +0.068로 상회하며 5-class AUC 0.76은 문헌 내 comparable 결과(Lu 2021 CLAM PAM50 AUC ~0.77)와 유사. caution이나 실질 성능은 양호."
+    },
+    "counterfactual_check": {
+      "status": "caution",
+      "evidence": [
+        "attention ablation: auc_full 0.7589 → auc_top_removed 0.7596 → AUC drop = -0.0007 (역전, 제거 후 AUC 상승)",
+        "auc_drop_random = -0.0004 (비슷한 수준 — top vs random이 AUC-level에서 구분 안 됨)",
+        "proba-level: mean_abs_proba_delta_top 0.0248 vs random 0.0017 (~14배) — proba level은 의미 있음",
+        "label shuffle test 미실행"
+      ],
+      "notes": "AUC 역전(-0.0007)은 5-class macro AUC 특성상 발생 가능: top attention 제거가 소수 클래스(HER2-E, Normal) 오분류를 줄여 macro AUC가 미세하게 향상될 수 있음. proba-level faithfulness(14배)는 의미 있으나 AUC-level 해석 주의 필요. per-class counterfactual로 어느 클래스에서 역전이 발생하는지 확인 권고."
+    },
+    "cross_dataset_check": {
+      "status": "pass",
+      "evidence": [
+        "CPTAC-BRCA 외부 검증 macro AUC 0.7216 (CI 0.6777–0.7673), n_test=395",
+        "val 0.7589 → ext 0.7216: 차이 -0.037 — 5-class 태스크에서 합리적인 generalization gap",
+        "ext balanced_acc 0.3395 vs val 0.4012: 외부에서 소수 클래스 예측 난이도 반영",
+        "라벨 출처: official (BIOP02-55, cBioPortal brca_cptac_2020) — 공식 라벨",
+        "이전 pre-filled 리뷰에서는 ext_test null로 기재됐으나 실제로는 ext_eval_summary.json 존재 — 이 리뷰에서 수정"
+      ],
+      "notes": "5-class PAM50 외부 검증 AUC 0.72는 충분한 일반화 성능. 소수 클래스 balanced_acc 저하는 CPTAC 클래스 분포 차이 반영. BIOP02-57 registry 기재 필요."
+    },
+    "biological_plausibility": {
+      "status": "pass",
+      "evidence": [
+        "PAM50 subtypes와 H&E 형태학 연관성 문헌 근거: Lu 2021(CLAM), Kather 2020",
+        "Basal-like: high grade, pushing margins — H&E 직접 관찰 가능",
+        "Luminal A: low grade — 핵 크기/형태로 구분 가능",
+        "HER2-E, Normal subtypes는 형태학적 특징이 덜 명확 → 소수 클래스 성능 저하 설명",
+        "ICI/Pembrolizumab 추천 없음"
+      ],
+      "notes": "생물학적으로 타당. per-class AUC 제출 시 Basal/LumA에서 높은 AUC 예상. sub-check: jhans (non-owner)."
+    },
+    "drp_framing": {
+      "status": "pass",
+      "evidence": [
+        "task: 'pam50' (표현형 예측)",
+        "금지 표현 미발견",
+        "claim_level: 'hypothesis_only'"
+      ],
+      "notes": "DRP 프레이밍 없음."
+    },
+    "claim_level": {
+      "status": "pass",
+      "evidence": [
+        "claim_level: hypothesis_only 명시",
+        "commit_hash 기록됨 (266d4c7)",
+        "5-class macro AUC로 보고 — 단순 accuracy 과신 없음"
+      ],
+      "notes": "claim 수준 적절. CPTAC 외부 검증 포함."
+    }
+  },
+  "critic_status": "caution",
+  "claim_level": "hypothesis_only",
+  "summary": "PAM50 5-class CLAM-MB(UNI v1) val macro AUC 0.7589, CPTAC ext 0.7216. random(0.48) 대비 +0.28, mean_embed(0.69) 대비 +0.07로 명확한 우위. MLP(0.7113) 대비 +0.048 개선. 이전 pre-filled 리뷰에서 CPTAC 외부 결과를 null로 오기재했으나 실제로는 ext_eval_summary.json 존재(AUC 0.7216). CI 미세 중첩 및 counterfactual AUC 역전이 주요 caution 사유. 전체 판정: caution.",
+  "required_followups": [
+    "[sjpark] per-class AUC 분해 제출 (LumA/LumB/Basal/HER2-E/Normal, val + CPTAC 각각)",
+    "[sjpark] label shuffle test 실행 (5-class balanced_acc ≈ 0.20 확인)",
+    "[sjpark] counterfactual AUC 역전 원인 분석 (per-class counterfactual로 어느 클래스에서 역전 발생하는지)",
+    "[kkkim] split_policy_v0 sign-off + lock 해시 기록",
+    "[sjpark] patient-overlap assert 로그 제출",
+    "[jhans] BIOP02-57 cross_validation_registry.jsonl에 PAM50 CLAM CPTAC 결과 기재"
+  ]
+}

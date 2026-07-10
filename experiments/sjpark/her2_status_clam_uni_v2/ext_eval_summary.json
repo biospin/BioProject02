@@ -1,0 +1,12 @@
+{
+  "test_manifest": "/workspace/data/cache/biop02/embedding_manifest_cptac_uni.csv",
+  "test_split": "cptac_external",
+  "n_test": 294,
+  "ext_auc": 0.5297,
+  "ext_auprc": 0.1213,
+  "ext_balanced_accuracy": 0.5,
+  "ext_auc_ci_95": [
+    0.4402,
+    0.6188
+  ]
+}

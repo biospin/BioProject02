@@ -1,0 +1,87 @@
+{
+  "schema_version": "0.1",
+  "created_at": "2026-07-09T14:14:06.920925Z",
+  "task": "er_status",
+  "label_col": "er",
+  "manifest": "data/cache/biop02/embedding_manifest_uni.csv",
+  "smoke_test": false,
+  "n_train": 707,
+  "n_val": 152,
+  "commit_hash": "6c9cd36",
+  "run_command": "agents/modeling/scripts/run_baselines.py --manifest data/cache/biop02/embedding_manifest_uni.csv --label_col er --task er_status --tag uni_v2_ext --bootstrap_ci --ext_manifest data/cache/biop02/embedding_manifest_cptac_uni.csv --ext_label_col er --commit_hash 6c9cd36",
+  "claim_level": "hypothesis_only",
+  "critic_status": "pending",
+  "baselines": [
+    {
+      "baseline": "random",
+      "auc": 0.5262,
+      "auprc": 0.7916,
+      "balanced_accuracy": 0.4693,
+      "n": 152,
+      "auc_ci_95": [
+        0.4177,
+        0.6276
+      ]
+    },
+    {
+      "baseline": "subtype_only",
+      "auc": 0.9181,
+      "auprc": 0.9635,
+      "balanced_accuracy": 0.7398,
+      "n": 152,
+      "auc_ci_95": [
+        0.8767,
+        0.9553
+      ]
+    },
+    {
+      "baseline": "mean_embed",
+      "auc": 0.8162,
+      "auprc": 0.9354,
+      "balanced_accuracy": 0.651,
+      "n": 152,
+      "auc_ci_95": [
+        0.7429,
+        0.8852
+      ]
+    }
+  ],
+  "ext_manifest": "data/cache/biop02/embedding_manifest_cptac_uni.csv",
+  "ext_split": "cptac_external",
+  "ext_n_test": 387,
+  "ext_baselines": [
+    {
+      "baseline": "random",
+      "auc": 0.473,
+      "auprc": 0.5882,
+      "balanced_accuracy": 0.4789,
+      "n": 387,
+      "auc_ci_95": [
+        0.4132,
+        0.5292
+      ]
+    },
+    {
+      "baseline": "subtype_only",
+      "auc": 0.9615,
+      "auprc": 0.9724,
+      "balanced_accuracy": 0.8389,
+      "n": 387,
+      "auc_ci_95": [
+        0.9424,
+        0.9775
+      ]
+    },
+    {
+      "baseline": "mean_embed",
+      "auc": 0.7655,
+      "auprc": 0.8388,
+      "balanced_accuracy": 0.6993,
+      "n": 387,
+      "auc_ci_95": [
+        0.7186,
+        0.8127
+      ]
+    }
+  ]
+}

@@ -19,5 +19,15 @@
   "claim_level": "hypothesis_only",
   "critic_status": "pending",
   "wandb_run_id": null,
-  "mlflow_run_id": null
+  "mlflow_run_id": null,
+  "auc_ci_95": [
+    0.8371,
+    0.9539
+  ],
+  "ext_auc_ci_95": [
+    0.8612,
+    0.9263
+  ],
+  "ext_label_source": "official (BIOP02-55, cBioPortal brca_cptac_2020)",
+  "ext_n_test": 387
 }

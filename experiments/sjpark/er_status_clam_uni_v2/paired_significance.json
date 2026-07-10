@@ -1,0 +1,13 @@
+{
+  "n": 152,
+  "auc_clam": 0.9013,
+  "auc_subtype_only": 0.9181,
+  "diff_clam_minus_subtype": -0.0177,
+  "diff_ci_95": [
+    -0.088,
+    0.0454
+  ],
+  "p_value_approx": 0.613,
+  "significant_at_0.05": false,
+  "interpretation": "\ub450 \ubaa8\ub378 \uac04 \uc720\uc758\ud55c \ucc28\uc774 \uc5c6\uc74c (CI\uac00 0\uc744 \ud3ec\ud568)"
+}

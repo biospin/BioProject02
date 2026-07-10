@@ -1,0 +1,89 @@
+{
+  "schema_version": "0.1",
+  "created_at": "2026-07-03T00:00:00Z",
+  "reviewer": "braveji",
+  "owner": "sjpark",
+  "experiment": {
+    "experiment_id": "her2_status_uni_v1",
+    "task": "her2_status",
+    "endpoint": "HER2 IHC binary classification (positive / negative; equivocal 251장 제외)",
+    "commit_hash": "879422e498f9f64d71802df8a16ce6c133af4dd2",
+    "config_path": "experiments/sjpark/her2_status_uni_v1/config.yaml",
+    "metrics_path": "experiments/sjpark/her2_status_uni_v1/metrics.json",
+    "predictions_path": "experiments/sjpark/her2_status_uni_v1/predictions.npy",
+    "embedding_manifest_path": "/workspace/data/cache/biop02/embedding_manifest_uni.csv",
+    "split_policy_path": "agents/data/split_policy_v0.md"
+  },
+  "checks": {
+    "data_leakage": {
+      "status": "caution",
+      "evidence": [
+        "split_policy_v0.md DRAFT 상태 — ER/PR 리뷰와 동일 이슈",
+        "n_train=496 / n_val=112 — equivocal 251장 제외로 전체 코호트 대비 작은 학습 셋",
+        "patient-overlap assert 로그 미제출"
+      ],
+      "notes": "split 자체는 patient-level로 추정되나 assert 로그 미제출. equivocal 제외 기준이 split 이전에 적용됐는지 확인 필요 (제외가 split 이후이면 leakage 아님)."
+    },
+    "baseline_comparison": {
+      "status": "reject",
+      "evidence": [
+        "HER2 SlideMLP AUC 0.5509 (95% CI 0.4306–0.6672) — CI가 0.5를 포함",
+        "HER2 AUPRC 0.4348 — 클래스 불균형(Pos 132 vs Neg 476) 고려해도 낮음",
+        "balanced_accuracy 0.5366 — 랜덤 수준 (0.50 ± noise)",
+        "HER2 전용 trivial_baselines.json 없음 — 공식 baseline 수치 미제출",
+        "ER 태스크 random AUC 0.526 참조 시, HER2 모델 AUC 0.5509와 사실상 동일"
+      ],
+      "notes": "HER2 AUC가 95% CI 기준 random과 통계적으로 구별 불가. 이는 H&E 형태학만으로 HER2 증폭(유전자/단백질 수준)을 예측하기 어렵다는 선행 연구(Kather 2020 등)와 일치하는 과학적으로 예상된 음성 결과(expected negative result)임. 단, checklist 기준으로는 baseline 미달 → reject."
+    },
+    "counterfactual_check": {
+      "status": "caution",
+      "evidence": [
+        "label shuffle test 미실행",
+        "AUC ≈ random이므로 label shuffle 후에도 AUC ≈ 0.5일 것으로 예측되나 실행 필요"
+      ],
+      "notes": "모델이 실질적으로 아무것도 학습하지 못한 것인지, 아니면 진짜 negative result인지 label shuffle로 구별해야 함."
+    },
+    "cross_dataset_check": {
+      "status": "not_applicable",
+      "evidence": ["Paper A 표현형 예측 단계"],
+      "notes": "Paper A 범위."
+    },
+    "biological_plausibility": {
+      "status": "pass",
+      "evidence": [
+        "HER2 증폭은 유전자 수준 이벤트로 H&E 형태학에서 직접 관찰 어려움 — 음성 결과가 생물학적으로 타당",
+        "HER2+ 케이스에서 세포 확대, 핵 다형성 등 간접적 형태학적 특징이 있으나 정량화 어려움",
+        "equivocal 케이스 제외로 클래스 불균형 심화 (Pos 132 vs Neg 476)",
+        "ICI 추천 없음"
+      ],
+      "notes": "이 결과는 '모델 실패'가 아니라 '태스크 고유 난이도를 반영한 정직한 음성 결과'로 해석해야 함. Paper A에서 HER2 예측의 한계를 정직하게 기술하는 것이 과학적으로 올바름."
+    },
+    "drp_framing": {
+      "status": "pass",
+      "evidence": [
+        "task: 'her2_status' (표현형 예측)",
+        "claim_level: 'hypothesis_only'",
+        "금지 표현 미발견"
+      ],
+      "notes": "DRP 프레이밍 문제 없음."
+    },
+    "claim_level": {
+      "status": "pass",
+      "evidence": [
+        "claim_level: 'hypothesis_only' 명시",
+        "metrics.json interpretation 필드에 음성 결과를 정직하게 기술"
+      ],
+      "notes": "음성 결과를 과장 없이 정직하게 기술. Paper A에 'H&E 단독으로 HER2 예측은 어려움' 으로 명시 권고."
+    }
+  },
+  "critic_status": "reject",
+  "claim_level": "hypothesis_only",
+  "summary": "HER2 status SlideMLP(UNI v1) AUC 0.5509 (CI 0.43–0.67) — 95% CI가 0.5를 포함하여 random과 통계적으로 구별 불가. 이는 H&E 형태학만으로 HER2 유전자 증폭을 예측하기 어렵다는 선행 연구와 일치하는 과학적으로 예상된 음성 결과. 체크리스트 기준 baseline_comparison reject → 전체 critic_status: reject. 단, 이 결과는 #biop02-experiments 공유 불가이나, Paper A의 'HER2 예측 한계' 섹션에 정직하게 기술해야 함. CLAM-SB 전환 및 HER2 equivocal 처리 전략 재검토 후 재실험 권고.",
+  "required_followups": [
+    "[sjpark] HER2 전용 trivial_baselines.json 생성 (baseline 미제출 상태 해소)",
+    "[sjpark] label shuffle test 실행 (모델이 완전히 random인지 확인)",
+    "[sjpark/kkkim] equivocal 케이스 처리 전략 재검토 (제외 vs 3-class 분류)",
+    "[sjpark] CLAM-SB Attention MIL 전환 후 HER2 재실험 — attention map으로 HER2 관련 형태 특징 탐색",
+    "[braveji] Paper A Methods에 HER2 음성 결과 및 한계 명시"
+  ]
+}

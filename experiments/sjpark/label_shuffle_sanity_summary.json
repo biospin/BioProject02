@@ -1,0 +1,31 @@
+{
+  "ER": {
+    "internal_auc": 0.5847,
+    "external_auc": 0.3501,
+    "n_train": 707,
+    "n_val": 152,
+    "label_shuffle_sanity_check": true
+  },
+  "PR": {
+    "internal_auc": 0.4629,
+    "external_auc": 0.3664,
+    "n_train": 705,
+    "n_val": 151,
+    "label_shuffle_sanity_check": true
+  },
+  "HER2": {
+    "internal_auc": 0.4829,
+    "external_auc": 0.5413,
+    "n_train": 496,
+    "n_val": 112,
+    "label_shuffle_sanity_check": true
+  },
+  "PAM50": {
+    "internal_auc": 0.5049,
+    "external_auc": 0.5393,
+    "n_train": 707,
+    "n_val": 151,
+    "label_shuffle_sanity_check": true
+  },
+  "_interpretation": "train label을 무작위 순열한 뒤 재학습, 실제(순열 안 된) val/external 라벨로 평가. 4개 태스크 전부 internal/external AUC가 noise 범위(0.35-0.58, chance=0.5)에 머물러 train-val 간 label leakage나 embedding 경로를 통한 라벨 유출 신호는 발견되지 않음."
+}

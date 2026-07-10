@@ -1,0 +1,87 @@
+{
+  "schema_version": "0.1",
+  "created_at": "2026-07-09T14:14:24.584071Z",
+  "task": "pr_status",
+  "label_col": "pr",
+  "manifest": "data/cache/biop02/embedding_manifest_uni.csv",
+  "smoke_test": false,
+  "n_train": 705,
+  "n_val": 151,
+  "commit_hash": "6c9cd36",
+  "run_command": "agents/modeling/scripts/run_baselines.py --manifest data/cache/biop02/embedding_manifest_uni.csv --label_col pr --task pr_status --tag uni_v2_ext --bootstrap_ci --ext_manifest data/cache/biop02/embedding_manifest_cptac_uni.csv --ext_label_col pr --commit_hash 6c9cd36",
+  "claim_level": "hypothesis_only",
+  "critic_status": "pending",
+  "baselines": [
+    {
+      "baseline": "random",
+      "auc": 0.5571,
+      "auprc": 0.7216,
+      "balanced_accuracy": 0.5095,
+      "n": 151,
+      "auc_ci_95": [
+        0.4626,
+        0.6545
+      ]
+    },
+    {
+      "baseline": "subtype_only",
+      "auc": 0.8085,
+      "auprc": 0.8471,
+      "balanced_accuracy": 0.8074,
+      "n": 151,
+      "auc_ci_95": [
+        0.7234,
+        0.8886
+      ]
+    },
+    {
+      "baseline": "mean_embed",
+      "auc": 0.6859,
+      "auprc": 0.7778,
+      "balanced_accuracy": 0.6641,
+      "n": 151,
+      "auc_ci_95": [
+        0.5933,
+        0.7728
+      ]
+    }
+  ],
+  "ext_manifest": "data/cache/biop02/embedding_manifest_cptac_uni.csv",
+  "ext_split": "cptac_external",
+  "ext_n_test": 375,
+  "ext_baselines": [
+    {
+      "baseline": "random",
+      "auc": 0.4714,
+      "auprc": 0.5315,
+      "balanced_accuracy": 0.4787,
+      "n": 375,
+      "auc_ci_95": [
+        0.4127,
+        0.5308
+      ]
+    },
+    {
+      "baseline": "subtype_only",
+      "auc": 0.9117,
+      "auprc": 0.8854,
+      "balanced_accuracy": 0.8836,
+      "n": 375,
+      "auc_ci_95": [
+        0.8822,
+        0.9419
+      ]
+    },
+    {
+      "baseline": "mean_embed",
+      "auc": 0.5545,
+      "auprc": 0.5688,
+      "balanced_accuracy": 0.5028,
+      "n": 375,
+      "auc_ci_95": [
+        0.4926,
+        0.6099
+      ]
+    }
+  ]
+}
