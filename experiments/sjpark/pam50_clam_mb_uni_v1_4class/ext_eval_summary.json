@@ -1,0 +1,15 @@
+{
+  "test_manifest": "/workspace/data/cache/biop02/embedding_manifest_cptac_uni.csv",
+  "test_split": "cptac_external",
+  "n_test": 382,
+  "ext_auc": 0.8181,
+  "ext_auprc": 0.564,
+  "ext_balanced_accuracy": 0.4506,
+  "ext_auc_ci_95": [
+    0.7875,
+    0.8536
+  ],
+  "ext_label_source": "official (BIOP02-55, cBioPortal brca_cptac_2020)",
+  "num_classes": 4,
+  "normal_like_excluded": 13
+}
