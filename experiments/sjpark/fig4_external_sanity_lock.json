@@ -16,9 +16,13 @@
       0.9424,
       0.9775
     ],
+    "shuffle_null_ext_min": 0.3904,
+    "shuffle_null_ext_max": 0.6802,
+    "external_above_shuffle_null": true,
+    "beats_external_baseline": false,
     "paired_diff_clam_minus_baseline": -0.067,
     "p_value_approx": 0.0,
-    "sanity_lock": "FAIL"
+    "verdict": "SIGNAL, NOT ADDITIVE"
   },
   "PR": {
     "internal_auc": 0.7765,
@@ -37,9 +41,13 @@
       0.8822,
       0.9419
     ],
+    "shuffle_null_ext_min": 0.3911,
+    "shuffle_null_ext_max": 0.5568,
+    "external_above_shuffle_null": true,
+    "beats_external_baseline": false,
     "paired_diff_clam_minus_baseline": -0.1343,
     "p_value_approx": 0.0,
-    "sanity_lock": "FAIL"
+    "verdict": "SIGNAL, NOT ADDITIVE"
   },
   "HER2": {
     "internal_auc": 0.5992,
@@ -58,9 +66,13 @@
       0.7132,
       0.8586
     ],
+    "shuffle_null_ext_min": 0.3391,
+    "shuffle_null_ext_max": 0.5804,
+    "external_above_shuffle_null": false,
+    "beats_external_baseline": false,
     "paired_diff_clam_minus_baseline": -0.2603,
     "p_value_approx": 0.0,
-    "sanity_lock": "FAIL"
+    "verdict": "NULL"
   },
   "PAM50": {
     "internal_auc": 0.7589,
@@ -79,8 +91,12 @@
       0.6234,
       0.7017
     ],
+    "shuffle_null_ext_min": 0.4996,
+    "shuffle_null_ext_max": 0.5606,
+    "external_above_shuffle_null": true,
+    "beats_external_baseline": true,
     "paired_diff_clam_minus_baseline": 0.0598,
     "p_value_approx": 0.021,
-    "sanity_lock": "PASS"
+    "verdict": "GENUINE"
   }
 }
