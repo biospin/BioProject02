@@ -61,6 +61,7 @@
 - **일반 원리(재현 예상):** *유전체 표적 변이 축(HER2·EGFR/ALK·BRAF)은 형태학에 near-invisible → 분자검사 필수, 형태 특징 뚜렷한 축은 H&E triage 가능.* Arslan의 predictability 순서(driver SNV 최하위)가 이를 암시하나 **치료축별 결정 규칙으로 정식화한 사람 없음** — 우리 몫.
 - **⚠️ 차별화 필수(스쿱 리스크):** Arslan 대비 "또 하나의 AUC 표"로 읽히면 incremental. **차별자 = feasibility AUC를 *치료결정 fidelity 비용*으로 변환** + 축별 mandatory/triage 컷오프. hypothesis_only·비-DRP 유지.
 - **비용/제약:** 암종당 새 코호트 임베딩+세포주 지도+아형-치료 매핑(수 주). 인프라(임베딩·DepMap/GDSC) 재사용되나 **BRCA-only 룰 위반이라 리더 사인오프 필요.**
+- **후보 암종·데이터·다운로드 카탈로그:** `2026-07-10_future-crosscancer-data.md` — 파일럿 추천 = **폐 NSCLC(EGFR/ALK vs LUAD/LUSC) + 대장(BRAF vs MSI 뉘앙스)**, TCGA/CPTAC/DepMap 소스·gdc-client/idc-index/cBioPortal 다운로드법 포함.
 - 위협 논문: Arslan Commun Med 2024(s43856-024-00471-5) · Fu/Kather Nat Cancer 2020(s43018-020-0085-8) · Waqas J Pers Med 2022(PMC9784641, "when to run molecular tests" 가장 근접) · Nat Commun 2024 prescreening(s41467-024-49153-9, 단일마커 비용절감) · Dawood npj PO 2023(breast image→drug).
 
 ---
