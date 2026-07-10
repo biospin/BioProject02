@@ -1,5 +1,5 @@
 {
-  "test_manifest": "/workspace/data/cache/biop02/embedding_manifest_cptac_uni.csv",
+  "test_manifest": "data/cache/biop02/embedding_manifest_cptac_uni.csv",
   "test_split": "cptac_external",
   "n_test": 387,
   "ext_auc": 0.894,
