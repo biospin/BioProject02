@@ -246,3 +246,9 @@ experiments/kkkim/20260710_pcr_impress/data/
 HANDOFF.md
 TODO.md
 SESSION_LOG.md
+
+# cross-cancer full-cohort embedding outputs (대용량 — 영구본은 디스크, git엔 드라이버·manifest·log만)
+experiments/crosscancer/*/full/embeddings/
+experiments/crosscancer/*/full/coords/
+experiments/crosscancer/*/full/shard_gpu*.json
+experiments/crosscancer/*/full/queue.json
