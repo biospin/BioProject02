@@ -6,6 +6,24 @@
 ## 거버넌스 주의 (기록)
 CLAUDE.md는 A/B를 Paper B까지 BRCA-only, pan-cancer=Paper C 별도 트랙(리더 승인)으로 명시. 이 통합은 그 계획을 재편하며, **리더(kkkim)가 통합을 승인**함으로써 성립한다. 유방 단독 Paper A의 서명된 정체성은 flagship의 anchor 챕터로 대체된다. 팀 공유·저자 확정은 사람 승인 게이트 유지.
 
+## 암종 선정 근거 (리뷰어 필수 질문 — 근거는 `research/paperA-positioning/2026-07-10_future-crosscancer-data.md`)
+선정 기준: 후보 암종은 **표적/H&E-blind 축**과 **형태학/H&E-triageable 축**을 **둘 다** 가져야 한다(치환비용의 전 범위를 stress-test하기 위해). 6개 후보를 랭킹했다.
+
+| 순위 | 암종 | 표적축(blind) | 형태학축(가시) | 판정 | 채택? |
+|---|---|---|---|---|---|
+| 1 | 폐 NSCLC | EGFR/ALK/KRAS | LUAD/LUSC 조직형 | Excellent | ✅ anchor |
+| 2 | 대장 CRC | BRAF/RAS | MSI-H(부분 형태) | Excellent | ✅ (중간비용 calibration) |
+| 3 | 위 STAD | HER2-amp(유방 직접 평행)·MSI | Lauren·signet-ring·EBV | Strong, **CPTAC ~20슬라이드 빈약** | ⏳ 미채택(외부검증 약) |
+| 4 | Glioma | 1p19q·MGMT·EGFRvIII | IDH·grade | Strong, 약리 얇음·표적 아닌 진단축 | ❌ |
+| 5 | 자궁내막 UCEC | POLE·HER2 | serous/endometrioid | CPTAC 우수하나 세포주 얇음 | ❌(검증용만) |
+| 경계 | 흑색종 SKCM | BRAF-V600 | (형태 아형 약함) | WSI ~107·CPTAC 없음 | ❌ |
+
+**왜 폐+대장:** 폐=가장 깨끗한 이중축(EGFR blind vs LUAD/LUSC 가시, ~1053슬라이드, CPTAC 페어). 대장=MSI 뉘앙스가 **중간비용**을 줘 metric calibration 가능(BRAF 고 vs MSI 중 vs 조직형 저). 둘이 치환비용 전 범위를 커버. ALK는 세포주 게이트 NO-GO(n=2)로 드롭(D1).
+
+**미채택 사유(정직):** 위암은 서사 최강(HER2-amp→trastuzumab = 유방 HER2 문자 그대로 복제)이나 외부검증 CPTAC-STAD ~20슬라이드로 빈약. Glioma는 마커가 진단/예후성이라 치료라우팅 프레이밍에 부적합. 자궁내막·흑색종은 데이터/축 결함.
+
+**flagship 확장 옵션(고가치):** 위암 STAD를 4번째 암종으로 추가하면 **법칙의 강한 held-out 검정**이 된다 — HER2-amp가 다른 장기에서도 H&E-blind면 유방 HER2를 복제(같은 변이·다른 장기). TCGA-STAD 내부 split만으로 법칙 검정 가능(외부검증 없이 blind 여부만 보면 됨). GPU 여유·시간 되면 추가 권장. → 사람 결정.
+
 ## 기여 문장 (이게 곧 논문의 정체성 — 파이프라인 아님)
 > H&E→분자 예측이 포화된 상황에서, 이 분야는 "예측된다"를 "임상적으로 대체 가능하다"와 혼동해 왔다. 우리는 치료 결정 경로에서 **H&E가 분자검사를 언제 값싸게 대신할 수 있는지의 다암종 결정지도**를 제시하고, 그 경계가 **형태학적 상관물의 유무**라는 사전등록 법칙으로 예측됨을 보인다. 멀티에이전트 파이프라인은 인프라이며 기여가 아니다.
 
