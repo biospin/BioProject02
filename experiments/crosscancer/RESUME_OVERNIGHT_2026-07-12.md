@@ -7,7 +7,9 @@
 |---|---|---|---|
 | 폐 임베딩 | 마스터 74878 + 워커 | 868/1050 | `LUNG_NSCLC/full/embeddings/*.npy`, manifest |
 | 폐 supervised chain | (임베딩 완료 감지 대기) | — | 폐 `mil_cost_results.json` + 법칙 held-out(EGFR/KRAS/TRU/histology) |
-| 위·두경부 임베딩 | `sh_embed.py` 156432 (+3워커) | STAD 67/442, HNSC 0/472 | 각 `full/embeddings/*.npy`, `embedding_manifest_*.csv` |
+| 위(STAD) 임베딩 | `sh_embed.py` 156432 (+3워커 GPU0/1/2) | STAD ~166/442 | `GASTRIC_STAD/full/embeddings/*.npy` |
+| 두경부(HNSC) 임베딩 **병렬** | `sh_embed_hnsc_gpu2.py` (워커 3개, physGPU2 고정) | HNSC 0→진행 | `HEADNECK_HNSC/full/embeddings/*.npy` · 로그 `EMBED_HNSC_GPU2_HEARTBEAT.log` |
+| ↳ 주의 | 병목=GDC 다운로드라 GPU2에 HNSC 병렬 추가(동시 실행). 마스터 sh_embed(순차)가 STAD 후 HNSC를 다시 돌려도 idempotent skip이라 충돌 없음. 라벨 20/21/22로 마스터 0/1/2와 비충돌 | | |
 | 위·두경부 chain | `sh_chain.py` 158576 (임베딩 대기) | — | 각 `full/mil_cost_results.json` + `full/LAW_TEST.md` + `SH_CHAIN_DONE.json` |
 | watcher | 147012 | — | `RESULTS_SUMMARY.md` 자동 |
 
