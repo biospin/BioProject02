@@ -1,0 +1,288 @@
+{
+  "exp": "angleA_spatial_erbb2_floor",
+  "data": "Andersson 2021 HER2+ ST (Zenodo 4751624), 8 patients, all clinical HER2+",
+  "method": "비종양 spot 배경 90th pct 역치 이하인 종양 면적% (CP10k+log1p ERBB2)",
+  "claim_level": "hypothesis_only",
+  "critic_status": "pending",
+  "caveat": [
+    "ST 코호트=메커니즘 시연(우리 TCGA 아님)",
+    "Path2Space는 HER2 이질성을 좋은 예측신호로 사용(반대해석) — 서사충돌 관리",
+    "spot=morphology area proxy, 세포수 아님"
+  ],
+  "threshold_90pct": {
+    "per_patient": [
+      {
+        "patient": "A",
+        "section": "A1",
+        "n_tumor": 303,
+        "n_ref": 38,
+        "erbb2_bg_thr(log)": 5.066,
+        "tumor_erbb2_median(log)": 5.07,
+        "ref_erbb2_median(log)": 4.746,
+        "low_erbb2_tumor_area_frac": 0.479
+      },
+      {
+        "patient": "B",
+        "section": "B1",
+        "n_tumor": 63,
+        "n_ref": 165,
+        "erbb2_bg_thr(log)": 3.83,
+        "tumor_erbb2_median(log)": 3.684,
+        "ref_erbb2_median(log)": 2.962,
+        "low_erbb2_tumor_area_frac": 0.746
+      },
+      {
+        "patient": "C",
+        "section": "C1",
+        "n_tumor": 127,
+        "n_ref": 40,
+        "erbb2_bg_thr(log)": 4.788,
+        "tumor_erbb2_median(log)": 4.582,
+        "ref_erbb2_median(log)": 4.318,
+        "low_erbb2_tumor_area_frac": 0.898
+      },
+      {
+        "patient": "D",
+        "section": "D1",
+        "n_tumor": 139,
+        "n_ref": 116,
+        "erbb2_bg_thr(log)": 2.902,
+        "tumor_erbb2_median(log)": 2.825,
+        "ref_erbb2_median(log)": 2.335,
+        "low_erbb2_tumor_area_frac": 0.64
+      },
+      {
+        "patient": "E",
+        "section": "E1",
+        "n_tumor": 340,
+        "n_ref": 194,
+        "erbb2_bg_thr(log)": 4.489,
+        "tumor_erbb2_median(log)": 4.666,
+        "ref_erbb2_median(log)": 3.882,
+        "low_erbb2_tumor_area_frac": 0.374
+      },
+      {
+        "patient": "F",
+        "section": "F1",
+        "n_tumor": 577,
+        "n_ref": 82,
+        "erbb2_bg_thr(log)": 4.557,
+        "tumor_erbb2_median(log)": 4.498,
+        "ref_erbb2_median(log)": 4.34,
+        "low_erbb2_tumor_area_frac": 0.62
+      },
+      {
+        "patient": "G",
+        "section": "G2",
+        "n_tumor": 160,
+        "n_ref": 225,
+        "erbb2_bg_thr(log)": 3.956,
+        "tumor_erbb2_median(log)": 3.687,
+        "ref_erbb2_median(log)": 3.245,
+        "low_erbb2_tumor_area_frac": 0.794
+      },
+      {
+        "patient": "H",
+        "section": "H1",
+        "n_tumor": 187,
+        "n_ref": 304,
+        "erbb2_bg_thr(log)": 3.959,
+        "tumor_erbb2_median(log)": 4.17,
+        "ref_erbb2_median(log)": 3.215,
+        "low_erbb2_tumor_area_frac": 0.316
+      }
+    ],
+    "summary": {
+      "n_patients": 8,
+      "median_low_frac": 0.63,
+      "range": [
+        0.316,
+        0.898
+      ]
+    }
+  },
+  "threshold_95pct": {
+    "per_patient": [
+      {
+        "patient": "A",
+        "section": "A1",
+        "n_tumor": 303,
+        "n_ref": 38,
+        "erbb2_bg_thr(log)": 5.192,
+        "tumor_erbb2_median(log)": 5.07,
+        "ref_erbb2_median(log)": 4.746,
+        "low_erbb2_tumor_area_frac": 0.752
+      },
+      {
+        "patient": "B",
+        "section": "B1",
+        "n_tumor": 63,
+        "n_ref": 165,
+        "erbb2_bg_thr(log)": 4.02,
+        "tumor_erbb2_median(log)": 3.684,
+        "ref_erbb2_median(log)": 2.962,
+        "low_erbb2_tumor_area_frac": 0.873
+      },
+      {
+        "patient": "C",
+        "section": "C1",
+        "n_tumor": 127,
+        "n_ref": 40,
+        "erbb2_bg_thr(log)": 4.805,
+        "tumor_erbb2_median(log)": 4.582,
+        "ref_erbb2_median(log)": 4.318,
+        "low_erbb2_tumor_area_frac": 0.921
+      },
+      {
+        "patient": "D",
+        "section": "D1",
+        "n_tumor": 139,
+        "n_ref": 116,
+        "erbb2_bg_thr(log)": 3.001,
+        "tumor_erbb2_median(log)": 2.825,
+        "ref_erbb2_median(log)": 2.335,
+        "low_erbb2_tumor_area_frac": 0.77
+      },
+      {
+        "patient": "E",
+        "section": "E1",
+        "n_tumor": 340,
+        "n_ref": 194,
+        "erbb2_bg_thr(log)": 4.689,
+        "tumor_erbb2_median(log)": 4.666,
+        "ref_erbb2_median(log)": 3.882,
+        "low_erbb2_tumor_area_frac": 0.518
+      },
+      {
+        "patient": "F",
+        "section": "F1",
+        "n_tumor": 577,
+        "n_ref": 82,
+        "erbb2_bg_thr(log)": 4.664,
+        "tumor_erbb2_median(log)": 4.498,
+        "ref_erbb2_median(log)": 4.34,
+        "low_erbb2_tumor_area_frac": 0.792
+      },
+      {
+        "patient": "G",
+        "section": "G2",
+        "n_tumor": 160,
+        "n_ref": 225,
+        "erbb2_bg_thr(log)": 4.164,
+        "tumor_erbb2_median(log)": 3.687,
+        "ref_erbb2_median(log)": 3.245,
+        "low_erbb2_tumor_area_frac": 0.887
+      },
+      {
+        "patient": "H",
+        "section": "H1",
+        "n_tumor": 187,
+        "n_ref": 304,
+        "erbb2_bg_thr(log)": 4.162,
+        "tumor_erbb2_median(log)": 4.17,
+        "ref_erbb2_median(log)": 3.215,
+        "low_erbb2_tumor_area_frac": 0.492
+      }
+    ],
+    "summary": {
+      "n_patients": 8,
+      "median_low_frac": 0.781,
+      "range": [
+        0.492,
+        0.921
+      ]
+    }
+  },
+  "threshold_50pct": {
+    "per_patient": [
+      {
+        "patient": "A",
+        "section": "A1",
+        "n_tumor": 303,
+        "n_ref": 38,
+        "erbb2_bg_thr(log)": 4.746,
+        "tumor_erbb2_median(log)": 5.07,
+        "ref_erbb2_median(log)": 4.746,
+        "low_erbb2_tumor_area_frac": 0.076
+      },
+      {
+        "patient": "B",
+        "section": "B1",
+        "n_tumor": 63,
+        "n_ref": 165,
+        "erbb2_bg_thr(log)": 2.962,
+        "tumor_erbb2_median(log)": 3.684,
+        "ref_erbb2_median(log)": 2.962,
+        "low_erbb2_tumor_area_frac": 0.079
+      },
+      {
+        "patient": "C",
+        "section": "C1",
+        "n_tumor": 127,
+        "n_ref": 40,
+        "erbb2_bg_thr(log)": 4.318,
+        "tumor_erbb2_median(log)": 4.582,
+        "ref_erbb2_median(log)": 4.318,
+        "low_erbb2_tumor_area_frac": 0.299
+      },
+      {
+        "patient": "D",
+        "section": "D1",
+        "n_tumor": 139,
+        "n_ref": 116,
+        "erbb2_bg_thr(log)": 2.335,
+        "tumor_erbb2_median(log)": 2.825,
+        "ref_erbb2_median(log)": 2.335,
+        "low_erbb2_tumor_area_frac": 0.151
+      },
+      {
+        "patient": "E",
+        "section": "E1",
+        "n_tumor": 340,
+        "n_ref": 194,
+        "erbb2_bg_thr(log)": 3.882,
+        "tumor_erbb2_median(log)": 4.666,
+        "ref_erbb2_median(log)": 3.882,
+        "low_erbb2_tumor_area_frac": 0.074
+      },
+      {
+        "patient": "F",
+        "section": "F1",
+        "n_tumor": 577,
+        "n_ref": 82,
+        "erbb2_bg_thr(log)": 4.34,
+        "tumor_erbb2_median(log)": 4.498,
+        "ref_erbb2_median(log)": 4.34,
+        "low_erbb2_tumor_area_frac": 0.229
+      },
+      {
+        "patient": "G",
+        "section": "G2",
+        "n_tumor": 160,
+        "n_ref": 225,
+        "erbb2_bg_thr(log)": 3.245,
+        "tumor_erbb2_median(log)": 3.687,
+        "ref_erbb2_median(log)": 3.245,
+        "low_erbb2_tumor_area_frac": 0.206
+      },
+      {
+        "patient": "H",
+        "section": "H1",
+        "n_tumor": 187,
+        "n_ref": 304,
+        "erbb2_bg_thr(log)": 3.215,
+        "tumor_erbb2_median(log)": 4.17,
+        "ref_erbb2_median(log)": 3.215,
+        "low_erbb2_tumor_area_frac": 0.08
+      }
+    ],
+    "summary": {
+      "n_patients": 8,
+      "median_low_frac": 0.115,
+      "range": [
+        0.074,
+        0.299
+      ]
+    }
+  }
+}

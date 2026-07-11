@@ -259,3 +259,6 @@ experiments/crosscancer/*/full/*.done
 experiments/crosscancer/full_run*.out
 experiments/crosscancer/EMBED_*.log
 experiments/crosscancer/EMBED_*.done
+
+# Angle A raw ST data (Andersson Zenodo, 재다운 가능)
+experiments/kkkim/angle_A_spatial_erbb2/data/
