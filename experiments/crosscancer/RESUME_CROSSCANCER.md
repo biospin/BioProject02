@@ -48,6 +48,24 @@ setsid nohup /home/kkkim/miniconda3/bin/python3 experiments/crosscancer/run_supe
 **결과 해석(advisor 게이트):** 각 endpoint에 `real`·`shuffle_null` AUROC 동반. **histology 양성대조 AUROC≥0.75 = 파이프라인 정상**(H&E가 형태 봄). 변이(EGFR/KRAS/BRAF) `real`이 낮고 `shuffle_null`과 비슷 = **H&E-blind(가설확증)**; `real`도 낮은데 histology도 낮으면 = MIL 고장. cost = 측정vs예측 축라우팅 mis-route×치료거리.
 검증(2026-07-11): 라벨 prevalence 게이트 **EGFR 10.2%(보정 후; 보정 전 9.4%)·KRAS 12.4%·BRAF 9.0% 모두 OK**, split site-disjoint OK, MIL 스모크(val+test 합침) **histology real 0.954[0.90,0.99] vs shuffle 0.473**(test-only 시절 0.806[0.54,1.0]/shuffle0.74에서 개선) PASS. cost=버전A(targeted 3축 거리)+버전B(histology 포함 mis-route) 둘 다 산출. **before→after 이력·상세결정=`PROGRESS_DECISIONS.md`**(덮어쓰지 말고 누적).
 
+## 🤖 결과 자동 요약 watcher (세션 끊겨도 정리 산출)
+
+`summarize_when_done.py`가 detached로 돌며, MIL 결과가 나오면 **사람이 읽을 요약을 자동 생성한다.**
+```bash
+cat experiments/crosscancer/RESULTS_SUMMARY.md 2>/dev/null      # 자동 생성된 결과 요약(암종별 real vs shuffle 판정·cost)
+cat experiments/crosscancer/SUMMARIZE_DONE.json 2>/dev/null     # 있으면 전 암종 요약 완료
+tail experiments/crosscancer/SUMMARIZE_HEARTBEAT.log
+# watcher가 죽었으면 재기동:
+setsid nohup /home/kkkim/miniconda3/bin/python3 experiments/crosscancer/summarize_when_done.py > experiments/crosscancer/summarize.out 2>&1 </dev/null &
+```
+
+### 재접속 시 결과가 나와 있으면 할 일 (사람 몫)
+`RESULTS_SUMMARY.md`는 기계적 판정까지만 한다. 세션이 살아나면 다음을 사람이 마무리한다.
+1. 요약을 읽고 해석을 확정한다(특히 양성대조 histology가 통과했는지, 변이 endpoint가 H&E-blind로 나왔는지).
+2. `PROGRESS_DECISIONS.md`의 중간 시사점을 v2로 갱신한다(BRCA HER2 패턴의 cross-cancer 재현 여부).
+3. JIRA **BIOP02-96**(MIL·cost)에 결과를 완결 문장으로 기록하고, 필요 시 상태를 전환한다.
+4. 사용자에게 검토를 요청한다.
+
 ## 완료 후 다음 단계 (수동 확인)
 1. 분자 라벨(cBioPortal: 폐 EGFR/ALK/KRAS-G12C·histology, 대장 BRAF-V600E) + manifest 조인 — **BIOP02-95**
 2. site-disjoint split 생성·검토 — BIOP02-95
