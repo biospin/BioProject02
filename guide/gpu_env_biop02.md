@@ -11,12 +11,22 @@
 
 | 항목 | 값 |
 |---|---|
-| **conda env** | **`base`** (전용 named env 없음) |
-| **경로** | `/home/kkkim/miniconda3` |
+| **conda env** | **`spatialpatho`** (BIOP02 전용 격리 env, 2026-07-11 클린 생성·검증) |
+| **경로** | `/home/kkkim/miniconda3/envs/spatialpatho` |
+| **활성화** | `conda activate spatialpatho` (또는 `/home/kkkim/miniconda3/envs/spatialpatho/bin/python`) |
 | **Python** | 3.13.13 |
 | **GPU** | RTX A6000 49GB × 3 |
 | **드라이버 / CUDA / cuDNN** | 535.309.01 / **12.4** / 9.1.0 |
 | **torch / torchvision** | **2.6.0+cu124 / 0.21.0+cu124** (`torch.cuda.is_available()=True`, 3 devices) |
+
+> 재현(클린 설치):
+> ```bash
+> conda create -n spatialpatho python=3.13 -y && conda activate spatialpatho
+> pip install torch==2.6.0+cu124 torchvision==0.21.0+cu124 --index-url https://download.pytorch.org/whl/cu124
+> pip install timm==1.0.27 openslide-python==1.4.3 openslide-bin huggingface_hub==1.15.0 transformers==5.12.1 \
+>             scikit-learn==1.9.0 pandas==2.2.3 scipy==1.18.0 pillow==12.2.0 opencv-python-headless==4.11.0.86 einops==0.8.2 safetensors==0.7.0
+> ```
+> ⚠️ 설치 함정: **openslide-python은 C 라이브러리 필요** → `openslide-bin`(번들 휠) 같이 설치(LD_LIBRARY_PATH 불필요). opencv는 4자리 버전 `opencv-python-headless==4.11.0.86`(서버=headless).
 
 ## 2. BIOP02 전용 GPU/DL 의존 (핵심 패키지, 정확 버전)
 
@@ -24,13 +34,13 @@
 torch==2.6.0+cu124        # 임베딩(UNI/CONCH forward) + MIL(CLAM/attention) 학습
 torchvision==0.21.0+cu124
 timm==1.0.27              # 파운데이션 모델(UNI ViT-L/16 등) 로드
-openslide-python==1.4.3   # WSI 타일링 (pyvips 미사용 — openslide로 통일)
+openslide-python==1.4.3 + openslide-bin   # WSI 타일링 (C라이브러리 번들, pyvips 미사용)
 huggingface_hub==1.15.0   # gated 가중치(UNI/CONCH, HF 승인 필요)
 transformers==5.12.1
 safetensors==0.7.0
 einops==0.8.2
 scikit-learn==1.9.0       # AUROC·평가 지표
-numpy==2.4.4  pandas==2.2.3  scipy==1.18.0  pillow==12.2.0  opencv-python==4.11.0
+numpy==2.4.4  pandas==2.2.3  scipy==1.18.0  pillow==12.2.0  opencv-python-headless==4.11.0.86
 ```
 - gated 모델 접근: `guide/hf_model_access.md` 참조(기관 이메일로 Mahmood Lab 승인).
 - 설치 스크립트 `agents/embedding/setup.sh` 존재하나 **헤더가 Python 3.10/A100로 구버전** → 위 실측(3.13/A6000/cu124) 기준으로 갱신 필요(별도 태스크).
