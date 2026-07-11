@@ -36,3 +36,34 @@
 - 폐/대장 `mil_cost_results.json`: endpoint별 real vs shuffle-null AUROC + cost 버전A/B.
 - **가설:** 표적변이(EGFR/KRAS/BRAF) real≈shuffle(H&E-blind) vs histology real≫shuffle(H&E-triage) → BRCA "HER2 blind/basal triage" 패턴의 cross-cancer 재현.
 - 검토 포인트: 양성대조 통과? 변이 CI? cost 프레이밍(A vs B)? EGFR 10.2% caveat.
+
+---
+
+## 중간 시사점 (계속 갱신 — 발표/논문 도입부 재활용용)
+
+> 갱신 로그: **v1 2026-07-11** (임베딩 진행 중, MIL 전). 결과 나올 때마다 append.
+
+### 수렴하는 핵심 원리
+**H&E 형태학은 조직 수준 표현형(형태·아형)은 담지만, 국소 유전체 드라이버(점돌연변이·증폭)엔 체계적으로 눈이 멀며 — 바로 그 지점이 분자검사가 대체 불가한 곳이다.** BRCA에서 도출, cross-cancer에서 재현 시험 중.
+
+### 확정 결과
+1. **BRCA HER2축: 라우팅 무관 100% mis-route**(PAM50·receptor 둘 다) → H&E-예측 아형은 항HER2 결정을 대체 못 함(분자검사 필수).
+2. **cost 렌즈가 외부 배치 아티팩트를 폭로:** CPTAC서 예측이 다수클래스로 붕괴(antiHER2 예측 0%·ER over-call). endocrine 5%/chemo 73% "반전"은 스킬 아닌 붕괴 산물. → raw AUROC(0.9)가 숨긴 miscalibration을 cost가 축별로 드러냄(방법론 기여).
+3. **헤드라인 contrast robust:** cost(antiHER2)−cost(endocrine) = PAM50 0.340[0.276,0.402]·receptor 0.381[0.348,0.420], 둘 다 0 배제.
+4. **표적축↔chemo 치료거리 암종 무관하게 큼**(세포주, GPU-free): BRCA HER2↔chemo 0.765·폐 KRAS-G12C↔chemo 0.914·대장 BRAF↔baseline 0.868. → 표적변이축의 치료적 고립은 치료 지형의 일반 성질.
+5. **양성대조(부분):** H&E가 폐 LUAD/LUSC를 0.954[0.90,0.99]로 구분(shuffle 0.473과 명확 분리) → 형태는 확실히 읽음.
+
+### 전략적 시사점
+- **레드오션 탈출:** "H&E가 X를 예측"(포화)이 아니라 **"H&E triage 안전 vs 분자검사 필수의 결정 지도"**(미출판 각).
+- **음성 결과가 자산:** H&E가 변이 못 맞힘 = "분자검사 필수 경계선"의 증거.
+- **단일암종→원리:** 축별 결정 규칙 정식화한 선행 없음(advisor 확인).
+
+### 정직한 한계
+- 외부 miscalibration(CPTAC 붕괴)은 실재 위협 — 결과이자 caveat.
+- 변이 endpoint 양성 얇음(hold-out 15-17), EGFR 라벨 10.2%(strict).
+- 전부 hypothesis_only·Critic 미통과. 클리니컬 주장 아님.
+
+### 다음 갱신 트리거
+- [ ] cross-cancer MIL 완료 → 표적변이 real vs shuffle 패턴 확인 시 v2.
+- [ ] cost 버전 A/B 결과 → 프레이밍 결정 시 갱신.
+- [ ] 양성대조 전량(1053) 재확인.
