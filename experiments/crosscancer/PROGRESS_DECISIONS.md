@@ -32,12 +32,14 @@
 | **D7 EGFR 라벨 분류기 보정** (S768I·exon20 dup·E709 추가) | 9.4% of LUAD (strict, ⚠️WARN 앵커 미달), 53환자 | **10.2%** (✅OK), 58환자 | 놓친 진짜 activating +5명 포섭 → 문헌 앵커(11-13%) 진입, anchor-chasing 아님 |
 | **D6 평가 test-only → val+test 합침** (histology 스모크, 부분 데이터) | real 0.806, CI **[0.538, 1.0]**, shuffle-null **0.736** | real 0.954, CI **[0.896, 0.994]**, shuffle-null **0.473** | hold-out 17→60명 → CI 폭 0.46→0.10 축소, shuffle-null이 노이즈(0.74)→깨끗한 null(0.47). real vs shuffle 분리 명확화 |
 | **D3 임베딩 자원 튜닝** | HDD 18워커 무제한스레드: load **133**, 폐 15분 **정체** | SSD 10워커 OMP=4: load **~8**, ~3 slides/min 안정 | HDD seek + torch 스레드 thrash 제거. 처리율 회복 |
+| **Angle A 역치 v1→v2 하드닝** (methodologist spec) | 임의 percentile: 배경 median 12%~90th 63%~95th 78% (역치 의존 심함) | **threshold-free Θ=P(tumor≤ref)=1−AUC**: 중앙 0.158·범위 0.023-0.424, **CI 0배제 8/8** | 정규화 불변·rank기반. kill 통과: interior-only 7/8·depth-cond(high-ρ) 3/3 생존. mixture 대신 분포중첩 확정. commit 대기 |
 
 ## 진행 상황
 - 07-11 ~11:40 임베딩 자율 착수(스모크 PASS 후 detached). 튜닝 수렴(D3).
 - 07-11 12:xx 라벨·split·MIL 스크립트 작성+검증, supervised 자동 체인 detached(임베딩 완료 감지).
 - **임베딩 진척:** 07-11 12:56 = 폐 235/1053 · 대장 168/625 → 16:06 = 폐 425 · 대장 356(순조). ETA 오늘밤~일 새벽.
 - **Angle A 착수·1차 결과(07-11 16:xx, commit 6c73620):** Andersson HER2+ ST(Zenodo 4751624, 8명) 다운로드(AES 암호 README에서 획득)→분석. **확진 HER2+ 8명 전원 종양 면적 일부가 HER2-음성 배경 ERBB2 수준**(strict median 12%·range 7-30%). floor 논지 성립. 그림 `experiments/kkkim/angle_A_spatial_erbb2/fig_erbb2_floor.png`. ⚠️ ST=메커니즘 시연·Path2Space 반대해석 관리.
+- **Angle A v2 하드닝(07-11 22:xx, methodologist spec):** 임의 percentile → **threshold-free Θ=P(tumor spot ERBB2 ≤ ref spot ERBB2)=1−AUC**(정규화 불변·rank기반). **Θ 중앙 0.158·범위 0.023-0.424, CI 0배제 8/8.** kill 통과: interior-only(확산통제) 7/8(B만 margin)·depth-conditioning(high-ρ C/E/G) 3/3 생존. 사전확인 tumor ERBB2 zero-frac≈0(graded-low). 환자=복제단위(pooling 금지). 산출 `analyze_v2_overlap.py`·`fig_erbb2_floor_v2.png`·`spatial_erbb2_floor_v2.json`. **floor 주장 하드닝 후에도 방어 성립.** claim 재규정=label 정보손실/target coverage('치료 실패' 아님). Path2Space 화해 프레이밍 확정.
 
 ## 검증된 사전결과 (임베딩 완료 전, 부분/GPU-free)
 - **세포주 냉동지도·치료거리(완료):** 폐 antiKRAS-G12C↔chemo **0.914**·antiEGFR↔chemo 0.667 / 대장 antiBRAF↔baseline **0.868** (BRCA HER2↔chemo 0.765 재현). positive control 통과.

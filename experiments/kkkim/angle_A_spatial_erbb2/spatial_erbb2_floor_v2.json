@@ -1,0 +1,211 @@
+{
+  "exp": "angleA_v2_overlap",
+  "estimand": "Θ=P(tumor spot ERBB2 ≤ ref spot ERBB2)=1−AUC (raw, 정규화불변)",
+  "data": "Andersson 2021 HER2+ ST (Zenodo 4751624), 8명 all HER2+",
+  "n_patients": 8,
+  "claim_level": "hypothesis_only",
+  "critic_status": "pending",
+  "claim": "확진 HER2+ 종양의 종양면적 일부가 co-sectioned 비종양과 구별불가한 ERBB2 수준 → patient-level 라벨이 sub-region 타깃변이 미해상 → 치환비용 spatial floor>0. (label 정보손실/target coverage, '치료 실패' 아님)",
+  "per_patient": [
+    {
+      "patient": "A",
+      "section": "A1",
+      "n_tumor": 302,
+      "n_ref": 38,
+      "tumor_erbb2_zero_frac": 0.0,
+      "depth_rho_residual": -0.137,
+      "theta_overlap": 0.165,
+      "theta_ci95": [
+        0.1,
+        0.235
+      ],
+      "frac_le_ref_median": 0.083,
+      "n_interior_tumor": 204,
+      "n_interior_ref": 0,
+      "theta_interior": 0.145,
+      "theta_depth_cond": 0.182,
+      "pctile_sweep_frac": {
+        "le_ref_50th": 0.083,
+        "le_ref_90th": 0.477,
+        "le_ref_95th": 0.619
+      }
+    },
+    {
+      "patient": "B",
+      "section": "B1",
+      "n_tumor": 62,
+      "n_ref": 117,
+      "tumor_erbb2_zero_frac": 0.0,
+      "depth_rho_residual": 0.056,
+      "theta_overlap": 0.023,
+      "theta_ci95": [
+        0.005,
+        0.047
+      ],
+      "frac_le_ref_median": 0.0,
+      "n_interior_tumor": 28,
+      "n_interior_ref": 30,
+      "theta_interior": 0.001,
+      "theta_depth_cond": 0.116,
+      "pctile_sweep_frac": {
+        "le_ref_50th": 0.0,
+        "le_ref_90th": 0.048,
+        "le_ref_95th": 0.065
+      }
+    },
+    {
+      "patient": "C",
+      "section": "C1",
+      "n_tumor": 126,
+      "n_ref": 38,
+      "tumor_erbb2_zero_frac": 0.0,
+      "depth_rho_residual": 0.489,
+      "theta_overlap": 0.2,
+      "theta_ci95": [
+        0.131,
+        0.286
+      ],
+      "frac_le_ref_median": 0.127,
+      "n_interior_tumor": 75,
+      "n_interior_ref": 10,
+      "theta_interior": 0.184,
+      "theta_depth_cond": 0.406,
+      "pctile_sweep_frac": {
+        "le_ref_50th": 0.127,
+        "le_ref_90th": 0.508,
+        "le_ref_95th": 0.54
+      }
+    },
+    {
+      "patient": "D",
+      "section": "D1",
+      "n_tumor": 139,
+      "n_ref": 116,
+      "tumor_erbb2_zero_frac": 0.0,
+      "depth_rho_residual": 0.213,
+      "theta_overlap": 0.146,
+      "theta_ci95": [
+        0.1,
+        0.192
+      ],
+      "frac_le_ref_median": 0.101,
+      "n_interior_tumor": 77,
+      "n_interior_ref": 40,
+      "theta_interior": 0.131,
+      "theta_depth_cond": 0.214,
+      "pctile_sweep_frac": {
+        "le_ref_50th": 0.101,
+        "le_ref_90th": 0.374,
+        "le_ref_95th": 0.468
+      }
+    },
+    {
+      "patient": "E",
+      "section": "E1",
+      "n_tumor": 337,
+      "n_ref": 194,
+      "tumor_erbb2_zero_frac": 0.0,
+      "depth_rho_residual": 0.429,
+      "theta_overlap": 0.287,
+      "theta_ci95": [
+        0.242,
+        0.33
+      ],
+      "frac_le_ref_median": 0.285,
+      "n_interior_tumor": 197,
+      "n_interior_ref": 71,
+      "theta_interior": 0.197,
+      "theta_depth_cond": 0.147,
+      "pctile_sweep_frac": {
+        "le_ref_50th": 0.285,
+        "le_ref_90th": 0.638,
+        "le_ref_95th": 0.757
+      }
+    },
+    {
+      "patient": "F",
+      "section": "F1",
+      "n_tumor": 577,
+      "n_ref": 82,
+      "tumor_erbb2_zero_frac": 0.0,
+      "depth_rho_residual": -0.137,
+      "theta_overlap": 0.424,
+      "theta_ci95": [
+        0.361,
+        0.487
+      ],
+      "frac_le_ref_median": 0.418,
+      "n_interior_tumor": 384,
+      "n_interior_ref": 19,
+      "theta_interior": 0.439,
+      "theta_depth_cond": 0.291,
+      "pctile_sweep_frac": {
+        "le_ref_50th": 0.418,
+        "le_ref_90th": 0.832,
+        "le_ref_95th": 0.891
+      }
+    },
+    {
+      "patient": "G",
+      "section": "G2",
+      "n_tumor": 160,
+      "n_ref": 214,
+      "tumor_erbb2_zero_frac": 0.0,
+      "depth_rho_residual": 0.415,
+      "theta_overlap": 0.151,
+      "theta_ci95": [
+        0.113,
+        0.192
+      ],
+      "frac_le_ref_median": 0.081,
+      "n_interior_tumor": 51,
+      "n_interior_ref": 39,
+      "theta_interior": 0.077,
+      "theta_depth_cond": 0.344,
+      "pctile_sweep_frac": {
+        "le_ref_50th": 0.081,
+        "le_ref_90th": 0.381,
+        "le_ref_95th": 0.631
+      }
+    },
+    {
+      "patient": "H",
+      "section": "H1",
+      "n_tumor": 187,
+      "n_ref": 295,
+      "tumor_erbb2_zero_frac": 0.0,
+      "depth_rho_residual": -0.047,
+      "theta_overlap": 0.064,
+      "theta_ci95": [
+        0.043,
+        0.089
+      ],
+      "frac_le_ref_median": 0.048,
+      "n_interior_tumor": 113,
+      "n_interior_ref": 119,
+      "theta_interior": 0.048,
+      "theta_depth_cond": 0.112,
+      "pctile_sweep_frac": {
+        "le_ref_50th": 0.048,
+        "le_ref_90th": 0.193,
+        "le_ref_95th": 0.219
+      }
+    }
+  ],
+  "summary": {
+    "theta_median": 0.158,
+    "theta_range": [
+      0.023,
+      0.424
+    ],
+    "nonzero_ci_excludes_0": "8/8",
+    "kill_interior_survive(>0.03)": "7/8",
+    "kill_depth_survive_highrho(>0.03)": "3/3",
+    "note": "환자=복제단위, spot pooling 금지. n=8=메커니즘 시연(모집단 prevalence 주장 X)."
+  },
+  "precheck": {
+    "tumor_erbb2_zero_frac": "≈0%(6/8=0) → graded-low, absence 아님(dropout kill 해소)"
+  },
+  "kill_criteria": "① interior-only Θ가 6/8 미만서 >0 → 확산 아티팩트 ② depth-cond가 high-ρ서 0.5로 붕괴 → depth 아티팩트 ③ CI 0포함 6/8 미만 → 재현 실패",
+  "limitations": "mRNA≠단백/증폭 · spot≠cell · ST≠우리 TCGA(메커니즘 시연) · 내부 ref는 HER2+환자 co-section(임상 HER2- 아님, 확산 있어 보수적 하한). Path2Space 화해: 같은 기질(공간ERBB2이질성), 다른 함수 — 그들=반응 바이오마커(양성), 우리=라벨이 버리는 정보(비용). 둘 다 성립."
+}
