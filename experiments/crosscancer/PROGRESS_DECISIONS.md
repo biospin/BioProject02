@@ -19,6 +19,7 @@
 | D6 | 평가=**val+test hold-out 합침**(site-disjoint 유지) | 변이 endpoint test 양성 7-9명 얇음 → CI 넓음. 합쳐 ~15-17명 검정력↑. **사용자 결정** | 07-11 |
 | D7 | **EGFR 라벨 보정**(S768I·exon20 dup·E709 추가, T790M·passenger 제외) | strict 9.4%가 놓친 진짜 activating 포섭 → 10.2%(문헌 11-13% 정합). anchor-chasing 아님. **사용자 질의 후** | 07-11 |
 | D8 | 폐 cost **버전 A(targeted 3축) + 버전 B(histology 포함 mis-route) 둘 다 산출**, 프레이밍 보류 | LUAD/LUSC가 chemo 레짐 바꿔 치료축 될 수 있음 vs BRCA 평행 단순성. **사용자 결정(보류)** | 07-11 |
+| D9 | **ST(공간전사체) 트랙 지금 개설 X** — 방어각 A는 banked, 진짜 ST논문 C는 Paper B 후 | scout+strategist 수렴: H&E→ST 예측 포화·Path2Space(Cell2026) ST경로 스쿱·유방 페어ST 소규모/치료라벨無/HER2경계 미포괄. cost-of-sub는 ST 불필요. 상세=`research/paperA-positioning/2026-07-11_HE-ST-scoop-and-angles.md` | 07-11 |
 
 ## 변경 효과 이력 (before → after, 덮어쓰지 말고 누적)
 
