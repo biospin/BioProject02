@@ -1,27 +1,30 @@
-# CMS 라벨 일치도 — 권위(Synapse) vs 자가계산(CMScaller)
+# CMS 라벨 3자 일치도 — Synapse vs CMScaller vs CMSclassifier
 
-> TCGA-COADREAD. 권위 라벨 = Guinney consensus(`cms_labels_public_all.txt`, syn4978511, TCGA 573환자).
-> 자가계산 = CMScaller NTP(cBioPortal RNA-seq, 템플릿 유전자). 대조 가능(권위 최종콜 CMS1-4) = 484환자.
+> TCGA-COADREAD. 세 라벨 소스: **Synapse**=Guinney 최종 consensus(`cms_labels_public_all.txt`, syn4978511) · **CMSclassifier(RF)**=동 파일의 RF 분류기 컬럼 · **CMScaller**=자가계산(NTP, cBioPortal RNA-seq). 확정 콜(CMS1-4) 공통 샘플 기준.
 
-## 전체 일치율 (핵심)
-**398/484 = 82.2%.** 이것이 서로 다른 도구(자가계산 CMScaller vs Guinney CMSclassifier-consensus)의 교차 일치율이며,
-문헌 보고 CMScaller-consensus concordance(~0.83) 및 사용자가 겪은 "CMScaller와 CMSclassifier가 완전히 같지는 않다"(≈18% 불일치)와 정합한다.
+## 쌍별 일치율
 
-## Confusion matrix (행=권위 consensus, 열=자가계산 CMScaller)
+| 비교 | 일치 | 일치율 |
+|---|---|---|
+| Synapse(consensus) vs CMScaller | 398/474 | **84.0%** |
+| Synapse(consensus) vs CMSclassifier(RF) | 494/494 | **100.0%** |
+| CMSclassifier(RF) vs CMScaller | 388/460 | **84.3%** |
+| 3자 만장일치 | 388/460 | 84.3% |
 
-| 권위 \ 계산 | CMS1 | CMS2 | CMS3 | CMS4 | 합 | class recall |
+## 읽는 법
+- **Synapse consensus 와 CMSclassifier(RF)가 100% 일치하는 이유는 둘이 독립이 아니기 때문이다** — Synapse 최종 라벨이 RF 분류기 출력으로 구성된다. 사실상 같은 값이다.
+- 따라서 **실제 도구 간 불일치는 CMScaller vs 나머지 ≈ 16%** 다. 이것이 문헌 concordance(~0.83) 및 "CMScaller와 CMSclassifier가 완전히 같지는 않다"는 경험과 정합한다.
+
+## Confusion (행=Synapse consensus, 열=CMScaller)
+
+| Synapse \ CMScaller | CMS1 | CMS2 | CMS3 | CMS4 | 합 | recall |
 |---|---|---|---|---|---|---|
 | **CMS1** | 67 | 0 | 2 | 2 | 71 | 94% |
-| **CMS2** | 3 | 157 | 14 | 29 | 209 | 75% |
+| **CMS2** | 3 | 157 | 14 | 29 | 203 | 77% |
 | **CMS3** | 13 | 0 | 56 | 0 | 69 | 81% |
-| **CMS4** | 3 | 3 | 7 | 118 | 135 | 87% |
+| **CMS4** | 3 | 3 | 7 | 118 | 131 | 90% |
 
-## 정정 노트 — "23% 불일치"의 정확한 정체
-권위 파일 안의 두 하위방법(**CMS_network vs CMS_RFclassifier**, 둘 다 Guinney CMSclassifier 내부)은 **둘 다 확정 CMS1-4를 낸 441샘플에서 0개만 불일치(라벨 자체는 100% 일치)**한다.
-한쪽만 확정하고 다른 쪽은 미분류(UNK/NOLBL)인 경우가 71/573(12%)이며, 앞서 "23% 불일치"라고 한 것은 **라벨 차이가 아니라 '어느 샘플을 분류하느냐(분류가능성)'의 차이**였다. 정정한다.
-- 즉 라벨 자체가 갈리는 것은 **서로 다른 도구 간**(CMScaller vs CMSclassifier)이며, 그 값이 위 **18% 불일치**다.
-
-## 해석
-- CMS1(67/71)·CMS4(118/135) recall이 높다 — H&E로 형태 상관물이 뚜렷한 아형과 정합(imCMS와 일치).
-- 주된 교차-도구 불일치는 CMS2↔CMS4 경계이며, 자가계산이 템플릿 유전자만으로 정규화되어 기질 신호(CMS4)를 다소 과대호출한 것으로 보인다.
-- 파이프라인 검증 목적 달성. **최종 분석에는 권위 consensus 라벨을 사용**하고, 자가계산은 검증·재현용으로 보존한다.
+## 결론
+- 최종 분석에는 **Synapse consensus 라벨**을 사용한다(권위, CMSclassifier와 동치).
+- CMScaller 자가계산은 파이프라인 검증·재현용으로 보존한다(consensus와 84% 일치).
+- CMS1·CMS4(H&E 형태 상관물 뚜렷)의 recall이 높고, 주된 불일치는 CMS2↔CMS4 경계다.

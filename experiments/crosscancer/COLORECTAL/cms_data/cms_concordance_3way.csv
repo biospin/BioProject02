@@ -1,0 +1,4 @@
+pair,agree,total,pct
+Synapse_vs_CMScaller,398,474,84.0
+Synapse_vs_CMSclassifier,494,494,100.0
+CMSclassifier_vs_CMScaller,388,460,84.3
