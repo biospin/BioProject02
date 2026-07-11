@@ -266,3 +266,4 @@ experiments/kkkim/angle_A_spatial_erbb2/data/
 # CMS 계산 중간산출(재생성 가능)
 experiments/crosscancer/COLORECTAL/cms_data/*.rda
 experiments/crosscancer/COLORECTAL/cms_data/coadread_expr_template.csv
+experiments/crosscancer/COLORECTAL/cms_data/*.txt
