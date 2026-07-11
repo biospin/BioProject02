@@ -15,7 +15,18 @@
 - **Synapse consensus 와 CMSclassifier(RF)가 100% 일치하는 이유는 둘이 독립이 아니기 때문이다** — Synapse 최종 라벨이 RF 분류기 출력으로 구성된다. 사실상 같은 값이다.
 - 따라서 **실제 도구 간 불일치는 CMScaller vs 나머지 ≈ 16%** 다. 이것이 문헌 concordance(~0.83) 및 "CMScaller와 CMSclassifier가 완전히 같지는 않다"는 경험과 정합한다.
 
-## Confusion (행=Synapse consensus, 열=CMScaller)
+## Confusion matrices (권위 기준, 두 방법)
+
+### 권위(Synapse) × CMSclassifier(RF)  (일치 494/494 = 100.0%)
+
+| Synapse \ CMSclassifier(RF) | CMS1 | CMS2 | CMS3 | CMS4 | 합 | recall |
+|---|---|---|---|---|---|---|
+| **CMS1** | 76 | 0 | 0 | 0 | 76 | 100% |
+| **CMS2** | 0 | 208 | 0 | 0 | 208 | 100% |
+| **CMS3** | 0 | 0 | 71 | 0 | 71 | 100% |
+| **CMS4** | 0 | 0 | 0 | 139 | 139 | 100% |
+
+### 권위(Synapse) × CMScaller  (일치 398/474 = 84.0%)
 
 | Synapse \ CMScaller | CMS1 | CMS2 | CMS3 | CMS4 | 합 | recall |
 |---|---|---|---|---|---|---|
@@ -23,6 +34,8 @@
 | **CMS2** | 3 | 157 | 14 | 29 | 203 | 77% |
 | **CMS3** | 13 | 0 | 56 | 0 | 69 | 81% |
 | **CMS4** | 3 | 3 | 7 | 118 | 131 | 90% |
+
+> Synapse×CMSclassifier(RF)가 완전 대각선(100%)인 것은 Synapse 최종 라벨이 RF 출력으로 구성되어 둘이 독립이 아니기 때문이다. 실제 방법 차이는 Synapse×CMScaller(≈84%)에서 드러난다.
 
 ## 결론
 - 최종 분석에는 **Synapse consensus 라벨**을 사용한다(권위, CMSclassifier와 동치).
