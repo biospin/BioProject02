@@ -46,7 +46,7 @@ setsid nohup /home/kkkim/miniconda3/bin/python3 experiments/crosscancer/run_supe
 # MIL만 다시(결과 존재 시 --force): python run_mil_cost.py --cancer LUNG_NSCLC --device cuda:0
 ```
 **결과 해석(advisor 게이트):** 각 endpoint에 `real`·`shuffle_null` AUROC 동반. **histology 양성대조 AUROC≥0.75 = 파이프라인 정상**(H&E가 형태 봄). 변이(EGFR/KRAS/BRAF) `real`이 낮고 `shuffle_null`과 비슷 = **H&E-blind(가설확증)**; `real`도 낮은데 histology도 낮으면 = MIL 고장. cost = 측정vs예측 축라우팅 mis-route×치료거리.
-검증(2026-07-11): 라벨 prevalence 게이트 **EGFR 10.2%(보정 후)·KRAS 12.4%·BRAF 9.0% 모두 OK**, split site-disjoint OK, MIL 스모크(val+test 합침) **histology real 0.954[0.90,0.99] vs shuffle 0.473** PASS. cost=버전A(targeted 3축 거리)+버전B(histology 포함 mis-route) 둘 다 산출. 상세결정=`PROGRESS_DECISIONS.md`.
+검증(2026-07-11): 라벨 prevalence 게이트 **EGFR 10.2%(보정 후; 보정 전 9.4%)·KRAS 12.4%·BRAF 9.0% 모두 OK**, split site-disjoint OK, MIL 스모크(val+test 합침) **histology real 0.954[0.90,0.99] vs shuffle 0.473**(test-only 시절 0.806[0.54,1.0]/shuffle0.74에서 개선) PASS. cost=버전A(targeted 3축 거리)+버전B(histology 포함 mis-route) 둘 다 산출. **before→after 이력·상세결정=`PROGRESS_DECISIONS.md`**(덮어쓰지 말고 누적).
 
 ## 완료 후 다음 단계 (수동 확인)
 1. 분자 라벨(cBioPortal: 폐 EGFR/ALK/KRAS-G12C·histology, 대장 BRAF-V600E) + manifest 조인 — **BIOP02-95**

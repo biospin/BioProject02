@@ -20,6 +20,16 @@
 | D7 | **EGFR 라벨 보정**(S768I·exon20 dup·E709 추가, T790M·passenger 제외) | strict 9.4%가 놓친 진짜 activating 포섭 → 10.2%(문헌 11-13% 정합). anchor-chasing 아님. **사용자 질의 후** | 07-11 |
 | D8 | 폐 cost **버전 A(targeted 3축) + 버전 B(histology 포함 mis-route) 둘 다 산출**, 프레이밍 보류 | LUAD/LUSC가 chemo 레짐 바꿔 치료축 될 수 있음 vs BRCA 평행 단순성. **사용자 결정(보류)** | 07-11 |
 
+## 변경 효과 이력 (before → after, 덮어쓰지 말고 누적)
+
+> 개선/변경의 효과를 남긴다. 새 변경 시 아래에 append.
+
+| 변경 | Before | After | 효과 |
+|---|---|---|---|
+| **D7 EGFR 라벨 분류기 보정** (S768I·exon20 dup·E709 추가) | 9.4% of LUAD (strict, ⚠️WARN 앵커 미달), 53환자 | **10.2%** (✅OK), 58환자 | 놓친 진짜 activating +5명 포섭 → 문헌 앵커(11-13%) 진입, anchor-chasing 아님 |
+| **D6 평가 test-only → val+test 합침** (histology 스모크, 부분 데이터) | real 0.806, CI **[0.538, 1.0]**, shuffle-null **0.736** | real 0.954, CI **[0.896, 0.994]**, shuffle-null **0.473** | hold-out 17→60명 → CI 폭 0.46→0.10 축소, shuffle-null이 노이즈(0.74)→깨끗한 null(0.47). real vs shuffle 분리 명확화 |
+| **D3 임베딩 자원 튜닝** | HDD 18워커 무제한스레드: load **133**, 폐 15분 **정체** | SSD 10워커 OMP=4: load **~8**, ~3 slides/min 안정 | HDD seek + torch 스레드 thrash 제거. 처리율 회복 |
+
 ## 진행 상황
 - 07-11 ~11:40 임베딩 자율 착수(스모크 PASS 후 detached). 튜닝 수렴(D3).
 - 07-11 12:xx 라벨·split·MIL 스크립트 작성+검증, supervised 자동 체인 detached(임베딩 완료 감지).
