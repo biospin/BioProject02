@@ -1,14 +1,15 @@
 # Subtype 치료결정 지도 — Paper A 핵심 메시지 (2026-07-10)
 
-> 작성: kkkim. 상태: **예비(PAM50 라우팅), claim_level=sanity/hypothesis.** receptor-status 라우팅(sjpark ER 수정 후) 확정 대기.
-> 근거 파일: `experiments/kkkim/20260710_cost_of_substitution/` (frozen_map·therapeutic_distance·patient_routing_cost·fig).
+> 작성: kkkim. 상태: **PAM50 + receptor-status 라우팅 2종 완료(2026-07-11), claim_level=hypothesis_only, Critic 미통과.**
+> 근거 파일: `experiments/kkkim/20260710_cost_of_substitution/` (frozen_map·therapeutic_distance·patient_routing_cost[_receptor]·fig).
+> ⚠️ **핵심 갱신(2026-07-11):** receptor 라우팅 결과 → **HER2축만 robust(양 라우팅 100% mis-route)**, endocrine/chemo per-axis cost는 라우팅 스킴·외부 calibration 의존이라 "안전" 주장 근거 약함. §3 참조.
 > ⚠️ 발표/공유 시 hypothesis_only·DRP 프레이밍 금지·수치는 기록에서만.
 
 ---
 
 ## 0. 한 문장 메시지 (슬라이드 표지)
-> **H&E 한 장은 어떤 치료 결정엔 충분하고 어떤 결정엔 위험하다 — 그 경계를 정량화한 지도.**
-> (basal→화학 triage 안전 · HER2→분자검사 필수 · luminal→판정 유보)
+> **H&E-예측 아형으로 치료를 정할 때, HER2축 치환은 라우팅 방식과 무관하게 항상 실패한다(100% mis-route) — 분자검사가 대체 불가임을 비용으로 증명한 지도.**
+> 부가: cost-of-substitution 렌즈가 raw AUROC가 숨긴 **외부 다수클래스 붕괴**(ER over-call·HER2 dead)를 축별로 드러냄 → 방법론적 기여. (endocrine/chemo는 라우팅 스킴 의존이라 단정 회피.)
 
 ## 1. 왜 이 프레이밍인가 (기존 결과의 재해석)
 - 우리 결과: H&E가 분자 아형 예측에서 **subtype_only 천장을 못 넘음**(ER 0.894 vs 0.918 동등), **HER2 외부 실패**(0.53). → "또 하나의 예측 벤치마크"로는 레드오션(스쿱).
@@ -17,17 +18,29 @@
 
 ## 2. Subtype 치료결정 지도 (핵심 표 = 핵심 그림)
 
-| Subtype / 축 | 표준 치료 | H&E 판정 | 해야 할 것 | 근거(예비) |
+| Subtype / 축 | 표준 치료 | H&E 판정 | 해야 할 것 | 근거(PAM50 / receptor) |
 |---|---|---|---|---|
-| **TNBC / Basal** | 화학(±PARP) | ✅ 믿을 만 | **H&E triage 가능** | cost 0.105 · 오라우팅 14% |
-| **HER2+ / ERBB2-amp** | 항HER2 | ❌ 무용 | **분자검사(IHC/ISH) 필수** | cost 0.718 · 오라우팅 **100%** |
-| **ER+ / Luminal** | 내분비(±CDK4/6) | ⚠️ 불확실 | **판정 유보**(receptor 라우팅 대기) | cost 0.378 · 오라우팅 51% |
+| **HER2+ / ERBB2-amp** | 항HER2 | ❌ 무용 | **분자검사(IHC/ISH) 필수** — 유일 robust 결론 | 오라우팅 **100% / 100%**(라우팅-불변) |
+| **TNBC / Basal** | 화학(±PARP) | ⚠️ 라우팅 의존 | H&E triage는 **PAM50 형태학축에서만**; receptor 계층서 ER over-call에 오염 | cost 0.105→0.510 · 오라우팅 14%→**73%** |
+| **ER+ / Luminal** | 내분비(±CDK4/6) | ⚠️ 판정 유보 | receptor서 낮으나 **majority-collapse 아티팩트**(§3) | cost 0.378→0.035 · 오라우팅 51%→5% |
 
-- 헤드라인 대비: **cost(antiHER2) − cost(endocrine) = 0.34, 95% CI [0.28, 0.40], 0 배제**(반증 바 통과).
+- 헤드라인 대비: **cost(antiHER2) − cost(endocrine)** = PAM50 0.340[0.276,0.402] · receptor 0.381[0.348,0.420], **양 라우팅 모두 0 배제**(반증 바 통과, robust).
+- ⚠️ TNBC·luminal 셀의 화살표(→)는 두 라우팅 스킴 간 반전 = §3 caveat. **단단한 메시지는 HER2 하나**로 좁혀졌음.
 - 그림: `fig_cost_of_substitution.png` (A 축별 비용 막대 + B 치료축 거리 히트맵; antiHER2↔chemo 거리 0.77 최대).
 
-## 3. 정직한 caveat (양 극단만 단단, 가운데는 물렁)
-1. **예비=PAM50 라우팅.** 모델이 Normal-like 과예측 → luminal 30%가 '무치료'로 샘. ER 분류기 자체는 AUROC 0.89로 좋으니 **receptor-status 라우팅에서 endocrine 비용이 더 낮게 나올 수 있음** → "luminal ≈ 안전" 확인/기각은 그때.
+## 3. 정직한 caveat — receptor 라우팅 후 갱신 (2026-07-11)
+
+**robustness 검증 결과: HER2 결론만 라우팅-불변, endocrine/chemo는 라우팅 스킴에 뒤집힘.**
+
+| 축 | PAM50 라우팅 | receptor 라우팅 | 판정 |
+|---|---|---|---|
+| **antiHER2** | mis 100% · cost 0.718 | mis **100%** · cost 0.416 | ✅ **robust — 분자검사 필수**(HER2 head 외부서 양성 0회 발화) |
+| endocrine | mis 51% · cost 0.378 | mis 5% · cost 0.035 | ⚠️ **불안정** — receptor서 낮으나 진짜 스킬 아님(아래) |
+| chemo | mis 14% · cost 0.105 | mis **73%** · cost 0.510 | ⚠️ **역전** — receptor서 급등 |
+
+- **헤드라인 contrast(antiHER2 − endocrine)는 양 라우팅서 robust:** 0.340[0.276,0.402](PAM50) · 0.381[0.348,0.420](receptor), 둘 다 0 배제.
+- **⚠️ endocrine 5% / chemo 73% 반전의 정체 = 외부 다수클래스 붕괴(진짜 H&E 스킬 아님).** CPTAC서 receptor head 예측분포가 endocrine 89%(실제 61%)·antiHER2 **0%**(실제 12%)·chemo 11%(실제 27%)로 붕괴. → (1) HER2 head가 한 번도 양성 미발화(AUROC 0.53 random 정합) → HER2+ 전원 이탈. (2) ER over-call(TNBC 79명 중 58명=73%를 ER+로) → TNBC가 endocrine으로 새면서 chemo cost 급등. endocrine 5%는 "ER+가 다수라 자명히 맞음"의 산물. 근거: `patient_routing_cost_receptor.json`(confusion·base_rate·mechanism).
+1. ~~예비=PAM50 라우팅, luminal 안전 확인 대기~~ → **위 표로 해소.** luminal "안전"은 majority-collapse 아티팩트라 기각. 단단한 결론은 **HER2 하나**로 좁혀짐.
 2. **세포주 지도가 내분비약 못 잡음**(positive control endocrine 1/8 vs antiHER2 3/3·chemo 7/7). endocrine 축 이중 불확실. → **HER2·basal 결론은 단단, luminal만 유보.**
    - **[D1 흡수]** 이건 분류기 탓만이 아니라 **치료증거 인프라의 구조적 한계** — 세포주 약물감수성은 targeted(HER2)·cytotoxic(chemo)엔 유효하나 **ER+ 내분비 backbone(BRCA ~70%)엔 체계적 부적합**. A를 강화하는 일반화 기여. 상세: `experiments/kkkim/20260710_cost_of_substitution/endocrine_limitation.md`.
 3. claim_level=sanity, hypothesis_only. Critic 미통과(공유 게이트 전).
