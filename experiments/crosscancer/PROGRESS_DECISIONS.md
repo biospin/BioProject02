@@ -129,7 +129,7 @@
 사용자 지시로 위암·두경부를 4·5번째 암종으로 추가. 근거: 법칙을 "개수"가 아니라 "대비"로 검정하되, 두 추가가 각각 고유 가치 — **위 HER2-amp = 유방 HER2를 같은 변이·다른 장기로 복제(법칙 최강 교차장기 검정)**, **두경부 HPV = 바이러스라는 새 종류의 형태-가시 축**(변이 아닌 형태 상관물로 법칙 조항 확장). pan-cancer 아틀라스로 흩지 않는 선(5개).
 - 후보성 확정: TCGA-STAD ~440, HNSC ~523(WSI 충분). 핵심축 확보 가능(HER2-amp=CNA, MSI=MSIsensor, EGFR, Lauren/조직형). **단 HPV(HNSC)·EBV(STAD)·아형은 cBioPortal SUBTYPE 공란 → 마커논문/유도 필요(폐 SSP와 동일 패턴).**
 - 법칙 예측 봉인(결과 전): `SUBSTITUTABILITY_LAW_PREREGISTRATION.md` — 위 HER2-amp ≤0.65(유방 0.599 복제)·MSI ≥0.82·Lauren ≥0.85; 두경부 HPV ≥0.80 > EGFR ≤0.70.
-- **CPTAC proteomics(Mertins 2016) 활용 결정:** "HER2 단백질은 높은데 H&E는 조용"을 한 줄 확인해 decoupling 굳힘(새 modality 아님, 보조). 사용자 지시.
+- **CPTAC proteomics(Mertins 2016) 활용 결정:** "HER2 단백질은 높은데 H&E엔 형태학적 상관물이 없음"을 한 줄 확인해 decoupling 굳힘(새 modality 아님, 보조). 사용자 지시. [용어: `PAPER_DIRECTION.md` §용어 정의]
 
 ### 다음 갱신 트리거 (갱신)
 - [x] 대장 CMS/MSI(아형 층위) 라벨 확보 → H&E→아형 예측 → 유방 아형과 like-with-like 비교. **(완료: Part A/B 분리)**

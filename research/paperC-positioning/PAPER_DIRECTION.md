@@ -6,6 +6,11 @@
 ## 한 문단 요지
 H&E 전(全)슬라이드 영상으로 분자 표현형을 예측하는 연구는 이미 포화됐다. 그런데 이 분야는 "예측된다"를 "임상적으로 대체 가능하다"와 혼동해 왔다. 우리는 치료 결정 경로에서 **H&E가 분자검사를 언제 값싸게 대신할 수 있는지의 다암종 결정지도**를 제시하고, 그 대체 가능 경계가 **분자 변이가 H&E 해상도에서 보이는 형태학적 상관물을 갖는지**라는 사전등록 법칙으로 예측됨을 5개 암종에서 보인다. 멀티에이전트 파이프라인은 인프라이지 기여가 아니다.
 
+## 용어 정의 (Terminology) — 근거 기반, 첫 등장 시 정의
+- **형태학적 상관물(morphological correlate)**: 어떤 분자 변이가 H&E에서 알아볼 수 있는 조직·세포 형태 특징(조직 구조·핵 형태·기질·면역침윤·점액 등)으로 나타나는 것. 병리학 표준 용어이다([Modern Pathology, "The Continuing Role of Morphology in the Molecular Age"](https://www.nature.com/articles/3880295); [J Pathol, Cifci 2022](https://pathsocjournals.onlinelibrary.wiley.com/doi/full/10.1002/path.5898)). 변이는 이 상관물을 "가진다 / 없다 / 부분적으로 가진다"로 서술한다.
+- **표준 용어 규칙**: 못 보는 상태는 "**형태학적 상관물이 없다(lacks a morphological correlate) / 형태학적으로 뚜렷하지 않다**"로 쓴다. 초기에 썼던 "형태학적 침묵·조용·silent"은 비공식 축약이며 정식 서술에서 쓰지 않는다. **"silent"은 유전학의 동의돌연변이(silent mutation)와 혼동**되고, "morphologically occult/silent"은 이 맥락에서 표준 용어로 문헌 확인되지 않으므로 채택하지 않는다.
+- **원칙(전 세션 적용)**: 용어는 지어내지 않는다. 새 용어는 문헌·기존 네이밍을 먼저 검증하고 그 형태로만 쓰며, 처음 등장할 때 정의부터 한다.
+
 ## 제목(가안)
 "When can H&E substitute for molecular testing? A cross-cancer decision map of morphological substitutability" (확정 전).
 
@@ -21,7 +26,7 @@ H&E 전(全)슬라이드 영상으로 분자 표현형을 예측하는 연구는
 - 두 값을 하나의 "비용" 숫자로 합치지 않는다(층위 오류 방지). 예후용 아형(CMS 등)의 예측 AUROC를 치료 비용으로 승격하지 않는다.
 
 ## 사전등록 법칙 (봉인됨, 결과 전)
-대체가능(저비용)=형태를 바꾸거나 형태와 연동된 변이(발현/증폭+구조, 면역연동 MSI, 조직형). 분자검사 필수(고비용)=형태학적으로 조용한 변이(HER2 증폭, RAS 점변이). 등급적=부분 상관물(폐 EGFR). **법칙은 "치환가능성" 경계이지 "생물학적 상관물 부재"가 아니다** — 고해상 기술이 미세 상관물을 찾아도 반증되지 않는다.
+대체가능(저비용)=형태를 바꾸거나 형태와 연동된 변이(발현/증폭+구조, 면역연동 MSI, 조직형). 분자검사 필수(고비용)=형태학적 상관물이 없는 변이(HER2 증폭, RAS 점변이). 등급적=부분 상관물(폐 EGFR). **법칙은 "치환가능성" 경계이지 "생물학적 상관물 부재"가 아니다** — 고해상 기술이 미세 상관물을 찾아도 반증되지 않는다.
 - 이미 관측(부합): 유방 ER 0.901/HER2 0.599, 대장 MSI 0.918/all-RAS 0.705/BRAF 0.882, CMS1 0.912/CMS4 0.661.
 - held-out(봉인): 폐 EGFR 등급적 0.75-0.89 > KRAS ≤0.65; **위 HER2-amp ≤0.65(유방 0.599 복제=최강 교차장기 검정)**; 두경부 HPV ≥0.80 > EGFR.
 
@@ -44,7 +49,7 @@ H&E 전(全)슬라이드 영상으로 분자 표현형을 예측하는 연구는
 모달 IF 6-12(npj Precision Oncology·Genome Medicine·EBioMedicine·Cell Reports Medicine), 스트레치 12-16(Nature Communications·npj Digital Medicine·Med). 20+ 비현실(전향적 검증/새 능력 필요). 상향 조건: 폐·위·두경부 held-out이 법칙을 확증 + AI 레이어가 "새 능력"으로 읽힐 것.
 
 ## 최신 기술 없이 강한 이유 (방어)
-H&E-우선은 약점이 아니라 명제다 — 가장 값싸고 보편적인 modality가 표준검사를 언제 대신하나. 멀티오믹스/공간전사체를 핵심 modality로 쓰면 배포성 전제를 스스로 부정한다. proteomics/ATAC 추가는 off-thesis(그 마커가 실재함은 기지사실). 단 CPTAC proteomics로 "HER2 단백질 상승 but H&E 조용"을 보조 확인해 decoupling만 굳힌다.
+H&E-우선은 약점이 아니라 명제다 — 가장 값싸고 보편적인 modality가 표준검사를 언제 대신하나. 멀티오믹스/공간전사체를 핵심 modality로 쓰면 배포성 전제를 스스로 부정한다. proteomics/ATAC 추가는 off-thesis(그 마커가 실재함은 기지사실). 단 CPTAC proteomics로 "HER2 단백질은 상승했으나 H&E엔 형태학적 상관물이 없다"를 보조 확인해 decoupling만 굳힌다.
 
 ## 현재 상태 (2026-07-12)
 - ✅ 유방(기존)·대장 Part A/B MIL 완료. 사전등록 법칙 봉인. 5개 암종·AI 레이어 방향 확정.
@@ -53,7 +58,7 @@ H&E-우선은 약점이 아니라 명제다 — 가장 값싸고 보편적인 mo
 
 ## 정직한 한계 (원고에 명시)
 - **대장 ST 메커니즘 = NULL**(Visium 55µm 해상도가 핵 텍스처 미만). 메커니즘 그림은 유방 ERBB2 floor가 담당, 대장은 MIL로만. Su IMC 재시도는 옵션.
-- **RAS-조용은 점변이라 프록시(MAPK/EREG) 경유** — 유방 증폭보다 덜 깨끗, exploratory.
+- **RAS 상관물 부재는 점변이라 프록시(MAPK/EREG) 경유** — 유방 증폭보다 덜 깨끗, exploratory.
 - **저검정력 endpoint**(CMS1/CMS3/MSI/BRAF, n_pos 15~21) exploratory 표기.
 - **CPTAC 외부 전이는 도메인 시프트로 붕괴**(+Fernandez-Romero 2026 이미 출판) — 예측검증 실패이나 "치환 도메인 취약" 증거로 재활용.
 - **hypothesis_only, 후향적, 전향적 검증 필요.**
