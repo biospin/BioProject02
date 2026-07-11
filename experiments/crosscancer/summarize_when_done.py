@@ -21,15 +21,18 @@ def log(m):
     with open(HB, "a") as f: f.write(line + "\n")
 
 def verdict(real, shuffle):
-    """real vs shuffle-null 자동 판정."""
+    """real vs shuffle-null 자동 판정. 두 결과 모두 원리(형태학 상관물 유무)와 일치할 수 있으며,
+    판정은 '이 표적이 어느 범주인가'를 알려준다."""
     if real is None: return "결과 없음"
     if shuffle is None: shuffle = 0.5
     diff = real - shuffle
     if real >= 0.75 and diff >= 0.15:
-        return f"H&E가 예측 가능(real {real} ≫ shuffle {shuffle}) — 예상 밖, 사람 검토 필요"
+        return (f"H&E가 예측 가능(real {real} ≫ shuffle {shuffle}) — 이 표적에 형태학적 상관물이 있다는 뜻이며 "
+                f"원리와 일치한다. 알려진 생물학과 부합하는지 사람이 확인.")
     if diff < 0.10 or real < 0.6:
-        return f"H&E-blind(real {real} ≈ shuffle {shuffle}) — 형태학은 이 표적 변이에 눈멀다는 가설 확증"
-    return f"중간(real {real} vs shuffle {shuffle}) — 경계, 사람 검토 필요"
+        return (f"H&E-blind(real {real} ≈ shuffle {shuffle}) — 이 표적에 형태학적 상관물이 없어 분자검사가 대체 불가하다는 뜻이며 "
+                f"유방암 HER2 패턴과 일치한다.")
+    return f"경계(real {real} vs shuffle {shuffle}) — 사람 검토 필요."
 
 def fmt_cancer(c, d):
     L = [f"## {c}", ""]
@@ -70,10 +73,11 @@ def build_summary(available):
             "최종 해석·시사점 갱신·JIRA 반영은 사람이 확인해야 한다.",
             "",
             "## 핵심 가설과 읽는 법",
-            "표적 유전자 변이(EGFR/KRAS/BRAF)는 형태학에 near-invisible하므로 H&E MIL의 real AUROC가 "
-            "shuffle-null(라벨 무작위)과 비슷할 것으로 예상한다. 이것이 확증되면 \"H&E는 이 변이에 눈멀다\"는 "
-            "BRCA의 HER2 패턴이 cross-cancer로 재현된 것이다. 반대로 양성대조인 histology(LUAD/LUSC)는 "
-            "real이 shuffle을 크게 상회해야 파이프라인이 정상임을 뜻한다.", ""]
+            "유방암에서 얻은 가설은, H&E-예측 아형이 표적에 형태학적 상관물이 있을 때만 분자검사를 대신할 수 있다는 것이다. "
+            "따라서 형태학적 상관물이 있는 표적(예: BRAF-대장은 serrated/MSI를 동반)은 H&E가 예측하고, 상관물이 약한 표적"
+            "(HER2 증폭, EGFR 등)은 H&E-blind일 것으로 본다. 두 결과 모두 원리와 일치할 수 있으며, real vs shuffle-null 비교는 "
+            "각 표적이 어느 범주인지 알려준다. 양성대조인 histology(LUAD/LUSC)는 형태학 그 자체이므로 real이 shuffle을 크게 "
+            "상회해야 파이프라인이 정상임을 뜻한다.", ""]
     body = [fmt_cancer(c, json.loads(RESULT(c).read_text())) for c in available]
     return "\n".join(head + body)
 
