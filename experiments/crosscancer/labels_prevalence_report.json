@@ -4,8 +4,8 @@
     "LUAD": 566,
     "LUSC": 484,
     "egfr_activating": {
-      "n": 56,
-      "pct_of_LUAD": 9.4
+      "n": 61,
+      "pct_of_LUAD": 10.2
     },
     "kras_g12c": {
       "n": 70,

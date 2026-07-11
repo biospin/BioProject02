@@ -37,14 +37,18 @@ def get(path):
 
 # ---- 변이 분류기 (cellline_counts_axis_analysis.py와 동일 로직) ----
 def egfr_activating(s):
+    """TCGA-LUAD activating(sensitizing) EGFR. T790M(저항성)·passenger 제외.
+    실측 보정(2026-07-11): S768I·exon20 dup·E709 추가로 놓친 activating 포섭 → ~11%(문헌 정합)."""
     s = s.replace('p.','')
     if re.match(r'^L858R$', s): return True
     if re.match(r'^L861[A-Z]', s): return True
     if re.match(r'^G719[A-Z]', s): return True
-    # exon19 in-frame deletion: 선행토큰 무관하게 codon 745-759 영역 del(delE746.. / E746_A750del 등)
+    if re.match(r'^S768I$', s): return True                       # exon20 sensitizing(가이드라인)
+    if re.match(r'^E709[A-Z_]', s): return True                   # exon18 E709X activating
+    # exon19 in-frame deletion: codon 745-759 영역 del
     if 'del' in s and re.search(r'74[5-9]|75[0-9]', s): return True
-    # exon20 insertion: codon 762-775 영역
-    if 'ins' in s and re.search(r'7[67][0-9]', s): return True
+    # exon20 insertion/duplication: codon 762-775 영역 (ins 또는 dup 표기)
+    if ('ins' in s or 'dup' in s) and re.search(r'7[67][0-9]', s): return True
     return False
 def kras_g12c(s): return s.replace('p.','') == 'G12C'
 def braf_v600e(s): return s.replace('p.','').startswith('V600')

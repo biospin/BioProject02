@@ -75,8 +75,17 @@ def train_eval(slides, labels, endpoint, device, shuffle=False, epochs=40, seed=
             if s["split"]==split and lv!="":
                 out.append((s, int(lv)))
         return out
-    tr, va, te = rows("train"), rows("val"), rows("test")
-    if not tr or not te or len({l for _,l in tr})<2: return None, None
+    tr_all = rows("train")
+    hold = rows("val") + rows("test")   # 평가=val+test 합침(site-disjoint 유지, 양성 검정력↑)
+    if not tr_all or not hold or len({l for _,l in tr_all})<2: return None, None
+    # early-stop용 dev를 train에서 환자단위 분리(15%). 보고 지표는 hold(val+test)로만 산출.
+    pats=sorted({s["case_id"] for s,_ in tr_all})
+    rng=np.random.default_rng(seed); rng.shuffle(pats)
+    dev_pat=set(pats[:max(1,int(len(pats)*0.15))])
+    tr=[(s,y) for s,y in tr_all if s["case_id"] not in dev_pat]
+    va=[(s,y) for s,y in tr_all if s["case_id"] in dev_pat]
+    te=hold
+    if len({l for _,l in tr})<2: return None, None
     if shuffle:
         ys=[l for _,l in tr]; np.random.default_rng(seed).shuffle(ys); tr=[(s,y) for (s,_),y in zip(tr,ys)]
     dev=torch.device(device if torch.cuda.is_available() else "cpu")
@@ -123,7 +132,8 @@ def run_endpoint(slides, labels, endpoint, device):
     if recs is None: return {"status":"skip(insufficient)"}
     pa=patient_agg(recs); y=[v[1] for v in pa.values()]; p=[v[0] for v in pa.values()]
     auc,lo,hi=bootstrap_auc(y,p)
-    out["real"]={"auc":auc,"ci95":[lo,hi],"n_test_patients":len(pa),"n_pos":int(sum(y)),"val_auc":va}
+    out["real"]={"auc":auc,"ci95":[lo,hi],"eval":"holdout(val+test) pooled, site-disjoint",
+                 "n_holdout_patients":len(pa),"n_pos":int(sum(y)),"dev_auc":va}
     # shuffle-null
     srecs,_=train_eval(slides,labels,endpoint,device,shuffle=True)
     if srecs:
@@ -191,7 +201,7 @@ def main():
         t=time.time(); r=run_endpoint(slides,labels,ep,a.device)
         results["endpoints"][ep]=r
         real=r.get("real",{}); sh=r.get("shuffle_null",{})
-        print(f"  {ep}: real AUC={real.get('auc')} CI{real.get('ci95')} n+={real.get('n_pos')}/{real.get('n_test_patients')} | shuffle={sh.get('auc')} ({time.time()-t:.0f}s)")
+        print(f"  {ep}: real AUC={real.get('auc')} CI{real.get('ci95')} n+={real.get('n_pos')}/{real.get('n_holdout_patients')} | shuffle={sh.get('auc')} ({time.time()-t:.0f}s)")
     # 양성대조 게이트
     pc=cfg["positive_control"]
     if pc and pc in results["endpoints"]:
