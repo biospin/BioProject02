@@ -131,10 +131,23 @@
 - 법칙 예측 봉인(결과 전): `SUBSTITUTABILITY_LAW_PREREGISTRATION.md` — 위 HER2-amp ≤0.65(유방 0.599 복제)·MSI ≥0.82·Lauren ≥0.85; 두경부 HPV ≥0.80 > EGFR ≤0.70.
 - **CPTAC proteomics(Mertins 2016) 활용 결정:** "HER2 단백질은 높은데 H&E엔 형태학적 상관물이 없음"을 한 줄 확인해 decoupling 굳힘(새 modality 아님, 보조). 사용자 지시. [용어: `PAPER_DIRECTION.md` §용어 정의]
 
+### 밤샘 자율 결과 harvest (2026-07-12 밤) — 결과+의미
+**1) shuffle-null 5-seed robustness** (`COLORECTAL/full/shuffle_null_robustness.json`):
+- null이 5-seed로 안정화. well-powered(CMS2 0.871 vs null 0.46±0.05, MSI 0.918 vs 0.53±0.11, BRAF 0.882 vs 0.53±0.08)는 real≫null 깨끗 = **누수 없음**. CMS1 0.912 vs 0.60±0.17(null sd 큼, n_pos 19). CMS4 0.661 vs 0.53±0.12 → margin~0.13 **약신호 재확인**.
+- **bag-size 교란(proba~tile수 ρ)**: 대부분 patient-level 무의미(견고). **예외 anti_egfr_eligible: slide ρ=−0.334(p≈0)·patient ρ=−0.262(p=8e-4)** → 항EGFR 0.705의 일부가 tile수 교란 = **진짜 형태 신호는 더 약함 → all-RAS 형태 상관물 부재 강화**. 원고에 정직 명시.
+
+**2) Su IMC 재시도** (`COLORECTAL/ST_IMC/`) — **substantive NULL(해상도 문제 아님, 정보적)**:
+- 세포 해상도(903k cells, 8 MSI-H/32 MSS)에서 **MSI-특이 면역 공간조직화 관측 안 됨**. 면역 hub 응집(log2 +0.66~1.37)·종양 배제는 MSI/MSS **공통(비특이)**.
+- MSI 방향 신호는 **CD8 abundance(밀도)뿐**(+1.6×, NS). → **MSI 판별축 = 공간 기하가 아니라 면역세포 밀도(TIL), 이건 H&E TIL-scoring(Kather·imCMS)이 이미 읽는 것.**
+- **결론(메커니즘 경로 확정): 대장 공간-ST 그림 폐기.** 메커니즘 근거 = (a) 유방 ERBB2 floor(공간, 작동) + (b) 대장 MSI=TIL 밀도를 **우리 H&E 모델의 해석가능 형태특징**으로(방법 스카우트 #2와 일치). Visium=해상도 null, IMC=축이 틀림 → 둘 다 "공간 ST는 MSI엔 틀린 도구"로 수렴.
+
+**3) mean_cost 임상거리**: `clinical_routing_distance_preregistered.json` 생성(frozen). ⚠️ **routing_cost.json의 msi/anti_egfr mean_cost는 아직 null → 적용 확인 필요(다음 세션 TODO).**
+
 ### 다음 갱신 트리거 (갱신)
 - [x] 대장 CMS/MSI(아형 층위) 라벨 확보 → H&E→아형 예측 → 유방 아형과 like-with-like 비교. **(완료: Part A/B 분리)**
 - [x] 통합 flagship 확정 + 법칙 사전등록 봉인. **(D11)**
 - [x] 위암·두경부 추가(5개 암종) + 법칙 예측 봉인. **(D12)**
+- [x] shuffle-null 5-seed·Su IMC·mean_cost 사전등록 harvest(밤샘). **메커니즘=TIL밀도 경로 확정.**
 - [ ] STAD/HNSC 임베딩→라벨(HER2-amp/MSI/HPV/EBV/조직형)→split→MIL(법칙 held-out 검정).
 - [ ] CPTAC proteomics HER2 decoupling 한 줄 확인.
 - [ ] 폐 subtype SSP 계산 → 폐 MIL 완료 → **법칙 held-out 검정**(EGFR>KRAS 순서, EGFR 등급적).
