@@ -36,9 +36,27 @@
 - **최고 레버리지 1수:** Angle A를 **사전제출 필수가 아닌 revision 방어탄약**으로 미리 빌드. HER2 공간불안정 공격 대비. clean·반나절이면 "치환비용 floor" supplementary로 승격(강화·일방향).
 - Angle C = Paper B 존재 후 진짜 ST 논문.
 
-## 5. 사람이 확인할 것 (tie-breaker)
-1. **Path2Space Cell 본문 PDF** — "축별 치환 결정손실"까지 하는가? (Cell/bioRxiv 403으로 미확인.) 한다면 ST-각 상당부분 스쿱, 광고성이면 인접(스쿱 아님). 우리 직접경로 Paper A엔 영향 적으나, ST 각 판단·인용에 필요.
-2. Angle A용 HEST Xenium 유방 패널 ERBB2 포함 여부.
+## 5. tie-breaker 확인 결과 (2026-07-11, bioRxiv 전문 정독)
+
+### ✅ Path2Space는 "cost-of-substitution/결정손실"을 하지 **않음** → 우리 프레이밍 **인접·미스쿱 확정**
+bioRxiv v2(2024.10.16.618609) 전문 확인. Path2Space의 치료반응 프레이밍 = **바이오마커 advocacy**(예측ST 유래 지표가 측정 RNA/FISH만큼/보다 좋다), **우리와 반대 방향:**
+- HER2 pathway **SPAND(공간 이질성) 점수가 trastuzumab pCR 예측** — TransNEO AUC 0.80·IMPRESS 0.72, **bulk RNA-seq(0.66/0.64)·FISH 능가**. trastuzumab-특이(chemo엔 약함).
+- 주장 = "H&E-유래 공간지표가 측정 분자검사만큼/보다 우수" (예측기 옹호). **"측정 대신 예측라벨로 치료 결정 시 축별 손실"은 전혀 안 함.**
+- → **우리 cost-of-substitution(결정손실 감사)는 직교·미스쿱.** Path2Space는 "가장 가까운 선행"으로 정직 인용하되, **방향이 반대**(그들=예측 옹호 / 우리=치환 실패 지점 감사)임을 명시.
+- 부수 포지셔닝: **Path2Space vs Wang 모순**을 우리가 해소 가능 — Path2Space는 *공간* 예측지표(SPAND), Wang은 raw 예측발현. 우리 결정손실 렌즈가 둘 위에 앉음.
+
+### ⚠️ Angle A에 대한 **역설/주의**(Path2Space가 만든 복잡성)
+Path2Space는 **HER2 공간 이질성(SPAND 높음)을 *좋은* trastuzumab 반응 예측자**로 씀(HER2-high↔low 혼재 → 면역반응 spillover 가설). 우리 Angle A는 같은 이질성을 **치환비용의 floor(나쁨)**로 프레이밍 → **정면 대비.** Angle A 추진 시 이 반대해석을 반드시 다뤄야 함(이질성=예측신호 vs 이질성=결정불가). 단순 스쿱은 아니나 서사 충돌 관리 필요.
+
+### 참고: 반응 코호트 = TransNEO + IMPRESS
+Path2Space가 쓴 HER2+ 반응 코호트 = TransNEO(trastuzumab 61/chemo 93)·IMPRESS(62/64). 우리 repo에 `experiments/kkkim/20260710_pcr_impress/` 이미 존재 → IMPRESS pCR이 우리 레이더에도 있음(연계 가능).
+
+### 남은 확인 1건
+- Angle A용 HEST Xenium 유방 패널 **ERBB2 포함 여부**(Visium이면 보장·Xenium이면 확인). → 아래 §6.
+
+## 6. ✅ HEST ERBB2 패널 확인 완료 (2026-07-11)
+- **10x Xenium Human Breast 패널(280유전자, Janesick 2023=HEST 포함본)에 ERBB2 포함 확인** (10x 문서: "ERBB2, PGR, ESR1, GATA3, MKI67 포함"). Andersson은 Visium 전사체라 자동 포함.
+- → **Angle A(공간 ERBB2 sub-threshold 면적) 데이터 실행 가능.** 두 tie-breaker 모두 해소 → Angle A는 언제든 반나절 실행 가능한 방어탄약으로 확정(사전제출 필수 아님).
 
 ---
 관련: `2026-07-10_subtype-decision-map.md`(Paper A 코어) · `PROGRESS_DECISIONS.md`(D9 결정). Sources: HEST-1k(arXiv 2406.16192)·Beyond Attention Heatmaps(2603.08328)·Path2Space(bioRxiv 2024.10.16.618609/Cell 2026)·Andersson 2021(PMID 34650042)·Wu 2021(Nat Genet)·Wang 2025(Nat Commun s41467-025-56618-y)·OmiCLIP/Loki(Nat Methods 2025).
