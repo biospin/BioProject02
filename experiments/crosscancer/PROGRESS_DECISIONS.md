@@ -117,9 +117,19 @@
 - 결정지도 문서: `experiments/crosscancer/CROSS_CANCER_DECISION_MAP.md`(표1 아형충실도 / 표2 라우팅비용 분리, §3 비대칭, §4 CPTAC 격리, §5 사람결정 필요항목).
 - **미해결(사람/차기)**: ① MSI/anti-EGFR mean_cost는 frozen_map ICI/항체축 제외로 null → 별도 임상거리 사전등록 필요. ② shuffle-null 단일추출 불안정(BRAF null 0.44→0.64, split만 바뀜) → ~5 seed 평균 또는 tile수-proba 상관 확인(bag-size 교란 의심). 상승 null은 누수신호 아님(누수는 null을 낮춤). ③ 모든 산출 critic_status=pending.
 
+### D11 — 통합 flagship 확정 (리더 kkkim, 2026-07-12)
+유방(Paper A)을 별도로 두지 않고 **cross-cancer 치환비용 결정지도 flagship의 anchor 암종으로 흡수**(옵션 1). 근거: breast-only 예측은 스쿱(Fernandez-Romero 2026이 CPTAC HER2 열화까지 이미 출판). 거버넌스 재편(A/B BRCA-only → 통합)은 리더 승인으로 성립. 계획=`research/paperC-positioning/FLAGSHIP_PLAN.md`.
+- **기여=결정지도(파이프라인 아님).** 예측충실도(표1)·라우팅 치환비용(표2) 분리 유지.
+- **AI 레이어 확정:** 치환가능성 스코어 지수 + 보정/기권(CPTAC 붕괴 동기) 채택. VoI=stretch. **RL 제외(단일스텝 미스매치·gimmick 위험).**
+- **사전등록 법칙 봉인:** 형태학적 상관물 치환가능성 법칙 = `SUBSTITUTABILITY_LAW_PREREGISTRATION.md`. 폐가 held-out 검정(EGFR 등급적 0.75-0.89 > KRAS ≤0.65 순서 예측). 폐 결과 전 봉인 = 단일 최대 IF 레버.
+- **저널 상향:** 모달 IF 6-12(npj Prec Oncol·Genome Med·EBioMedicine·Cell Rep Med), 스트레치 12-16(Nat Commun·npj Digit Med·Med). 20+ 비현실.
+- **CPTAC 재해석:** 예측검증으로는 실패(+이미 출판됨)이나, "치환은 도메인 취약" 증거 + AI 결정레이어(보정/기권)의 존재이유. 단 전량붕괴=도메인/보정(고칠수있음) ≠ HER2 내재적 blind(0.599) 구분.
+
 ### 다음 갱신 트리거 (갱신)
 - [x] 대장 CMS/MSI(아형 층위) 라벨 확보 → H&E→아형 예측 → 유방 아형과 like-with-like 비교. **(완료: Part A/B 분리)**
-- [ ] 폐 MIL 완료 → EGFR/KRAS 확인.
-- [ ] MSI/anti-EGFR mean_cost 임상거리 사전등록(사람 결정).
-- [ ] shuffle-null 다중시드/bag-size 확인.
+- [x] 통합 flagship 확정 + 법칙 사전등록 봉인. **(D11)**
+- [ ] 폐 subtype SSP 계산 → 폐 MIL 완료 → **법칙 held-out 검정**(EGFR>KRAS 순서, EGFR 등급적).
+- [ ] MSI/anti-EGFR mean_cost 임상거리 사전등록(진행 중).
+- [ ] shuffle-null 다중시드/bag-size 확인(진행 중, GPU).
+- [ ] AI 레이어: 치환가능성 스코어 + 보정/기권 구현(결과 안착 후).
 - [ ] Critic 리뷰(braveji 총괄) → critic_status pass 후 결과 공유.
