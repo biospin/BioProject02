@@ -91,8 +91,14 @@
 - **폐(EGFR·KRAS) 결과가 대비를 완성한다.** EGFR·KRAS는 형태학적 상관물이 약하므로 가설상 H&E-blind(real ≈ shuffle)로 기대되며, 그렇게 나오면 원리가 확정된다. 폐는 진행 중(778/1053, 대장 완료로 가속).
 - 산출: `experiments/crosscancer/COLORECTAL/full/mil_cost_results.json`, 자동 요약 `experiments/crosscancer/RESULTS_SUMMARY.md`.
 
+### ⚠️ 비교 층위 오류 정정 (2026-07-12, 사용자 지적)
+
+위 대장 BRAF 결과를 유방 HER2와 "하나의 원리"로 묶은 것은 **개념 층위 오류**다. 유방 HER2는 **아형(수용체·증폭)**, 대장 BRAF는 **점돌연변이**로 서로 다른 종류이며, 이를 1:1로 비교해 원리를 주장할 수 없다. **cross-cancer "원리" 주장을 보류한다.** 재발 방지책은 memory `feedback-comparison-like-with-like`에 등록.
+
+**올바른 비교를 위해 대장암 아형 라벨을 확보 중이다.** 유방 PAM50/수용체 아형의 대장 격은 **CMS1-4(Consensus Molecular Subtypes)** 또는 **MSI-H/MSS**다. 진행: ① 대장암 아형 전면 조사(literature-scout, H&E→CMS 선행연구·데이터 접근 포함) ② R env `cms-r` 설치(CMScaller NTP + CMSclassifier RF, ⚠️ 두 알고리즘 불일치 알려짐 → 공개 Guinney 라벨을 authoritative로 우선) ③ CMS 템플릿(529유전자×CMS1-4)은 pyreadr로 이미 추출. 확정 후 CMS를 H&E MIL 아형-예측 endpoint로 추가.
+
 ### 다음 갱신 트리거
-- [x] 대장 MIL 완료 → 위 부분 갱신(BRAF 예상 밖 예측 가능).
-- [ ] **폐 MIL 완료 → EGFR/KRAS가 H&E-blind인지 확인 → 원리 확정(v2 최종).**
-- [ ] cost 버전 A/B·임계값 캘리브레이션 확인.
-- [ ] 양성대조(histology) 전량 재확인.
+- [x] 대장 MIL(BRAF, 변이 층위) 완료 — 단 아형 비교엔 부적합(위 정정).
+- [ ] **대장 CMS/MSI(아형 층위) 라벨 확보 → H&E→아형 예측 → 유방 아형과 like-with-like 비교.**
+- [ ] 폐 MIL 완료 → EGFR/KRAS 확인.
+- [ ] cost 임계값 캘리브레이션 확인.
