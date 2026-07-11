@@ -76,7 +76,8 @@ def main():
             eps={ep:{"real":v.get("real",{}).get("auc"),"shuffle":v.get("shuffle_null",{}).get("auc")}
                  for ep,v in d.get("endpoints",{}).items()}
             summary["results"][cancer]={"endpoints":eps,"pos_control":d.get("positive_control_gate"),
-                                        "cost":d.get("cost_of_substitution",{}).get("per_axis")}
+                                        "cost_targeted":d.get("cost_of_substitution_targeted",{}).get("per_axis"),
+                                        "misroute_incl_histology":d.get("endpoint_misroute_incl_histology")}
     (HERE/"SUPERVISED_DONE.json").write_text(json.dumps(summary,indent=2,ensure_ascii=False))
     log(f"=== SUPERVISED CHAIN DONE ===\n{json.dumps(summary,indent=2,ensure_ascii=False)}")
 

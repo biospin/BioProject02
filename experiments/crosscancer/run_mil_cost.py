@@ -211,8 +211,24 @@ def main():
             "note":"histology(형태학) AUROC>=0.75 = H&E/파이프라인 정상. 미달이면 MIL 고장 의심."}
         print(f"  [양성대조 {pc}] AUROC={pca} → {'PASS' if gate else 'FAIL(파이프라인 점검)'}")
     if not a.smoke:
-        results["cost_of_substitution"]=cost_routing(a.cancer, results["endpoints"], labels, split)
-        print("  cost:", json.dumps(results["cost_of_substitution"]["per_axis"], ensure_ascii=False))
+        # 버전 A: targeted-only 치료거리 cost (측정 vs 예측 축 라우팅 × frozen_map 거리)
+        results["cost_of_substitution_targeted"]=cost_routing(a.cancer, results["endpoints"], labels, split)
+        print("  costA(targeted):", json.dumps(results["cost_of_substitution_targeted"]["per_axis"], ensure_ascii=False))
+        # 버전 B: endpoint별 mis-route(오분류)율 — histology 포함 대비(H&E-blind vs H&E-triage)
+        mr={}
+        for ep, r in results["endpoints"].items():
+            pp=r.get("patient_proba",{}); pt=r.get("patient_true",{})
+            if not pp: continue
+            n=mis=0
+            for c,proba in pp.items():
+                true=pt.get(c)
+                if true is None: continue
+                n+=1; mis+=int(int(proba>=0.5)!=true)
+            mr[ep]={"n":n,"misroute_rate":round(mis/n,3) if n else None,
+                    "auc":r.get("real",{}).get("auc"),
+                    "type":"morphology(triage 예상)" if ep=="histology_lusc" else "targeted-mutation(H&E-blind 예상)"}
+        results["endpoint_misroute_incl_histology"]=mr
+        print("  costB(mis-route incl histology):", json.dumps(mr, ensure_ascii=False))
     out=HERE/a.cancer/"full"/("mil_cost_smoke.json" if a.smoke else "mil_cost_results.json")
     out.write_text(json.dumps(results, indent=2, ensure_ascii=False))
     print(f"  wrote {out}")
