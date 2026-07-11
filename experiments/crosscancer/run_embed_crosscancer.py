@@ -31,7 +31,7 @@ CANCERS = {
     "LUNG_NSCLC": {"cohorts": ["TCGA-LUAD", "TCGA-LUSC"]},
     "COLORECTAL": {"cohorts": ["TCGA-COAD", "TCGA-READ"]},
 }
-RAW_BASE = Path.home() / "data" / "crosscancer_raw"    # HDD LRU (transient)
+RAW_BASE = Path("/workspace/data/cache/biop02/_crosscancer_raw")  # SSD LRU (transient) — 동시 I/O가 HDD보다 훨씬 빠름
 
 
 def log(msg, fp=None):
@@ -102,9 +102,15 @@ def download(rec, raw_dir):
 def process_slide(rec, dirs, wlog):
     name = rec["file_name"][:-4] if rec["file_name"].endswith(".svs") else rec["file_name"]
     emb = dirs["emb"] / f"{name}_uni_embeddings.npy"
-    if emb.exists():                                  # idempotent skip
-        log(f"  SKIP {name} (임베딩 존재)", wlog)
-        return "skip"
+    if emb.exists():                                  # idempotent skip (부분파일 검증)
+        try:
+            import numpy as np
+            a = np.load(emb)
+            if a.ndim == 2 and a.shape[1] == 1024 and np.isfinite(a).all():
+                return "skip"
+        except Exception:
+            pass
+        emb.unlink()                                  # 손상/부분 → 재처리
     raw = download(rec, dirs["raw"])
     if raw is None:
         log(f"  FAIL download {name}", wlog)
@@ -134,6 +140,9 @@ def process_slide(rec, dirs, wlog):
 
 
 def run_worker(cancer, shard_path, gpu):
+    # torch/BLAS 스레드 제한 — 워커 다수 동시 임베딩 시 코어 전량 점유로 load 폭발 방지(자식 tile/extract가 상속)
+    for k in ("OMP_NUM_THREADS", "MKL_NUM_THREADS", "OPENBLAS_NUM_THREADS", "NUMEXPR_NUM_THREADS"):
+        os.environ[k] = "4"
     dirs = make_dirs(cancer)
     wlog = dirs["out"] / f"worker_gpu{gpu}.log"
     recs = json.loads(Path(shard_path).read_text())
@@ -156,7 +165,7 @@ def make_dirs(cancer):
     return dirs
 
 
-def run_master(cancers, limit=None, smoke=False):
+def run_master(cancers, limit=None, smoke=False, nshards=3):
     hb = ROOT / "experiments/crosscancer/EMBED_HEARTBEAT.log"
     log(f"=== MASTER start cancers={cancers} limit={limit} smoke={smoke} ===", hb)
     for cancer in cancers:
@@ -178,22 +187,24 @@ def run_master(cancers, limit=None, smoke=False):
         (dirs["out"] / "queue.json").write_text(json.dumps(recs, indent=0))
         if not recs:
             log(f"{cancer} 빈 큐 — 스킵", mlog); continue
-        # split into 3 GPU shards (round-robin for size balance)
-        shards = [[], [], []]
+        # split into N shards (round-robin), shard i → GPU (i % 3). N=nshards(기본 3)
+        nsh = nshards
+        shards = [[] for _ in range(nsh)]
         for i, r in enumerate(recs):
-            shards[i % 3].append(r)
+            shards[i % nsh].append(r)
         procs = []
-        for g in range(3):
-            if not shards[g]:
+        for s in range(nsh):
+            if not shards[s]:
                 continue
-            sp = dirs["out"] / f"shard_gpu{g}.json"
-            sp.write_text(json.dumps(shards[g]))
+            g = s % 3
+            sp = dirs["out"] / f"shard_{s}_gpu{g}.json"
+            sp.write_text(json.dumps(shards[s]))
             env = dict(os.environ, CUDA_VISIBLE_DEVICES=str(g))
             cmd = [PY, str(Path(__file__).resolve()), "--worker", "--cancer", cancer,
-                   "--shard", str(sp), "--gpu", str(g)]
+                   "--shard", str(sp), "--gpu", str(s)]     # gpu=shard idx (로그 구분), CVD로 실제 GPU 핀
             p = subprocess.Popen(cmd, env=env)
-            procs.append((g, p))
-            log(f"{cancer} spawned worker gpu{g} pid={p.pid} n={len(shards[g])}", mlog)
+            procs.append((s, p))
+            log(f"{cancer} spawned worker shard{s}→gpu{g} pid={p.pid} n={len(shards[s])}", mlog)
         # monitor with heartbeat
         while any(p.poll() is None for _, p in procs):
             done = len(list(dirs["emb"].glob("*_uni_embeddings.npy")))
@@ -239,11 +250,12 @@ def main():
     ap.add_argument("--gpu", type=int)
     ap.add_argument("--limit", type=int)
     ap.add_argument("--smoke", action="store_true")
+    ap.add_argument("--shards", type=int, default=3, help="워커(shard) 수, GPU에 라운드로빈(기본 3)")
     a = ap.parse_args()
     if a.worker:
         run_worker(a.cancer, a.shard, a.gpu)
     else:
-        run_master(a.cancers, limit=a.limit, smoke=a.smoke)
+        run_master(a.cancers, limit=a.limit, smoke=a.smoke, nshards=a.shards)
 
 
 if __name__ == "__main__":

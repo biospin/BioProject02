@@ -252,3 +252,10 @@ experiments/crosscancer/*/full/embeddings/
 experiments/crosscancer/*/full/coords/
 experiments/crosscancer/*/full/shard_gpu*.json
 experiments/crosscancer/*/full/queue.json
+
+experiments/crosscancer/*/full/shard_*.json
+experiments/crosscancer/*/full/*.log
+experiments/crosscancer/*/full/*.done
+experiments/crosscancer/full_run*.out
+experiments/crosscancer/EMBED_*.log
+experiments/crosscancer/EMBED_*.done
