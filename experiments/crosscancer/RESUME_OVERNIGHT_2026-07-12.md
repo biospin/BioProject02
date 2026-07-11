@@ -31,6 +31,12 @@
 - shuffle-null 5-seed 안정 = 누수 없음.
 - 용어: "형태학적 상관물"(표준), "침묵/조용/silent" 폐기(→ `PAPER_DIRECTION.md` §용어).
 
+## SOTA 다중 FM 견고성 (2026-07-12 추가) — 최대 IF 레버
+- **[사용자 액션] HF 게이팅 신청**: `paige-ai/Virchow2`(1순위)·`MahmoodLab/UNI2-h`(2순위)·(선택)`prov-gigapath/prov-gigapath`. 기관 이메일(@gmail 불가).
+- 목적: HER2/RAS 상관물 부재가 프런티어 FM 전반에서 성립 → 법칙 모델 비의존(약한 인코더 반박 차단).
+- 로컬 가용=UNI·CONCH뿐(Virchow2 등 미다운로드). CONCH는 UNI보다 약해 interim만.
+- 구현: coords 영구저장 → 재다운로드+재추출(재타일 불필요). **폐 임베딩 완료 후** 핵심 마커(HER2·MSI·RAS) 서브셋만. 계획=`../../research/paperC-positioning/FLAGSHIP_PLAN.md` §SOTA.
+
 ## 대기 중 사람 결정 (다음 세션에 물을 것)
 - 대장 ST를 mechanism 그림에서 빼고 TIL-특징 경로로 가는 것 최종 확인(밤샘 결과가 이를 강하게 지지).
 - AI 결정 레이어(치환가능성 스코어 + 보정/기권) 착수 시점(결과 안착 후).
