@@ -1,0 +1,32 @@
+{
+  "clinical": {
+    "grouping": "ERBB2_UPDATED_CLINICAL_STATUS (IHC/FISH)",
+    "n_pos": 13,
+    "n_neg": 72,
+    "erbb2_protein_mean_pos": 3.0682,
+    "erbb2_protein_mean_neg": -4.6425,
+    "erbb2_protein_median_pos": 3.0395,
+    "erbb2_protein_median_neg": -4.7748,
+    "cohens_d": 3.9094,
+    "rank_biserial": -0.9124,
+    "mannwhitney_u": 895.0,
+    "pvalue_mwu": 1.9148556324277042e-07,
+    "welch_t": 7.931,
+    "pvalue_ttest": 2.5222219536243354e-06
+  },
+  "amplification": {
+    "grouping": "ERBB2_GENE_AMPLIFIED (DNA amp)",
+    "n_pos": 17,
+    "n_neg": 105,
+    "erbb2_protein_mean_pos": 2.5356,
+    "erbb2_protein_mean_neg": -4.2955,
+    "erbb2_protein_median_pos": 2.4729,
+    "erbb2_protein_median_neg": -4.3415,
+    "cohens_d": 3.3665,
+    "rank_biserial": -0.8667,
+    "mannwhitney_u": 1666.0,
+    "pvalue_mwu": 1.0985509540936714e-08,
+    "welch_t": 7.4435,
+    "pvalue_ttest": 9.649662290688723e-07
+  }
+}
