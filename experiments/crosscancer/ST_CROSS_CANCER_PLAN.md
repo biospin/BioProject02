@@ -42,8 +42,16 @@
 - **남은 확정 2건(완전-Go 조건):** (1) GSE285505 RAW.tar 다운로드로 H&E tissue image 실재 확인, (2) MSI n=1 얇음 → 2번째 오픈 MSI-H Visium 추가 or Su IMC로 면역축 보강.
 - **RAS-조용 반쪽**(Valdeolivas Zenodo 7551712 · Yang HRA011642)과 합치면 양쪽 substrate 오픈 확보.
 
+## 대장 ST 실행 결과 (2026-07-12) — ⚠️ 정직한 NULL
+GSE285505 4샘플(CMS1/MSI + MSS + CMS4×2) 다운로드·분석 완료. 산출 `COLORECTAL/ST/`(json 2·그림 2·스크립트·README).
+- **가설한 MSI-가시/RAS-조용 공간 비대칭이 관측되지 않음.** MSI 면역 시그니처↔H&E 세포밀도 공존 ρ=−0.007(CI 0 포함), RAS MAPK 프록시 ρ=+0.075~0.172("조용 아님"), 대조 Δρ 부호 비일관·프록시 간 뒤집힘.
+- **유일한 견고한 양성 = 발현 수준(공간 아님)**: CMS1 IFN-hot vs CMS2 cold(IRF1 0.85 vs 0.23 등, housekeeping 대조로 아티팩트 배제).
+- **원인 = 생물학적 반증 아니라 기질 한계**: (1) Visium 55µm spot이 hires에서 14px = 핵 텍스처 해상도 미만(imCMS/Kather의 세포단위 신호 접근 불가), (2) IFN 시그니처가 림프구 위치 아닌 경로활성을 읽음, (3) MSI n=1. 전부 exploratory.
+- **함의**: 대장 ST를 메커니즘 그림으로 강제하지 않는다. **MIL AUROC 비대칭(CMS1 0.912·MSI 0.918 vs all-RAS 0.705)이 핵심 증거로 독립적으로 성립**(D9: cost-of-sub는 ST 불필요). 메커니즘 grounding은 유방 ERBB2 floor(작동함)가 담당.
+- **선택지(사람 결정)**: (a) 대장 ST를 mechanism 그림에서 빼고 MIL로만 간다(권장, 마감·정직성), (b) 해상도 적합 substrate **Su et al. 2025 IMC**(Zenodo 13901180, 단백/세포수준)로 재시도 — 단 IMC는 세포분할 별도 파이프라인(추가 작업).
+
 ## 상태 (2026-07-12)
-- 스쿱·데이터 조사: ✅ 완료 — adjacent + conditional-Go.
-- MSI substrate 확인: ✅ 완료 — 존재(GSE285505 + Su IMC), 단 H&E 실재·MSI n 얇음 2건 확정 필요.
-- 대장 ST 그림: ⏸ **사람 결정 대기** — 다음 중: GSE285505 H&E 실재부터 확인 / RAS-조용 반쪽 예비 그림 먼저 / MIL 비대칭이 이미 깨끗하니 Paper C banked로 보류.
-- 폐 ST: ⏸ 대장 결과 대기(EGFR도 활성화변이라 프록시 문제 동일 → 우선순위 낮음).
+- 스쿱·데이터 조사: ✅ adjacent + conditional-Go.
+- MSI substrate 확인: ✅ 존재(GSE285505 + Su IMC).
+- 대장 ST 그림: ✅ **실행 완료 = NULL(exploratory)**. Visium 해상도 한계. **권장: mechanism 그림에서 제외, MIL이 핵심 증거.** Su IMC 재시도는 옵션.
+- 폐 ST: ❌ 착수 안 함 — 대장 Visium이 null이라 폐도 동일 해상도 문제 예상. Su IMC류 아니면 우선순위 없음.
