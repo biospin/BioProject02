@@ -21,10 +21,12 @@ def log(m):
     print(line, flush=True)
     with open(HB,"a") as f: f.write(line+"\n")
 
-def embed_masters_alive():
-    r=subprocess.run(["bash","-c","ps -eo cmd | grep 'run_embed_crosscancer.py --cancers' | grep -v grep | wc -l"],
-                     capture_output=True, text=True)
-    return int(r.stdout.strip() or "0")
+def embed_master_alive(cancer):
+    """해당 암종 임베딩 master가 살아있나(--cancers <cancer>)."""
+    r=subprocess.run(["bash","-c",
+        f"ps -eo cmd | grep 'run_embed_crosscancer.py --cancers {cancer}' | grep -v grep | wc -l"],
+        capture_output=True, text=True)
+    return int(r.stdout.strip() or "0") > 0
 
 def emb_count(cancer):
     return len(list((HERE/cancer/"full"/"embeddings").glob("*_uni_embeddings.npy")))
@@ -40,33 +42,38 @@ def run(cmd, tag, timeout):
 
 def main():
     force = "--force" in sys.argv
-    log(f"=== SUPERVISED CHAIN start (force={force}) — 임베딩 완료 대기 ===")
-    # 1) 임베딩 master 종료 대기(폴링 10분)
-    while embed_masters_alive() > 0:
-        counts={c:emb_count(c) for c in TARGET}
-        log(f"  임베딩 진행 중 (master {embed_masters_alive()}): {counts} — 대기")
-        time.sleep(600)
-    counts={c:emb_count(c) for c in TARGET}
-    log(f"임베딩 master 종료 확인. 최종 임베딩 수: {counts} / 목표 {TARGET}")
-    for c,t in TARGET.items():
-        miss=t-counts[c]
-        if miss>0: log(f"  ⚠️ {c}: {miss}장 누락({counts[c]}/{t}) — 실패/손상 슬라이드. MIL은 있는 것으로 진행(누락 명시).")
-
-    # 2) 라벨 + split (GPU 0, idempotent)
-    run([PY, str(HERE/"fetch_labels.py")], "fetch_labels", 900)
-    run([PY, str(HERE/"make_split.py")], "make_split", 300)
-
-    # 3) MIL + cost (암종별, GPU 분산: 폐=cuda:0, 대장=cuda:1)
+    log(f"=== SUPERVISED CHAIN start (force={force}) — 암종별 임베딩 완료 즉시 실행 ===")
     gpu={"LUNG_NSCLC":"cuda:0","COLORECTAL":"cuda:1"}
-    for cancer in TARGET:
-        out=HERE/cancer/"full"/"mil_cost_results.json"
-        if out.exists() and not force:
-            log(f"  {cancer}: 결과 이미 존재 — skip(--force로 재계산)"); continue
-        ok=run([PY, str(HERE/"run_mil_cost.py"), "--cancer", cancer, "--device", gpu[cancer]],
-               f"mil_cost:{cancer}", 14400)
-        if not ok: log(f"  {cancer}: MIL 실패 — 다음 암종 계속")
+    labels_split_done=False
+    pending=set(TARGET)
+    while pending:
+        for cancer in sorted(pending):
+            if embed_master_alive(cancer):
+                continue                              # 그 암종 아직 임베딩 중
+            # --- 이 암종 임베딩 완료 → 즉시 chain ---
+            cnt=emb_count(cancer); miss=TARGET[cancer]-cnt
+            log(f"[{cancer}] 임베딩 master 종료. {cnt}/{TARGET[cancer]}" +
+                (f" ⚠️ {miss}장 누락(실패/손상, 있는 것으로 진행)" if miss>0 else " (완료)"))
+            # 라벨+split은 한 번만(양 암종 공통 cBioPortal, 임베딩 무관)
+            if not labels_split_done:
+                run([PY, str(HERE/"fetch_labels.py")], "fetch_labels", 900)
+                run([PY, str(HERE/"make_split.py")], "make_split", 300)
+                labels_split_done=True
+            out=HERE/cancer/"full"/"mil_cost_results.json"
+            if out.exists() and not force:
+                log(f"  {cancer}: 결과 이미 존재 — skip(--force로 재계산)")
+            else:
+                ok=run([PY, str(HERE/"run_mil_cost.py"), "--cancer", cancer, "--device", gpu[cancer]],
+                       f"mil_cost:{cancer}", 14400)
+                if not ok: log(f"  {cancer}: MIL 실패 — 다음 암종 계속")
+            pending.discard(cancer)
+        if pending:
+            still={c:emb_count(c) for c in pending}
+            log(f"  임베딩 대기 중: {still}")
+            time.sleep(300)
+    counts={c:emb_count(c) for c in TARGET}
 
-    # 4) 요약
+    # 요약
     summary={"finished_utc":time.strftime("%Y-%m-%dT%H:%M:%SZ",time.gmtime()),
              "embedding_counts":counts,"targets":TARGET,"results":{}}
     for cancer in TARGET:

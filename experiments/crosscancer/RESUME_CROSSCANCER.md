@@ -33,7 +33,7 @@ setsid nohup $D $S --cancers COLORECTAL --shards 5 > experiments/crosscancer/ful
 
 ## 🤖 supervised 자동 체인 (임베딩 후 자동 실행 — 이미 detached 가동 중)
 
-**`run_supervised_chain.py`**(pid는 `ps -eo pid,cmd|grep supervised_chain`)가 **임베딩 master 종료를 감지**하면 자동으로:
+**`run_supervised_chain.py`**(pid는 `ps -eo pid,cmd|grep supervised_chain`)가 **각 암종 임베딩 master 종료를 감지하면(폐/대장 독립) 즉시** 그 암종에 대해:
 1. `fetch_labels.py`(cBioPortal 라벨) → 2. `make_split.py`(site-disjoint) → 3. `run_mil_cost.py`(암종별 MIL+cost)
 ```bash
 # 자동체인 상태
