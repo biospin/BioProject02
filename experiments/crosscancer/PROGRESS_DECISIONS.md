@@ -21,6 +21,7 @@
 | D8 | 폐 cost **버전 A(targeted 3축) + 버전 B(histology 포함 mis-route) 둘 다 산출**, 프레이밍 보류 | LUAD/LUSC가 chemo 레짐 바꿔 치료축 될 수 있음 vs BRCA 평행 단순성. **사용자 결정(보류)** | 07-11 |
 | D9 | **ST(공간전사체) 트랙 지금 개설 X** — 방어각 A는 banked, 진짜 ST논문 C는 Paper B 후 | scout+strategist 수렴: H&E→ST 예측 포화·유방 페어ST 소규모/치료라벨無/HER2경계 미포괄. cost-of-sub는 ST 불필요. 상세=`research/paperA-positioning/2026-07-11_HE-ST-scoop-and-angles.md` | 07-11 |
 | D9-확인 | **tie-breaker 2건 모두 해소(PDF/웹 직접 확인):** ①Path2Space는 cost-of-substitution 아님(바이오마커 advocacy·반대방향)→우리 **인접·미스쿱 확정** ②Xenium 유방패널 ERBB2 포함→Angle A 실행가능 | bioRxiv 전문(kkkim 업로드) 정독 + 10x 패널 확인. Path2Space는 최근접 선행으로 인용, 방향 반대 명시 | 07-11 |
+| D10 | **Angle A 지금 착수**(공간 ERBB2=치환비용 floor, Paper A 강화 방어그림), **C는 bank**(Paper B 후; ⚠️ **필요시 Paper A+B 병합 가능**→C 착수 앞당겨질 수 있음) | 사용자 지시. 스쿱 아님 확정+데이터 확보(ERBB2 포함)→A는 값싸고 HER2 헤드라인 강화. 산출=`experiments/*/angle_A_spatial_erbb2/` | 07-11 |
 
 ## 변경 효과 이력 (before → after, 덮어쓰지 말고 누적)
 
@@ -35,7 +36,8 @@
 ## 진행 상황
 - 07-11 ~11:40 임베딩 자율 착수(스모크 PASS 후 detached). 튜닝 수렴(D3).
 - 07-11 12:xx 라벨·split·MIL 스크립트 작성+검증, supervised 자동 체인 detached(임베딩 완료 감지).
-- **임베딩 진척:** 07-11 12:56 = 폐 235/1053 · 대장 168/625. ETA 오늘밤~일 새벽.
+- **임베딩 진척:** 07-11 12:56 = 폐 235/1053 · 대장 168/625 → 16:06 = 폐 425 · 대장 356(순조). ETA 오늘밤~일 새벽.
+- **Angle A 착수·1차 결과(07-11 16:xx, commit 6c73620):** Andersson HER2+ ST(Zenodo 4751624, 8명) 다운로드(AES 암호 README에서 획득)→분석. **확진 HER2+ 8명 전원 종양 면적 일부가 HER2-음성 배경 ERBB2 수준**(strict median 12%·range 7-30%). floor 논지 성립. 그림 `experiments/kkkim/angle_A_spatial_erbb2/fig_erbb2_floor.png`. ⚠️ ST=메커니즘 시연·Path2Space 반대해석 관리.
 
 ## 검증된 사전결과 (임베딩 완료 전, 부분/GPU-free)
 - **세포주 냉동지도·치료거리(완료):** 폐 antiKRAS-G12C↔chemo **0.914**·antiEGFR↔chemo 0.667 / 대장 antiBRAF↔baseline **0.868** (BRCA HER2↔chemo 0.765 재현). positive control 통과.
