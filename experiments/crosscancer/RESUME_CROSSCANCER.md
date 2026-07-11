@@ -31,7 +31,24 @@ setsid nohup $D $S --cancers COLORECTAL --shards 5 > experiments/crosscancer/ful
 - 튜닝 실측: HDD 18워커=thrash(load133) / SSD 10워커 무제한스레드=thrash(load73) / **SSD 6워커 OMP4=healthy(load5)** / SSD 10워커 OMP4=목표(load~25-30).
 - 처리율 실측(6워커): ~2.7 slides/min. 10워커면 ~2배 기대. 사이즈순 정렬이라 후반(대형 슬라이드) 감속.
 
-## 완료 후 다음 단계 (supervised, GPU 후속)
+## 🤖 supervised 자동 체인 (임베딩 후 자동 실행 — 이미 detached 가동 중)
+
+**`run_supervised_chain.py`**(pid는 `ps -eo pid,cmd|grep supervised_chain`)가 **임베딩 master 종료를 감지**하면 자동으로:
+1. `fetch_labels.py`(cBioPortal 라벨) → 2. `make_split.py`(site-disjoint) → 3. `run_mil_cost.py`(암종별 MIL+cost)
+```bash
+# 자동체인 상태
+tail -6 experiments/crosscancer/SUPERVISED_HEARTBEAT.log
+cat experiments/crosscancer/SUPERVISED_DONE.json 2>/dev/null        # 있으면 전체 완료+요약
+cat experiments/crosscancer/LUNG_NSCLC/full/mil_cost_results.json 2>/dev/null   # 폐 결과
+cat experiments/crosscancer/COLORECTAL/full/mil_cost_results.json 2>/dev/null   # 대장 결과
+# 자동체인이 죽었으면 재기동(임베딩 완료 후엔 즉시 라벨→split→MIL):
+setsid nohup /home/kkkim/miniconda3/bin/python3 experiments/crosscancer/run_supervised_chain.py > experiments/crosscancer/supervised_chain.out 2>&1 </dev/null &
+# MIL만 다시(결과 존재 시 --force): python run_mil_cost.py --cancer LUNG_NSCLC --device cuda:0
+```
+**결과 해석(advisor 게이트):** 각 endpoint에 `real`·`shuffle_null` AUROC 동반. **histology 양성대조 AUROC≥0.75 = 파이프라인 정상**(H&E가 형태 봄). 변이(EGFR/KRAS/BRAF) `real`이 낮고 `shuffle_null`과 비슷 = **H&E-blind(가설확증)**; `real`도 낮은데 histology도 낮으면 = MIL 고장. cost = 측정vs예측 축라우팅 mis-route×치료거리.
+검증(2026-07-11): 라벨 prevalence 게이트(KRAS12.4%/BRAF9.0% OK, EGFR9.4% WARN=strict), split site-disjoint OK, MIL 스모크 histology 0.81(부분데이터) PASS.
+
+## 완료 후 다음 단계 (수동 확인)
 1. 분자 라벨(cBioPortal: 폐 EGFR/ALK/KRAS-G12C·histology, 대장 BRAF-V600E) + manifest 조인 — **BIOP02-95**
 2. site-disjoint split 생성·검토 — BIOP02-95
 3. MIL 학습(train_mil 재사용)→환자 라우팅 cost→cross-cancer 그림 — **BIOP02-96**
