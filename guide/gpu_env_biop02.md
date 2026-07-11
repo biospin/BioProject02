@@ -12,8 +12,8 @@
 | 항목 | 값 |
 |---|---|
 | **conda env** | **`spatialpatho`** (BIOP02 전용 격리 env, 2026-07-11 클린 생성·검증) |
-| **경로** | `/home/kkkim/miniconda3/envs/spatialpatho` |
-| **활성화** | `conda activate spatialpatho` (또는 `/home/kkkim/miniconda3/envs/spatialpatho/bin/python`) |
+| **경로(팀 공용)** | **`/opt/envs/spatialpatho`** (2026-07-11 /opt 공용으로 clone, BIOP01 envs와 동일 위치. 검증 완료: import 전체 OK·CUDA 3dev·openslide) |
+| **활성화** | **`conda activate /opt/envs/spatialpatho`** (full-path 권장). ⚠️ `conda activate spatialpatho`(이름)는 개인 원본(`~/miniconda3/envs/spatialpatho`)이 envs_dirs 우선순위상 먼저라 그쪽이 잡힘 → **cross-cancer 잡 종료(idle) 후 개인 원본 제거하면 이름만으로 /opt 해소.** |
 | **Python** | 3.13.13 |
 | **GPU** | RTX A6000 49GB × 3 |
 | **드라이버 / CUDA / cuDNN** | 535.309.01 / **12.4** / 9.1.0 |
