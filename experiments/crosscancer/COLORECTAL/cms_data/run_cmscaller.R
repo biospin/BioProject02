@@ -1,0 +1,10 @@
+suppressMessages(library(CMScaller))
+emat <- as.matrix(read.csv("coadread_expr_template.csv", row.names=1, check.names=FALSE))
+cat("입력 발현행렬:", nrow(emat), "유전자 x", ncol(emat), "샘플\n")
+# rownames = Entrez (templates.CMS$probe와 매칭). RSEM → RNAseq=TRUE(log2+rowscale)
+res <- CMScaller(emat, RNAseq=TRUE, doPlot=FALSE, FDR=0.05, seed=42)
+out <- data.frame(sample=rownames(res), CMS=as.character(res$prediction),
+                  FDR=signif(res$FDR,3), stringsAsFactors=FALSE)
+write.csv(out, "coadread_cms_cmscaller.csv", row.names=FALSE)
+cat("\nCMS 분포(NTP, CMScaller):\n"); print(table(out$CMS, useNA="always"))
+cat("\n유병률 문헌 앵커: CMS1~14% CMS2~37% CMS3~13% CMS4~23%, unclassified~13%\n")
