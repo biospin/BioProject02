@@ -102,3 +102,24 @@
 - [ ] **대장 CMS/MSI(아형 층위) 라벨 확보 → H&E→아형 예측 → 유방 아형과 like-with-like 비교.**
 - [ ] 폐 MIL 완료 → EGFR/KRAS 확인.
 - [ ] cost 임계값 캘리브레이션 확인.
+
+---
+
+### 2026-07-12 — 층위 분리 실행 완료: Part A(예측충실도) / Part B(라우팅비용) 트랙 분리
+
+위 정정(비교 층위 오류)을 실제 분석으로 해소했다. 대장을 **두 트랙으로 분리 실행**하여 유방과 like-with-like 비교를 확립했다.
+
+- **Part A = CMS 예측충실도 트랙**(아형↔아형): H&E→CMS one-vs-rest 4 endpoint MIL(CLAM-SB, site-disjoint holdout). CMS1 0.912(CI 0.828–0.973, exploratory n+19), CMS2 0.871(well-powered n+50), CMS3 0.840(exploratory n+21), CMS4 0.661(well-powered n+42, **약신호**). 이것은 **예측충실도이지 치료비용이 아니다**(CMS=예후 아형, Buikhuisen JNCI 2022). imCMS(Gut 2021, 0.84) 대비 우열 주장 금지 — 다른 코호트/방법. 산출: `COLORECTAL/full/mil_cms_fidelity.json`.
+- **Part B = 치료 라우팅 치환비용 트랙**(변이↔변이/수용체): 라우팅 스킴 사전등록(`routing_scheme_preregistered.json`, cost 계산 전 동결) 후 마커 MIL. MSI-H 0.918/misroute 0.112(**저비용, 가설확증**), anti-EGFR(all-RAS/BRAF-WT) 0.705/misroute **0.416**(**고비용, 가설확증** — 가장 약한 예측·최고 misroute), BRAF-V600 0.882/misroute 0.099(부분, 기존 0.868과 CI 내 일치). 산출: `COLORECTAL/full/routing_cost.json`.
+- **핵심 비대칭 확립**: 유방은 아형체계(PAM50/수용체)가 곧 치료라우팅이나, 대장은 CMS(예후)와 MSI/RAS(라우팅)가 **분리**된다. **유방 HER2(H&E-blind, 고비용)의 대장 격은 CMS 아형이 아니라 all-RAS 변이축이다** — 단 이는 **서열(ordinal)·결정구조 유사이지 수치 동치 아님**(HER2 0.599 near-random vs anti-EGFR 0.705 above-chance). 아형↔변이 1:1 비교는 여전히 금지.
+- **내부-대-내부 비교 확립**: 두 표 모두 내부 site-disjoint holdout. 유방 CPTAC 외부전이 열화는 별도 §4로 격리(내부표에 미혼입).
+- Step 0 치료마커 라벨(`labels_treatment.csv`, cBioPortal): MSI-H 86/14.0%, all-RAS 214/34.9%, BRAF 47 — 검증치와 일치, BRAF 재추출은 기존 patient_labels.csv와 0건 불일치(0.868 재사용 정당성 유지).
+- 결정지도 문서: `experiments/crosscancer/CROSS_CANCER_DECISION_MAP.md`(표1 아형충실도 / 표2 라우팅비용 분리, §3 비대칭, §4 CPTAC 격리, §5 사람결정 필요항목).
+- **미해결(사람/차기)**: ① MSI/anti-EGFR mean_cost는 frozen_map ICI/항체축 제외로 null → 별도 임상거리 사전등록 필요. ② shuffle-null 단일추출 불안정(BRAF null 0.44→0.64, split만 바뀜) → ~5 seed 평균 또는 tile수-proba 상관 확인(bag-size 교란 의심). 상승 null은 누수신호 아님(누수는 null을 낮춤). ③ 모든 산출 critic_status=pending.
+
+### 다음 갱신 트리거 (갱신)
+- [x] 대장 CMS/MSI(아형 층위) 라벨 확보 → H&E→아형 예측 → 유방 아형과 like-with-like 비교. **(완료: Part A/B 분리)**
+- [ ] 폐 MIL 완료 → EGFR/KRAS 확인.
+- [ ] MSI/anti-EGFR mean_cost 임상거리 사전등록(사람 결정).
+- [ ] shuffle-null 다중시드/bag-size 확인.
+- [ ] Critic 리뷰(braveji 총괄) → critic_status pass 후 결과 공유.
