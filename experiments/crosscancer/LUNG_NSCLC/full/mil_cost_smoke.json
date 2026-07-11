@@ -1,0 +1,71 @@
+{
+  "cancer": "LUNG_NSCLC",
+  "n_slides": 193,
+  "claim_level": "hypothesis_only",
+  "critic_status": "pending",
+  "endpoints": {
+    "histology_lusc": {
+      "real": {
+        "auc": 0.8056,
+        "ci95": [
+          0.5383,
+          1.0
+        ],
+        "n_test_patients": 17,
+        "n_pos": 9,
+        "val_auc": 0.989
+      },
+      "shuffle_null": {
+        "auc": 0.7361
+      },
+      "prevalence_baseline": {
+        "auc": 0.5,
+        "note": "상수예측 정의상 0.5"
+      },
+      "patient_proba": {
+        "TCGA-43-2576": 0.0052,
+        "TCGA-43-2578": 0.3896,
+        "TCGA-43-2581": 0.0001,
+        "TCGA-43-7657": 0.9873,
+        "TCGA-43-7658": 0.2663,
+        "TCGA-67-3774": 0.0002,
+        "TCGA-67-4679": 0.97,
+        "TCGA-91-A4BC": 0.0075,
+        "TCGA-94-7033": 0.9977,
+        "TCGA-94-7557": 0.9918,
+        "TCGA-94-7943": 0.995,
+        "TCGA-94-8035": 0.9997,
+        "TCGA-99-7458": 0.0053,
+        "TCGA-99-8025": 0.0003,
+        "TCGA-99-8028": 0.1003,
+        "TCGA-99-8032": 0.0002,
+        "TCGA-99-8033": 0.0008
+      },
+      "patient_true": {
+        "TCGA-43-2576": 1,
+        "TCGA-43-2578": 1,
+        "TCGA-43-2581": 1,
+        "TCGA-43-7657": 1,
+        "TCGA-43-7658": 1,
+        "TCGA-67-3774": 0,
+        "TCGA-67-4679": 0,
+        "TCGA-91-A4BC": 0,
+        "TCGA-94-7033": 1,
+        "TCGA-94-7557": 1,
+        "TCGA-94-7943": 1,
+        "TCGA-94-8035": 1,
+        "TCGA-99-7458": 0,
+        "TCGA-99-8025": 0,
+        "TCGA-99-8028": 0,
+        "TCGA-99-8032": 0,
+        "TCGA-99-8033": 0
+      }
+    }
+  },
+  "positive_control_gate": {
+    "endpoint": "histology_lusc",
+    "auc": 0.8056,
+    "pass": true,
+    "note": "histology(형태학) AUROC>=0.75 = H&E/파이프라인 정상. 미달이면 MIL 고장 의심."
+  }
+}
