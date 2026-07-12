@@ -45,6 +45,15 @@ H&E 전(全)슬라이드 영상으로 분자 표현형을 예측하는 연구는
 - 보정 + 기권(selective/conformal) — OOD·불확실 시 분자검사로. **CPTAC 도메인 붕괴가 동기.**
 - (stretch) Value-of-Information 검사주문 정책. **RL 제외**(단일스텝 미스매치). DRP 경계: "검사 주문 여부"에만.
 
+## 의의 / "골드 스탠다드가 이미 있는데 뭐?" 방어 (리뷰어 핵심 질문)
+HER2·MSI·EGFR은 이미 분자 골드스탠다드(IHC/FISH/NGS)가 있다. "H&E가 그걸 못 대신한다"만으론 현상 재확인이라 약하다. 우리 의의는 **골드스탠다드 대체가 아니라**:
+1. **결정지도(decision-tree) 자체가 산출물**: 마커→{H&E-triage 가능 / 등급적 / 분자검사 필수}의 체계적·다암종 지도. "언제 어떤 방법"을 마커별로 답한다(사용자 표현의 decision tree = 우리 프레임워크).
+2. **가치는 대체가능·triage 쪽에 집중**: H&E가 예측되는 마커(MSI 등)는 **저비용 pre-screen/triage**로 (a) 비싸거나 희소한 분자검사(NGS 패널·자원제한 세팅·reflex testing)의 **우선순위·deprioritize**를, (b) 어디에 검사를 몰지 결정. 값싸고 보편적인 H&E의 강점.
+3. **음성결과의 연구 재배치 가치**: 어떤 마커의 H&E-예측 시도가 futile인지 알려주고(많은 논문이 시도), **법칙이 신규 마커의 blind 여부를 a priori 예측** → 매번 경험적으로 놀랄 필요 없음.
+4. **AI 결정레이어가 곧 이 decision-tree의 조작화**: VoI(검사 주문 여부)+보정/기권 = "H&E로 충분한가, 분자검사로 보낼까"를 환자별로.
+- **정직한 한계**: HER2 IHC처럼 **값싸고 보편적인 골드스탠다드**엔 H&E-triage가 별 이득 없음 → 가치는 **비싸거나 느리거나 희소한 분자검사 + 자원제한 세팅**으로 프레이밍(전면 대체 주장 금지).
+- **한 줄**: 기여는 "골드스탠다드를 이긴다"가 아니라 "**값싼 H&E가 언제 분자검사를 pre-screen/triage할 수 있고 언제 불가한지의 예측 가능한 결정지도**"다.
+
 ## 저널·IF
 모달 IF 6-12(npj Precision Oncology·Genome Medicine·EBioMedicine·Cell Reports Medicine), 스트레치 12-16(Nature Communications·npj Digital Medicine·Med). 20+ 비현실(전향적 검증/새 능력 필요). 상향 조건: 폐·위·두경부 held-out이 법칙을 확증 + AI 레이어가 "새 능력"으로 읽힐 것.
 
