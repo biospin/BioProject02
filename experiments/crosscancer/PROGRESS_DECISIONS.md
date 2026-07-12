@@ -152,6 +152,15 @@
 - **전략 함의: held-out 변이축은 유병률 낮아 구조적 저검정력**(EGFR/KRAS n_pos 14-15). 법칙은 검정력 충분한 **유방+대장서 확립**, held-out(폐·위·두경부)은 **방향적 corroboration**. 위 법칙검정은 검정력 좋은 endpoint(Lauren·MSI·HPV) 전면 + 변이축 exploratory 보조로 프레이밍.
 - 스트래글러: 영구실패 1(TCGA-49-4506-DX3, 환자 손실 아님)·느린 대용량 4(train-side만, holdout 불변). 산출: `LUNG_NSCLC/full/LAW_TEST.md`·`mil_cost_results.json`. hypothesis_only/pending.
 
+### 위암 법칙 held-out 검정 결과 (2026-07-12, 두 번째 held-out, 부분 337/442)
+**폐와 같은 정직한 패턴: 점추정은 법칙과 consistent, 검정력 부족으로 INCONCLUSIVE. + 하나의 인상적 일치, + 양성대조 실패 하나.**
+- **HER2/ERBB2-amp(헤드라인 #2, 교차장기): real 0.585** CI[0.46,0.72] n_pos=14 → **유방 HER2 0.599와 사실상 동일(차 0.014), ≤0.65** = *같은 증폭·다른 장기 둘 다 H&E-blind(~0.59)*. **consistent with 법칙(확증 아님·반증 아님, n_pos=14 exploratory).** "복제 확증" 금지, "consistent with breast 0.599"까지만.
+- **⚠️ Lauren 조직형 양성대조 FAIL**: 0.607 CI(0.5 포함) shuffle 0.77>real → 실패. **원인=Lauren 라벨 희소(train 69)로 불안정**(diffuse 형태 부재 아님). 파이프라인 정상성은 **de facto 대조(MSI 0.80·EBV 0.87의 shuffle 상회)**로 확보.
+- MSI-H 0.803(0.82 미세 미달, n_pos=24=임계 1명 미달→exploratory) consistent with substitutable. EBV 0.871(n_pos=7).
+- 순서 조직형≥MSI>HER2: MSI>HER2 점추정 성립, 조직형≥MSI는 Lauren 실패로 무효 → INCONCLUSIVE.
+- **반증 트리거 없음**(HER2-amp ≥0.8 미관측, MSI/EBV blind 아님) → 법칙 반증 아님·확증도 아님.
+- **함의: held-out(폐·위) 변이축은 저검정력 구조적. 법칙=유방+대장서 확립, held-out은 방향적 corroboration(HER2 교차장기 0.585≈0.599가 가장 인상적).** 확증엔 442 완료(MSI≥25·HER2↑)+Lauren 라벨 보강 필요. 산출 `GASTRIC_STAD/full/LAW_TEST.md`. hypothesis_only/pending.
+
 ### 다음 갱신 트리거 (갱신)
 - [x] 대장 CMS/MSI(아형 층위) 라벨 확보 → H&E→아형 예측 → 유방 아형과 like-with-like 비교. **(완료: Part A/B 분리)**
 - [x] 통합 flagship 확정 + 법칙 사전등록 봉인. **(D11)**
