@@ -5,7 +5,18 @@
 
 ---
 
-## 2026-07-12 (저녁) — held-out 법칙검정 + confound 반전 + 논문 정직화 (대형 세션)
+## 2026-07-12 (밤) — 대장 증분 검정 완료 + 블로그 그룹편성 + MCP 드롭 재시작
+**진행:** 직전 세션 pivotal 미결(대장 MSI/anti-EGFR 증분)을 완결. per-patient p_HE를 seed=42 결정론 MIL 재실행으로 복원(재현 AUROC 0.9184/0.7053 커밋값 일치 검증), 통상병리 baseline=점액성 조직형+우측/좌측 편측성(cBioPortal coadread, 등급/oncotree 없음)으로 중첩 로지스틱 증분 계산.
+- **결과(D13):** anti-EGFR(점돌연변이 위험검정, n_pos84) 통상병리 대비 **+0.049**(CI 0.003–0.096, LR p 0.026). advisor 요청 견고성: BH 다중비교 통과(0.030)·CV 7시드 부호 안정(mean +0.052)이나 **Bonferroni 미통과**(0.208), +CMS 넣으면 소멸. MSI(n_pos21) +0.129지만 **탐색적(INCONCLUSIVE)**.
+- **판정:** 엄격한 이분법 법칙 안 서고(점돌연변이도 작은 증분), 기울기도 검정력 있는 교차암종 대비 부재로 미확립 → **법칙 생사 선언 보류, STAD/HNSC held-out 필요.** advisor 교정: 4마커 교차암종 표는 기준선 두께 섞여 like-with-like 아님 → 암종 내 동일기준선 비교만.
+- **산출:** `COLORECTAL/full/{incremental_crc_results,incremental_crc_robustness,treatment_pHE}.json`·`CONCLUSION_CRC_INCREMENTAL.md`·`run_incremental_crc[_robust].py`·`dump_treatment_pHE.py`. PROGRESS_DECISIONS D13. 커밋 **57eb768** origin push 완료.
+- **블로그:** cross-cancer 편 4편+사이드바 그룹편성 사전초안(`blog/2026-07-12_..._GROUPING-DRAFT.md`, 3층위=예측충실도/통상병리증분/치환비용).
+- **인프라:** GPU 재배치 감시자 기동(PID 230205) — STAD 완료 시 HNSC를 3-GPU 균등 재배치. **atlassian MCP 40종 세션 중간 드롭**(서버 정상, 세션만 핸들 상실) → 재시작으로 복구, 메모리 [[infra-atlassian-credentials]] 기록. BIOP02-53에 Paper C 방향 공유 ADF 댓글(id 11107, biospin-leader 멘션).
+- **사용자 피드백:** 채팅·문서에서 "정직/붕괴" 및 em대시 남발 금지(메모리 [[feedback-plain-professional-writing]] 갱신).
+
+---
+
+## 2026-07-12 (저녁) — held-out 법칙검정 + confound 반전 + 논문 재정립 (대형 세션)
 **진행:** cross-cancer flagship을 5개 암종으로 확정(D12, 위·두경부 추가)하고, 사전등록 법칙 봉인 후 폐·위 held-out 법칙검정을 9시 회의 전 확보. 이어 사용자 제안 견고성 검정들이 서사를 **정직하게 뒤집음**.
 - **held-out 결과(정직)**: 폐 — 조직형 양성대조 0.925 통과(파이프라인 sound), 변이축(EGFR/KRAS) n_pos 14-15로 **INCONCLUSIVE**, TRU-최고 예측 미스. 위 — HER2-amp near-chance이나 exploratory, **Lauren 양성대조 실패(라벨 희소)**. **법칙=유방+대장(well-powered)서 확립, held-out은 방향적 corroboration.**
 - **⚠️ HER2 "blind" 반증**: 3정의(IHC/FISH/CNV) 검정 — 깨끗한 CNV 라벨로 H&E ~0.73(well-powered·누수통제). 0.599는 노이즈 IHC+작은 val split. CNV·IHC·FISH 3중 일치(89-94%)+CPTAC 단백질(d≈4).
