@@ -1,0 +1,157 @@
+{
+  "check": "robustness_of_colorectal_incremental (advisor discriminating check)",
+  "claim_level": "hypothesis_only",
+  "critic_status": "pending",
+  "primary_metric": "nested-LR p (in-sample, CV-seed-independent)",
+  "correction_grid": [
+    {
+      "test": "BRCA/ER/conv",
+      "LR_p_raw": 0.0,
+      "BH_adj": 0.0,
+      "Bonferroni": 0.0,
+      "powered": true,
+      "survives_BH": true,
+      "survives_Bonf": true
+    },
+    {
+      "test": "BRCA/ER/molsub",
+      "LR_p_raw": 3.3e-05,
+      "BH_adj": 7e-05,
+      "Bonferroni": 0.00026,
+      "powered": true,
+      "survives_BH": true,
+      "survives_Bonf": true
+    },
+    {
+      "test": "BRCA/HER2_CNVamp/conv",
+      "LR_p_raw": 1e-06,
+      "BH_adj": 0.0,
+      "Bonferroni": 1e-05,
+      "powered": true,
+      "survives_BH": true,
+      "survives_Bonf": true
+    },
+    {
+      "test": "BRCA/HER2_CNVamp/molsub",
+      "LR_p_raw": 0.002802,
+      "BH_adj": 0.00374,
+      "Bonferroni": 0.02242,
+      "powered": true,
+      "survives_BH": true,
+      "survives_Bonf": true
+    },
+    {
+      "test": "CRC/msi_high/conv",
+      "LR_p_raw": 0.0,
+      "BH_adj": 0.0,
+      "Bonferroni": 0.0,
+      "powered": false,
+      "survives_BH": true,
+      "survives_Bonf": true
+    },
+    {
+      "test": "CRC/msi_high/molsub",
+      "LR_p_raw": 0.000767,
+      "BH_adj": 0.00123,
+      "Bonferroni": 0.00614,
+      "powered": false,
+      "survives_BH": true,
+      "survives_Bonf": true
+    },
+    {
+      "test": "CRC/anti_egfr_eligible/conv",
+      "LR_p_raw": 0.02605,
+      "BH_adj": 0.02977,
+      "Bonferroni": 0.2084,
+      "powered": true,
+      "survives_BH": true,
+      "survives_Bonf": false
+    },
+    {
+      "test": "CRC/anti_egfr_eligible/molsub",
+      "LR_p_raw": 0.094561,
+      "BH_adj": 0.09456,
+      "Bonferroni": 0.75649,
+      "powered": true,
+      "survives_BH": false,
+      "survives_Bonf": false
+    }
+  ],
+  "seed_robustness": {
+    "msi_high": {
+      "baseline": "conventional(hist+side)",
+      "seeds": [
+        42,
+        0,
+        1,
+        7,
+        2024,
+        7777,
+        314
+      ],
+      "dAUROC_by_seed": [
+        0.1293,
+        0.1338,
+        0.1704,
+        0.1194,
+        0.1194,
+        0.1257,
+        0.1389
+      ],
+      "dAUROC_mean": 0.1338,
+      "dAUROC_min": 0.1194,
+      "dAUROC_max": 0.1704,
+      "frac_dAUROC_positive": 1.0,
+      "delong_p_by_seed": [
+        0.0362,
+        0.0146,
+        0.004,
+        0.0584,
+        0.0482,
+        0.0368,
+        0.0159
+      ],
+      "frac_delong_sig": 0.857,
+      "n_pos": 21,
+      "exploratory_by_prereg": true
+    },
+    "anti_egfr_eligible": {
+      "baseline": "conventional(hist+side)",
+      "seeds": [
+        42,
+        0,
+        1,
+        7,
+        2024,
+        7777,
+        314
+      ],
+      "dAUROC_by_seed": [
+        0.049,
+        0.0661,
+        0.0306,
+        0.0453,
+        0.0604,
+        0.0572,
+        0.052
+      ],
+      "dAUROC_mean": 0.0515,
+      "dAUROC_min": 0.0306,
+      "dAUROC_max": 0.0661,
+      "frac_dAUROC_positive": 1.0,
+      "delong_p_by_seed": [
+        0.0407,
+        0.0051,
+        0.2385,
+        0.0868,
+        0.0157,
+        0.0248,
+        0.0348
+      ],
+      "frac_delong_sig": 0.714,
+      "n_pos": 84,
+      "exploratory_by_prereg": false
+    }
+  },
+  "read_rule": "anti_egfr 'increment' counts as ROBUST only if LR_p survives BH AND CV dAUROC stays >0 across seeds AND DeLong<0.05 in majority of seeds. Otherwise read = 'no robust increment for the point-mutation marker' (law's prediction approx holds). MSI stays INCONCLUSIVE by power regardless."
+}

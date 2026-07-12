@@ -3,40 +3,58 @@
   "claim_level": "hypothesis_only",
   "critic_status": "pending",
   "note": "TCGA-BRCA lacks histologic grade; conventional baseline=histologic type (ductal/lobular/other). PAM50 is molecular subtype (partly co-defined by ER/HER2) -> secondary/stringent only. PRIMARY test=nested LR on p_HE coef (in-sample MLE); DeLong + bootstrap CI on 5-fold CV scores=out-of-sample support. ER p_HE=val split (used for early stopping -> mildly optimistic); HER2 p_HE=pooled val+test. hypothesis_only, no commit.",
+  "pam50_provenance": "Parker-2009 nearest-centroid classifier computed from RNA expression (tcga_brca_pam50_computed_PROVENANCE.md); manifest pam50 == computed file 100%. Expression-derived, H&E-independent -> valid as an independent (stringent) baseline covariate.",
+  "grade_note": "TCGA-BRCA has NO histologic grade in cBioPortal pancan or legacy studies (empirically checked); conventional-pathology baseline is histotype-only by necessity.",
   "verdicts": {
     "ER": {
-      "primary_pHE_exceeds_conventional_pathology": true,
-      "primary_delta_auroc": 0.2364,
-      "primary_delta_ci95": [
-        0.1494,
-        0.3297
-      ],
-      "primary_LRtest_p": 0.0,
-      "primary_delong_p": 0.0,
-      "secondary_vs_PAM50_delta_auroc": 0.0335,
-      "secondary_delta_ci95": [
-        0.0008,
-        0.07
-      ],
-      "secondary_LRtest_p": 3.3e-05,
-      "interpretation": "H&E predicted probability adds significant signal ABOVE conventional histologic type (supports marker-specific morphology, not merely histotype confound). Against the stringent PAM50 baseline the increment shrinks to small-but-significant; PAM50 is molecular subtype partly co-defined by this marker (near-circular), so this is an expected ceiling, not conventional-pathology absorption."
+      "vs_conventional_histology": {
+        "delta_auroc": 0.2364,
+        "delta_ci95": [
+          0.1494,
+          0.3297
+        ],
+        "LRtest_p": 0.0,
+        "delong_p": 0.0,
+        "significant_increment": true
+      },
+      "vs_molecular_subtype_PAM50": {
+        "delta_auroc": 0.0335,
+        "delta_ci95": [
+          0.0008,
+          0.07
+        ],
+        "LRtest_p": 3.3e-05,
+        "delong_p": 0.05962,
+        "three_tests_agree": false,
+        "note": "LR & bootstrap-CI significant but DeLong borderline (in-sample vs out-of-sample disagreement) \u2014 do not smooth over"
+      },
+      "framework_implication": "partially_supports",
+      "interpretation": "OVER conventional H&E-readable pathology (histologic type): large, robust increment (dAUC 0.2364 [0.1494, 0.3297], LR p 0.0) \u2014 H&E carries marker-specific morphology beyond histotype. OVER molecular subtype (PAM50, expression-derived, Parker-2009, H&E-independent): increment small (dAUC 0.0335 [0.0008, 0.07], LR p 3.3e-05) \u2014 much of the H&E signal is shared with the luminal/HER2-enriched subtype axis (expected: PAM50 is not obtainable from H&E and is partly co-defined by this marker). NET: signal beyond histotype = demonstrated; fully independent of molecular subtype = NOT demonstrated."
     },
     "HER2_CNVamp": {
-      "primary_pHE_exceeds_conventional_pathology": true,
-      "primary_delta_auroc": 0.1782,
-      "primary_delta_ci95": [
-        0.0996,
-        0.2636
-      ],
-      "primary_LRtest_p": 1e-06,
-      "primary_delong_p": 2e-05,
-      "secondary_vs_PAM50_delta_auroc": 0.0353,
-      "secondary_delta_ci95": [
-        0.0128,
-        0.0607
-      ],
-      "secondary_LRtest_p": 0.002802,
-      "interpretation": "H&E predicted probability adds significant signal ABOVE conventional histologic type (supports marker-specific morphology, not merely histotype confound). Against the stringent PAM50 baseline the increment shrinks to small-but-significant; PAM50 is molecular subtype partly co-defined by this marker (near-circular), so this is an expected ceiling, not conventional-pathology absorption."
+      "vs_conventional_histology": {
+        "delta_auroc": 0.1782,
+        "delta_ci95": [
+          0.0996,
+          0.2636
+        ],
+        "LRtest_p": 1e-06,
+        "delong_p": 2e-05,
+        "significant_increment": true
+      },
+      "vs_molecular_subtype_PAM50": {
+        "delta_auroc": 0.0353,
+        "delta_ci95": [
+          0.0128,
+          0.0607
+        ],
+        "LRtest_p": 0.002802,
+        "delong_p": 0.00294,
+        "three_tests_agree": true,
+        "note": "LR, bootstrap-CI and DeLong concordant"
+      },
+      "framework_implication": "partially_supports",
+      "interpretation": "OVER conventional H&E-readable pathology (histologic type): large, robust increment (dAUC 0.1782 [0.0996, 0.2636], LR p 1e-06) \u2014 H&E carries marker-specific morphology beyond histotype. OVER molecular subtype (PAM50, expression-derived, Parker-2009, H&E-independent): increment small (dAUC 0.0353 [0.0128, 0.0607], LR p 0.002802) \u2014 much of the H&E signal is shared with the luminal/HER2-enriched subtype axis (expected: PAM50 is not obtainable from H&E and is partly co-defined by this marker). NET: signal beyond histotype = demonstrated; fully independent of molecular subtype = NOT demonstrated."
     }
   },
   "skipped_markers": {

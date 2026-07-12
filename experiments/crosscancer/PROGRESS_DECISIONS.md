@@ -169,6 +169,13 @@
 - **함의**: (1) "HER2=blind(chance 0.59)" 기계론 주장 **철회**. (2) 단 **결정(분자검사 필수)은 살릴 여지**: 0.73은 임상 대체 불가 임계 미달 → "약하게/간접적으로만 예측, 대체 불가"로 재프레이밍 가능. (3) 법칙의 HER2 배치("형태 상관물 없음")도 "약한/아형매개 상관물 있음"으로 수정 필요.
 - **영향 문서/그림**: 개념도·결정지도 그림·gastric 교차장기·`HER2_MOLECULAR_CONCORDANCE.md`("H&E 0.59" 프레이밍)·법칙. **회의 전 재프레이밍 필요.** 산출 `experiments/kkkim/her2_blind_across_assays/`. braveji/sjpark 리뷰 권고. hypothesis_only.
 
+### D13 (2026-07-12) — 대장 증분 검정 완료: 법칙의 이분법은 안 서고, 기울기는 아직 못 세움
+advisor 지정 결정 검정(H&E가 통상 병리를 넘는가)의 대장 파트 완료. 산출 `COLORECTAL/full/incremental_crc_results.json`·`incremental_crc_robustness.json`·`CONCLUSION_CRC_INCREMENTAL.md`. per-patient p_HE는 seed=42 결정론 MIL 재실행으로 복원(재현 AUROC 0.9184/0.7053 커밋값 일치 검증). 통상병리 baseline = 점액성 조직형 + 우측/좌측 편측성(TCGA-COADREAD에 등급·oncotree 없음, 0/613).
+- **anti-EGFR(검정력 있는 점돌연변이 위험검정, n_pos=84)**: 통상병리 대비 +0.049(CI 0.003–0.096, LR p 0.026, DeLong 0.041). BH 보정 통과(0.030)·CV 시드 7개 부호 안정(mean +0.052, frac>0=1.0)·DeLong 5/7 유의. 단 **Bonferroni 미통과**(0.208), +CMS 넣으면 소멸(+0.019 비유의).
+- **MSI(양성대조, n_pos=21)**: 통상병리 대비 +0.129지만 사전등록 검정력 규칙상 **탐색적(INCONCLUSIVE)** — 양성대조 뒷받침으로만.
+- **판정(이 턴에 법칙 생사 선언 안 함)**: (1) 엄격한 이분법("상관물 없음→증분 0")은 뒷받침 안 됨 — 점돌연변이 마커도 작지만 부호 안정 증분(BH 통과). (2) 단 증분은 작고 경계적(Bonferroni 미통과, 아형에 흡수) → 간접(아형 매개) 신호로 보임(메커니즘 설명이지 치환 수치 아님; CMS는 분자검사 필요). (3) **검정력 있는 교차암종 대비 부재가 구조적 한계**: 유방 기준선(조직형만) < 대장(조직형+편측성), 대장 내 상관물 비교자 MSI는 검정력 부족 → STAD·HNSC 전량 held-out 재검정이 필요한 이유. hypothesis_only, critic_status pending.
+- **advisor 교정 반영**: 4마커 교차암종 기울기 표는 기준선 두께·코호트가 섞여 like-with-like 아님 → 암종 내 동일기준선 대비(유방 ER vs HER2 / 대장 MSI vs anti-EGFR)로만 서술. anti-EGFR "DEMONSTRATED" 표현은 "작고 경계적"으로 완화.
+
 ### 다음 갱신 트리거 (갱신)
 - [x] 대장 CMS/MSI(아형 층위) 라벨 확보 → H&E→아형 예측 → 유방 아형과 like-with-like 비교. **(완료: Part A/B 분리)**
 - [x] 통합 flagship 확정 + 법칙 사전등록 봉인. **(D11)**
@@ -177,6 +184,7 @@
 - [ ] STAD/HNSC 임베딩→라벨(HER2-amp/MSI/HPV/EBV/조직형)→split→MIL(법칙 held-out 검정).
 - [ ] CPTAC proteomics HER2 decoupling 한 줄 확인.
 - [ ] 폐 subtype SSP 계산 → 폐 MIL 완료 → **법칙 held-out 검정**(EGFR>KRAS 순서, EGFR 등급적).
+- [x] 대장 증분 검정(MSI/anti-EGFR가 통상병리 넘는가) — **완료(D13)**: anti-EGFR 작고 경계적 증분(BH 통과·Bonf 미통과), MSI 탐색적. 법칙 이분법 안 서고 기울기 미확립.
 - [ ] MSI/anti-EGFR mean_cost 임상거리 사전등록(진행 중).
 - [ ] shuffle-null 다중시드/bag-size 확인(진행 중, GPU).
 - [ ] AI 레이어: 치환가능성 스코어 + 보정/기권 구현(결과 안착 후).
