@@ -21,20 +21,46 @@ def rel(f: Path):
     except ValueError:
         return str(f)
 
-# --- 하드룰 (티어 무관, 위반 시 blocked) ---
-DRP_FORBIDDEN = [
-    r"drug response prediction", r"personalized therapy", r"personalised therapy",
-    r"patient-?specific[^\n]{0,20}treatment", r"optimal treatment",
-    r"약물반응예측", r"개인 ?맞춤 ?치료",
-]
-METRICS_REQUIRED = ["auc", "auprc", "balanced_accuracy", "n_train", "n_val",
-                    "model", "embedding_model", "commit_hash"]
+# --- 하드룰·티어 패턴을 config에서 로드 (프로젝트-불문; config 없으면 기본값 폴백) ---
+_CFG_PATH = Path(__file__).resolve().parent / "auto_review_config.json"
+_DEFAULT_HR = {
+    "forbidden_phrases": [
+        r"drug response prediction", r"personalized therapy", r"personalised therapy",
+        r"patient-?specific[^\n]{0,20}treatment", r"optimal treatment",
+        r"약물반응예측", r"개인 ?맞춤 ?치료"],
+    "forbidden_safe_markers": ["금지", "아님", "않", "없", "not ", "n't", "prohibit", "forbidden",
+        "avoid", "must not", "❌", "banned", "위반", "framing", "표현", "검출", "reference", "`",
+        "regex", "grep", "anti-pattern", "안티패턴", "AP-0"],
+    "meta_files": ["auto_review_gate.py", "AUTO_REVIEW_POLICY", "anti_patterns", "checklist",
+        "AI_REVIEW_PROMPT", "auto_review_config"],
+    "metrics_required": ["auc", "auprc", "balanced_accuracy", "n_train", "n_val",
+        "model", "embedding_model", "commit_hash"],
+    "claim_level_required_value": "hypothesis_only",
+}
+_DEFAULT_TIER = {
+    "C": ["manuscript", "preprint", "paper_draft", "abstract", "headline",
+          "SUBSTITUTABILITY_LAW", "PAPER_DIRECTION", "publish", "figure_main"],
+    "A": ["guide/", "docs/", "README", "HANDOFF", "PROGRESS_DECISIONS",
+          "setup", "infra", ".yaml", ".yml", "manifest", "RESUME_"],
+}
 
-# Tier 자동 분류 힌트 (경로/이름 기반; .review_tier 파일 또는 --tier 로 override)
-TIER_C_HINTS = ["manuscript", "preprint", "paper_draft", "abstract", "headline",
-                "SUBSTITUTABILITY_LAW", "PAPER_DIRECTION", "publish", "figure_main"]
-TIER_A_HINTS = ["guide/", "docs/", "README", "HANDOFF", "PROGRESS_DECISIONS",
-                "setup", "infra", ".yaml", ".yml", "manifest", "RESUME_"]
+def _load_rules():
+    try:
+        cfg = json.loads(_CFG_PATH.read_text())
+        hr = {**_DEFAULT_HR, **cfg.get("hard_rules", {})}
+        tr = cfg.get("tier_rules", {})
+        tier = {"C": tr.get("C_path_patterns", _DEFAULT_TIER["C"]),
+                "A": tr.get("A_path_patterns", _DEFAULT_TIER["A"])}
+        return hr, tier
+    except Exception:
+        return _DEFAULT_HR, _DEFAULT_TIER
+
+_HR, _TIER = _load_rules()
+DRP_FORBIDDEN = _HR["forbidden_phrases"]
+METRICS_REQUIRED = _HR["metrics_required"]
+CLAIM_REQUIRED = _HR["claim_level_required_value"]
+TIER_C_HINTS = _TIER["C"]
+TIER_A_HINTS = _TIER["A"]
 
 
 def classify_tier(p: Path, override=None):
@@ -71,12 +97,9 @@ def iter_text_files(p: Path):
             yield f
 
 
-# 금지어가 "위반"이 아니라 "금지 규칙 서술/참조"인 문맥 마커 → 오탐 제외
-DRP_SAFE_MARKERS = ["금지", "아님", "않", "없", "not ", "n't", "prohibit", "forbidden",
-                    "avoid", "must not", "❌", "banned", "위반", "framing", "표현", "검출",
-                    "reference", "`", "regex", "grep", "anti-pattern", "안티패턴", "AP-0"]
-# 규칙 정의 파일 자체는 스킵(금지어 목록을 담고 있음)
-DRP_META_FILES = ["auto_review_gate.py", "AUTO_REVIEW_POLICY", "anti_patterns", "checklist"]
+# 금지어가 "위반"이 아니라 "금지 규칙 서술/참조"인 문맥 마커(오탐 제외) + 규칙정의 파일 스킵 — config에서
+DRP_SAFE_MARKERS = _HR["forbidden_safe_markers"]
+DRP_META_FILES = _HR["meta_files"]
 
 def check_drp(p: Path):
     hits = []
@@ -110,7 +133,7 @@ def check_claim_level(p: Path):
             continue
         for m in re.finditer(r'claim_level["\s:=]+([a-zA-Z_]+)', t):
             seen = True
-            if m.group(1) != "hypothesis_only":
+            if m.group(1) != CLAIM_REQUIRED:
                 bad.append({"file": rel(f), "value": m.group(1)})
     return seen, bad
 

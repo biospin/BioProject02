@@ -1,0 +1,79 @@
+{
+  "_purpose": "자동 리뷰 결정 항목. 스터디에서 정하면 <DECIDE...> 값만 채우고 enabled=true. 코드 변경 불필요.",
+  "_policy": "guide/AUTO_REVIEW_POLICY.md",
+  "enabled": false,
+
+  "_portability": "프로젝트별 값은 전부 이 파일에. 코드(auto_review_gate/orchestrator)는 project-agnostic. 타 프로젝트(BIOP01 등)는 스크립트 복사 + 자기 config만 넣으면 작동.",
+
+  "hard_rules": {
+    "_note": "티어 무관 즉시 blocked. 프로젝트별 금지 프레이밍·필수필드. (BIOP01은 자기 값으로 교체)",
+    "forbidden_phrases": [
+      "drug response prediction", "personalized therapy", "personalised therapy",
+      "patient-?specific[^\\n]{0,20}treatment", "optimal treatment",
+      "약물반응예측", "개인 ?맞춤 ?치료"
+    ],
+    "forbidden_safe_markers": ["금지", "아님", "않", "없", "not ", "n't", "prohibit", "forbidden",
+      "avoid", "must not", "❌", "banned", "위반", "framing", "표현", "검출", "reference", "`",
+      "regex", "grep", "anti-pattern", "안티패턴", "AP-0"],
+    "meta_files": ["auto_review_gate.py", "AUTO_REVIEW_POLICY", "anti_patterns", "checklist", "AI_REVIEW_PROMPT", "auto_review_config"],
+    "metrics_required": ["auc", "auprc", "balanced_accuracy", "n_train", "n_val", "model", "embedding_model", "commit_hash"],
+    "claim_level_required_value": "hypothesis_only"
+  },
+
+  "tier_rules": {
+    "_DECIDE_at_study": "B/C 경계. 아래 패턴이 경로/이름에 있으면 해당 티어.",
+    "C_path_patterns": ["manuscript", "preprint", "abstract", "SUBSTITUTABILITY_LAW", "PAPER_DIRECTION", "publish", "figure_main"],
+    "A_path_patterns": ["guide/", "docs/", "README", "HANDOFF", "PROGRESS_DECISIONS", "RESUME_", "setup", ".yaml", ".yml", "manifest"],
+    "default_tier": "B"
+  },
+
+  "provisional": {
+    "allow_progress_and_commit": true,
+    "share_requires_human_confirm": true
+  },
+
+  "adjudicators": {
+    "_DECIDE_at_study": "C 최종 확인 담당(사람). artifact 유형별.",
+    "headline_claim": "<DECIDE: kkkim 또는 braveji>",
+    "publication": "<DECIDE: 팀 합의 필수>",
+    "novel_bio_claim": "<DECIDE: sjpark 또는 jhans>",
+    "cross_conceptual_comparison": "<DECIDE: kkkim>",
+    "default_C": "<DECIDE>"
+  },
+
+  "owner_ne_reviewer": {
+    "_DECIDE_at_study": "리더 단독(리뷰어 부재) 시 폴백 허용 여부·조건.",
+    "allow_ai_adversarial_fallback": true,
+    "fallback_min_independent_passes": 3,
+    "fallback_label": "ai-adversarial+leader-confirm",
+    "headline_requires_second_human": true
+  },
+
+  "cross_review_map": {
+    "_note": "CLAUDE.md cross-review 매핑(자동 배정). 작성자→리뷰어.",
+    "sjpark": "kkkim", "kkkim": "jamie", "jamie": "braveji", "jhans": "braveji"
+  },
+
+  "ai_review": {
+    "agents": ["paper-critic", "reviewer"],
+    "checklist": "agents/critic/checklist_v1.md",
+    "prompt_template": "agents/critic/AI_REVIEW_PROMPT.md",
+    "independent_passes": 2,
+    "verify_headline_numbers": true
+  },
+
+  "notify": {
+    "_DECIDE_at_study": "알림 채널. mechanism=openclaw(guide/openclaw_harness_runbook.md).",
+    "mechanism": "openclaw",
+    "channel_blocked": "#biop02-alerts",
+    "channel_provisional": "#biop02-dev",
+    "channel_needs_human": "#biop02-dev"
+  },
+
+  "cron": {
+    "_DECIDE_at_study": "자동 스캔 주기·대상.",
+    "enabled": false,
+    "cadence_min": 30,
+    "scan_paths": ["experiments", "blog", "research/paperC-positioning"]
+  }
+}

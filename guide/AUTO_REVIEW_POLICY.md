@@ -42,5 +42,33 @@
       └ Tier C → AI 적대적 리뷰 → needs_human(판단항목 목록) → 사람 adjudicate
 ```
 
+## 구조 (구현됨 — 결정되면 config만 채워 활성화)
+```
+agents/critic/
+  auto_review_config.json     # ★ 결정 항목 전부(스터디에서 <DECIDE...> 채움 + enabled=true)
+  auto_review_gate.py         # 결정론 게이트(하드룰·티어). config 기반, 없으면 기본값
+  auto_review_orchestrator.py # gate→큐→상태→알림. enabled=false면 DRY-RUN(안전 대기)
+  AI_REVIEW_PROMPT.md         # AI 적대적 리뷰 표준 스펙(7-point+추가점검)
+  cron_auto_review.sh         # 주기 스캔 스캐폴드(cron.enabled=true 시)
+  ai_review_queue.jsonl       # (생성) AI리뷰 대기 큐
+  review_status.json          # (생성) 경로별 상태
+  review_requests/            # (생성) drain 시 에이전트 호출 스펙
+```
+데이터 흐름: `cron_auto_review.sh`(주기) → `orchestrator --scan`(gate+큐+알림) → `orchestrator --drain-queue`(에이전트 호출 스펙 발행) → **세션/OpenClaw가 스펙대로 paper-critic/7-point 실행** → `critic_report.json` → `orchestrator --confirm <path> --by <사람>`(1-클릭 확인).
+
+## 활성화 절차 (스터디 결정 후)
+1. `auto_review_config.json`의 `<DECIDE...>` 채움: adjudicators(C 담당)·owner_ne_reviewer 폴백·notify 채널·cron 주기·(원하면 tier 패턴 조정).
+2. `"enabled": true` (+ 원하면 `cron.enabled: true`).
+3. cron 등록: `crontab -e` → `*/30 * * * * /home/kkkim/project/BioProject02/agents/critic/cron_auto_review.sh`.
+4. #biop02-general 공지(팀 리뷰 의무 변경).
+   — 이전까지는 `enabled=false`라 실제 행동 없이 DRY-RUN(무엇을 할지만 로그).
+
+## 이식성 (타 프로젝트 재사용, 예: BIOP01)
+코드(gate·orchestrator·cron·prompt)는 **project-agnostic** — 프로젝트별 값은 전부 `auto_review_config.json`에 있다. 타 프로젝트는:
+1. `agents/critic/` 5개 파일 복사.
+2. 자기 `auto_review_config.json` 작성 — **hard_rules(자기 금지 프레이밍·필수 metrics 필드), tier 패턴(자기 파일명), cross_review_map(자기 팀), notify 채널, adjudicators**. (BIOP02의 DRP 금지어·#biop02-* 채널·팀원명을 자기 것으로 교체.)
+3. `enabled=true`.
+코드 수정 불필요. ROOT는 스크립트 위치 기준 자동 산출(`parents[2]`).
+
 ## 거버넌스
 리더가 정책·티어 경계를 정한다. 팀원의 리뷰 의무를 바꾸므로 **팀 공지 대상**(#biop02-general). provisional로 진행한 것도 **공개·저자-대면은 사람 확정 게이트 유지**(CLAUDE.md).
