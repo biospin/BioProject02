@@ -32,9 +32,8 @@
 - 용어: "형태학적 상관물"(표준), "침묵/조용/silent" 폐기(→ `PAPER_DIRECTION.md` §용어).
 
 ## SOTA 다중 FM 견고성 (2026-07-12 추가) — 최대 IF 레버
-- **[사용자 액션] HF 게이팅 신청**: `paige-ai/Virchow2`(1순위)·`MahmoodLab/UNI2-h`(2순위)·(선택)`prov-gigapath/prov-gigapath`. 기관 이메일(@gmail 불가).
-- 목적: HER2/RAS 상관물 부재가 프런티어 FM 전반에서 성립 → 법칙 모델 비의존(약한 인코더 반박 차단).
-- 로컬 가용=UNI·CONCH뿐(Virchow2 등 미다운로드). CONCH는 UNI보다 약해 interim만.
+- **HF 접근 이미 승인됨**(BIOP02-24, 2026-05-17): Virchow2·UNI2-h·Prov-GigaPath·UNI·CONCH 전부 서버 토큰 접근 OK. **신청 불필요**(로컬 미다운로드일 뿐).
+- 목적: HER2/RAS 상관물 부재가 프런티어 FM 전반에서 성립 → 법칙 모델 비의존(약한 인코더 반박 차단). Virchow2(0.82 SOTA)로 검증 가능.
 - 구현: coords 영구저장 → 재다운로드+재추출(재타일 불필요). **폐 임베딩 완료 후** 핵심 마커(HER2·MSI·RAS) 서브셋만. 계획=`../../research/paperC-positioning/FLAGSHIP_PLAN.md` §SOTA.
 
 ## 대기 중 사람 결정 (다음 세션에 물을 것)
