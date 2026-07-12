@@ -66,12 +66,13 @@ def _compute_midrank(x):
     return T2
 
 def delong_var(scores, y):
-    # scores: (k, n) two predictors; y binary
+    # scores: (k, N) predictors; y binary. Fast DeLong requires positives-first ordering.
     pos = y == 1; neg = ~pos
-    m = pos.sum(); n = neg.sum()
+    m = int(pos.sum()); n = int(neg.sum())
     k = scores.shape[0]
-    tx = np.array([_compute_midrank(scores[r, pos]) for r in range(k)])
-    ty = np.array([_compute_midrank(scores[r, neg]) for r in range(k)])
+    scores = np.hstack([scores[:, pos], scores[:, neg]])  # positives first, then negatives
+    tx = np.array([_compute_midrank(scores[r, :m]) for r in range(k)])
+    ty = np.array([_compute_midrank(scores[r, m:]) for r in range(k)])
     tz = np.array([_compute_midrank(scores[r]) for r in range(k)])
     aucs = (tz[:, :m].sum(axis=1) / m - (m + 1) / 2) / n
     v01 = (tz[:, :m] - tx) / n
@@ -212,12 +213,65 @@ def main():
                                 pam50_dist=dfc["pam50"].value_counts().to_dict())
         results.append(analyze(dfc, marker, "A_histology_only(PRIMARY)", ["hist"]))
         results.append(analyze(dfc, marker, "B_histology+PAM50(secondary)", ["hist", "pam50"]))
+    # ---- per-marker verdicts (primary = baseline A histology-only) ----
+    verdicts = {}
+    bykey = {(r["marker"], r["baseline"]): r for r in results}
+    for marker in ["ER", "HER2_CNVamp"]:
+        A = bykey[(marker, "A_histology_only(PRIMARY)")]
+        B = bykey[(marker, "B_histology+PAM50(secondary)")]
+        ciA = A["delta_auroc_cv_ci95"]; ciB = B["delta_auroc_cv_ci95"]
+        beats_histology = (A["LRtest_p"] < 0.05) and (ciA is not None and ciA[0] > 0)
+        beats_pam50_LR = B["LRtest_p"] < 0.05
+        beats_pam50_ci = (ciB is not None and ciB[0] > 0)
+        beats_pam50_delong = B["delong_p_cv"] < 0.05
+        tests_agree_vs_pam50 = beats_pam50_LR and beats_pam50_ci and beats_pam50_delong
+        verdicts[marker] = dict(
+            # --- lead with the CONTRAST between two baselines ---
+            vs_conventional_histology=dict(
+                delta_auroc=A["delta_auroc_cv"], delta_ci95=ciA,
+                LRtest_p=A["LRtest_p"], delong_p=A["delong_p_cv"],
+                significant_increment=bool(beats_histology)),
+            vs_molecular_subtype_PAM50=dict(
+                delta_auroc=B["delta_auroc_cv"], delta_ci95=ciB,
+                LRtest_p=B["LRtest_p"], delong_p=B["delong_p_cv"],
+                three_tests_agree=bool(tests_agree_vs_pam50),
+                note=("LR & bootstrap-CI significant but DeLong borderline (in-sample vs out-of-sample "
+                      "disagreement) — do not smooth over" if (beats_pam50_LR and beats_pam50_ci and not beats_pam50_delong)
+                      else "LR, bootstrap-CI and DeLong concordant")),
+            framework_implication="partially_supports",
+            interpretation=(
+                "OVER conventional H&E-readable pathology (histologic type): large, robust increment "
+                f"(dAUC {A['delta_auroc_cv']} {ciA}, LR p {A['LRtest_p']}) — H&E carries marker-specific "
+                "morphology beyond histotype. OVER molecular subtype (PAM50, expression-derived, Parker-2009, "
+                "H&E-independent): increment small "
+                f"(dAUC {B['delta_auroc_cv']} {ciB}, LR p {B['LRtest_p']}) — much of the H&E signal is shared "
+                "with the luminal/HER2-enriched subtype axis (expected: PAM50 is not obtainable from H&E and is "
+                "partly co-defined by this marker). NET: signal beyond histotype = demonstrated; fully "
+                "independent of molecular subtype = NOT demonstrated."))
+    skipped = {
+        "COLORECTAL_MSI_high": "SKIPPED/INCONCLUSIVE — per-patient p_HE not persisted (routing_cost.json "
+            "stores only summary AUROC 0.9184); crosscancer embeddings owned by another process (do-not-touch) "
+            "and no GPU slot reservable here. Re-training would be a new result (fresh seed/split), not reuse. "
+            "UNBLOCK (one line for owning process): in run_cms_and_routing.py Part-B, persist patient_proba for "
+            "msi_high/anti_egfr_eligible exactly as braf_v600e/CMS already do, then this test can run.",
+        "COLORECTAL_all_RAS_anti_egfr": "SKIPPED/INCONCLUSIVE — same reason (routing_cost.json summary AUROC "
+            "0.7053 only). Same one-line unblock.",
+        "note_pivotal": "MSI-H vs (mucinous + right-sided + high-grade) is the sharpest 'does the embedding beat "
+            "the pathologist' test (MSI has classic H&E morphology). Currently blocked, not negative."
+    }
     out = dict(analysis="incremental_over_conventional_pathology",
                claim_level="hypothesis_only", critic_status="pending",
-               note="TCGA-BRCA lacks histologic grade; conventional baseline=histologic type. "
+               note="TCGA-BRCA lacks histologic grade; conventional baseline=histologic type (ductal/lobular/other). "
                     "PAM50 is molecular subtype (partly co-defined by ER/HER2) -> secondary/stringent only. "
-                    "PRIMARY test=nested LR on p_HE coef; DeLong on 5-fold CV scores=support. "
-                    "ER p_HE=val split (used for early stopping -> mildly optimistic). hypothesis_only.",
+                    "PRIMARY test=nested LR on p_HE coef (in-sample MLE); DeLong + bootstrap CI on 5-fold CV "
+                    "scores=out-of-sample support. ER p_HE=val split (used for early stopping -> mildly optimistic); "
+                    "HER2 p_HE=pooled val+test. hypothesis_only, no commit.",
+               pam50_provenance="Parker-2009 nearest-centroid classifier computed from RNA expression "
+                    "(tcga_brca_pam50_computed_PROVENANCE.md); manifest pam50 == computed file 100%. "
+                    "Expression-derived, H&E-independent -> valid as an independent (stringent) baseline covariate.",
+               grade_note="TCGA-BRCA has NO histologic grade in cBioPortal pancan or legacy studies "
+                    "(empirically checked); conventional-pathology baseline is histotype-only by necessity.",
+               verdicts=verdicts, skipped_markers=skipped,
                coverage=coverage, results=results)
     (OUT / "incremental_results.json").write_text(json.dumps(out, indent=2))
     # print table

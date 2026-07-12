@@ -18,3 +18,16 @@
 
 ## 다음 (정확 검정)
 per-patient p_HE로 완전 partialling-incremental(MSI·RAS 포함, DeLong/LR) — subagent 진행 또는 MIL 재실행 필요. 대장 조직형은 GDC/TCGA-CDR로 대체 조달.
+
+---
+## ⚠️ 정정 (subagent 정확 incremental 도착 — 제 crude oracle 뒤집힘, 19:10)
+제 oracle은 **PAM50을 "병리 baseline"으로 잘못 사용**했습니다. **PAM50은 분자 아형(분자데이터 필요, ER/HER2로 일부 co-define=near-circular)이지 통상 병리가 아닙니다.** 정확 분석(nested LR + DeLong, 5-fold CV):
+| 마커 | vs **통상병리(조직형)** Δ | vs PAM50(분자,circular) Δ | 판정 |
+|---|---|---|---|
+| ER | **+0.236** (CI 0.15–0.33, p≈0) | +0.034(작지만 유의) | **H&E가 통상병리 넘음(마커-특이)** |
+| HER2-amp | **+0.178** (CI 0.10–0.26, p=1e-6) | +0.035(유의) | **H&E가 통상병리 넘음** |
+- **정정**: "HER2 아형에 흡수"(내 crude oracle)는 **틀림**. 올바른 baseline(통상 조직형)과 비교하면 H&E가 ER·HER2에 **유의한 마커-특이 신호를 더함.** PAM50 대비 작은 증분은 **near-circular ceiling**이지 흡수 아님.
+- **단 honest 한계**: 통상 baseline=조직형(ductal/lobular)뿐(TCGA-BRCA 등급 결측)이라 **coarse** — H&E가 이걸 넘는 건 낮은 바. "type+등급+세밀형태 전체"를 넘는지는 두 baseline 사이, 미해결.
+- **HER2 "blind(chance)"는 여전히 틀렸음**(H&E ~0.73). 그러나 "아형 흡수"도 아님 → **약하지만 마커-특이**가 정직한 현 상태.
+- **MSI/RAS(대장): 나·subagent 둘 다 미완**(cBioPortal 대장 공변량·per-patient p_HE plumbing). MSI가 통상병리 넘는지가 대장 법칙의 사활 — 회의 후 완료.
+- **교훈(반복)**: 나 또 crude proxy로 성급히 "흡수" 결론냄 → 정확 분석이 뒤집음. baseline 정의(분자 vs 통상병리)가 결론을 가름. **법칙 생사 선언 보류.**
