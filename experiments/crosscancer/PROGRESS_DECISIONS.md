@@ -143,6 +143,15 @@
 
 **3) mean_cost 임상거리**: `clinical_routing_distance_preregistered.json` 생성(frozen). ⚠️ **routing_cost.json의 msi/anti_egfr mean_cost는 아직 null → 적용 확인 필요(다음 세션 TODO).**
 
+### 폐 법칙 held-out 검정 결과 (2026-07-12, 5개 암종 중 첫 held-out)
+**핵심: 견고히 결론나는 건 양성대조(파이프라인 정상성)뿐. 법칙 판별 예측 3개는 전부 검정력 부족→INCONCLUSIVE.** 사전등록이 노린 "discovery급 격상"을 폐는 못 준다.
+- 조직형 LUAD/LUSC(양성대조, n_pos 152): **0.925** CI[0.889,0.957], shuffle 0.467 → **PASS(파이프라인 sound)**. 사전 ≥0.93은 점추정 0.5%p 미달이나 CI 부합(≈met).
+- EGFR 등급적: 0.813(대역 안)이나 n_pos=15·shuffle 0.66(마진 0.15)→ **consistent with, INCONCLUSIVE**.
+- EGFR>KRAS 순서: 점추정 성립(0.81>0.65)이나 CI 광범위 겹침→ **INCONCLUSIVE**(반증도 아님).
+- TRU 최고: **아니오**(PP 0.887>TRU 0.833). 점추정 미스, 순위검정 검정력부족→INCONCLUSIVE.
+- **전략 함의: held-out 변이축은 유병률 낮아 구조적 저검정력**(EGFR/KRAS n_pos 14-15). 법칙은 검정력 충분한 **유방+대장서 확립**, held-out(폐·위·두경부)은 **방향적 corroboration**. 위 법칙검정은 검정력 좋은 endpoint(Lauren·MSI·HPV) 전면 + 변이축 exploratory 보조로 프레이밍.
+- 스트래글러: 영구실패 1(TCGA-49-4506-DX3, 환자 손실 아님)·느린 대용량 4(train-side만, holdout 불변). 산출: `LUNG_NSCLC/full/LAW_TEST.md`·`mil_cost_results.json`. hypothesis_only/pending.
+
 ### 다음 갱신 트리거 (갱신)
 - [x] 대장 CMS/MSI(아형 층위) 라벨 확보 → H&E→아형 예측 → 유방 아형과 like-with-like 비교. **(완료: Part A/B 분리)**
 - [x] 통합 flagship 확정 + 법칙 사전등록 봉인. **(D11)**
