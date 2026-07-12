@@ -1,3 +1,5 @@
+> ⚠️ **2026-07-12 정정**: 아래 "H&E는 0.59로 못 본다" 프레이밍은 **후속 견고성 검정에서 취약함이 드러남** — 깨끗한 CNV 라벨로 H&E는 above-chance(test 0.725, well-powered, 누수통제). 0.599는 노이즈 IHC 라벨+작은 val split 산물. 단 subtype 매개 가능성 미해결. 상세=PROGRESS_DECISIONS "HER2 서사 REFUTED", `experiments/kkkim/her2_blind_across_assays/`. **이 문서의 decoupling 주장은 재검 전 사용 금지.**
+
 # HER2 분자 다중검사 일치 + decoupling 증거 (2026-07-12)
 
 > 사용자 질의("CNV·IHC/FISH 매칭")에서 출발. HER2가 **여러 분자검사에서 명확히 실재**하는데도 H&E는 못 본다(decoupling)를 굳히고, 라벨 정의 이슈를 드러낸다. claim_level: hypothesis_only.

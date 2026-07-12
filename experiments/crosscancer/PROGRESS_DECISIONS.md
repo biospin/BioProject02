@@ -161,6 +161,14 @@
 - **반증 트리거 없음**(HER2-amp ≥0.8 미관측, MSI/EBV blind 아님) → 법칙 반증 아님·확증도 아님.
 - **함의: held-out(폐·위) 변이축은 저검정력 구조적. 법칙=유방+대장서 확립, held-out은 방향적 corroboration(HER2 증폭이 유방·위 둘 다 near-chance).** 확증엔 442 완료(MSI≥25·HER2↑)+Lauren 라벨 보강 필요. 산출 `GASTRIC_STAD/full/LAW_TEST.md`. hypothesis_only/pending.
 
+### ⚠️⚠️ 중대 정정 (2026-07-12) — "HER2 H&E-blind" 서사 REFUTED (견고성 검정)
+사용자 제안대로 유방 HER2를 3정의(IHC/FISH/CNV)로 H&E 예측 검정한 결과, **"정의 무관 H&E-blind" 가설이 반증됨.**
+- **깨끗한 CNV 라벨(GISTIC=2)로 H&E가 above-chance**: test-only AUROC **0.725**(CI 0.60-0.83, p=0.001, holdout n_pos 45=well-powered), pooled 0.753. **누수통제(train-label-shuffle → 0.541 붕괴) → 신호 진짜.**
+- **기존 0.599는 취약**: 노이즈 IHC-status 라벨 + 단일 작은 val split의 산물(val 0.585 vs test 0.712 불일치). CNV_amp만 내부 val/test 일치(0.77/0.73).
+- **⚠️ 단, subtype 매개 가능성(핵심 미해결)**: PAM50-HER2class oracle이 CNV_amp를 0.789로 예측 → H&E(0.75)가 subtype oracle을 **초과 못 함** → H&E의 HER2 신호가 **증폭-특이가 아니라 아형-형태 매개**일 수 있음. within-subtype 분석 전엔 "H&E가 HER2를 본다"고 못 함.
+- **함의**: (1) "HER2=blind(chance 0.59)" 기계론 주장 **철회**. (2) 단 **결정(분자검사 필수)은 살릴 여지**: 0.73은 임상 대체 불가 임계 미달 → "약하게/간접적으로만 예측, 대체 불가"로 재프레이밍 가능. (3) 법칙의 HER2 배치("형태 상관물 없음")도 "약한/아형매개 상관물 있음"으로 수정 필요.
+- **영향 문서/그림**: 개념도·결정지도 그림·gastric 교차장기·`HER2_MOLECULAR_CONCORDANCE.md`("H&E 0.59" 프레이밍)·법칙. **회의 전 재프레이밍 필요.** 산출 `experiments/kkkim/her2_blind_across_assays/`. braveji/sjpark 리뷰 권고. hypothesis_only.
+
 ### 다음 갱신 트리거 (갱신)
 - [x] 대장 CMS/MSI(아형 층위) 라벨 확보 → H&E→아형 예측 → 유방 아형과 like-with-like 비교. **(완료: Part A/B 분리)**
 - [x] 통합 flagship 확정 + 법칙 사전등록 봉인. **(D11)**
