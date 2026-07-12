@@ -1,0 +1,148 @@
+{
+  "analysis": "incremental_over_conventional_pathology",
+  "claim_level": "hypothesis_only",
+  "critic_status": "pending",
+  "note": "TCGA-BRCA lacks histologic grade; conventional baseline=histologic type. PAM50 is molecular subtype (partly co-defined by ER/HER2) -> secondary/stringent only. PRIMARY test=nested LR on p_HE coef; DeLong on 5-fold CV scores=support. ER p_HE=val split (used for early stopping -> mildly optimistic). hypothesis_only.",
+  "coverage": {
+    "ER": {
+      "n_total": 152,
+      "n_missing_hist": 0,
+      "n_missing_pam50": 1,
+      "n_analyzed": 151,
+      "hist_dist": {
+        "ductal": 82,
+        "lobular": 47,
+        "other": 22
+      },
+      "pam50_dist": {
+        "LumB": 36,
+        "LumA": 32,
+        "Normal": 28,
+        "HER2": 28,
+        "Basal": 27
+      }
+    },
+    "HER2_CNVamp": {
+      "n_total": 300,
+      "n_missing_hist": 0,
+      "n_missing_pam50": 1,
+      "n_analyzed": 299,
+      "hist_dist": {
+        "ductal": 190,
+        "lobular": 66,
+        "other": 43
+      },
+      "pam50_dist": {
+        "LumB": 81,
+        "LumA": 64,
+        "Basal": 60,
+        "Normal": 48,
+        "HER2": 46
+      }
+    }
+  },
+  "results": [
+    {
+      "marker": "ER",
+      "baseline": "A_histology_only(PRIMARY)",
+      "covariates": [
+        "hist"
+      ],
+      "n": 151,
+      "n_pos": 114,
+      "prevalence": 0.755,
+      "n_params_full": 3,
+      "events_per_variable": 38.0,
+      "auroc_pHE_alone": 0.9021,
+      "auroc_base_cv": 0.6688,
+      "auroc_full_cv": 0.9052,
+      "delta_auroc_cv": 0.2364,
+      "delta_auroc_cv_ci95": [
+        0.1494,
+        0.3297
+      ],
+      "delong_p_cv": 0.44205,
+      "LRtest_stat": 50.6848,
+      "LRtest_df": 1,
+      "LRtest_p": 0.0,
+      "pHE_coef_full": 1.7359
+    },
+    {
+      "marker": "ER",
+      "baseline": "B_histology+PAM50(secondary)",
+      "covariates": [
+        "hist",
+        "pam50"
+      ],
+      "n": 151,
+      "n_pos": 114,
+      "prevalence": 0.755,
+      "n_params_full": 7,
+      "events_per_variable": 16.29,
+      "auroc_pHE_alone": 0.9021,
+      "auroc_base_cv": 0.9017,
+      "auroc_full_cv": 0.9353,
+      "delta_auroc_cv": 0.0335,
+      "delta_auroc_cv_ci95": [
+        0.0008,
+        0.07
+      ],
+      "delong_p_cv": 0.81631,
+      "LRtest_stat": 17.2324,
+      "LRtest_df": 1,
+      "LRtest_p": 3.3e-05,
+      "pHE_coef_full": 1.3675
+    },
+    {
+      "marker": "HER2_CNVamp",
+      "baseline": "A_histology_only(PRIMARY)",
+      "covariates": [
+        "hist"
+      ],
+      "n": 299,
+      "n_pos": 45,
+      "prevalence": 0.1505,
+      "n_params_full": 3,
+      "events_per_variable": 15.0,
+      "auroc_pHE_alone": 0.7527,
+      "auroc_base_cv": 0.5821,
+      "auroc_full_cv": 0.7603,
+      "delta_auroc_cv": 0.1782,
+      "delta_auroc_cv_ci95": [
+        0.0996,
+        0.2636
+      ],
+      "delong_p_cv": 0.8601,
+      "LRtest_stat": 23.4771,
+      "LRtest_df": 1,
+      "LRtest_p": 1e-06,
+      "pHE_coef_full": 0.6755
+    },
+    {
+      "marker": "HER2_CNVamp",
+      "baseline": "B_histology+PAM50(secondary)",
+      "covariates": [
+        "hist",
+        "pam50"
+      ],
+      "n": 299,
+      "n_pos": 45,
+      "prevalence": 0.1505,
+      "n_params_full": 7,
+      "events_per_variable": 6.43,
+      "auroc_pHE_alone": 0.7527,
+      "auroc_base_cv": 0.8641,
+      "auroc_full_cv": 0.8994,
+      "delta_auroc_cv": 0.0353,
+      "delta_auroc_cv_ci95": [
+        0.0128,
+        0.0607
+      ],
+      "delong_p_cv": 0.80299,
+      "LRtest_stat": 8.9324,
+      "LRtest_df": 1,
+      "LRtest_p": 0.002802,
+      "pHE_coef_full": 0.5546
+    }
+  ]
+}

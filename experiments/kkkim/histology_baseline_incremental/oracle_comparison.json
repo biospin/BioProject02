@@ -1,0 +1,27 @@
+{
+ "ER(유방)": {
+  "oracle=PAM50": 0.846,
+  "H&E": 0.9,
+  "n_pos": 781,
+  "n": 1009,
+  "주의": "PAM50이 ER로 일부 정의(near-tautology)"
+ },
+ "msi_high(대장)": {
+  "oracle=조직형": null,
+  "H&E": 0.92,
+  "n_pos": 0,
+  "n": 0
+ },
+ "all_ras(대장)": {
+  "oracle=조직형": null,
+  "H&E": 0.71,
+  "n_pos": 0,
+  "n": 0
+ },
+ "HER2-amp(유방)": {
+  "oracle=PAM50": 0.789,
+  "H&E": 0.75,
+  "n_pos": 45,
+  "출처": "her2_blind_across_assays(CNV_amp)"
+ }
+}
