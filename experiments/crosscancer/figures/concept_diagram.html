@@ -151,7 +151,7 @@
         <div class="chips">
           <div class="chip"><span class="m">MSI-H<small>대장 · 항PD-1</small></span><span class="v">0.92</span></div>
           <div class="chip"><span class="m">ER<small>유방 · 내분비</small></span><span class="v">0.90</span></div>
-          <div class="chip sealed"><span class="m">조직형 LUAD/LUSC<small>폐 · 양성대조<span class="lock">🔒봉인</span></small></span><span class="v">≥0.93</span></div>
+          <div class="chip"><span class="m">조직형 LUAD/LUSC<small>폐 · 양성대조 ✓</small></span><span class="v">0.925</span></div>
           <div class="chip sealed"><span class="m">HPV<small>두경부 · de-escalation<span class="lock">🔒봉인</span></small></span><span class="v">≥0.80</span></div>
         </div>
         <p class="mech"><b>왜 보이나</b> — 변이의 하류 결과가 조직을 바꾼다. MSI→<b>TIL 밀도</b>·점액·수질형, ER→선구조·핵형태. H&amp;E가 직접 읽는 형태 특징.</p>
@@ -162,7 +162,7 @@
         <p class="cost">중간 — 부분 상관물</p>
         <div class="chips">
           <div class="chip"><span class="m">BRAF-V600<small>대장 · serrated 동반</small></span><span class="v">0.88</span></div>
-          <div class="chip sealed"><span class="m">EGFR<small>폐 · lepidic/acinar<span class="lock">🔒봉인</span></small></span><span class="v">0.75–0.89</span></div>
+          <div class="chip"><span class="m">EGFR<small>폐 · exploratory(미결)</small></span><span class="v">0.81*</span></div>
         </div>
         <p class="mech"><b>부분적으로 보임</b> — 형태 상관물이 있으나 일관되지 않는다. 예측은 되지만 near-random은 아닌 중간 지대.</p>
       </div>
@@ -173,8 +173,8 @@
         <div class="chips">
           <div class="chip"><span class="m">HER2 (증폭)<small>유방 · 항HER2</small></span><span class="v">0.60</span></div>
           <div class="chip"><span class="m">all-RAS (점변이)<small>대장 · 항EGFR 적격</small></span><span class="v">0.71*</span></div>
-          <div class="chip sealed"><span class="m">HER2-amp<small>위 · trastuzumab<span class="lock">🔒봉인</span></small></span><span class="v">≤0.65</span></div>
-          <div class="chip sealed"><span class="m">KRAS-G12C<small>폐 · 점변이<span class="lock">🔒봉인</span></small></span><span class="v">≤0.65</span></div>
+          <div class="chip"><span class="m">HER2-amp<small>위 · exploratory(미결)</small></span><span class="v">0.585*</span></div>
+          <div class="chip"><span class="m">KRAS-G12C<small>폐 · exploratory(미결)</small></span><span class="v">0.65*</span></div>
         </div>
         <p class="mech"><b>왜 안 보이나</b> — 효과가 세포 내부 생화학 신호에 머문다. 증폭·점변이가 조직 구조를 바꾸지 않아 H&amp;E에 상관물이 없다. <b>*all-RAS 0.71은 일부 bag-size 교란</b> → 실제 형태 신호는 더 약함.</p>
       </div>
@@ -185,9 +185,9 @@
       <div class="pair">
         <span class="org">유방 HER2 <b>0.60</b></span>
         <span class="arrow">↔</span>
-        <span class="org">위 HER2-amp <b>≤0.65</b> <span class="lock">🔒</span></span>
+        <span class="org">위 HER2-amp <b>0.585*</b></span>
       </div>
-      <span class="cap">같은 증폭이 <b style="color:var(--ink)">다른 장기</b>에서도 형태에 안 보이면, "증폭 ≠ 형태"라는 법칙이 확립된다. 위암 결과는 봉인된 예측(exploratory) — 확증 시 "부합", 복제 주장은 검정력 확보 후.</span>
+      <span class="cap"><b style="color:var(--ink)">HER2 증폭이 유방·위 두 장기 모두 near-chance(H&E-blind)</b> → "증폭 ≠ 형태" 원리와 consistent. ⚠️ 단 위 n_pos=14 exploratory → <b style="color:var(--ink)">"consistent with"까지만</b>(정밀 근접은 우연, 복제 확증 아님).</span>
     </div>
   </section>
 
@@ -241,7 +241,7 @@
   </footer>
   <div class="legend">
     <span><span class="sw solid"></span> 관측 (유방·대장, 내부 holdout)</span>
-    <span><span class="sw dash"></span> 🔒 봉인된 예측 (폐·위·두경부, 결과 전 사전등록)</span>
+    <span><span class="sw dash"></span> * held-out 관측이나 exploratory(저검정력 n_pos&lt;25) → 미결(INCONCLUSIVE), "consistent with"까지만</span>
   </div>
   <p class="disclaimer">claim_level: hypothesis_only · 후향적 · 전향적 검증 필요 · 멀티에이전트 파이프라인은 인프라이지 기여가 아니다.</p>
 </div>
