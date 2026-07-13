@@ -39,8 +39,9 @@
 4. **대장은 회고적** → 검정력 있는 held-out 확증 집계에서 제외. 방향 일관까지만.
 5. **법칙 = 방향적으로 일관(directionally consistent), 이분법 미확립(dichotomy NOT established).** 확립엔 검정력 있는 필수/변이축 확증(n_pos≥25) 축적 필요 — 현 코호트 크기론 대부분 도달 불가(구조적 한계).
 
-## G1 상태
+## G1 상태 — ✅ **확정 (kkkim Leader 승인, 2026-07-14)**
 - [x] held-out 4암종 + anchor 결과 산출·정본 수치 확정.
 - [x] 대장 회고적 지위 명시(sealed-forward와 구분).
 - [x] 정직 라벨링(검정력·지위·판정, 위암 양성대조 FAIL 명시).
-- [ ] **kkkim(Leader) 최종 "결과 확정" 승인** → 이후 braveji Critic(G2) 인계.
+- [x] **kkkim(Leader) 최종 "결과 확정" 승인(2026-07-14).** 결과셋 동결 = 이 스코어보드 + 각 `LAW_TEST.md` + DECISION_MAP. **이후 변경은 새 버전.**
+- → **다음: braveji Critic(G2 나머지) 인계.** claim은 "법칙 방향 일관·이분법 미확립"으로 동결(승격 금지).

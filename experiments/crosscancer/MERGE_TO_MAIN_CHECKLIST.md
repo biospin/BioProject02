@@ -5,11 +5,11 @@
 
 ## 🚦 병합 게이트 (전부 충족해야 실행)
 
-- [ ] **G1 — Paper C 결과 확정.** held-out 법칙 검정이 firm(HNSC ✅ / STAD 442 ✅ / 폐 MIL held-out 완료 / 대장 증분 D13 정리). 미완 endpoint는 exploratory로 명시, provisional headline을 확립으로 승격하지 않음.
+- [x] **G1 — Paper C 결과 확정.** ✅ **kkkim Leader 승인(2026-07-14).** held-out 4암종+anchor firm, 대장 회고적 명시, 5암종 통합 = `LAW_HELDOUT_SCOREBOARD.md`. 결론 "방향 일관·이분법 미확립"으로 동결(승격 금지).
 - [~] **G2 — Critic 서명(braveji).** 2갈래 중 **split lock ✅ 완료**, Paper C 대기.
   - ✅ **split lock(BIOP02-41): braveji Critic cross-sign PASS**(2026-07-13, commit 6ffdeb9 + critic_report/registry a6d2f55). §6 lock criteria 전항 통과.
   - [ ] **Paper C held-out 산출물**: G1(kkkim 결과확정) 후 braveji 인계 → `critic_status: pass` 대기.
-- [ ] **G3 — claim 규율.** 전 산출물 `claim_level: hypothesis_only`(+ provisional 표기) 유지, DRP 프레이밍 0.
+- [x] **G3 — claim 규율.** ✅ 검증(2026-07-14): crosscancer 산출물 전부 `claim_level: hypothesis_only`·`critic_status: pending`, DRP 금지표현 0(유일 히트=준수 문장 "약물반응예측 아니다").
 - [ ] **G4 — 브랜치 동기화.** `git fetch && git merge origin/main` → **뒤처짐 0**. (2026-07-13 충족, 병합 직전 재확인.)
 - [x] **G5 — split lock focused PR(#32) 선처리.** ✅ **braveji가 PR #32 main 머지 완료**(2026-07-13, merge e6ffc45). split lock provenance가 main에 안착 → 대형 병합 diff·리스크 축소됨.
 
