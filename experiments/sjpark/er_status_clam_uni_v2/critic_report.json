@@ -18,13 +18,13 @@
     "data_leakage": {
       "status": "caution",
       "evidence": [
-        "split_policy_v0.md 상태 = DRAFT (kkkim sign-off / lock 해시 metrics.json 미기록)",
-        "patient-overlap assert 로그 미제출 (train∩val case_id 수동 확인 불가)",
+        "split_policy_v0.md LOCKED 2026-07-13 (kkkim sign-off 2026-07-11, braveji cross-sign 2026-07-13) — split_hash=5995f29d3978b831, metrics.json stamping 완료",
+        "patient-overlap assert 로그 미제출 (train∩val case_id 수동 확인 불가 — sjpark 미이행)",
         "site_classifier_probe UNI AUC = 0.9977 (CI 0.9958–0.9989) — UNI 임베딩이 수집 사이트를 거의 완벽하게 구분함. checklist #1 reject 기준(≥0.75) 초과",
-        "site-disjoint split 의도는 split_policy_v0.md에 명시, kkkim이 site_probe 결과를 인지하고 site-disjoint split 권고함 (site_probe_report.json 해석 참조)",
-        "실제 CLAM 학습에 site-disjoint split이 적용됐는지 config/log 확인 필요"
+        "site-disjoint split 의도는 split_policy_v0.md에 명시 (16/10/11 사이트 분배, 해시 검증)",
+        "실제 CLAM 학습에 site-disjoint split이 적용됐는지 config/log 확인 미완료 (sjpark 미이행)"
       ],
-      "notes": "site_confound AUC 0.9977은 매우 심각한 수준이나 (1) site-disjoint split이 설계 의도이고 (2) CPTAC 외부 검증 AUC 0.894가 높아 실제 site leakage가 크지 않음을 간접 지지. 단, split lock + patient-overlap assert 없이는 pass 불가. caution."
+      "notes": "split lock + Critic cross-sign 완료(2026-07-13). 잔여 caution 2건: (1) patient-overlap assert 로그 미제출, (2) CLAM 학습 config의 site-disjoint 적용 명시 미완료. site_confound AUC 0.9977은 심각하나 CPTAC ext AUC 0.894가 site leakage 크지 않음을 간접 지지. pass 조건: sjpark patient-overlap 로그 + site-disjoint config 명시."
     },
     "baseline_comparison": {
       "status": "caution",
@@ -43,9 +43,9 @@
       "evidence": [
         "attention ablation: auc_full 0.9013 → auc_top_removed 0.9004 → AUC-level drop = 0.0009 (극히 미미)",
         "proba-level: mean_abs_proba_delta_top 0.0564 vs random 0.0028 (~20배) — top attention 패치가 예측에 영향을 줌",
-        "label shuffle test 미실행"
+        "label shuffle AUC = 0.5847 (random ✓ — 실제 라벨 신호에 의한 학습 확인됨, 2026-07-13)"
       ],
-      "notes": "AUC-level faithfulness는 거의 없으나 proba-level faithfulness는 20배 차이로 의미 있음. MIL aggregation 특성상 AUC는 일부 패치 제거에 robust한 경향이 있어 proba-level 지표를 주요 근거로 허용. 단 label shuffle 미실행으로 caution 유지."
+      "notes": "label shuffle AUC 0.5847로 data leakage 아님 확인. AUC-level faithfulness 0.0009는 극히 미미하나, proba-level 20배 차이는 top attention이 실질적으로 예측에 기여함을 지지. MIL aggregation 특성상 AUC는 일부 패치 제거에 robust. 전체 counterfactual 판정: caution (AUC-level 약함, per-patch 해석 보강 권고)."
     },
     "cross_dataset_check": {
       "status": "pass",
@@ -91,10 +91,9 @@
   "claim_level": "hypothesis_only",
   "summary": "ER CLAM-SB(UNI v2) val AUC 0.9013, CPTAC 0.894. MLP 대비 크게 개선. 그러나 CPTAC 외부에서 subtype_only(0.9615) vs CLAM(0.894) p≈0로 유의 역전 — TCGA val에서 tied(p=0.61)였던 결과와 정반대. site_confound 0.9977과 결합하면 CLAM이 사이트 아티팩트 기반 subtype 상관을 부분적으로 학습했을 가능성 있음. split lock + label shuffle + site-disjoint 적용 확인 필요. 전체 판정: caution (이전보다 이슈 심각도 높음).",
   "required_followups": [
-    "[kkkim] split_policy_v0 sign-off + lock 해시를 metrics.json에 기록",
-    "[sjpark] patient-overlap assert 로그 제출 (train∩val case_id == 0)",
-    "[sjpark] CLAM 학습 config에 site-disjoint split 적용 여부 명시 (per_site split 또는 GroupKFold 확인)",
-    "[sjpark] label shuffle test 실행 (AUC ≈ 0.5 확인)",
-    "[jhans] BIOP02-57 cross_validation_registry.jsonl에 ER CLAM CPTAC 결과 기재"
+    "[sjpark] patient-overlap assert 로그 제출 (train∩val case_id == 0) — 미이행",
+    "[sjpark] CLAM 학습 config에 site-disjoint split 적용 여부 명시 (per_site split 또는 GroupKFold 확인) — 미이행",
+    "[Done 2026-07-13] split_policy_v0 LOCKED (kkkim sign-off 2026-07-11, braveji cross-sign 2026-07-13, split_hash=5995f29d3978b831)",
+    "[Done 2026-07-13] label shuffle AUC 0.5847 확인 (random ✓)"
   ]
 }

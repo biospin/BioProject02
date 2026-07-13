@@ -18,12 +18,12 @@
     "data_leakage": {
       "status": "caution",
       "evidence": [
-        "split_policy_v0.md DRAFT (lock 해시 미기록)",
-        "patient-overlap assert 로그 미제출",
-        "n_train=707 / n_val=151 — ER/PR과 동일 split 추정",
-        "site_confound UNI AUC 0.9977 — site-disjoint split 확인 필요"
+        "split_policy_v0.md LOCKED 2026-07-13 (split_hash=5995f29d3978b831, kkkim sign-off 2026-07-11, braveji cross-sign 2026-07-13)",
+        "patient-overlap assert 로그 미제출 (sjpark 미이행)",
+        "n_train=707 / n_val=151 — ER/PR과 동일 split 확인됨 (split_policy_v0_folds.json)",
+        "site_confound UNI AUC 0.9977 — CLAM 학습 config에 site-disjoint 적용 여부 명시 미완료 (sjpark)"
       ],
-      "notes": "다른 태스크와 동일한 data leakage 이슈. PAM50 5-class의 경우 클래스 분포가 고르지 않아 site별 클래스 불균형이 추가 confound 요인이 될 수 있음."
+      "notes": "split lock 완료(2026-07-13). PAM50 5-class 특유 추가 caution: site별 PAM50 클래스 분포 불균형이 추가 confound 요인 가능. val HER2-E 클래스 과다(28/127=22%, train 74/628=12%). 잔여 caution: patient-overlap assert 로그, config 명시(sjpark)."
     },
     "baseline_comparison": {
       "status": "caution",
@@ -44,9 +44,9 @@
         "attention ablation: auc_full 0.7589 → auc_top_removed 0.7596 → AUC drop = -0.0007 (역전, 제거 후 AUC 상승)",
         "auc_drop_random = -0.0004 (비슷한 수준 — top vs random이 AUC-level에서 구분 안 됨)",
         "proba-level: mean_abs_proba_delta_top 0.0248 vs random 0.0017 (~14배) — proba level은 의미 있음",
-        "label shuffle test 미실행"
+        "label shuffle macro AUC = 0.5049, balanced_acc = 0.1576 (5-class random ~0.20 ✓ — 2026-07-13)"
       ],
-      "notes": "AUC 역전(-0.0007)은 5-class macro AUC 특성상 발생 가능: top attention 제거가 소수 클래스(HER2-E, Normal) 오분류를 줄여 macro AUC가 미세하게 향상될 수 있음. proba-level faithfulness(14배)는 의미 있으나 AUC-level 해석 주의 필요. per-class counterfactual로 어느 클래스에서 역전이 발생하는지 확인 권고."
+      "notes": "label shuffle macro AUC 0.5049, balanced_acc 0.1576 — 5-class random 기대값(~0.20)에 부합(✓). AUC 역전(-0.0007)은 macro AUC 특성상 발생 가능(소수 클래스 오분류 변화). per-class counterfactual로 어느 클래스에서 역전 발생하는지 확인 권고 — 잔여 caution."
     },
     "cross_dataset_check": {
       "status": "pass",
@@ -93,11 +93,11 @@
   "claim_level": "hypothesis_only",
   "summary": "PAM50 5-class CLAM-MB(UNI v1) val macro AUC 0.7589, CPTAC ext 0.7216. random(0.48) 대비 +0.28, mean_embed(0.69) 대비 +0.07로 명확한 우위. MLP(0.7113) 대비 +0.048 개선. 이전 pre-filled 리뷰에서 CPTAC 외부 결과를 null로 오기재했으나 실제로는 ext_eval_summary.json 존재(AUC 0.7216). CI 미세 중첩 및 counterfactual AUC 역전이 주요 caution 사유. 전체 판정: caution.",
   "required_followups": [
-    "[sjpark] per-class AUC 분해 제출 (LumA/LumB/Basal/HER2-E/Normal, val + CPTAC 각각)",
-    "[sjpark] label shuffle test 실행 (5-class balanced_acc ≈ 0.20 확인)",
-    "[sjpark] counterfactual AUC 역전 원인 분석 (per-class counterfactual로 어느 클래스에서 역전 발생하는지)",
-    "[kkkim] split_policy_v0 sign-off + lock 해시 기록",
-    "[sjpark] patient-overlap assert 로그 제출",
-    "[jhans] BIOP02-57 cross_validation_registry.jsonl에 PAM50 CLAM CPTAC 결과 기재"
+    "[sjpark] per-class AUC 분해 제출 (LumA/LumB/Basal/HER2-E, val + CPTAC 각각) — 미이행",
+    "[sjpark] counterfactual AUC 역전 원인 분석 (per-class counterfactual) — 미이행",
+    "[sjpark] patient-overlap assert 로그 제출 — 미이행",
+    "[sjpark] CLAM 학습 config에 site-disjoint 적용 명시 — 미이행",
+    "[Done 2026-07-13] split_policy_v0 LOCKED (split_hash=5995f29d3978b831)",
+    "[Done 2026-07-13] label shuffle macro AUC 0.5049, balanced_acc 0.1576 (random ✓)"
   ]
 }
