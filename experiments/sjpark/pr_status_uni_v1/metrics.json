@@ -12,6 +12,7 @@
   "auprc": 0.8188,
   "balanced_accuracy": 0.6599,
   "commit_hash": "879422e498f9f64d71802df8a16ce6c133af4dd2",
+  "split_hash": "5995f29d3978b831",
   "claim_level": "hypothesis_only",
   "critic_status": "pending",
   "wandb_run_id": null,

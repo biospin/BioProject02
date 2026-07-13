@@ -10,6 +10,7 @@
   "balanced_accuracy": null,
   "best_val_loss": null,
   "commit_hash": null,
+  "split_hash": "<split_policy_v0, e.g. 5995f29d3978b831>",
   "wandb_run_id": null,
   "mlflow_run_id": null,
   "schema_version": "0.1",
