@@ -18,12 +18,12 @@
     "data_leakage": {
       "status": "caution",
       "evidence": [
-        "split_policy_v0.md DRAFT (lock 해시 미기록)",
-        "patient-overlap assert 로그 미제출",
-        "n_train=496 (equivocal 251장 제외) — equivocal 제외 기준이 split 이전/이후 적용 여부 불명확",
-        "site_confound AUC 0.9977 — site-disjoint split 적용 확인 필요"
+        "split_policy_v0.md LOCKED 2026-07-13 (split_hash=5995f29d3978b831, kkkim sign-off 2026-07-11, braveji cross-sign 2026-07-13)",
+        "patient-overlap assert 로그 미제출 (sjpark 미이행)",
+        "n_train=496 (equivocal 251장 제외) — equivocal 제외 기준이 split 이전/이후 적용 여부 여전히 불명확",
+        "site_confound AUC 0.9977 — site-disjoint split config 명시 미완료 (sjpark)"
       ],
-      "notes": "HER2 특유의 추가 이슈: equivocal 케이스 제외가 split 이전에 적용됐으면 leakage 없음, split 이후이면 label leakage 가능성. equivocal 제외 순서 확인 필요."
+      "notes": "split lock 완료(2026-07-13). HER2 특유 추가 이슈: equivocal 케이스 제외 순서 확인 필요(sjpark). 그러나 reject 결론에는 영향 없음 — 두 코호트 모두 random 수준(val CI 0.5 포함, ext AUC 0.530)."
     },
     "baseline_comparison": {
       "status": "reject",
@@ -46,9 +46,9 @@
         "auc_drop_random = -0.0021 (random 제거 시 오히려 소폭 상승)",
         "proba-level: mean_abs_proba_delta_top 0.0284 vs random 0.0028 (~10배)",
         "ER/PR(~20배) 대비 낮은 proba faithfulness",
-        "label shuffle test 미실행"
+        "label shuffle AUC = 0.4829 (random ✓ — 2026-07-13)"
       ],
-      "notes": "AUC가 random 수준이므로 counterfactual이 실질적 의미가 없음. 그럼에도 top attention이 proba에 영향을 주는 것은 모델이 일부 패턴을 포착하려 함을 시사. HER2 음성 결과 자체가 가장 중요한 발견."
+      "notes": "label shuffle AUC 0.4829 확인(random ✓ — 데이터 누수 아님). AUC가 random 수준이므로 counterfactual 실질적 의미 없음. reject 결론에 영향 없음. HER2 음성 결과가 핵심 발견."
     },
     "cross_dataset_check": {
       "status": "reject",
@@ -93,11 +93,11 @@
   "claim_level": "hypothesis_only",
   "summary": "HER2 CLAM-SB(UNI v2) val AUC 0.5992 (CI 0.48–0.71), CPTAC ext AUC 0.5297 — 두 코호트 모두 random 수준. CI가 0.5를 포함하며 CPTAC에서도 random 재확인. baseline_comparison reject + cross_dataset_check reject → 전체 critic_status: reject. 이전 MLP 리뷰(BIOP02-50 reject)와 동일한 결론을 CLAM에서도 확인. 이 결과는 #biop02-experiments 공유 불가이나 Paper A Limitation에 반드시 기술해야 함. EXAONE_sg 재실험 권고.",
   "required_followups": [
-    "[sjpark] equivocal 케이스 제외 순서 확인 (split 이전/이후)",
+    "[sjpark] equivocal 케이스 제외 순서 확인 (split 이전/이후) — 미이행",
     "[sjpark/kkkim] HER2 equivocal 처리 전략 재논의 (제외 유지 vs 3-class 분류)",
     "[sjpark] EXAONE_sg 임베딩으로 HER2 재실험 (3-way 비교에서 EXAONE_sg HER2 AUC 0.697로 최고)",
     "[braveji] Paper A Limitation에 HER2 음성 결과 및 H&E 한계 기술",
-    "[sjpark] label shuffle test 실행",
-    "[kkkim] split_policy_v0 sign-off"
+    "[Done 2026-07-13] split_policy_v0 LOCKED (split_hash=5995f29d3978b831)",
+    "[Done 2026-07-13] label shuffle AUC 0.4829 (random ✓)"
   ]
 }

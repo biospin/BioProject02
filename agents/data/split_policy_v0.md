@@ -210,10 +210,10 @@ write_split_meta(out_rows, path="agents/data/manifests/split_manifest_meta.json"
 | 역할 | 담당 | 상태 |
 |---|---|---|
 | Data-owner (작성/잠금) | kkkim | ☑ **signed 2026-07-11** — fold 정의 동결, split_hash 5995f29d3978b831, §6.1 lock record. |
-| Split critic (cross-review, owner≠reviewer) | braveji (Critic 총괄) — 바이오 sub-check sjpark | ☐ **pending** — data-owner가 self-review 금지(anti-self-reference). BIOP02-41/53 게이트. |
+| Split critic (cross-review, owner≠reviewer) | braveji (Critic 총괄) — 바이오 sub-check sjpark | ☑ **signed 2026-07-13** — §6 lock criteria 전항 통과. patient-disjoint(707+152+151=1010), site-disjoint(16+10+11=37 sites, no overlap), class balance 첨부, site-probe AUC 0.9977 기록. metrics.json split_hash stamping 18개 파일 확인. caution: HER2 val positivity 34% vs train 19% (site-disjoint 제약 특성상 허용). BIOP02-41 cross-sign **pass**. |
 
 data-owner 서명: fold 정의 + `split_hash` 동결(§6.1). 이후 split 변경 = v0.1 신규 해시 + 재서명.
-Critic 서명 전: manifest split은 동결됐으나 **Critic-pass 게이트(실험 공유)** 는 braveji 서명까지 보류.
+Critic cross-sign 완료(2026-07-13): split_policy_v0 + split_hash **5995f29d3978b831** 최종 확정. 실험 결과 공유 게이트 해제 (Critic-pass 실험에 한함).
 
 ## 10. Leader 결정 반영 (2026-06-10, kkkim)
 - **Subset = 전체 1010 (full BRCA cohort)** — Paper A 범위를 1010으로 확정. ⚠️ CLAUDE.md "~150 subset" 금지조항(line 220/239) override → 거버넌스 갱신 필요. site-disjoint split 검정력 확보.

@@ -18,12 +18,12 @@
     "data_leakage": {
       "status": "caution",
       "evidence": [
-        "split_policy_v0.md DRAFT (lock 해시 미기록) — ER/HER2/PAM50 리뷰와 동일",
-        "patient-overlap assert 로그 미제출",
+        "split_policy_v0.md LOCKED 2026-07-13 (split_hash=5995f29d3978b831, kkkim sign-off 2026-07-11, braveji cross-sign 2026-07-13)",
+        "patient-overlap assert 로그 미제출 (sjpark 미이행)",
         "site_classifier_probe UNI AUC = 0.9977 — site 정보가 임베딩에 고도로 인코딩됨",
-        "n_train=705 / n_val=151 — ER 실험(707/152)과 동일 split 추정"
+        "n_train=705 / n_val=151 — ER 실험(707/152)과 동일 split 확인됨 (split_policy_v0_folds.json)"
       ],
-      "notes": "ER 리뷰의 data leakage 이슈 동일하게 적용. site-disjoint split 의도는 있으나 config에 명시적 확인 필요."
+      "notes": "split lock 완료(2026-07-13). 잔여 caution: patient-overlap assert 로그, CLAM config site-disjoint 명시(sjpark). CPTAC 역전(-0.134) 심각 — 주요 Paper A 해석 주의."
     },
     "baseline_comparison": {
       "status": "caution",
@@ -43,9 +43,9 @@
         "attention ablation: auc_full 0.7765 → auc_top_removed 0.7578 → AUC-level drop = 0.0186 (ER보다 유의미)",
         "auc_drop_random = -0.0004 (random 제거 시 AUC 유지) — top attention의 특이성 확인됨",
         "proba-level: mean_abs_proba_delta_top 0.0409 vs random 0.002 (~20배)",
-        "label shuffle test 미실행"
+        "label shuffle AUC = 0.4629 (random ✓ — 실제 라벨 신호에 의한 학습 확인됨, 2026-07-13)"
       ],
-      "notes": "ER CLAM 대비 AUC-level faithfulness가 더 강함(0.0009→0.0186). proba delta 20배 차이는 attention이 PR 예측에 실질적으로 기여함을 지지. label shuffle 미실행으로 caution 유지."
+      "notes": "label shuffle AUC 0.4629 확인(random ✓). AUC-level faithfulness 0.0186(PR > ER 0.0009). proba delta 20배로 attention이 PR 예측에 기여. 전체 counterfactual: caution (label shuffle 통과, AUC-level 보강 권고)."
     },
     "cross_dataset_check": {
       "status": "pass",
@@ -91,10 +91,9 @@
   "claim_level": "hypothesis_only",
   "summary": "PR CLAM-SB(UNI v2) val AUC 0.7765, CPTAC ext AUC 0.7776. 절대 성능 gap 거의 없음(+0.001). 그러나 CPTAC external에서 subtype_only(0.9117) vs CLAM(0.7776): diff=-0.134, p≈0 — 유의하게 역전. ER(-0.067)보다 더 큰 역전 폭. TCGA val에서 tied(p=0.36)였으나 외부에서 완전히 뒤집힘 — PR CLAM의 사이트 아티팩트 학습 가능성 상당. 전체 판정: caution (이전보다 이슈 심각도 높음).",
   "required_followups": [
-    "[kkkim] split_policy_v0 sign-off + lock 해시 기록",
-    "[sjpark] patient-overlap assert 로그 제출",
-    "[sjpark] label shuffle test 실행",
-    "[sjpark] site-disjoint split 적용 여부 config에 명시",
-    "[jhans] BIOP02-57 cross_validation_registry.jsonl에 PR CLAM CPTAC 결과 기재"
+    "[sjpark] patient-overlap assert 로그 제출 (train∩val case_id == 0) — 미이행",
+    "[sjpark] site-disjoint split 적용 여부 config에 명시 — 미이행",
+    "[Done 2026-07-13] split_policy_v0 LOCKED (split_hash=5995f29d3978b831)",
+    "[Done 2026-07-13] label shuffle AUC 0.4629 (random ✓)"
   ]
 }
