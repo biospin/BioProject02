@@ -54,6 +54,7 @@
     }
   ],
   "commit_hash": "802ef9b24fd6b1705fd99e72584e7bece33c75a3",
+  "split_hash": "5995f29d3978b831",
   "claim_level": "hypothesis_only",
   "critic_status": "pending",
   "wandb_run_id": null,
