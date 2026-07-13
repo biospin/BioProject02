@@ -1,0 +1,10 @@
+{
+  "control": "train-label-shuffle (train labels permuted seed=42, val/test real labels)",
+  "purpose": "rule out harness leakage behind the CNV_amp positive (high-stakes reversal of team narrative)",
+  "real_pooled_auroc": 0.7525,
+  "shuffle_val_auroc": 0.4973,
+  "shuffle_test_auroc": 0.5929,
+  "shuffle_pooled_auroc": 0.5413,
+  "verdict": "pooled collapses 0.75->0.54 (val 0.497) -> CNV_amp signal is genuine, not a training-side leak",
+  "claim_level": "hypothesis_only"
+}

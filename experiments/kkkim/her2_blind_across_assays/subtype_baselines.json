@@ -1,0 +1,29 @@
+{
+  "note": "Subtype-only baselines (critic checklist #2) on pooled val+test holdout. Scores derived from manifest ER/PAM50 labels (NOT H&E). If H&E MIL AUROC does not exceed these, HER2 predictability is consistent with subtype-morphology mediation rather than direct HER2 readout.",
+  "definitions": {
+    "IHC_status": {
+      "holdout_n": 202,
+      "holdout_pos": 65,
+      "ER_neg_only_auroc": 0.5071,
+      "PAM50_HER2class_only_auroc": 0.6177
+    },
+    "IHC_3plus": {
+      "holdout_n": 86,
+      "holdout_pos": 29,
+      "ER_neg_only_auroc": 0.6013,
+      "PAM50_HER2class_only_auroc": 0.7577
+    },
+    "FISH": {
+      "holdout_n": 47,
+      "holdout_pos": 15,
+      "ER_neg_only_auroc": 0.4729,
+      "PAM50_HER2class_only_auroc": 0.6687
+    },
+    "CNV_amp": {
+      "holdout_n": 300,
+      "holdout_pos": 45,
+      "ER_neg_only_auroc": 0.5693,
+      "PAM50_HER2class_only_auroc": 0.7889
+    }
+  }
+}

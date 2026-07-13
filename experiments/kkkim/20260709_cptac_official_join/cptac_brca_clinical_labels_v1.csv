@@ -1,0 +1,201 @@
+case_id,cbioportal_patient_id,join_key_resolved,has_imaging,er_status,pr_status,her2_status,pam50,has_er,has_pr,has_her2,has_pam50,has_labels,source
+01BR001,X01BR001,yes,yes,Negative,Negative,Negative,Basal,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+01BR002,,,yes,,,,,0,0,0,0,0,
+01BR003,,,yes,,,,,0,0,0,0,0,
+01BR004,,,yes,,,,,0,0,0,0,0,
+01BR005,,,yes,,,,,0,0,0,0,0,
+01BR006,,,yes,,,,,0,0,0,0,0,
+01BR007,,,yes,,,,,0,0,0,0,0,
+01BR008,X01BR008,yes,yes,,,,Basal,0,0,0,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+01BR009,X01BR009,yes,yes,Negative,Negative,,Basal,1,1,0,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+01BR010,X01BR010,yes,yes,Negative,Negative,,HER2,1,1,0,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+01BR011,,,yes,,,,,0,0,0,0,0,
+01BR012,,,yes,,,,,0,0,0,0,0,
+01BR013,,,yes,,,,,0,0,0,0,0,
+01BR014,,,yes,,,,,0,0,0,0,0,
+01BR015,X01BR015,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+01BR016,,,yes,,,,,0,0,0,0,0,
+01BR017,X01BR017,yes,yes,Negative,Negative,Positive,HER2,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+01BR018,X01BR018,yes,yes,Positive,Negative,Negative,Basal,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+01BR019,,,yes,,,,,0,0,0,0,0,
+01BR020,X01BR020,yes,yes,Negative,Negative,,Basal,1,1,0,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+01BR021,,,yes,,,,,0,0,0,0,0,
+01BR022,,,yes,,,,,0,0,0,0,0,
+01BR023,X01BR023,yes,yes,Positive,Positive,Equivocal,LumA,1,1,0,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+01BR024,,,yes,,,,,0,0,0,0,0,
+01BR025,X01BR025,yes,yes,Positive,Positive,Equivocal,LumA,1,1,0,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+01BR026,X01BR026,yes,yes,Negative,Negative,,Basal,1,1,0,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+01BR027,X01BR027,yes,yes,Negative,Negative,Negative,Basal,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+01BR028,,,yes,,,,,0,0,0,0,0,
+01BR029,,,yes,,,,,0,0,0,0,0,
+01BR030,X01BR030,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+01BR031,X01BR031,yes,yes,Negative,Negative,,Basal,1,1,0,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+01BR032,X01BR032,yes,yes,Positive,Positive,Negative,LumB,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+01BR033,X01BR033,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+01BR034,,,yes,,,,,0,0,0,0,0,
+01BR039,,,yes,,,,,0,0,0,0,0,
+01BR040,X01BR040,yes,yes,Negative,Negative,,Basal,1,1,0,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+01BR041,,,yes,,,,,0,0,0,0,0,
+01BR042,X01BR042,yes,yes,Negative,Negative,,Basal,1,1,0,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+01BR043,X01BR043,yes,yes,Negative,Negative,,Basal,1,1,0,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+03BR002,X03BR002,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+03BR004,X03BR004,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+03BR005,X03BR005,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+03BR006,X03BR006,yes,yes,Negative,Negative,,Basal,1,1,0,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+03BR008,,,yes,,,,,0,0,0,0,0,
+03BR009,,,yes,,,,,0,0,0,0,0,
+03BR010,X03BR010,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+03BR011,X03BR011,yes,yes,Positive,Negative,,LumA,1,1,0,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+03BR012,,,yes,,,,,0,0,0,0,0,
+03BR013,X03BR013,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+03BR014,,,yes,,,,,0,0,0,0,0,
+05BR001,X05BR001,yes,yes,Negative,Positive,Negative,Basal,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+05BR002,,,yes,,,,,0,0,0,0,0,
+05BR003,X05BR003,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+05BR004,X05BR004,yes,yes,Positive,Positive,,LumA,1,1,0,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+05BR005,X05BR005,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+05BR009,X05BR009,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+05BR010,,,yes,,,,,0,0,0,0,0,
+05BR015,,,yes,,,,,0,0,0,0,0,
+05BR016,X05BR016,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+05BR019,,,yes,,,,,0,0,0,0,0,
+05BR022,,,yes,,,,,0,0,0,0,0,
+05BR024,,,yes,,,,,0,0,0,0,0,
+05BR026,X05BR026,yes,yes,Positive,Positive,Positive,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+05BR029,X05BR029,yes,yes,Negative,Negative,Negative,Basal,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+05BR031,,,yes,,,,,0,0,0,0,0,
+05BR032,,,yes,,,,,0,0,0,0,0,
+05BR033,,,yes,,,,,0,0,0,0,0,
+05BR038,X05BR038,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+05BR040,,,yes,,,,,0,0,0,0,0,
+05BR042,X05BR042,yes,yes,Negative,Negative,Negative,Basal,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+05BR043,X05BR043,yes,yes,Negative,Negative,Negative,Basal,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+05BR044,X05BR044,yes,yes,Positive,Negative,Negative,HER2,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+05BR045,X05BR045,yes,yes,Negative,Negative,Equivocal,Basal,1,1,0,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+06BR003,X06BR003,yes,yes,Positive,Negative,Equivocal,HER2,1,1,0,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+06BR005,X06BR005,yes,yes,Positive,Positive,Equivocal,LumA,1,1,0,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+06BR006,X06BR006,yes,yes,Negative,Negative,Equivocal,Normal-like,1,1,0,0,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+06BR009,,,yes,,,,,0,0,0,0,0,
+06BR014,X06BR014,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+09BR001,X09BR001,yes,yes,Positive,Positive,,LumA,1,1,0,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+09BR002,,,yes,,,,,0,0,0,0,0,
+09BR004,X09BR004,yes,yes,Positive,Positive,Positive,Normal-like,1,1,1,0,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+09BR005,X09BR005,yes,yes,Positive,Positive,Positive,HER2,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+09BR007,X09BR007,yes,yes,Positive,Positive,Positive,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR003,X11BR003,yes,yes,Negative,Negative,Negative,Basal,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR004,X11BR004,yes,yes,Positive,Positive,Positive,HER2,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR005,,,yes,,,,,0,0,0,0,0,
+11BR006,X11BR006,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR009,X11BR009,yes,yes,Positive,Positive,Negative,LumB,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR010,X11BR010,yes,yes,Positive,Positive,Positive,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR011,X11BR011,yes,yes,Positive,Positive,Equivocal,LumB,1,1,0,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR012,X11BR012,yes,yes,Positive,Negative,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR013,X11BR013,yes,yes,Positive,Negative,Negative,LumB,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR014,X11BR014,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR015,X11BR015,yes,yes,Positive,Negative,Negative,LumB,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR016,X11BR016,yes,yes,Negative,Negative,Negative,Basal,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR017,X11BR017,yes,yes,Negative,Negative,Negative,HER2,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR018,X11BR018,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR019,X11BR019,yes,yes,Positive,Positive,Negative,LumB,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR020,X11BR020,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR021,,,yes,,,,,0,0,0,0,0,
+11BR022,X11BR022,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR023,X11BR023,yes,yes,Negative,Negative,Negative,Basal,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR024,X11BR024,yes,yes,Negative,Negative,Negative,Basal,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR025,X11BR025,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR027,X11BR027,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR028,X11BR028,yes,yes,Negative,Negative,Positive,HER2,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR029,,,yes,,,,,0,0,0,0,0,
+11BR030,X11BR030,yes,yes,Negative,Negative,Positive,HER2,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR031,X11BR031,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR032,X11BR032,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR033,,,yes,,,,,0,0,0,0,0,
+11BR034,,,yes,,,,,0,0,0,0,0,
+11BR035,,,yes,,,,,0,0,0,0,0,
+11BR036,X11BR036,yes,yes,Negative,Negative,Negative,Basal,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR037,,,yes,,,,,0,0,0,0,0,
+11BR038,X11BR038,yes,yes,Negative,,Positive,HER2,1,0,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR040,X11BR040,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR041,,,yes,,,,,0,0,0,0,0,
+11BR042,X11BR042,yes,yes,Negative,Negative,Negative,HER2,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR043,X11BR043,yes,yes,Positive,Positive,Negative,LumB,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR044,X11BR044,yes,yes,Positive,Positive,Negative,LumB,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR047,X11BR047,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR048,,,yes,,,,,0,0,0,0,0,
+11BR049,X11BR049,yes,yes,Positive,Positive,Negative,LumB,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR050,X11BR050,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR051,X11BR051,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR052,,,yes,,,,,0,0,0,0,0,
+11BR053,X11BR053,yes,yes,Positive,Positive,Negative,LumB,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR054,X11BR054,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR055,X11BR055,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR056,X11BR056,yes,yes,Positive,Negative,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR057,,,yes,,,,,0,0,0,0,0,
+11BR058,X11BR058,yes,yes,Negative,,Negative,Normal-like,1,0,1,0,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR059,X11BR059,yes,yes,Positive,,Negative,Normal-like,1,0,1,0,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR060,X11BR060,yes,yes,Negative,Negative,Positive,HER2,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR069,,,yes,,,,,0,0,0,0,0,
+11BR072,X11BR072,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR073,X11BR073,yes,yes,Positive,Positive,Negative,LumB,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR074,X11BR074,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR075,X11BR075,yes,yes,Positive,,Negative,LumB,1,0,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+11BR076,,,yes,,,,,0,0,0,0,0,
+11BR077,,,yes,,,,,0,0,0,0,0,
+11BR078,,,yes,,,,,0,0,0,0,0,
+11BR079,,,yes,,,,,0,0,0,0,0,
+11BR080,X11BR080,yes,yes,Positive,Positive,Negative,Basal,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+13BR003,,,yes,,,,,0,0,0,0,0,
+13BR004,,,yes,,,,,0,0,0,0,0,
+13BR009,X13BR009,yes,yes,Positive,Positive,Negative,LumB,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+14BR002,,,yes,,,,,0,0,0,0,0,
+14BR005,X14BR005,yes,yes,Positive,Positive,,LumA,1,1,0,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+14BR007,,,yes,,,,,0,0,0,0,0,
+14BR008,X14BR008,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+14BR011,,,yes,,,,,0,0,0,0,0,
+14BR012,,,yes,,,,,0,0,0,0,0,
+14BR014,X14BR014,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+14BR020,,,yes,,,,,0,0,0,0,0,
+14BR023,,,yes,,,,,0,0,0,0,0,
+15BR001,,,yes,,,,,0,0,0,0,0,
+15BR002,,,yes,,,,,0,0,0,0,0,
+15BR003,X15BR003,yes,yes,Positive,Negative,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+15BR004,,,yes,,,,,0,0,0,0,0,
+15BR011,,,yes,,,,,0,0,0,0,0,
+16BR012,X16BR012,yes,yes,,,,LumB,0,0,0,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+18BR001,,,yes,,,,,0,0,0,0,0,
+18BR002,X18BR002,yes,yes,Negative,Negative,Negative,HER2,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+18BR003,X18BR003,yes,yes,Positive,Negative,Negative,LumB,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+18BR004,X18BR004,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+18BR005,,,yes,,,,,0,0,0,0,0,
+18BR006,X18BR006,yes,yes,Positive,Positive,Negative,LumB,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+18BR007,X18BR007,yes,yes,Positive,Positive,Equivocal,LumA,1,1,0,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+18BR008,,,yes,,,,,0,0,0,0,0,
+18BR009,X18BR009,yes,yes,Negative,Negative,Positive,Normal-like,1,1,1,0,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+18BR010,X18BR010,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+18BR016,X18BR016,yes,yes,Positive,,Negative,LumA,1,0,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+18BR017,X18BR017,yes,yes,Positive,Negative,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+18BR019,X18BR019,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+18BR020,,,yes,,,,,0,0,0,0,0,
+20BR001,X20BR001,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+20BR002,X20BR002,yes,yes,Negative,Positive,Negative,Basal,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+20BR003,,,yes,,,,,0,0,0,0,0,
+20BR004,,,yes,,,,,0,0,0,0,0,
+20BR005,X20BR005,yes,yes,Negative,Negative,Negative,Basal,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+20BR006,X20BR006,yes,yes,Positive,Negative,Negative,Basal,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+20BR007,X20BR007,yes,yes,Negative,Negative,Negative,Basal,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+20BR008,X20BR008,yes,yes,Negative,Negative,Negative,HER2,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+21BR001,X21BR001,yes,yes,Negative,Negative,,LumB,1,1,0,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+21BR002,X21BR002,yes,yes,Positive,Positive,,LumA,1,1,0,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+21BR003,,,yes,,,,,0,0,0,0,0,
+21BR005,,,yes,,,,,0,0,0,0,0,
+21BR010,X21BR010,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+22BR001,,,yes,,,,,0,0,0,0,0,
+22BR002,,,yes,,,,,0,0,0,0,0,
+22BR003,,,yes,,,,,0,0,0,0,0,
+22BR005,X22BR005,yes,yes,Positive,Positive,Positive,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+22BR006,X22BR006,yes,yes,Positive,Positive,Negative,LumA,1,1,1,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+22BR007,,,yes,,,,,0,0,0,0,0,
+22BR008,,,yes,,,,,0,0,0,0,0,
+27BR002,,,yes,,,,,0,0,0,0,0,
+CPT000814,CPT000814,no,no,Negative,Negative,,Basal,1,1,0,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)
+CPT001846,CPT001846,no,no,Negative,Negative,,Basal,1,1,0,1,1,cBioPortal brca_cptac_2020 (Krug 2020 Cell)

@@ -1,0 +1,75 @@
+{
+  "schema_version": "0.1",
+  "task": "her2_status_decoupling",
+  "model": "CLAM-SB",
+  "embedding_model": "uni_v1",
+  "embedding_manifest": "/workspace/data/cache/biop02/embedding_manifest_uni.csv",
+  "split_source": "embedding_manifest_uni.csv (site-disjoint, verified)",
+  "hyperparams": {
+    "hidden_dim": 512,
+    "att_dim": 256,
+    "dropout": 0.25,
+    "lr": 0.0002,
+    "epochs": 50,
+    "patience": 7,
+    "seed": 42
+  },
+  "commit_hash": "25fc09b0d288b4924c2e52403724a0990269c915",
+  "claim_level": "hypothesis_only",
+  "critic_status": "pending",
+  "definition": "CNV_amp",
+  "n_train": 683,
+  "n_train_pos": 69,
+  "best_val_loss": 0.4021,
+  "val_only": {
+    "n": 151,
+    "n_pos": 27,
+    "prevalence": 0.1788,
+    "auroc": 0.7682,
+    "auc_ci_95": [
+      0.6592,
+      0.8697
+    ],
+    "auprc": 0.4764,
+    "perm_null_mean": 0.5004,
+    "perm_null_ci_95": [
+      0.3823,
+      0.6189
+    ],
+    "perm_p_value": 0.0002
+  },
+  "test_only": {
+    "n": 149,
+    "n_pos": 18,
+    "prevalence": 0.1208,
+    "auroc": 0.7252,
+    "auc_ci_95": [
+      0.603,
+      0.8327
+    ],
+    "auprc": 0.2407,
+    "perm_null_mean": 0.4982,
+    "perm_null_ci_95": [
+      0.3575,
+      0.6421
+    ],
+    "perm_p_value": 0.001
+  },
+  "pooled": {
+    "n": 300,
+    "n_pos": 45,
+    "prevalence": 0.15,
+    "auroc": 0.7525,
+    "auc_ci_95": [
+      0.6732,
+      0.8286
+    ],
+    "auprc": 0.3568,
+    "perm_null_mean": 0.5007,
+    "perm_null_ci_95": [
+      0.4056,
+      0.5949
+    ],
+    "perm_p_value": 0.0002
+  }
+}

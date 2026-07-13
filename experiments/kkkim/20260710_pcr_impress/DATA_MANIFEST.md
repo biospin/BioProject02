@@ -68,9 +68,10 @@ Tier B 트랙: **pCR from pre-treatment H&E** (Paper A와 별개).
   - **총 252개 `.svs`** = HE 126 + IHC 126.
 - **형식:** `.svs` (openslide 호환; svs-deidentifier로 deid. 원 스캐너 Hamamatsu 20×).
   환자당 HE 1장 + IHC 1장.
-- **용량:** ⚠️ **미확정.** public folder view가 per-file/합계 용량을 노출하지 않음.
-  정확한 용량은 Drive API(auth) 또는 실제 다운로드 필요. `.svs` 20× WSI 통상 규모상
-  수십~수백 GB대로 **추정만** 함(수치 확정 아님, 절대 인용 금지).
+- **용량 (2026-07-10 실측 갱신):** HE 5장 실제 다운로드 → 34.7 / 75.5 / 142.7 / 169.9 / 190.4 MB
+  (평균 122.6MB, 편차 큼). **HE-only 126장 ≈ ~15 GB 추정**(n=5), **전체 252(HE+IHC) ≈ ~30 GB 추정**
+  (IHC 미측정, 거친 추정). 단일 확정치 인용 금지 — biopsy 조직량 편차 큼. 상세=`RUN_PLAN.md §1`.
+- **파일 ID:** `data/wsi_drive_listing/file_ids.txt` = 254항목(id↔파일명), gdown으로 개별 다운로드 가능.
 
 ## 우리 파이프라인 적용 경로
 
