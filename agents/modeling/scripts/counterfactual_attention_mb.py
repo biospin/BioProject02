@@ -28,10 +28,16 @@ import sys
 sys.path.insert(0, str(Path(__file__).parents[2]))
 from modeling.baselines.attention_mil import CLAMMB
 
-PAM50_MAP = {"luma": 0, "lumb": 1, "basal": 2, "her2": 3, "normal": 4, "normal-like": 4}
+PAM50_MAP_5 = {"luma": 0, "lumb": 1, "basal": 2, "her2": 3, "normal": 4, "normal-like": 4}
+PAM50_MAP_4 = {"luma": 0, "lumb": 1, "basal": 2, "her2": 3}  # §4 준수: Normal 제외
 
 
-def load_manifest(manifest_path, split):
+def pam50_map(num_classes):
+    return PAM50_MAP_4 if num_classes == 4 else PAM50_MAP_5
+
+
+def load_manifest(manifest_path, split, num_classes=5):
+    PAM50_MAP = pam50_map(num_classes)
     rows = []
     with open(manifest_path, newline="") as f:
         for row in csv.DictReader(f):
@@ -78,8 +84,9 @@ def main():
     ).to(device)
     model.load_state_dict(torch.load(args.model, map_location=device))
 
-    rows = load_manifest(args.manifest, args.split)
-    print(f"슬라이드 {len(rows)}장 PAM50 counterfactual 검증 (remove_frac={args.remove_frac})")
+    PAM50_MAP = pam50_map(num_classes)
+    rows = load_manifest(args.manifest, args.split, num_classes=num_classes)
+    print(f"슬라이드 {len(rows)}장 PAM50 counterfactual 검증 (remove_frac={args.remove_frac}, num_classes={num_classes})")
 
     rng = np.random.default_rng(args.seed)
 

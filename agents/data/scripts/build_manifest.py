@@ -43,7 +43,7 @@ CLINICAL_COLS = {
     "her2_status_by_ihc": "her2_status",
 }
 # values that mean "no usable label"
-MISSING = {"", "[not available]", "[not applicable]", "[unknown]", "[discrepancy]",
+MISSING = {"", "[not available]", "[not applicable]", "[not evaluated]", "[unknown]", "[discrepancy]",
            "indeterminate", "equivocal", "not performed", "na"}
 # PAM50 values that are present but not a usable phenotype target (policy §4)
 PAM50_MISSING = MISSING | {"normal", "normal-like", "normallike"}
@@ -157,13 +157,25 @@ def write_split_meta(rows: list[dict], path: Path, ratios, seed: int) -> dict:
     for r in rows:
         patients_by_split[r["split"]].add(r["case_id"])
         sites_by_split[r["split"]].add(r["tss_code"])
-    er_balance = {}
+    # policy split_policy_v0.md §"라벨 정의" line 118: ER/PR/HER2/PAM50 class-ratio
+    # table per fold, for data-owner (kkkim) sign-off review.
+    er_balance, pr_balance, her2_balance = {}, {}, {}
+    pam50_balance = {}
     for f in ("train", "val", "test"):
         fr = [r for r in rows if r["split"] == f]
         er_balance[f] = {
             "er_pos": sum(1 for r in fr if r["er_status"].strip().lower() == "positive"),
             "er_neg": sum(1 for r in fr if r["er_status"].strip().lower() == "negative"),
         }
+        pr_balance[f] = {
+            "pr_pos": sum(1 for r in fr if r["pr_status"].strip().lower() == "positive"),
+            "pr_neg": sum(1 for r in fr if r["pr_status"].strip().lower() == "negative"),
+        }
+        her2_balance[f] = {
+            "her2_pos": sum(1 for r in fr if r["her2_status"].strip().lower() == "positive"),
+            "her2_neg": sum(1 for r in fr if r["her2_status"].strip().lower() == "negative"),
+        }
+        pam50_balance[f] = dict(Counter(r["pam50"] for r in fr if str(r["has_pam50"]) == "1"))
     meta = {
         "policy": "split_policy_v0",
         "split_hash": split_hash(rows),
@@ -173,6 +185,9 @@ def write_split_meta(rows: list[dict], path: Path, ratios, seed: int) -> dict:
         "patients_per_split": {k: len(v) for k, v in sorted(patients_by_split.items())},
         "sites_per_split": {k: len(v) for k, v in sorted(sites_by_split.items())},
         "er_balance_per_split": er_balance,
+        "pr_balance_per_split": pr_balance,
+        "her2_balance_per_split": her2_balance,
+        "pam50_balance_per_split": pam50_balance,
         "n_slides": len(rows),
         "n_patients": len({r["case_id"] for r in rows}),
         "n_sites": len({r["tss_code"] for r in rows}),

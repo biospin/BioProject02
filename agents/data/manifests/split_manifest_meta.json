@@ -36,6 +36,54 @@
       "er_neg": 43
     }
   },
+  "pr_balance_per_split": {
+    "train": {
+      "pr_pos": 484,
+      "pr_neg": 221
+    },
+    "val": {
+      "pr_pos": 100,
+      "pr_neg": 51
+    },
+    "test": {
+      "pr_pos": 88,
+      "pr_neg": 61
+    }
+  },
+  "her2_balance_per_split": {
+    "train": {
+      "her2_pos": 94,
+      "her2_neg": 402
+    },
+    "val": {
+      "her2_pos": 38,
+      "her2_neg": 74
+    },
+    "test": {
+      "her2_pos": 27,
+      "her2_neg": 63
+    }
+  },
+  "pam50_balance_per_split": {
+    "train": {
+      "LumA": 178,
+      "Basal": 136,
+      "LumB": 240,
+      "HER2": 74
+    },
+    "val": {
+      "LumA": 32,
+      "LumB": 36,
+      "HER2": 28,
+      "Basal": 27
+    },
+    "test": {
+      "HER2": 18,
+      "LumB": 45,
+      "Basal": 35,
+      "LumA": 33
+    }
+  },
   "n_slides": 1010,
   "n_patients": 1010,
   "n_sites": 37,

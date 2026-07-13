@@ -1,0 +1,47 @@
+{
+  "schema_version": "0.1",
+  "created_at": "2026-07-10T08:55:34.524266Z",
+  "task": "pam50",
+  "model": "CLAM-MB",
+  "num_classes": 4,
+  "class_names": [
+    "LumA",
+    "LumB",
+    "Basal",
+    "HER2"
+  ],
+  "embedding_model": "uni",
+  "smoke_test": false,
+  "n_train": 628,
+  "n_val": 123,
+  "label_shuffle_sanity_check": false,
+  "best_val_loss": 1.2693,
+  "auc": 0.8053,
+  "auprc": 0.6281,
+  "balanced_accuracy": 0.5466,
+  "ext_test_manifest": "/workspace/data/cache/biop02/embedding_manifest_cptac_uni.csv",
+  "ext_auc": 0.8181,
+  "ext_auprc": 0.564,
+  "ext_balanced_accuracy": 0.4506,
+  "commit_hash": "pending_4class",
+  "claim_level": "hypothesis_only",
+  "critic_status": "pending",
+  "wandb_run_id": null,
+  "mlflow_run_id": null,
+  "auc_ci_95": [
+    0.7504,
+    0.8623
+  ],
+  "ext_auc_ci_95": [
+    0.7875,
+    0.8536
+  ],
+  "ext_n_test": 382,
+  "ext_label_source": "official (BIOP02-55, cBioPortal brca_cptac_2020)",
+  "ext_normal_like_excluded": {
+    "count": 13,
+    "cptac_5class_labeled": 395,
+    "cptac_4class_eval": 382,
+    "reason": "split_policy_v0 §4 준수 — PAM50 4-class(LumA/LumB/Basal/HER2)에서 Normal-like 제외. 내부 TCGA는 train 79/val 28/test 20 제외(n_train 707→628, n_val 151→123), 외부 CPTAC는 13건 제외(395→382)."
+  }
+}

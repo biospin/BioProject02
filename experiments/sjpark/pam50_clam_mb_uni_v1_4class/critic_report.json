@@ -1,0 +1,95 @@
+{
+  "schema_version": "0.1",
+  "created_at": "2026-07-10T20:00:00+09:00",
+  "reviewer": "braveji",
+  "owner": "sjpark",
+  "experiment": {
+    "experiment_id": "pam50_clam_mb_uni_v1_4class",
+    "task": "pam50",
+    "endpoint": "PAM50 4-class classification (LumA / LumB / Basal / HER2-E) — §4 준수, Normal-like 제외",
+    "commit_hash": "f5d0d9a8a7303366d1d59372fffa813971b6c25c",
+    "config_path": "experiments/sjpark/pam50_clam_mb_uni_v1_4class/config.yaml",
+    "metrics_path": "experiments/sjpark/pam50_clam_mb_uni_v1_4class/metrics.json",
+    "predictions_path": "experiments/sjpark/pam50_clam_mb_uni_v1_4class/predictions.npz",
+    "embedding_manifest_path": "/workspace/data/cache/biop02/embedding_manifest_uni.csv",
+    "split_policy_path": "agents/data/split_policy_v0.md"
+  },
+  "checks": {
+    "data_leakage": {
+      "status": "pending",
+      "evidence": [
+        "site-disjoint 검증 통과: TCGA train/val/test 간 TSS·case_id 교집합 0 (site_disjoint_verification.json)",
+        "label-shuffle multi-seed(5): real ext 0.8181 vs null [0.4323, 0.5656] — null 밖 = leakage 아님",
+        "n_train=628 / n_val=123 (Normal-like 제외 정합: train 707→628, val 151→123)",
+        "잔여: split_policy_v0 lock(kkkim) 미완 → data_leakage 최종 판정은 lock 후"
+      ],
+      "notes": "reviewer(braveji) 최종 판정 대기. split_policy_v0 lock이 유일 잔여 블로커."
+    },
+    "baseline_comparison": {
+      "status": "pending",
+      "evidence": [
+        "CLAM-MB val macro AUC 0.8053 (95% CI 0.7504–0.8623)",
+        "CLAM-MB ext macro AUC 0.8181 (95% CI 0.7875–0.8536), n_test=382",
+        "mean_embed ext AUC 0.653 (CI 0.6141–0.6932) → paired diff +0.165, CI [0.1218, 0.2064], p≈0 (0 제외)",
+        "random ext 0.5075, majority 0.5",
+        "subtype_only 미적용 — PAM50는 subtype 자체(정의상 순환)라 mean_embed가 유효 기준선",
+        "5-class와 macro-AUC 직접 비교 불가(라벨 공간 상이) — 버전 간 우열 주장 안 함(BIOP02-56 braveji 기각 수용, pam50_4class_vs_5class.json)"
+      ],
+      "notes": "braveji BIOP02-56 comment[8]② 예비판정: #2 PASS (diff≥0.03 AND CI 비중첩). 최종 sign-off 대기."
+    },
+    "counterfactual_check": {
+      "status": "pending",
+      "evidence": [
+        "attention ablation: auc_full 0.8053 → auc_top_removed 0.7868 (drop 0.0185) vs random 제거 -0.0003",
+        "AUC(full)-AUC(top제거) paired CI [-0.0006, 0.0387], p=0.061 (α=0.05 미달이나 5-class p=0.917 대비 대폭 개선)",
+        "proba-level: |Δproba| top 0.052 vs random 0.0023 (~23×) — attention 기여 명확"
+      ],
+      "notes": "braveji 예비판정: caution (proba-level faithful, AUC-level은 p=0.061로 경계). 최종 sign-off 대기."
+    },
+    "cross_dataset_check": {
+      "status": "pending",
+      "evidence": [
+        "CPTAC-BRCA 외부검증 macro AUC 0.8181 (CI 0.7875–0.8536), n_test=382",
+        "val 0.8053 → ext 0.8181: gap -0.013 (외부가 오히려 소폭 높음, 강한 일반화)",
+        "라벨 출처: official (BIOP02-55, cBioPortal brca_cptac_2020)",
+        "CPTAC Normal-like 13건 제외(395→382), §4 준수"
+      ],
+      "notes": "braveji 예비판정: 강함. 최종 sign-off 대기. #4 DepMap/GDSC sub-check=jhans(Paper B, 별개)."
+    },
+    "biological_plausibility": {
+      "status": "pending",
+      "evidence": [
+        "PAM50 subtype–H&E 형태학 연관 문헌: Lu 2021(CLAM), Kather 2020",
+        "Basal-like(high grade, pushing margin) / LumA(low grade) 형태 관찰 가능",
+        "Normal-like 제외로 소수·저신호 클래스 혼입 제거",
+        "ICI/Pembrolizumab 추천 없음"
+      ],
+      "notes": "sub-check: jhans (non-owner)."
+    },
+    "drp_framing": {
+      "status": "pass",
+      "evidence": [
+        "task: 'pam50' (표현형 예측)",
+        "금지 표현 미발견",
+        "claim_level: 'hypothesis_only'"
+      ],
+      "notes": "DRP 프레이밍 없음."
+    },
+    "claim_level": {
+      "status": "pass",
+      "evidence": [
+        "metrics.json claim_level: 'hypothesis_only'",
+        "버전 간 성능 우열 주장 철회(BIOP02-56)"
+      ],
+      "notes": "hypothesis_only 유지."
+    }
+  },
+  "critic_status": "pending",
+  "claim_level": "hypothesis_only",
+  "summary": "PAM50 4-class(§4 준수, Normal-like 제외) CLAM-MB(UNI v1). val macro AUC 0.8053(CI 0.7504–0.8623), CPTAC ext 0.8181(CI 0.7875–0.8536, n=382). mean_embed(0.653) 대비 paired diff +0.165(p≈0, CI 비중첩) → #2 PASS 후보. label-shuffle null 위 = GENUINE. 5-class와 직접 비교하지 않음(라벨 공간 상이). 본 파일은 5-artifact 규칙 충족용 owner 제출 스켈레톤 — 각 check status/critic_status 최종 판정은 reviewer(braveji) 소관.",
+  "required_followups": [
+    "[braveji] 최종 critic_status sign-off (comment[8]④: #2 pass / #3 caution / #4 강함 예비)",
+    "[kkkim] split_policy_v0 lock (Critic #1 유일 잔여 블로커)",
+    "[kkkim] pam50 라벨 소스 study_id 확정 (BIOP02-38, §139 단일소스)"
+  ]
+}
