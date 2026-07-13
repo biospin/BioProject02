@@ -277,3 +277,10 @@ experiments/crosscancer/COLORECTAL/ST/data/
 
 # detached 프로세스 stdout 덤프 (transient)
 experiments/crosscancer/*.out
+
+# Jupyter 협업 상태 DB (transient)
+.jupyter_ystore.db
+# per-slide 추출 로그 (transient debug)
+experiments/kkkim/logs/
+# pcr_impress pilot coords (재생성 가능, 대용량)
+experiments/kkkim/20260710_pcr_impress/outputs/

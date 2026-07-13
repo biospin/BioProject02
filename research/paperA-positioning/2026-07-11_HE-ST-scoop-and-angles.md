@@ -23,7 +23,9 @@
 - **운용:** 사전제출 필수그림 아님. **리뷰어가 HER2 gold-standard 공간불안정성 공격할 것 → 방어 탄약(limitation 문단+요청 시 그림)으로 미리 준비.** 반나절이면 supplementary로 승격.
 - ⚠️ VERIFY: ERBB2가 해당 HEST Xenium 유방 패널에 있는지(Visium이면 보장·Xenium이면 확인).
 
-### Angle C (진짜 미래 ST 논문, Paper B 위에) — 공간분해 치료가설 flip
+### Angle C (진짜 미래 ST 논문 — banked, 착수조건 명시) — 공간분해 치료가설 flip
+> **결정(2026-07-11, 사용자):** C는 지금 착수 X, **잘 기록해 bank.** 착수 트리거 = Paper B(therapeutic-evidence 링킹) 성숙. **⚠️ 필요 시 Paper A와 B를 합칠 수 있음(사용자)** → 합치면 C의 토대(therapeutic 링킹+cost)가 Paper A/B 통합본에 함께 서므로 **C 착수 시점이 앞당겨질 수 있음.** 병합 여부에 따라 C를 통합논문 확장으로 갈지, 독립 Paper C로 갈지 재판단.
+
 - **주장:** 우리 DepMap/GDSC 링커는 환자당 subtype→약물 가설 1개. 공간혼합 종양(luminal이 basal/HER2-like subclone 보유, Wu 2021)에선 종양 면적 일부가 patient-level 가설에 오배정. "region-level subtype이 다른 top 가설 내는 면적%" 정량.
 - **defensible:** 우리 시그니처(therapeutic-evidence 링킹+cost)를 공간으로 확장 = 사실상 미점유. 어떤 interpretability각보다 on-brand.
 - **의존:** Paper B(jhans, 2026-07-06 착수) 성숙 필요 → Paper C.
