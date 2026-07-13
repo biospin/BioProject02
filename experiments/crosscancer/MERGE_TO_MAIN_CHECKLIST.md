@@ -6,7 +6,7 @@
 ## 🚦 병합 게이트 (전부 충족해야 실행)
 
 - [ ] **G1 — Paper C 결과 확정.** held-out 법칙 검정이 firm(HNSC ✅ / STAD 442 ✅ / 폐 MIL held-out 완료 / 대장 증분 D13 정리). 미완 endpoint는 exploratory로 명시, provisional headline을 확립으로 승격하지 않음.
-- [ ] **G2 — Critic 서명(braveji).** split lock(BIOP02-41) + Paper C 산출물 `critic_status: pass`. Owner≠Reviewer(kkkim self-sign 금지). 현재 = **pending**.
+- [ ] **G2 — Critic 서명(braveji).** split lock(BIOP02-41) + Paper C 산출물 `critic_status: pass`. Owner≠Reviewer(kkkim self-sign 금지). 현재 = **요청 발송·braveji ack(2026-07-13), 실제 서명 대기**. (split lock=PR #32 지금 검토 가능 / Paper C=G1 확정 후 인계.)
 - [ ] **G3 — claim 규율.** 전 산출물 `claim_level: hypothesis_only`(+ provisional 표기) 유지, DRP 프레이밍 0.
 - [ ] **G4 — 브랜치 동기화.** `git fetch && git merge origin/main` → **뒤처짐 0**. (2026-07-13 충족, 병합 직전 재확인.)
 - [ ] **G5 — split lock focused PR(#32) 선처리.** 가능하면 PR #32(split lock만)를 먼저 main에 머지해 provenance를 분리 이관 → 이 대형 병합의 diff·리스크 축소.
