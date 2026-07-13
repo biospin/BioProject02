@@ -176,12 +176,20 @@ advisor 지정 결정 검정(H&E가 통상 병리를 넘는가)의 대장 파트
 - **판정(이 턴에 법칙 생사 선언 안 함)**: (1) 엄격한 이분법("상관물 없음→증분 0")은 뒷받침 안 됨 — 점돌연변이 마커도 작지만 부호 안정 증분(BH 통과). (2) 단 증분은 작고 경계적(Bonferroni 미통과, 아형에 흡수) → 간접(아형 매개) 신호로 보임(메커니즘 설명이지 치환 수치 아님; CMS는 분자검사 필요). (3) **검정력 있는 교차암종 대비 부재가 구조적 한계**: 유방 기준선(조직형만) < 대장(조직형+편측성), 대장 내 상관물 비교자 MSI는 검정력 부족 → STAD·HNSC 전량 held-out 재검정이 필요한 이유. hypothesis_only, critic_status pending.
 - **advisor 교정 반영**: 4마커 교차암종 기울기 표는 기준선 두께·코호트가 섞여 like-with-like 아님 → 암종 내 동일기준선 대비(유방 ER vs HER2 / 대장 MSI vs anti-EGFR)로만 서술. anti-EGFR "DEMONSTRATED" 표현은 "작고 경계적"으로 완화.
 
+### D14 (2026-07-13) — 두경부 HNSC held-out 법칙검정: **첫 검정력 있는 CONFIRM (HPV)**
+HNSC 임베딩 완료(468슬라이드/450환자, 라벨 523 중 커버리지 86%) → MIL+cost+법칙검정 실행. 산출 `HEADNECK_HNSC/full/mil_cost_results.json`·`LAW_TEST.md`, 신규 스코어러 `sh_hnsc_lawtest.py`(사전등록 봉인 예측 대칭 verdict 미러).
+- **hpv_pos AUROC 0.9594 (CI 0.921–0.986, n_pos=26 ≥ 25)** → 사전등록 ≥0.80 **CONFIRM(대체가능)**. shuffle-null 0.680. **exploratory 아님** — 지금까지 held-out(폐·위·유방)은 대부분 n_pos<25로 INCONCLUSIVE였는데, **두경부 HPV가 법칙 "형태 상관물 有 → 대체가능(≥0.80)" 축의 첫 검정력 확보 확증.** 변이축이 아닌 **바이러스축**(HPV 감염이 비각화·basaloid 형태 유도) → 법칙의 "형태 상관물" 조항을 감염이라는 새 종류로 확장 검정.
+- **grade_high 0.8152 (n_pos=41)** 양성대조 PASS(≥0.75; SCC라 0.85 미달은 예측대로). 파이프라인 sanity 확립.
+- **egfr_amp 0.6039 (n_pos=17)** → exploratory INCONCLUSIVE. 점추정은 사전등록 ≤0.70 대역 내(형태 상관물 약함과 consistent), 반증신호(≥0.80) 없음. 검정력 부족으로 확증·반증 모두 불가.
+- **순서 HPV≫EGFR**: 두 CI 완전분리(0.921–0.986 vs 0.443–0.760) → 순서 견고. 단 EGFR 절대대역 판정은 exploratory라 INCONCLUSIVE 표기(과소검정력이 결과 안 가리게 대칭 verdict).
+- **함의(hypothesis_only, critic pending):** 대체가능축(형태 상관물 有)은 두경부 HPV로 처음 검정력 있게 뒷받침(0.96). 필수/변이축(HER2-amp·EGFR)의 H&E-blindness는 방향은 일관하나 개별 암종에선 여전히 대부분 exploratory. 법칙 완전 이분법 확립은 검정력 있는 필수축 확증/반례 축적 대기. **kkkim=owner라 self-Critic 금지 → braveji 서명 별도.**
+
 ### 다음 갱신 트리거 (갱신)
 - [x] 대장 CMS/MSI(아형 층위) 라벨 확보 → H&E→아형 예측 → 유방 아형과 like-with-like 비교. **(완료: Part A/B 분리)**
 - [x] 통합 flagship 확정 + 법칙 사전등록 봉인. **(D11)**
 - [x] 위암·두경부 추가(5개 암종) + 법칙 예측 봉인. **(D12)**
 - [x] shuffle-null 5-seed·Su IMC·mean_cost 사전등록 harvest(밤샘). **메커니즘=TIL밀도 경로 확정.**
-- [ ] STAD/HNSC 임베딩→라벨(HER2-amp/MSI/HPV/EBV/조직형)→split→MIL(법칙 held-out 검정).
+- [x] STAD/HNSC 임베딩→라벨(HER2-amp/MSI/HPV/EBV/조직형)→split→MIL(법칙 held-out 검정). **(완료: STAD D-야간·442, HNSC D14·HPV 첫 검정력 CONFIRM)**
 - [ ] CPTAC proteomics HER2 decoupling 한 줄 확인.
 - [ ] 폐 subtype SSP 계산 → 폐 MIL 완료 → **법칙 held-out 검정**(EGFR>KRAS 순서, EGFR 등급적).
 - [x] 대장 증분 검정(MSI/anti-EGFR가 통상병리 넘는가) — **완료(D13)**: anti-EGFR 작고 경계적 증분(BH 통과·Bonf 미통과), MSI 탐색적. 법칙 이분법 안 서고 기울기 미확립.
