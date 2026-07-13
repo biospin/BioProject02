@@ -32,7 +32,7 @@ Goal: H&E WSI → morphology embedding → molecular phenotype prediction → De
 |---|---|---|---|---|---|---|
 | jamie (jmryu) | JamieLyu | jamie.orangecounty@gmail.com | jamie.orangecounty@gmail.com | jamie-openclaw-bot |2203 | Data Agent — TCGA/CPTAC manifests, labels, splits |
 | kkkim (gkkim) | kakyungkim | kakyung.kim@gmail.com | kakyung.kim@gmail.com | kakyung.kim-openclaw-bot | 2205 | **Project Leader** + Embedding Agent — WSI tiling, foundation model extraction (Data manifest/다운로드 역할 흡수) |
-| ~~gglee (gklee)~~ | Geongyu | rjsrb365@gmail.com | rjsrb365@gmail.com | ggyu-claw | 2202 | (이탈 2026-06-09 — Leader→kkkim, Critic→braveji 재배정) |
+| gglee (gklee) | Geongyu | rjsrb365@gmail.com | rjsrb365@gmail.com | ggyu-claw | 2202 | **재편입 2026-07-07** (일정으로 2026-06-09 이탈 → 재합류). 역할 재배정 별도 협의(현재 Leader=kkkim·Critic=braveji 유지). Atlassian 계정 active·배정 가능(accountId 712020:bff61238-cf1c-4ca7-a971-4411a06ccf42); GitHub org 접근만 확인 필요 |
 | sjpark | sezinie000 | sezinie000@gmail.com | sezinie000@gmail.com | sezinie-openclaw-bot | 2206 | Modeling Agent — phenotype prediction (MLP, attention MIL); Critic 바이오 sub-check 분담 |
 | braveji (ykji) | braveji18 | biospinleader@gmail.com  | biospinleader@gmail.com | yong-openclaw-bot |  2201 | Orchestrator + **Scientific Critic (총괄)** — pipeline coordination, infra, schemas; 7-point/critic_status owns, 바이오 sub-check(#4/#5)는 sjpark/jhans에 분담 |
 | jhans | JeonghanSeo | phoenicx16@gmail.com | phoenicx16@gmail.com |  | 2204 |  Therapeutic Evidence Agent — DepMap/GDSC drug linking |
