@@ -1,0 +1,1253 @@
+{
+  "dataset": "Su et al. 2025 npj Precision Oncology (PMC11973205), IMC single-cell, Zenodo 13901180",
+  "claim_level": "hypothesis_only",
+  "evidence_strength": "exploratory",
+  "estimand": "abundance-controlled within-ROI permutation enrichment; log2(obs/null) scale-free effect (LL=immune aggregation, LT=immune-tumor mixing); z secondary; patient=unit",
+  "params": {
+    "primary_radius_px_um": 30.0,
+    "radii_tested": [
+      20.0,
+      30.0,
+      50.0
+    ],
+    "n_perm": 500,
+    "min_immune_per_roi": 20,
+    "min_edges": 100,
+    "immune_sets": {
+      "lymphocyte": [
+        "B cell",
+        "CD4 T cell",
+        "CD8 T cell",
+        "NK-cells",
+        "Proliferative Immune"
+      ],
+      "CD8": [
+        "CD8 T cell"
+      ]
+    },
+    "tumor_types": [
+      "Epithelial/Tumor",
+      "P53+ Tumor",
+      "Proliferative Tumor"
+    ]
+  },
+  "cohort": {
+    "n_patients": 40,
+    "n_MSI_H": 8,
+    "n_MSS": 32,
+    "cell_type_note": "cell_type is marker-defined (CD8a/CD3/GranzB/etc.); MSI from WES (Suppl Table 2)"
+  },
+  "abundance_positive_control": {
+    "lymphocyte": {
+      "MSI_H_median": 0.2278,
+      "MSI_H_mean": 0.2488,
+      "n_MSI_H": 8,
+      "MSS_median": 0.1963,
+      "MSS_mean": 0.212,
+      "n_MSS": 32,
+      "p_two_sided": 0.5611,
+      "rank_biserial": 0.141
+    },
+    "CD8": {
+      "MSI_H_median": 0.0865,
+      "MSI_H_mean": 0.1075,
+      "n_MSI_H": 8,
+      "MSS_median": 0.0529,
+      "MSS_mean": 0.0644,
+      "n_MSS": 32,
+      "p_two_sided": 0.2092,
+      "rank_biserial": 0.297
+    }
+  },
+  "spatial_pattern": {
+    "lymphocyte": {
+      "R20": {
+        "n_valid_roi": 123,
+        "n_MSI_H": 8,
+        "n_MSS": 32,
+        "LL_aggregation_log2": {
+          "MSI_H_median": 0.8311,
+          "MSI_H_mean": 0.7575,
+          "n_MSI_H": 8,
+          "MSS_median": 0.8856,
+          "MSS_mean": 0.9639,
+          "n_MSS": 32,
+          "p_two_sided": 0.0879,
+          "rank_biserial": -0.398
+        },
+        "LT_mixing_log2": {
+          "MSI_H_median": -0.5342,
+          "MSI_H_mean": -0.6224,
+          "n_MSI_H": 8,
+          "MSS_median": -0.8515,
+          "MSS_mean": -0.8628,
+          "n_MSS": 32,
+          "p_two_sided": 0.1743,
+          "rank_biserial": 0.32
+        },
+        "LL_z_secondary": {
+          "MSI_H_median": 21.3787,
+          "MSI_H_mean": 27.4454,
+          "n_MSI_H": 8,
+          "MSS_median": 29.9171,
+          "MSS_mean": 29.3295,
+          "n_MSS": 32,
+          "p_two_sided": 0.3959,
+          "rank_biserial": -0.203
+        },
+        "LT_z_secondary": {
+          "MSI_H_median": -23.6707,
+          "MSI_H_mean": -25.9102,
+          "n_MSI_H": 8,
+          "MSS_median": -29.3718,
+          "MSS_mean": -31.9307,
+          "n_MSS": 32,
+          "p_two_sided": 0.6069,
+          "rank_biserial": 0.125
+        }
+      },
+      "R30": {
+        "n_valid_roi": 123,
+        "n_MSI_H": 8,
+        "n_MSS": 32,
+        "LL_aggregation_log2": {
+          "MSI_H_median": 0.6595,
+          "MSI_H_mean": 0.6227,
+          "n_MSI_H": 8,
+          "MSS_median": 0.767,
+          "MSS_mean": 0.8132,
+          "n_MSS": 32,
+          "p_two_sided": 0.0596,
+          "rank_biserial": -0.438
+        },
+        "LT_mixing_log2": {
+          "MSI_H_median": -0.427,
+          "MSI_H_mean": -0.5093,
+          "n_MSI_H": 8,
+          "MSS_median": -0.6704,
+          "MSS_mean": -0.7062,
+          "n_MSS": 32,
+          "p_two_sided": 0.1743,
+          "rank_biserial": 0.32
+        },
+        "LL_z_secondary": {
+          "MSI_H_median": 22.3361,
+          "MSI_H_mean": 29.2102,
+          "n_MSI_H": 8,
+          "MSS_median": 31.0949,
+          "MSS_mean": 32.618,
+          "n_MSS": 32,
+          "p_two_sided": 0.3959,
+          "rank_biserial": -0.203
+        },
+        "LT_z_secondary": {
+          "MSI_H_median": -26.5198,
+          "MSI_H_mean": -29.4972,
+          "n_MSI_H": 8,
+          "MSS_median": -32.9924,
+          "MSS_mean": -36.8413,
+          "n_MSS": 32,
+          "p_two_sided": 0.5388,
+          "rank_biserial": 0.148
+        },
+        "abundance_control_check": {
+          "spearman_log2LL_vs_frac": -0.526,
+          "p": 0.0005,
+          "residual_MSI_vs_MSS": {
+            "MSI_H_median": -0.1073,
+            "MSI_H_mean": -0.1179,
+            "n_MSI_H": 8,
+            "MSS_median": 0.0235,
+            "MSS_mean": 0.0295,
+            "n_MSS": 32,
+            "p_two_sided": 0.1173,
+            "rank_biserial": -0.367
+          }
+        }
+      },
+      "R50": {
+        "n_valid_roi": 124,
+        "n_MSI_H": 8,
+        "n_MSS": 32,
+        "LL_aggregation_log2": {
+          "MSI_H_median": 0.4696,
+          "MSI_H_mean": 0.4758,
+          "n_MSI_H": 8,
+          "MSS_median": 0.6287,
+          "MSS_mean": 0.6397,
+          "n_MSS": 32,
+          "p_two_sided": 0.0699,
+          "rank_biserial": -0.422
+        },
+        "LT_mixing_log2": {
+          "MSI_H_median": -0.2996,
+          "MSI_H_mean": -0.382,
+          "n_MSI_H": 8,
+          "MSS_median": -0.4718,
+          "MSS_mean": -0.5027,
+          "n_MSS": 32,
+          "p_two_sided": 0.3959,
+          "rank_biserial": 0.203
+        },
+        "LL_z_secondary": {
+          "MSI_H_median": 19.3932,
+          "MSI_H_mean": 28.7875,
+          "n_MSI_H": 8,
+          "MSS_median": 27.5376,
+          "MSS_mean": 32.941,
+          "n_MSS": 32,
+          "p_two_sided": 0.3774,
+          "rank_biserial": -0.211
+        },
+        "LT_z_secondary": {
+          "MSI_H_median": -23.4679,
+          "MSI_H_mean": -28.8385,
+          "n_MSI_H": 8,
+          "MSS_median": -28.957,
+          "MSS_mean": -37.7106,
+          "n_MSS": 32,
+          "p_two_sided": 0.6069,
+          "rank_biserial": 0.125
+        }
+      }
+    },
+    "CD8": {
+      "R20": {
+        "n_valid_roi": 116,
+        "n_MSI_H": 8,
+        "n_MSS": 32,
+        "LL_aggregation_log2": {
+          "MSI_H_median": 1.3916,
+          "MSI_H_mean": 1.5471,
+          "n_MSI_H": 8,
+          "MSS_median": 1.8085,
+          "MSS_mean": 1.8191,
+          "n_MSS": 32,
+          "p_two_sided": 0.2092,
+          "rank_biserial": -0.297
+        },
+        "LT_mixing_log2": {
+          "MSI_H_median": -0.596,
+          "MSI_H_mean": -0.6634,
+          "n_MSI_H": 8,
+          "MSS_median": -0.7469,
+          "MSS_mean": -0.8699,
+          "n_MSS": 32,
+          "p_two_sided": 0.3595,
+          "rank_biserial": 0.219
+        },
+        "LL_z_secondary": {
+          "MSI_H_median": 20.7073,
+          "MSI_H_mean": 24.9605,
+          "n_MSI_H": 8,
+          "MSS_median": 20.9868,
+          "MSS_mean": 21.0996,
+          "n_MSS": 32,
+          "p_two_sided": 0.7781,
+          "rank_biserial": 0.07
+        },
+        "LT_z_secondary": {
+          "MSI_H_median": -10.5692,
+          "MSI_H_mean": -15.4817,
+          "n_MSI_H": 8,
+          "MSS_median": -13.3676,
+          "MSS_mean": -15.5646,
+          "n_MSS": 32,
+          "p_two_sided": 0.934,
+          "rank_biserial": 0.023
+        }
+      },
+      "R30": {
+        "n_valid_roi": 116,
+        "n_MSI_H": 8,
+        "n_MSS": 32,
+        "LL_aggregation_log2": {
+          "MSI_H_median": 1.1392,
+          "MSI_H_mean": 1.1909,
+          "n_MSI_H": 8,
+          "MSS_median": 1.3739,
+          "MSS_mean": 1.4399,
+          "n_MSS": 32,
+          "p_two_sided": 0.1256,
+          "rank_biserial": -0.359
+        },
+        "LT_mixing_log2": {
+          "MSI_H_median": -0.4664,
+          "MSI_H_mean": -0.5239,
+          "n_MSI_H": 8,
+          "MSS_median": -0.592,
+          "MSS_mean": -0.7045,
+          "n_MSS": 32,
+          "p_two_sided": 0.3774,
+          "rank_biserial": 0.211
+        },
+        "LL_z_secondary": {
+          "MSI_H_median": 18.8286,
+          "MSI_H_mean": 24.9923,
+          "n_MSI_H": 8,
+          "MSS_median": 21.0449,
+          "MSS_mean": 21.5719,
+          "n_MSS": 32,
+          "p_two_sided": 0.9077,
+          "rank_biserial": 0.031
+        },
+        "LT_z_secondary": {
+          "MSI_H_median": -10.8135,
+          "MSI_H_mean": -15.9059,
+          "n_MSI_H": 8,
+          "MSS_median": -14.5888,
+          "MSS_mean": -17.3374,
+          "n_MSS": 32,
+          "p_two_sided": 0.8553,
+          "rank_biserial": 0.047
+        },
+        "abundance_control_check": {
+          "spearman_log2LL_vs_frac": -0.506,
+          "p": 0.0009,
+          "residual_MSI_vs_MSS": {
+            "MSI_H_median": -0.0929,
+            "MSI_H_mean": -0.0679,
+            "n_MSI_H": 8,
+            "MSS_median": -0.0141,
+            "MSS_mean": 0.017,
+            "n_MSS": 32,
+            "p_two_sided": 0.8036,
+            "rank_biserial": -0.062
+          }
+        }
+      },
+      "R50": {
+        "n_valid_roi": 116,
+        "n_MSI_H": 8,
+        "n_MSS": 32,
+        "LL_aggregation_log2": {
+          "MSI_H_median": 0.7078,
+          "MSI_H_mean": 0.8231,
+          "n_MSI_H": 8,
+          "MSS_median": 1.0661,
+          "MSS_mean": 1.0513,
+          "n_MSS": 32,
+          "p_two_sided": 0.263,
+          "rank_biserial": -0.266
+        },
+        "LT_mixing_log2": {
+          "MSI_H_median": -0.3222,
+          "MSI_H_mean": -0.3817,
+          "n_MSI_H": 8,
+          "MSS_median": -0.3996,
+          "MSS_mean": -0.5009,
+          "n_MSS": 32,
+          "p_two_sided": 0.6784,
+          "rank_biserial": 0.102
+        },
+        "LL_z_secondary": {
+          "MSI_H_median": 17.3607,
+          "MSI_H_mean": 22.7705,
+          "n_MSI_H": 8,
+          "MSS_median": 20.0543,
+          "MSS_mean": 21.5649,
+          "n_MSS": 32,
+          "p_two_sided": 0.9868,
+          "rank_biserial": -0.008
+        },
+        "LT_z_secondary": {
+          "MSI_H_median": -10.7528,
+          "MSI_H_mean": -14.6119,
+          "n_MSI_H": 8,
+          "MSS_median": -14.6117,
+          "MSS_mean": -17.4292,
+          "n_MSS": 32,
+          "p_two_sided": 0.7781,
+          "rank_biserial": 0.07
+        }
+      }
+    }
+  },
+  "per_patient_primary": {
+    "lymphocyte": [
+      {
+        "patient": "CR008",
+        "msi": "MSS",
+        "n_roi": 3,
+        "log2_LL": 0.9587,
+        "z_LL": 33.8238,
+        "log2_LT": -0.6387,
+        "z_LT": -23.0556,
+        "frac": 0.1259,
+        "resid": 0.074
+      },
+      {
+        "patient": "CR014",
+        "msi": "MSI-H",
+        "n_roi": 5,
+        "log2_LL": 0.6846,
+        "z_LL": 16.1809,
+        "log2_LT": -0.1425,
+        "z_LT": -6.8098,
+        "frac": 0.1837,
+        "resid": -0.1323
+      },
+      {
+        "patient": "CR020",
+        "msi": "MSS",
+        "n_roi": 1,
+        "log2_LL": 0.5832,
+        "z_LL": 36.2362,
+        "log2_LT": -0.7226,
+        "z_LT": -62.5928,
+        "frac": 0.3058,
+        "resid": -0.0907
+      },
+      {
+        "patient": "CR027",
+        "msi": "MSS",
+        "n_roi": 4,
+        "log2_LL": 0.6101,
+        "z_LL": 33.0257,
+        "log2_LT": -1.0241,
+        "z_LT": -59.9681,
+        "frac": 0.3107,
+        "resid": -0.0579
+      },
+      {
+        "patient": "CR034",
+        "msi": "MSS",
+        "n_roi": 3,
+        "log2_LL": 0.7753,
+        "z_LL": 23.7322,
+        "log2_LT": -0.6119,
+        "z_LT": -31.7237,
+        "frac": 0.2005,
+        "resid": -0.0219
+      },
+      {
+        "patient": "CR041",
+        "msi": "MSS",
+        "n_roi": 2,
+        "log2_LL": 0.9901,
+        "z_LL": 53.9334,
+        "log2_LT": -0.4734,
+        "z_LT": -48.2677,
+        "frac": 0.1649,
+        "resid": 0.1512
+      },
+      {
+        "patient": "CR043",
+        "msi": "MSS",
+        "n_roi": 3,
+        "log2_LL": 0.5506,
+        "z_LL": 14.3364,
+        "log2_LT": -0.2961,
+        "z_LT": -12.7849,
+        "frac": 0.2527,
+        "resid": -0.1853
+      },
+      {
+        "patient": "CR048",
+        "msi": "MSI-H",
+        "n_roi": 2,
+        "log2_LL": 0.344,
+        "z_LL": 10.6996,
+        "log2_LT": -0.4541,
+        "z_LT": -21.1918,
+        "frac": 0.2566,
+        "resid": -0.3875
+      },
+      {
+        "patient": "CR053",
+        "msi": "MSS",
+        "n_roi": 2,
+        "log2_LL": 0.614,
+        "z_LL": 31.0624,
+        "log2_LT": -0.4244,
+        "z_LT": -35.6554,
+        "frac": 0.1986,
+        "resid": -0.1854
+      },
+      {
+        "patient": "CR054",
+        "msi": "MSS",
+        "n_roi": 3,
+        "log2_LL": 1.0093,
+        "z_LL": 38.5278,
+        "log2_LT": -0.774,
+        "z_LT": -34.626,
+        "frac": 0.161,
+        "resid": 0.1658
+      },
+      {
+        "patient": "CR055",
+        "msi": "MSS",
+        "n_roi": 2,
+        "log2_LL": 0.2868,
+        "z_LL": 31.1274,
+        "log2_LT": -0.831,
+        "z_LT": -57.8724,
+        "frac": 0.4629,
+        "resid": -0.2029
+      },
+      {
+        "patient": "CR056",
+        "msi": "MSI-H",
+        "n_roi": 3,
+        "log2_LL": 0.6504,
+        "z_LL": 12.5658,
+        "log2_LT": -0.3402,
+        "z_LT": -12.7859,
+        "frac": 0.095,
+        "resid": -0.2705
+      },
+      {
+        "patient": "CR057",
+        "msi": "MSS",
+        "n_roi": 2,
+        "log2_LL": 1.5878,
+        "z_LL": 114.7472,
+        "log2_LT": -1.8758,
+        "z_LT": -70.4984,
+        "frac": 0.2402,
+        "resid": 0.8371
+      },
+      {
+        "patient": "CR058",
+        "msi": "MSS",
+        "n_roi": 3,
+        "log2_LL": 0.7475,
+        "z_LL": 32.9583,
+        "log2_LT": -0.7387,
+        "z_LT": -32.4451,
+        "frac": 0.3015,
+        "resid": 0.0687
+      },
+      {
+        "patient": "CR060",
+        "msi": "MSS",
+        "n_roi": 5,
+        "log2_LL": 0.4808,
+        "z_LL": 16.4227,
+        "log2_LT": -0.2262,
+        "z_LT": -8.7169,
+        "frac": 0.4691,
+        "resid": -0.0016
+      },
+      {
+        "patient": "CR077",
+        "msi": "MSS",
+        "n_roi": 3,
+        "log2_LL": 1.0459,
+        "z_LL": 37.3311,
+        "log2_LT": -0.7021,
+        "z_LT": -33.5397,
+        "frac": 0.1562,
+        "resid": 0.1968
+      },
+      {
+        "patient": "CR079",
+        "msi": "MSS",
+        "n_roi": 3,
+        "log2_LL": 1.0708,
+        "z_LL": 14.076,
+        "log2_LT": -0.194,
+        "z_LT": -7.4646,
+        "frac": 0.0496,
+        "resid": 0.0967
+      },
+      {
+        "patient": "CR080",
+        "msi": "MSS",
+        "n_roi": 3,
+        "log2_LL": 0.4928,
+        "z_LL": 19.8493,
+        "log2_LT": -0.5495,
+        "z_LT": -18.3272,
+        "frac": 0.2596,
+        "resid": -0.2351
+      },
+      {
+        "patient": "CR081",
+        "msi": "MSS",
+        "n_roi": 2,
+        "log2_LL": 1.0986,
+        "z_LL": 40.0182,
+        "log2_LT": -0.7779,
+        "z_LT": -48.4282,
+        "frac": 0.1239,
+        "resid": 0.2116
+      },
+      {
+        "patient": "CR082",
+        "msi": "MSI-H",
+        "n_roi": 6,
+        "log2_LL": 0.6685,
+        "z_LL": 33.46,
+        "log2_LT": -0.7105,
+        "z_LT": -41.309,
+        "frac": 0.2643,
+        "resid": -0.0539
+      },
+      {
+        "patient": "CR094",
+        "msi": "MSS",
+        "n_roi": 4,
+        "log2_LL": 1.1684,
+        "z_LL": 14.2646,
+        "log2_LT": -0.7122,
+        "z_LT": -18.262,
+        "frac": 0.0622,
+        "resid": 0.2091
+      },
+      {
+        "patient": "CR096",
+        "msi": "MSS",
+        "n_roi": 5,
+        "log2_LL": 0.7009,
+        "z_LL": 14.6492,
+        "log2_LT": -0.4892,
+        "z_LT": -9.7069,
+        "frac": 0.1764,
+        "resid": -0.1245
+      },
+      {
+        "patient": "CR100",
+        "msi": "MSS",
+        "n_roi": 2,
+        "log2_LL": 0.9747,
+        "z_LL": 14.7898,
+        "log2_LT": 0.0771,
+        "z_LT": 4.0183,
+        "frac": 0.0905,
+        "resid": 0.0486
+      },
+      {
+        "patient": "CR101",
+        "msi": "MSI-H",
+        "n_roi": 3,
+        "log2_LL": 0.8099,
+        "z_LL": 78.1631,
+        "log2_LT": -1.1912,
+        "z_LT": -66.641,
+        "frac": 0.461,
+        "resid": 0.318
+      },
+      {
+        "patient": "CR102",
+        "msi": "MSS",
+        "n_roi": 5,
+        "log2_LL": 1.2662,
+        "z_LL": 66.0595,
+        "log2_LT": -1.1163,
+        "z_LT": -52.4876,
+        "frac": 0.233,
+        "resid": 0.5071
+      },
+      {
+        "patient": "CR110",
+        "msi": "MSI-H",
+        "n_roi": 3,
+        "log2_LL": 0.8305,
+        "z_LL": 41.0007,
+        "log2_LT": -0.5332,
+        "z_LT": -38.8938,
+        "frac": 0.199,
+        "resid": 0.0316
+      },
+      {
+        "patient": "CR113",
+        "msi": "MSS",
+        "n_roi": 2,
+        "log2_LL": 0.5667,
+        "z_LL": 18.4012,
+        "log2_LT": -0.4481,
+        "z_LT": -24.1401,
+        "frac": 0.1356,
+        "resid": -0.3066
+      },
+      {
+        "patient": "CR115",
+        "msi": "MSS",
+        "n_roi": 1,
+        "log2_LL": 0.6983,
+        "z_LL": 29.813,
+        "log2_LT": -0.8967,
+        "z_LT": -39.9148,
+        "frac": 0.1939,
+        "resid": -0.1067
+      },
+      {
+        "patient": "CR123",
+        "msi": "MSS",
+        "n_roi": 2,
+        "log2_LL": 0.718,
+        "z_LL": 23.1793,
+        "log2_LT": -0.5397,
+        "z_LT": -21.7806,
+        "frac": 0.1293,
+        "resid": -0.1626
+      },
+      {
+        "patient": "CR124",
+        "msi": "MSS",
+        "n_roi": 3,
+        "log2_LL": 1.0722,
+        "z_LL": 48.0133,
+        "log2_LT": -1.6054,
+        "z_LT": -77.7596,
+        "frac": 0.1722,
+        "resid": 0.2419
+      },
+      {
+        "patient": "CR137",
+        "msi": "MSS",
+        "n_roi": 3,
+        "log2_LL": 0.8409,
+        "z_LL": 15.6369,
+        "log2_LT": -0.2124,
+        "z_LT": -11.8548,
+        "frac": 0.0914,
+        "resid": -0.0842
+      },
+      {
+        "patient": "CR139",
+        "msi": "MSS",
+        "n_roi": 2,
+        "log2_LL": 0.7587,
+        "z_LL": 57.8826,
+        "log2_LT": -1.3024,
+        "z_LT": -102.5835,
+        "frac": 0.2961,
+        "resid": 0.0736
+      },
+      {
+        "patient": "CR141",
+        "msi": "MSS",
+        "n_roi": 5,
+        "log2_LL": 0.7312,
+        "z_LL": 26.0263,
+        "log2_LT": -0.2505,
+        "z_LT": -14.9137,
+        "frac": 0.2348,
+        "resid": -0.0258
+      },
+      {
+        "patient": "CR144",
+        "msi": "MSI-H",
+        "n_roi": 2,
+        "log2_LL": 0.4673,
+        "z_LL": 28.4913,
+        "log2_LT": -0.4,
+        "z_LT": -31.8479,
+        "frac": 0.4118,
+        "resid": -0.0822
+      },
+      {
+        "patient": "CR153",
+        "msi": "MSS",
+        "n_roi": 3,
+        "log2_LL": 0.9212,
+        "z_LL": 38.338,
+        "log2_LT": -1.374,
+        "z_LT": -59.3318,
+        "frac": 0.1621,
+        "resid": 0.079
+      },
+      {
+        "patient": "CR164",
+        "msi": "MSS",
+        "n_roi": 2,
+        "log2_LL": 0.4152,
+        "z_LL": 8.9268,
+        "log2_LT": -0.0718,
+        "z_LT": -3.1717,
+        "frac": 0.2683,
+        "resid": -0.3025
+      },
+      {
+        "patient": "CR166",
+        "msi": "MSS",
+        "n_roi": 3,
+        "log2_LL": 0.522,
+        "z_LL": 32.6705,
+        "log2_LT": -0.9088,
+        "z_LT": -75.6172,
+        "frac": 0.2639,
+        "resid": -0.2009
+      },
+      {
+        "patient": "CR179",
+        "msi": "MSS",
+        "n_roi": 3,
+        "log2_LL": 0.9326,
+        "z_LL": 36.4844,
+        "log2_LT": -1.2886,
+        "z_LT": -62.4306,
+        "frac": 0.1661,
+        "resid": 0.0951
+      },
+      {
+        "patient": "CR185",
+        "msi": "MSS",
+        "n_roi": 8,
+        "log2_LL": 0.8342,
+        "z_LL": 27.4332,
+        "log2_LT": -0.598,
+        "z_LT": -23.0191,
+        "frac": 0.3238,
+        "resid": 0.1815
+      },
+      {
+        "patient": "CR202",
+        "msi": "MSI-H",
+        "n_roi": 2,
+        "log2_LL": 0.5266,
+        "z_LL": 13.1206,
+        "log2_LT": -0.303,
+        "z_LT": -16.4982,
+        "frac": 0.1189,
+        "resid": -0.3663
+      }
+    ],
+    "CD8": [
+      {
+        "patient": "CR008",
+        "msi": "MSS",
+        "n_roi": 3,
+        "log2_LL": 1.551,
+        "z_LL": 13.9857,
+        "log2_LT": -0.6049,
+        "z_LT": -8.8325,
+        "frac": 0.0216,
+        "resid": -0.0351
+      },
+      {
+        "patient": "CR014",
+        "msi": "MSI-H",
+        "n_roi": 5,
+        "log2_LL": 1.6838,
+        "z_LL": 17.1469,
+        "log2_LT": -0.701,
+        "z_LT": -8.1774,
+        "frac": 0.0593,
+        "resid": 0.2415
+      },
+      {
+        "patient": "CR020",
+        "msi": "MSS",
+        "n_roi": 1,
+        "log2_LL": 0.7444,
+        "z_LL": 23.1499,
+        "log2_LT": -0.5266,
+        "z_LT": -28.4551,
+        "frac": 0.1382,
+        "resid": -0.3973
+      },
+      {
+        "patient": "CR027",
+        "msi": "MSS",
+        "n_roi": 4,
+        "log2_LL": 1.1484,
+        "z_LL": 15.9522,
+        "log2_LT": -0.3215,
+        "z_LT": -8.7805,
+        "frac": 0.0671,
+        "resid": -0.2645
+      },
+      {
+        "patient": "CR034",
+        "msi": "MSS",
+        "n_roi": 3,
+        "log2_LL": 0.9983,
+        "z_LL": 9.3449,
+        "log2_LT": -0.0833,
+        "z_LT": -2.9542,
+        "frac": 0.0497,
+        "resid": -0.4808
+      },
+      {
+        "patient": "CR041",
+        "msi": "MSS",
+        "n_roi": 2,
+        "log2_LL": 1.5814,
+        "z_LL": 36.3065,
+        "log2_LT": -0.5915,
+        "z_LT": -27.6315,
+        "frac": 0.0498,
+        "resid": 0.1027
+      },
+      {
+        "patient": "CR043",
+        "msi": "MSS",
+        "n_roi": 3,
+        "log2_LL": 0.9991,
+        "z_LL": 13.5798,
+        "log2_LT": -0.3518,
+        "z_LT": -9.4915,
+        "frac": 0.123,
+        "resid": -0.2006
+      },
+      {
+        "patient": "CR048",
+        "msi": "MSI-H",
+        "n_roi": 2,
+        "log2_LL": 1.3049,
+        "z_LL": 10.288,
+        "log2_LT": 0.0261,
+        "z_LT": 0.7371,
+        "frac": 0.0429,
+        "resid": -0.2
+      },
+      {
+        "patient": "CR053",
+        "msi": "MSS",
+        "n_roi": 2,
+        "log2_LL": 1.3305,
+        "z_LL": 14.9916,
+        "log2_LT": -0.5108,
+        "z_LT": -12.3624,
+        "frac": 0.0263,
+        "resid": -0.2377
+      },
+      {
+        "patient": "CR054",
+        "msi": "MSS",
+        "n_roi": 3,
+        "log2_LL": 1.6294,
+        "z_LL": 20.9683,
+        "log2_LT": -0.8548,
+        "z_LT": -15.4885,
+        "frac": 0.0428,
+        "resid": 0.124
+      },
+      {
+        "patient": "CR055",
+        "msi": "MSS",
+        "n_roi": 2,
+        "log2_LL": 0.8127,
+        "z_LL": 18.5395,
+        "log2_LT": -1.2269,
+        "z_LT": -30.89,
+        "frac": 0.0822,
+        "resid": -0.5426
+      },
+      {
+        "patient": "CR056",
+        "msi": "MSI-H",
+        "n_roi": 3,
+        "log2_LL": 1.5665,
+        "z_LL": 14.3607,
+        "log2_LT": -0.4658,
+        "z_LT": -9.0392,
+        "frac": 0.0304,
+        "resid": 0.0142
+      },
+      {
+        "patient": "CR057",
+        "msi": "MSS",
+        "n_roi": 2,
+        "log2_LL": 1.7519,
+        "z_LL": 49.5211,
+        "log2_LT": -1.8073,
+        "z_LT": -30.184,
+        "frac": 0.0581,
+        "resid": 0.305
+      },
+      {
+        "patient": "CR058",
+        "msi": "MSS",
+        "n_roi": 3,
+        "log2_LL": 1.2208,
+        "z_LL": 33.4313,
+        "log2_LT": -0.9945,
+        "z_LT": -24.6093,
+        "frac": 0.1431,
+        "resid": 0.0978
+      },
+      {
+        "patient": "CR060",
+        "msi": "MSS",
+        "n_roi": 5,
+        "log2_LL": 1.7363,
+        "z_LL": 24.599,
+        "log2_LT": -0.5025,
+        "z_LT": -6.8964,
+        "frac": 0.1255,
+        "resid": 0.5462
+      },
+      {
+        "patient": "CR077",
+        "msi": "MSS",
+        "n_roi": 3,
+        "log2_LL": 1.1919,
+        "z_LL": 29.7596,
+        "log2_LT": -0.5924,
+        "z_LT": -23.5177,
+        "frac": 0.1066,
+        "resid": -0.0701
+      },
+      {
+        "patient": "CR079",
+        "msi": "MSS",
+        "n_roi": 3,
+        "log2_LL": 1.9844,
+        "z_LL": 5.0132,
+        "log2_LT": -0.3401,
+        "z_LT": -3.628,
+        "frac": 0.0058,
+        "resid": 0.3383
+      },
+      {
+        "patient": "CR080",
+        "msi": "MSS",
+        "n_roi": 2,
+        "log2_LL": 1.5512,
+        "z_LL": 23.7414,
+        "log2_LT": -0.503,
+        "z_LT": -13.6891,
+        "frac": 0.0806,
+        "resid": 0.1901
+      },
+      {
+        "patient": "CR081",
+        "msi": "MSS",
+        "n_roi": 2,
+        "log2_LL": 1.6544,
+        "z_LL": 18.2841,
+        "log2_LT": -0.7972,
+        "z_LT": -21.1616,
+        "frac": 0.0297,
+        "resid": 0.0994
+      },
+      {
+        "patient": "CR082",
+        "msi": "MSI-H",
+        "n_roi": 6,
+        "log2_LL": 0.8785,
+        "z_LL": 20.5103,
+        "log2_LT": -0.2748,
+        "z_LT": -10.1266,
+        "frac": 0.1136,
+        "resid": -0.3571
+      },
+      {
+        "patient": "CR094",
+        "msi": "MSS",
+        "n_roi": 3,
+        "log2_LL": 1.1503,
+        "z_LL": 3.7398,
+        "log2_LT": -0.2623,
+        "z_LT": -4.1005,
+        "frac": 0.013,
+        "resid": -0.4686
+      },
+      {
+        "patient": "CR096",
+        "msi": "MSS",
+        "n_roi": 4,
+        "log2_LL": 1.5073,
+        "z_LL": 6.5775,
+        "log2_LT": -0.485,
+        "z_LT": -3.9338,
+        "frac": 0.0217,
+        "resid": -0.0783
+      },
+      {
+        "patient": "CR100",
+        "msi": "MSS",
+        "n_roi": 2,
+        "log2_LL": 1.8144,
+        "z_LL": 5.4243,
+        "log2_LT": 0.1953,
+        "z_LT": 1.1995,
+        "frac": 0.0142,
+        "resid": 0.2004
+      },
+      {
+        "patient": "CR101",
+        "msi": "MSI-H",
+        "n_roi": 3,
+        "log2_LL": 1.2106,
+        "z_LL": 69.9793,
+        "log2_LT": -1.1745,
+        "z_LT": -42.3304,
+        "frac": 0.2289,
+        "resid": 0.4144
+      },
+      {
+        "patient": "CR102",
+        "msi": "MSS",
+        "n_roi": 5,
+        "log2_LL": 1.891,
+        "z_LL": 36.9971,
+        "log2_LT": -1.172,
+        "z_LT": -25.9468,
+        "frac": 0.0677,
+        "resid": 0.4808
+      },
+      {
+        "patient": "CR110",
+        "msi": "MSI-H",
+        "n_roi": 3,
+        "log2_LL": 0.876,
+        "z_LL": 24.3327,
+        "log2_LT": -0.3774,
+        "z_LT": -20.6689,
+        "frac": 0.1204,
+        "resid": -0.3335
+      },
+      {
+        "patient": "CR113",
+        "msi": "MSS",
+        "n_roi": 2,
+        "log2_LL": 1.1993,
+        "z_LL": 6.2623,
+        "log2_LT": -0.159,
+        "z_LT": -2.9638,
+        "frac": 0.0171,
+        "resid": -0.4037
+      },
+      {
+        "patient": "CR115",
+        "msi": "MSS",
+        "n_roi": 1,
+        "log2_LL": 1.5238,
+        "z_LL": 25.3996,
+        "log2_LT": -1.3025,
+        "z_LT": -25.1383,
+        "frac": 0.0517,
+        "resid": 0.0527
+      },
+      {
+        "patient": "CR123",
+        "msi": "MSS",
+        "n_roi": 1,
+        "log2_LL": 1.3308,
+        "z_LL": 8.2308,
+        "log2_LT": -0.2586,
+        "z_LT": -4.5511,
+        "frac": 0.0174,
+        "resid": -0.2713
+      },
+      {
+        "patient": "CR124",
+        "msi": "MSS",
+        "n_roi": 3,
+        "log2_LL": 1.9543,
+        "z_LL": 21.462,
+        "log2_LT": -1.3701,
+        "z_LT": -25.8372,
+        "frac": 0.0276,
+        "resid": 0.391
+      },
+      {
+        "patient": "CR137",
+        "msi": "MSS",
+        "n_roi": 1,
+        "log2_LL": 3.0301,
+        "z_LL": 37.1134,
+        "log2_LT": -1.2101,
+        "z_LT": -17.6818,
+        "frac": 0.0111,
+        "resid": 1.404
+      },
+      {
+        "patient": "CR139",
+        "msi": "MSS",
+        "n_roi": 2,
+        "log2_LL": 1.4032,
+        "z_LL": 59.9145,
+        "log2_LT": -1.9255,
+        "z_LT": -71.6398,
+        "frac": 0.1379,
+        "resid": 0.2603
+      },
+      {
+        "patient": "CR141",
+        "msi": "MSS",
+        "n_roi": 5,
+        "log2_LL": 1.3286,
+        "z_LL": 20.1141,
+        "log2_LT": -0.4074,
+        "z_LT": -11.4017,
+        "frac": 0.0885,
+        "resid": -0.0027
+      },
+      {
+        "patient": "CR144",
+        "msi": "MSI-H",
+        "n_roi": 2,
+        "log2_LL": 0.9394,
+        "z_LL": 32.1759,
+        "log2_LT": -0.7565,
+        "z_LT": -26.1418,
+        "frac": 0.2276,
+        "resid": 0.1381
+      },
+      {
+        "patient": "CR153",
+        "msi": "MSS",
+        "n_roi": 3,
+        "log2_LL": 1.3446,
+        "z_LL": 26.1912,
+        "log2_LT": -1.126,
+        "z_LT": -32.6934,
+        "frac": 0.0668,
+        "resid": -0.0691
+      },
+      {
+        "patient": "CR164",
+        "msi": "MSS",
+        "n_roi": 2,
+        "log2_LL": 0.7747,
+        "z_LL": 10.0856,
+        "log2_LT": 0.0282,
+        "z_LT": 0.792,
+        "frac": 0.1397,
+        "resid": -0.3615
+      },
+      {
+        "patient": "CR166",
+        "msi": "MSS",
+        "n_roi": 3,
+        "log2_LL": 1.2137,
+        "z_LL": 21.1215,
+        "log2_LT": -0.62,
+        "z_LT": -20.3692,
+        "frac": 0.054,
+        "resid": -0.2488
+      },
+      {
+        "patient": "CR179",
+        "msi": "MSS",
+        "n_roi": 3,
+        "log2_LL": 1.5811,
+        "z_LL": 26.4901,
+        "log2_LT": -1.0817,
+        "z_LT": -28.4139,
+        "frac": 0.0515,
+        "resid": 0.1091
+      },
+      {
+        "patient": "CR185",
+        "msi": "MSS",
+        "n_roi": 7,
+        "log2_LL": 1.1434,
+        "z_LL": 24.0077,
+        "log2_LT": -0.777,
+        "z_LT": -13.5446,
+        "frac": 0.1311,
+        "resid": -0.0254
+      },
+      {
+        "patient": "CR202",
+        "msi": "MSI-H",
+        "n_roi": 2,
+        "log2_LL": 1.0678,
+        "z_LL": 11.1448,
+        "log2_LT": -0.4669,
+        "z_LT": -11.5004,
+        "frac": 0.0366,
+        "resid": -0.4611
+      }
+    ]
+  },
+  "scope_caveat": "No co-registered H&E in this path; AreaShape=IMC segmentation morphology, not H&E texture. Shows cell-resolution IMMUNE ARCHITECTURE MSI vs MSS, NOT direct H&E-visibility. v2 H&E_annotations (Zenodo 14602539, 3.8MB) = unregistered pathologist JPGs for 4 patients (CR014/CR020/CR034/CR048) -> qualitative only; registration = heavy path, not run."
+}

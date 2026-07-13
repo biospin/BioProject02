@@ -1,0 +1,51 @@
+{
+  "purpose": "Critic #2/#6/#7 cherry-pick 방지 — cost 계산 전 임상 결정거리를 동결한다(frozen_map 방식 미러). routing_cost.json에서 mean_cost=null인 MSI-H·anti-EGFR 축의 오분류쌍 결정거리를 결과(misroute 방향분포)를 보기 전에 방향별로 고정.",
+  "cancer": "COLORECTAL",
+  "claim_level": "hypothesis_only",
+  "critic_status": "pending",
+  "repo_commit_hash": "d3a614f88855eafd50bf764aaf1ec07e543c33b6",
+  "frozen_before_running": "real MIL 오분류 방향분포(FN/FP) 재계산 이전",
+  "note_no_system_time": "frozen_at 타임스탬프는 시스템 시간 신뢰불가로 생략, repo commit hash로 시점 고정.",
+  "not_drp": "이 거리는 약물구조 입력이 아니라 임상 결과(PFS/OS/독성) 기반 '치료라우팅 치환비용'이다. drug response prediction 프레이밍 금지. hypothesis_only.",
+  "preregistration_integrity": "각 거리는 해당 임상시험 앵커 단독에서 도출했다. MSI가 '낮게', anti-EGFR가 '높게' 나오도록 값을 역설계하지 않았다. 라우팅 스킴·비용방향 순위가설은 routing_scheme_preregistered.json에서 이미 동결됨 — 이 파일의 값은 독립적인 임상-피해 가중치다.",
+  "distance_scale": "0(치환 무해)~1(치환 최대피해). 방향별(FN=marker양성을 음성으로 오판, FP=marker음성을 양성으로 오판).",
+  "mean_cost_formula": "mean_cost = (n_FN * d_FN + n_FP * d_FP) / n_holdout. d_FN=d_FP=D이면 misroute_rate*D로 환원(기존 braf 공식과 정합).",
+  "axes": {
+    "msi_high": {
+      "route_to": "anti-PD-1 (pembrolizumab)",
+      "positive_class": "MSI-H (marker=1)",
+      "d_FN": {
+        "value": 0.90,
+        "event": "MSI-H를 MSS로 오판 → 1차 pembrolizumab 미투여(과소치료)",
+        "anchor": "KEYNOTE-177 (André NEJM 2020): dMMR/MSI-H mCRC 1차 pembrolizumab vs 화학요법, 중앙 PFS 16.5 vs 8.2 mo (HR 0.60), 지속반응. 놓치면 PFS 2배 이익·durable response 상실 → 큰 결정거리."
+      },
+      "d_FP": {
+        "value": 0.45,
+        "event": "MSS를 MSI-H로 오판 → 부적격 ICI 지목(과잉)",
+        "anchor": "MSS mCRC 단일 ICI ORR ~0%(KEYNOTE-177은 dMMR 한정, MSS 제외). H&E 라우팅은 최종 Rx가 아니라 확정 MSI/MMR 검사 트리거 → 피해는 대개 유효 화학요법 지연+불필요 검사(가역적) → 중간 결정거리."
+      }
+    },
+    "anti_egfr_eligible": {
+      "route_to": "anti-EGFR (cetuximab / panitumumab)",
+      "positive_class": "eligible = all-RAS/BRAF-WT (marker=1)",
+      "d_FN": {
+        "value": 0.80,
+        "event": "적격(WT)을 부적격으로 오판 → 적격인데 anti-EGFR 미투여(과소치료)",
+        "anchor": "FIRE-3 (Heinemann Lancet Oncol 2014): RAS-WT에서 FOLFIRI+cetuximab vs +bevacizumab, OS 33.1 vs 25.0 mo. 특히 좌측대장에서 OS 이익 상실 → 큰 결정거리."
+      },
+      "d_FP": {
+        "value": 0.90,
+        "event": "부적격(RAS/BRAF-mut)을 적격으로 오판 → 부적격인데 anti-EGFR 투여(능동적 피해)",
+        "anchor": "PRIME (Douillard NEJM 2013): RAS-mut에 panitumumab 추가는 PFS/OS에 오히려 해로움(detrimental). 무효+grade3 피부독성+비용 → 이 방향이 가장 해로움(missed benefit보다 active harm이 큼)."
+      }
+    }
+  },
+  "braf_v600_note": {
+    "primary_mean_cost_source": "frozen_map antiBRAF__baseline=0.868 (cell-line 치료거리) — routing_cost.json v1의 mean_cost=0.086 불변 유지.",
+    "scale_caveat": "braf mean_cost는 세포주 frozen_map 스케일, MSI/anti-EGFR mean_cost는 임상-결정 스케일 → 세 mean_cost는 직접 비교/교차랭킹 불가.",
+    "parallel_clinical_distance_optional": {
+      "d_FN": {"value": 0.70, "event": "BRAF-V600E를 WT로 오판 → encorafenib+cetuximab 미투여", "anchor": "BEACON (Kopetz NEJM 2019): BRAF-V600E mCRC enco+cetux vs 화학요법, OS 8.4 vs 5.4 mo, ORR 20% vs 2%."},
+      "d_FP": {"value": 0.55, "event": "WT를 BRAF-V600E로 오판 → BRAF-표적 부적절 투여", "anchor": "BRAF-doublet은 V600E 없이는 무효; 독성·비용 추가하나 확정 BRAF 검사 표준 → 중간."}
+    }
+  }
+}

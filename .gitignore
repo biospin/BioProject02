@@ -267,3 +267,13 @@ experiments/kkkim/angle_A_spatial_erbb2/data/
 experiments/crosscancer/COLORECTAL/cms_data/*.rda
 experiments/crosscancer/COLORECTAL/cms_data/coadread_expr_template.csv
 experiments/crosscancer/COLORECTAL/cms_data/*.txt
+
+# pilot 임베딩·coords (대용량, 디스크가 영구본 — full과 동일 정책)
+experiments/crosscancer/*/pilot/embeddings/
+experiments/crosscancer/*/pilot/coords/
+
+# ST/IMC raw 다운로드 (GEO 공개데이터, 재다운 가능 — 분석 산출 JSON·figure만 git)
+experiments/crosscancer/COLORECTAL/ST/data/
+
+# detached 프로세스 stdout 덤프 (transient)
+experiments/crosscancer/*.out
