@@ -24,4 +24,12 @@
 ## 📌 상태 (갱신)
 - 2026-07-13: 게이트 전부 미충족(G2 pending). 브랜치는 동기화(G4 ✅). PR #32(split lock focused) 리뷰 대기.
 - 2026-07-14: HNSC 472/472 → 5암종 held-out + 스코어보드, G1 ✅. **BUT G2 Paper C = braveji Critic REJECT**(블로커 5건, PR#33). ⚠️ **병합 중단.** (kkkim이 올린 BIOP02-93 Critic요청 코멘트는 reject와 교차되어 삭제됨.)
-- 다음(remediation 순서): 블로커5 경로→/workspace 재현성(**착수**) → 문서동기화(폐 정본·대장 5-seed) → 전 endpoint 5-seed null + baseline(pixel-mean·subtype-only) → sjpark/jhans #4·#5 → braveji 재검토 → G2 통과 후에만 §16 병합.
+- **remediation 진척(2026-07-14, kkkim):**
+  - ✅ BLOCKER-5 경로 재현성 — 임베딩 43G→/workspace, manifest 재작성(52e2644).
+  - ✅ BLOCKER-2 폐 정본 동기화(0.9247→0.939 등) + 폐 provenance 봉인(ea03cee·b38c7de).
+  - ✅ BLOCKER-4 대장 5-seed 실패검정 문서 반영(ea03cee).
+  - ✅ 위 erbb2 "blind 적중" 채점·유방 HER2 인용 철회(b38c7de).
+  - ✅ BLOCKER-1 전 endpoint 5-seed 우연배제(50bb7c9) — **두경부 HPV 0.9594 PASS(thr 0.790)**, 양성대조 lung/grade PASS, 위 lauren·erbb2·두경부 egfr_amp FAIL. 스모크로 정본 재현(histology 0.939) 검증.
+  - ✅ BLOCKER-3 pixel-mean baseline(50bb7c9, 3암종) — subtype-only는 잔여.
+  - ⬜ 잔여: subtype-only baseline · #4·#5 bio sub-check(sjpark/jhans 의뢰) · braveji 재검토 서명.
+- 다음: 잔여 항목 → braveji 재검토 → `critic_status: pass` → G4 뒤처짐 0 재확인 → §16 병합.
