@@ -13,7 +13,7 @@
 | anti_egfr_eligible → anti-EGFR | 필수(high; 형태 상관물 없음, 하류 프록시만) | 0.7053 ([0.620, 0.783]) | 84/161 | 0.539 | **0.416** | well-powered | 방향 consistent(회고) — held-out 확증 아님 |
 | braf_v600 → BRAF+EGFR | 등급적/partial(serrated/MSI 동반 부분가시) | 0.8817 ([0.817, 0.938]) | 15/161 | 0.641 | 0.099 | exploratory(n_pos<25) | 가설과 consistent(회고·저검정력) |
 
-¹ **shuffle-null 단일추정 주의(routing_cost.json §caveat):** seed=42 1회 순열, 소표본에서 분산 큼. braf null이 split 변경만으로 0.44(holdout151)→0.64(holdout161)로 흔들렸고 real은 거의 불변(0.868→0.882). 상승한(>0.5) null은 누수 신호가 **아니다**(누수는 null을 0.5로 낮춘다) — 라벨무관 CLAM bag-size 교란 가능성. 우연배제는 bootstrap CI + real-vs-null 마진으로 판단. patient_overlap=0·site-disjoint 검증됨. FOLLOW-UP(non-blocking): null ~5 seed 평균.
+¹ **shuffle-null 단일추정 주의(routing_cost.json §caveat):** seed=42 1회 순열, 소표본에서 분산 큼. braf null이 split 변경만으로 0.44(holdout151)→0.64(holdout161)로 흔들렸고 real은 거의 불변(0.868→0.882). 상승한(>0.5) null은 누수 신호가 **아니다**(누수는 null을 0.5로 낮춘다) — 라벨무관 CLAM bag-size 교란 가능성. 우연배제는 bootstrap CI + real-vs-null 마진으로 판단. patient_overlap=0·site-disjoint 검증됨. **5-seed shuffle-null 완료(정정 2026-07-14, braveji G2 BLOCKER-4):** `shuffle_null_robustness.json`(기준 real > null_mean+2·null_sd) — **cms1_vs_rest 0.912<0.936 FAIL · cms4_vs_rest 0.661<0.773 FAIL**, cms2·cms3·msi_high·anti_egfr(0.705>0.667)·braf PASS. 즉 이 검정은 이전 기술처럼 "미실시(non-blocking)"가 아니라 **완료·2/7 실패**였다(weak≠zero, 자체 기준 미달=실패로 명시). msi_high·anti_egfr·braf 라우팅축은 5-seed 우연배제 통과.
 
 > **수치 정합(3-문서 드리프트 방지):** 정본 = `routing_cost.json`(holdout161, 세 축 동일 split). `mil_cost_results.json`의 braf 0.8676은 **옛 holdout151** 실행이라 이 표와 다름(같은 마커, 다른 split; CI 내 일치). DECISION_MAP Table 2와는 0.918/0.705/0.882로 일치.
 

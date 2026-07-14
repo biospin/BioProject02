@@ -2,15 +2,16 @@
 
 > **5개 암종 중 첫 held-out 검정.** 사전등록 `../../SUBSTITUTABILITY_LAW_PREREGISTRATION.md`(폐 봉인 예측 4개, 결과 보기 전 커밋으로 봉인)의 예측을 1047→1048 임베딩 기반 MIL 관측과 대조.
 > claim_level: **hypothesis_only** · critic_status: pending · 2026-07-12
+> **⚠️ 정본 재동기화 2026-07-14 (braveji G2 BLOCKER-2 반영):** 폐 MIL은 2회 실행됐고(994b187 → 9b42d37, n_slides 1024→1026) 본 문서는 1차 기준에 멈춰 있었다. 재실행이 "위암 442장" 커밋 본문에 묻혀 인지되지 못함. 아래 **base 3 endpoint(histology/egfr/kras)**를 정본 `mil_cost_results.json`(9b42d37) 기준으로 정정한다. 정정 방향은 결과 개선(histology 0.9247→0.939, egfr shuffle 0.66→0.46). subtype endpoint는 `mil_subtype_results.json` 소관으로 본 정정 범위 밖.
 > 산출: `mil_cost_results.json`(base 3 endpoint + subtype 7 endpoint 병합), `mil_subtype_results.json`.
 > 모델: CLAM-SB(UNI 1024-d), val+test **pooled site-disjoint holdout**, 환자단위 평균, AUROC + 1000-boot 95% CI. 각 endpoint {real, shuffle-null, prevalence}.
 
 ## 검정력 (해석의 지배 변수)
 | endpoint | holdout n_pos | 검정력 판정 |
 |---|---|---|
-| histology_lusc | **152 / 270** | **충분 — 유일하게 확증/반증 가능한 진짜 검정** |
-| egfr_activating | 15 / 270 | exploratory (n_pos<25) → INCONCLUSIVE |
-| kras_g12c | 14 / 270 | exploratory → INCONCLUSIVE |
+| histology_lusc | **153 / 271** | **충분 — 유일하게 확증/반증 가능한 진짜 검정** |
+| egfr_activating | 15 / 271 | exploratory (n_pos<25) → INCONCLUSIVE |
+| kras_g12c | 14 / 271 | exploratory → INCONCLUSIVE |
 | luad_TRU_vs_rest | 25 / 57 | 경계(자체 AUROC는 보고 가능) |
 | luad_PI / PP_vs_rest | 18 / 14 | exploratory → 순위 비교 불가 |
 
@@ -19,9 +20,9 @@
 ## 관측 요약
 | endpoint | real AUROC | 95% CI | shuffle-null | n_pos |
 |---|---|---|---|---|
-| histology_lusc | **0.9247** | [0.8894, 0.9573] | 0.4665 | 152 |
-| egfr_activating | 0.8133 | [0.6695, 0.9344] | 0.6641 | 15 |
-| kras_g12c | 0.6549 | [0.5634, 0.7434] | 0.3842 | 14 |
+| histology_lusc | **0.939** | [0.9046, 0.9666] | 0.4343 | 153 |
+| egfr_activating | 0.8518 | [0.7247, 0.953] | 0.4589 | 15 |
+| kras_g12c | 0.6809 | [0.577, 0.7825] | 0.5081 | 14 |
 | luad_TRU_vs_rest | 0.8325 | [0.7249, 0.9343] | 0.5713 | 25 |
 | luad_PI_vs_rest | 0.7863 | [0.6462, 0.9034] | 0.5299 | 18 |
 | luad_PP_vs_rest | 0.8870 | [0.7574, 0.9842] | 0.3272 | 14 |
@@ -33,23 +34,23 @@
 ## 봉인 예측 vs 관측
 
 ### [1] 조직형 LUAD/LUSC ≥ 0.93 (양성대조) — **유일한 검정력 충분 검정**
-- 관측 **0.9247**, CI [0.8894, **0.9573**], shuffle 0.4665, n_pos=152.
-- **Verdict: PASS(양성대조 성립) / 임계 예측 ≥0.93은 CI-부합, 점추정 미세 미달.**
-  - 파이프라인 정상성: 형태 자체 축을 0.92로 예측, shuffle 0.47 → H&E/MIL 정상 작동 확정.
-  - 사전 0.93 라인: 점추정 0.9247은 0.93보다 0.5%p 낮으나 **CI 상한 0.957이 0.93을 포함** → 반증 아님, "≈met".
+- 관측 **0.939**, CI [0.9046, **0.9666**], shuffle 0.4343, n_pos=153.
+- **Verdict: PASS(양성대조 성립) / 임계 예측 ≥0.93 점추정 명확 적중.**
+  - 파이프라인 정상성: 형태 자체 축을 0.94로 예측, shuffle 0.43 → H&E/MIL 정상 작동 확정.
+  - 사전 0.93 라인: 점추정 **0.939 ≥ 0.93 명확 적중.** 1차(stale) 문서의 "0.9247·CI 상한으로 구제(≈met)"는 정본에서 불필요 — 깔끔한 적중이다.
   - 결론: **양성대조 통과. 파이프라인 sound.**
 
 ### [2] EGFR 활성변이 등급적 0.75–0.89, near-random(≤0.6) 아님
-- 관측 0.8133, CI [0.6695, 0.9344], n_pos=15.
-- 점추정은 예측 대역 **안(0.75–0.89), near-random 아님** → 예측과 방향 일치.
-- 그러나 **exploratory(n_pos=15) → INCONCLUSIVE.** CI 하한 0.67로 광범위, shuffle-null 0.664로 높아(순열에서도 0.66) real과의 마진이 ~0.15로 작음 → 신호가 약하고 불안정.
+- 관측 0.8518, CI [0.7247, 0.953], shuffle-null 0.4589, n_pos=15.
+- 점추정은 예측 대역 **안(0.75–0.89), near-random 아님** → 예측과 방향 일치. real↔shuffle 마진 **0.39**(1차 문서의 shuffle 0.664·마진 0.15는 stale — 정본 shuffle 0.4589로 신호가 훨씬 깨끗).
+- 그러나 **exploratory(n_pos=15) → INCONCLUSIVE.** CI 하한 0.72로 여전히 광범위 → 점추정·마진은 강해졌으나 검정력 부족은 불변.
 - **Verdict: consistent with graded(확증 아님).**
 
 ### [3] KRAS-G12C ≤ 0.65 **및 EGFR > KRAS 순서**
-- KRAS 관측 0.6549(≤0.65 라인 바로 위, 사실상 경계), CI [0.5634, 0.7434], n_pos=14.
-- EGFR(0.8133) > KRAS(0.6549) → **점추정 순서는 예측과 일치(EGFR>KRAS).**
-- 그러나 EGFR·KRAS 모두 exploratory, **CI가 광범위하게 겹침**(EGFR [0.67,0.93] ∩ KRAS [0.56,0.74]) → **순서 어느 방향도 통계적으로 확립 불가.**
-- **Verdict: INCONCLUSIVE.** 점추정은 법칙과 부합(consistent with)하나 n_pos 14–15로 순서·라인 모두 확증 불가. **반증도 아님**(KRAS가 ≥0.8로 잘 예측되는 반증 시나리오는 관측되지 않음).
+- KRAS 관측 0.6809(≤0.65 라인 **위** — 정본 기준 경계 이탈), CI [0.577, 0.7825], shuffle 0.5081, n_pos=14.
+- EGFR(0.8518) > KRAS(0.6809) → **점추정 순서는 예측과 일치(EGFR>KRAS).**
+- 그러나 EGFR·KRAS 모두 exploratory, **CI가 광범위하게 겹침**(EGFR [0.72,0.95] ∩ KRAS [0.58,0.78]) → **순서 어느 방향도 통계적으로 확립 불가.**
+- **Verdict: INCONCLUSIVE.** 점추정 순서는 consistent with이나 n_pos 14로 확증 불가. KRAS 0.6809는 사전 ≤0.65 라인을 미세 초과(1차 0.6549 "경계"보다 정본은 오히려 예측서 벗어남) — 단 n_pos 14·CI 광범위로 "필수 마커 예측 실패" 반증으로도 셀 수 없음.
 
 ### [4] 전사체 아형 중 **TRU 최고 AUROC**
 - LUAD 발현아형 one-vs-rest(LUAD 내 제한; LUSC를 rest에 넣지 않아 histology 재검출 차단):
@@ -67,4 +68,4 @@
 ## 주의
 - claim_level: hypothesis_only. 어떤 우월성/치료 최적화 주장 없음. DRP 아님(형태→가설 라우팅만).
 - 임베딩 1048/1053(스트래글러 4장 다운로드중 + 1장 fail_dl; `../STRAGGLERS.md`). 완료 시 EGFR/KRAS n_pos는 사실상 불변(누락은 환자 4명)이라 결론 안정.
-- shuffle-null 편차(EGFR 0.66, PP 0.33 등)는 holdout n_pos 소수에서의 부트스트랩/순열 잡음 — exploratory 판정을 강화한다.
+- shuffle-null은 holdout n_pos 소수에서 순열/부트스트랩 잡음이 커 endpoint마다 편차가 있다(subtype PP 0.33 등) — exploratory 판정을 강화한다. **단 base 3 endpoint는 정본(9b42d37) shuffle 0.43/0.46/0.51로 재동기화됨.** 단일시드 shuffle의 우연배제 한계는 별도 blocker(≥5-seed)로 다룬다.
