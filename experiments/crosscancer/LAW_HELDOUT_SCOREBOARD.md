@@ -1,6 +1,6 @@
 # 치환가능성 법칙 — 5암종 통합 스코어보드 (G1 결과 확정용)
 
-> 사전등록 `SUBSTITUTABILITY_LAW_PREREGISTRATION.md`(봉인) 대비 held-out 관측 통합. claim_level: **hypothesis_only** · critic_status: **caution**(braveji, 2026-07-14 — HPV 표 provisional 하향, 자기모순 해소; BLOCKER-3·4-2는 `critic_robustness_probe.py` 실행 후 pass 판정 가능). 2026-07-13 (**정본 재동기화 2026-07-14**: 폐 base 3 endpoint를 정본 JSON으로 정정, 대장 5-seed 실패검정 반영 — BLOCKER-2·4).
+> 사전등록 `SUBSTITUTABILITY_LAW_PREREGISTRATION.md`(봉인) 대비 held-out 관측 통합. claim_level: **hypothesis_only** · critic_status: **caution**(braveji, 2026-07-14 — HPV 5-seed PASS 확인 후 CONFIRM 복원; BLOCKER-1·3·4-2는 kkkim 브랜치 `50bb7c9`에서 해소됨 — main 병합 대기. G2 pass 잔여: sjpark #4·jhans #5 sub-check + 위암 lauren 원인 진단 + braveji 3차 재검토). 2026-07-13 (**정본 재동기화 2026-07-14**: 폐 base 3 endpoint를 정본 JSON으로 정정, 대장 5-seed 실패검정 반영 — BLOCKER-2·4).
 > 목적: Paper C 브랜치→main 병합 게이트 **G1(결과 확정)**의 단일 인계 문서. 정본 수치는 각 암종 `full/LAW_TEST.md` / `routing_cost.json`에서 직접 인용.
 > **핵심 규율: "확정"=결과셋 동결+정직 라벨링이지 "법칙 확증"이 아니다.** 검정력 있는 봉인 확증은 아래 굵게 표시된 소수뿐.
 
@@ -14,7 +14,7 @@
 
 | 암종 | endpoint | 축 분류 | 관측 AUROC (CI) | n_pos | 검정력 | 지위 | 판정 |
 |---|---|---|---|---|---|---|---|
-| 두경부 | **HPV** | 대체가능(바이러스축 형태) | **0.9594 (0.921–0.986)** | **26** | **충분** | sealed | ⚠️ **provisional** (≥0.80 점추정, 5-seed null 대기 — 우연배제 미확립) |
+| 두경부 | **HPV** | 대체가능(바이러스축 형태) | **0.9594 (0.921–0.986)** | **26** | **충분** | sealed | **✅ CONFIRM (≥0.80, 5-seed PASS — real 0.959 > thr 0.790)** |
 | 두경부 | grade_high | 양성대조(분화도) | 0.8152 (0.742–0.882) | 41 | 충분 | sealed | ✅ 양성대조 PASS(≥0.75) |
 | 두경부 | egfr_amp | 필수/등급적 | 0.6039 (0.443–0.760) | 17 | 부족 | sealed | INCONCLUSIVE(≤0.70 점추정 부합) |
 | 폐 | **histology LUSC** | 대체가능(양성대조) | **0.939 (0.905–0.967)** | **153** | **충분** | sealed | **✅ 양성대조 CONFIRM(≥0.93 명확 적중)** |
@@ -33,7 +33,7 @@
 
 ## 결론 (정직한 bottom line — 이게 "확정")
 
-1. **검정력 있는 sealed-forward 양성대조:** 폐 histology **0.939** · 두경부 grade 0.815 — 파이프라인 정상성 확인. 두경부 HPV 0.9594(n_pos=26, 검정력 충분)는 "형태 상관물 有 → 대체가능(≥0.80)" 축의 검정력 있는 후보이나, **5-seed shuffle-null이 미실행(단일 시드만)이라 우연배제 미확립 — `provisional` 처리.** 5-seed 완료 후 CONFIRM 승격 가능(위 표 판정란 참조). 5-seed는 현재 대장에만 적용됨(아래 6).
+1. **검정력 있는 sealed-forward 확증:** 양성대조(폐 histology **0.939** · 두경부 grade 0.815) + **두경부 HPV 0.9594(n_pos=26, 5-seed PASS — real 0.959 > thr 0.790, pixel-mean 0.922).** HPV가 "형태 상관물 有 → 대체가능(≥0.80)" 축의 **유일한 검정력 있는 확증**이며, 바이러스축이라 법칙을 새 종류로 확장. 5-seed 우연배제 확립(BLOCKER-1 해소, `50bb7c9` on kkkim branch — main 병합 대기). pixel-mean 0.922는 조직형·바이러스축이 저해상도 특징에서도 회수 가능함을 보임(MIL gap +0.037 — Limitation 소재).
 2. **모든 변이/증폭축은 exploratory(n_pos<25) → INCONCLUSIVE.** 폐 EGFR/KRAS, 위 MSI 등 방향은 법칙과 일관하나 검정력 부족으로 확증·반증 불가. **[인용 철회, braveji G2] 위 ERBB2-amp(0.6444)는 shuffle-null 0.6406과 마진 0.004 = 신호 0**이라, 유방 HER2(0.599)와의 "증폭≠형태 일치"를 증거로 쓸 수 없음(신호 없는 endpoint에서 증거 가치 차용 불가).
 3. **위암 양성대조(Lauren) FAIL(0.54):** 위암 파이프라인 sanity가 서지 않음 → **위암 endpoint 전체는 저신뢰로 취급.** (파이프라인 문제 vs 데이터 희소 구분 필요.)
 4. **대장은 회고적** → 검정력 있는 held-out 확증 집계에서 제외. 방향 일관까지만.
