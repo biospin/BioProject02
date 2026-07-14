@@ -91,10 +91,71 @@
 
 ---
 
+## 3-bis. 블로커 5 (신규) — **owner 외에는 아무도 재현할 수 없습니다**
+
+`critic_robustness_probe.py`를 돌리려다 발견했습니다. 4개 암종 `embedding_manifest`의 `embedding_path` **2,588건 전부**가 개인 컨테이너 홈을 가리킵니다.
+
+| 암종 | 경로 접두사 | 건수 |
+|---|---|---|
+| LUNG_NSCLC | `/home/kkkim/project/...` | 1052 |
+| COLORECTAL | `/home/kkkim/project/...` | 622 |
+| HEADNECK_HNSC | `/home/kkkim/project/...` | 472 |
+| GASTRIC_STAD | `/home/kkkim/project/...` | 442 |
+
+`CLAUDE.md` §팀 공유 데이터 경로 규칙:
+
+> 각 팀원 SSH 계정은 **별도 Docker 컨테이너**다. `/home/<user>/`는 해당 컨테이너 로컬 디스크라 **다른 계정에서는 보이지 않는다**(권한을 열어도 마운트 자체가 없음).
+> manifest의 `embedding_path`는 **`/workspace/...` 절대경로**로 작성한다(**개인 홈 경로 금지**).
+
+### 왜 이게 심각한가 — Owner≠Reviewer가 **구조적으로 불가능**합니다
+
+- **Critic(braveji)이 재현할 수 없습니다.** 제가 이번 검토를 커밋된 JSON 정적 대조로만 한 것은 방법론 선택이 아니라 **강제**였습니다.
+- **sub-reviewer(sjpark/jhans)도 재현할 수 없습니다.** #4·#5를 의뢰해도 두 분은 숫자를 확인할 방법이 없습니다.
+- **남은 remediation도 owner만 실행 가능합니다.** 5-seed null, pixel-mean baseline — 전부 kkkim만 돌릴 수 있어 **동일한 단일 실패점을 재생산**합니다.
+- **#1(누수) 판정을 `pass` → `caution`으로 내렸습니다.** `split_meta.json`의 `site_disjoint: true` / `patient_overlap: 0`을 **독립 재계산할 수 없어** owner 자기신고에 의존하기 때문입니다.
+
+### 그리고 이것이 블로커 1·2·4가 살아남은 **구조적 이유**입니다
+
+폐 문서가 낡은 것도, 대장 실패 결과가 사라진 것도, 위암 shuffle 열이 빠진 것도 — **아무도 검증할 수 없었기 때문에** 살아남았습니다. 검증 가능성이 없으면 Critic 게이트는 서류 절차가 됩니다.
+
+**→ 블로커 5가 최우선 선행조건입니다.** 임베딩을 `/workspace/data/cache/biop02/`로 옮기고 manifest를 재작성하기 전까지, 나머지 remediation은 검증 불가능한 상태로 반복됩니다.
+
+---
+
+## 3-ter. Critic 제공 진단 도구
+
+`experiments/crosscancer/critic_robustness_probe.py` (braveji 작성)
+
+`run_mil_cost.train_eval`을 **그대로 import**합니다 (재구현 금지 — RNG 소비까지 동일해야 seed=42 real이 저장본을 재현). 유일한 차이는 `n_tiles` 부수 산출.
+
+endpoint마다 산출:
+
+| | 항목 | 목적 |
+|---|---|---|
+| **[A]** | real (seed=42) | 저장본 재현 확인 |
+| **[B]** | **5-seed shuffle-null** | `null_mean` / `null_sd` / 판정 (`real > null_mean + 2·null_sd` — kkkim 자체 기준 유지) |
+| **[C]** | **`n_tiles`-only baseline** ★ | **타일 수 단 하나의 피처로 LR.** 이게 높으면(≳0.7) AUROC가 형태가 아니라 **bag-size에서 나온다는 직접 증거** — shuffle-null이 >0.5로 뜨는 현상의 유력 용의자 |
+| **[D]** | mean-embed baseline | 임베딩 평균 → LR. MIL(attention)이 단순 평균 대비 더하는 값 (#2 pixel-mean 대응물) |
+| **[E]** | bag-size 교란 | `spearman(proba, n_tiles)` · **`spearman(label, n_tiles)`** — 후자가 유의하면 라벨 자체가 타일 수와 엮인 **원천 교란** → 그 endpoint의 AUROC는 전부 의심 |
+
+**[C]가 위암 `lauren_diffuse` 진단의 핵심입니다.** `n_tiles` 하나로 0.8이 나오면 블로커 1이 확정되고, 0.5 근처면 lauren 실패는 라벨 품질/56% 결손 쪽입니다.
+
+> ⚠️ **미실행입니다.** 구문·API 계약 정적 검증만 마쳤습니다 (`py_compile` 통과, `run_mil_cost`의 `train_eval(slides, labels, endpoint, device, shuffle, epochs, seed)` 시그니처와 계약 일치 확인). 로컬에 GPU·torch·데이터가 없고, **블로커 5 때문에 owner 외에는 실행 자체가 불가능**합니다. 실행 전 `#biop02-alerts`에 GPU 예약 필요.
+
+```bash
+python critic_robustness_probe.py --cancer GASTRIC_STAD --device cuda:0
+python critic_robustness_probe.py --cancer LUNG_NSCLC   --device cuda:1
+python critic_robustness_probe.py --cancer HEADNECK_HNSC --device cuda:2
+# → <cancer>/full/critic_robustness.json
+```
+
+---
+
 ## 4. 갱신된 서명 조건
 
 | # | 조건 | 상태 |
 |---|---|---|
+| **0** | **임베딩을 `/workspace/data/cache/biop02/`로 이전 + manifest 재작성** (`/home/kkkim/...` 2588건). CLAUDE.md 팀 공유 경로 규칙 위반이자, **모든 검증·remediation의 선행조건** | **신규 (블로커 5) · 최우선** |
 | 1 | **폐 3개 문서를 정본 JSON(`9b42d37`) 기준으로 재생성** + commit/split hash 봉인 | 원인 규명 완료 → 기계적 수정만 남음. **결과가 좋아지는 방향** |
 | 2 | **5-seed shuffle-null을 폐·위·두경부 전 endpoint에 적용** (`run_openitems_robustness.py` 이식). 판정 기준 = `real > null_mean + 2·null_sd` (kkkim 자체 기준 유지) | **blocking으로 승격** |
 | 3 | **대장 robustness 결과를 스코어보드·LAW_TEST에 반영** — cms1·cms4 FAIL 명시, `afedc6a`의 "사전등록 3축 확증" 서술 재검토, LAW_TEST 각주¹의 "FOLLOW-UP(non-blocking)" 문구 정정 | **신규 (블로커 4)** |
