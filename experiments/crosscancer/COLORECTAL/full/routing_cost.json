@@ -1,0 +1,64 @@
+{
+  "track": "Part B — treatment routing 치환비용 (routing-fidelity, cost-of-substitution)",
+  "note": "misroute_rate = 측정 마커 vs H&E-예측 마커 라우팅 불일치율(거리무관, 유방 receptor-routing과 like-with-like). mean_cost는 frozen_map 치료거리 존재 축(braf 0.868)만; MSI/anti-EGFR은 frozen_map 제외축이라 null(사람 결정 필요). 치료축은 routing-fidelity/cost-of-substitution로만 조작화한다(약물구조 입력 없음, hypothesis_only).",
+  "claim_level": "hypothesis_only",
+  "critic_status": "pending",
+  "commit": "d3a614f88855eafd50bf764aaf1ec07e543c33b6",
+  "preregistered": "routing_scheme_preregistered.json",
+  "axes": {
+    "msi_high": {
+      "route_to": "anti-PD-1",
+      "cost_hypothesis": "low",
+      "mil_auroc": 0.9184,
+      "ci95": [
+        0.8499,
+        0.9694
+      ],
+      "shuffle_null_auroc": 0.6364,
+      "n_holdout": 161,
+      "n_pos": 21,
+      "exploratory": true,
+      "misroute_rate": 0.112,
+      "mean_cost": null,
+      "mean_cost_note": "frozen_map에 이 축 치료거리 없음(ICI/항체축 제외) — null."
+    },
+    "anti_egfr_eligible": {
+      "route_to": "anti-EGFR",
+      "cost_hypothesis": "high",
+      "mil_auroc": 0.7053,
+      "ci95": [
+        0.6199,
+        0.7833
+      ],
+      "shuffle_null_auroc": 0.5385,
+      "n_holdout": 161,
+      "n_pos": 84,
+      "exploratory": false,
+      "misroute_rate": 0.416,
+      "mean_cost": null,
+      "mean_cost_note": "frozen_map에 이 축 치료거리 없음(ICI/항체축 제외) — null."
+    },
+    "braf_v600": {
+      "route_to": "BRAF+EGFR",
+      "cost_hypothesis": "partial",
+      "mil_auroc": 0.8817,
+      "ci95": [
+        0.8172,
+        0.9378
+      ],
+      "shuffle_null_auroc": 0.6406,
+      "n_holdout": 161,
+      "n_pos": 15,
+      "exploratory": true,
+      "misroute_rate": 0.099,
+      "mean_cost": 0.086,
+      "mean_cost_note": null
+    }
+  },
+  "shuffle_null_caveat": "shuffle_null_auroc는 seed=42 단일 라벨순열 1회 추정치로, 소표본(n_pos 15~21)에서 분산이 큼. braf_v600 null이 split 변경만으로 0.44(holdout151)->0.64(holdout161)로 흔들린 것이 그 증거(real은 0.868->0.882로 거의 불변). 따라서 우연배제 근거는 null 점추정치가 아니라 bootstrap CI와 real-vs-null 마진으로 판단해야 함. 상승한(>0.5) null은 데이터누수 신호가 '아니다' — 누수는 셔플이 지름길을 끊어 null을 0.5로 '낮춘다'. 상승 방향은 라벨무관 교란(CLAM bag-size: attention-sum이 tile수 N에 비례, N이 일부 표현형과 약상관)일 가능성. patient_overlap=0, site-disjoint 이미 검증됨. FOLLOW-UP(non-blocking, 사람/차기세션): null을 ~5 seed 평균내거나 holdout proba~tile수 상관 확인.",
+  "leakage_checks_passed": {
+    "patient_overlap": 0,
+    "site_disjoint": true,
+    "split_hash": "6b5e7f0ec176b27f(base)+site-map extend"
+  }
+}

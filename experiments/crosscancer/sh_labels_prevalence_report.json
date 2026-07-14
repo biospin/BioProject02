@@ -1,0 +1,83 @@
+{
+  "stad": {
+    "n_universe": 440,
+    "erbb2_amp": {
+      "n_pos": 58,
+      "n_has": 438,
+      "pct": 13.2
+    },
+    "msi_h": {
+      "n_pos": 82,
+      "n_has": 438,
+      "subtype_STAD_MSI": 73,
+      "agreement_sensor_vs_subtype": 73,
+      "pct": 18.7
+    },
+    "lauren_diffuse": {
+      "n_pos": 83,
+      "n_neg": 87,
+      "n_has": 170,
+      "pct_diffuse_of_classified": 48.8
+    },
+    "ebv": {
+      "n_pos": 30,
+      "n_has": 383,
+      "pct": 7.8
+    }
+  },
+  "hnsc": {
+    "n_universe": 523,
+    "hpv_pos": {
+      "n_pos": 72,
+      "n_has": 487,
+      "pct": 14.8
+    },
+    "egfr_amp": {
+      "n_pos": 54,
+      "n_has": 517,
+      "pct": 10.4
+    },
+    "grade_high": {
+      "n_pos": 130,
+      "n_neg": 371,
+      "n_has": 501,
+      "pct": 25.9
+    }
+  },
+  "anchors": {
+    "stad_erbb2_amp": [
+      10,
+      22
+    ],
+    "stad_msi_h": [
+      15,
+      25
+    ],
+    "stad_ebv": [
+      5,
+      13
+    ],
+    "hnsc_hpv_pos": [
+      10,
+      30
+    ],
+    "hnsc_egfr_amp": [
+      6,
+      20
+    ]
+  },
+  "est_holdout_pos_30pct": {
+    "STAD": {
+      "erbb2_amp": 17.4,
+      "msi_h": 24.6,
+      "lauren_diffuse": 24.9,
+      "ebv": 9.0
+    },
+    "HNSC": {
+      "hpv_pos": 21.6,
+      "egfr_amp": 16.2,
+      "grade_high": 39.0
+    }
+  },
+  "note": "SUBTYPE 필드 실측 채워짐 → EBV/MSI/HPV 분자아형 직접획득. MSI 1차=MSI_SENSOR>=3.5."
+}

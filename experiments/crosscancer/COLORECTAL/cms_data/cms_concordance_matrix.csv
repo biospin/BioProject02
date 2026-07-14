@@ -1,0 +1,6 @@
+authoritative\computed,CMS1,CMS2,CMS3,CMS4,total,recall_pct
+CMS1,67,0,2,2,71,94.4
+CMS2,3,157,14,29,209,75.1
+CMS3,13,0,56,0,69,81.2
+CMS4,3,3,7,118,135,87.4
+OVERALL,,,,,398/484,82.2%

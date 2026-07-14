@@ -1,0 +1,49 @@
+{
+  "analysis": "CPTAC-BRCA ERBB2 protein vs HER2 status \u2014 decoupling support",
+  "claim_level": "hypothesis_only",
+  "primary_result": {
+    "grouping": "HER2 clinical status (IHC/FISH), case-normalized",
+    "grouping_attribute": "ERBB2_UPDATED_CLINICAL_STATUS",
+    "n_her2pos": 13,
+    "n_her2neg": 82,
+    "erbb2_protein_mean_pos": 3.0682,
+    "erbb2_protein_mean_neg": -4.5879,
+    "erbb2_protein_median_pos": 3.0395,
+    "erbb2_protein_median_neg": -4.7273,
+    "direction": "HER2+ higher",
+    "cohens_d": 4.0046,
+    "rank_biserial_posHigher": 0.9099,
+    "pvalue_mannwhitney": 1.5501068405768435e-07,
+    "pvalue_welch_t": 2.8456743365504056e-06
+  },
+  "secondary_result_amp": {
+    "grouping": "ERBB2 DNA amplification",
+    "grouping_attribute": "ERBB2_GENE_AMPLIFIED",
+    "n_her2pos": 17,
+    "n_her2neg": 105,
+    "erbb2_protein_mean_pos": 2.5356,
+    "erbb2_protein_mean_neg": -4.2955,
+    "erbb2_protein_median_pos": 2.4729,
+    "erbb2_protein_median_neg": -4.3415,
+    "direction": "HER2+ higher",
+    "cohens_d": 3.3665,
+    "rank_biserial_posHigher": 0.8667,
+    "pvalue_mannwhitney": 1.0985509540936714e-08,
+    "pvalue_welch_t": 9.649662290688723e-07
+  },
+  "source": {
+    "proteomics": "cBioPortal brca_cptac_2020_protein_quantification (CPTAC-BRCA mass-spec, Krug 2020 Cell / Mertins 2016 Nature; datatype LOG2-VALUE, log2 ratio vs reference so negatives = below-reference)",
+    "her2_labels": "cBioPortal brca_cptac_2020 native clinical attributes (ERBB2_UPDATED_CLINICAL_STATUS, ERBB2_GENE_AMPLIFIED); native patientIds, no cross-ID join",
+    "gene": "ERBB2 (entrezGeneId 2064)",
+    "accessed": "2026-07-12",
+    "api": "www.cbioportal.org/api"
+  },
+  "he_mil_reference": {
+    "her2_internal_auroc": 0.599,
+    "her2_external_cptac_auroc": 0.53,
+    "attribution": "sjpark modeling eval (agents/modeling); quoted here, NOT recomputed in this workspace",
+    "pairing": "cohort-level juxtaposition \u2014 NOT patient-paired to the proteomics subset"
+  },
+  "note": "Confirms known biology (amplification->overexpression): HER2+ tumors have strongly elevated ERBB2 protein. This is a re-confirmation of established fact, NOT a new finding. Its role is to establish that HER2 is molecularly REAL at the protein level in this cohort, so the low H&E-MIL AUROC reflects morphological silence, not a label/DNA artifact.",
+  "commit_hash": "ec3710553723ff07437177684162212c3d5fd1c2"
+}

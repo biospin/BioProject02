@@ -1,0 +1,45 @@
+# Cross-cancer cost-of-substitution — 암종 config (Phase 0)
+# 이 파일 하나로 runner가 download→tile→embed→labels→MIL→frozen_map→cost→figure 구동(Phase 1).
+# 값은 착수 전 GDC facet / DepMap Model.csv 로 실측(approx 표기).
+
+cancer: LUNG_NSCLC
+description: "폐 NSCLC — 표적축(EGFR/ALK/KRAS, H&E-blind 예상) vs 형태학축(LUAD/LUSC, triage 예상)"
+
+# --- H&E WSI (open) ---
+tcga_cohorts: [TCGA-LUAD, TCGA-LUSC]     # GDC, 진단슬라이드 ~1,000 (approx)
+gdc_filter: {data_type: "Slide Image", experimental_strategy: "Diagnostic Slide"}
+cptac_collections: [cptac_luad, cptac_lscc]   # IDC 외부검증 (~244 + ~212)
+
+# --- 예측 엔드포인트 → 치료축 매핑 (사람 도메인 입력) ---
+endpoints:
+  - {name: EGFR_mut,           axis: anti-EGFR, expect: H&E-blind,      drugs: [Osimertinib, Gefitinib, Afatinib]}
+  - {name: ALK_fusion,         axis: anti-ALK,  expect: H&E-blind,      drugs: [Crizotinib, Alectinib, Lorlatinib]}
+  - {name: KRAS_G12C,          axis: anti-KRAS, expect: H&E-blind,      drugs: [Sotorasib, Adagrasib]}
+  - {name: histology_LUAD_LUSC, axis: histology, expect: H&E-triageable, drugs: [Pemetrexed]}   # 형태학 대조축
+
+# --- 분자 라벨 소스 (open tier) ---
+label_sources:
+  cbioportal: [luad_tcga_pan_can_atlas_2018, lusc_tcga_pan_can_atlas_2018]
+  # 대안: GDC MAF/CNV, TCGA-CDR clinical
+
+# --- 세포주 냉동지도 (open) ---
+depmap_lineage: Lung          # Model.csv OncotreeLineage 필터 (DepMap 최대 lineage, ~200+ approx)
+gdsc_tcga_desc: [LUAD, LUSC]  # GDSC2 TCGA_DESC
+map_axes: [anti-EGFR, anti-ALK, anti-KRAS, chemo]   # 냉동지도 축
+
+# --- 재사용 스크립트 (기존) ---
+reuse:
+  tile: agents/embedding/scripts/tile_wsi.py
+  embed: {uni: agents/embedding/scripts/extract_uni.py, conch: agents/embedding/scripts/extract_conch.py}
+  frozen_map: experiments/kkkim/20260710_cost_of_substitution/build_frozen_map.py
+  compute_cost: experiments/kkkim/20260710_cost_of_substitution/compute_cost.py
+  figure: experiments/kkkim/20260710_cost_of_substitution/make_fig_cost.py
+
+# --- 산출 위치 ---
+out_dir: experiments/crosscancer/LUNG_NSCLC
+
+# --- 게이트 (Phase 1 실행 전 확인) ---
+gates:
+  signoff: "research/paperA-positioning/2026-07-10_crosscancer-signoff.md (Leader 승인 2026-07-10, 팀 헤드업 대기)"
+  gpu: "#biop02-alerts 유휴 슬롯 예약 (Paper A와 경쟁)"
+  celllines_per_axis: ">=5 (build_frozen_map 후 확인, BRCA=51라인 GO 선례)"

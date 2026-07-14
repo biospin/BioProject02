@@ -13,9 +13,9 @@
 | jamie   | 류재면 | Data Agent | 2203 | `/workspace/agents/data/` |
 | sjpark  | 박세진 | Modeling Agent; Critic 바이오 sub-check 분담 | 2206 | `/workspace/agents/modeling/` |
 | jhans   | 서정한 | Therapeutic Evidence Agent | 2204 | `/workspace/agents/therapeutic_evidence/` |
-| ~~gglee~~   | ~~이건규~~ | (이탈 2026-06-09) | 2202 | — |
+| gglee   | 이건규 | 재편입 2026-07-07 (일정으로 6/9 이탈→재합류; 역할 재배정 별도 협의) | 2202 | `/workspace/agents/critic/` |
 
-**분담 원칙:** kkkim이 Project Leader 겸임 (2026-06-09 확정). braveji = Orchestrator + Scientific Critic 총괄. gglee 이탈로 5인 체제.
+**분담 원칙:** kkkim이 Project Leader 겸임 (2026-06-09 확정 — gglee 이탈로 이양). braveji = Orchestrator + Scientific Critic 총괄. **2026-07-07 gglee(이건규) 재편입 → 6인 체제**, 단 리더=kkkim·Critic 총괄=braveji 유지(역할 재배정은 별도 협의).
 
 > **서버 안내(현행):** 작업 서버는 `121.126.38.195`(RTX A6000 49GB × 3, 내부망 `192.168.0.85`). `61.109.239.220`은 bastion(점프 호스트)로 사용. 위 SSH 포트는 2026-06-30 현행 서버에 맞춰 정정됨(표 기준).
 

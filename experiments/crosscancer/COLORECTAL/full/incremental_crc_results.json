@@ -1,0 +1,212 @@
+{
+  "analysis": "incremental_over_conventional_pathology_COLORECTAL",
+  "claim_level": "hypothesis_only",
+  "critic_status": "pending",
+  "conventional_baseline": "ICD_O_3 histotype (mucinous/adenoNOS/other) + ICD_O_3 sidedness (right/left/nos). TCGA-COADREAD has NO grade/oncotree in cBioPortal patient data (0/613 empirically).",
+  "interpretation_limit": "TIL density is not a structured TCGA covariate; 'beats recorded covariates' is not 'beats a pathologist who can see TILs'.",
+  "law_framing": "msi_high = positive control (predictable = known morphology). anti_egfr_eligible = the powered test of the risky 'no-correlate' prediction. The colorectal verdict on the law rides on anti_egfr, not MSI (which is INCONCLUSIVE by our own n_pos<25 rule).",
+  "verdicts": {
+    "msi_high": {
+      "role": "positive_control(MSI classic H&E morphology; n_pos<25 EXPLORATORY by pre-reg)",
+      "vs_conventional_pathology": {
+        "delta_auroc": 0.1293,
+        "delta_ci95": [
+          0.0079,
+          0.26
+        ],
+        "LRtest_p": 0.0,
+        "delong_p": 0.03618,
+        "significant_increment": true
+      },
+      "vs_plus_CMS_molecular": {
+        "delta_auroc": 0.0304,
+        "delta_ci95": [
+          0.0048,
+          0.0604
+        ],
+        "LRtest_p": 0.000767,
+        "delong_p": 0.02645
+      },
+      "exploratory_by_prereg": true,
+      "verdict": "INCONCLUSIVE_by_power(n_pos<25) \u2014 positive-control corroboration only"
+    },
+    "anti_egfr_eligible": {
+      "role": "POWERED test of law's risky prediction (RAS/BRAF-wt = point-mutation status, 'no correlate')",
+      "vs_conventional_pathology": {
+        "delta_auroc": 0.049,
+        "delta_ci95": [
+          0.0033,
+          0.0963
+        ],
+        "LRtest_p": 0.02605,
+        "delong_p": 0.0407,
+        "significant_increment": true
+      },
+      "vs_plus_CMS_molecular": {
+        "delta_auroc": 0.0192,
+        "delta_ci95": [
+          -0.0144,
+          0.053
+        ],
+        "LRtest_p": 0.094561,
+        "delong_p": 0.26855
+      },
+      "exploratory_by_prereg": false,
+      "verdict": "increment_over_conventional_pathology_DEMONSTRATED"
+    }
+  },
+  "coverage": {
+    "msi_high": {
+      "n_total": 161,
+      "n_pos": 21,
+      "exploratory_by_prereg": true,
+      "hist_dist": {
+        "adenoNOS": 117,
+        "other": 27,
+        "mucinous": 17
+      },
+      "side_dist": {
+        "left": 87,
+        "right": 51,
+        "nos": 23
+      },
+      "cms_dist": {
+        "CMS2": 50,
+        "CMS4": 42,
+        "NOLBL": 29,
+        "CMS3": 21,
+        "CMS1": 19
+      }
+    },
+    "anti_egfr_eligible": {
+      "n_total": 161,
+      "n_pos": 84,
+      "exploratory_by_prereg": false,
+      "hist_dist": {
+        "adenoNOS": 117,
+        "other": 27,
+        "mucinous": 17
+      },
+      "side_dist": {
+        "left": 87,
+        "right": 51,
+        "nos": 23
+      },
+      "cms_dist": {
+        "CMS2": 50,
+        "CMS4": 42,
+        "NOLBL": 29,
+        "CMS3": 21,
+        "CMS1": 19
+      }
+    }
+  },
+  "results": [
+    {
+      "marker": "msi_high",
+      "baseline": "A_conventional_pathology(PRIMARY)",
+      "covariates": [
+        "hist",
+        "side"
+      ],
+      "n": 161,
+      "n_pos": 21,
+      "prevalence": 0.1304,
+      "n_params_full": 5,
+      "events_per_variable": 4.2,
+      "auroc_pHE_alone": 0.9184,
+      "auroc_base_cv": 0.6741,
+      "auroc_full_cv": 0.8034,
+      "delta_auroc_cv": 0.1293,
+      "delta_auroc_cv_ci95": [
+        0.0079,
+        0.26
+      ],
+      "delong_p_cv": 0.03618,
+      "LRtest_stat": 38.5377,
+      "LRtest_df": 1,
+      "LRtest_p": 0.0,
+      "pHE_coef_full": 1.4792
+    },
+    {
+      "marker": "msi_high",
+      "baseline": "B_+CMS_molecular(secondary)",
+      "covariates": [
+        "hist",
+        "side",
+        "cms"
+      ],
+      "n": 161,
+      "n_pos": 21,
+      "prevalence": 0.1304,
+      "n_params_full": 9,
+      "events_per_variable": 2.33,
+      "auroc_pHE_alone": 0.9184,
+      "auroc_base_cv": 0.9019,
+      "auroc_full_cv": 0.9323,
+      "delta_auroc_cv": 0.0304,
+      "delta_auroc_cv_ci95": [
+        0.0048,
+        0.0604
+      ],
+      "delong_p_cv": 0.02645,
+      "LRtest_stat": 11.3204,
+      "LRtest_df": 1,
+      "LRtest_p": 0.000767,
+      "pHE_coef_full": 1.1004
+    },
+    {
+      "marker": "anti_egfr_eligible",
+      "baseline": "A_conventional_pathology(PRIMARY)",
+      "covariates": [
+        "hist",
+        "side"
+      ],
+      "n": 161,
+      "n_pos": 84,
+      "prevalence": 0.5217,
+      "n_params_full": 5,
+      "events_per_variable": 16.8,
+      "auroc_pHE_alone": 0.7066,
+      "auroc_base_cv": 0.6208,
+      "auroc_full_cv": 0.6698,
+      "delta_auroc_cv": 0.049,
+      "delta_auroc_cv_ci95": [
+        0.0033,
+        0.0963
+      ],
+      "delong_p_cv": 0.0407,
+      "LRtest_stat": 4.9527,
+      "LRtest_df": 1,
+      "LRtest_p": 0.02605,
+      "pHE_coef_full": 0.4032
+    },
+    {
+      "marker": "anti_egfr_eligible",
+      "baseline": "B_+CMS_molecular(secondary)",
+      "covariates": [
+        "hist",
+        "side",
+        "cms"
+      ],
+      "n": 161,
+      "n_pos": 84,
+      "prevalence": 0.5217,
+      "n_params_full": 9,
+      "events_per_variable": 9.33,
+      "auroc_pHE_alone": 0.7066,
+      "auroc_base_cv": 0.6535,
+      "auroc_full_cv": 0.6728,
+      "delta_auroc_cv": 0.0192,
+      "delta_auroc_cv_ci95": [
+        -0.0144,
+        0.053
+      ],
+      "delong_p_cv": 0.26855,
+      "LRtest_stat": 2.795,
+      "LRtest_df": 1,
+      "LRtest_p": 0.094561,
+      "pHE_coef_full": 0.3151
+    }
+  ]
+}

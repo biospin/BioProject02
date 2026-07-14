@@ -1,0 +1,235 @@
+{
+  "commit_hash": "25fc09b0d288b4924c2e52403724a0990269c915",
+  "n_perm": 5000,
+  "n_boot": 2000,
+  "definitions": [
+    {
+      "definition": "IHC_status",
+      "n_train": 496,
+      "n_train_pos": 94,
+      "best_val_loss": 0.7738,
+      "val_only": {
+        "n": 112,
+        "n_pos": 38,
+        "prevalence": 0.3393,
+        "auroc": 0.585,
+        "auc_ci_95": [
+          0.4657,
+          0.6972
+        ],
+        "auprc": 0.4788,
+        "perm_null_mean": 0.5015,
+        "perm_null_ci_95": [
+          0.3887,
+          0.6177
+        ],
+        "perm_p_value": 0.0818
+      },
+      "test_only": {
+        "n": 90,
+        "n_pos": 27,
+        "prevalence": 0.3,
+        "auroc": 0.7125,
+        "auc_ci_95": [
+          0.5925,
+          0.8266
+        ],
+        "auprc": 0.5083,
+        "perm_null_mean": 0.5005,
+        "perm_null_ci_95": [
+          0.3657,
+          0.6332
+        ],
+        "perm_p_value": 0.0008
+      },
+      "pooled": {
+        "n": 202,
+        "n_pos": 65,
+        "prevalence": 0.3218,
+        "auroc": 0.6384,
+        "auc_ci_95": [
+          0.5525,
+          0.7194
+        ],
+        "auprc": 0.4675,
+        "perm_null_mean": 0.4996,
+        "perm_null_ci_95": [
+          0.4136,
+          0.5862
+        ],
+        "perm_p_value": 0.0012
+      }
+    },
+    {
+      "definition": "IHC_3plus",
+      "n_train": 318,
+      "n_train_pos": 58,
+      "best_val_loss": 0.6958,
+      "val_only": {
+        "n": 48,
+        "n_pos": 19,
+        "prevalence": 0.3958,
+        "auroc": 0.6334,
+        "auc_ci_95": [
+          0.457,
+          0.7967
+        ],
+        "auprc": 0.609,
+        "perm_null_mean": 0.5021,
+        "perm_null_ci_95": [
+          0.3358,
+          0.6697
+        ],
+        "perm_p_value": 0.064
+      },
+      "test_only": {
+        "n": 38,
+        "n_pos": 10,
+        "prevalence": 0.2632,
+        "auroc": 0.6393,
+        "auc_ci_95": [
+          0.3946,
+          0.8583
+        ],
+        "auprc": 0.5134,
+        "perm_null_mean": 0.4994,
+        "perm_null_ci_95": [
+          0.2929,
+          0.7107
+        ],
+        "perm_p_value": 0.0968
+      },
+      "pooled": {
+        "n": 86,
+        "n_pos": 29,
+        "prevalence": 0.3372,
+        "auroc": 0.6407,
+        "auc_ci_95": [
+          0.5036,
+          0.7683
+        ],
+        "auprc": 0.5546,
+        "perm_null_mean": 0.5011,
+        "perm_null_ci_95": [
+          0.3721,
+          0.6304
+        ],
+        "perm_p_value": 0.017
+      }
+    },
+    {
+      "definition": "FISH",
+      "n_train": 350,
+      "n_train_pos": 60,
+      "best_val_loss": 0.6791,
+      "val_only": {
+        "n": 25,
+        "n_pos": 8,
+        "prevalence": 0.32,
+        "auroc": 0.8088,
+        "auc_ci_95": [
+          0.5333,
+          1.0
+        ],
+        "auprc": 0.8113,
+        "perm_null_mean": 0.4986,
+        "perm_null_ci_95": [
+          0.25,
+          0.7426
+        ],
+        "perm_p_value": 0.0066
+      },
+      "test_only": {
+        "n": 22,
+        "n_pos": 7,
+        "prevalence": 0.3182,
+        "auroc": 0.7429,
+        "auc_ci_95": [
+          0.5086,
+          0.9412
+        ],
+        "auprc": 0.4988,
+        "perm_null_mean": 0.501,
+        "perm_null_ci_95": [
+          0.2286,
+          0.7714
+        ],
+        "perm_p_value": 0.039
+      },
+      "pooled": {
+        "n": 47,
+        "n_pos": 15,
+        "prevalence": 0.3191,
+        "auroc": 0.7667,
+        "auc_ci_95": [
+          0.5952,
+          0.9095
+        ],
+        "auprc": 0.5765,
+        "perm_null_mean": 0.5004,
+        "perm_null_ci_95": [
+          0.3208,
+          0.6771
+        ],
+        "perm_p_value": 0.0018
+      }
+    },
+    {
+      "definition": "CNV_amp",
+      "n_train": 683,
+      "n_train_pos": 69,
+      "best_val_loss": 0.4021,
+      "val_only": {
+        "n": 151,
+        "n_pos": 27,
+        "prevalence": 0.1788,
+        "auroc": 0.7682,
+        "auc_ci_95": [
+          0.6592,
+          0.8697
+        ],
+        "auprc": 0.4764,
+        "perm_null_mean": 0.5004,
+        "perm_null_ci_95": [
+          0.3823,
+          0.6189
+        ],
+        "perm_p_value": 0.0002
+      },
+      "test_only": {
+        "n": 149,
+        "n_pos": 18,
+        "prevalence": 0.1208,
+        "auroc": 0.7252,
+        "auc_ci_95": [
+          0.603,
+          0.8327
+        ],
+        "auprc": 0.2407,
+        "perm_null_mean": 0.4982,
+        "perm_null_ci_95": [
+          0.3575,
+          0.6421
+        ],
+        "perm_p_value": 0.001
+      },
+      "pooled": {
+        "n": 300,
+        "n_pos": 45,
+        "prevalence": 0.15,
+        "auroc": 0.7525,
+        "auc_ci_95": [
+          0.6732,
+          0.8286
+        ],
+        "auprc": 0.3568,
+        "perm_null_mean": 0.5007,
+        "perm_null_ci_95": [
+          0.4056,
+          0.5949
+        ],
+        "perm_p_value": 0.0002
+      }
+    }
+  ]
+}

@@ -1,0 +1,207 @@
+{
+  "analysis": "incremental_over_conventional_pathology",
+  "claim_level": "hypothesis_only",
+  "critic_status": "pending",
+  "note": "TCGA-BRCA lacks histologic grade; conventional baseline=histologic type (ductal/lobular/other). PAM50 is molecular subtype (partly co-defined by ER/HER2) -> secondary/stringent only. PRIMARY test=nested LR on p_HE coef (in-sample MLE); DeLong + bootstrap CI on 5-fold CV scores=out-of-sample support. ER p_HE=val split (used for early stopping -> mildly optimistic); HER2 p_HE=pooled val+test. hypothesis_only, no commit.",
+  "pam50_provenance": "Parker-2009 nearest-centroid classifier computed from RNA expression (tcga_brca_pam50_computed_PROVENANCE.md); manifest pam50 == computed file 100%. Expression-derived, H&E-independent -> valid as an independent (stringent) baseline covariate.",
+  "grade_note": "TCGA-BRCA has NO histologic grade in cBioPortal pancan or legacy studies (empirically checked); conventional-pathology baseline is histotype-only by necessity.",
+  "verdicts": {
+    "ER": {
+      "vs_conventional_histology": {
+        "delta_auroc": 0.2364,
+        "delta_ci95": [
+          0.1494,
+          0.3297
+        ],
+        "LRtest_p": 0.0,
+        "delong_p": 0.0,
+        "significant_increment": true
+      },
+      "vs_molecular_subtype_PAM50": {
+        "delta_auroc": 0.0335,
+        "delta_ci95": [
+          0.0008,
+          0.07
+        ],
+        "LRtest_p": 3.3e-05,
+        "delong_p": 0.05962,
+        "three_tests_agree": false,
+        "note": "LR & bootstrap-CI significant but DeLong borderline (in-sample vs out-of-sample disagreement) \u2014 do not smooth over"
+      },
+      "framework_implication": "partially_supports",
+      "interpretation": "OVER conventional H&E-readable pathology (histologic type): large, robust increment (dAUC 0.2364 [0.1494, 0.3297], LR p 0.0) \u2014 H&E carries marker-specific morphology beyond histotype. OVER molecular subtype (PAM50, expression-derived, Parker-2009, H&E-independent): increment small (dAUC 0.0335 [0.0008, 0.07], LR p 3.3e-05) \u2014 much of the H&E signal is shared with the luminal/HER2-enriched subtype axis (expected: PAM50 is not obtainable from H&E and is partly co-defined by this marker). NET: signal beyond histotype = demonstrated; fully independent of molecular subtype = NOT demonstrated."
+    },
+    "HER2_CNVamp": {
+      "vs_conventional_histology": {
+        "delta_auroc": 0.1782,
+        "delta_ci95": [
+          0.0996,
+          0.2636
+        ],
+        "LRtest_p": 1e-06,
+        "delong_p": 2e-05,
+        "significant_increment": true
+      },
+      "vs_molecular_subtype_PAM50": {
+        "delta_auroc": 0.0353,
+        "delta_ci95": [
+          0.0128,
+          0.0607
+        ],
+        "LRtest_p": 0.002802,
+        "delong_p": 0.00294,
+        "three_tests_agree": true,
+        "note": "LR, bootstrap-CI and DeLong concordant"
+      },
+      "framework_implication": "partially_supports",
+      "interpretation": "OVER conventional H&E-readable pathology (histologic type): large, robust increment (dAUC 0.1782 [0.0996, 0.2636], LR p 1e-06) \u2014 H&E carries marker-specific morphology beyond histotype. OVER molecular subtype (PAM50, expression-derived, Parker-2009, H&E-independent): increment small (dAUC 0.0353 [0.0128, 0.0607], LR p 0.002802) \u2014 much of the H&E signal is shared with the luminal/HER2-enriched subtype axis (expected: PAM50 is not obtainable from H&E and is partly co-defined by this marker). NET: signal beyond histotype = demonstrated; fully independent of molecular subtype = NOT demonstrated."
+    }
+  },
+  "skipped_markers": {
+    "COLORECTAL_MSI_high": "SKIPPED/INCONCLUSIVE \u2014 per-patient p_HE not persisted (routing_cost.json stores only summary AUROC 0.9184); crosscancer embeddings owned by another process (do-not-touch) and no GPU slot reservable here. Re-training would be a new result (fresh seed/split), not reuse. UNBLOCK (one line for owning process): in run_cms_and_routing.py Part-B, persist patient_proba for msi_high/anti_egfr_eligible exactly as braf_v600e/CMS already do, then this test can run.",
+    "COLORECTAL_all_RAS_anti_egfr": "SKIPPED/INCONCLUSIVE \u2014 same reason (routing_cost.json summary AUROC 0.7053 only). Same one-line unblock.",
+    "note_pivotal": "MSI-H vs (mucinous + right-sided + high-grade) is the sharpest 'does the embedding beat the pathologist' test (MSI has classic H&E morphology). Currently blocked, not negative."
+  },
+  "coverage": {
+    "ER": {
+      "n_total": 152,
+      "n_missing_hist": 0,
+      "n_missing_pam50": 1,
+      "n_analyzed": 151,
+      "hist_dist": {
+        "ductal": 82,
+        "lobular": 47,
+        "other": 22
+      },
+      "pam50_dist": {
+        "LumB": 36,
+        "LumA": 32,
+        "Normal": 28,
+        "HER2": 28,
+        "Basal": 27
+      }
+    },
+    "HER2_CNVamp": {
+      "n_total": 300,
+      "n_missing_hist": 0,
+      "n_missing_pam50": 1,
+      "n_analyzed": 299,
+      "hist_dist": {
+        "ductal": 190,
+        "lobular": 66,
+        "other": 43
+      },
+      "pam50_dist": {
+        "LumB": 81,
+        "LumA": 64,
+        "Basal": 60,
+        "Normal": 48,
+        "HER2": 46
+      }
+    }
+  },
+  "results": [
+    {
+      "marker": "ER",
+      "baseline": "A_histology_only(PRIMARY)",
+      "covariates": [
+        "hist"
+      ],
+      "n": 151,
+      "n_pos": 114,
+      "prevalence": 0.755,
+      "n_params_full": 3,
+      "events_per_variable": 38.0,
+      "auroc_pHE_alone": 0.9021,
+      "auroc_base_cv": 0.6688,
+      "auroc_full_cv": 0.9052,
+      "delta_auroc_cv": 0.2364,
+      "delta_auroc_cv_ci95": [
+        0.1494,
+        0.3297
+      ],
+      "delong_p_cv": 0.0,
+      "LRtest_stat": 50.6848,
+      "LRtest_df": 1,
+      "LRtest_p": 0.0,
+      "pHE_coef_full": 1.7359
+    },
+    {
+      "marker": "ER",
+      "baseline": "B_histology+PAM50(secondary)",
+      "covariates": [
+        "hist",
+        "pam50"
+      ],
+      "n": 151,
+      "n_pos": 114,
+      "prevalence": 0.755,
+      "n_params_full": 7,
+      "events_per_variable": 16.29,
+      "auroc_pHE_alone": 0.9021,
+      "auroc_base_cv": 0.9017,
+      "auroc_full_cv": 0.9353,
+      "delta_auroc_cv": 0.0335,
+      "delta_auroc_cv_ci95": [
+        0.0008,
+        0.07
+      ],
+      "delong_p_cv": 0.05962,
+      "LRtest_stat": 17.2324,
+      "LRtest_df": 1,
+      "LRtest_p": 3.3e-05,
+      "pHE_coef_full": 1.3675
+    },
+    {
+      "marker": "HER2_CNVamp",
+      "baseline": "A_histology_only(PRIMARY)",
+      "covariates": [
+        "hist"
+      ],
+      "n": 299,
+      "n_pos": 45,
+      "prevalence": 0.1505,
+      "n_params_full": 3,
+      "events_per_variable": 15.0,
+      "auroc_pHE_alone": 0.7527,
+      "auroc_base_cv": 0.5821,
+      "auroc_full_cv": 0.7603,
+      "delta_auroc_cv": 0.1782,
+      "delta_auroc_cv_ci95": [
+        0.0996,
+        0.2636
+      ],
+      "delong_p_cv": 2e-05,
+      "LRtest_stat": 23.4771,
+      "LRtest_df": 1,
+      "LRtest_p": 1e-06,
+      "pHE_coef_full": 0.6755
+    },
+    {
+      "marker": "HER2_CNVamp",
+      "baseline": "B_histology+PAM50(secondary)",
+      "covariates": [
+        "hist",
+        "pam50"
+      ],
+      "n": 299,
+      "n_pos": 45,
+      "prevalence": 0.1505,
+      "n_params_full": 7,
+      "events_per_variable": 6.43,
+      "auroc_pHE_alone": 0.7527,
+      "auroc_base_cv": 0.8641,
+      "auroc_full_cv": 0.8994,
+      "delta_auroc_cv": 0.0353,
+      "delta_auroc_cv_ci95": [
+        0.0128,
+        0.0607
+      ],
+      "delong_p_cv": 0.00294,
+      "LRtest_stat": 8.9324,
+      "LRtest_df": 1,
+      "LRtest_p": 0.002802,
+      "pHE_coef_full": 0.5546
+    }
+  ]
+}

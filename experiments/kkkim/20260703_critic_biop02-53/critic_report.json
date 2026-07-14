@@ -1,0 +1,85 @@
+{
+  "schema_version": "0.1",
+  "created_at": "2026-07-03T14:40:40Z",
+  "reviewer": "kkkim",
+  "owner": "sjpark",
+  "experiment": {
+    "experiment_id": "er_pr_her2_status_clam_uni_v2",
+    "task": "molecular_phenotype_mil (er/pr/her2_status)",
+    "endpoint": "ER/PR/HER2 IHC status (binary), attention MIL",
+    "commit_hash": "0e0a1e1f8f02d472e65728a25701c57f4ac48462",
+    "config_path": "/workspace/agents/modeling/experiments/sjpark/er_status_clam_uni_v2/config.yaml",
+    "metrics_path": "/workspace/agents/modeling/experiments/sjpark/er_status_clam_uni_v2/metrics.json",
+    "predictions_path": "/workspace/agents/modeling/experiments/sjpark/er_status_clam_uni_v2/predictions.npy",
+    "embedding_manifest_path": "/workspace/data/cache/biop02/embedding_manifest_uni.csv",
+    "split_policy_path": "/workspace/data/cache/biop02/split_policy_v1.csv"
+  },
+  "checks": {
+    "data_leakage": {
+      "status": "pass",
+      "evidence": [
+        "Site-disjoint verified: 37 distinct TSS codes, NONE span >1 split (train/val/test).",
+        "split dist train707/val152/test151; splits carried in embedding_manifest_uni.csv 'split' column.",
+        "val->CPTAC ext AUC gap tiny for ER (0.901->0.894) and PR (0.777->0.778) => no gross site-leakage."
+      ],
+      "notes": "Site-probe AUROC 0.9977 shows morphology encodes site, but the locked split is site-disjoint so it does not leak into train/val. Passes."
+    },
+    "baseline_comparison": {
+      "status": "pass",
+      "evidence": [
+        "ER CLAM-SB AUC 0.901 > random 0.526 and > mean_embed 0.816 (morphology-free floors both beaten).",
+        "Attention MIL (0.901) > mean-pooling mean_embed (0.816) => aggregation adds value.",
+        "subtype_only ER 0.918 uses PAM50 as INPUT (--aux_col pam50) = ceiling reference, not a floor.",
+        "PR: CLAM 0.777 > random 0.557 > mean_embed 0.686; subtype_only 0.808 ceiling."
+      ],
+      "notes": "subtype_only is NOT a failure criterion — it is a PAM50-informed ceiling. Model beats all morphology-free baselines; nears but does not surpass molecular-subtype prior (expected limitation)."
+    },
+    "counterfactual_check": {
+      "status": "not_applicable",
+      "evidence": [
+        "Feature-ablation counterfactual applies to therapeutic-hypothesis ranking (Paper B), not phenotype classification at this stage."
+      ],
+      "notes": "Attention maps (attention_summary.json) exist as partial interpretability."
+    },
+    "cross_dataset_check": {
+      "status": "caution",
+      "evidence": [
+        "Modeling-stage generalization = TCGA(train)->CPTAC(test). Literal PRISM-vs-GDSC (#4) N/A (Paper B).",
+        "ER holds: val 0.901 -> ext 0.894. PR holds: 0.777 -> 0.778.",
+        "HER2 collapses externally: ext_auc 0.530, ext_auprc 0.121 = near-random; internal val already weak (0.599)."
+      ],
+      "notes": "CAUTION: CPTAC labels are kkkim provisional cBioPortal set (395/653) — partial reviewer self-reference. Final sign-off needs jamie official labels + braveji. HER2 external result is a real negative finding."
+    },
+    "biological_plausibility": {
+      "status": "not_applicable",
+      "evidence": [
+        "#5 bio sub-check assigned to a non-owner sub-reviewer (owner=sjpark cannot self-review); reviewer kkkim is embedding-side."
+      ],
+      "notes": "Deferred to braveji-designated bio sub-reviewer. Attention maps available as substrate."
+    },
+    "drp_framing": {
+      "status": "pass",
+      "evidence": [
+        "grep of sjpark artifacts/configs/scripts: no 'drug response / personalized therapy / optimal treatment / patient-specific / pembrolizumab'."
+      ],
+      "notes": "Framing clean."
+    },
+    "claim_level": {
+      "status": "pass",
+      "evidence": [
+        "All CLAM metrics.json carry claim_level=hypothesis_only."
+      ],
+      "notes": "Compliant."
+    }
+  },
+  "critic_status": "caution",
+  "claim_level": "hypothesis_only",
+  "summary": "Attention MIL (CLAM-SB) on UNI, ER/PR/HER2, TCGA->CPTAC. Leakage clean (site-disjoint), baselines correctly beaten (subtype_only is a PAM50 ceiling not a floor), ER/PR generalize externally (ER 0.89, PR 0.78 ext AUC), but HER2 near-random externally (ext_auc 0.53/auprc 0.12). critic_status=caution pending jamie official CPTAC labels, braveji final sign-off, and missing PAM50 MIL. Modeling cross-review only; not a final pass.",
+  "required_followups": [
+    "Replace provisional kkkim CPTAC labels (395/653) with jamie official labels; re-run external eval.",
+    "braveji: final critic_status + assign #5 biological-plausibility sub-reviewer (non-owner).",
+    "sjpark: add PAM50 attention-MIL run (currently only MLP exists) to complete BIOP02-53 scope.",
+    "Report HER2 external near-random (ext_auc 0.53) explicitly; do not present HER2 as validated.",
+    "Use v2 (attention-init) as primary over v1; v2 dominates on ER/PR external."
+  ]
+}

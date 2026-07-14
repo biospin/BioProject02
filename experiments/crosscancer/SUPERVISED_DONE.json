@@ -1,0 +1,101 @@
+{
+  "finished_utc": "2026-07-12T06:37:51Z",
+  "embedding_counts": {
+    "LUNG_NSCLC": 1052,
+    "COLORECTAL": 622
+  },
+  "targets": {
+    "LUNG_NSCLC": 1053,
+    "COLORECTAL": 625
+  },
+  "results": {
+    "LUNG_NSCLC": {
+      "endpoints": {
+        "histology_lusc": {
+          "real": 0.939,
+          "shuffle": 0.4343
+        },
+        "egfr_activating": {
+          "real": 0.8518,
+          "shuffle": 0.4589
+        },
+        "kras_g12c": {
+          "real": 0.6809,
+          "shuffle": 0.5081
+        }
+      },
+      "pos_control": {
+        "endpoint": "histology_lusc",
+        "auc": 0.939,
+        "pass": true,
+        "note": "histology(형태학) AUROC>=0.75 = H&E/파이프라인 정상. 미달이면 MIL 고장 의심."
+      },
+      "cost_targeted": {
+        "chemo": {
+          "n": 242,
+          "mean_cost": 0.114,
+          "misroute_rate": 0.165
+        },
+        "antiEGFR": {
+          "n": 15,
+          "mean_cost": 0.133,
+          "misroute_rate": 0.2
+        },
+        "antiKRAS_G12C": {
+          "n": 14,
+          "mean_cost": 0.86,
+          "misroute_rate": 1.0
+        }
+      },
+      "misroute_incl_histology": {
+        "histology_lusc": {
+          "n": 271,
+          "misroute_rate": 0.122,
+          "auc": 0.939,
+          "type": "morphology(triage 예상)"
+        },
+        "egfr_activating": {
+          "n": 271,
+          "misroute_rate": 0.162,
+          "auc": 0.8518,
+          "type": "targeted-mutation(H&E-blind 예상)"
+        },
+        "kras_g12c": {
+          "n": 271,
+          "misroute_rate": 0.066,
+          "auc": 0.6809,
+          "type": "targeted-mutation(H&E-blind 예상)"
+        }
+      }
+    },
+    "COLORECTAL": {
+      "endpoints": {
+        "braf_v600e": {
+          "real": 0.8676,
+          "shuffle": 0.4426
+        }
+      },
+      "pos_control": null,
+      "cost_targeted": {
+        "baseline": {
+          "n": 136,
+          "mean_cost": 0.013,
+          "misroute_rate": 0.015
+        },
+        "antiBRAF": {
+          "n": 15,
+          "mean_cost": 0.637,
+          "misroute_rate": 0.733
+        }
+      },
+      "misroute_incl_histology": {
+        "braf_v600e": {
+          "n": 151,
+          "misroute_rate": 0.086,
+          "auc": 0.8676,
+          "type": "targeted-mutation(H&E-blind 예상)"
+        }
+      }
+    }
+  }
+}

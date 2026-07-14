@@ -1,0 +1,247 @@
+<style>
+  :root{
+    --ground:#faf9fc; --panel:#ffffff; --ink:#1b1626; --muted:#6b6480;
+    --line:rgba(60,45,110,.14); --line-strong:rgba(60,45,110,.26);
+    --brand:#5a4b9c; --brand-soft:rgba(90,75,156,.10);
+    --low:#0f8a7e; --low-soft:rgba(15,138,126,.10); --low-line:rgba(15,138,126,.35);
+    --mid:#b9791a; --mid-soft:rgba(185,121,26,.10); --mid-line:rgba(185,121,26,.35);
+    --high:#c0455e; --high-soft:rgba(192,69,94,.10); --high-line:rgba(192,69,94,.38);
+    --shadow:0 1px 2px rgba(30,20,60,.05),0 8px 26px rgba(30,20,60,.06);
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --ground:#131019; --panel:#1b1726; --ink:#ece9f5; --muted:#9a92b0;
+      --line:rgba(150,130,220,.16); --line-strong:rgba(150,130,220,.28);
+      --brand:#a99ce6; --brand-soft:rgba(150,130,220,.14);
+      --low:#3fc6b4; --low-soft:rgba(63,198,180,.12); --low-line:rgba(63,198,180,.34);
+      --mid:#e0a94a; --mid-soft:rgba(224,169,74,.12); --mid-line:rgba(224,169,74,.34);
+      --high:#e8768c; --high-soft:rgba(232,118,140,.12); --high-line:rgba(232,118,140,.36);
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#131019; --panel:#1b1726; --ink:#ece9f5; --muted:#9a92b0;
+    --line:rgba(150,130,220,.16); --line-strong:rgba(150,130,220,.28);
+    --brand:#a99ce6; --brand-soft:rgba(150,130,220,.14);
+    --low:#3fc6b4; --low-soft:rgba(63,198,180,.12); --low-line:rgba(63,198,180,.34);
+    --mid:#e0a94a; --mid-soft:rgba(224,169,74,.12); --mid-line:rgba(224,169,74,.34);
+    --high:#e8768c; --high-soft:rgba(232,118,140,.12); --high-line:rgba(232,118,140,.36);
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+  }
+  :root[data-theme="light"]{
+    --ground:#faf9fc; --panel:#ffffff; --ink:#1b1626; --muted:#6b6480;
+    --line:rgba(60,45,110,.14); --line-strong:rgba(60,45,110,.26);
+    --brand:#5a4b9c; --brand-soft:rgba(90,75,156,.10);
+    --low:#0f8a7e; --low-soft:rgba(15,138,126,.10); --low-line:rgba(15,138,126,.35);
+    --mid:#b9791a; --mid-soft:rgba(185,121,26,.10); --mid-line:rgba(185,121,26,.35);
+    --high:#c0455e; --high-soft:rgba(192,69,94,.10); --high-line:rgba(192,69,94,.38);
+    --shadow:0 1px 2px rgba(30,20,60,.05),0 8px 26px rgba(30,20,60,.06);
+  }
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);
+    line-height:1.55;-webkit-font-smoothing:antialiased;font-feature-settings:"ss01";}
+  .wrap{max-width:1040px;margin:0 auto;padding:48px 24px 72px}
+  .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--brand);
+    font-weight:600;margin:0 0 14px}
+  h1{font-family:var(--serif);font-weight:600;font-size:clamp(28px,4.6vw,44px);line-height:1.1;
+    margin:0 0 14px;text-wrap:balance;letter-spacing:-.01em}
+  .thesis{font-size:clamp(15px,1.9vw,18px);color:var(--muted);max-width:64ch;margin:0}
+  .thesis b{color:var(--ink);font-weight:600}
+
+  section{margin-top:44px}
+  .kicker{display:flex;align-items:center;gap:10px;font-size:12.5px;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--muted);font-weight:600;margin:0 0 16px}
+  .kicker::after{content:"";flex:1;height:1px;background:var(--line)}
+
+  /* spectrum bar */
+  .spectrum{position:relative;height:14px;border-radius:8px;margin:6px 0 8px;
+    background:linear-gradient(90deg,var(--low) 0%,var(--mid) 50%,var(--high) 100%);opacity:.9}
+  .spectrum-labels{display:flex;justify-content:space-between;gap:12px;font-size:13px;color:var(--muted)}
+  .spectrum-labels .l{color:var(--low);font-weight:600}
+  .spectrum-labels .r{color:var(--high);font-weight:600;text-align:right}
+
+  .zones{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:22px}
+  @media(max-width:760px){.zones{grid-template-columns:1fr}}
+  .zone{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 18px 20px;
+    box-shadow:var(--shadow);border-top:3px solid var(--zc)}
+  .zone.low{--zc:var(--low)} .zone.mid{--zc:var(--mid)} .zone.high{--zc:var(--high)}
+  .zone h3{margin:2px 0 3px;font-size:16px;font-weight:700;color:var(--zc)}
+  .zone .cost{font-size:12.5px;color:var(--muted);margin:0 0 14px;font-weight:500}
+  .chips{display:flex;flex-direction:column;gap:8px}
+  .chip{display:flex;align-items:center;justify-content:space-between;gap:10px;
+    padding:8px 11px;border-radius:9px;font-size:13.5px;
+    background:var(--zsoft);border:1px solid var(--zline)}
+  .zone.low .chip{--zsoft:var(--low-soft);--zline:var(--low-line)}
+  .zone.mid .chip{--zsoft:var(--mid-soft);--zline:var(--mid-line)}
+  .zone.high .chip{--zsoft:var(--high-soft);--zline:var(--high-line)}
+  .chip.sealed{background:transparent;border-style:dashed}
+  .chip .m{font-weight:600}
+  .chip .m small{display:block;font-weight:400;color:var(--muted);font-size:11.5px;letter-spacing:.01em}
+  .chip .v{font-variant-numeric:tabular-nums;font-weight:700;font-size:14px;white-space:nowrap}
+  .lock{font-size:10px;opacity:.7;margin-left:5px}
+  .mech{margin:15px 0 0;font-size:12.5px;color:var(--muted);line-height:1.5;
+    padding-top:13px;border-top:1px dashed var(--line)}
+  .mech b{color:var(--ink);font-weight:600}
+
+  /* highlight */
+  .highlight{margin-top:22px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;
+    background:var(--high-soft);border:1px solid var(--high-line);border-radius:14px;padding:16px 20px}
+  .highlight .badge{font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;
+    color:var(--high);white-space:nowrap}
+  .highlight .pair{display:flex;align-items:center;gap:14px;font-variant-numeric:tabular-nums}
+  .highlight .pair .org{font-weight:600;font-size:14px}
+  .highlight .pair .org b{color:var(--high);font-size:16px}
+  .highlight .arrow{color:var(--high);font-weight:700}
+  .highlight .cap{font-size:12.5px;color:var(--muted);flex:1;min-width:200px}
+
+  /* two-layer + decision */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:22px}
+  @media(max-width:760px){.grid2{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px;box-shadow:var(--shadow)}
+  .card h4{margin:0 0 4px;font-size:14px;font-weight:700}
+  .card p{margin:0;font-size:13px;color:var(--muted)}
+  .card .tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:.05em;
+    padding:2px 8px;border-radius:20px;background:var(--brand-soft);color:var(--brand);margin-bottom:9px}
+  .flow{display:flex;align-items:stretch;gap:0;margin-top:22px;border:1px solid var(--line);
+    border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
+  @media(max-width:680px){.flow{flex-direction:column}}
+  .step{flex:1;padding:16px 18px;background:var(--panel);min-width:0}
+  .step + .step{border-left:1px solid var(--line)}
+  @media(max-width:680px){.step + .step{border-left:0;border-top:1px solid var(--line)}}
+  .step .n{font-family:var(--serif);font-size:13px;color:var(--brand);font-weight:600}
+  .step h5{margin:6px 0 4px;font-size:14px;font-weight:700}
+  .step p{margin:0;font-size:12.5px;color:var(--muted)}
+  .step.out-low{border-bottom:3px solid var(--low)}
+  .step.out-high{border-bottom:3px solid var(--high)}
+  .step.out-abstain{border-bottom:3px solid var(--brand)}
+
+  footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);
+    display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center;font-size:12px;color:var(--muted)}
+  .cancers{display:flex;flex-wrap:wrap;gap:7px}
+  .canc{padding:3px 10px;border:1px solid var(--line-strong);border-radius:20px;font-weight:600;color:var(--ink);font-size:11.5px}
+  .canc .anchor{color:var(--brand)}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;font-size:12px;color:var(--muted)}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .sw{width:22px;height:11px;border-radius:3px;border:1px solid var(--line-strong)}
+  .sw.solid{background:var(--brand-soft);border-color:var(--brand)}
+  .sw.dash{border-style:dashed}
+  .disclaimer{margin-top:8px;font-size:11.5px;color:var(--muted);font-style:italic}
+</style>
+
+<div class="wrap">
+  <p class="eyebrow">SpatialPathoAgent · Paper C · 개념도</p>
+  <h1>H&amp;E는 분자검사를 언제 대신할 수 있는가</h1>
+  <p class="thesis">분자 표현형을 H&amp;E로 <b>예측하는</b> 연구는 포화됐다. 우리는 치료 결정 경로에서 값싼 H&amp;E가 분자검사를 <b>대신해도 되는 경계</b>를 지도화하고, 그 경계가 <b>형태학적 상관물(morphological correlate)의 유무</b>라는 사전등록 법칙으로 예측됨을 5개 암종에서 보인다.</p>
+
+  <section>
+    <p class="kicker">치환가능성 스펙트럼 — 형태학적 상관물의 유무</p>
+    <div class="spectrum" role="img" aria-label="왼쪽 상관물 있음(저비용)에서 오른쪽 상관물 없음(고비용)으로의 스펙트럼"></div>
+    <div class="spectrum-labels">
+      <span class="l">◀ 형태학적 상관물 있음 · H&amp;E로 대체 가능 · 저비용</span>
+      <span class="r">형태학적 상관물 없음 · 분자검사 필수 · 고비용 ▶</span>
+    </div>
+
+    <div class="zones">
+      <div class="zone low">
+        <h3>H&amp;E로 대체 가능</h3>
+        <p class="cost">저비용 — 형태로 읽힘</p>
+        <div class="chips">
+          <div class="chip"><span class="m">MSI-H<small>대장 · 항PD-1</small></span><span class="v">0.92</span></div>
+          <div class="chip"><span class="m">ER<small>유방 · 내분비</small></span><span class="v">0.90</span></div>
+          <div class="chip"><span class="m">조직형 LUAD/LUSC<small>폐 · 양성대조 ✓</small></span><span class="v">0.925</span></div>
+          <div class="chip sealed"><span class="m">HPV<small>두경부 · de-escalation<span class="lock">🔒봉인</span></small></span><span class="v">≥0.80</span></div>
+        </div>
+        <p class="mech"><b>왜 보이나</b> — 변이의 하류 결과가 조직을 바꾼다. MSI→<b>TIL 밀도</b>·점액·수질형, ER→선구조·핵형태. H&amp;E가 직접 읽는 형태 특징.</p>
+      </div>
+
+      <div class="zone mid">
+        <h3>등급적 (부분)</h3>
+        <p class="cost">중간 — 부분 상관물</p>
+        <div class="chips">
+          <div class="chip"><span class="m">BRAF-V600<small>대장 · serrated 동반</small></span><span class="v">0.88</span></div>
+          <div class="chip"><span class="m">EGFR<small>폐 · exploratory(미결)</small></span><span class="v">0.81*</span></div>
+        </div>
+        <p class="mech"><b>부분적으로 보임</b> — 형태 상관물이 있으나 일관되지 않는다. 예측은 되지만 near-random은 아닌 중간 지대.</p>
+      </div>
+
+      <div class="zone high">
+        <h3>분자검사 필수</h3>
+        <p class="cost">고비용 — 형태에 안 보임</p>
+        <div class="chips">
+          <div class="chip"><span class="m">HER2 (증폭)<small>유방 · 항HER2</small></span><span class="v">0.60</span></div>
+          <div class="chip"><span class="m">all-RAS (점변이)<small>대장 · 항EGFR 적격</small></span><span class="v">0.71*</span></div>
+          <div class="chip"><span class="m">HER2-amp<small>위 · exploratory(미결)</small></span><span class="v">0.585*</span></div>
+          <div class="chip"><span class="m">KRAS-G12C<small>폐 · exploratory(미결)</small></span><span class="v">0.65*</span></div>
+        </div>
+        <p class="mech"><b>왜 안 보이나</b> — 효과가 세포 내부 생화학 신호에 머문다. 증폭·점변이가 조직 구조를 바꾸지 않아 H&amp;E에 상관물이 없다. <b>*all-RAS 0.71은 일부 bag-size 교란</b> → 실제 형태 신호는 더 약함.</p>
+      </div>
+    </div>
+
+    <div class="highlight">
+      <span class="badge">교차장기 검정</span>
+      <div class="pair">
+        <span class="org">유방 HER2 <b>0.60</b></span>
+        <span class="arrow">↔</span>
+        <span class="org">위 HER2-amp <b>0.585*</b></span>
+      </div>
+      <span class="cap"><b style="color:var(--ink)">HER2 증폭이 유방·위 두 장기 모두 near-chance(H&E-blind)</b> → "증폭 ≠ 형태" 원리와 consistent. ⚠️ 단 위 n_pos=14 exploratory → <b style="color:var(--ink)">"consistent with"까지만</b>(정밀 근접은 우연, 복제 확증 아님).</span>
+    </div>
+  </section>
+
+  <section>
+    <p class="kicker">두 층위는 절대 섞지 않는다</p>
+    <div class="grid2">
+      <div class="card">
+        <span class="tag">표 1</span>
+        <h4>예측충실도 (prediction-fidelity)</h4>
+        <p>H&amp;E가 분자 아형을 얼마나 복원하는가. 아형↔아형(PAM50 ↔ CMS ↔ 전사체 아형). "예측된다"의 층위.</p>
+      </div>
+      <div class="card">
+        <span class="tag">표 2</span>
+        <h4>라우팅 치환비용 (routing-cost)</h4>
+        <p>그 예측으로 치료를 배정할 때 잃는 결정 정확도(오배정률). 마커↔마커. "대체해도 되나"의 층위.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="kicker">결정 지도 — H&amp;E 한 장에서 나오는 출력</p>
+    <div class="flow">
+      <div class="step out-low">
+        <span class="n">01</span>
+        <h5>H&amp;E로 충분</h5>
+        <p>형태 상관물 있음 → 분자검사 없이 H&amp;E로 라우팅(저비용).</p>
+      </div>
+      <div class="step out-high">
+        <span class="n">02</span>
+        <h5>분자검사 필수</h5>
+        <p>형태 상관물 없음 → H&amp;E 대체 불가, 분자검사 주문(고비용).</p>
+      </div>
+      <div class="step out-abstain">
+        <span class="n">03</span>
+        <h5>기권 (도메인 시프트)</h5>
+        <p>염색·특징공간 시프트로 불확실 → 보정·기권 후 분자검사로. CPTAC 붕괴가 동기.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="cancers">
+      <span class="canc"><span class="anchor">유방</span> anchor</span>
+      <span class="canc">폐</span>
+      <span class="canc">대장</span>
+      <span class="canc">위</span>
+      <span class="canc">두경부</span>
+    </div>
+    <span style="flex:1"></span>
+    <span>H&amp;E → 형태학적 상관물 → 치환가능성 결정지도</span>
+  </footer>
+  <div class="legend">
+    <span><span class="sw solid"></span> 관측 (유방·대장, 내부 holdout)</span>
+    <span><span class="sw dash"></span> * held-out 관측이나 exploratory(저검정력 n_pos&lt;25) → 미결(INCONCLUSIVE), "consistent with"까지만</span>
+  </div>
+  <p class="disclaimer">claim_level: hypothesis_only · 후향적 · 전향적 검증 필요 · 멀티에이전트 파이프라인은 인프라이지 기여가 아니다.</p>
+</div>

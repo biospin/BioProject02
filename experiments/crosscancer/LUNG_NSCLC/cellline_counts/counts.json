@@ -1,0 +1,79 @@
+{
+  "intersection_definition": "DepMap 24Q4 NSCLC (OncotreeLineage=Lung AND OncotreeSubtype in {LUAD,LUSC,NSCLC,LargeCell,Adenosquamous,PoorlyDiff-NSCLC}; SCLC/carcinoid/NUT/meso/SMARCA4-undiff/immortalized EXCLUDED) INNER JOIN GDSC2-screened on SangerModelID",
+  "n_depmap_nsclc_subtype": 157,
+  "n_intersection_gdsc": 104,
+  "tcga_desc_breakdown": {
+    "LUAD": 63,
+    "UNCLASSIFIED": 26,
+    "LUSC": 13,
+    "SCLC": 1,
+    "MESO": 1
+  },
+  "axes": {
+    "antiEGFR_activating": {
+      "n": 6,
+      "threshold": 5,
+      "GO": true,
+      "label_basis": "DepMap 24Q4 OmicsSomaticMutations EGFR ProteinChange: L858R/exon19del/G719X/L861Q/exon20ins (activating only; T790M-alone excluded)"
+    },
+    "antiALK_fusion": {
+      "n": 2,
+      "threshold": 5,
+      "GO": false,
+      "label_basis": "DepMap 24Q4 OmicsFusionFiltered ALK fusions in NSCLC lines (EML4-ALK etc; NPM1-ALK/lymphoma excluded by cohort restriction)"
+    },
+    "antiKRAS_G12C": {
+      "n": 9,
+      "threshold": 5,
+      "GO": true,
+      "label_basis": "DepMap 24Q4 KRAS p.G12C (sotorasib-druggable subset)"
+    },
+    "KRASmut_any_context": {
+      "n": 28,
+      "threshold": 5,
+      "GO": true,
+      "label_basis": "DepMap 24Q4 KRAS any hotspot missense/indel (context, not a standalone targeted axis)"
+    },
+    "chemo_noTargetDriver": {
+      "n": 68,
+      "threshold": 5,
+      "GO": true,
+      "label_basis": "NSCLC lines lacking EGFR-activating / ALK-fusion / KRAS mut (chemo/IO baseline candidates)"
+    }
+  },
+  "driver_cooccurrence_n": 0,
+  "gdsc_drugs_present": {
+    "EGFR": [
+      "Gefitinib",
+      "Afatinib",
+      "Osimertinib",
+      "Erlotinib"
+    ],
+    "ALK": [
+      "Crizotinib"
+    ],
+    "KRAS_G12C": "ABSENT (Sotorasib not in GDSC2 27Oct23; MEK Selumetinib available as downstream proxy)",
+    "chemo": [
+      "Cisplatin",
+      "Paclitaxel",
+      "Docetaxel"
+    ]
+  },
+  "sources": {
+    "depmap": "DepMap 24Q4 Public figshare 27993248: Model.csv(51065297), OmicsSomaticMutations.csv(51065732), OmicsFusionFiltered.csv(51065693)",
+    "gdsc": "GDSC2_fitted_dose_response_27Oct23.xlsx"
+  },
+  "caveats": [
+    "Cohort = NSCLC only (SCLC explicitly excluded: 58 SCLC GDSC-screened lines would otherwise inflate the chemo axis).",
+    "EGFR/ALK/KRAS axes are DepMap-molecular-derived (mutation/fusion primary); no literature backfill needed.",
+    "ALK axis counts lines with any ALK fusion call in OmicsFusionFiltered restricted to NSCLC cohort; canonical EML4-ALK NSCLC lines are H2228/H3122.",
+    "KRAS-G12C is the sotorasib-druggable subset; Sotorasib is NOT in GDSC2 so direct drug validation for this axis is not possible (MEKi proxy only)."
+  ],
+  "go_nogo": "PARTIAL",
+  "go_nogo_per_axis": {
+    "antiEGFR": true,
+    "antiALK": false,
+    "antiKRAS_G12C": true,
+    "chemo": true
+  }
+}

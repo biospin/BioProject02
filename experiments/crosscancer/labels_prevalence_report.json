@@ -1,0 +1,39 @@
+{
+  "lung": {
+    "n_sequenced": 1050,
+    "LUAD": 566,
+    "LUSC": 484,
+    "egfr_activating": {
+      "n": 61,
+      "pct_of_LUAD": 10.2
+    },
+    "kras_g12c": {
+      "n": 70,
+      "pct_of_LUAD": 12.4
+    },
+    "histology_lusc": {
+      "n": 484
+    }
+  },
+  "crc": {
+    "n_sequenced": 534,
+    "braf_v600e": {
+      "n": 48,
+      "pct": 9.0
+    }
+  },
+  "anchors": {
+    "egfr_activating_pct_LUAD": [
+      10,
+      22
+    ],
+    "kras_g12c_pct_LUAD": [
+      8,
+      18
+    ],
+    "braf_v600e_pct": [
+      5,
+      14
+    ]
+  }
+}

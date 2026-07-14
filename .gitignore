@@ -1,7 +1,12 @@
-# Claude — settings/local은 제외, commands(팀 공유 슬래시 커맨드)는 포함
+# Claude — settings/local은 제외; commands + 논문생산 하네스(agents/skills)는 팀 공유
 .claude/*
 !.claude/commands/
 !.claude/commands/**
+!.claude/agents/
+!.claude/agents/**
+!.claude/skills/
+!.claude/skills/**
+!.claude/PAPER-HARNESS-LICENSE
 CLAUDE.local.md
 
 # Byte-compiled / optimized / DLL files
@@ -226,10 +231,60 @@ __marimo__/
 # macOS
 .DS_Store
 
-# EXAONE Path 2.0 cloned HF repo + weights (550MB pytorch_model.bin — 영구 tracking 금지)
+# EXAONE Path 2.0 로컬 레포+가중치 (550M pytorch_model.bin, NC 라이선스, 재현가능 — 커밋 금지)
 agents/embedding/exaone_path2/
+
+# 블로그 공용 툴 심링크(개인 ~/.claude/assets 경로 — 팀 비이식, BIOP01 선례=미추적)
+blog/build_index.py
+blog/sync_blog_to_workspace.sh
+
+# 대용량 raw 다운로드(세포주 omics·GDSC·IMPRESS) — 재현가능, 커밋 제외
+experiments/kkkim/20260710_cellline_counts/data/
+experiments/kkkim/20260710_pcr_impress/data/
 
 # 세션 인수인계 파일 — 프로젝트 폴더에서 주기적으로 갱신하되 git에는 올리지 않음
 HANDOFF.md
 TODO.md
 SESSION_LOG.md
+
+# cross-cancer full-cohort embedding outputs (대용량 — 영구본은 디스크, git엔 드라이버·manifest·log만)
+experiments/crosscancer/*/full/embeddings/
+experiments/crosscancer/*/full/coords/
+experiments/crosscancer/*/full/shard_gpu*.json
+experiments/crosscancer/*/full/queue.json
+
+experiments/crosscancer/*/full/shard_*.json
+experiments/crosscancer/*/full/*.log
+experiments/crosscancer/*/full/*.done
+experiments/crosscancer/full_run*.out
+experiments/crosscancer/EMBED_*.log
+experiments/crosscancer/EMBED_*.done
+
+# Angle A raw ST data (Andersson Zenodo, 재다운 가능)
+experiments/kkkim/angle_A_spatial_erbb2/data/
+
+# CMS 계산 중간산출(재생성 가능)
+experiments/crosscancer/COLORECTAL/cms_data/*.rda
+experiments/crosscancer/COLORECTAL/cms_data/coadread_expr_template.csv
+experiments/crosscancer/COLORECTAL/cms_data/*.txt
+
+# pilot 임베딩·coords (대용량, 디스크가 영구본 — full과 동일 정책)
+experiments/crosscancer/*/pilot/embeddings/
+experiments/crosscancer/*/pilot/coords/
+
+# ST/IMC raw 다운로드 (GEO 공개데이터, 재다운 가능 — 분석 산출 JSON·figure만 git)
+experiments/crosscancer/COLORECTAL/ST/data/
+
+# detached 프로세스 stdout 덤프 (transient)
+experiments/crosscancer/*.out
+
+# Jupyter 협업 상태 DB (transient)
+.jupyter_ystore.db
+# per-slide 추출 로그 (transient debug)
+experiments/kkkim/logs/
+# pcr_impress pilot coords (재생성 가능, 대용량)
+experiments/kkkim/20260710_pcr_impress/outputs/
+
+# BLOCKER-5 이관 로그·manifest 백업(재생성 가능)
+experiments/crosscancer/BLOCKER5_COPY.log
+experiments/crosscancer/*/full/*.prehome_bak

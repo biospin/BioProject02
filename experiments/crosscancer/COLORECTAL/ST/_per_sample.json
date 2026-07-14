@@ -1,0 +1,546 @@
+[
+  {
+    "gsm": "GSM8703565",
+    "sample": "sample24",
+    "cms": "CMS1",
+    "role": "MSI-immune (target)",
+    "n_spots": 3563,
+    "n_interior": 3255,
+    "PRIMARY_density_proxy": "hematoxylin_OD",
+    "poscontrol_rho_totalUMI_vs_hem": 0.362,
+    "poscontrol_ci95": [
+      0.334,
+      0.391
+    ],
+    "rho_immune_vs_hem": -0.007,
+    "rho_immune_vs_hem_ci95": [
+      -0.04,
+      0.026
+    ],
+    "rho_mapk_vs_hem": 0.075,
+    "rho_mapk_vs_hem_ci95": [
+      0.043,
+      0.107
+    ],
+    "rho_lymph_CD8A_GZMB_only_vs_hem": 0.04,
+    "rho_lymph_only_vs_hem_ci95": [
+      0.01,
+      0.072
+    ],
+    "depth_control": {
+      "median_umi": 4687,
+      "housekeeping_detect": {
+        "ACTB": 0.99,
+        "B2M": 0.99
+      },
+      "ifn_cp10k_mean": {
+        "STAT1": 0.754,
+        "GBP1": 0.811,
+        "IRF1": 1.583,
+        "CXCL9": 0.169
+      }
+    },
+    "rho_immune_interior": -0.019,
+    "rho_immune_interior_ci95": [
+      -0.056,
+      0.015
+    ],
+    "rho_mapk_interior": 0.073,
+    "rho_mapk_interior_ci95": [
+      0.039,
+      0.106
+    ],
+    "delta_rho_immune_minus_mapk_HEM": -0.083,
+    "delta_rho_HEM_ci95": [
+      -0.124,
+      -0.039
+    ],
+    "delta_rho_immune_minus_mapk_DARK": 0.064,
+    "delta_rho_DARK_ci95": [
+      0.023,
+      0.108
+    ],
+    "sensitivity_rho_immune_vs_darkness": -0.004,
+    "sensitivity_rho_mapk_vs_darkness": -0.069,
+    "compartment_theta_immune_stroma_vs_tumor": 0.401,
+    "compartment_theta_mapk_stroma_vs_tumor": 0.304,
+    "gene_detection": {
+      "immune": {
+        "CD8A": {
+          "detect_frac": 0.09,
+          "mean_count": 0.101
+        },
+        "GZMB": {
+          "detect_frac": 0.107,
+          "mean_count": 0.117
+        },
+        "STAT1": {
+          "detect_frac": 0.565,
+          "mean_count": 1.349
+        },
+        "GBP1": {
+          "detect_frac": 0.605,
+          "mean_count": 1.298
+        },
+        "IRF1": {
+          "detect_frac": 0.853,
+          "mean_count": 3.395
+        },
+        "CXCL9": {
+          "detect_frac": 0.176,
+          "mean_count": 0.235
+        },
+        "CXCL10": {
+          "detect_frac": 0.089,
+          "mean_count": 0.106
+        }
+      },
+      "mapk": {
+        "DUSP4": {
+          "detect_frac": 0.018,
+          "mean_count": 0.019
+        },
+        "DUSP6": {
+          "detect_frac": 0.195,
+          "mean_count": 0.23
+        },
+        "SPRY2": {
+          "detect_frac": 0.255,
+          "mean_count": 0.333
+        },
+        "ETV4": {
+          "detect_frac": 0.296,
+          "mean_count": 0.446
+        },
+        "ETV5": {
+          "detect_frac": 0.091,
+          "mean_count": 0.101
+        },
+        "PHLDA1": {
+          "detect_frac": 0.168,
+          "mean_count": 0.204
+        },
+        "AREG": {
+          "detect_frac": 0.533,
+          "mean_count": 1.158
+        },
+        "EREG": {
+          "detect_frac": 0.063,
+          "mean_count": 0.069
+        }
+      }
+    },
+    "genes_missing": {
+      "immune": [],
+      "mapk": []
+    }
+  },
+  {
+    "gsm": "GSM8703566",
+    "sample": "sample26",
+    "cms": "CMS2",
+    "role": "canonical / MSS (control)",
+    "n_spots": 3415,
+    "n_interior": 2967,
+    "PRIMARY_density_proxy": "hematoxylin_OD",
+    "poscontrol_rho_totalUMI_vs_hem": 0.523,
+    "poscontrol_ci95": [
+      0.498,
+      0.547
+    ],
+    "rho_immune_vs_hem": 0.173,
+    "rho_immune_vs_hem_ci95": [
+      0.141,
+      0.204
+    ],
+    "rho_mapk_vs_hem": 0.14,
+    "rho_mapk_vs_hem_ci95": [
+      0.109,
+      0.172
+    ],
+    "rho_lymph_CD8A_GZMB_only_vs_hem": 0.185,
+    "rho_lymph_only_vs_hem_ci95": [
+      0.153,
+      0.218
+    ],
+    "depth_control": {
+      "median_umi": 3502,
+      "housekeeping_detect": {
+        "ACTB": 0.987,
+        "B2M": 0.934
+      },
+      "ifn_cp10k_mean": {
+        "STAT1": 0.107,
+        "GBP1": 0.033,
+        "IRF1": 0.273,
+        "CXCL9": 0.012
+      }
+    },
+    "rho_immune_interior": 0.178,
+    "rho_immune_interior_ci95": [
+      0.141,
+      0.213
+    ],
+    "rho_mapk_interior": 0.139,
+    "rho_mapk_interior_ci95": [
+      0.102,
+      0.173
+    ],
+    "delta_rho_immune_minus_mapk_HEM": 0.032,
+    "delta_rho_HEM_ci95": [
+      -0.011,
+      0.077
+    ],
+    "delta_rho_immune_minus_mapk_DARK": 0.015,
+    "delta_rho_DARK_ci95": [
+      -0.028,
+      0.061
+    ],
+    "sensitivity_rho_immune_vs_darkness": 0.069,
+    "sensitivity_rho_mapk_vs_darkness": 0.054,
+    "compartment_theta_immune_stroma_vs_tumor": 0.41,
+    "compartment_theta_mapk_stroma_vs_tumor": 0.352,
+    "gene_detection": {
+      "immune": {
+        "CD8A": {
+          "detect_frac": 0.002,
+          "mean_count": 0.002
+        },
+        "GZMB": {
+          "detect_frac": 0.341,
+          "mean_count": 0.476
+        },
+        "STAT1": {
+          "detect_frac": 0.107,
+          "mean_count": 0.121
+        },
+        "GBP1": {
+          "detect_frac": 0.031,
+          "mean_count": 0.033
+        },
+        "IRF1": {
+          "detect_frac": 0.234,
+          "mean_count": 0.298
+        },
+        "CXCL9": {
+          "detect_frac": 0.011,
+          "mean_count": 0.012
+        },
+        "CXCL10": {
+          "detect_frac": 0.006,
+          "mean_count": 0.006
+        }
+      },
+      "mapk": {
+        "DUSP4": {
+          "detect_frac": 0.062,
+          "mean_count": 0.068
+        },
+        "DUSP6": {
+          "detect_frac": 0.295,
+          "mean_count": 0.408
+        },
+        "SPRY2": {
+          "detect_frac": 0.337,
+          "mean_count": 0.506
+        },
+        "ETV4": {
+          "detect_frac": 0.255,
+          "mean_count": 0.355
+        },
+        "ETV5": {
+          "detect_frac": 0.054,
+          "mean_count": 0.058
+        },
+        "PHLDA1": {
+          "detect_frac": 0.331,
+          "mean_count": 0.527
+        },
+        "AREG": {
+          "detect_frac": 0.264,
+          "mean_count": 0.38
+        },
+        "EREG": {
+          "detect_frac": 0.142,
+          "mean_count": 0.187
+        }
+      }
+    },
+    "genes_missing": {
+      "immune": [],
+      "mapk": []
+    }
+  },
+  {
+    "gsm": "GSM8703563",
+    "sample": "sample19",
+    "cms": "CMS4",
+    "role": "mesenchymal / stroma-rich",
+    "n_spots": 3493,
+    "n_interior": 3230,
+    "PRIMARY_density_proxy": "hematoxylin_OD",
+    "poscontrol_rho_totalUMI_vs_hem": 0.36,
+    "poscontrol_ci95": [
+      0.33,
+      0.388
+    ],
+    "rho_immune_vs_hem": 0.015,
+    "rho_immune_vs_hem_ci95": [
+      -0.017,
+      0.049
+    ],
+    "rho_mapk_vs_hem": 0.078,
+    "rho_mapk_vs_hem_ci95": [
+      0.047,
+      0.111
+    ],
+    "rho_lymph_CD8A_GZMB_only_vs_hem": -0.003,
+    "rho_lymph_only_vs_hem_ci95": [
+      -0.033,
+      0.029
+    ],
+    "depth_control": {
+      "median_umi": 4129,
+      "housekeeping_detect": {
+        "ACTB": 1.0,
+        "B2M": 0.929
+      },
+      "ifn_cp10k_mean": {
+        "STAT1": 0.216,
+        "GBP1": 0.098,
+        "IRF1": 0.703,
+        "CXCL9": 0.037
+      }
+    },
+    "rho_immune_interior": 0.013,
+    "rho_immune_interior_ci95": [
+      -0.023,
+      0.048
+    ],
+    "rho_mapk_interior": 0.071,
+    "rho_mapk_interior_ci95": [
+      0.036,
+      0.107
+    ],
+    "delta_rho_immune_minus_mapk_HEM": -0.063,
+    "delta_rho_HEM_ci95": [
+      -0.107,
+      -0.017
+    ],
+    "delta_rho_immune_minus_mapk_DARK": -0.006,
+    "delta_rho_DARK_ci95": [
+      -0.052,
+      0.039
+    ],
+    "sensitivity_rho_immune_vs_darkness": -0.034,
+    "sensitivity_rho_mapk_vs_darkness": -0.028,
+    "compartment_theta_immune_stroma_vs_tumor": 0.483,
+    "compartment_theta_mapk_stroma_vs_tumor": 0.432,
+    "gene_detection": {
+      "immune": {
+        "CD8A": {
+          "detect_frac": 0.023,
+          "mean_count": 0.023
+        },
+        "GZMB": {
+          "detect_frac": 0.029,
+          "mean_count": 0.03
+        },
+        "STAT1": {
+          "detect_frac": 0.2,
+          "mean_count": 0.252
+        },
+        "GBP1": {
+          "detect_frac": 0.09,
+          "mean_count": 0.097
+        },
+        "IRF1": {
+          "detect_frac": 0.526,
+          "mean_count": 0.852
+        },
+        "CXCL9": {
+          "detect_frac": 0.032,
+          "mean_count": 0.032
+        },
+        "CXCL10": {
+          "detect_frac": 0.035,
+          "mean_count": 0.036
+        }
+      },
+      "mapk": {
+        "DUSP4": {
+          "detect_frac": 0.085,
+          "mean_count": 0.098
+        },
+        "DUSP6": {
+          "detect_frac": 0.33,
+          "mean_count": 0.441
+        },
+        "SPRY2": {
+          "detect_frac": 0.235,
+          "mean_count": 0.305
+        },
+        "ETV4": {
+          "detect_frac": 0.383,
+          "mean_count": 0.619
+        },
+        "ETV5": {
+          "detect_frac": 0.024,
+          "mean_count": 0.024
+        },
+        "PHLDA1": {
+          "detect_frac": 0.212,
+          "mean_count": 0.256
+        },
+        "AREG": {
+          "detect_frac": 0.63,
+          "mean_count": 1.244
+        },
+        "EREG": {
+          "detect_frac": 0.303,
+          "mean_count": 0.447
+        }
+      }
+    },
+    "genes_missing": {
+      "immune": [],
+      "mapk": []
+    }
+  },
+  {
+    "gsm": "GSM8703564",
+    "sample": "sample20",
+    "cms": "CMS4",
+    "role": "mesenchymal / stroma-rich",
+    "n_spots": 2473,
+    "n_interior": 2173,
+    "PRIMARY_density_proxy": "hematoxylin_OD",
+    "poscontrol_rho_totalUMI_vs_hem": 0.509,
+    "poscontrol_ci95": [
+      0.478,
+      0.543
+    ],
+    "rho_immune_vs_hem": 0.136,
+    "rho_immune_vs_hem_ci95": [
+      0.098,
+      0.174
+    ],
+    "rho_mapk_vs_hem": 0.172,
+    "rho_mapk_vs_hem_ci95": [
+      0.134,
+      0.21
+    ],
+    "rho_lymph_CD8A_GZMB_only_vs_hem": 0.07,
+    "rho_lymph_only_vs_hem_ci95": [
+      0.035,
+      0.105
+    ],
+    "depth_control": {
+      "median_umi": 1547,
+      "housekeeping_detect": {
+        "ACTB": 0.865,
+        "B2M": 0.609
+      },
+      "ifn_cp10k_mean": {
+        "STAT1": 0.207,
+        "GBP1": 0.13,
+        "IRF1": 0.592,
+        "CXCL9": 0.055
+      }
+    },
+    "rho_immune_interior": 0.13,
+    "rho_immune_interior_ci95": [
+      0.09,
+      0.171
+    ],
+    "rho_mapk_interior": 0.172,
+    "rho_mapk_interior_ci95": [
+      0.131,
+      0.212
+    ],
+    "delta_rho_immune_minus_mapk_HEM": -0.037,
+    "delta_rho_HEM_ci95": [
+      -0.084,
+      0.013
+    ],
+    "delta_rho_immune_minus_mapk_DARK": -0.039,
+    "delta_rho_DARK_ci95": [
+      -0.087,
+      0.01
+    ],
+    "sensitivity_rho_immune_vs_darkness": -0.099,
+    "sensitivity_rho_mapk_vs_darkness": -0.061,
+    "compartment_theta_immune_stroma_vs_tumor": 0.39,
+    "compartment_theta_mapk_stroma_vs_tumor": 0.348,
+    "gene_detection": {
+      "immune": {
+        "CD8A": {
+          "detect_frac": 0.038,
+          "mean_count": 0.04
+        },
+        "GZMB": {
+          "detect_frac": 0.045,
+          "mean_count": 0.05
+        },
+        "STAT1": {
+          "detect_frac": 0.142,
+          "mean_count": 0.178
+        },
+        "GBP1": {
+          "detect_frac": 0.085,
+          "mean_count": 0.093
+        },
+        "IRF1": {
+          "detect_frac": 0.335,
+          "mean_count": 0.531
+        },
+        "CXCL9": {
+          "detect_frac": 0.038,
+          "mean_count": 0.044
+        },
+        "CXCL10": {
+          "detect_frac": 0.018,
+          "mean_count": 0.019
+        }
+      },
+      "mapk": {
+        "DUSP4": {
+          "detect_frac": 0.008,
+          "mean_count": 0.009
+        },
+        "DUSP6": {
+          "detect_frac": 0.059,
+          "mean_count": 0.068
+        },
+        "SPRY2": {
+          "detect_frac": 0.12,
+          "mean_count": 0.146
+        },
+        "ETV4": {
+          "detect_frac": 0.16,
+          "mean_count": 0.229
+        },
+        "ETV5": {
+          "detect_frac": 0.022,
+          "mean_count": 0.024
+        },
+        "PHLDA1": {
+          "detect_frac": 0.066,
+          "mean_count": 0.084
+        },
+        "AREG": {
+          "detect_frac": 0.279,
+          "mean_count": 0.501
+        },
+        "EREG": {
+          "detect_frac": 0.07,
+          "mean_count": 0.087
+        }
+      }
+    },
+    "genes_missing": {
+      "immune": [],
+      "mapk": []
+    }
+  }
+]

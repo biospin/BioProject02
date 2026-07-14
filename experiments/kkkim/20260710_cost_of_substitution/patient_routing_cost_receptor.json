@@ -1,0 +1,60 @@
+{
+  "exp": "C1_step2B_receptor_routing",
+  "routing": "HER2+>antiHER2; ER+>endocrine; else chemo",
+  "pred_source": "/home/kkkim/project/BioProject02/experiments/sjpark/cptac_ext_predictions_indexed.csv",
+  "per_axis": {
+    "endocrine": {
+      "n": 180,
+      "mean_cost": 0.035,
+      "misroute_rate": 0.05
+    },
+    "antiHER2": {
+      "n": 35,
+      "mean_cost": 0.416,
+      "misroute_rate": 1.0
+    },
+    "chemo": {
+      "n": 79,
+      "mean_cost": 0.51,
+      "misroute_rate": 0.734
+    },
+    "headline_contrast": {
+      "value": 0.381,
+      "ci95": [
+        0.348,
+        0.42
+      ],
+      "excludes_zero": true
+    }
+  },
+  "confusion_true_to_pred": {
+    "endocrine": {
+      "endocrine": 171,
+      "chemo": 9
+    },
+    "antiHER2": {
+      "endocrine": 33,
+      "chemo": 2
+    },
+    "chemo": {
+      "endocrine": 58,
+      "chemo": 21
+    }
+  },
+  "prediction_base_rates": {
+    "predicted": {
+      "endocrine": 0.891,
+      "antiHER2": 0.0,
+      "chemo": 0.109
+    },
+    "actual": {
+      "endocrine": 0.612,
+      "antiHER2": 0.119,
+      "chemo": 0.269
+    }
+  },
+  "mechanism": "외부 CPTAC서 receptor head가 다수클래스로 붕괴: 예측 endocrine 89%(실제 61%)·antiHER2 0%(실제 12%)·chemo 11%(실제 27%). → (1) HER2 head 외부서 한 번도 양성 미발화(AUROC 0.53 random과 정합) → HER2+ 100% mis-route. (2) ER over-call(TNBC 73%를 ER+로) → chemo mis-route 73%. endocrine 5% mis-route는 진짜 H&E 스킬이 아니라 다수클래스 붕괴의 산물(ER+ 다수라 자명히 맞음).",
+  "honest_reading": "robust 결론=HER2축(양 라우팅 100% mis-route, 분자검사 필수). endocrine/chemo per-axis cost는 라우팅 스킴·외부 calibration 의존(PAM50 51%↔receptor 5% / PAM50 14%↔receptor 73%)이라 안전 주장 근거 아님. 헤드라인 contrast(antiHER2-endocrine)만 양 라우팅서 robust(0.340/0.381, CI 0배제).",
+  "claim_level": "hypothesis_only",
+  "critic_status": "pending"
+}

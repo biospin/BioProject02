@@ -1,0 +1,100 @@
+{
+  "schema_version": "0.1",
+  "created_at": "2026-07-14T00:00:00+09:00",
+  "reviewer": "braveji",
+  "owner": "kkkim",
+  "experiment": {
+    "experiment_id": "crosscancer_law_heldout_G1_5cancer",
+    "task": "morphological-correlate substitutability law — sealed held-out test (CLAM-SB MIL on UNI v1 embeddings)",
+    "endpoint": "LUNG(histology_lusc,egfr_activating,kras_g12c) / GASTRIC_STAD(lauren_diffuse,msi_h,erbb2_amp,ebv) / HEADNECK_HNSC(hpv_pos,egfr_amp,grade_high) / COLORECTAL(msi_high,anti_egfr,braf_v600, retrospective) / BRCA(anchor)",
+    "commit_hash": "5232dfe8fb24ed3de1807215c0f9cef1dff60fe5",
+    "metrics_path": "experiments/crosscancer/LAW_HELDOUT_SCOREBOARD.md",
+    "predictions_path": "experiments/crosscancer/*/full/mil_cost_results.json",
+    "config_path": "experiments/crosscancer/SUBSTITUTABILITY_LAW_PREREGISTRATION.md",
+    "split_policy_path": "experiments/crosscancer/*/full/split_meta.json"
+  },
+  "checks": {
+    "data_leakage": {
+      "status": "caution",
+      "evidence": [
+        "split_meta.json (LUNG/GASTRIC_STAD/HEADNECK_HNSC): site_disjoint=true, patient_overlap=0, patient-level, seed=42",
+        "run_mil_cost.py:79 hold = rows('val') + rows('test') — 보고 지표는 holdout으로만 산출",
+        "run_mil_cost.py:81 early-stop dev를 train에서 환자단위 15% 분리 → 공식 val이 모델선택에 사용되지 않음",
+        "GASTRIC lauren dev_auc=0.963 vs holdout=0.5364 — dev가 train 파생임과 정합(누수 시 나타나지 않는 격차)",
+        "[BLOCKER-5] 4개 암종 embedding_manifest의 embedding_path 2588건 전부가 /home/kkkim/project/... (개인 컨테이너 홈)를 가리킴 — LUNG 1052 / COLORECTAL 622 / HEADNECK 472 / GASTRIC 442",
+        "[BLOCKER-5] CLAUDE.md 명시 위반: 'manifest의 embedding_path는 /workspace/... 절대경로로 작성한다(개인 홈 경로 금지)'. /home/<user>/는 팀원별 별도 Docker 컨테이너 로컬 디스크라 다른 계정에서 마운트 자체가 없음"
+      ],
+      "notes": "설계상 누수 없음 — 그러나 pass가 아니라 caution으로 내린다. 검증이 코드/메타데이터 정적 검토에 그쳤고, 재실행 검증이 불가능하기 때문이다. 그 원인이 BLOCKER-5다: 임베딩이 owner의 개인 컨테이너 홈에 있어 Critic(braveji)도, sub-reviewer(sjpark/jhans)도, 어느 팀원도 결과를 재현할 수 없다. Owner≠Reviewer 원칙이 구조적으로 성립하지 않는 상태이며, 남은 remediation(5-seed null, pixel-mean baseline)도 owner만 실행 가능해 동일한 단일 실패점을 재생산한다. split_meta의 site_disjoint/patient_overlap 값 자체를 독립 재계산할 수 없다는 점에서 #1의 pass는 owner 자기신고에 의존한다."
+    },
+    "baseline_comparison": {
+      "status": "reject",
+      "evidence": [
+        "요구 3종(random / subtype-only / pixel-mean) 중 shuffle-null(≈random)만 존재",
+        "prevalence_baseline은 'auc: 0.5, note: 상수예측 정의상 0.5' — 계산이 아니라 정의값이므로 경험적 baseline이 아님",
+        "pixel-mean baseline이 4개 암종 전부에 부재",
+        "subtype-only baseline 부재",
+        "[BLOCKER-4] shuffle-null이 sealed-forward 3암종(폐/위/두경부)에서 단일시드(seed=42)뿐 — COLORECTAL/full/shuffle_null_robustness.json이 5-seed에서 null SD 0.046~0.167을 보여줌 → 단일시드 null은 우연배제 근거로 사용 불가",
+        "[BLOCKER-4] 그 5-seed 검정은 이미 완료(9b42d37, 07-13 13:35)됐고 kkkim 자체 기준(real > null_mean+2*null_sd)으로 cms1_vs_rest FAIL(0.912<0.936)·cms4_vs_rest FAIL(0.661<0.773)",
+        "[BLOCKER-4] 그럼에도 이후 작성된 COLORECTAL/full/LAW_TEST.md(2bd300b, 07-13 23:28) 각주1은 이를 'FOLLOW-UP(non-blocking): null ~5 seed 평균'이라 기술하고, LAW_HELDOUT_SCOREBOARD.md(5232dfe, 07-14 00:19)는 인용 0건 → 완료·실패한 강건성 검정이 문서에서 소실"
+      ],
+      "notes": "형식 미비가 아니라 실질 결함. (1) pixel-mean/bag-size 대조 부재. (2) 5-seed shuffle-null 도구(run_openitems_robustness.py)가 이미 존재하고 대장에만 적용됐으며, 적용된 곳에서 2/7 endpoint가 자체 기준으로 실패했는데 그 결과가 downstream 문서에 반영되지 않음. 단일시드 null 무효화의 귀결로 두경부 HPV(유일한 검정력 있는 CONFIRM)조차 우연배제가 5-seed로 확립되지 않음. 5-seed null을 non-blocking에서 blocking으로 승격 요구."
+    },
+    "counterfactual_check": {
+      "status": "caution",
+      "evidence": [
+        "COLORECTAL: misroute cost(anti_egfr 0.416) + 증분 LR(CMS 투입 시 증분 소멸) — counterfactual 성격 분석 존재",
+        "LUNG / GASTRIC_STAD / HEADNECK_HNSC: 특징 제거 counterfactual 부재 (shuffle-null은 라벨 순열이지 특징 제거가 아님)"
+      ],
+      "notes": "sealed-forward 3개 암종에 counterfactual 없음. 블로커는 아니나 CONFIRM 서술 전 보완 필요."
+    },
+    "cross_dataset_check": {
+      "status": "not_applicable",
+      "evidence": [
+        "블로커 1·2 미해소 상태에서 생물 sub-check 의뢰 보류 (sjpark/jhans)",
+        "HEADNECK HPV 0.9594 — 유일한 검정력 있는 CONFIRM이나 TCGA-HNSC 단일 코호트·seed=42 단일 실행·외부 복제 없음"
+      ],
+      "notes": "정본 수치(블로커 2)가 확정되지 않은 상태에서 sub-reviewer에게 넘기면 잘못된 숫자에 생물 판정을 받는 결과가 됨. 블로커 해소 후 재의뢰."
+    },
+    "biological_plausibility": {
+      "status": "not_applicable",
+      "evidence": [
+        "cross_dataset_check와 동일 사유로 보류 — sjpark/jhans 의뢰는 블로커 1·2 해소 후"
+      ],
+      "notes": "Owner≠Reviewer 원칙상 sub-check 담당자는 sjpark/jhans. 현 단계 의뢰는 시기상조."
+    },
+    "drp_framing": {
+      "status": "pass",
+      "evidence": [
+        "experiments/crosscancer + research 전수 grep: 'drug response prediction' / 'personalized therapy' / '개인 맞춤' / '치료 최적화' 위반 0건",
+        "히트는 전부 준수 문장(clinical_routing_distance_preregistered.json 'not_drp', run_cms_and_routing.py:122, LUNG_NSCLC/full/LAW_TEST.md:68) 또는 대조 문헌 인용(research/_index/papers.csv DRP-CONTRAST)",
+        "약물 구조 입력(SMILES/fingerprint) 없음 — 형태→가설 라우팅만"
+      ],
+      "notes": "프레이밍 규율 준수."
+    },
+    "claim_level": {
+      "status": "pass",
+      "evidence": [
+        "전 산출물 claim_level: hypothesis_only / critic_status: pending",
+        "LAW_HELDOUT_SCOREBOARD 결론 5번 '법칙 = 방향적 일관, 이분법 미확립'으로 동결",
+        "COLORECTAL/full/LAW_TEST.md 상단 배너로 회고적(retrospective) 지위 명시 — held-out 승격 금지 자진 표기"
+      ],
+      "notes": "claim 규율과 정직 라벨링 자체는 양호. 다만 위암 erbb2_amp를 '유방 HER2와 방향 일치'로 인용한 결론 2번은 근거가 null-equivalent이므로 철회 필요(블로커 1)."
+    }
+  },
+  "critic_status": "reject",
+  "claim_level": "hypothesis_only",
+  "summary": "G2 Critic 서명 거부(reject). 문서의 절제된 톤과 정직 라벨링은 양호하나, 결론을 받치는 정본 수치가 무너지며 근본 원인은 하나다 — 결과 파일과 서술 문서 사이의 동기화 규율 부재. 세 사례 모두 문서가 결과보다 낙관적인 방향으로 어긋나 있다. [BLOCKER-2 · 원인 규명 완료] 폐 MIL은 두 번 실행됐고(994b187 07-12 15:35 → 9b42d37 07-13 13:35, n_slides 1024→1026) LAW_TEST.md/SCOREBOARD는 1차 실행 기준에서 갱신되지 않았다. 재실행은 '위암 442장' 제목 커밋 본문의 한 줄에 묻혔다. 귀결은 역설적으로 긍정적이다 — 정본 JSON은 histology_lusc 0.939로 봉인 예측 ≥0.93을 명확히 적중시키는 반면(문서는 0.9247로 미달-CI구제), EGFR shuffle-null도 0.6641→0.4589로 개선된다. 즉 문서를 정본에 맞추면 결과가 좋아진다. [BLOCKER-4 · 신규] COLORECTAL/full/shuffle_null_robustness.json(9b42d37, 07-13 13:35)은 5-seed shuffle-null을 이미 완료했고, kkkim 자체 기준(real > null_mean+2*null_sd)으로 cms1_vs_rest(0.912<0.936)·cms4_vs_rest(0.661<0.773)가 FAIL했다. 그럼에도 10시간 뒤 작성된 COLORECTAL LAW_TEST.md(2bd300b)는 이를 'FOLLOW-UP(non-blocking): null ~5 seed 평균'이라 미실시로 기술하고, SCOREBOARD(5232dfe)는 인용 0건이다 — 완료·실패한 강건성 검정이 문서에서 소실됐다. [BLOCKER-1 · 메커니즘 정정, 결론 유지·확대] 본 리포트 초판은 위암 lauren shuffle-null=0.8232를 근거로 '라벨무관 교란이 AUROC를 구동하는 파이프라인 결함'이라 단정했으나, BLOCKER-4의 5-seed 데이터가 null SD 0.046~0.167(cms1: 0.387~0.794)을 보이므로 단일시드 0.8232는 넓은 null 분포의 draw일 수 있다. 이 단정은 철회한다(단일시드 null을 신뢰한 동일 오류). 올바른 서술은 더 넓다 — 단일시드 shuffle-null은 우연배제 근거로 사용할 수 없으므로 위암의 어느 endpoint도 우연배제가 확립되지 않았고, 이는 폐·두경부에도 동일 적용되어 두경부 HPV 0.9594(Paper C의 유일한 검정력 있는 CONFIRM)조차 5-seed 우연배제가 없다. null과 무관하게 성립하는 지적은 유지된다: 위암 lauren은 signet-ring/diffuse라는 H&E 최강 형태축에서 real 0.5364(dev 0.963, 격차 0.43, holdout n=58 = 계획 132 대비 56% 결손)로 양성대조가 실패했고, erbb2_amp real 0.6444는 관측 null 분포에서 우연과 구별되지 않으므로 사전등록 'blind ≤0.65 적중' 채점은 무효다(신호 없음을 blind 예측 적중으로 셀 수 없음). [BLOCKER-3] pixel-mean/subtype-only baseline이 전 암종에 부재. [BLOCKER-5 · 신규] 4개 암종 embedding_manifest의 embedding_path 2588건 전부가 /home/kkkim/project/...(개인 컨테이너 홈)를 가리킨다. CLAUDE.md는 '개인 홈 경로 금지, /workspace/... 절대경로'를 명시하며, /home/<user>/는 팀원별 별도 컨테이너라 다른 계정에서 마운트조차 없다. 즉 Critic도 sub-reviewer도 어떤 cross-cancer 결과도 재현할 수 없다 — Owner≠Reviewer가 구조적으로 성립하지 않으며, 이것이 블로커 1·2·4가 살아남은 구조적 이유다(아무도 검증할 수 없었다). 이 때문에 #1 누수 검토는 정적 검토에 그쳤고 pass가 아닌 caution으로 내린다(site_disjoint/patient_overlap 값을 독립 재계산할 수 없어 owner 자기신고에 의존). #6 DRP·#7 claim-level pass. #4·#5 생물 sub-check는 블로커 해소 전 의뢰 보류. 구조적 권고: 손으로 쓴 수치를 CI에서 결과 JSON과 대조해 불일치 시 실패시킬 것 — 그러면 BLOCKER 1·2·4가 재발하지 않는다.",
+  "required_followups": [
+    "[BLOCKER-2] 폐 3개 문서(LAW_TEST · SCOREBOARD · 개념도)를 정본 JSON(9b42d37) 기준으로 재생성하고 commit_hash+split_hash로 봉인. 원인 규명 완료 — 문서가 1차 실행(994b187)에서 멈춘 stale doc. 정정 시 결과는 개선됨(histology 0.939로 ≥0.93 명확 적중).",
+    "[BLOCKER-5] embedding_manifest의 embedding_path를 /home/kkkim/... → /workspace/data/cache/biop02/ 로 이전하고 manifest 재작성 (CLAUDE.md 팀 공유 데이터 경로 규칙). 이것이 최우선 선행조건 — 해소 전까지 Critic도 sub-reviewer도 어떤 결과도 재현할 수 없고, 아래 remediation을 owner 외 누구도 실행할 수 없다.",
+    "[BLOCKER-4] 5-seed shuffle-null을 sealed-forward 3암종(폐/위/두경부) 전 endpoint에 적용. Critic 제공 도구: experiments/crosscancer/critic_robustness_probe.py (5-seed null + n_tiles-only baseline + mean-embed baseline + bag-size Spearman). 학습 경로는 run_mil_cost.train_eval을 그대로 import하여 재구현하지 않음. 구문·API 계약 정적 검증 완료, 미실행(GPU·데이터 접근 불가 — BLOCKER-5). 판정 기준은 kkkim 자체 기준 유지: real > null_mean + 2*null_sd. non-blocking → blocking 승격.",
+    "[BLOCKER-4] 대장 shuffle_null_robustness.json 결과를 SCOREBOARD·LAW_TEST에 반영: cms1_vs_rest·cms4_vs_rest FAIL 명시, COLORECTAL LAW_TEST 각주1의 'FOLLOW-UP(non-blocking)' 문구 정정, 커밋 afedc6a의 '사전등록 3축 확증' 서술 재검토.",
+    "[BLOCKER-1] 위암 erbb2_amp의 '예측적중=적중' 표기 및 SCOREBOARD 결론 2번의 '유방 HER2와 방향 일치' 인용 철회 — real 0.6444가 관측 null 분포에서 우연과 구별되지 않음.",
+    "[BLOCKER-1] 위암 lauren_diffuse 양성대조 실패의 원인 규명(라벨 품질 vs bag-size 교란 vs 56% 결손). 진단 전까지 위암 전 endpoint를 스코어보드 집계에서 제외.",
+    "[BLOCKER-3] pixel-mean + subtype-only baseline을 4개 암종 전 endpoint에 추가 (7-point #2).",
+    "커버리지 비무작위 결손 분석: HEADNECK 450/523(86%), GASTRIC lauren holdout 58/132(56% 결손). 타일 실패는 슬라이드 품질과 상관되므로 무작위 결손이 아님. HPV CONFIRM 유지를 위해 결손군 vs 포함군의 HPV 유병률 비교 필요.",
+    "sealed-forward 3개 암종(폐/위/두경부)에 counterfactual 분석 추가 (#3).",
+    "[구조] 결과 JSON → 서술 문서 자동 생성을 강제하고, 손으로 쓴 수치는 CI에서 JSON과 대조해 불일치 시 실패시킬 것. BLOCKER 1·2·4의 공통 근본원인(문서-결과 동기화 규율 부재)에 대한 구조적 대응.",
+    "위 항목 해소 후 #4(cross-dataset)·#5(biological plausibility)를 sjpark/jhans에 sub-check 의뢰 → 재검토 후 최종 서명."
+  ]
+}

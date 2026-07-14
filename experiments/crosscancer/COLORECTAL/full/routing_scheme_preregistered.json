@@ -1,0 +1,40 @@
+{
+  "purpose": "Critic #2/#6/#7 cherry-pick 방지 — cost 계산 전 라우팅 스킴을 동결한다. 마커→치료축 매핑과 비용 방향 가설을 결과를 보기 전에 고정.",
+  "cancer": "COLORECTAL",
+  "claim_level": "hypothesis_only",
+  "critic_status": "pending",
+  "repo_commit_hash": "d3a614f88855eafd50bf764aaf1ec07e543c33b6",
+  "frozen_before_running": "Part B MIL (msi_high / anti_egfr_eligible / braf_v600)",
+  "note_no_system_time": "frozen_at 타임스탬프는 시스템 시간 신뢰불가로 생략, repo commit hash로 시점 고정.",
+  "axes": [
+    {
+      "marker": "msi_high",
+      "definition": "MSIsensor>=3.5 (fallback MANTIS>=0.4)",
+      "route_to": "anti-PD-1 (pembrolizumab)",
+      "clinical_anchor": "KEYNOTE-177",
+      "cost_hypothesis": "low",
+      "rationale": "MSI-H는 종양침윤림프구/수질형태 등 H&E 형태상관물이 알려짐 → H&E-가시 예상, 저치환비용."
+    },
+    {
+      "marker": "anti_egfr_eligible",
+      "definition": "all_ras==0 AND braf_v600==0 (all-RAS = KRAS/NRAS codon 12/13/61 activating)",
+      "route_to": "anti-EGFR (cetuximab / panitumumab)",
+      "clinical_anchor": "CRYSTAL, FIRE-3",
+      "cost_hypothesis": "high",
+      "rationale": "RAS 변이는 H&E-조용(형태 무상관) 예상 → 예측이 near-random에 가까울수록 라우팅 치환비용 큼. 이 축이 유방 HER2(H&E-blind, 고비용)의 대장 격."
+    },
+    {
+      "marker": "braf_v600",
+      "definition": "BRAF proteinChange V600*",
+      "route_to": "BRAF+EGFR 병용 (encorafenib+cetuximab)",
+      "clinical_anchor": "BEACON",
+      "cost_hypothesis": "partial",
+      "rationale": "BRAF-V600은 CMS1/MSI·우측대장 등과 부분 형태상관 → 부분 가시(기존 내부 holdout AUROC 0.868)."
+    }
+  ],
+  "cost_metric": {
+    "lead": "misroute_rate = (측정 마커 vs H&E-예측 마커) 라우팅 불일치율. 거리-무관, 유방 receptor-routing과 like-with-like.",
+    "mean_cost": "frozen_map 치료거리 가중. antiBRAF__baseline=0.868만 냉동지도에 존재. MSI(ICI)/anti-EGFR(항체) 축은 frozen_map에서 제외됨(monoculture가 ICI/항체 효능 미포착) → mean_cost=null, 별도 사전등록 임상거리는 사람 결정 필요."
+  },
+  "comparison_rule": "내부 holdout 대 내부 holdout만. 유방 CPTAC 외부전이 결과와 섞지 않음. 변이축↔변이축 정합(유방 HER2 ↔ 대장 all-RAS)."
+}

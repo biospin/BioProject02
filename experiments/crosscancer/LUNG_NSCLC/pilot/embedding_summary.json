@@ -1,0 +1,122 @@
+{
+  "TCGA-05-4384-01Z-00-DX1.CA68BF29-BBE3-4C8E-B48B-554431A9EE13": {
+    "shape": [
+      68,
+      1024
+    ],
+    "finite": true,
+    "sec": 7.4
+  },
+  "TCGA-05-4390-01Z-00-DX1.858E64DF-DD3E-4F43-B7C1-CE35B33F1C90": {
+    "shape": [
+      48,
+      1024
+    ],
+    "finite": true,
+    "sec": 7.0
+  },
+  "TCGA-05-4410-01Z-00-DX1.E5B66334-4949-4F45-9200-296B1A2F1AD5": {
+    "shape": [
+      67,
+      1024
+    ],
+    "finite": true,
+    "sec": 7.3
+  },
+  "TCGA-05-4425-01Z-00-DX1.82B093EE-49BC-4FD9-91AC-4CC89944309D": {
+    "shape": [
+      33,
+      1024
+    ],
+    "finite": true,
+    "sec": 6.9
+  },
+  "TCGA-05-5420-01Z-00-DX1.8C253A99-44FD-48B6-AF31-D808CCB7DB1E": {
+    "shape": [
+      58,
+      1024
+    ],
+    "finite": true,
+    "sec": 7.2
+  },
+  "TCGA-05-5423-01Z-00-DX1.CCCF5FDB-ACAD-4D9D-80DF-556F0D6284AF": {
+    "shape": [
+      55,
+      1024
+    ],
+    "finite": true,
+    "sec": 7.1
+  },
+  "TCGA-05-5425-01Z-00-DX1.85865B2F-4888-43DD-A501-458BEFCF832B": {
+    "shape": [
+      45,
+      1024
+    ],
+    "finite": true,
+    "sec": 7.1
+  },
+  "TCGA-05-5428-01Z-00-DX1.8018AD62-F1CE-4BFF-8EFD-3F2D4513FC11": {
+    "shape": [
+      41,
+      1024
+    ],
+    "finite": true,
+    "sec": 7.0
+  },
+  "TCGA-05-5429-01Z-00-DX1.20729065-FADA-4E43-98D7-AFA5FB4A0447": {
+    "shape": [
+      46,
+      1024
+    ],
+    "finite": true,
+    "sec": 6.9
+  },
+  "TCGA-05-5715-01Z-00-DX1.D3F0A1FA-2507-45FF-823F-F9981E62BB4C": {
+    "shape": [
+      57,
+      1024
+    ],
+    "finite": true,
+    "sec": 7.2
+  },
+  "TCGA-44-7661-01Z-00-DX1.baf72abd-edb9-4f56-beb3-f5138aa50930": {
+    "shape": [
+      1705,
+      1024
+    ],
+    "finite": true,
+    "sec": 37.4
+  },
+  "TCGA-55-8204-01Z-00-DX1.30ba69f3-53f1-41cc-826c-20dce3cfe86b": {
+    "shape": [
+      537,
+      1024
+    ],
+    "finite": true,
+    "sec": 19.2
+  },
+  "TCGA-55-8207-01Z-00-DX1.2dafc442-f927-4b0d-b197-cc8c5f86d0fc": {
+    "shape": [
+      141,
+      1024
+    ],
+    "finite": true,
+    "sec": 10.0
+  },
+  "TCGA-55-8505-01Z-00-DX1.D364C30D-BFB8-486B-A0D3-948FF8E90C3E": {
+    "shape": [
+      662,
+      1024
+    ],
+    "finite": true,
+    "sec": 21.8
+  },
+  "TCGA-99-7458-01Z-00-DX1.10ea0b2c-c763-40d1-83a4-3d4ae957fdb0": {
+    "shape": [
+      1125,
+      1024
+    ],
+    "finite": true,
+    "sec": 32.3
+  }
+}
