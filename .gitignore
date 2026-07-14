@@ -284,3 +284,7 @@ experiments/crosscancer/*.out
 experiments/kkkim/logs/
 # pcr_impress pilot coords (재생성 가능, 대용량)
 experiments/kkkim/20260710_pcr_impress/outputs/
+
+# BLOCKER-5 이관 로그·manifest 백업(재생성 가능)
+experiments/crosscancer/BLOCKER5_COPY.log
+experiments/crosscancer/*/full/*.prehome_bak
