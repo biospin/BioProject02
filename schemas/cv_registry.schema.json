@@ -27,24 +27,40 @@
     "claim_level"
   ],
   "properties": {
-    "schema_version": {"type": "string", "const": "0.1"},
+    "schema_version": {
+      "type": "string",
+      "const": "0.1"
+    },
     "entry_id": {
       "type": "string",
       "description": "Stable id, convention: cv-<YYYYMMDD>-<endpoint>-<embedding>-<model> e.g. cv-20260703-er-uni-mlp",
       "pattern": "^cv-[0-9]{8}-[a-z0-9]+-[a-z0-9]+-[a-z0-9]+$"
     },
-    "created_at": {"type": "string", "format": "date-time"},
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
     "owner": {
       "type": "string",
       "description": "Experiment owner username (produced the model). Must differ from the Critic reviewer (Owner != Reviewer)."
     },
     "reviewer": {
-      "type": ["string", "null"],
+      "type": [
+        "string",
+        "null"
+      ],
       "description": "Critic reviewer username. Owner != Reviewer. Null until reviewed."
     },
     "endpoint": {
       "type": "string",
-      "enum": ["er_status", "pr_status", "her2_status", "pam50"]
+      "enum": [
+        "er_status",
+        "pr_status",
+        "her2_status",
+        "pam50",
+        "pam50_4class"
+      ],
+      "description": "예측 엔드포인트. pam50(5-class, §4 위반 레거시)과 pam50_4class(§4 준수, Normal-like 제외)는 라벨 공간·표본·macro 평균 대상이 달라 직접 비교 불가한 별개 태스크다 — 반드시 구분해 기재한다."
     },
     "model": {
       "type": "string",
@@ -52,94 +68,322 @@
     },
     "embedding_model": {
       "type": "string",
-      "enum": ["uni_v1", "conch", "exaone_path2", "virchow_v1", "uni2_h", "dummy"]
+      "enum": [
+        "uni_v1",
+        "conch",
+        "exaone_path2",
+        "virchow_v1",
+        "uni2_h",
+        "dummy"
+      ]
     },
-    "embedding_dim": {"type": ["integer", "null"], "minimum": 1},
-    "train_dataset": {"type": "string", "const": "TCGA-BRCA"},
-    "test_dataset": {"type": "string", "const": "CPTAC-BRCA"},
+    "embedding_dim": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1
+    },
+    "train_dataset": {
+      "type": "string",
+      "const": "TCGA-BRCA"
+    },
+    "test_dataset": {
+      "type": "string",
+      "const": "CPTAC-BRCA"
+    },
     "split_policy": {
       "type": "string",
       "description": "Reference to the locked split policy, e.g. split_policy_v0 (site-disjoint train 707 / val 152 / test 151)."
     },
-    "n_train": {"type": "integer", "minimum": 1},
-    "n_val": {"type": "integer", "minimum": 1},
-    "n_test": {"type": "integer", "minimum": 1, "description": "External CPTAC-BRCA test slides/patients."},
+    "n_train": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "n_val": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "n_test": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "External CPTAC-BRCA test slides/patients."
+    },
     "ext_label_source": {
-      "type": ["string", "null"],
+      "type": [
+        "string",
+        "null"
+      ],
       "description": "Provenance of the external (CPTAC) labels, e.g. 'official (BIOP02-55, cBioPortal brca_cptac_2020)' vs a provisional source. Entries on provisional labels stay critic_status<=caution until official labels confirm."
     },
     "internal_metrics": {
       "type": "object",
       "additionalProperties": false,
       "description": "TCGA-BRCA held-out validation metrics (in-domain).",
-      "required": ["auc", "auprc", "balanced_accuracy"],
+      "required": [
+        "auc",
+        "auprc",
+        "balanced_accuracy"
+      ],
       "properties": {
-        "auc": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
-        "auprc": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
-        "balanced_accuracy": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "auc": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "auprc": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "balanced_accuracy": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
         "auc_ci_95": {
-          "type": ["array", "null"],
+          "type": [
+            "array",
+            "null"
+          ],
           "description": "Bootstrap 95% CI for AUC as [lower, upper] (Critic #2).",
-          "items": {"type": "number", "minimum": 0, "maximum": 1},
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
           "minItems": 2,
           "maxItems": 2
         },
-        "n": {"type": ["integer", "null"], "minimum": 1}
+        "n": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        }
       }
     },
     "external_metrics": {
       "type": "object",
       "additionalProperties": false,
       "description": "CPTAC-BRCA external test metrics (out-of-domain).",
-      "required": ["auc", "auprc", "balanced_accuracy"],
+      "required": [
+        "auc",
+        "auprc",
+        "balanced_accuracy"
+      ],
       "properties": {
-        "auc": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
-        "auprc": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
-        "balanced_accuracy": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+        "auc": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "auprc": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
+        "balanced_accuracy": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0,
+          "maximum": 1
+        },
         "auc_ci_95": {
-          "type": ["array", "null"],
+          "type": [
+            "array",
+            "null"
+          ],
           "description": "Bootstrap 95% CI for external AUC as [lower, upper] (Critic #2).",
-          "items": {"type": "number", "minimum": 0, "maximum": 1},
+          "items": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
           "minItems": 2,
           "maxItems": 2
         },
-        "n": {"type": ["integer", "null"], "minimum": 1}
+        "n": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        }
       }
     },
     "generalization_gap": {
-      "type": ["object", "null"],
+      "type": [
+        "object",
+        "null"
+      ],
       "additionalProperties": false,
       "description": "internal minus external. Positive = performance drop on external cohort.",
       "properties": {
-        "auc_delta": {"type": ["number", "null"]},
-        "auprc_delta": {"type": ["number", "null"]},
-        "balanced_accuracy_delta": {"type": ["number", "null"]}
+        "auc_delta": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "auprc_delta": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "balanced_accuracy_delta": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
       }
     },
     "baselines": {
-      "type": ["object", "null"],
+      "type": [
+        "object",
+        "null"
+      ],
       "additionalProperties": false,
       "description": "Trivial baselines on the external cohort (Critic #2). External AUC must beat these to claim signal.",
       "properties": {
-        "random_auc": {"type": ["number", "null"]},
-        "subtype_only_auc": {"type": ["number", "null"]},
-        "mean_embed_auc": {"type": ["number", "null"], "description": "Mean-embedding (patch-mean) logistic baseline — the pixel/embedding-mean trivial baseline actually used in this project."},
-        "pixel_mean_auc": {"type": ["number", "null"]}
+        "random_auc": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "subtype_only_auc": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "mean_embed_auc": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "description": "Mean-embedding (patch-mean) logistic baseline — the pixel/embedding-mean trivial baseline actually used in this project."
+        },
+        "pixel_mean_auc": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
       }
     },
     "experiment_dir": {
       "type": "string",
       "description": "Path to the experiment dir holding the 5 artifacts (config.yaml, model.pt, metrics.json, predictions.npy, critic_report.json), e.g. experiments/sjpark/20260703_er_uni_mlp_cptac/"
     },
-    "predictions_path": {"type": ["string", "null"]},
-    "critic_report_path": {"type": ["string", "null"]},
-    "commit_hash": {"type": "string", "pattern": "^[0-9a-f]{7,40}$"},
+    "predictions_path": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "critic_report_path": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "commit_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{7,40}$"
+    },
     "critic_status": {
       "type": "string",
-      "enum": ["pending", "pass", "caution", "reject"],
+      "enum": [
+        "pending",
+        "pass",
+        "caution",
+        "reject"
+      ],
       "description": "Only entries with pass may be shared in #biop02-experiments."
     },
-    "claim_level": {"type": "string", "const": "hypothesis_only"},
-    "notes": {"type": ["string", "null"]}
+    "claim_level": {
+      "type": "string",
+      "const": "hypothesis_only"
+    },
+    "notes": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "label_shuffle_auc": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "라벨 순열(shuffle) null AUROC. 단일시드 또는 대표값. Critic #2 근거."
+    },
+    "label_shuffle_balanced_accuracy": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "description": "라벨 순열 null balanced accuracy."
+    },
+    "label_shuffle_null_multiseed": {
+      "type": "object",
+      "description": "다중시드 shuffle-null. 단일시드 null은 분산이 커 우연배제 근거로 부족하므로 ≥5 seed 권장.",
+      "properties": {
+        "n_seeds": {
+          "type": "integer"
+        },
+        "null_aucs": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          }
+        },
+        "null_min": {
+          "type": "number"
+        },
+        "null_max": {
+          "type": "number"
+        },
+        "real_above_null": {
+          "type": "boolean"
+        },
+        "scope": {
+          "type": "string",
+          "enum": [
+            "internal",
+            "external",
+            "both"
+          ]
+        }
+      },
+      "required": [
+        "n_seeds",
+        "null_aucs",
+        "real_above_null"
+      ],
+      "additionalProperties": false
+    }
   }
 }
