@@ -288,3 +288,6 @@ experiments/kkkim/20260710_pcr_impress/outputs/
 # BLOCKER-5 이관 로그·manifest 백업(재생성 가능)
 experiments/crosscancer/BLOCKER5_COPY.log
 experiments/crosscancer/*/full/*.prehome_bak
+
+# crosscancer 상위 배치 로그(transient)
+experiments/crosscancer/*.log
