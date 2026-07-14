@@ -17,3 +17,9 @@
 ## 하이라이트 — 위 HER2/ERBB2-amp vs 유방 HER2(0.599)
 - 관측 AUROC=0.6444 (n_pos=14), **shuffle-null 0.6406 → real↔null 마진 0.004 = 자기 순열 위로 신호 0.** 예측=blind≤0.65지만 **"예측적중" 채점은 무효(braveji G2 BLOCKER-1):** 아무것도 학습 못 하는 파이프라인은 모든 endpoint에 ≤0.65를 산출하므로, 신호 없는 낮은 AUROC를 "blind 예측 적중"으로 셀 수 없다. 법칙판정=미결(INCONCLUSIVE, n_pos<25).
 - **exploratory(n_pos<25) + real≈null**: 신호 자체가 확립되지 않으므로 유방 HER2-blind(0.599)와의 "consistent" 인용도 **철회한다**(신호 없는 endpoint에서 증거 가치를 끌어올 수 없음). 위 ERBB2-amp는 "증폭 마커 H&E-blindness 부합"의 근거로 사용하지 않는다.
+
+
+## 5-seed 우연배제 + pixel-mean baseline (2026-07-14, BLOCKER-1·3)
+- **5-seed shuffle-null**: msi_h PASS(thr 0.647)·ebv PASS(thr 0.706, n_pos 7). **lauren_diffuse FAIL**(null에 0.8232 draw로 thr 1.042>1 = 양성대조 불성립·null 불안정), **erbb2_amp FAIL**(real 0.6444≈null, thr 0.725). 
+- **pixel-mean baseline**: lauren **0.631 > MIL 0.536**(MIL이 trivial baseline보다 낮음 = 위암 파이프라인 저신뢰 재확인)·msi 0.777·erbb2 0.561·ebv 0.864.
+- **결론: 위암 endpoint 전반 저신뢰**(braveji BLOCKER-1 방향). 통합 = 스코어보드 §5-seed.

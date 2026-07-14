@@ -69,3 +69,9 @@
 - claim_level: hypothesis_only. 어떤 우월성/치료 최적화 주장 없음. DRP 아님(형태→가설 라우팅만).
 - 임베딩 1048/1053(스트래글러 4장 다운로드중 + 1장 fail_dl; `../STRAGGLERS.md`). 완료 시 EGFR/KRAS n_pos는 사실상 불변(누락은 환자 4명)이라 결론 안정.
 - shuffle-null은 holdout n_pos 소수에서 순열/부트스트랩 잡음이 커 endpoint마다 편차가 있다(subtype PP 0.33 등) — exploratory 판정을 강화한다. **단 base 3 endpoint는 정본(9b42d37) shuffle 0.43/0.46/0.51로 재동기화됨.** 단일시드 shuffle의 우연배제 한계는 별도 blocker(≥5-seed)로 다룬다.
+
+
+## 5-seed 우연배제 + pixel-mean baseline (2026-07-14, BLOCKER-1·3)
+- **5-seed shuffle-null(seed 42,1,2,3,4): histology/egfr/kras 전부 PASS** (real > null_mean+2·null_sd; thr 각 0.677/0.760/0.583). 단일시드 한계 해소. 정본 `shuffle_null_robustness.json`.
+- **pixel-mean baseline**: histology 0.919·egfr 0.829·kras 0.637 (MIL real 0.939/0.852/0.681과 근접 = 신호가 attention 아티팩트 아님). `baseline_pixelmean.json`.
+- 통합 = `../../LAW_HELDOUT_SCOREBOARD.md` §5-seed 우연배제.
