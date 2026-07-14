@@ -1,0 +1,28 @@
+# BIOP02-52 v0.2 — PRISM vs GDSC Consistency 실측
+# Author: jhans (서정한)
+# Date: 2026-07-02
+
+version: "0.2"
+ticket: BIOP02-52
+
+data:
+  depmap_model:       "data/Model.csv"
+  prism_compound:     "data/Repurposing_Public_24Q2_Extended_Secondary_Compound_List.csv"
+  prism_matrix:       "data/Repurposing_Public_24Q2_Extended_Secondary_Data_Matrix.csv"
+  gdsc_response:      "data/GDSC2_fitted_dose_response_25Feb2025.xlsx"
+  gdsc_compound:      "data/screened_compounds_rel_8.5.csv"
+
+filter:
+  brca_lineage:       "Breast"        # DepMap OncotreeLineage
+  brca_tcga:          "BRCA"          # GDSC TCGA_DESC
+
+join:
+  cell_line_key:      "SangerModelID" # primary key (COSMICID fallback)
+  drug_key:           "pubchem_cid"   # PubChem CID cross-link
+
+consistency:
+  min_cell_lines:     5               # 통계적 유의성 최소 n
+  spearman_rho_min:   0.3             # "both" 판정 기준
+  pval_max:           0.05
+
+output_dir:           "."             # experiments/jhans/20260702_consistency/

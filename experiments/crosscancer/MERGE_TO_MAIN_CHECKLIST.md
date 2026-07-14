@@ -8,7 +8,15 @@
 - [x] **G1 — Paper C 결과 확정.** ✅ **kkkim Leader 승인(2026-07-14).** held-out 4암종+anchor firm, 대장 회고적 명시, 5암종 통합 = `LAW_HELDOUT_SCOREBOARD.md`. 결론 "방향 일관·이분법 미확립"으로 동결(승격 금지).
 - [ ] **G2 — Critic 서명(braveji).** split lock ✅ 완료 / **Paper C held-out ❌ REJECT — remediation 필요.**
   - ✅ **split lock(BIOP02-41): braveji Critic cross-sign PASS**(2026-07-13, commit 6ffdeb9 + critic_report/registry a6d2f55). §6 lock criteria 전항 통과.
-  - [ ] ❌ **Paper C held-out: braveji Critic REJECT**(2026-07-14). 산출물 `critic_report.json`·`CRITIC_REVIEW_G2_braveji.md`·`CRITIC_REVIEW_G2_ADDENDUM.md`(브랜치 `docs/BIOP02-96-braveji-critic-crosscancer-g2` / PR#33 · BIOP02-96 코멘트). 블로커 5건: ①단일시드 null→우연배제 미확립(두경부 HPV 0.9594 포함) ②폐 stale doc(정본 histology 0.939 vs 문서 0.9247) ③baseline(pixel-mean·subtype-only) 전 암종 부재 ④대장 5-seed 실패검정(cms1·cms4 FAIL)이 문서서 소실 ⑤embedding_path 2,588건 전부 /home/kkkim=재현 불가(구조적 루트, **착수함→/workspace 이관 중**). **서명조건 6개 해소 후 재검토(braveji: "통과 가능성 높음").**
+  - [ ] ❌ **Paper C held-out: braveji Critic 2차 재검토 REJECT**(2026-07-14, commit ab77cce, 브랜치 `docs/BIOP02-96-braveji-critic-g2-reverify`). 1차 5건 중 3건 해소, **잔여 2건 + 신규 HPV 표 모순:**
+    - ✅ BLOCKER-2 해소: 폐 정본 재동기화(9b42d37, histology 0.9247→0.939)
+    - ✅ BLOCKER-4 해소: 대장 5-seed 실패(cms1·cms4 FAIL) 스코어보드 §6 반영
+    - ✅ BLOCKER-5 해소: embedding_path 43G → `/workspace` 이관 완료(재현성 복원)
+    - ❌ **BLOCKER-3**: pixel-mean / subtype-only baseline 전 암종 부재
+    - ❌ **BLOCKER-4-2**: 폐·위·두경부 5-seed shuffle-null 미실행 (`LUNG/GASTRIC/HEADNECK/full/critic_robustness.json` 없음)
+    - 🔴 **HPV 표 모순**: `LAW_HELDOUT_SCOREBOARD.md` 표 "✅ CONFIRM" vs 결론 §1 "우연배제 미확립" 자기모순 → kkkim: HPV 행을 `⚠️ provisional (5-seed 대기 — 우연배제 미확립)`로 수정
+    - **승격 경로 — `caution`**: HPV 행 수정 1건(편집만). **`pass`**: `critic_robustness_probe.py` 폐·위·두경부 실행(BLOCKER-3·4-2 동시 해소) + 위암 lauren 원인 진단 + sjpark/jhans sub-check (#4/#5) → braveji 3차 재검토
+    - ⭐ **kkkim 최우선 실행**: `python experiments/crosscancer/critic_robustness_probe.py --cancer HEADNECK_HNSC --device cuda:0` (두경부 HPV 5-seed null — 최우선)
 - [x] **G3 — claim 규율.** ✅ 검증(2026-07-14): crosscancer 산출물 전부 `claim_level: hypothesis_only`·`critic_status: pending`, DRP 금지표현 0(유일 히트=준수 문장 "약물반응예측 아니다").
 - [ ] **G4 — 브랜치 동기화.** `git fetch && git merge origin/main` → **뒤처짐 0**. (2026-07-13 충족, 병합 직전 재확인.)
 - [x] **G5 — split lock focused PR(#32) 선처리.** ✅ **braveji가 PR #32 main 머지 완료**(2026-07-13, merge e6ffc45). split lock provenance가 main에 안착 → 대형 병합 diff·리스크 축소됨.
@@ -23,13 +31,7 @@
 
 ## 📌 상태 (갱신)
 - 2026-07-13: 게이트 전부 미충족(G2 pending). 브랜치는 동기화(G4 ✅). PR #32(split lock focused) 리뷰 대기.
-- 2026-07-14: HNSC 472/472 → 5암종 held-out + 스코어보드, G1 ✅. **BUT G2 Paper C = braveji Critic REJECT**(블로커 5건, PR#33). ⚠️ **병합 중단.** (kkkim이 올린 BIOP02-93 Critic요청 코멘트는 reject와 교차되어 삭제됨.)
-- **remediation 진척(2026-07-14, kkkim):**
-  - ✅ BLOCKER-5 경로 재현성 — 임베딩 43G→/workspace, manifest 재작성(52e2644).
-  - ✅ BLOCKER-2 폐 정본 동기화(0.9247→0.939 등) + 폐 provenance 봉인(ea03cee·b38c7de).
-  - ✅ BLOCKER-4 대장 5-seed 실패검정 문서 반영(ea03cee).
-  - ✅ 위 erbb2 "blind 적중" 채점·유방 HER2 인용 철회(b38c7de).
-  - ✅ BLOCKER-1 전 endpoint 5-seed 우연배제(50bb7c9) — **두경부 HPV 0.9594 PASS(thr 0.790)**, 양성대조 lung/grade PASS, 위 lauren·erbb2·두경부 egfr_amp FAIL. 스모크로 정본 재현(histology 0.939) 검증.
-  - ✅ BLOCKER-3 pixel-mean baseline(50bb7c9, 3암종) — subtype-only는 잔여.
-  - ⬜ 잔여: subtype-only baseline · #4·#5 bio sub-check(sjpark/jhans 의뢰) · braveji 재검토 서명.
-- 다음: 잔여 항목 → braveji 재검토 → `critic_status: pass` → G4 뒤처짐 0 재확인 → §16 병합.
+- 2026-07-14 #1: HNSC 472/472 → 5암종 held-out + 스코어보드, G1 ✅. **BUT G2 Paper C = braveji Critic 1차 REJECT**(블로커 5건, PR#33 / BIOP02-96). ⚠️ 병합 중단.
+- 2026-07-14 #2: **braveji 2차 재검토 — REJECT 유지**(commit ab77cce). 5→2 블로커 축소. HPV 표 모순 신규 지적.
+- 2026-07-14 #3: **braveji Critic — HPV 표 provisional 수정 완료 → critic_status: caution 달성.** `LAW_HELDOUT_SCOREBOARD.md` HPV 행 "✅ CONFIRM" → "⚠️ provisional (5-seed 대기)" 및 결론 §1 consistent 수정(자기모순 해소). **G2 pass 잔여 = `critic_robustness_probe.py` 폐·위·두경부 실행 + 위암 lauren 원인 진단 + sjpark/jhans sub-check (#4/#5) → braveji 3차 재검토.**
+- **다음(kkkim 실행 순서):** ① `critic_robustness_probe.py` HEADNECK_HNSC → GASTRIC → LUNG_NSCLC ② 위암 lauren 원인 진단 ③ sjpark/jhans sub-check → braveji 3차 재검토 → G2 통과 후에만 main 병합.

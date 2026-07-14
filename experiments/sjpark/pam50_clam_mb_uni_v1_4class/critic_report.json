@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "created_at": "2026-07-10T20:00:00+09:00",
+  "created_at": "2026-07-14T11:00:00+09:00",
   "reviewer": "braveji",
   "owner": "sjpark",
   "experiment": {
@@ -16,80 +16,87 @@
   },
   "checks": {
     "data_leakage": {
-      "status": "pending",
+      "status": "caution",
       "evidence": [
-        "site-disjoint 검증 통과: TCGA train/val/test 간 TSS·case_id 교집합 0 (site_disjoint_verification.json)",
-        "label-shuffle multi-seed(5): real ext 0.8181 vs null [0.4323, 0.5656] — null 밖 = leakage 아님",
-        "n_train=628 / n_val=123 (Normal-like 제외 정합: train 707→628, val 151→123)",
-        "잔여: split_policy_v0 lock(kkkim) 미완 → data_leakage 최종 판정은 lock 후"
+        "split_policy_v0 LOCKED (split_hash=5995f29d3978b831) — kkkim sign-off 2026-07-11, braveji cross-sign 2026-07-13, BIOP02-41 main 병합(6ffdeb9) 완료",
+        "site-disjoint patient-level split. 5-class와 동일 split → n_train 707→628, n_val 151→123 (Normal-like 제외분 79/28과 정합)",
+        "embedding_manifest·ext_test_manifest 모두 /workspace/... 절대경로 → 팀 내 독립 재현 가능",
+        "잔여: patient-overlap assert 로그 미제출 (5-class 리뷰에서 요구했으나 4-class에도 미이행)",
+        "잔여: site별 PAM50 클래스 분포 불균형 (5-class에서 val HER2-E 과다 지적, 4-class 재확인 필요)"
       ],
-      "notes": "reviewer(braveji) 최종 판정 대기. split_policy_v0 lock이 유일 잔여 블로커."
+      "notes": "5-class 리뷰 시점의 최대 블로커였던 split_policy_v0 lock이 해소되어(BIOP02-41) 누수 위험은 크게 낮아졌다. 다만 patient-overlap assert 로그가 여전히 미제출이라 pass가 아닌 caution. manifest가 /workspace 절대경로여서 Critic이 독립 재현 가능한 점은 명확히 양호하다(Paper C BIOP02-96과 대조)."
     },
     "baseline_comparison": {
-      "status": "pending",
+      "status": "pass",
       "evidence": [
-        "CLAM-MB val macro AUC 0.8053 (95% CI 0.7504–0.8623)",
-        "CLAM-MB ext macro AUC 0.8181 (95% CI 0.7875–0.8536), n_test=382",
-        "mean_embed ext AUC 0.653 (CI 0.6141–0.6932) → paired diff +0.165, CI [0.1218, 0.2064], p≈0 (0 제외)",
-        "random ext 0.5075, majority 0.5",
-        "subtype_only 미적용 — PAM50는 subtype 자체(정의상 순환)라 mean_embed가 유효 기준선",
-        "5-class와 macro-AUC 직접 비교 불가(라벨 공간 상이) — 버전 간 우열 주장 안 함(BIOP02-56 braveji 기각 수용, pam50_4class_vs_5class.json)"
+        "외부(CPTAC) paired: CLAM-MB 0.8181 vs mean_embed 0.653 → diff +0.165, CI95 [0.1218, 0.2064] (0 제외), p≈0, significant_at_0.05=true",
+        "내부(TCGA val) paired: CLAM-MB 0.8053 vs mean_embed 0.7153 → diff +0.0889, CI95 [0.0394, 0.14] (0 제외), p=0.001",
+        "label-shuffle null 5-seed: 내부 real 0.8053 vs null [0.4232, 0.5933] / 외부 real 0.8181 vs null [0.4323, 0.5656] — 양쪽 real_above_null=true",
+        "subtype_only baseline은 PAM50에 정의상 순환(PAM50로 PAM50 예측)이라 적용 불가 → mean_embed가 유효 기준선"
       ],
-      "notes": "braveji BIOP02-56 comment[8]② 예비판정: #2 PASS (diff≥0.03 AND CI 비중첩). 최종 sign-off 대기."
+      "notes": "4개 BRCA 엔드포인트 중 #2를 통과한 유일한 결과. diff≥0.03 AND CI 비중첩을 내부·외부에서 동시 충족한다. shuffle-null을 5-seed로 산출한 점은 단일시드 null의 분산 문제를 회피한 올바른 규율이다(Paper C가 결여한 바로 그 통제). ER/PR이 외부에서 subtype_only에 역전당해 SIGNAL-NOT-ADDITIVE이고 HER2가 reject인 상황에서 PAM50 4-class가 pass 후보 1순위."
     },
     "counterfactual_check": {
-      "status": "pending",
+      "status": "caution",
       "evidence": [
-        "attention ablation: auc_full 0.8053 → auc_top_removed 0.7868 (drop 0.0185) vs random 제거 -0.0003",
-        "AUC(full)-AUC(top제거) paired CI [-0.0006, 0.0387], p=0.061 (α=0.05 미달이나 5-class p=0.917 대비 대폭 개선)",
-        "proba-level: |Δproba| top 0.052 vs random 0.0023 (~23×) — attention 기여 명확"
+        "top-attention 10% 제거: AUC 0.8053 → 0.7868 (drop 0.0185) vs 무작위 동수 제거 0.805 (drop 0.0003)",
+        "AUC-level 유의성: CI95 [-0.0006, 0.0387]이 0을 포함, p≈0.061 → auc_drop_significant=false (α=0.05 미달)",
+        "proba-level: |Δproba| top 0.052 vs random 0.0023 → 23배",
+        "5-class 대비 대폭 개선(p 0.917 → 0.061)이나 유의수준 미달",
+        "counterfactual_summary.json의 faithfulness_confirmed=true 플래그는 여전히 과대 — AUC-level은 non-significant"
       ],
-      "notes": "braveji 예비판정: caution (proba-level faithful, AUC-level은 p=0.061로 경계). 최종 sign-off 대기."
+      "notes": "proba-level faithfulness는 성립(무작위 대비 23×)하나 슬라이드 순위(AUC) 수준에서는 유의하지 않다. MIL 신호 중복성으로 해석 가능하나 'counterfactual 검증됨'으로 단정 불가. faithfulness_confirmed 플래그가 proba-level 한정임을 아티팩트에 명기할 것(5-class 지적이 4-class에 잔존). Paper A 서술: 'attention은 예측확률 수준에서 faithful하나 슬라이드 순위는 top-타일 제거에 robust'."
     },
     "cross_dataset_check": {
-      "status": "pending",
+      "status": "pass",
       "evidence": [
-        "CPTAC-BRCA 외부검증 macro AUC 0.8181 (CI 0.7875–0.8536), n_test=382",
-        "val 0.8053 → ext 0.8181: gap -0.013 (외부가 오히려 소폭 높음, 강한 일반화)",
-        "라벨 출처: official (BIOP02-55, cBioPortal brca_cptac_2020)",
-        "CPTAC Normal-like 13건 제외(395→382), §4 준수"
+        "CPTAC-BRCA 외부 macro AUC 0.8181 (CI95 [0.7875, 0.8536]), n_test=382 — 공식 라벨(BIOP02-55, cBioPortal brca_cptac_2020)",
+        "generalization gap: ext 0.8181 ≥ int 0.8053 → auc_delta +0.0128 (열화 없음)",
+        "Normal-like 외부 제외 13건(395→382) 근거 문서화 완료 — 내부 제외분(train 79/val 28/test 20)과 정합",
+        "balanced_accuracy는 int 0.5466 → ext 0.4506 하락 (외부 클래스 분포 차이 반영)"
       ],
-      "notes": "braveji 예비판정: 강함. 최종 sign-off 대기. #4 DepMap/GDSC sub-check=jhans(Paper B, 별개)."
+      "notes": "외부에서 AUC가 열화되지 않은 유일한 BRCA 엔드포인트. ER/PR과 달리 subtype_only 역전 문제가 구조적으로 없다(순환이라 비교 대상 아님). 다만 site_confound(UNI 사이트 판별 AUC 0.9977)는 전 엔드포인트 공통 한계로 Paper A에 명시 필요. ※ 본 항목은 Paper A의 TCGA→CPTAC 교차코호트 검증이며, CLAUDE.md 7-point #4가 규정한 DepMap PRISM vs GDSC 일관성(Paper B, BIOP02-52, jhans)과는 별개 축이다."
     },
     "biological_plausibility": {
-      "status": "pending",
+      "status": "caution",
       "evidence": [
-        "PAM50 subtype–H&E 형태학 연관 문헌: Lu 2021(CLAM), Kather 2020",
-        "Basal-like(high grade, pushing margin) / LumA(low grade) 형태 관찰 가능",
-        "Normal-like 제외로 소수·저신호 클래스 혼입 제거",
-        "ICI/Pembrolizumab 추천 없음"
+        "생물학적 타당성 자체는 문헌 지지: Basal-like = high grade·pushing margin, Luminal A = low grade → H&E 형태로 관찰 가능 (Lu 2021 CLAM, Kather 2020)",
+        "§4가 제외한 Normal-like는 '형태학 신호 빈약'(Tafavvoghi) 근거이며, 제외 후에도 신호가 유지된 것은 이 가정과 정합",
+        "미해결: PAM50 라벨 소스 study_id 미확정 — 원본 --pam50 CSV가 repo 미커밋 (agents/data/docs/her2_pam50_label_qc_v0.1.md §55)",
+        "라벨 QC: manifest PAM50 vs cBioPortal brca_tcga_pan_can_atlas_2018 concordance 57.0%(514/902) → split_policy_v0 §220이 지정한 단일소스(cBioPortal TCGA-BRCA PAM50, Parker 2009)와 다른 study 가능성",
+        "split_policy_v0.md §154 DoD '라벨 정의 단일 소스'가 여전히 미체크"
       ],
-      "notes": "sub-check: jhans (non-owner)."
+      "notes": "타당성 판단의 근거가 되는 라벨 자체의 출처가 확정되지 않았으므로 pass 불가. 또한 CLAUDE.md상 #5 sub-check 담당은 sjpark이나 본 실험의 owner가 sjpark이므로 Owner≠Reviewer 위반 → jhans 재배정 필요. (5-class에서 sub-check 미완 상태로 pass를 준 것은 조기 판정이었으며 이를 정정한다.) 잔여 블로커 (b) = kkkim(BIOP02-38) study_id 확정."
     },
     "drp_framing": {
       "status": "pass",
       "evidence": [
-        "task: 'pam50' (표현형 예측)",
-        "금지 표현 미발견",
-        "claim_level: 'hypothesis_only'"
+        "약물 구조 입력(SMILES/fingerprint) 없음 — H&E → 분자 표현형(PAM50) 예측만",
+        "'drug response prediction' / 'personalized therapy' 표현 없음"
       ],
-      "notes": "DRP 프레이밍 없음."
+      "notes": "DRP 프레이밍 위반 없음."
     },
     "claim_level": {
       "status": "pass",
       "evidence": [
-        "metrics.json claim_level: 'hypothesis_only'",
-        "버전 간 성능 우열 주장 철회(BIOP02-56)"
+        "metrics.json claim_level=hypothesis_only",
+        "sjpark이 4-class vs 5-class 성능 비교 주장을 Critic 기각 수용 후 철회(fc07e5c) — pam50_4class_vs_5class.json critic_correction 필드에 명시",
+        "'Normal 제외가 성능을 향상시켰다' 취지 서술 제거 확인"
       ],
-      "notes": "hypothesis_only 유지."
+      "notes": "claim 규율 준수. 4-class와 5-class macro-AUC는 라벨 공간·표본·평균 대상이 달라 직접 비교가 불가하며, 그 주장이 철회된 것을 확인했다."
     }
   },
-  "critic_status": "pending",
+  "critic_status": "caution",
   "claim_level": "hypothesis_only",
-  "summary": "PAM50 4-class(§4 준수, Normal-like 제외) CLAM-MB(UNI v1). val macro AUC 0.8053(CI 0.7504–0.8623), CPTAC ext 0.8181(CI 0.7875–0.8536, n=382). mean_embed(0.653) 대비 paired diff +0.165(p≈0, CI 비중첩) → #2 PASS 후보. label-shuffle null 위 = GENUINE. 5-class와 직접 비교하지 않음(라벨 공간 상이). 본 파일은 5-artifact 규칙 충족용 owner 제출 스켈레톤 — 각 check status/critic_status 최종 판정은 reviewer(braveji) 소관.",
+  "summary": "PAM50 4-class(split_policy_v0 §4 준수본) Critic 서명 — critic_status=caution. 【진전】 sjpark이 registry 등록 전 보완 6건(BIOP02-56 comment[8]③)을 33d0629로 전부 해소했고, 제가 걸어둔 잔여 블로커 (a) split_policy_v0 lock은 BIOP02-41에서 해소됐다(braveji cross-sign 2026-07-13, main 병합 6ffdeb9). 결과 자체는 강하다 — #2 baseline_comparison을 4개 BRCA 엔드포인트 중 유일하게 통과했고(외부 paired diff +0.165, CI [0.1218, 0.2064] 0 제외, p≈0 / 내부 +0.0889, CI [0.0394, 0.14]; label-shuffle null 5-seed 내외부 모두 real≫null), #4 cross-dataset도 pass다(외부 0.8181 ≥ 내부 0.8053, gap +0.0128 — 외부에서 열화되지 않은 유일한 엔드포인트). 【caution 유지 사유】 comment[8]④에서 'pass 상신은 (a) split lock AND (b) PAM50 라벨 소스 study_id 확정이 둘 다 해소될 때'라고 사전 고정했고 (b)가 미해소다 — 원본 --pam50 CSV가 repo에 미커밋이고(her2_pam50_label_qc_v0.1.md §55), manifest PAM50이 cBioPortal pan_can_atlas_2018과 concordance 57%에 그쳐 split_policy_v0 §220이 지정한 단일소스(Parker 2009)에서 왔는지 확인할 수 없으며 §154 DoD가 미체크다. 타당성 판단의 근거인 라벨 출처가 불명이면 #5는 pass할 수 없다. 사전에 고정한 기준을 결과가 좋다는 이유로 사후 이동시키지 않는다. 추가로 #5 sub-check 지정 담당(CLAUDE.md=sjpark)이 본 실험 owner이므로 Owner≠Reviewer 위반 → jhans 재배정이 필요하다. #3 counterfactual은 AUC-level p=0.061로 α=0.05 미달이라 caution(5-class p=0.917에서 대폭 개선). 【신규 지적 2건】 (1) metrics.json commit_hash가 'pending_4class'로 회귀했다 — c938ff4가 실제값(f5d0d9a8...)으로 고쳤으나 33d0629(보완 6건)가 placeholder로 되돌렸다. critic_report/cv_registry 스키마의 ^[0-9a-f]{7,40}$ 패턴 위반이자 CLAUDE.md DoD 필수 필드다. (2) counterfactual_summary.json의 faithfulness_confirmed=true 플래그가 여전히 과대하다(AUC-level non-significant). 【레지스트리】 cv-20260710-pam50-uni-clammb-4class를 append(교체 아님)하고, 5-class 엔트리 cv-20260707은 §4 정책 위반본이므로 reject + supersede 표기했다. 아울러 cv_registry.schema.json에 label_shuffle 필드가 없어 기존 4엔트리 전부가 스키마 검증에 실패하고 있었으므로(BIOP02-57, 본 Critic 소관 버그) 스키마를 보강해 해소했다.",
   "required_followups": [
-    "[braveji] 최종 critic_status sign-off (comment[8]④: #2 pass / #3 caution / #4 강함 예비)",
-    "[kkkim] split_policy_v0 lock (Critic #1 유일 잔여 블로커)",
-    "[kkkim] pam50 라벨 소스 study_id 확정 (BIOP02-38, §139 단일소스)"
+    "[sjpark] metrics.json commit_hash 회귀 수정 — 'pending_4class' → f5d0d9a8a7303366d1d59372fffa813971b6c25c. c938ff4가 고친 값을 33d0629가 되돌렸으므로, metrics.json을 재생성하는 스크립트가 placeholder를 덮어쓰지 않도록 함께 수정할 것.",
+    "[sjpark] counterfactual_summary.json의 faithfulness_confirmed 플래그에 proba-level 한정임을 명기 (AUC-level p=0.061, non-significant). 5-class 지적이 4-class에 잔존.",
+    "[sjpark] patient-overlap assert 로그 제출 + config 명시 (#1 caution 해소 조건, 5-class부터 미이행).",
+    "[kkkim / BIOP02-38] PAM50 원본 --pam50 CSV의 cBioPortal study_id 확정 + agents/data/manifests/에 커밋. split_policy_v0 §154 DoD '라벨 정의 단일 소스' 충족 → pass 승격의 유일한 잔여 블로커.",
+    "[braveji → jhans] #5 biological plausibility sub-check 재배정 — CLAUDE.md 지정 담당 sjpark이 본 실험 owner라 Owner≠Reviewer 위반.",
+    "[Paper A 서술] #3은 'attention은 예측확률 수준에서 faithful(무작위 대비 23×)하나 슬라이드 순위는 top-타일 제거에 robust — MIL 신호 중복성' 으로 정직 서술. 'counterfactual 검증됨' 표현 금지.",
+    "[Paper A 서술] site_confound(UNI 사이트 판별 AUC 0.9977)를 전 엔드포인트 공통 한계로 명시.",
+    "(b) study_id 확정 + #5 sub-check 완료 시 PAM50 4-class는 pass 상신 가능 — 현재 4개 BRCA 엔드포인트 중 pass 후보 1순위."
   ]
 }
