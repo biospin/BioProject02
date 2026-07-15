@@ -1,0 +1,16 @@
+{
+  "figure": "Fig 1 — SpatialPathoAgent pipeline schematic",
+  "issue": "BIOP02-62",
+  "stages": [
+    "H&E WSI",
+    "Tiling",
+    "FM embedding",
+    "Attention MIL",
+    "Molecular phenotype",
+    "External validation",
+    "Therapeutic hypothesis"
+  ],
+  "governance": "7-point Scientific Critic gate",
+  "framing": "hypothesis-only; NOT a DRP model; academic non-commercial",
+  "note": "schematic only — performance numbers live in Fig 3 (baseline comparison)"
+}
