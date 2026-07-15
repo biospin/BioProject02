@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "created_at": "2026-07-15T16:30:00+09:00",
+  "created_at": "2026-07-15T16:45:00+09:00",
   "reviewer": "braveji",
   "owner": "sjpark",
   "experiment": {
@@ -21,7 +21,8 @@
         "split_policy_v0.md LOCKED 2026-07-13 (split_hash=5995f29d3978b831, kkkim sign-off 2026-07-11, braveji cross-sign 2026-07-13)",
         "patient-overlap assert 로그 미제출 (sjpark 미이행)",
         "site_classifier_probe UNI AUC = 0.9977 — site 정보가 임베딩에 고도로 인코딩됨",
-        "n_train=705 / n_val=151 — ER 실험(707/152)과 동일 split 확인됨 (split_policy_v0_folds.json)"
+        "n_train=705 / n_val=151 — ER 실험(707/152)과 동일 split 확인됨 (split_policy_v0_folds.json)",
+        "[Critic 원자료 재계산 2026-07-15, numpy 설치 후] predictions.npy(proba·y_true)에서 bootstrap AUC 직접 산출 → val 0.7765 CI[0.687, 0.8596] · ext 0.7776 CI[0.7272, 0.8228] — critic_report/metrics.json 기록값과 일치. #1의 'numpy 부재로 재계산 미실시' 잔여 해소. 산출물 experiments/braveji/BIOP02-50_critic_recompute_braveji.json."
       ],
       "notes": "split lock 완료(2026-07-13). 잔여 caution: patient-overlap assert 로그, CLAM config site-disjoint 명시(sjpark). CPTAC 역전(-0.134) 심각 — 주요 Paper A 해석 주의."
     },
