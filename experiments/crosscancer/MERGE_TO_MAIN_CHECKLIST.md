@@ -35,4 +35,5 @@
 - 2026-07-14 #2: **braveji 2차 재검토 — REJECT 유지**(commit ab77cce). 5→2 블로커 축소. HPV 표 모순 신규 지적.
 - 2026-07-14 #3: **braveji Critic — HPV 표 provisional 수정 완료 → critic_status: caution 달성.** `LAW_HELDOUT_SCOREBOARD.md` HPV 행 "✅ CONFIRM" → "⚠️ provisional (5-seed 대기)" 및 결론 §1 consistent 수정(자기모순 해소). **G2 pass 잔여 = `critic_robustness_probe.py` 폐·위·두경부 실행 + 위암 lauren 원인 진단 + sjpark/jhans sub-check (#4/#5) → braveji 3차 재검토.**
 - **2026-07-15 재구성(스테일 정정):** 위 "kkkim probe 실행"·"lauren 진단"은 **이미 완료**(5-seed=`shuffle_null_robustness.json`, pixel-mean, subtype-only, lauren 진단 전부 커밋됨: 50bb7c9·14a181d·bfa03f8). critic_status=**caution**.
+- **2026-07-15 braveji 3차 재판정 = reject → CAUTION 승격 확정**(브랜치 `docs/BIOP02-96-braveji-g2-caution-signoff` 683b8cc, critic_report.json 갱신). **PR #36 머지됨**(remediation 데이터 main 안착, 02:21). braveji가 **5-seed 판정을 독립 재계산 → 10/10 endpoint 일치**(Owner≠Reviewer 재현성 실증). BIOP02-50(Paper A) kkkim 정식 peer review 완료(#11174, caution 동의).
 - **다음(잔여 = kkkim 아님):** sjpark #4(cross-dataset) · jhans #5(biological plausibility) sub-check → braveji 3차 재검토·서명 → G2 pass → main 병합. remediation 데이터는 **PR #36 open**(docs/BIOP02-96-kkkim-5seed-remediation→main).
