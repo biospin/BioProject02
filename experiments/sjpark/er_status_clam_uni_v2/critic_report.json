@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "created_at": "2026-07-09T00:00:00+09:00",
+  "created_at": "2026-07-15T11:00:00+09:00",
   "reviewer": "braveji",
   "owner": "sjpark",
   "experiment": {
@@ -34,7 +34,8 @@
         "mean_embed AUC 0.8162 (CI 0.7429–0.8852) → CLAM +0.0851 (diff ≥ 0.03 충족)",
         "CI 중첩 확인: CLAM lower 0.8371 < mean_embed upper 0.8852 → CI 중첩 존재 (checklist AND 조건 미충족)",
         "MLP 대비 CLAM 개선: 0.8209 → 0.9013 (+0.0804), AUPRC 0.9295 → 0.9632 — Attention MIL이 유의미하게 우수함",
-        "subtype_only(PAM50 기반) AUC 0.9181 (CI 0.8767–0.9553) vs CLAM 0.9013: paired test p=0.613, diff CI [-0.088, 0.045] → 통계적 차이 없음 (tied with molecular baseline)"
+        "subtype_only(PAM50 기반) AUC 0.9181 (CI 0.8767–0.9553) vs CLAM 0.9013: paired test p=0.613, diff CI [-0.088, 0.045] → 통계적 차이 없음 (tied with molecular baseline)",
+        "CLAM vs mean_embed paired significance 파일 부재 — 판정이 CI 중첩(비-paired)에 의존. paired_significance*.json은 subtype_only(ceiling) 대비만 존재. PAM50 4-class엔 mean_embed 대비 paired(CI 0 제외)가 있어 #2 pass 근거가 됐으나, ER/PR/HER2엔 없음(braveji 재판정 2026-07-15, BIOP02-50 comment 11172)."
       ],
       "notes": "checklist 기준(diff≥0.03 AND CI 비중첩) 중 diff 조건은 충족하나 CI 중첩으로 caution. 중요: CPTAC 외부 검증에서 subtype_only(PAM50 0.9615) vs CLAM(0.894): diff=-0.067, CI[-0.094,-0.042], p≈0 — 유의하게 역전. TCGA 내부(p=0.613, not significant)와 외부(p≈0)가 정반대 결론. sjpark self-critic: TCGA 내부 성능이 site/batch 특유 subtype 상관 아티팩트를 학습했을 가능성 시사(site_confound AUC 0.9977과 연관). subtype_only는 분자 데이터로 H&E와 직접 비교 부당하나, 내부↔외부 역전 자체가 CLAM 일반화의 한계를 드러냄."
     },
@@ -93,6 +94,7 @@
   "required_followups": [
     "[sjpark] patient-overlap assert 로그 제출 (train∩val case_id == 0) — 미이행",
     "[sjpark] CLAM 학습 config에 site-disjoint split 적용 여부 명시 (per_site split 또는 GroupKFold 확인) — 미이행",
+    "[sjpark] CLAM vs mean_embed paired significance를 ER/PR/HER2 내부·외부에 산출 — 현재 subtype_only 대비 paired만 존재. CI 중첩 판정을 paired p-value로 확정. PAM50 4-class(paired_significance_external.json)와 동일 방식. #2 판정의 직접 근거.",
     "[Done 2026-07-13] split_policy_v0 LOCKED (kkkim sign-off 2026-07-11, braveji cross-sign 2026-07-13, split_hash=5995f29d3978b831)",
     "[Done 2026-07-13] label shuffle AUC 0.5847 확인 (random ✓)"
   ]
