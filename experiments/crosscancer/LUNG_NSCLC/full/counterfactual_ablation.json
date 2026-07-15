@@ -1,0 +1,85 @@
+{
+ "track": "LUNG_NSCLC",
+ "purpose": "counterfactual attention-ablation (7-point #3)",
+ "claim_level": "hypothesis_only",
+ "critic_status": "pending",
+ "ablation_k": [
+  0.1,
+  0.2
+ ],
+ "endpoints": {
+  "histology_lusc": {
+   "full": {
+    "auc": 0.939,
+    "ci95": [
+     0.9075,
+     0.967
+    ],
+    "n_pos": 153,
+    "n": 271
+   },
+   "top10": {
+    "auc": 0.9071,
+    "ci95": [
+     0.8703,
+     0.9419
+    ],
+    "n_pos": 153,
+    "n": 271
+   },
+   "random10": {
+    "auc": 0.9385,
+    "ci95": [
+     0.907,
+     0.9665
+    ],
+    "n_pos": 153,
+    "n": 271
+   },
+   "bottom10": {
+    "auc": 0.939,
+    "ci95": [
+     0.9075,
+     0.967
+    ],
+    "n_pos": 153,
+    "n": 271
+   },
+   "top20": {
+    "auc": 0.8552,
+    "ci95": [
+     0.8108,
+     0.8981
+    ],
+    "n_pos": 153,
+    "n": 271
+   },
+   "random20": {
+    "auc": 0.9392,
+    "ci95": [
+     0.9079,
+     0.967
+    ],
+    "n_pos": 153,
+    "n": 271
+   },
+   "bottom20": {
+    "auc": 0.939,
+    "ci95": [
+     0.9075,
+     0.967
+    ],
+    "n_pos": 153,
+    "n": 271
+   },
+   "_drop_vs_full": {
+    "top10": 0.0319,
+    "random10": 0.0005,
+    "bottom10": 0.0,
+    "top20": 0.0838,
+    "random20": -0.0002,
+    "bottom20": 0.0
+   }
+  }
+ }
+}

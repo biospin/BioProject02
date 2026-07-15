@@ -1,0 +1,85 @@
+{
+ "track": "GASTRIC_STAD",
+ "purpose": "counterfactual attention-ablation (7-point #3)",
+ "claim_level": "hypothesis_only",
+ "critic_status": "pending",
+ "ablation_k": [
+  0.1,
+  0.2
+ ],
+ "endpoints": {
+  "msi_h": {
+   "full": {
+    "auc": 0.8599,
+    "ci95": [
+     0.7665,
+     0.9357
+    ],
+    "n_pos": 24,
+    "n": 107
+   },
+   "top10": {
+    "auc": 0.8504,
+    "ci95": [
+     0.7509,
+     0.9332
+    ],
+    "n_pos": 24,
+    "n": 107
+   },
+   "random10": {
+    "auc": 0.8594,
+    "ci95": [
+     0.7668,
+     0.936
+    ],
+    "n_pos": 24,
+    "n": 107
+   },
+   "bottom10": {
+    "auc": 0.8599,
+    "ci95": [
+     0.7665,
+     0.9357
+    ],
+    "n_pos": 24,
+    "n": 107
+   },
+   "top20": {
+    "auc": 0.8238,
+    "ci95": [
+     0.7224,
+     0.909
+    ],
+    "n_pos": 24,
+    "n": 107
+   },
+   "random20": {
+    "auc": 0.8614,
+    "ci95": [
+     0.7709,
+     0.9385
+    ],
+    "n_pos": 24,
+    "n": 107
+   },
+   "bottom20": {
+    "auc": 0.8599,
+    "ci95": [
+     0.7665,
+     0.9357
+    ],
+    "n_pos": 24,
+    "n": 107
+   },
+   "_drop_vs_full": {
+    "top10": 0.0095,
+    "random10": 0.0005,
+    "bottom10": 0.0,
+    "top20": 0.0361,
+    "random20": -0.0015,
+    "bottom20": 0.0
+   }
+  }
+ }
+}

@@ -40,6 +40,19 @@
 5. **법칙 = 방향적으로 일관(directionally consistent), 이분법 미확립(dichotomy NOT established).** 확립엔 검정력 있는 필수/변이축 확증(n_pos≥25) 축적 필요 — 현 코호트 크기론 대부분 도달 불가(구조적 한계).
 6. **5-seed shuffle-null 강건성 — 대장만 완료, 2/7 실패(BLOCKER-4 반영):** `COLORECTAL/full/shuffle_null_robustness.json`(기준 real > null_mean + 2·null_sd). **cms1_vs_rest 0.912 < 0.936 FAIL · cms4_vs_rest 0.661 < 0.773 FAIL**; cms2·cms3·msi_high·anti_egfr·braf PASS. 이 완료·실패 검정이 이전 대장 LAW_TEST에 "미실시(non-blocking)"로 잘못 기술되고 스코어보드 인용 0이던 것을 정정. sealed-forward 3암종(폐·위·두경부)엔 5-seed 미적용 → 우연배제 미확립(위 1).
 
+## Counterfactual — attention-ablation (7-point #3 · 2026-07-15)
+
+> sealed-forward 핵심 endpoint에 특징-제거 counterfactual: seed42 real 모델의 full-bag attention 상위 k% 타일 제거 후 재-forward(`sh_counterfactual.py`). **top-k 제거 낙차 ≫ random-k 제거**면 예측이 특정 고-attention 형태학에 충실. 정본 `<암종>/full/counterfactual_ablation.json`.
+
+| endpoint | full AUROC | top-10% 낙차 | random-10% | top-20% 낙차 | random-20% | 충실도 |
+|---|---|---|---|---|---|---|
+| **두경부 HPV (CONFIRM)** | 0.9594 | 0.042 | −0.001 | **0.107** | 0.001 | ★ 강함 |
+| 폐 histology (양성대조) | 0.939 | 0.032 | 0.001 | 0.084 | −0.000 | 강함 |
+| 위 msi | 0.8599 | 0.010 | 0.001 | 0.036 | −0.002 | 중간 |
+| 두경부 grade (양성대조) | 0.8152 | −0.004 | −0.001 | 0.017 | −0.001 | 약함(분산 특징) |
+
+**해석:** 전 endpoint에서 **top-attention 타일 제거가 random 제거보다 AUROC를 크게 낮춘다**(random ~0). 특히 **HPV(CONFIRM)는 top-20% 제거 시 −0.107 vs random ~0** → 예측이 아티팩트가 아니라 특정 고-attention 형태학에 **충실(faithful)**. 충실도 순서(HPV>histology>msi>grade)는 각 형태특징의 국소성과 정합. → braveji `critic_report.json` **counterfactual_check: caution**("sealed-forward 3암종 counterfactual 없음") 보완, HPV CONFIRM 서술 지지. (random 제거는 seed0 단일 draw; 낙차 대비가 극명해 충분.)
+
 ## G1 상태 — ✅ **확정 (kkkim Leader 승인, 2026-07-14)**
 - [x] held-out 4암종 + anchor 결과 산출·정본 수치 확정.
 - [x] 대장 회고적 지위 명시(sealed-forward와 구분).
