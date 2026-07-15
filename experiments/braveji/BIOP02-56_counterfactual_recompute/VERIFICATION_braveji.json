@@ -1,0 +1,86 @@
+{
+  "track": "Critic #3 counterfactual 독립 재실행 (braveji, GPU 머신)",
+  "purpose": "sjpark counterfactual_summary를 원자료(model.pt+/workspace uni_v1 임베딩)에서 재계산해 대조",
+  "tool": "spatialpatho env: torch 2.6.0+cu124, numpy 2.4.4, sklearn 1.9.0; seed=42; split=val; remove_frac=0.1",
+  "commit_base": "102bf33b0de03eb4a9fee13d8dcfe86823e446f8",
+  "endpoints": {
+    "er": {
+      "braveji": {
+        "auc_full": 0.9013,
+        "auc_top_removed": 0.9004,
+        "auc_random_removed": 0.9013,
+        "mean_abs_proba_delta_top": 0.0564,
+        "mean_abs_proba_delta_random": 0.0028
+      },
+      "sjpark_committed": {
+        "auc_full": 0.9013,
+        "auc_top_removed": 0.9004,
+        "auc_random_removed": 0.9013,
+        "mean_abs_proba_delta_top": 0.0564,
+        "mean_abs_proba_delta_random": 0.0028
+      },
+      "max_abs_diff": 0.0,
+      "reproduced": true,
+      "auc_drop_significant": "n/a(SB)"
+    },
+    "pr": {
+      "braveji": {
+        "auc_full": 0.7765,
+        "auc_top_removed": 0.7578,
+        "auc_random_removed": 0.7769,
+        "mean_abs_proba_delta_top": 0.0409,
+        "mean_abs_proba_delta_random": 0.002
+      },
+      "sjpark_committed": {
+        "auc_full": 0.7765,
+        "auc_top_removed": 0.7578,
+        "auc_random_removed": 0.7769,
+        "mean_abs_proba_delta_top": 0.0409,
+        "mean_abs_proba_delta_random": 0.002
+      },
+      "max_abs_diff": 0.0,
+      "reproduced": true,
+      "auc_drop_significant": "n/a(SB)"
+    },
+    "her2": {
+      "braveji": {
+        "auc_full": 0.5992,
+        "auc_top_removed": 0.5935,
+        "auc_random_removed": 0.6014,
+        "mean_abs_proba_delta_top": 0.0284,
+        "mean_abs_proba_delta_random": 0.0028
+      },
+      "sjpark_committed": {
+        "auc_full": 0.5992,
+        "auc_top_removed": 0.5935,
+        "auc_random_removed": 0.6014,
+        "mean_abs_proba_delta_top": 0.0284,
+        "mean_abs_proba_delta_random": 0.0028
+      },
+      "max_abs_diff": 0.0,
+      "reproduced": true,
+      "auc_drop_significant": "n/a(SB)"
+    },
+    "pam50_4class": {
+      "braveji": {
+        "auc_full": 0.8053,
+        "auc_top_removed": 0.7868,
+        "auc_random_removed": 0.805,
+        "mean_abs_proba_delta_top": 0.052,
+        "mean_abs_proba_delta_random": 0.0023
+      },
+      "sjpark_committed": {
+        "auc_full": 0.8053,
+        "auc_top_removed": 0.7868,
+        "auc_random_removed": 0.805,
+        "mean_abs_proba_delta_top": 0.052,
+        "mean_abs_proba_delta_random": 0.0023
+      },
+      "max_abs_diff": 0.0,
+      "reproduced": true,
+      "auc_drop_significant": false
+    }
+  },
+  "all_reproduced": true,
+  "conclusion": "4개 엔드포인트 #3 counterfactual 전부 원자료 재현 일치(max diff<1e-4). 단 faithfulness는 proba-level 한정: top-attention 제거 |Δproba|가 random 대비 10~23배(신호 있음)이나 AUC-level drop은 미미/비유의(ER 0.0009, PAM50 p=0.061) — 슬라이드 순위는 MIL 신호 중복성으로 robust. sjpark 수치 신뢰 가능, faithfulness_confirmed 플래그는 proba-level로 한정 서술 필요."
+}
