@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "created_at": "2026-07-15T11:00:00+09:00",
+  "created_at": "2026-07-15T16:30:00+09:00",
   "reviewer": "braveji",
   "owner": "sjpark",
   "experiment": {
@@ -35,9 +35,10 @@
         "CI 중첩 확인: CLAM lower 0.8371 < mean_embed upper 0.8852 → CI 중첩 존재 (checklist AND 조건 미충족)",
         "MLP 대비 CLAM 개선: 0.8209 → 0.9013 (+0.0804), AUPRC 0.9295 → 0.9632 — Attention MIL이 유의미하게 우수함",
         "subtype_only(PAM50 기반) AUC 0.9181 (CI 0.8767–0.9553) vs CLAM 0.9013: paired test p=0.613, diff CI [-0.088, 0.045] → 통계적 차이 없음 (tied with molecular baseline)",
-        "CLAM vs mean_embed paired significance 파일 부재 — 판정이 CI 중첩(비-paired)에 의존. paired_significance*.json은 subtype_only(ceiling) 대비만 존재. PAM50 4-class엔 mean_embed 대비 paired(CI 0 제외)가 있어 #2 pass 근거가 됐으나, ER/PR/HER2엔 없음(braveji 재판정 2026-07-15, BIOP02-50 comment 11172)."
+        "CLAM vs mean_embed paired significance 파일 부재 — 판정이 CI 중첩(비-paired)에 의존. paired_significance*.json은 subtype_only(ceiling) 대비만 존재. PAM50 4-class엔 mean_embed 대비 paired(CI 0 제외)가 있어 #2 pass 근거가 됐으나, ER/PR/HER2엔 없음(braveji 재판정 2026-07-15, BIOP02-50 comment 11172).",
+        "[kkkim 정식 peer review 완료, 커밋 5ae1404 · BIOP02-50 comment 11174] 지정 리뷰어 kkkim(non-owner)이 baseline JSON에서 CLAM vs mean_embed CI를 독립 재계산 → ER/PR/HER2 모두 CI 중첩(CLAM이 trivial baseline 유의 상회 못함) 확인. braveji 재판정과 독립적으로 동일 결론 = 2인 교차 확인. Owner≠Reviewer 게이트 해소."
       ],
-      "notes": "checklist 기준(diff≥0.03 AND CI 비중첩) 중 diff 조건은 충족하나 CI 중첩으로 caution. 중요: CPTAC 외부 검증에서 subtype_only(PAM50 0.9615) vs CLAM(0.894): diff=-0.067, CI[-0.094,-0.042], p≈0 — 유의하게 역전. TCGA 내부(p=0.613, not significant)와 외부(p≈0)가 정반대 결론. sjpark self-critic: TCGA 내부 성능이 site/batch 특유 subtype 상관 아티팩트를 학습했을 가능성 시사(site_confound AUC 0.9977과 연관). subtype_only는 분자 데이터로 H&E와 직접 비교 부당하나, 내부↔외부 역전 자체가 CLAM 일반화의 한계를 드러냄."
+      "notes": "checklist 기준(diff≥0.03 AND CI 비중첩) 중 diff 조건은 충족하나 CI 중첩으로 caution. 중요: CPTAC 외부 검증에서 subtype_only(PAM50 0.9615) vs CLAM(0.894): diff=-0.067, CI[-0.094,-0.042], p≈0 — 유의하게 역전. TCGA 내부(p=0.613, not significant)와 외부(p≈0)가 정반대 결론. sjpark self-critic: TCGA 내부 성능이 site/batch 특유 subtype 상관 아티팩트를 학습했을 가능성 시사(site_confound AUC 0.9977과 연관). subtype_only는 분자 데이터로 H&E와 직접 비교 부당하나, 내부↔외부 역전 자체가 CLAM 일반화의 한계를 드러냄. [갱신 2026-07-15] kkkim peer review로 #2 결론이 2인 독립 확인됨 — CI 중첩 폭이 커 paired bootstrap으로도 뒤집힐 가능성은 사실상 없다. sjpark의 mean_embed paired sig는 결론 확정용이 아니라 형식 근거 문서화이며, #2의 과학적 결론('MIL 부가가치 mean_embed 대비 유의하지 않음')은 확정적. pass의 실질 게이트는 jhans #5."
     },
     "counterfactual_check": {
       "status": "caution",

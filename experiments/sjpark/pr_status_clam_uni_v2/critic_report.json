@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "created_at": "2026-07-15T11:00:00+09:00",
+  "created_at": "2026-07-15T16:30:00+09:00",
   "reviewer": "braveji",
   "owner": "sjpark",
   "experiment": {
@@ -34,9 +34,10 @@
         "CI 중첩: CLAM lower 0.6832 < mean_embed upper 0.7728 → 중첩 존재 (checklist AND 조건 미충족)",
         "MLP 대비 CLAM 개선: 0.7125 → 0.7765 (+0.064), AUPRC 0.8188 → 0.8343",
         "subtype_only(PAM50) AUC 0.8085 (CI 0.7234–0.8886) vs CLAM 0.7765: diff=-0.032, p=0.358, CI[-0.106, 0.038] → 통계적으로 유의하지 않음",
-        "CLAM vs mean_embed paired significance 파일 부재 — 판정이 CI 중첩(비-paired)에 의존. paired_significance*.json은 subtype_only(ceiling) 대비만 존재. PAM50 4-class엔 mean_embed 대비 paired(CI 0 제외)가 있어 #2 pass 근거가 됐으나, ER/PR/HER2엔 없음 (braveji 재판정 2026-07-15, BIOP02-50 comment 11172)."
+        "CLAM vs mean_embed paired significance 파일 부재 — 판정이 CI 중첩(비-paired)에 의존. paired_significance*.json은 subtype_only(ceiling) 대비만 존재. PAM50 4-class엔 mean_embed 대비 paired(CI 0 제외)가 있어 #2 pass 근거가 됐으나, ER/PR/HER2엔 없음 (braveji 재판정 2026-07-15, BIOP02-50 comment 11172).",
+        "[kkkim 정식 peer review 완료, 커밋 5ae1404 · BIOP02-50 comment 11174] 지정 리뷰어 kkkim(non-owner)이 baseline JSON에서 CLAM vs mean_embed CI를 독립 재계산 → ER/PR/HER2 모두 CI 중첩(CLAM이 trivial baseline 유의 상회 못함) 확인. braveji 재판정과 독립적으로 동일 결론 = 2인 교차 확인. Owner≠Reviewer 게이트 해소."
       ],
-      "notes": "diff ≥ 0.03 충족, CI 중첩으로 caution. 중요: CPTAC 외부에서 subtype_only(0.9117) vs CLAM(0.7776): diff=-0.1343, CI[-0.179,-0.092], p≈0 — 유의한 역전. TCGA val에서는 p=0.358(not significant)였으나 외부에서 완전히 뒤집힘. PR은 ER보다 역전 폭이 더 큼(-0.134 vs -0.067). 이는 PR CLAM이 TCGA 사이트 특이적 패턴을 더 많이 학습했을 가능성 시사."
+      "notes": "diff ≥ 0.03 충족, CI 중첩으로 caution. 중요: CPTAC 외부에서 subtype_only(0.9117) vs CLAM(0.7776): diff=-0.1343, CI[-0.179,-0.092], p≈0 — 유의한 역전. TCGA val에서는 p=0.358(not significant)였으나 외부에서 완전히 뒤집힘. PR은 ER보다 역전 폭이 더 큼(-0.134 vs -0.067). 이는 PR CLAM이 TCGA 사이트 특이적 패턴을 더 많이 학습했을 가능성 시사. [갱신 2026-07-15] kkkim peer review로 #2 결론이 2인 독립 확인됨 — CI 중첩 폭이 커 paired bootstrap으로도 뒤집힐 가능성은 사실상 없다. sjpark의 mean_embed paired sig는 결론 확정용이 아니라 형식 근거 문서화이며, #2의 과학적 결론('MIL 부가가치 mean_embed 대비 유의하지 않음')은 확정적. pass의 실질 게이트는 jhans #5."
     },
     "counterfactual_check": {
       "status": "caution",
