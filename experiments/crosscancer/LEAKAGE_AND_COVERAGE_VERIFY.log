@@ -1,0 +1,20 @@
+# 누수 assert + /workspace ls + HPV 커버리지 검증 (kkkim, braveji followup 대응)
+# 생성: 2026-07-15
+
+## 1. /workspace 임베딩 ls (파일 목록 요약 — braveji SSH 대체)
+  LUNG_NSCLC/uni_v1/: 1052개  예) TCGA-05-4244-01Z-00-DX1.d4ff32cd-38cf-40ea-8213-45c2b100ac01_uni_embeddings.npy … TCGA-XC-AA0X-01Z-00-DX1.61A34BE0-F16B-4EC1-8E7F-7BF94F6629F4_uni_embeddings.npy
+  COLORECTAL/uni_v1/: 622개  예) TCGA-3L-AA1B-01Z-00-DX1.8923A151-A690-40B7-9E5A-FCBEDFC2394F_uni_embeddings.npy … TCGA-WS-AB45-01Z-00-DX1.1FD99E7A-830F-40DC-98CD-53C62C678AC6_uni_embeddings.npy
+  HEADNECK_HNSC/uni_v1/: 472개  예) TCGA-4P-AA8J-01Z-00-DX1.5B44796F-D099-4076-9CAF-B40C2B83F432_uni_embeddings.npy … TCGA-WA-A7H4-01Z-00-DX2.40997C97-F0B1-4943-8DD6-BD3F8AE3384F_uni_embeddings.npy
+  GASTRIC_STAD/uni_v1/: 442개  예) TCGA-3M-AB46-01Z-00-DX1.70F638A0-BDCB-4BDE-BBFE-6D78A1A08C5B_uni_embeddings.npy … TCGA-ZQ-A9CR-01Z-00-DX1.C9AC9991-7054-4068-A7AA-9D1EB7F040A3_uni_embeddings.npy
+
+## 2. patient-overlap + site-disjoint ASSERT (split.csv 직접)
+  LUNG_NSCLC: n=1050 split={'train': 735, 'val': 158, 'test': 157} | patient_overlap=0 site_violation=0/69site → PASS
+  COLORECTAL: n=534 split={'test': 80, 'val': 80, 'train': 374} | patient_overlap=0 site_violation=0/37site → PASS
+  HEADNECK_HNSC: n=523 split={'train': 366, 'val': 79, 'test': 78} | patient_overlap=0 site_violation=0/28site → PASS
+  GASTRIC_STAD: n=440 split={'val': 66, 'test': 66, 'train': 308} | patient_overlap=0 site_violation=0/22site → PASS
+  → 전체 ASSERT: ✅ PASS (patient_overlap=0, site-disjoint 위반=0)
+
+## 3. 두경부 HPV 커버리지 비무작위성 (포함군 vs 결손군 HPV 유병률)
+  포함군(임베딩 有): HPV+ 유병률=0.102 (n=412)
+  결손군(임베딩 無): HPV+ 유병률=0.400 (n=75)
+  → 유병률 차이 0.298. 주의: 결손군 유병률 상이

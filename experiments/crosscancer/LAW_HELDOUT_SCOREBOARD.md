@@ -33,7 +33,7 @@
 
 ## 결론 (정직한 bottom line — 이게 "확정")
 
-1. **검정력 있는 sealed-forward 확증:** 양성대조(폐 histology **0.939** · 두경부 grade 0.815) + **두경부 HPV 0.9594(n_pos=26, 5-seed PASS — real 0.959 > thr 0.790, pixel-mean 0.922).** HPV가 "형태 상관물 有 → 대체가능(≥0.80)" 축의 **유일한 검정력 있는 확증**이며, 바이러스축이라 법칙을 새 종류로 확장. 5-seed 우연배제 확립(BLOCKER-1 해소, `50bb7c9` on kkkim branch — main 병합 대기). pixel-mean 0.922는 조직형·바이러스축이 저해상도 특징에서도 회수 가능함을 보임(MIL gap +0.037 — Limitation 소재).
+1. **검정력 있는 sealed-forward 확증:** 양성대조(폐 histology **0.939** · 두경부 grade 0.815) + **두경부 HPV 0.9594(n_pos=26, 5-seed PASS — real 0.959 > thr 0.790, pixel-mean 0.922).** HPV가 "형태 상관물 有 → 대체가능(≥0.80)" 축의 **유일한 검정력 있는 확증**이며, 바이러스축이라 법칙을 새 종류로 확장. 5-seed 우연배제 확립(BLOCKER-1 해소, `50bb7c9` on kkkim branch — main 병합 대기). pixel-mean 0.922는 조직형·바이러스축이 저해상도 특징에서도 회수 가능함을 보임(MIL gap +0.037 — Limitation 소재). ⚠️ **HPV 커버리지 비무작위 Limitation**: 결손군(임베딩無) HPV+ 유병률 0.40 vs 포함군 0.10(~30 HPV+례 제외) → CONFIRM 0.9594는 **분석 부분집합 기준**, 전체 HNSC 일반화엔 결손 편향 명시(아래 §커버리지). (5-seed·counterfactual은 유효.)
 2. **모든 변이/증폭축은 exploratory(n_pos<25) → INCONCLUSIVE.** 폐 EGFR/KRAS, 위 MSI 등 방향은 법칙과 일관하나 검정력 부족으로 확증·반증 불가. **[인용 철회, braveji G2] 위 ERBB2-amp(0.6444)는 shuffle-null 0.6406과 마진 0.004 = 신호 0**이라, 유방 HER2(0.599)와의 "증폭≠형태 일치"를 증거로 쓸 수 없음(신호 없는 endpoint에서 증거 가치 차용 불가).
 3. **위암 양성대조(Lauren) FAIL(0.54) — 원인 진단 완료(`GASTRIC_STAD/full/LAUREN_POSCONTROL_DIAGNOSIS.md`, 14a181d):** **Lauren-특이 site-교란**이지 파이프라인 고장·데이터 희소 아님(dev 0.963→holdout 0.536, pixel-mean 0.63>MIL 0.54, 유병률 site종속 HU100%~CG18%). → 종전 **"위암 endpoint 전체 저신뢰"를 "Lauren 국한"으로 정정**; MSI(0.86, 5-seed PASS)·ebv 등 위암 일반화는 정상. *(braveji 3차 재검토 확인 대기.)*
 4. **대장은 회고적** → 검정력 있는 held-out 확증 집계에서 제외. 방향 일관까지만.
@@ -52,6 +52,12 @@
 | 두경부 grade (양성대조) | 0.8152 | −0.004 | −0.001 | 0.017 | −0.001 | 약함(분산 특징) |
 
 **해석:** 전 endpoint에서 **top-attention 타일 제거가 random 제거보다 AUROC를 크게 낮춘다**(random ~0). 특히 **HPV(CONFIRM)는 top-20% 제거 시 −0.107 vs random ~0** → 예측이 아티팩트가 아니라 특정 고-attention 형태학에 **충실(faithful)**. 충실도 순서(HPV>histology>msi>grade)는 각 형태특징의 국소성과 정합. → braveji `critic_report.json` **counterfactual_check: caution**("sealed-forward 3암종 counterfactual 없음") 보완, HPV CONFIRM 서술 지지. (random 제거는 seed0 단일 draw; 낙차 대비가 극명해 충분.)
+
+## 누수 ASSERT + HPV 커버리지 (2026-07-15 · braveji followup 대응)
+
+- **누수 assert (data_leakage caution의 assert-log 잔여 해소):** split.csv 직접 검증 — 4암종 전부 **patient_overlap=0, site-disjoint 위반=0**(site수 LUNG 69·COLORECTAL 37·HNSC 28·GASTRIC 22). 로그 `LEAKAGE_AND_COVERAGE_VERIFY.log`. **/workspace 임베딩 ls**도 동 로그 첨부(braveji SSH 키 부재 대체): 1052/622/472/442.
+- **⚠️ HPV 커버리지 비무작위성 (CONFIRM Limitation):** 두경부 임베딩 결손(~14%)이 **HPV에 대해 비무작위** — 포함군(임베딩 有) HPV+ 유병률 **0.102(n=412)** vs **결손군(임베딩 無) 0.400(n=75)**. HPV+ 사례 ~30례가 다운로드/타일 실패로 분석서 제외됨. → **HPV CONFIRM 0.9594는 "분석 가능했던 부분집합" 기준이며 전체 HNSC 일반화엔 결손 편향(낙관 가능성)을 Limitation으로 명시.** (5-seed PASS·counterfactual faithful은 유효.) 원인 후보: HPV+(구인두) vs HPV−(구강/후두) 슬라이드 특성·site 차이.
+- **pixel-mean Limitation(서술):** MIL이 pixel-mean을 크게 못 넘는 endpoint(위 lauren pixel 0.631>MIL 0.536 등)는 "MIL 부가가치 제한적, 형태 신호는 mean-pool로도 상당 회수"로 기술. subtype-only는 폐 EGFR/KRAS만 산출(cross-cancer 대부분 순환).
 
 ## G1 상태 — ✅ **확정 (kkkim Leader 승인, 2026-07-14)**
 - [x] held-out 4암종 + anchor 결과 산출·정본 수치 확정.
