@@ -1,0 +1,27 @@
+{
+  "manifest": "agents/data/manifests/tcga_brca_manifest.csv",
+  "n_rows_per_split": {
+    "test": 151,
+    "val": 152,
+    "train": 707
+  },
+  "n_unique_sites_per_split": {
+    "test": 11,
+    "val": 10,
+    "train": 16
+  },
+  "site_overlap": {
+    "test_train": 0,
+    "test_val": 0,
+    "train_val": 0
+  },
+  "site_overlap_detail": {},
+  "case_id_overlap": {
+    "test_train": 0,
+    "test_val": 0,
+    "train_val": 0
+  },
+  "case_id_overlap_detail": {},
+  "site_disjoint": true,
+  "patient_disjoint": true
+}
