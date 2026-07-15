@@ -35,7 +35,7 @@
 
 1. **검정력 있는 sealed-forward 확증:** 양성대조(폐 histology **0.939** · 두경부 grade 0.815) + **두경부 HPV 0.9594(n_pos=26, 5-seed PASS — real 0.959 > thr 0.790, pixel-mean 0.922).** HPV가 "형태 상관물 有 → 대체가능(≥0.80)" 축의 **유일한 검정력 있는 확증**이며, 바이러스축이라 법칙을 새 종류로 확장. 5-seed 우연배제 확립(BLOCKER-1 해소, `50bb7c9` on kkkim branch — main 병합 대기). pixel-mean 0.922는 조직형·바이러스축이 저해상도 특징에서도 회수 가능함을 보임(MIL gap +0.037 — Limitation 소재).
 2. **모든 변이/증폭축은 exploratory(n_pos<25) → INCONCLUSIVE.** 폐 EGFR/KRAS, 위 MSI 등 방향은 법칙과 일관하나 검정력 부족으로 확증·반증 불가. **[인용 철회, braveji G2] 위 ERBB2-amp(0.6444)는 shuffle-null 0.6406과 마진 0.004 = 신호 0**이라, 유방 HER2(0.599)와의 "증폭≠형태 일치"를 증거로 쓸 수 없음(신호 없는 endpoint에서 증거 가치 차용 불가).
-3. **위암 양성대조(Lauren) FAIL(0.54):** 위암 파이프라인 sanity가 서지 않음 → **위암 endpoint 전체는 저신뢰로 취급.** (파이프라인 문제 vs 데이터 희소 구분 필요.)
+3. **위암 양성대조(Lauren) FAIL(0.54) — 원인 진단 완료(`GASTRIC_STAD/full/LAUREN_POSCONTROL_DIAGNOSIS.md`, 14a181d):** **Lauren-특이 site-교란**이지 파이프라인 고장·데이터 희소 아님(dev 0.963→holdout 0.536, pixel-mean 0.63>MIL 0.54, 유병률 site종속 HU100%~CG18%). → 종전 **"위암 endpoint 전체 저신뢰"를 "Lauren 국한"으로 정정**; MSI(0.86, 5-seed PASS)·ebv 등 위암 일반화는 정상. *(braveji 3차 재검토 확인 대기.)*
 4. **대장은 회고적** → 검정력 있는 held-out 확증 집계에서 제외. 방향 일관까지만.
 5. **법칙 = 방향적으로 일관(directionally consistent), 이분법 미확립(dichotomy NOT established).** 확립엔 검정력 있는 필수/변이축 확증(n_pos≥25) 축적 필요 — 현 코호트 크기론 대부분 도달 불가(구조적 한계).
 6. **5-seed shuffle-null 강건성 — 대장만 완료, 2/7 실패(BLOCKER-4 반영):** `COLORECTAL/full/shuffle_null_robustness.json`(기준 real > null_mean + 2·null_sd). **cms1_vs_rest 0.912 < 0.936 FAIL · cms4_vs_rest 0.661 < 0.773 FAIL**; cms2·cms3·msi_high·anti_egfr·braf PASS. 이 완료·실패 검정이 이전 대장 LAW_TEST에 "미실시(non-blocking)"로 잘못 기술되고 스코어보드 인용 0이던 것을 정정. sealed-forward 3암종(폐·위·두경부)엔 5-seed 미적용 → 우연배제 미확립(위 1).
