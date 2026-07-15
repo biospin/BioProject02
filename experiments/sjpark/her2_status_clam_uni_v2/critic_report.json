@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "created_at": "2026-07-15T11:00:00+09:00",
+  "created_at": "2026-07-15T16:45:00+09:00",
   "reviewer": "braveji",
   "owner": "sjpark",
   "experiment": {
@@ -21,7 +21,8 @@
         "split_policy_v0.md LOCKED 2026-07-13 (split_hash=5995f29d3978b831, kkkim sign-off 2026-07-11, braveji cross-sign 2026-07-13)",
         "patient-overlap assert 로그 미제출 (sjpark 미이행)",
         "n_train=496 (equivocal 251장 제외) — equivocal 제외 기준이 split 이전/이후 적용 여부 여전히 불명확",
-        "site_confound AUC 0.9977 — site-disjoint split config 명시 미완료 (sjpark)"
+        "site_confound AUC 0.9977 — site-disjoint split config 명시 미완료 (sjpark)",
+        "[Critic 원자료 재계산 2026-07-15, numpy 설치 후] predictions.npy(proba·y_true)에서 bootstrap AUC 직접 산출 → val 0.5992 CI[0.4846, 0.7113] · ext 0.5297 CI[0.4413, 0.6177] — critic_report/metrics.json 기록값과 일치. #1의 'numpy 부재로 재계산 미실시' 잔여 해소. 산출물 experiments/braveji/BIOP02-50_critic_recompute_braveji.json."
       ],
       "notes": "split lock 완료(2026-07-13). HER2 특유 추가 이슈: equivocal 케이스 제외 순서 확인 필요(sjpark). 그러나 reject 결론에는 영향 없음 — 두 코호트 모두 random 수준(val CI 0.5 포함, ext AUC 0.530)."
     },
@@ -36,9 +37,10 @@
         "CPTAC AUPRC 0.1213 — 외부 코호트에서 사실상 붕괴",
         "MLP → CLAM 개선: 0.5509 → 0.5992 (+0.048) — 개선 있으나 여전히 random 영역",
         "best_val_loss = 0.666 ≈ binary cross-entropy 이론 상한 → 모델 학습 실패에 가까움",
-        "CLAM vs mean_embed paired significance 파일 부재 — 판정이 CI 중첩(비-paired)에 의존. paired_significance*.json은 subtype_only(ceiling) 대비만 존재. PAM50 4-class엔 mean_embed 대비 paired(CI 0 제외)가 있어 #2 pass 근거가 됐으나, ER/PR/HER2엔 없음 (braveji 재판정 2026-07-15, BIOP02-50 comment 11172)."
+        "CLAM vs mean_embed paired significance 파일 부재 — 판정이 CI 중첩(비-paired)에 의존. paired_significance*.json은 subtype_only(ceiling) 대비만 존재. PAM50 4-class엔 mean_embed 대비 paired(CI 0 제외)가 있어 #2 pass 근거가 됐으나, ER/PR/HER2엔 없음 (braveji 재판정 2026-07-15, BIOP02-50 comment 11172).",
+        "[kkkim 정식 peer review 완료, 커밋 5ae1404 · BIOP02-50 comment 11174] 지정 리뷰어 kkkim(non-owner)이 baseline JSON에서 CLAM vs mean_embed CI를 독립 재계산 → ER/PR/HER2 모두 CI 중첩(CLAM이 trivial baseline 유의 상회 못함) 확인. braveji 재판정과 독립적으로 동일 결론 = 2인 교차 확인. Owner≠Reviewer 게이트 해소."
       ],
-      "notes": "HER2 CLAM AUC 95% CI가 0.5를 포함하며 외부 검증(CPTAC ext AUC 0.530)이 random 수준. H&E 형태학으로 HER2 유전자 증폭을 예측하는 것은 본질적으로 어렵다는 선행 연구(Kather 2020, Lu 2021)와 일치하는 과학적으로 예상된 음성 결과. checklist 기준 → reject."
+      "notes": "HER2 CLAM AUC 95% CI가 0.5를 포함하며 외부 검증(CPTAC ext AUC 0.530)이 random 수준. H&E 형태학으로 HER2 유전자 증폭을 예측하는 것은 본질적으로 어렵다는 선행 연구(Kather 2020, Lu 2021)와 일치하는 과학적으로 예상된 음성 결과. checklist 기준 → reject. [갱신 2026-07-15] kkkim peer review로 #2 결론이 2인 독립 확인됨 — CI 중첩 폭이 커 paired bootstrap으로도 뒤집힐 가능성은 사실상 없다. sjpark의 mean_embed paired sig는 결론 확정용이 아니라 형식 근거 문서화이며, #2의 과학적 결론('MIL 부가가치 mean_embed 대비 유의하지 않음')은 확정적. pass의 실질 게이트는 jhans #5."
     },
     "counterfactual_check": {
       "status": "caution",
