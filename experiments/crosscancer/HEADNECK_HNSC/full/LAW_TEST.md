@@ -30,3 +30,9 @@
 - 대체가능축(형태 상관물 有 → 높은 AUROC): 두경부 HPV **첫 검정력 확증**(0.96) · 유방 PAM50(0.76, 내부) · 위암 MSI(0.86, exploratory).
 - 필수/변이축(형태 상관물 無 → 낮은 AUROC): 유방 HER2-blind(0.599) · 위암 ERBB2-amp(0.64, expl) · 두경부 EGFR(0.60, expl) — 방향 일관, 대부분 검정력 부족.
 - **결론(hypothesis_only, critic pending):** 두경부 HPV가 "형태 상관물 있는 결정축은 H&E로 대체가능"을 처음으로 검정력 있게 뒷받침. 필수/변이축의 H&E-blindness는 방향은 일관하나 개별 암종에선 여전히 대부분 exploratory → 법칙의 완전 이분법 확립은 검정력 있는 필수축 반례/확증 축적 대기.
+
+
+## 5-seed 우연배제 + pixel-mean baseline (2026-07-14, BLOCKER-1·3)
+- **★ hpv_pos 0.9594 5-seed PASS(thr 0.790)** = Paper C 유일 검정력 있는 CONFIRM의 우연배제 확립(braveji BLOCKER-1 해소). pixel-mean 0.922로도 견고.
+- grade_high(양성대조) PASS(thr 0.550). egfr_amp FAIL(real 0.604 < thr 0.631, 원 INCONCLUSIVE 일관).
+- pixel-mean: hpv 0.922·grade 0.590(MIL 0.815, attention 이득)·egfr_amp 0.540. 통합 = 스코어보드 §5-seed.
