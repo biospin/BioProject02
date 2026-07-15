@@ -56,7 +56,9 @@
 ## 누수 ASSERT + HPV 커버리지 (2026-07-15 · braveji followup 대응)
 
 - **누수 assert (data_leakage caution의 assert-log 잔여 해소):** split.csv 직접 검증 — 4암종 전부 **patient_overlap=0, site-disjoint 위반=0**(site수 LUNG 69·COLORECTAL 37·HNSC 28·GASTRIC 22). 로그 `LEAKAGE_AND_COVERAGE_VERIFY.log`. **/workspace 임베딩 ls**도 동 로그 첨부(braveji SSH 키 부재 대체): 1052/622/472/442.
-- **⚠️ HPV 커버리지 비무작위성 (CONFIRM Limitation):** 두경부 임베딩 결손(~14%)이 **HPV에 대해 비무작위** — 포함군(임베딩 有) HPV+ 유병률 **0.102(n=412)** vs **결손군(임베딩 無) 0.400(n=75)**. HPV+ 사례 ~30례가 다운로드/타일 실패로 분석서 제외됨. → **HPV CONFIRM 0.9594는 "분석 가능했던 부분집합" 기준이며 전체 HNSC 일반화엔 결손 편향(낙관 가능성)을 Limitation으로 명시.** (5-seed PASS·counterfactual faithful은 유효.) 원인 후보: HPV+(구인두) vs HPV−(구강/후두) 슬라이드 특성·site 차이.
+- **⚠️ HPV 커버리지 비무작위성 (CONFIRM Limitation) — 원인 규명 완료(2026-07-15):** 두경부 임베딩 결손(~14%)이 HPV에 비무작위 — 포함군 HPV+ 유병률 **0.102(n=412)** vs 결손군 **0.400(n=75)**, HPV+ ~30례 제외.
+  - **메커니즘 = site-level 슬라이드 부재(형태학 문제 아님):** 결손 75명은 **다운로드/타일 실패가 아니라 애초 GDC에 진단(DX) 슬라이드가 없던 환자**(다운로드 큐 0/75). **TSS site `CR`이 통째 결손**(53명 전원 미포함, HPV+ 17/53=32% 편중) → 결손 HPV+ 30명 중 CR이 17명(57%). 즉 **HPV+ 많은 특정 기관(CR 등)이 임상·분자 데이터(=HPV 라벨)만 제공하고 H&E DX 슬라이드는 GDC 미공개**여서 생긴 데이터 가용성 아티팩트.
+  - **함의:** AUROC 0.9594 자체는 "HPV+ 형태가 어려워 드롭"된 게 아니라 site-가용성 결손이므로 **형태-난이도 편향은 아님**. 단 분석셋이 CR류 site를 못 봐서 **그런 site로의 외삽엔 caveat**. site-disjoint holdout(가용 site 간 일반화)은 유효 → CONFIRM은 **"가용 site 기준 확증 + CR류 미표집 Limitation"**으로 기술. (5-seed PASS·counterfactual faithful 유효.)
 - **pixel-mean Limitation(서술):** MIL이 pixel-mean을 크게 못 넘는 endpoint(위 lauren pixel 0.631>MIL 0.536 등)는 "MIL 부가가치 제한적, 형태 신호는 mean-pool로도 상당 회수"로 기술. subtype-only는 폐 EGFR/KRAS만 산출(cross-cancer 대부분 순환).
 
 ## G1 상태 — ✅ **확정 (kkkim Leader 승인, 2026-07-14)**
