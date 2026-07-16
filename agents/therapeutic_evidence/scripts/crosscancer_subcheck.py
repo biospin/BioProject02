@@ -18,8 +18,8 @@ Usage:
 
     # #4 포함 (PRISM 있을 때):
     python ... \\
-        --prism_bowel  /workspace/data/BIOP02-96/PRISM_Repurposing_Secondary_Bowel.csv \\
-        --prism_lung   /workspace/data/BIOP02-96/PRISM_Repurposing_Secondary_Lung.csv
+        --prism_bowel  "/workspace/data/BIOP02-96/PRISM_Repurposing_Secondary_(AUC)_subsetted_Bowel.csv" \\
+        --prism_lung   "/workspace/data/BIOP02-96/PRISM_Repurposing_Secondary_(AUC)_subsetted_Lung.csv"
 """
 
 from __future__ import annotations
@@ -184,8 +184,9 @@ def run_prism_gdsc_consistency(
         model_col = "SANGER_MODEL_ID" if "SANGER_MODEL_ID" in gdsc_df.columns else "Sanger Model ID"
         gdsc_sub = gdsc_df[gdsc_df[model_col].isin(sanger_ids)]
         gdsc_wide = gdsc_sub.pivot_table(index=model_col, columns=drug_col, values=auc_col, aggfunc="mean")
-        # SangerModelID → ModelID 매핑
-        sid_to_mid = dict(zip(model_df["SangerModelID"].dropna(), model_df["ModelID"]))
+        # SangerModelID → ModelID 매핑 (양쪽 동시 필터링으로 위치 오정렬 방지)
+        _smap = model_df.dropna(subset=["SangerModelID"])
+        sid_to_mid = dict(zip(_smap["SangerModelID"], _smap["ModelID"]))
         gdsc_wide.index = [sid_to_mid.get(s, s) for s in gdsc_wide.index]
         log.info(f"#4 {cancer}: GDSC 교집합 {len(gdsc_wide)}개 cell line")
     except Exception as e:
