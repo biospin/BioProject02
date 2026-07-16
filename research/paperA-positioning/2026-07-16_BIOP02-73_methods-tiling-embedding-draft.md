@@ -56,14 +56,14 @@ Slide-level 표현형 예측에 attention-based MIL(CLAM; Lu et al. 2021)을 사
 | Learning rate | 1.0e-3 |
 | Batch size | 1 (slide/step, MIL 관례) |
 | Seed | 42 |
-| Optimizer | `[확인 필요]` (config 미기재 — Adam 추정, 코드 확인 후 명기) |
+| Optimizer | **Adam** (`train_mil.py:166`, lr=config) ✅ 해소 |
 
 > `[확인 필요]` config의 `hidden_dims`가 CLAM attention head 정의인지 별도 MLP인지 코드(`run_baselines.py`/모델 정의)에서 확인해 정확히 기술. CLAM-SB/MB 표준 구성 대비 커스텀 여부도 명시.
 
 ### 2.6 Reproducibility
 모든 실행은 seed=42로 고정하고, 각 `metrics.json`에 split_hash·config·commit hash·predictions를 기록한다(provenance). 
 
-> `[확인 필요]` **행동 항목(연구계획서)**: `experiments/registry/cross_validation_registry.jsonl`이 비어 있음 → headline 수치(ER ext AUROC 0.894 등)의 provenance를 registry에 등재해야 pre-registration 검증 가능. Methods "Data availability/Reproducibility"에서 이 registry를 참조하려면 먼저 채워야 함.
+> ✅ **registry provenance (해소 2026-07-16):** `cross_validation_registry.jsonl`은 **이미 5개 엔트리로 채워짐**(er/pr/her2/pam50/pam50_4class, 각 commit_hash·critic_status 포함, `validate_registry.py` 통과). 연구계획서(07-10)의 "0 bytes"는 그 사이 갱신됨. → Methods "Reproducibility"에서 이 registry 참조 가능. (단 critic_status는 caution/reject 상태 — headline 승격은 별개 게이트.)
 
 ---
 
@@ -72,9 +72,11 @@ Slide-level 표현형 예측에 attention-based MIL(CLAM; Lu et al. 2021)을 사
 - Chen et al. 2024 — UNI (`research/foundation-models/chen-2024-uni/`)
 - Bussola 2020 · Yagis 2021 · Howard 2021 — split/leakage (`agents/data/split_policy_v0.md` 인용)
 
-## 초안 미확정 요약 (2026-07-16: 5건 → 3건, 2건 해소)
-1. ~~Stain normalization~~ ✅ 해소 — 미적용(ImageNet 정규화만)
-2. ~~UNI 모델 버전~~ ✅ 해소 — UNI v1 1024-dim (`uni_v2`=v1 2차 실행 라벨)
-3. split_policy Critic 서명 완료 여부 — **미해소**(braveji cross-sign pending)
-4. Optimizer 정확화 — **미해소**(CLAM-SB 사용은 확인, optimizer는 CLAM 학습 스크립트 재확인 필요)
-5. cross_validation_registry.jsonl provenance 등재 — **미해소**(registry 비어 있음)
+## 초안 미확정 요약 (2026-07-16: 5건 → 1건, 4건 해소)
+1. ~~Stain normalization~~ ✅ 미적용(ImageNet 정규화만)
+2. ~~UNI 모델 버전~~ ✅ UNI v1 1024-dim (`uni_v2`=v1 2차 실행 라벨)
+3. **split_policy Critic 서명** — **미해소**(braveji cross-sign pending, 유일한 외부 의존)
+4. ~~Optimizer~~ ✅ Adam (`train_mil.py:166`)
+5. ~~registry provenance~~ ✅ 이미 5개 엔트리로 채워짐(validate 통과)
+
+→ **kkkim이 해소 가능한 4건 완료. 남은 1건(#3 split Critic 서명)은 braveji 몫.**
