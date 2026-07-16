@@ -305,3 +305,21 @@
 **배경:** BIOP01 profile-likelihood(`p3_profile_likelihood.py --subset 400`) 백그라운드 실행 중 — 타 세션, BIOP02 무관, 미개입.
 
 **세션 마무리:** 게재료(APC) 조사 → `research/publication-cost-2026-07.md`(최저 eLife $2.5k / J.Pathol.Informatics $1.47k; 한국 KESLI/NST 협정은 대학·출연연만 → 싸이토젠 소속 미커버). BIOP02-90 Subtask 생성(sjpark ER 예측, -53 하위) + sjpark 카톡 문구. **발표 블러브 최종 확정**(제목 "단일세포부터 병리 이미지까지", 연결=치료효과 01 속도/02 아형처방 → 치료효과에 다가섬; DRP·em대시·클리셰·구어체 제거, 결과 폄하 X). **SESSION_LOG 프로젝트별 분리**(BIOP01 항목 제거, 전역 ~/.claude 동기화 중단, memory `feedback-session-log-project-scoped`). HANDOFF 즉시재개 갱신(다음 창 인수인계). 커밋 `ca38fd5`까지 push.
+
+---
+
+## 2026-07-16 — Critic G2 5차 재판정 (braveji): Paper C **#1 PASS**, PR 4건 병합
+
+**판정 변화:** `#1 data_leakage` **caution → PASS**. 7항목 = **pass 4 · caution 2 · not_applicable 1 · reject 0**, 전체 `critic_status: caution` 유지(main `2888a7b`).
+
+**PR #50 (kkkim) — #1 pass 조건 2건 충족.** ① patient-overlap assert: 4/4 암종 patient(case_id)·TSS overlap **0**, pairwise 3분할 전조합 ALL_PASS. ② `/workspace` 실파일 ls: LUNG 1052(18G)·COLORECTAL 622(9.1G)·HEADNECK 472(8.4G)·GASTRIC 442(7.0G) = manifest 건수 일치(43G 이관 실증).
+
+**braveji 원자료 독립검증(중요).** HNSC `split.csv`(523 case) vs `embedding_manifest`(472행/**450 고유 case**) 직접 대조 → **51건 차이 발견, 헤드라인 위협 의심 → 기각.** 결손은 train 72/366(19.7%)·val 5/79(6.3%)에 국한되고 **test 78/78 = 100% 커버** → `hpv_pos` 0.9594 평가 유효. 증거문서 표기 2건 부정확(정정 요청, 판정 불변): "n_slides=523"은 case 수(실슬라이드 472) / "1 slide=1 patient"는 450 고유 case로 **불성립**(22건 다중 슬라이드). split이 case 단위라 **누수 결론 자체는 유효**. `overlap_assert.py` 재현 스크립트 PR 미포함.
+
+**PR #51 (jhans) — #4 `not_applicable` 유지.** `zip(dropna(), full_series)` 위치 오정렬 → `dropna(subset=)` 행단위 동시필터 수정은 **코드검토상 정석**이며, Critic 4차의 "데이터 provisioning 문제" 원인귀속이 틀렸을 가능성을 시사. **그러나 재실행 산출물 0건**(Test plan 2/2 미체크), 본문 "COLORECTAL 30/LUNG 96"은 출처 JSON 부재로 검증 불가 → **코드가 옳다 ≠ 재실행이 pass**. 코드 병합 찬성, 판정은 `crosscancer_subcheck_*.json` 커밋 후 즉시 재판정.
+
+**pass 미승격 근거(자기기준 준수).** 4차에서 "pass 조건 = #1 서버검증 + #3 처리"로 못박았고 이번엔 **#1만 충족** → 전체 승격 보류. **남은 것은 #3 하나**(폐·위·두경부 counterfactual 보완 또는 'MIL 신호 중복성' Limitation 명시).
+
+**병합 4건:** #50 `704ce8e` · #51 `fba77ac` · #49(4·5차 재판정) `2888a7b` · #45(dbGaP 불필요 문서화) `36c388a`. **BIOP02-61 → Done**(BRCA1/2 gene-level label은 open-access MC3/cBioPortal로 충분, raw/unmasked genome-wide 필요 시에만 재검토). JIRA BIOP02-96 comment `11210`.
+
+**신규 followup:** kkkim = PR#50 표기 정정 3건 + HNSC 커버리지 비무작위 결손 분석(train 19.7%). jhans = PR#51 재실행 산출물 커밋 + kkkim 실행본과 스크립트 계보 일치 확인(**main에 원본 `.py` 부재 → 분기 위험**).
