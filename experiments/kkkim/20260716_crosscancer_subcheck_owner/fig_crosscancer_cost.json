@@ -1,0 +1,52 @@
+{
+  "figure": "cross-cancer cost-of-substitution asymmetry",
+  "ticket": "BIOP02-96",
+  "claim_level": "hypothesis_only",
+  "critic_status": "pending",
+  "owner": "kkkim",
+  "definition": "cost_of_substitution_targeted = misroute_rate × targeted-axis therapeutic distance",
+  "data": {
+    "유방 (BRCA)": {
+      "easy_axis": {
+        "name": "endocrine",
+        "misroute": 0.05,
+        "cost": 0.035,
+        "n": 180
+      },
+      "hard_axis": {
+        "name": "antiHER2",
+        "misroute": 1.0,
+        "cost": 0.416,
+        "n": 35
+      }
+    },
+    "대장 (CRC)": {
+      "easy_axis": {
+        "name": "baseline",
+        "misroute": 0.015,
+        "cost": 0.013,
+        "n": 136
+      },
+      "hard_axis": {
+        "name": "antiBRAF",
+        "misroute": 0.733,
+        "cost": 0.637,
+        "n": 15
+      }
+    },
+    "폐 (NSCLC)": {
+      "easy_axis": {
+        "name": "chemo",
+        "misroute": 0.165,
+        "cost": 0.114,
+        "n": 242
+      },
+      "hard_axis": {
+        "name": "antiKRAS-G12C",
+        "misroute": 1.0,
+        "cost": 0.86,
+        "n": 14
+      }
+    }
+  }
+}
