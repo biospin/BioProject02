@@ -266,11 +266,11 @@ Weekly sync: **every Friday**, 60 min. Leader: kkkim. Orchestrator/minutes: brav
 
 ## Data Sources
 
-- **TCGA-BRCA** — **~1010 slides** (manifest 기반 DX-slide BRCA cohort, open access slides + clinical, Paper A scope; NAS 원본 1133장 중 DX+임상 결합 subset, 2026-06-10 Leader 확정). Controlled access (somatic mutations) requires dbGaP with PI signature.
+- **TCGA-BRCA** — **~1010 slides** (manifest 기반 DX-slide BRCA cohort, open access slides + clinical, Paper A scope; NAS 원본 1133장 중 DX+임상 결합 subset, 2026-06-10 Leader 확정). Paper A의 BRCA1/2 gene-level mutation label은 open-access MC3 기반 cBioPortal API로 충분하므로 dbGaP 신청은 하지 않는다(BIOP02-61, 2026-07-16). Raw/unmasked genome-wide somatic data가 새로 필요할 때만 PI 서명을 포함한 controlled-access 신청을 별도 검토한다.
 - **CPTAC-BRCA** — IDC `gs://` bucket, ~120 paired samples for external validation.
 - **DepMap PRISM + GDSC** — cell line × drug sensitivity (Paper B / Therapeutic Evidence).
 
-Labels: ER/PR/HER2 IHC, PAM50, BRCA1/2 mutation, OS/DFS from TCGA-CDR or cBioPortal.
+Labels: ER/PR/HER2 IHC, PAM50, BRCA1/2 gene-level mutation(open-access MC3/cBioPortal), OS/DFS from TCGA-CDR or cBioPortal.
 
 Patient-level splits are locked after `split_policy_v0` is signed off — no changes after lock.
 

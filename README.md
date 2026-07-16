@@ -108,11 +108,11 @@ HuggingFace에 기관 이메일로 신청 (`@gmail`/`@naver` 불가). 모두 게
 
 ## 데이터 소스
 
-- **TCGA-BRCA** — 약 150장 슬라이드 (공개 접근). 체세포 변이 데이터는 dbGaP + PI 서명 필요.
+- **TCGA-BRCA** — 약 150장 슬라이드 (공개 접근). Paper A의 BRCA1/2 gene-level 변이 라벨은 open-access MC3 기반 cBioPortal API를 사용하며, raw/unmasked genome-wide 체세포 변이가 새로 필요할 때만 dbGaP + PI 서명을 별도 검토합니다(BIOP02-61).
 - **CPTAC-BRCA** — IDC `gs://` 버킷, 약 120 쌍 샘플 (외부 검증용).
 - **DepMap PRISM + GDSC** — 세포주 × 약물 감수성 (Paper B).
 
-레이블: ER/PR/HER2 IHC, PAM50, BRCA1/2 변이, TCGA-CDR 또는 cBioPortal의 OS/DFS.
+레이블: ER/PR/HER2 IHC, PAM50, BRCA1/2 gene-level 변이(open-access MC3/cBioPortal), TCGA-CDR 또는 cBioPortal의 OS/DFS.
 
 ---
 

@@ -209,7 +209,7 @@ gglee (critic_report pass)
 | HF 승인 5/22 전 미도착 | dummy embedding(`torch.randn`)으로 sjpark MLP 흐름 unblock, pilot 5/22 발표 보류 |
 | GPU 충돌 (5명 1대) | 잠정 캘린더 슬롯 룰 (09–13 / 13–17 / 17–21 / 21–01) → Sprint 0 끝나면 gpu.lock wrapper |
 | 2 TB 디스크 부족 | raw = S3 only, `/data/cache/` LRU 200 GB, embedding만 영구 보존 |
-| dbGaP controlled access 지연 | open access slides + clinical만으로 v0 진행, Paper A scope에서 controlled 제외 |
+| dbGaP controlled access | BIOP02-61에서 BRCA1/2 gene-level label은 open-access MC3/cBioPortal로 충분함을 확인해 신청 보류·Paper A scope에서 controlled 제외. Raw/unmasked genome-wide somatic data 요구가 생길 때만 재검토 |
 | split_policy_v0 lock 지연 | jamie가 5/29 이전 lock — 이후 변경 금지 (실험 재현성 보호) |
 
 ---
