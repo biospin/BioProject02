@@ -1,0 +1,116 @@
+{
+  "assert": "patient-overlap==0 (case_id) + TSS site-disjoint",
+  "by": "kkkim",
+  "ticket": "BIOP02-96 #1 leakage guard",
+  "per_cancer": {
+    "LUNG_NSCLC": {
+      "n_slides": 1050,
+      "n_patients": 1050,
+      "splits": {
+        "test": 157,
+        "train": 735,
+        "val": 158
+      },
+      "pairs": {
+        "test∩train": {
+          "patient": 0,
+          "tss": 0
+        },
+        "test∩val": {
+          "patient": 0,
+          "tss": 0
+        },
+        "train∩val": {
+          "patient": 0,
+          "tss": 0
+        }
+      },
+      "patient_overlap_total": 0,
+      "tss_overlap_total": 0,
+      "PASS_patient_disjoint": true,
+      "site_disjoint": true
+    },
+    "COLORECTAL": {
+      "n_slides": 534,
+      "n_patients": 534,
+      "splits": {
+        "test": 80,
+        "train": 374,
+        "val": 80
+      },
+      "pairs": {
+        "test∩train": {
+          "patient": 0,
+          "tss": 0
+        },
+        "test∩val": {
+          "patient": 0,
+          "tss": 0
+        },
+        "train∩val": {
+          "patient": 0,
+          "tss": 0
+        }
+      },
+      "patient_overlap_total": 0,
+      "tss_overlap_total": 0,
+      "PASS_patient_disjoint": true,
+      "site_disjoint": true
+    },
+    "HEADNECK_HNSC": {
+      "n_slides": 523,
+      "n_patients": 523,
+      "splits": {
+        "test": 78,
+        "train": 366,
+        "val": 79
+      },
+      "pairs": {
+        "test∩train": {
+          "patient": 0,
+          "tss": 0
+        },
+        "test∩val": {
+          "patient": 0,
+          "tss": 0
+        },
+        "train∩val": {
+          "patient": 0,
+          "tss": 0
+        }
+      },
+      "patient_overlap_total": 0,
+      "tss_overlap_total": 0,
+      "PASS_patient_disjoint": true,
+      "site_disjoint": true
+    },
+    "GASTRIC_STAD": {
+      "n_slides": 440,
+      "n_patients": 440,
+      "splits": {
+        "test": 66,
+        "train": 308,
+        "val": 66
+      },
+      "pairs": {
+        "test∩train": {
+          "patient": 0,
+          "tss": 0
+        },
+        "test∩val": {
+          "patient": 0,
+          "tss": 0
+        },
+        "train∩val": {
+          "patient": 0,
+          "tss": 0
+        }
+      },
+      "patient_overlap_total": 0,
+      "tss_overlap_total": 0,
+      "PASS_patient_disjoint": true,
+      "site_disjoint": true
+    }
+  },
+  "ALL_PASS_patient_disjoint": true
+}
