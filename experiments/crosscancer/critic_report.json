@@ -1,13 +1,13 @@
 {
   "schema_version": "0.1",
-  "created_at": "2026-07-15T12:00:00+09:00",
+  "created_at": "2026-07-16T16:30:00+09:00",
   "reviewer": "braveji",
   "owner": "kkkim",
   "experiment": {
     "experiment_id": "crosscancer_law_heldout_G1_5cancer",
     "task": "morphological-correlate substitutability law — sealed held-out test (CLAM-SB MIL on UNI v1 embeddings)",
     "endpoint": "LUNG(histology_lusc,egfr_activating,kras_g12c) / GASTRIC_STAD(lauren_diffuse,msi_h,erbb2_amp,ebv) / HEADNECK_HNSC(hpv_pos,egfr_amp,grade_high) / COLORECTAL(msi_high,anti_egfr,braf_v600, retrospective) / BRCA(anchor)",
-    "commit_hash": "f7ab60e2",
+    "commit_hash": "85a2291e",
     "metrics_path": "experiments/crosscancer/LAW_HELDOUT_SCOREBOARD.md",
     "predictions_path": "experiments/crosscancer/*/full/mil_cost_results.json",
     "config_path": "experiments/crosscancer/SUBSTITUTABILITY_LAW_PREREGISTRATION.md",
@@ -46,22 +46,24 @@
       "notes": "sealed-forward 3개 암종에 counterfactual 없음. 블로커는 아니나 CONFIRM 서술 전 보완 필요."
     },
     "cross_dataset_check": {
-      "status": "caution",
+      "status": "not_applicable",
       "evidence": [
-        "블로커 1·2 미해소 상태에서 생물 sub-check 의뢰 보류 (sjpark/jhans)",
-        "HEADNECK HPV 0.9594 — 유일한 검정력 있는 CONFIRM이나 TCGA-HNSC 단일 코호트·seed=42 단일 실행·외부 복제 없음"
+        "[sub-check 완료, PR #47] jhans crosscancer_subcheck.py(PR #44)를 kkkim이 실데이터 실행. reviewer=jhans(non-owner) → Owner≠Reviewer 충족.",
+        "#4 DepMap PRISM vs GDSC 일관성 = 판정불가(pending_data, 구조적). PRISM subsetted 파일이 GDSC와 비중첩: 대장 PRISM∩GDSC=1/∪=86, per-drug 전부 skip(PRISM미수록 또는 n<5). 폐 교집합 14로 median Spearman 낮음.",
+        "근본원인(CHECK4_ROOTCAUSE_NOTE, Critic 검증): ID 조인 정상(ACH ModelID), PRISM subset이 GDSC 여집합으로 구성된 데이터 provisioning 문제 — '일치성 실패'가 아님. jhans 수정방향 3개 제시(subset 필터 재점검 / GDSC 겹치는 PRISM AUC 재수신 / #4 재설계)."
       ],
-      "notes": "블로커 해소로 정본 수치가 확정돼 sub-reviewer 의뢰가 가능해졌다. #4 DepMap PRISM vs GDSC 일관성 sub-check = jhans(non-owner). pass는 그 후."
+      "notes": "caution → not_applicable(구조적 판정불가). Paper C의 #4는 데이터 교집합 부족으로 현 데이터셋에서 계산 불가이며, 이는 결과 실패가 아니라 provisioning 문제다. Paper A/B/C 공통으로 DepMap/GDSC cross-dataset은 Limitation으로 기술. PRISM 재수신 시 재판정 가능하나 pass 게이트 아님(hypothesis_only claim)."
     },
     "biological_plausibility": {
-      "status": "caution",
+      "status": "pass",
       "evidence": [
-        "[표/본문 모순 해소] 스코어보드 표 17행 HPV가 '✅ CONFIRM (5-seed PASS — real 0.959 > thr 0.790)'으로 근거 명시 — 5-seed 통과로 CONFIRM이 정당해져 재검토 신규 지적(표/본문 모순) 해소.",
-        "[BLOCKER-1 잔여 해소] 위암 lauren FAIL 원인 규명(LAUREN_POSCONTROL_DIAGNOSIS.md): dev 0.963→holdout 0.536(gap -0.43, 위암 4 endpoint 중 유일 파국), pixel-mean 0.631>MIL 0.536, lauren 양성률 site 종속(train 0.457/test 0.875) → site-confound가 site-disjoint holdout에서 정당 노출. '위암 전체 저신뢰'를 'Lauren 국한'으로 정정, MSI는 유효.",
-        "미완: #5 biological plausibility 정식 sub-check = jhans(non-owner). Owner≠Reviewer상 braveji 총괄이되 바이오 판단은 jhans.",
-        "minor: 두경부 HPV 커버리지 450/523(86%)의 비무작위 결손이 CONFIRM에 주는 영향은 별도 미분석(lauren엔 site 종속 분석 있음)."
+        "[sub-check 완료·PASS, PR #47] reviewer=jhans(non-owner). 대장·폐 positive control 3/3 통과.",
+        "대장: Dabrafenib/Trametinib/Selumetinib → antiBRAF (z −1.32~−1.62, baseline 대비 음수=민감), prior 일치(BRAF-V600E CRC BRAF+MEK 병용 BEACON-CRC).",
+        "폐: Gefitinib/Afatinib/Osimertinib → antiEGFR (z −2.29 등), prior 일치(EGFR-mut NSCLC EGFR-TKI).",
+        "표/본문 모순 해소(기존): 두경부 HPV 5-seed PASS(thr 0.790)로 CONFIRM 정당. 위암 lauren site-confound 규명.",
+        "z-score 방향·prior 일치 판정 로직 Critic 검증 완료. (DepMap 원자료 재계산은 데이터 부재로 미실시, 판정 로직은 문서 검증.)"
       ],
-      "notes": "not_applicable → caution. 표/본문 모순과 lauren 원인이 해소돼 생물 판단을 진행할 조건이 됐다. 정식 #5 sub-check는 jhans에 의뢰(블로커 해소됐으므로 이제 시기 적절). pass는 그 후."
+      "notes": "caution → pass. jhans #5 sub-check(positive control 3/3, prior 일치)로 생물학적 타당성 확립. Owner≠Reviewer 충족(reviewer=jhans). 형태→치료축 라우팅의 방향성이 임상 prior와 일치."
     },
     "drp_framing": {
       "status": "pass",
@@ -84,13 +86,13 @@
   },
   "critic_status": "caution",
   "claim_level": "hypothesis_only",
-  "summary": "G2 3차 재판정(main f7ab60e, PR #36 병합 후) — critic_status: reject → CAUTION 승격. kkkim이 PR #36(5-seed 우연배제 + pixel-mean baseline, additive-only +720)으로 남은 블로커를 전부 해소했고, Critic이 5-seed 판정(real > null_mean+2·sd)을 독립 재계산해 10개 endpoint 전부 kkkim 기록과 일치함을 확인했다. 【5개 블로커 전부 해소】 BLOCKER-1(위암): erbb2 'blind 적중' 채점 철회 + lauren FAIL 원인 규명(site-confound가 site-disjoint holdout에서 정당 노출, dev 0.963→holdout 0.536 gap -0.43, 양성률 site 종속). '위암 전체 저신뢰'를 'Lauren 국한'으로 정정, MSI 유효. BLOCKER-2(폐 정본): 문서=JSON 일치(histology 0.939). BLOCKER-3(pixel-mean): 4암종 산출. BLOCKER-4(대장 5-seed 은폐): 스코어보드 cms1·cms4 FAIL 명시. BLOCKER-4-2(폐/위/두경부 5-seed): 전 endpoint 적용, 재계산 10/10 일치. BLOCKER-5(재현 불가): 임베딩 /workspace 이관 + PR #36 산출로 재현성 실증. 【표/본문 모순 해소】 재검토 신규 지적이었던 'HPV 표 CONFIRM vs 본문 우연배제 미확립' 모순은, HPV 0.9594가 5-seed PASS(thr 0.790)를 실제 통과해 CONFIRM이 정당해지면서 해소. 표 17행에 근거 명시. 【caution인 이유(pass 아님)】 (1) #4 cross-dataset·#5 biological plausibility 정식 sub-check(jhans) 미완 — 블로커 해소로 이제 의뢰 가능한 상태. (2) patient-overlap assert 로그 미제출. (3) braveji SSH 키 부재로 /workspace 실파일 서버 검증 미완(kkkim ls 1건으로 완결). subtype-only baseline 미산출은 형태 상관물 법칙엔 pixel-mean 대조가 핵심이라 pass 게이트가 아닌 Limitation으로 처리. #6 DRP·#7 claim-level pass. 【승격 경로】 #4/#5 sub-check(jhans) 완료 시 pass 상신 가능. 큰 블로커는 전부 닫혔고 남은 건 sub-review 게이트다.",
+  "summary": "G2 4차 재판정(main 85a2291, PR #47 병합 후) — critic_status: caution 유지, 단 모든 sub-check(#4/#5) 완료. 【sub-check 완료】 jhans crosscancer_subcheck.py(PR #44)를 kkkim이 실행(reviewer=jhans non-owner, Owner≠Reviewer 충족). #5 생물학적 타당성 = PASS: 대장·폐 positive control 3/3(Dabrafenib/Trametinib/Selumetinib→antiBRAF z−1.3~−1.6 BEACON-CRC prior 일치, Gefitinib/Afatinib/Osimertinib→antiEGFR z−2.3 EGFR-TKI prior 일치). #4 cross-dataset = 판정불가(pending_data, 구조적): PRISM subsetted 파일이 GDSC와 비중첩(대장 ∩=1/∪=86)이라 상관 계산 구조적 불가 — 결과 실패가 아니라 데이터 provisioning 문제(근본원인 진단 정확, Critic 검증). 【5개 블로커 전부 해소 유지】 위암 erbb2 철회+lauren site-confound 규명, 폐 정본 동기화, pixel-mean 4암종, 대장 5-seed 명시, 폐/위/두경부 5-seed(재계산 10/10 일치), 임베딩 /workspace 이관. 두경부 HPV 5-seed PASS로 표/본문 모순 해소. 【caution 유지 사유(pass 아님)】 (1) #1 patient-overlap assert 로그 미제출 + braveji SSH 키 부재로 /workspace 실파일 서버검증 미완(kkkim ls 1건으로 완결). (2) #3 sealed-forward 3암종 counterfactual 부재. (3) #2 subtype-only 미산출·#4 데이터 provisioning은 Limitation 성격. 이제 reject 항목 0, 모든 sub-check 완료, 잔여는 전부 Limitation/서버검증 성격 — '검증 완료된 caution'. hypothesis_only claim에 대해 caution이 적절(본문 승격은 여전히 신중). #6 DRP·#7 claim-level pass. 【pass 경로】 #1 실파일 서버검증(kkkim ls) + #3 counterfactual(또는 Limitation 처리) 완료 시 pass 상신 가능. 큰 게이트는 전부 닫혔다.",
   "required_followups": [
-    "[jhans] #4 cross-dataset(DepMap PRISM vs GDSC 일관성) + #5 biological plausibility sub-check — 블로커 전부 해소돼 이제 의뢰 시점 적절. Owner≠Reviewer상 바이오 판단은 non-owner jhans.",
-    "[kkkim] /workspace/data/cache/biop02/crosscancer/ ls 결과 1건 공유 — 경로 재작성·PR#36 산출로 재현성은 실증됐으나 braveji SSH 키 부재로 실파일 목록만 미확인. BLOCKER-5 완결용.",
-    "[sjpark/kkkim] patient-overlap assert 로그 제출(#1 caution 해소).",
-    "[Paper A/C 서술] pixel-mean이 MIL에 근접/상회하는 endpoint(위 lauren pixel 0.631>MIL 0.536 등)는 'MIL 부가가치 제한적'으로 Limitation 명시. subtype-only 미산출도 함께 기술.",
-    "[minor] 두경부 HPV 커버리지 86% 결손의 비무작위성(결손군 vs 포함군 HPV 유병률) 확인 — CONFIRM 강건성 보강용.",
-    "위 #4/#5 sub-check 완료 후 critic_status pass 재판정."
+    "[kkkim] /workspace/data/cache/biop02/crosscancer/ ls 결과 1건 공유 — 재현성 실증됐으나 braveji SSH 키 부재로 실파일 목록만 미확인. #1 pass 조건.",
+    "[kkkim/sjpark] patient-overlap assert 로그 제출 (#1).",
+    "[Paper C 서술] #3 sealed-forward 3암종(폐/위/두경부) counterfactual 보완 또는 'MIL 신호 중복성' Limitation 명시.",
+    "[Paper C 서술] #4 DepMap PRISM vs GDSC = 데이터 provisioning 한계로 Limitation 기술. subtype-only 미산출·pixel-mean 근접 endpoint도 함께.",
+    "[jhans] #4 재수신 옵션(GDSC 겹치는 PRISM AUC) 검토 — pass 게이트 아니나 cross-dataset 근거 보강 시 유용.",
+    "위 #1 서버검증 + #3 처리 완료 후 critic_status pass 재판정. 현재 모든 sub-check 완료·reject 0."
   ]
 }
