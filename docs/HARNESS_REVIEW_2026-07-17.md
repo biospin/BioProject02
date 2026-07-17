@@ -124,7 +124,29 @@ ClawBio 스킬은 `reproducibility/` 디렉토리를 emit한다:
 | `checksums.sha256` | 산출물 SHA-256 | ❌ **없음** |
 | `runtime-lock.json` | 추가 lock(선택) | ❌ 없음 |
 
-우리 `experiments/<user>/<date>/` 5종 규약은 `commit_hash`만 있고 **환경·명령·체크섬이 전부 없다** → 재현이 사람 기억에 의존. **이 4파일 계약을 우리 규약에 추가하는 게 §5.6 전체에서 가장 값싸고 확실한 이득.** (문서 주의: "일부 replay는 원본 외부 입력·도구가 로컬에 있어야 함" — 우리 WSI raw 보관 정책과 연결됨.)
+우리 `experiments/<user>/<date>/` 5종 규약은 `commit_hash`만 있고 **환경·명령·체크섬이 전부 없다** → 재현이 사람 기억에 의존.
+
+> ### ⚠️ kkkim 정정 (2026-07-17, 저장소 실물 확인 후)
+> 위 문단을 쓸 때 나는 **README를 WebFetch로 읽은 것이 전부였다.** 저장소를 열어보지도 않고
+> **"§5.6 전체에서 가장 값싸고 확실한 이득"**이라 단정했다 — 효과를 과장했다.
+>
+> **맞은 것:** 4파일 계약은 실재하고 널리 구현됐다 — 96개 스킬 중 `commands.sh` 131파일 ·
+> `environment.yml` 73 · `checksums.sha256` 62. README "many skills"는 과장 아님. LICENSE 실파일 = MIT.
+>
+> **틀린 것 — "원래 세션 없이 재검증 가능"은 절반만 참:**
+> - `clawbio/common/checksums.py`는 **24줄, `sha256_file`·`sha256_hex` 둘뿐 — 검증 함수가 없다.**
+> - CLI 서브커맨드 = `list`/`upload`/`run` — **`verify`가 없다.** 체크섬을 읽어서 대조하는 코드는
+>   **자기네 `tests/`에만** 있다(writer 단위테스트지 사용자용 검증 도구가 아니다).
+> - **기록만 하고 검증은 안 해준다.** "이 산출물이 그때 그거 맞나"는 사용자가 직접 짜야 한다.
+>
+> **더 중요한 누락 — 이 계약은 오늘 우리 사고 3건을 하나도 못 잡는다:**
+> HF 캐시 `.incomplete`(❌ 체크섬은 산출물을 해싱하지 모델 가중치 상태를 안 봄) · detached conda
+> 침묵 사망(❌ 예방 못 함, 단 `commands.sh`+`environment.yml`로 사후진단은 쉬워짐) · csv `\r`(❌).
+>
+> **정정 판단:** 이 계약은 "사고 방지 장치"가 아니라 **"출판 결과의 사후 재현 기록"**이다. 가져올
+> 가치는 여전히 있으나(우리는 `commit_hash`뿐) **검증은 우리가 만들어야** 하고 = §5.4/§5.6의
+> *"게이트는 자작 유지"*와 같은 결론. **차용 형태 = 스킬 설치가 아니라 아이디어(4파일 emit) + 우리 verify.**
+> *(서브에이전트가 API 오류로 중단돼 kkkim이 직접 확인. 중단 직전 소견 "checksums 쓰기만 하고 verify 없음"은 실물로 확인됨.)*
 
 ### 4.2 ★ ClawBio에서 **지금 바로 차용할 구체 계약**
 ClawBio 스킬은 **replay 메타데이터**를 export한다: **`commands.sh` + `environment.yml` + `SHA-256` 체크섬** → **"원래 에이전트 세션 없이 재검증 가능"**.
@@ -204,6 +226,30 @@ ClawBio 스킬은 **replay 메타데이터**를 export한다: **`commands.sh` + 
 #### 부수 발견
 CrossRef 실측이 **우리 정정 2건을 독립 확인**했다: Sharifi-Noghabi = **2021** ✅, Path2Space 1저자 = **Shulman, Eldad D.** ✅.
 반면 우리가 "Koudijs **2023**"으로 쓴 건 CrossRef `issued` 기준 **2022**다(epub/issue 연도 차이로 추정) — 원고 확정 시 확인 필요.
+
+### 4.3.2 병리 본진(BIOP02)·단일세포(BIOP01) 스킬 조사 — **차용할 것 없음** (2026-07-17)
+
+kkkim이 인용만 재봤다는 지적에 따라 **본진(병리 이미지)·통계/그림·BIOP01(단일세포)** 로 확장 조사.
+상세 = `docs/pilot_pathology_skills_2026-07-17.md`.
+
+**병리(BIOP02 본진) — 후보 5종 전부 실행코드 0줄, 차용 없음:**
+- AIPOCH/K-Dense의 `histolab`·`pathml`·`pathology-roi-selector` = **SKILL.md + 산문 references만**
+  (= 기존 pip 라이브러리 사용설명서). 우리 실패셋 6건 **0건** 커버. 우리 `tile_wsi.py`가 이미 더 특화.
+- Anthropic `life-sciences`·Harvard `ToolUniverse` = 도메인 불일치(single-cell / API·DB).
+
+**통계·그림 — medsci `analyze-stats`만 참조 가치(차용 아님):**
+- 유일하게 실행코드 있는 구역(MIT, 위험호출 안전). sjpark용 **템플릿 참조**로만 — 파이프라인 편입 X.
+- 검증기 대조: medsci `check_split_leakage.py`보다 **우리 `verify_split_integrity.py`가 더 엄격**
+  (site-level TSS까지 봄 — 실측 우리 site-hit 15 vs medsci 0). `check_metric_reporting.py`는
+  "숫자 재계산 안 함"이라 **우리 n=187/85 실패를 구조적으로 못 잡는다.** → 자작 유지가 옳다.
+
+**★ 부수발견 — "스킬 저장소의 self-eval 점수를 게이트로 쓰면 안 된다" (kkkim 실물 확인):**
+`pathology-roi-selector`의 SKILL.md는 `scripts/main.py` 실행을 광고하고 `python -m py_compile
+scripts/main.py`까지 적어놨는데 **저장소에 `.py`가 0개.** 그런데 자기 `eval_report`는
+`code_usability`/`stability`/`contract` 전부 **PASS(92/100)**. **존재하지 않는 파일을 "파싱 통과"로 채점**했다.
+AIPOCH 605개 중 실행파일 광고 201개 → **15개가 .py 0개 배송**(서브에이전트 집계). → verify-refs의
+`submission_safe`·roi-selector의 self-eval은 **같은 안티패턴**: 도구가 자기 자신을 "통과"라 말하는 걸 믿으면 안 된다.
+*(부수발견 2 = "§5.6의 K-Dense LOW 근거가 부정확"은 서브에이전트가 클론을 정리해 kkkim 재확인 불가 → **미확인**으로 남김. LOW 결론 자체는 유지.)*
 
 ### 4.4 원문에 없던 발견 4건
 
