@@ -7,7 +7,7 @@
 ## 요약 (counts)
 - **정확(verified OK): 33건** — 식별자(DOI/PMID/PMCID/PII) 보유 인용 전부 포함. 신규 오류 **0건**.
 - **오류(error): 0건** (신규). 이전 5건은 `CITATION_CORRECTIONS_2026-07-17.md`에서 이미 정정됨(재검증 결과 정정본이 맞음 — 아래 참조).
-- **미확인(unverified): 1건** — Ding 2025(Cancer Biol Med, 특정 논문 확인 불가). *문서가 `[snippet, unverified]`로 자체 플래그했던 Lancet Oncol 2025·PANProfiler은 본 감사에서 독립 검증에 성공 → 정확으로 승격.*
+- **미확인(unverified): 0건** — (초기 1건 Ding 2025는 2026-07-17 kkkim이 저널 목차로 실존 확인 → 정확 승격, 아래). *문서가 `[snippet, unverified]`로 자체 플래그했던 Lancet Oncol 2025·PANProfiler도 본 감사에서 독립 검증 성공 → 정확 승격.*
 - **자원(비-서지): 1건** — DepMap/Chronos(포털, 논문 인용 아님).
 - **핵심 결론:** 이전 감사의 "나머지도 틀릴 수 있다" 경고에 대한 답 = **나머지 식별자-보유 인용은 모두 정확.** 특히 (1) 정정 문서가 후속 재검증 대상으로 남겨둔 **Farahmand PMC10221954는 정확함을 확인**(open item 종결), (2) 문서가 unverified로 남겼던 **Lancet Oncol 2025·PANProfiler도 실존·서지 일치 확인**. 오류는 이미 잡힌 5건에 국한.
 - **참고(범위 명확화):** 감사 지시가 예시로 든 "Coudray"는 3개 문서에 없음 — 문서는 **Couture**(npj Breast Cancer 2018, 검증됨)를 인용. 지시의 Coudray(Nat Med 2018, `phenotype-prediction/coudray-2018-natmed/`)는 이 3개 문서에 미인용이라 대상 아님(이름 혼동으로 판단). Liu Cell 2018은 문서 표기 PII `S0092-8674(18)30229-0`가 Crossref alternative-id `S0092867418302290`와 일치함까지 확인.
@@ -42,7 +42,7 @@
 | **npj PO 2023, routine-H&E luminal 예후 (s41698-023-00472-y)** | novelty §3 body | **정확** | DOI 10.1038/s41698-023-00472-y = Wahab, *npj Precision Oncology* 2023, "AI-enabled routine H&E image based prognostic marker for early-stage luminal breast cancer" (문서 "routine-H&E 조기 luminal 예후 마커" 정합) | — |
 | **Corsello, Nat Cancer 2020 (PMID 32613204)** | novelty §9 | **정확** | Corsello SM, *Nat Cancer* 1:235–248, 2020, "Discovering the anti-cancer potential of non-oncology drugs…" (PRISM 원자원) | — |
 | **Lin 2025, BCRT (10.1007/s10549-025-07817-0)** | novelty §9 | **정확** | Lin, Hao-Kuen, *Breast Cancer Res Treat* 214:319–327, 2025 (1저자 Lin; 문서 "Lin/Dai/Pusztai" 정합) | — |
-| **Ding/Shao/Yu, Cancer Biol Med 2025 (22/12/1605)** | novelty §9 | **미확인** | PubMed·Crossref(ISSN 2095-3941)에서 해당 CRC-dependency+PRISM 논문을 특정 못함. *Cancer Biol Med*·vol 22(2025)는 실재하나 특정 서지 미확인. **오류로 단정 안 함** | 서지 재확인(권/쪽/DOI 확보) — D3 드롭 트랙이라 우선순위 낮음 |
+| **Ding, Shao, Yu, Cancer Biol Med 2025 22(12):1605-1626** | novelty §9 | **정확(2026-07-17 저널 목차로 실존 확인)** | Rui Ding·Zhiming Shao·Tianjian Yu, "Comprehensive investigation of the molecular basis of cancer dependencies suggests therapeutic options for breast cancer", *Cancer Biol Med* 22(12):1605-1626, 2025-12-15, DOI 10.20892/j.issn.2095-3941.2025.0290. 초기 미확인은 Crossref/PubMed 색인 지연 탓 | 확인 완료. 인용 시 위 DOI 사용 |
 | **Sannigrahi, Mol Oncol 2023 (PMC10850805)** | novelty §9 | **정확(경미)** | PMC10850805 = Sannigrahi MK, *Mol Oncol* 18, **epub 2023-12-13 / print 2024-02**, "…prioritizing cancer type-specific therapeutic vulnerabilities using DepMap". 문서 "2023"은 online-first 연도로 방어 가능(정식 인용연도는 2024) | (선택) 연도 2024로 표기 통일 |
 | **Jurj 2025 (PMC12471285)** | novelty §9 | **정확** | PMC12471285 = Jurj ED, *Medicina (Kaunas)* 61, 2025, "Redefining Breast Cancer Care by Harnessing Computational Drug Repositioning" (리뷰; 문서 "리뷰 Jurj 2025" 정합) | — |
 | **Path2Space = Shulman, Cell 189 (2026)** | CRC-LUNG S1, Sources | **정확**(기정정) | Shulman, Eldad D., *Cell* 189:4225–4240.e25, 2026, DOI 10.1016/j.cell.2026.04.023 — 정정문서 #4(Kaminski→Shulman) **재검증 확정** | 이미 정정됨 — 유지 |
@@ -64,6 +64,6 @@
 ## 조치 권고 (kkkim)
 1. **오류 0건** — 3개 문서의 식별자-보유 인용은 원문 그대로 두어도 됨. 별도 정정 불필요.
 2. **`CITATION_CORRECTIONS_2026-07-17.md` §23 후속권고 종결** — "Farahmand PMC10221954 등 일괄 재검증"은 본 감사로 완료(Farahmand·Sharifi-Noghabi·Koudijs·Path2Space·MAKO 모두 정정본이 정확).
-3. **미확인 1건**: **Ding 2025(Cancer Biol Med)** — §9 D3(드롭 트랙)이라 급하지 않으나 본문 인용 시 권/쪽/DOI 확보 필요.
+3. ~~미확인 1건: Ding 2025~~ → **2026-07-17 실존 확인 완료**(저널 목차): Ding·Shao·Yu, Cancer Biol Med 22(12):1605-1626, DOI 10.20892/j.issn.2095-3941.2025.0290. 색인 지연이었을 뿐 실재. **미확인 0건.**
 4. **문서 플래그 갱신 가능**: novelty §4⑥ Lancet Oncol 2025(=Shamai, *Lancet Oncol*)·§4⑧ PANProfiler(=PMID 40645910, *Clin Breast Cancer*)는 본 감사에서 실존·서지 확인됨 → `[snippet, unverified]` 해제 가능. (인용연도는 online-first/print 확인 권장.)
 5. (선택) 경미 표기 통일: Sannigrahi 연도 2023→2024(print), GSE285505 데이터 포인터에 Iwane 2025 저자 병기.
