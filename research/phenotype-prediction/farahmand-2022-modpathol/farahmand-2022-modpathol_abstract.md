@@ -11,7 +11,7 @@
 HER2+ 유방암의 표준 치료는 HER2 증폭(ISH 또는 IHC 판정)에 근거한 neoadjuvant 항암 + 항-HER2 병용이다. 그러나 H&E 슬라이드가 훨씬 흔하게 확보되므로, H&E에서 HER2 상태와 항-HER2 치료 반응을 정확히 예측하면 비용을 줄이고 치료 선택 속도를 높일 수 있다. 저자들은 기존 방법보다 정확도를 높인 CNN 분류기를 제시한다.
 
 - **HER2 상태 예측:** 병리팀이 tumor ROI를 수기 주석한 **188개 H&E WSI**(93 HER2+, 95 HER2−)로 학습. slide-level HER2 상태에 대해 **교차검증 AUC 0.90**, **독립 TCGA 테스트셋(187 slides)에서 AUC 0.81**. 슬라이드 내부에서 병리의가 주석한 ROI와 blinded 계산 예측(tumor region / HER2 status)이 강하게 일치.
-- **Trastuzumab 치료 반응 예측:** 이후 trastuzumab 치료를 받은 **HER2+ 환자 187명의 치료 전(pre-treatment) 샘플**(36 responders, 49 non-responders)로 학습. **5-fold 교차검증 AUC 0.80**.
+- **Trastuzumab 치료 반응 예측:** 이후 trastuzumab 치료를 받은 **HER2+ 환자 85명의 치료 전(pre-treatment) 샘플**(36 responders/pCR, 49 non-responders)로 학습. **5-fold 교차검증 AUC 0.80 (95% CI 0.69–0.88)**. ※이전 판의 "187명"은 TCGA HER2-status 테스트 수(187)와 혼동한 오류 — 검증된 반응 코호트 n=85(36+49). deep 분석에서 정정.
 
 ## 우리 논문에서의 역할
 - **역할: head-to-head 벤치마크 (핵심 baseline).** Paper C의 real treatment-outcome anchor — Yale HER2 코호트(TCIA HER2-TUMOR-ROIS)에서 H&E 유도 anti-HER2 axis score가 실제 trastuzumab 반응(pCR)을 층화하는지 — 와 **동일 modality(H&E tumor ROI) · 동일 target(trastuzumab 반응) · 겹치는 코호트 계보**를 공유한다.

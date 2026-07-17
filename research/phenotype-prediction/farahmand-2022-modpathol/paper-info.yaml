@@ -9,6 +9,7 @@ authors:
   - Emily Reisenbichler
   - Kourosh Zarringhalam
 year: 2022
+epub: "2021-09-07"
 venue: "Modern Pathology"
 volume: "35(1)"
 pages: "44-51"
@@ -58,4 +59,24 @@ priority:
 workflow:
   created: "2026-06-10"
   last_updated: "2026-07-17"
-  tier: "abstract"
+  tier: "deep"
+  deep_files:
+    - farahmand-2022-modpathol_core.md
+    - farahmand-2022-modpathol_lens-academic.md
+    - farahmand-2022-modpathol_lens-industry.md
+    - farahmand-2022-modpathol_methodology-brief.md
+  verified_details:  # WebFetch PMC10221954 + TCIA collection
+    backbone: "Inception v3 (transfer + full train)"
+    tiling: "512x512 px @ 20x non-overlapping, invasive-carcinoma ROI only"
+    aggregation: "mean tile probability, 0.5 cutoff"
+    her2_train: "Yale 188 slides (93 HER2+/95 HER2-)"
+    her2_cv_auc: "0.90 (95% CI 0.79-0.97); tile-level 0.77"
+    her2_tcga_test: "187 samples (92 HER2-/95 HER2+); AUC 0.81 (95% CI 0.73-0.84)"
+    trastuzumab_cohort: "Yale 85 pre-treatment (36 pCR responders / 49 non-responders)"
+    trastuzumab_cv_auc: "0.80 (95% CI 0.69-0.88), 5-fold CV"
+    ci_method: "1000-iteration bootstrap"
+    code_data: "available upon request (not publicly deposited)"
+    tcia_deposit: "HER2-TUMOR-ROIS — includes status ROIs + 85 response cohort pCR labels (verified)"
+    unverified:
+      - "trastuzumab model: Inception weight-transfer vs fresh train — not stated [미확인]"
+    corrected: "response cohort n=85 (not 187 — 187 was TCGA HER2-status test count)"
