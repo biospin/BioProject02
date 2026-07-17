@@ -347,8 +347,8 @@ JIRA에서 이슈가 할당되거나 기한이 임박하면 OpenClaw가 Slack으
 OpenClaw 알림 수신 후:
 
 ```bash
-# 1. 서버 접속
-ssh -p 2202 kkkim@61.109.239.220
+# 1. 서버 접속 (2026-07-11부터 직접접속, kkkim 포트=2205)
+ssh -p 2205 kkkim@121.126.38.195
 
 # 2. 브랜치 생성
 git checkout -b feat/BIOP02-7-kkkim-tile-wsi
