@@ -244,6 +244,7 @@ critic_status: pass
 - `❌` Recommending ICI / Pembrolizumab via cell-line transfer
 - `❌` Critic agent setting its own thresholds / controls (anti-self-reference)
 - `❌` raw WSI 전량 영구 보관 — 스트리밍 다운로드 → 임베딩 추출 후 raw `.svs` 삭제(LRU). 영구 보존은 manifest·coords·embeddings·logs (Paper A scope = manifest 기반 **~1010 DX-slide BRCA cohort**, 2026-06-10 Leader 확정)
+  - ⚠️ **예외 (Leader 결정 2026-07-17, 프로젝트 기간 한정): raw 자동 삭제 중단.** LRU 삭제 때문에 cross-cancer raw 2,588장이 전부 사라져 **재다운로드가 필요해졌다**(다중 FM 견고성 작업이 실제로 이 비용을 치름). 논문이 끝날 때까지는 raw를 **보관**하고, 디스크가 부족하면 **자동 삭제가 아니라 정지+사람 판단**(디스크 가드). 신규 파이프라인은 이 정책을 따른다 — 근거·운용 = `experiments/kkkim/20260717_multifm_robustness/RESUME.md` §3. 프로젝트 종료 시 위 원칙(삭제)으로 복귀.
 - `❌` **Paper A/B는 BRCA-only** — Paper A/B에서 다른 암종으로 확장 금지. **단 Paper C는 예외**: 사전등록된 **5개 암종**(유방 anchor + 폐·대장·위·두경부) cross-cancer 결정지도다("현재 스코프" 참조). Paper C가 금지하는 것은 **열린 pan-cancer 아틀라스로의 무경계 확장**(6번째 암종 즉흥 추가 등) — 사전등록 5종 경계를 넘으려면 Leader(kkkim) 승인.
 
 ## Sprint Schedule
