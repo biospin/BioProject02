@@ -118,6 +118,53 @@ ClawBio 스킬은 **replay 메타데이터**를 export한다: **`commands.sh` + 
 ### 4.3 ★ AIPOCH의 "literature authenticity hard rules" = 우리가 오늘 당한 그 문제
 우리는 오늘 **존재하지 않는 논문을 인용**했다가 적대적 검증으로 잡았다. AIPOCH가 이걸 **hard rule**로 강제한다면 §5.1 파일럿의 **직접 비교 대상**이다. 검증 질문: *"AIPOCH의 authenticity rule이 우리 CITATION_AUDIT 5건을 잡아내는가?"* — 이게 곧 저비용·고정보 파일럿이다.
 
+### 4.3.1 ★★ 파일럿 실행 결과 — `medsci-skills/verify-refs` vs **우리 인용오류 5건** (kkkim, 2026-07-17)
+
+§4.5-(c)의 원칙("합격 기준 = 우리가 실제로 당한 실패셋")을 **실제로 집행한 첫 사례**.
+
+**게이트 통과 확인:** LICENSE 실파일 = **MIT**(Aperivue). `verify_refs.py` 1,050줄 **순수 파이썬**,
+`subprocess`/`os.system`/`eval`/`exec` **없음**, 외부통신 = CrossRef/NCBI/OpenAlex뿐(SKILL.md에 공개).
+스킬 설계도 좋다: **"기억으로 검증하지 말고 번들 스크립트를 실행하라"** = 결정론적, audit-only(참고문헌 미수정).
+
+**시험 구성:** 우리 오류 3건(서지성) + 실존 대조군 3건.
+
+| 우리 오류 | 성격 | verify-refs 판정 | 결과 |
+|---|---|---|---|
+| **"Williams 2022" LINCS reversal** | **날조(실존 안 함)** | **`OK`** | ❌ **놓침** |
+| Sharifi-Noghabi **2024**(→실제 2021) | 연도 오류 | `MISMATCH` | ✅ 잡음 |
+| Path2Space **"Kaminski"**(→실제 Shulman) | 저자 오류 | `MISMATCH` | ✅ 잡음 |
+| "cross-dataset Spearman 0.2–0.25" | 초록에 없는 **수치** | — | ⚪ **범위 밖**(서지 아님) |
+| MAKO = "subtype 벤치마크"(→ROR-P) | **스코프** 오프레이밍 | — | ⚪ **범위 밖**(서지 아님) |
+
+**→ 서지성 오류 3건 중 2건 적발. 그러나 가장 위험한 1건(날조)을 놓쳤다.**
+
+#### 왜 놓쳤나 — 도구의 진짜 약점 (코드 확인)
+`verify_refs.py` L557–560: PubMed `esearch`를 **제목으로 조회해 결과가 하나라도 있으면 무조건 `OK`**를 반환한다.
+유사도 가드(`_title_similarity`)는 **OpenAlex 경로에만** 걸려 있고 **PubMed 경로엔 없다**.
+→ 날조된 제목이 느슨하게 매칭된 아무 논문이나 물어오면 `OK`. 실제로 "Williams 2022"는
+`PubMed title match; PMID candidates=41646932,35...`로 **OK** 판정됐다.
+
+**★ 치명적인 이유: 날조 인용은 정의상 DOI가 없다.** 이 도구의 강한 경로(CrossRef DOI 대조)는
+**DOI가 있을 때만** 작동하고, DOI가 없으면 약한 PubMed 제목 경로로 떨어져 `OK`가 된다.
+**즉 "존재하지 않는 논문"이 정확히 이 도구가 가장 약한 지점이다** — 우리가 실제로 당한 그 유형.
+
+#### 내 시험 설계 결함도 있었다 (정직 보고)
+- 1차 시도에서 `.bib`의 DOI가 전부 파싱 안 됐다 → 원인은 도구 정규식 `doi\s*=\s*[{"](.+?)[}"]\s*,`이
+  **끝 쉼표를 요구**하는데 내 DOI가 마지막 필드였던 것. (내 실수지만 **정규식도 취약** — 마지막 필드 DOI는
+  적법한 BibTeX다.) 쉼표 추가 후 CrossRef 경로가 정상 작동.
+- 대조군 3건의 **제목을 내가 축약**해 넣어서 전부 `MISMATCH`가 됐다 → **위양성률은 이 시험으로 판정 불가.**
+  정확한 제목으로 재시험해야 한다(미완).
+
+#### 판단
+- **차용 가치 있음(조건부):** DOI가 있는 인용의 **연도·저자·제목 대조는 실제로 작동**했다(우리 오류 2건 적발).
+  우리에게 없는 기능이고 MIT다.
+- **그러나 이걸로 우리 검증을 대체하면 안 된다.** 우리 적대적 검증은 **"Williams 2022"를 잡았고**
+  이 도구는 **놓쳤다.** 우리 방식이 이 지점에선 더 강하다 — §5.4/§5.6의 *"검증 게이트 설계는 자작 유지"*가
+  실증된 셈.
+- **차용한다면:** DOI 있는 인용의 기계적 대조 = 이 도구, **DOI 없는 인용 = 무조건 사람/적대적 검증**으로
+  라우팅. `submission_safe` 플래그를 **그대로 믿으면 안 된다**(1차 시도에서 날조 인용이 있는데도 `True`였다).
+- **업스트림 기여 후보:** PubMed 경로에도 `_title_similarity` 가드 적용 → MIT라 PR 가능.
+
 ### 4.4 원문에 없던 발견 4건
 
 1. **⚠️ `OpenClaw` 이름 충돌 — 반드시 인지.** 원문 LOW의 "OpenClaw(★2,847) 종합 컬렉션"은 **오픈소스 에이전트 게이트웨이/플랫폼**이다(ClawBio가 "self-hosted OpenClaw gateway"를 지원, [`FreedomIntelligence/OpenClaw-Medical-Skills`]도 존재). **BIOP02 CLAUDE.md의 "OpenClaw bot"(팀원별 JIRA→Slack 알림 봇)과 같은 이름**이라 문서·대화에서 혼동이 확실히 생긴다. 둘의 관계를 확인하고 **명칭을 구분**해야 한다(예: "OpenClaw 플랫폼" vs "OpenClaw 알림봇").
