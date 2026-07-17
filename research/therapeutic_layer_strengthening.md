@@ -42,7 +42,7 @@ TCGA-CDR([Liu *Cell* 2018](https://www.cell.com/cell/fulltext/S0092-8674(18)3022
 
 ## B. 진짜로 독립인 readout 축 (구멍 #2 collinearity 환상 + 공유 H&E 오류)
 
-검증된 사실: **PRISM↔GDSC/CTRP cross-dataset Spearman ≈ 0.2–0.25**([Sharifi-Noghabi 2024, PMC11043358](https://pmc.ncbi.nlm.nih.gov/articles/PMC11043358/)) — 완전 중복은 아니나 **같은 evidence type(cell-line viability)**·method 교란 공유. 3표로 세면 독립성 과장. → viability를 **1축**으로 접고, **기전적으로 다른** 축 추가.
+검증된 사실: **cross-dataset 약물반응 일반화는 낮고 데이터셋·측정지표 선택에 크게 의존**([Sharifi-Noghabi 2021, *Brief Bioinform* 22(6) bbab294](https://doi.org/10.1093/bib/bbab294)) — 완전 중복은 아니나 **같은 evidence type(cell-line viability)**·method 교란 공유. 3표로 세면 독립성 과장. → viability를 **1축**으로 접고, **기전적으로 다른** 축 추가. ⚠️[정정 2026-07-17, `CITATION_CORRECTIONS_2026-07-17.md`]: 종전 인용 "Sharifi-Noghabi 2024·PMC11043358·Spearman 0.2–0.25"는 오류(PMC11043358=타 논문, 0.2–0.25는 원문 미확인). 검증된 cross-domain 값은 Pearson 기반(CTRPv2→gCSI 0.40±0.21·GDSCv1→gCSI 0.26±0.16).
 
 ### 재설계된 축
 
@@ -50,7 +50,7 @@ TCGA-CDR([Liu *Cell* 2018](https://www.cell.com/cell/fulltext/S0092-8674(18)3022
 |---|---|---|---|
 | **축1 — 약물 viability (1축)** | PRISM+GDSC+CTRP 통합; 내부일치 보고하되 **3중계산 금지** | 화합물 하 세포생존 | n/a (기준축) |
 | **축2 — CRISPR 유전자 의존성** | DepMap **Chronos** gene-effect (Achilles) | **인과 loss-of-function** — 약물 없음, *타깃* 필수성 측정 | **YES.** 약물스크린 무관, CRISPR knockout 기반 ([DepMap Chronos](https://depmap.org/portal/achilles/)) |
-| **축3 — 전사체 reversal** | **LINCS L1000 / CMap** connectivity | 후보약물 시그니처가 예측 dysregulated 시그니처를 *역전*시키나? | **YES.** viability 아닌 약물유도 전사섭동; 종양 repurposing 검증됨 ([Williams 2022](https://academic.oup.com/bib/article/24/1/bbac490/6850563)) |
+| **축3 — 전사체 reversal** | **LINCS L1000 / CMap** connectivity | 후보약물 시그니처가 예측 dysregulated 시그니처를 *역전*시키나? | **YES(단 caveat).** viability 아닌 약물유도 전사섭동. 개념 근거=CMap/LINCS(Lamb 2006·Subramanian 2017). ⚠️[정정 2026-07-17]: 종전 "Williams 2022" 인용은 실존 미확인이고 링크(bbac490)는 실제 **Koudijs 2023**으로 **reversal 단독 예측력 과대평가**를 경고 → 오히려 "독립축 수렴 필요"의 근거로만 인용 |
 | **축4 (보조, 독립표 아님)** | OncoKB/CIViC/Open Targets | 큐레이션 임상 actionability | NO — grounding 전용, 수렴 투표서 제외(Part D) |
 
 **비-collinear 근거:** 축2=유전적 섭동(축1=화학적과 다른 modality), 축3=전사체 층(viability와 다른 분자층). 세 축 모두 상위인 약물 = **독립 3선 지지**(1신호 3중계산 아님).
@@ -143,4 +143,4 @@ KB-vs-KB는 여전히 knowledge-recovery. **진짜 비순환 신호 = Part A 실
 - [`../agents/data/split_policy_v0.md`](../agents/data/split_policy_v0.md) — Yale/BCNB/TransNEO = 외부 test, **never-train**·site-stratified 선언 필요
 
 ## Sources
-Sammut Nature 601:623 (2022) · TCIA HER2-TUMOR-ROIS(Yale, open, trastuzumab pCR)/Farahmand PMC10221954 · Huang npj PO 7:14 (2023) IMPRESS · BCNB · Post-NAT-BRCA · HEROHE · ACROBAT · BreastPathQ · I-SPY2(MRI only) · Dawood npj PO (2024, scoop) · DepMap/Chronos · LINCS L1000 reversion(Williams 2022) · PRISM/GDSC/CTRP r~0.2–0.25 (PMC11043358) · Liu Cell (2018) TCGA-CDR PFI/DFI
+Sammut Nature 601:623 (2022) · TCIA HER2-TUMOR-ROIS(Yale, open, trastuzumab pCR)/Farahmand PMC10221954 · Huang npj PO 7:14 (2023) IMPRESS · BCNB · Post-NAT-BRCA · HEROHE · ACROBAT · BreastPathQ · I-SPY2(MRI only) · Dawood npj PO (2024, scoop) · DepMap/Chronos · LINCS L1000 reversion(Lamb 2006·Subramanian 2017; reversal caveat=Koudijs 2023 bbac490) · PRISM/GDSC/CTRP cross-dataset(Sharifi-Noghabi 2021 bbab294) · Liu Cell (2018) TCGA-CDR PFI/DFI  [인용정정 2026-07-17: CITATION_CORRECTIONS 참조]

@@ -16,5 +16,8 @@
 - #4·#5는 **C flagship 포지셔닝**에 직접 인용될 논문이라 우선 정정.
 - Koudijs 2023은 오히려 **"reversal 단독은 generic 항증식 신호 → 독립축 수렴 필요"**의 근거로 인용 가치 있음(에이전트 제안) — B 되살릴 때 검토.
 
-## 정정 안 한 이유
-자동 수정하지 않고 기록만 함 — 원 문서(therapeutic_layer_strengthening 등)는 설계 맥락이 있어 Leader 확인 후 정정하는 게 안전. "말이 아닌 행동" 원칙상 발견 즉시 기록은 완료.
+## 정정 상태 (2026-07-17, Leader 승인 후 적용)
+- ✅ **#1·#2 정정 완료** — `therapeutic_layer_strengthening.md` §B(L45 Sharifi-Noghabi 2021 bbab294로 정정+0.2–0.25 철회, L53 Williams→Lamb2006·Subramanian2017+Koudijs 2023 caveat) + Sources(L146).
+- ✅ **#3 정정 완료** — `2026-07-12_CRC-LUNG-ST-scoop-and-data.md` Path2Space "Kaminski"→"Shulman(교신 Ruppin), Cell 189, 10.1016/j.cell.2026.04.023".
+- ✅ **#4/#5 확인** — MAKO 스코프는 `2026-07-10_novelty-scoop-analysis.md`에 **이미 "ROR-P"로 정확히** 기술됨(초기 오프레이밍은 제안 단계 한정). 확정 서지(Kaczmarzyk, npj Dig Med 9:149, 10.1038/s41746-025-02334-2) 박음.
+- ⬜ **후속 권고(미완):** 에이전트 경고대로 포지셔닝 문서 전반의 나머지 인용(예 Farahmand PMC10221954 등) 일괄 재검증 — 심층분석에서 서지 확정되는 대로 반영.

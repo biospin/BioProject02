@@ -24,7 +24,7 @@
 
 | # | 선행 | 인용 | 무엇을 했나 | 우리와 같은 점 / **다른 점** |
 |---|---|---|---|---|
-| S1 | **Path2Space** (유방 전용) | Kaminski et al., *Cell* 2026 (S0092-8674(26)00458-7); bioRxiv 2024.10.16.618609 | H&E→예측ST→SPAND 공간지표→trastuzumab/chemo 반응 **advocacy** | 같음: H&E×ST×치료축, ~976 TCGA. **다름: (1) 유방 전용 — 대장/범암종 버전 미존재(2026-07 확인). (2) 방향 반대 = 예측지표 옹호 vs 우리는 치환실패 지점 감사.** 유방에서 이미 인접·미스쿱 확정(D9). |
+| S1 | **Path2Space** (유방 전용) | Shulman et al. (교신 Ruppin), *Cell* 189 (2026), 10.1016/j.cell.2026.04.023; bioRxiv 2024.10.16.618609  [인용정정 2026-07-17: 종전 "Kaminski" 오기] | H&E→예측ST→SPAND 공간지표→trastuzumab/chemo 반응 **advocacy** | 같음: H&E×ST×치료축, ~976 TCGA. **다름: (1) 유방 전용 — 대장/범암종 버전 미존재(2026-07 확인). (2) 방향 반대 = 예측지표 옹호 vs 우리는 치환실패 지점 감사.** 유방에서 이미 인접·미스쿱 확정(D9). |
 | S2 | 대장 CMS 공간 이질성 | Valdeolivas et al., *npj Precis Oncol* 2024, 8:10 (10.1038/s41698-023-00488-4) | 7환자 14 Visium으로 종양 내 CMS 이질성·다초점성 매핑 | 같음: 대장 ST에서 분자아형 공간분포. **다름: 순수 이질성 기술(descriptive) — 치환비용/결정손실·H&E 형태학적 상관물-부재 대비 없음.** 우리 데이터 substrate이자 인접선행. |
 | S3 | KRAS-mut 면역억제 공간 niche | Yang, Gu, Miao et al., *J Immunother Cancer* 2025, 13:e013763 (10.1136/jitc-2025-013763; PMID 41475845) | 2 KRAS-mut + 2 WT Visium — KRAS-mut 종양의 면역억제 spatial niche | 같음: **RAS mut/WT ST 페어**(우리 RAS축에 최근접). **다름: 면역微환경 기술 — 형태학적 상관물-부재 decoupling·치환비용 프레이밍 없음.** 최근접 RAS-pair substrate 겸 인접선행. |
 | S4 | MMRd/MMRp 공간 면역 hub | Pelka et al., *Cell* 2021, 184:4734 (S0092-8674(21)00945-4; PMID 34450029) | 62환자(28 MMRp/34 MMRd) — MMRd-enriched 면역 hub, 종양-내 활성T·chemokine | 같음: **MSI(=MMRd) 면역 시그니처의 공간 조직화**(우리 MSI-가시 축의 생물학 앵커). **다름: 주로 scRNA-seq(371k cells); 형태 상관물 공존/치환비용 렌즈 없음.** ⚠️ H&E-정합 Visium 여부 미확인(§2 주). |
