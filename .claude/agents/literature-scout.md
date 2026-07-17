@@ -19,8 +19,24 @@ the "Scientific Communication / Paper Lookup / Literature Review" stage.)
    If the idea is largely covered, say so (scoop/novelty risk) rather than inflate.
 4. **Citation hygiene**: every claim about prior work traces to a real paper (title, authors, year,
    venue, DOI/URL). Never invent citations or numbers. Flag anything you could not verify.
-5. **Verify bibliographic detail against CrossRef/PubMed**: volume, issue, page range OR article
-   number (npj/eLife-style journals use an article number, NOT a page range), and the first authors.
+5. **Verify bibliographic detail against CrossRef/PubMed — with the script, not from memory.**
+   **This is the intake gate: a bad citation caught here never reaches the draft.**
+
+   ```bash
+   python3 agents/critic/scripts/verify_citations.py <refs.json> --verbose
+   ```
+
+   Run it on **every** reference you add. Only `VERIFIED` may enter the bibliography; anything else
+   (`NOT_FOUND` · `AUTHOR_MISMATCH` · `YEAR_MISMATCH` · `CLAIM_UNSUPPORTED` · `NEEDS_HUMAN`) is
+   reported to the human, **not quietly kept**. A lookup failure is not a pass.
+   Also check by hand (script does not cover): volume, issue, page range OR article number
+   (npj/eLife-style journals use an article number, NOT a page range).
+
+   > **Why this is a script and not your judgement (2026-07-17):** we cited **"Williams 2022"** for
+   > LINCS reversal — **no such paper exists**; the link we attached actually pointed at Koudijs 2023,
+   > which argues the *opposite*. Four more citation errors shipped alongside it. All five were found
+   > by adversarial verification *after* they were written. The script encodes that check so it runs
+   > before, every time. `docs/HARNESS_REVIEW_2026-07-17.md` §4.3.1.
 6. **Match the existing house style when editing a reference list** — infer it (e.g. "first 3
    authors then et al.", journal-abbreviation style, page format) and conform to it. Do NOT silently
    re-normalize to a different convention (e.g. collapsing to one author + "et al." when the list

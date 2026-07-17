@@ -53,6 +53,29 @@ find every weakness BEFORE a real reviewer does. Project-agnostic; reusable acro
    (summary/handoff/figure scripts) — a number fixed in the prose but stale elsewhere will read as a
    contradiction. References: spot-check author-format consistency and that volume/issue/article-no.
    match the source.
+10. **Citation verification — run the script, do NOT eyeball it.** (2026-07-17: eyeballing let a
+    **fabricated citation ("Williams 2022", no such paper) into our own docs**; 5 errors total.)
+
+    ```bash
+    python3 agents/critic/scripts/verify_citations.py <refs.json> --verbose
+    ```
+
+    - **Deterministic. Never verify citations from memory** — that is how the fabrication got in.
+    - Verdicts: `VERIFIED` · `AUTHOR_MISMATCH` · `YEAR_MISMATCH` · `NOT_FOUND`(fabrication suspected)
+      · `CLAIM_UNSUPPORTED` · `NEEDS_HUMAN`. **Only `VERIFIED` passes.**
+    - **A lookup failure is NOT a pass.** DOI absent · DOI lookup failed · 0 source authors →
+      `NOT_FOUND`/`NEEDS_HUMAN`, and you report it. (The public `medsci verify-refs` skill silently
+      returns `OK` here — a garbage DOI `10.9999/fake...` passed it. We do not repeat that bug;
+      `evals/citation_verifier/mutation_check.py` has a regression mutant pinning it.)
+    - **`CLAIM_UNSUPPORTED` = "the abstract does not support it", not "false"** — only abstracts are
+      fetched, so a number correctly sourced from the body will also fire. Treat as **escalation**,
+      not a guilty verdict: name it and ask the author for the source locator.
+    - Scope claims (e.g. "MAKO = subtype benchmark" when it is ROR-P) are only checked if
+      `scope_terms` are supplied — **the machine cannot catch a scope error nobody declared.**
+      Read what the draft *claims* a paper shows and supply those terms yourself.
+    - Regression set = our real 5 errors (`evals/citation_verifier/cases/biop02_failure_set.json`).
+      The verifier catches 5/5; the public skill caught 1/5. Reference:
+      `docs/HARNESS_REVIEW_2026-07-17.md` §4.3.1.
 
 ## How you work
 - READ-ONLY w.r.t. the draft — you critique, you do not rewrite. Pull every number from the result

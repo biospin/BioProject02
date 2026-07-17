@@ -344,6 +344,7 @@ JIRA (BIOP02)
 | "차별화 각도 / 뭘 새로 해야 하나" | `novelty-strategist` |
 | "가설·실험설계·분석계획 점검·감사" | `research-methodologist` |
 | "제출 전 적대적 자체검토 / 그림 QA" | `paper-critic` (+ `agents/critic/` 체크리스트 병행) |
+| "인용 검증 / 참고문헌 확인 / 이 논문 진짜 있나" | `paper-critic` (제출 게이트) 또는 `literature-scout` (문헌 추가 시 intake). **둘 다 `agents/critic/scripts/verify_citations.py`를 실행한다 — 눈으로 보지 않는다** |
 | "정식 venue 리뷰 시뮬레이션" | `reviewer` (전역, 선택) |
 | "발표자료/슬라이드/발제" | `presenter` |
 | "로고·아이콘·브랜드·그림 미감" | `design` |
