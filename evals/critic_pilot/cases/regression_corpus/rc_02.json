@@ -1,0 +1,12 @@
+{
+  "case_id": "RC-02",
+  "title": "same-line self-reference under `set -u`: local coh=\"$1\" man=\"...${coh}...\"",
+  "date": "2026-07-17",
+  "real_incident": true,
+  "layer": "regression_corpus",
+  "classification": "out_of_eval_scope",
+  "class_reason": "Shell defect. `local a=... b=${a}` on one line does not see `a` yet; under set -u this raises 'coh: unbound variable'. Download succeeded, embedding died silently afterwards — only visible in logs. Not reviewable by a checklist scorer.",
+  "failure_mode": "silent_death_after_apparent_success",
+  "belongs_to": "pipeline smoke test (not Inspect Critic eval)",
+  "proposed_guard": "Smoke test: run each stage script with `bash -n` + a 1-slide end-to-end run that asserts the embedding .npy exists and is non-empty; split multi-assign local lines."
+}

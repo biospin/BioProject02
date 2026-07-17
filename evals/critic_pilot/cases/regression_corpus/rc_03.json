@@ -1,0 +1,12 @@
+{
+  "case_id": "RC-03",
+  "title": "conda not on PATH in a detached shell -> embedding step fails",
+  "date": "2026-07-17",
+  "real_incident": true,
+  "layer": "regression_corpus",
+  "classification": "out_of_eval_scope",
+  "class_reason": "Environment/infra defect. Detached (non-login) shells do not source conda init, so `conda activate` is unavailable. Resolution: absolute interpreter path /opt/envs/spatialpatho/bin/python. Nothing in the 7-point checklist covers env wiring.",
+  "failure_mode": "environment",
+  "belongs_to": "pipeline smoke test (not Inspect Critic eval)",
+  "proposed_guard": "Smoke test: assert `/opt/envs/spatialpatho/bin/python -c 'import torch, openslide'` returns 0 from a detached shell; forbid bare `conda activate` in batch scripts."
+}

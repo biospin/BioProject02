@@ -1,0 +1,40 @@
+{
+  "auc": 0.842,
+  "auprc": 0.881,
+  "auc_ci95": [
+    0.801,
+    0.879
+  ],
+  "balanced_accuracy": 0.771,
+  "n_train": 707,
+  "n_val": 151,
+  "model": "mlp",
+  "embedding_model": "uni_v1",
+  "commit_hash": "a1b2c3d4e5f",
+  "baselines": {
+    "random": {
+      "auc": 0.502,
+      "auprc": 0.712,
+      "auc_ci95": [
+        0.451,
+        0.553
+      ]
+    },
+    "subtype_only": {
+      "auc": 0.744,
+      "auprc": 0.803,
+      "auc_ci95": [
+        0.699,
+        0.789
+      ]
+    },
+    "pixel_mean": {
+      "auc": 0.571,
+      "auprc": 0.742,
+      "auc_ci95": [
+        0.522,
+        0.62
+      ]
+    }
+  }
+}

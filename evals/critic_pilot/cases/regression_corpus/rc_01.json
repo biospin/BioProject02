@@ -1,0 +1,12 @@
+{
+  "case_id": "RC-01",
+  "title": "csv.writer default \\r\\n -> filenames containing carriage return",
+  "date": "2026-07-17",
+  "real_incident": true,
+  "layer": "regression_corpus",
+  "classification": "out_of_eval_scope",
+  "class_reason": "Code/pipeline defect. Python csv.writer emits \\r\\n; bash `read` then yields a filename with a trailing \\r, and openslide fails with 'Unsupported or missing image file'. There is no critic_report artifact at this stage — the Critic checklist reviews reported experiment results, not shell I/O.",
+  "failure_mode": "silent_failure",
+  "belongs_to": "pipeline smoke test (not Inspect Critic eval)",
+  "proposed_guard": "Smoke test: assert no filename in the manifest matches r'[\\r\\n]'; write CSVs with newline='' and/or strip \\r on read."
+}
