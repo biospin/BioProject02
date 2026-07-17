@@ -1,21 +1,82 @@
 document_type: paper
-title: "Deep learning trained on H&E tumor ROIs predicts HER2 status and trastuzumab treatment response"
-authors: "Farahmand S et al."
+title: "Deep learning trained on hematoxylin and eosin tumor region of interest predicts HER2 status and trastuzumab treatment response in HER2+ breast cancer"
+authors:
+  - Saman Farahmand
+  - Aileen I. Fernandez
+  - Fahad Shabbir Ahmed
+  - David L. Rimm
+  - Jeffrey H. Chuang
+  - Emily Reisenbichler
+  - Kourosh Zarringhalam
 year: 2022
+epub: "2021-09-07"
 venue: "Modern Pathology"
+volume: "35(1)"
+pages: "44-51"
 doi: "10.1038/s41379-021-00911-w"
+keywords:
+  - computational pathology
+  - HER2 status prediction
+  - trastuzumab treatment response
+  - H&E tumor ROI
+  - convolutional neural network
+  - breast cancer
+  - TCGA-BRCA
 topics: [PHENO]
 citation:
   key: farahmand-2022-modpathol
   short_id: farahmand-2022
 sources:
   paper:
-    url: "https://pmc.ncbi.nlm.nih.gov/articles/PMC10221954/"
+    url: "https://www.nature.com/articles/s41379-021-00911-w"
+    mirror: "https://pmc.ncbi.nlm.nih.gov/articles/PMC10221954/"
+    doi: "10.1038/s41379-021-00911-w"
+    status: verified (WebFetch via PMC10221954 + Europe PMC)
+  data:
+    - "TCGA-BRCA (independent HER2-status test set, 187 slides)"
+    - "TCIA HER2 tumor ROIs (Yale) — trastuzumab response cohort lineage"
 categorization:
+  domain:
+    - computational pathology
+    - HER2 / anti-HER2 therapy response
+  use_case:
+    - predict HER2 status from H&E tumor ROI (CV AUC 0.90; TCGA test AUC 0.81)
+    - predict trastuzumab response from pre-treatment H&E (5-fold CV AUC 0.80)
   importance:
-    level: 중
-    perspective: "HER2 상태 + trastuzumab 반응 예측(AUC 0.80). biomarker→치료결과 결합 — BIOP02 치료가설 목표와 부분 겹침(SCOOP-THERAPY). 차이=cell-line 전이·hypothesis-only·다약물 랭킹."
+    level: 상
+    perspective: >
+      Head-to-head benchmark for the BIOP02 Paper C treatment-outcome anchor.
+      Same modality (H&E tumor ROI), same target (trastuzumab / pCR response),
+      overlapping Yale HER2 cohort lineage (TCIA HER2-TUMOR-ROIS). Their
+      trastuzumab-response 5-fold CV AUC = 0.80 is the exact bar our H&E-derived
+      anti-HER2 axis score must meet or beat.
+priority:
+  level: P0
+  reason: >
+    Defines the AUC bar (~0.80) and the direct comparison for our real
+    treatment-outcome anchor. Our differentiation: interpretable axis score
+    (not black-box CNN), cross-cancer substitution framing, prospective anchor.
 workflow:
   created: "2026-06-10"
-  last_updated: "2026-06-10"
-  tier: "summary"
+  last_updated: "2026-07-17"
+  tier: "deep"
+  deep_files:
+    - farahmand-2022-modpathol_core.md
+    - farahmand-2022-modpathol_lens-academic.md
+    - farahmand-2022-modpathol_lens-industry.md
+    - farahmand-2022-modpathol_methodology-brief.md
+  verified_details:  # WebFetch PMC10221954 + TCIA collection
+    backbone: "Inception v3 (transfer + full train)"
+    tiling: "512x512 px @ 20x non-overlapping, invasive-carcinoma ROI only"
+    aggregation: "mean tile probability, 0.5 cutoff"
+    her2_train: "Yale 188 slides (93 HER2+/95 HER2-)"
+    her2_cv_auc: "0.90 (95% CI 0.79-0.97); tile-level 0.77"
+    her2_tcga_test: "187 samples (92 HER2-/95 HER2+); AUC 0.81 (95% CI 0.73-0.84)"
+    trastuzumab_cohort: "Yale 85 pre-treatment (36 pCR responders / 49 non-responders)"
+    trastuzumab_cv_auc: "0.80 (95% CI 0.69-0.88), 5-fold CV"
+    ci_method: "1000-iteration bootstrap"
+    code_data: "available upon request (not publicly deposited)"
+    tcia_deposit: "HER2-TUMOR-ROIS — includes status ROIs + 85 response cohort pCR labels (verified)"
+    unverified:
+      - "trastuzumab model: Inception weight-transfer vs fresh train — not stated [미확인]"
+    corrected: "response cohort n=85 (not 187 — 187 was TCGA HER2-status test count)"
