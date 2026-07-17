@@ -83,6 +83,33 @@
 
 *(star 수치 자체는 검증하지 않았다 — 실존·내용만 확인. 관심도는 채택 근거가 아니므로 굳이 확인할 가치가 낮다.)*
 
+### 4.1.1 라이선스 게이트 확인 결과 (kkkim, 2026-07-17) — §4.4-4의 실행
+
+우리는 학술 비상업(출판 전용)으로 운용 중이라 **채택 전 라이선스 확인이 필수**다. 확인 결과:
+
+| 후보 | 라이선스 | 설치 | 비고 |
+|---|---|---|---|
+| **AIPOCH** medical-research-skills | ✅ **MIT** | — | 무료·유료계정 불요. 단 개별 스킬이 외부 서비스(PubMed·ChEMBL·DrugBank) 호출 시 각 자격증명 필요 |
+| **ClawBio** | ✅ **MIT** | `pip install clawbio` · `conda install -c bioconda clawbio` · **`/plugin marketplace add ClawBio/ClawBio`** | local-first |
+| **Aperivue** medsci-skills | ✅ **MIT** (README 명시) | — | citation check 특화 |
+| **Anthropic** life-sciences | ⏳ **미확인** | `/plugin marketplace add` (marketplace.json) | 공식 |
+
+**→ MIT 3종은 라이선스 게이트 통과.** 우리 FM 라이선스(CC-BY-NC-ND)보다 오히려 자유롭다.
+**⚠️ 남은 게이트:** SKILL.md·스크립트 **내용 확인**(실행 코드를 읽지 않고 설치 금지) · 외부 전송 여부.
+
+### 4.1.2 ★ ClawBio 재현성 계약 — 실측 확인
+
+ClawBio 스킬은 `reproducibility/` 디렉토리를 emit한다:
+
+| 파일 | 내용 | 우리에게 없는 것? |
+|---|---|---|
+| `commands.sh` | 재실행 명령 | ❌ **없음** |
+| `environment.yml` | conda 환경 스냅샷 | ❌ **없음** |
+| `checksums.sha256` | 산출물 SHA-256 | ❌ **없음** |
+| `runtime-lock.json` | 추가 lock(선택) | ❌ 없음 |
+
+우리 `experiments/<user>/<date>/` 5종 규약은 `commit_hash`만 있고 **환경·명령·체크섬이 전부 없다** → 재현이 사람 기억에 의존. **이 4파일 계약을 우리 규약에 추가하는 게 §5.6 전체에서 가장 값싸고 확실한 이득.** (문서 주의: "일부 replay는 원본 외부 입력·도구가 로컬에 있어야 함" — 우리 WSI raw 보관 정책과 연결됨.)
+
 ### 4.2 ★ ClawBio에서 **지금 바로 차용할 구체 계약**
 ClawBio 스킬은 **replay 메타데이터**를 export한다: **`commands.sh` + `environment.yml` + `SHA-256` 체크섬** → **"원래 에이전트 세션 없이 재검증 가능"**.
 
