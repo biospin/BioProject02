@@ -2,25 +2,26 @@
   "assert": "patient-overlap==0 (case_id) + TSS site-disjoint",
   "by": "kkkim",
   "ticket": "BIOP02-96 #1 leakage guard",
+  "note": "split.csv는 case(환자) 단위. n_cases=split.csv 행 수(슬라이드 아님). 임베딩 슬라이드 수는 별개(embedding_manifest_*.csv 참조).",
   "per_cancer": {
     "LUNG_NSCLC": {
-      "n_slides": 1050,
-      "n_patients": 1050,
+      "n_cases": 1050,
+      "n_unique_cases": 1050,
       "splits": {
-        "test": 157,
         "train": 735,
-        "val": 158
+        "val": 158,
+        "test": 157
       },
       "pairs": {
-        "test∩train": {
-          "patient": 0,
-          "tss": 0
-        },
-        "test∩val": {
-          "patient": 0,
-          "tss": 0
-        },
         "train∩val": {
+          "patient": 0,
+          "tss": 0
+        },
+        "train∩test": {
+          "patient": 0,
+          "tss": 0
+        },
+        "val∩test": {
           "patient": 0,
           "tss": 0
         }
@@ -31,23 +32,23 @@
       "site_disjoint": true
     },
     "COLORECTAL": {
-      "n_slides": 534,
-      "n_patients": 534,
+      "n_cases": 534,
+      "n_unique_cases": 534,
       "splits": {
-        "test": 80,
         "train": 374,
-        "val": 80
+        "val": 80,
+        "test": 80
       },
       "pairs": {
-        "test∩train": {
-          "patient": 0,
-          "tss": 0
-        },
-        "test∩val": {
-          "patient": 0,
-          "tss": 0
-        },
         "train∩val": {
+          "patient": 0,
+          "tss": 0
+        },
+        "train∩test": {
+          "patient": 0,
+          "tss": 0
+        },
+        "val∩test": {
           "patient": 0,
           "tss": 0
         }
@@ -58,23 +59,23 @@
       "site_disjoint": true
     },
     "HEADNECK_HNSC": {
-      "n_slides": 523,
-      "n_patients": 523,
+      "n_cases": 523,
+      "n_unique_cases": 523,
       "splits": {
-        "test": 78,
         "train": 366,
-        "val": 79
+        "val": 79,
+        "test": 78
       },
       "pairs": {
-        "test∩train": {
-          "patient": 0,
-          "tss": 0
-        },
-        "test∩val": {
-          "patient": 0,
-          "tss": 0
-        },
         "train∩val": {
+          "patient": 0,
+          "tss": 0
+        },
+        "train∩test": {
+          "patient": 0,
+          "tss": 0
+        },
+        "val∩test": {
           "patient": 0,
           "tss": 0
         }
@@ -85,23 +86,23 @@
       "site_disjoint": true
     },
     "GASTRIC_STAD": {
-      "n_slides": 440,
-      "n_patients": 440,
+      "n_cases": 440,
+      "n_unique_cases": 440,
       "splits": {
-        "test": 66,
         "train": 308,
-        "val": 66
+        "val": 66,
+        "test": 66
       },
       "pairs": {
-        "test∩train": {
-          "patient": 0,
-          "tss": 0
-        },
-        "test∩val": {
-          "patient": 0,
-          "tss": 0
-        },
         "train∩val": {
+          "patient": 0,
+          "tss": 0
+        },
+        "train∩test": {
+          "patient": 0,
+          "tss": 0
+        },
+        "val∩test": {
           "patient": 0,
           "tss": 0
         }
