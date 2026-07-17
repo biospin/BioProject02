@@ -1,0 +1,55 @@
+{
+  "figure": "Fig 3 (research-plan §9) — 축별 cost + headline 대비",
+  "jira": "BIOP02-91 / FIGURES_INDEX",
+  "relation_to_fig2": "Fig2=메커니즘(confusion×distance, 왜), Fig3=크기·불확실성(얼마)",
+  "sources": [
+    "patient_routing_cost.json (PAM50 routing)",
+    "patient_routing_cost_receptor.json (receptor routing, primary)"
+  ],
+  "claim_level": "hypothesis_only",
+  "critic_status": "pending",
+  "per_axis_cost": {
+    "receptor": {
+      "antiHER2": 0.416,
+      "endocrine": 0.035,
+      "chemo": 0.51
+    },
+    "pam50": {
+      "antiHER2": 0.718,
+      "endocrine": 0.378,
+      "chemo": 0.105
+    }
+  },
+  "misroute_pct": {
+    "receptor": {
+      "antiHER2": 100.0,
+      "endocrine": 5.0,
+      "chemo": 73.4
+    },
+    "pam50": {
+      "antiHER2": 100.0,
+      "endocrine": 51.4,
+      "chemo": 13.8
+    }
+  },
+  "headline_contrast": {
+    "receptor": {
+      "value": 0.381,
+      "ci95": [
+        0.348,
+        0.42
+      ],
+      "excludes_zero": true
+    },
+    "pam50": {
+      "value": 0.34,
+      "ci95": [
+        0.276,
+        0.402
+      ],
+      "excludes_zero": true
+    }
+  },
+  "honest_reading": "robust 결론=HER2축(양 라우팅 100% mis-route, 분자검사 필수). endocrine/chemo per-axis cost는 라우팅 스킴·외부 calibration 의존(PAM50 51%↔receptor 5% / PAM50 14%↔receptor 73%)이라 안전 주장 근거 아님. 헤드라인 contrast(antiHER2-endocrine)만 양 라우팅서 robust(0.340/0.381, CI 0배제).",
+  "note": "raw per-axis cost는 라우팅 스킴 의존(endocrine/chemo 반전) — 안전 주장 근거 아님. robust = antiHER2 misroute 1.00(스킴 불문) + headline contrast CI 0 배제."
+}
