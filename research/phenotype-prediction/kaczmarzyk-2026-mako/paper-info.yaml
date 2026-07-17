@@ -1,0 +1,61 @@
+document_type: paper
+title: "Towards interpretable prediction of recurrence risk in breast cancer using pathology foundation models"
+authors:
+  - Jakub R. Kaczmarzyk
+  - Sarah C. Van Alsten
+  - Alyssa J. Cozzo
+  - Rajarsi Gupta
+  - Peter K. Koo
+  - Melissa A. Troester
+  - Katherine A. Hoadley
+  - Joel H. Saltz
+year: 2026
+venue: "npj Digital Medicine"
+doi: "10.1038/s41746-025-02334-2"
+keywords:
+  - computational pathology
+  - pathology foundation models
+  - attention-based multiple instance learning (ABMIL)
+  - PAM50 ROR-P (risk of recurrence)
+  - recurrence risk prediction
+  - H&E whole-slide imaging
+  - Carolina Breast Cancer Study (CBCS)
+  - TCGA-BRCA external validation
+  - interpretability
+version:
+  type: published (Version of Record)
+  peer_reviewed: true
+  note: >
+    npj Digital Medicine 9:149 (2026). Abstract + numbers verified via PMC12895011
+    (open access) and arXiv 2508.12025. Framework named MAKO (Mammary Analysis
+    for Knowledge of Outcomes).
+citation:
+  key: kaczmarzyk-2026-mako
+  short_id: MAKO
+topics:
+  - FM × MIL breast benchmark (12 FM + 2 non-pathology baselines)
+  - H&E → transcriptomic-assay (ROR-P) prediction
+  - subtype/recurrence downstream reuse (prognosis)
+sources:
+  paper:
+    url: "https://www.nature.com/articles/s41746-025-02334-2"
+    doi: "10.1038/s41746-025-02334-2"
+    status: verified (WebFetch via PMC12895011)
+  preprint:
+    - "https://arxiv.org/abs/2508.12025"
+importance:
+  level: 상
+  perspective: >
+    Prior FM benchmark on breast H&E. Occupies the "free-reuse prognosis/ROR-P"
+    slot we had considered (12 FM × ABMIL, CBCS train → TCGA-BRCA external), so it
+    scoops the descriptive FM-benchmark angle and the recurrence-risk reuse angle.
+    Evidence that H&E→molecular-marker/prognosis prediction is saturated.
+priority:
+  level: P0
+  reason: >
+    Cite as the standing FM benchmark demonstrating prediction saturation; do NOT
+    re-run a plain FM×MIL breast benchmark. Our contribution is the substitution-cost
+    decision frame, not another accuracy leaderboard.
+workflow:
+  created: "2026-07-17"
+  last_updated: "2026-07-17"

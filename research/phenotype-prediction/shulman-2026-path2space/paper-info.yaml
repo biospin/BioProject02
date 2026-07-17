@@ -1,0 +1,91 @@
+document_type: paper
+title: "AI-predicted spatial transcriptomics unlocks breast cancer biomarkers from pathology"
+model_name: "Path2Space"
+authors:  # Crossref 확정 (34인 전체)
+  - Eldad D. Shulman
+  - Emma M. Campagnolo
+  - Roshan Lodha
+  - Youngmin Chung
+  - Amos Stemmer
+  - Thomas Cantore
+  - Beibei Ru
+  - Tian-Gen Chang
+  - Sumona Biswas
+  - Saugato Rahman Dhruba
+  - Sumeet Patiyal
+  - Sushant Patkar
+  - Andrew Wang
+  - Ranjan K. Barman
+  - Chuhan Wang
+  - Rohit Paul
+  - Sarath Chandra Kalisetty
+  - Tom Hu
+  - MacLean P. Nasrallah
+  - Ellis Patrick
+  - Jean Yang
+  - Yuan Yuan
+  - Karine Sargsyan
+  - Amy Plotkin
+  - Padma Sheila Rajagopal
+  - Stephen-John Sammut
+  - Stanley Lipkowitz
+  - Peng Jiang
+  - Carlos Caldas
+  - Simon R. V. Knott
+  - Kenneth Aldape
+  - Joo Sang Lee
+  - Danh-Tai Hoang
+  - Eytan Ruppin  # corresponding (last author)
+year: 2026
+venue: "Cell (vol 189)"
+doi: "10.1016/j.cell.2026.04.023"
+keywords:
+  - H&E → spatial transcriptomics prediction/reconstruction
+  - computational pathology
+  - spatial gene expression
+  - tumor microenvironment (TME)
+  - cell-type deconvolution
+  - breast cancer biomarker discovery
+  - chemotherapy / trastuzumab response
+  - TCGA-BRCA
+version:
+  type: published (Version of Record)
+  peer_reviewed: true
+  note: >
+    Cell vol 189 (2026); article S0092-8674(26)00458-7; PMID 42105763. 저자명단·서지
+    = Crossref 확정(34인). Abstract/numbers via Cell abstract page + WebSearch;
+    bioRxiv preprint 2024.10.16.618609.
+citation:
+  key: shulman-2026-path2space
+  short_id: Path2Space
+topics:
+  - H&E → predicted spatial transcriptomics (OPPOSITE direction to us)
+  - spatial-biomarker advocacy (SPAND) for treatment response
+  - low-cost TME landscape at scale
+sources:
+  paper:
+    url: "https://www.cell.com/cell/abstract/S0092-8674(26)00458-7"
+    doi: "10.1016/j.cell.2026.04.023"
+    status: verified (Cell abstract + WebSearch; internal cross-ref)
+  preprint:
+    - "https://www.biorxiv.org/content/10.1101/2024.10.16.618609"
+  code:
+    - "Zenodo records 20171390 / 14729337 (비상업 학술 라이선스)"
+    - "GitHub: path2space-extended, path2space-companion"
+importance:
+  level: 상
+  perspective: >
+    Closest "H&E × molecular × treatment-axis" prior work on ~976 TCGA-BRCA, BUT
+    OPPOSITE DIRECTION: Path2Space ADVOCATES predicted-ST-derived spatial biomarkers
+    (SPAND) as good/better than measured RNA/FISH for response prediction. We AUDIT
+    the decision loss of substituting H&E for molecular tests. Contrast, not scoop.
+priority:
+  level: P0
+  reason: >
+    Must be cited as nearest neighbour and explicitly differentiated by direction
+    (their advocacy of prediction vs our audit of substitution failure points).
+    Reconstruction route (H&E→ST→marker) is distinct from our direct route
+    (H&E→phenotype→therapy, no ST).
+workflow:
+  created: "2026-07-17"
+  last_updated: "2026-07-17"

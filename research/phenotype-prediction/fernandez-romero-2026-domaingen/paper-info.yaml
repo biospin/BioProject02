@@ -1,0 +1,60 @@
+document_type: paper
+title: "Domain generalisation challenges in breast cancer molecular classification using foundation models: a cross-cohort exploratory study"
+authors:
+  - Jesus Fernandez-Romero
+  - Pablo Ramos-Berciano
+  - Manuel Perez-Perez
+  - David Benavides
+  - Antonio Robles-Frias
+  - Jorge Garcia-Gutierrez
+  - Laura Macias-Garcia
+year: 2026
+venue: "Medical & Biological Engineering & Computing"
+doi: "10.1007/s11517-026-03590-4"
+keywords:
+  - computational pathology
+  - breast cancer molecular subtyping
+  - PAM50
+  - IHC receptor status (ER/PR/HER2)
+  - pathology foundation models
+  - multiple instance learning
+  - domain generalisation / external validation
+  - TCGA-BRCA
+  - CPTAC-BRCA
+version:
+  type: published
+  peer_reviewed: true
+  note: >
+    저자명단·서지 = Crossref 확정(vol 64). Abstract 본문 = WebSearch snippet +
+    우리 positioning 문서 2026-07-10_novelty-scoop-analysis.md에서 DOI/설계 교차확인.
+    표-단위 정확 AUC는 Springer paywall로 미확보(정성 인용만).
+citation:
+  key: fernandez-romero-2026-domaingen
+  short_id: DomainGen
+topics:
+  - H&E → molecular subtype/receptor prediction (saturated)
+  - foundation-model × MIL benchmark on breast
+  - TCGA→CPTAC external validation collapse (domain shift)
+sources:
+  paper:
+    url: "https://link.springer.com/article/10.1007/s11517-026-03590-4"
+    doi: "10.1007/s11517-026-03590-4"
+    status: verified (abstract via WebSearch; internal cross-ref)
+importance:
+  level: 상
+  perspective: >
+    NEAREST SCOOP for the former breast "Paper A". Same design as our descriptive
+    predictive experiment (13 FM × 3 MIL, PAM50 + IHC, TCGA-BRCA CV → CPTAC
+    external), same cost/assay-unavailability motivation, and it even reproduces
+    our HER2 external-validation failure. This paper is the reason breast was
+    demoted from a standalone predictive paper and absorbed into flagship Paper C
+    (cost-of-substitution decision map).
+priority:
+  level: P0
+  reason: >
+    Defines the "do NOT lead with prediction accuracy" boundary. Cite qualitatively
+    to concede the descriptive/external-validation result is already published, then
+    pivot to the substitution-cost decision frame (our novelty).
+workflow:
+  created: "2026-07-17"
+  last_updated: "2026-07-17"

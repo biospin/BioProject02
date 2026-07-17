@@ -1,0 +1,74 @@
+document_type: paper
+title: "Drug sensitivity prediction from cell line-based pharmacogenomics data: guidelines for developing machine learning models"
+authors:
+  - Hossein Sharifi-Noghabi
+  - Soheil Jahangiri-Tazehkand
+  - Petr Smirnov
+  - Casey Hon
+  - Anthony Mammoliti
+  - Sisira Kadambat Nair
+  - Arvind Singh Mer
+  - Martin Ester
+  - Benjamin Haibe-Kains
+year: 2021
+venue: "Briefings in Bioinformatics"
+doi: "10.1093/bib/bbab294"
+keywords:
+  - drug sensitivity prediction
+  - pharmacogenomics
+  - cross-dataset generalization
+  - GDSC
+  - CTRP
+  - CCLE
+  - gCSI
+  - machine learning guidelines
+  - drug-response measure (AAC/IC50)
+version:
+  type: published (Version of Record)
+  peer_reviewed: true
+topics:
+  - cross-dataset / cross-study generalization of drug-response predictors
+  - choice of training dataset and drug-sensitivity measure matters
+  - inconsistency across cell-line pharmacogenomics resources
+citation:
+  key: sharifi-noghabi-2021-crossdataset
+  short_id: SNoghabi-Guidelines
+sources:
+  paper:
+    url: "https://academic.oup.com/bib/article/22/6/bbab294/6348324"
+    doi: "10.1093/bib/bbab294"
+    status: verified (WebFetch OUP; abstract + author list confirmed)
+  preprint:
+    - "https://www.biorxiv.org/content/10.1101/2021.04.09.439076v2"
+categorization:
+  domain:
+    - pharmacogenomics ML methodology
+    - drug-response dataset consistency
+  use_case:
+    - justify treating viability datasets (PRISM/GDSC/CTRP) as ONE axis, not three independent axes
+  importance:
+    level: 상
+    perspective: >
+      Cross-dataset-consistency backbone for the deferred therapeutic-evidence (Paper B)
+      axis design. Shows drug-response predictors generalize poorly across cell-line
+      resources and that the choice of dataset/measure strongly changes results — the
+      basis for NOT triple-counting drug-viability datasets as three mechanistically
+      independent axes.
+priority:
+  level: P1
+  reason: >
+    Grounds the axis-independence argument. Convergence should be claimed only across
+    mechanistically distinct readouts (viability vs CRISPR dependency vs transcriptomic
+    reversal), not across three viability datasets that share a readout.
+provenance_note: >
+  Parent task referenced this as "Sharifi-Noghabi 2024 ... PMC11043358" reporting a
+  cross-dataset Spearman ~0.2-0.25. CORRECTION (verified): the real paper is 2021
+  (Briefings in Bioinformatics 22(6), bbab294). PMC11043358 is a DIFFERENT paper
+  (Ovchinnikova et al. 2024, npj Precision Oncology, on z-scoring drug response) and
+  Sharifi-Noghabi is NOT among its authors. The specific "Spearman ~0.2-0.25" value is
+  NOT stated verbatim in this paper's abstract; verified cross-domain figures are
+  Pearson-based (see abstract note). Treat the 0.2-0.25 Spearman as UNVERIFIED pending
+  the original source.
+workflow:
+  created: "2026-07-17"
+  last_updated: "2026-07-17"

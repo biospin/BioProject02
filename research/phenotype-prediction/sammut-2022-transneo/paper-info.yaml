@@ -1,0 +1,60 @@
+document_type: paper
+title: "Multi-omic machine learning predictor of breast cancer therapy response"
+authors:
+  - Stephen-John Sammut
+  - Mireia Crispin-Ortuzar
+  - Suet-Feung Chin
+  - Elena Provenzano
+  - "H. Raza Ali"
+  - et al.
+year: 2022
+venue: "Nature"
+volume: "601 (7894)"
+pages: "623-629"
+doi: "10.1038/s41586-021-04278-5"
+keywords:
+  - TransNEO
+  - multi-omic machine learning
+  - neoadjuvant therapy response
+  - pathological complete response (pCR)
+  - residual cancer burden (RCB)
+  - digital pathology
+  - breast cancer
+  - HER2 / ERBB2
+topics: [PHENO]
+citation:
+  key: sammut-2022-transneo
+  short_id: TransNEO
+sources:
+  paper:
+    url: "https://www.nature.com/articles/s41586-021-04278-5"
+    mirror: "https://pubmed.ncbi.nlm.nih.gov/34875674/"
+    doi: "10.1038/s41586-021-04278-5"
+    status: verified (WebFetch via PubMed, verbatim abstract)
+  data:
+    - "TransNEO prospective neoadjuvant cohort (clinical + digital pathology + DNA/RNA-seq)"
+    - "External validation cohort (75 patients)"
+categorization:
+  domain:
+    - precision oncology
+    - multi-omic response prediction
+  use_case:
+    - integrate clinicopathological + digital pathology + genomic + transcriptomic
+      features to predict pCR / residual disease
+  importance:
+    level: 상
+    perspective: >
+      Secondary outcome-anchor candidate and gold-standard multi-omic ceiling.
+      Sets the aspirational bar (external pCR AUC 0.87) that a full multi-omic
+      integration reaches; our H&E-only anchor is deliberately cheaper/simpler,
+      so this frames the cost-vs-accuracy trade in the substitution decision map.
+priority:
+  level: P1
+  reason: >
+    Defines the multi-omic performance ceiling (AUC 0.87) and the pCR/RCB
+    endpoint definitions our anchor reuses. Digital-pathology component is the
+    partial-overlap; full genomics is what H&E substitution aims to avoid.
+workflow:
+  created: "2026-07-17"
+  last_updated: "2026-07-17"
+  tier: "abstract"

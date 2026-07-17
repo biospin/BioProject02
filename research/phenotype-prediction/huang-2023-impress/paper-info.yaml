@@ -1,0 +1,64 @@
+document_type: paper
+title: "Artificial intelligence reveals features associated with breast cancer neoadjuvant chemotherapy responses from multi-stain histopathologic images"
+authors:
+  - Zhi Huang
+  - Wei Shao
+  - Zhi Han
+  - Ahmad Mahmoud Alkashash
+  - Carlo De la Sancha
+  - Anil V. Parwani
+  - Hiroaki Nitta
+  - Yanjun Hou
+  - Tongxin Wang
+  - Paul Salama
+  - Maher Rizkalla
+  - Jie Zhang
+  - Kun Huang
+  - Zaibo Li
+year: 2023
+venue: "npj Precision Oncology"
+volume: "7"
+article_number: "14"
+doi: "10.1038/s41698-023-00352-5"
+keywords:
+  - IMPRESS
+  - neoadjuvant chemotherapy response
+  - HER2-positive breast cancer
+  - triple-negative breast cancer
+  - multiplex IHC (PD-L1, CD8, CD163)
+  - tumor immune micro-environment
+  - interpretable histopathology features
+topics: [PHENO]
+citation:
+  key: huang-2023-impress
+  short_id: IMPRESS
+sources:
+  paper:
+    url: "https://www.nature.com/articles/s41698-023-00352-5"
+    doi: "10.1038/s41698-023-00352-5"
+    status: verified (Europe PMC core abstract + Springer communities)
+  data:
+    - "H&E + multiplex IHC (PD-L1, CD8+, CD163+) breast cancer WSIs"
+categorization:
+  domain:
+    - computational pathology
+    - neoadjuvant response prediction
+  use_case:
+    - predict NAC response in HER2+ and TNBC from H&E + IHC features
+  importance:
+    level: 상
+    perspective: >
+      TARGET-JOURNAL precedent (npj Precision Oncology) for H&E -> treatment-
+      response prediction in breast cancer. Establishes the venue's expectation
+      for interpretable-feature NAC-response models and an AUC band
+      (HER2+ 0.90; TNBC 0.77 dev).
+priority:
+  level: P1
+  reason: >
+    Journal-fit exemplar and interpretable-feature baseline. Their HER2+ NAC
+    AUC (0.8975 dev / 0.90 external) is a reference bar; they also warn that
+    TNBC/external validation is fragile (TNBC external AUC 0.59).
+workflow:
+  created: "2026-07-17"
+  last_updated: "2026-07-17"
+  tier: "abstract"
