@@ -243,6 +243,13 @@ critic_status: pass
 - `❌` Expressions: "patient-specific optimal treatment prediction", "personalized therapy"
 - `❌` Recommending ICI / Pembrolizumab via cell-line transfer
 - `❌` Critic agent setting its own thresholds / controls (anti-self-reference)
+- `❌` **발표자료·슬라이드·메모·배정표의 숫자를 합격 기준으로 쓰는 것** (2026-07-17 실사고)
+  - **발표자료엔 "관측값"이 실리지 "기준값"이 안 실린다.** 슬라이드 12의 `α 0.88`은 *측정 결과*인데, 하네스 점검 메모가 이를 eval 임계로 옮겨 적었다. **봉인된 사전등록의 실제 기준은 `ρ ≥ 0.50`**(BIOP01 `manuscript/PREREGISTRATION_gse205117.md` L15; 0.88은 비고란 관측치). 0.88을 게이트로 박으면 **데이터를 본 뒤 골대를 옮기는 것** = 그 문서 L26이 금지한 행위.
+  - **규칙:** eval 임계·합격 기준의 근거는 **봉인 문서(사전등록)와 실물 코드**뿐이다. 기준을 인용할 땐 **`파일:줄`을 명시**한다. 발표자료를 근거로 쓰지 않는다.
+  - **같은 사고의 다른 얼굴:** 배정표의 *"앞으로 할 일"*(지용기님 `ref/compact/reset diff 자동화`)이 몇 줄 아래서 *"이미 있는 씨앗"*으로 승격됐다 — **실물이 없었다.** **계획을 자산으로 쓰지 않는다. 있다고 적혀 있으면 열어서 확인한다.**
+- `❌` **도구가 "못 찾겠다"고 한 것을 통과로 처리하는 것** (2026-07-17 실측)
+  - `medsci verify-refs`는 **DOI 조회 실패 시 약한 제목 검색으로 내려가 `OK`를 준다** → **엉터리 DOI(`10.9999/fake...`)가 통과**했다. DOI를 안 쓰는 것보다 **가짜 DOI가 더 잘 뚫린다.**
+  - **규칙:** DOI 부재 · **DOI 조회 실패** · `actual_authors=0` → **전부 사람/적대적 검증으로 에스컬레이션.** 도구의 `submission_safe`를 믿지 않는다(날조가 있는데도 `True`였다).
 - `❌` raw WSI 전량 영구 보관 — 스트리밍 다운로드 → 임베딩 추출 후 raw `.svs` 삭제(LRU). 영구 보존은 manifest·coords·embeddings·logs (Paper A scope = manifest 기반 **~1010 DX-slide BRCA cohort**, 2026-06-10 Leader 확정)
   - ⚠️ **예외 (Leader 결정 2026-07-17, 프로젝트 기간 한정): raw 자동 삭제 중단.** LRU 삭제 때문에 cross-cancer raw 2,588장이 전부 사라져 **재다운로드가 필요해졌다**(다중 FM 견고성 작업이 실제로 이 비용을 치름). 논문이 끝날 때까지는 raw를 **보관**하고, 디스크가 부족하면 **자동 삭제가 아니라 정지+사람 판단**(디스크 가드). 신규 파이프라인은 이 정책을 따른다 — 근거·운용 = `experiments/kkkim/20260717_multifm_robustness/RESUME.md` §3. 프로젝트 종료 시 위 원칙(삭제)으로 복귀.
 - `❌` **Paper A/B는 BRCA-only** — Paper A/B에서 다른 암종으로 확장 금지. **단 Paper C는 예외**: 사전등록된 **5개 암종**(유방 anchor + 폐·대장·위·두경부) cross-cancer 결정지도다("현재 스코프" 참조). Paper C가 금지하는 것은 **열린 pan-cancer 아틀라스로의 무경계 확장**(6번째 암종 즉흥 추가 등) — 사전등록 5종 경계를 넘으려면 Leader(kkkim) 승인.
