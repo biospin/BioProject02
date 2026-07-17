@@ -48,7 +48,23 @@
 
 ## 2. BIOP01 적용
 
-- **§5.2 Inspect** — 지용기님 **재현성 회귀**(ref/compact/reset diff)를 eval 스위트로. scorer = **4종 교차 재현 일치도**. 문서가 이를 "Flywheel 첫 발판"으로 지목한 건 타당하다.
+> ⚠️ **kkkim 정정 (2026-07-17, 실행 후):** 아래 원안 중 **"ref/compact/reset diff"는 실물이 없다.**
+> 그 표현은 회의록(§5.2·§6)에만 있고 BIOP01엔 **자동화 코드·결과가 없다**(git log엔
+> `/compact + /clear consistency tests` 커밋 2건이 있으나 이건 **문헌 재분석 일관성 확인**이지
+> 재현성 회귀 자동화가 아니다). **원 제안이 미착수 계획 항목을 기존 자산으로 오인했다.**
+> → 실제로 존재하는 **사전등록 채점 자산**(`pipeline/hspc-velocity-benchmark/`)을 대상으로 삼았다.
+>
+> ⚠️ **두 번째 정정 — 임계값:** 원 제안의 **"α 0.88 기준선"은 임계가 아니라 관측값**이다.
+> 봉인된 사전등록(`manuscript/PREREGISTRATION_gse205117.md` L15)은 **"Spearman ρ ≥ 0.50"**이고
+> "HSPC 0.88"은 **비고란의 관측치**다. **0.88을 게이트로 박으면 사전등록을 사후에 조이는 것**
+> (= 그 문서 L26이 명시적으로 금지한 행위의 반대 방향 버전). → **0.50을 썼다.**
+
+- **§5.2 Inspect** — ~~지용기님 재현성 회귀(ref/compact/reset diff)~~ → **사전등록 채점 재현**을 eval 스위트로.
+  실물: `manuscript/PREREGISTRATION_gse205117.md`(fit 산출 **전에 봉인**된 6예측+임계+반증조건) ·
+  `cross_dataset/p3_prereg_gse205117.py`(결정론적 채점기) · `results/prereg_gse205117_scorecard.{csv,md}`(6 PASS/0 FAIL).
+  **산출: `BioProject01/evals/reproducibility_pilot/`** — 105/105, 실물 scorecard 6/6 정확 재현,
+  Inspect 6 task accuracy 1.000, **뮤턴트 25/25 전멸**(`invert_threshold` 포함 — α는 ρ가 높아야 pass,
+  lag는 낮아야 pass로 **방향이 반대**라 부호 뒤집기 뮤턴트가 살면 안 된다. BIOP01 고유 위험).
 - **§5.1 PaperQA2** — velocity 방법론 + Trevino 2021 코퍼스. BIOP01은 이미 `paper_analysis/`에 dual-lens 20편 이상 보유 → **BIOP02와 동일한 "baseline 대비 diff"** 방식이 그대로 적용된다.
 - **§7 액션** — BIOP01 에이전트 구조 점검(데이터셋 기준 → 역할/단계 구조로 수렴 중)에 BIOP02 구조가 참조 모델.
 - **§5.6 매핑** — GPTomics bioSkills(RNA-seq·single-cell) · BioMate(DESeq2/edgeR/limma 선택법) · Anthropic **scvi-tools** 번들이 BIOP01 쪽 직접 후보(§4 참조).
