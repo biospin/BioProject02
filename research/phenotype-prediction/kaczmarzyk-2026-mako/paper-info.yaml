@@ -29,6 +29,7 @@ version:
     npj Digital Medicine 9:149 (2026). Abstract + numbers verified via PMC12895011
     (open access) and arXiv 2508.12025. Framework named MAKO (Mammary Analysis
     for Knowledge of Outcomes).
+tier: deep  # 4-lens deep analysis (core + academic + industry + methodology-brief) — 2026-07-17
 citation:
   key: kaczmarzyk-2026-mako
   short_id: MAKO
@@ -59,3 +60,4 @@ priority:
 workflow:
   created: "2026-07-17"
   last_updated: "2026-07-17"
+  tier_upgraded: "2026-07-17"  # abstract → deep 4-lens; numbers verified via PMC12895011 (VoR)

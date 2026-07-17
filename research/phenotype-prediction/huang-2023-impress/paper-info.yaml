@@ -36,9 +36,16 @@ sources:
   paper:
     url: "https://www.nature.com/articles/s41698-023-00352-5"
     doi: "10.1038/s41698-023-00352-5"
-    status: verified (Europe PMC core abstract + Springer communities)
+    pmc: "PMC9883475"
+    status: verified (WebFetch via PMC9883475 full text + GitHub)
+  code:
+    - "https://github.com/huangzhii/IMPRESS"  # MIT license; Python + MATLAB
+    - "features/ + clinical/ folders provide pre-extracted 36 features (HER2+/TNBC) — ML step reproducible without raw WSI"
+    - "deps: PyTorch 1.6.0, scikit-learn 0.23.2, OpenCV 4.4.0, OpenSlide 1.1.2"
   data:
-    - "H&E + multiplex IHC (PD-L1, CD8+, CD163+) breast cancer WSIs"
+    - "H&E + multiplex IHC (PD-L1, CD8, CD163) breast cancer WSIs"
+    - "development cohort: Ohio State University (HER2+ 62, TNBC 64; accrual 2011-2016)"
+    - "external validation: n=20/subtype (10 pCR / 10 residual each); source institution [미확인]"
 categorization:
   domain:
     - computational pathology
@@ -55,10 +62,16 @@ categorization:
 priority:
   level: P1
   reason: >
-    Journal-fit exemplar and interpretable-feature baseline. Their HER2+ NAC
-    AUC (0.8975 dev / 0.90 external) is a reference bar; they also warn that
-    TNBC/external validation is fragile (TNBC external AUC 0.59).
+    Journal-fit exemplar (target venue) + interpretable-feature baseline +
+    external-fragility evidence. Cited on 3 axes. CAUTION on numbers: both
+    external AUCs rest on n=20/subtype (10 pCR/10 residual) so neither the
+    HER2+ 0.90 nor the TNBC 0.59 is a robust bar — the TNBC dev-0.77 ->
+    external-0.59 collapse is the salient fragility signal; the HER2+ 0.90
+    must NOT be cited as a solid upper band. Classical LASSO logistic + LOOCV
+    on 36 interpretable features (not end-to-end DL). Their HER2+ target = NAC
+    (chemo±anti-HER2) with multiplex IHC co-registration, distinct in regimen
+    AND modality from our H&E-only anti-HER2 axis anchor (Farahmand 0.80).
 workflow:
   created: "2026-07-17"
   last_updated: "2026-07-17"
-  tier: "abstract"
+  tier: "deep"

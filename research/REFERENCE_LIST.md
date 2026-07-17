@@ -147,10 +147,10 @@
 | 상태 | 문헌(확정 서지) | slug | 우리 논문에서 |
 |---|---|---|---|
 | DEEP | **Fernandez-Romero 2026** — Domain generalisation…FM (Med Biol Eng Comput 64) | fernandez-romero-2026-domaingen | 최근접 스쿱(유방 subtype, 외부열화) → 치환프레임 pivot |
-| brief | **Kaczmarzyk 2026 (MAKO)** — ROR-P 재발위험 예측 (npj Digital Med 9:149) | kaczmarzyk-2026-mako | "예측 포화" 근거(⚠️ subtype 아니라 ROR-P) |
+| DEEP | **Kaczmarzyk 2026 (MAKO)** — ROR-P 재발위험 예측 (npj Digital Med 9:149) | kaczmarzyk-2026-mako | "예측 포화" 근거(⚠️ subtype 아니라 ROR-P) |
 | brief | **Shulman 2026 (Path2Space)** — AI 공간전사체 (Cell 189, 교신 Ruppin) | shulman-2026-path2space | 반대방향(복원 vs 치환 audit) ⚠️문서엔 "Kaminski" 오기 |
 | DEEP★ | **Farahmand 2022** (Mod Pathol 35:44) | farahmand-2022-modpathol | **Yale 앵커 head-to-head 바 = trastuzumab반응 CV AUC 0.80** (HER2 CV0.90/외부0.81) |
-| brief | **Huang 2023 (IMPRESS)** (npj PO 7:14) | huang-2023-impress | 타겟저널 선례. HER2+ 0.90/TNBC 0.77(dev), ⚠️TNBC 외부 0.59 붕괴 |
+| DEEP | **Huang 2023 (IMPRESS)** (npj PO 7:14) | huang-2023-impress | 타겟저널 선례. HER2+ 0.90/TNBC 0.77(dev), ⚠️TNBC 외부 0.59 붕괴 |
 | brief | **Sammut 2022 (TransNEO)** (Nature 601:623) | sammut-2022-transneo | 2차 앵커·다중오믹 pCR 외부 AUC 0.87 |
 | brief | **Sharifi-Noghabi 2021** (Brief Bioinform 22(6) bbab294) | sharifi-noghabi-2021-crossdataset | 약물축 독립성 ⚠️문서 인용 오류(연도·PMC·수치) |
 | NOT FOUND | ~~Williams 2022 LINCS~~ | williams-2022-lincs-reversal | 실존 미확인 — 서지 재확인 or 삭제 |
