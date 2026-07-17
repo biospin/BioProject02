@@ -1,4 +1,6 @@
-# Paper A — Figure 레지스트리 / 버전 관리 (BIOP02-66)
+> ⚠️ **라벨 정리(2026-07-17):** "Paper A"는 독립 논문이 아니라 **Paper C(플래그십)의 유방 anchor 챕터**다(D11/D12 흡수, 2026-07-12). 아래 figure들은 C 유방 anchor의 그림으로 읽는다. 정본 = [`../paperC-positioning/PAPER_STRUCTURE_DECISION_2026-07-17.md`](../paperC-positioning/PAPER_STRUCTURE_DECISION_2026-07-17.md).
+
+# Paper A(= C 유방 anchor) — Figure 레지스트리 / 버전 관리 (BIOP02-66)
 
 **목적:** Paper A(cost-of-substitution) figure의 **단일 출처·버전 규칙**과 현재 상태를 한 곳에 정리. Confluence(VC) 공유의 근거 문서.
 **관리자:** braveji(Orchestrator). **정본 figure 계획:** `research/paperA-positioning/2026-07-10_research-plan.md` §9.
