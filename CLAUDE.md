@@ -391,3 +391,4 @@ JIRA (BIOP02)
 5. **registry 등재.** 완료 experiment는 `experiments/registry/`에 등록.
 6. **숫자·저자·경로를 지어내지 않았는가.** 근거 없는 헤드라인 수치·저자 정보 금지 — `<FILL>`로 남기고 팀/kkkim 확인.
 7. **상태 기록 + 정직 보고.** 그 턴에 `HANDOFF.md`·`TODO.md`·`SESSION_LOG.md` 갱신. 검증한 것/미검증인 것 명시, 실패는 출력과 함께 그대로 보고.
+   - ⚠️ **`SESSION_LOG.md`는 매일/매 세션 반드시 채운다(반복 누락 지점 — 2026-07-18 kkkim 재지시).** HANDOFF는 "다음이 이어받을 상태", SESSION_LOG는 "그날 한 일의 날짜별 기록"으로 목적이 다르다. **HANDOFF를 갱신할 때 SESSION_LOG도 같은 턴에 함께 쓴다**(역시간순, 최신이 위). SESSION_LOG는 **git 추적 대상**이라 커밋해야 남는다(HANDOFF/TODO는 gitignore라 로컬 지속 — 셋의 커밋 여부가 다름에 주의). 07-12~07-16 누락 사례 있었음.
