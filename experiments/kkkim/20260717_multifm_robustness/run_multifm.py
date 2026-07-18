@@ -63,7 +63,11 @@ def log(msg, fp=HB):
 
 
 def free_gb(path):
-    st = os.statvfs(path)
+    # statvfs는 마운트(파티션) 여유를 본다. 아직 없는 raw 디렉토리면 존재하는 상위로 올라간다.
+    p = Path(path)
+    while not p.exists() and p != p.parent:
+        p = p.parent
+    st = os.statvfs(p)
     return st.f_bavail * st.f_frsize / 1e9
 
 
@@ -123,10 +127,10 @@ def process_slide(rec, d, wlog):
     if not raw.exists():
         if rec["file_id"] is None:
             log(f"  FAIL raw_missing {name} (로컬 BRCA인데 파일 없음)", wlog); return "fail_raw"
+        d["raw"].mkdir(parents=True, exist_ok=True)
         if not disk_guard(d["raw"], wlog):
             return "halt_disk"
         from run_embed_crosscancer import download
-        d["raw"].mkdir(parents=True, exist_ok=True)
         if download(rec, d["raw"]) is None:
             log(f"  FAIL download {name}", wlog); return "fail_dl"
 
@@ -174,7 +178,11 @@ def run_master():
         if done_flag.exists():
             log(f"{cancer}: 이미 완료 — 스킵"); continue
         d = dirs_for(cancer)
-        recs = build_queue(cancer, projects)
+        try:
+            recs = build_queue(cancer, projects)      # GDC 쿼리 일시 실패가 남은 코호트를 죽이지 않게 격리
+        except Exception as e:
+            log(f"⚠️ {cancer}: 큐 생성 실패({e}) — 이 코호트 건너뛰고 다음으로. 재실행하면 다시 시도(idempotent).")
+            continue
         log(f"{cancer}: QUEUE={len(recs)} slides (raw={'로컬' if projects is None else 'GDC 다운로드'})")
         if not recs:
             log(f"{cancer}: 빈 큐 — 스킵"); continue
