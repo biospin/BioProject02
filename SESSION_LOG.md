@@ -5,6 +5,31 @@
 
 ---
 
+## 2026-07-18 — 다중 FM 2-FM 개편 + 스킬 벤치마크 5영역 + 블로그 분석/환경 분리 + 인용검증기 공유
+**진행:** 어제 착수한 다중 FM 임베딩을 UNI2-h까지 확장(2-FM)하며 여러 버그를 잡았고, 외부 스킬 벤치마크를 5개 영역으로 마무리했으며, 블로그를 분석/환경 2계열로 나눠 Confluence·Drive에 반영하고, 인용검증기를 BIOP01과 공유했다. 집필(월요일 시작)을 위한 JIRA 요청 2건도 발송.
+
+- **다중 FM 2-FM 개편(JIRA BIOP02-101, PR #65):** kkkim 결정으로 UNI2-h 추가(reg token 8개, 1536-d) + raw는 전 FM 검증 후에만 삭제(crosscancer만, BRCA 절대 보존). 버그 4~5건 실측 수정: HNSC 진입 시 gdc_query 일시실패가 master 죽임(try/except 격리), disk_guard가 없는 raw 디렉토리 statvfs(free_gb 상위 마운트로), 가드가 /workspace에 300GB 오적용(볼륨별 임계 raw300/ws60), 부분 raw(218MB→66MB) 무한재시도(크기검증 후 재다운로드). BRCA v2·u2 완료, HNSC 진행 중.
+- **스킬 벤치마크 5영역 완료(전부 "차용 없음" 또는 참조만):** 인용검증(medsci 1/5·AIPOCH 방향반대)·재현성(ClawBio 검증함수 없음)·병리(실행코드 0줄)·단일세포(공식이나 파이프라인 무관)·집필(TRIPOD+AI 체크리스트만 참조 차용, abstract-trimmer는 hedge 삭제라 금지). 원칙 재확인: 표준 기계작업만 차용, 검증 게이트는 자작. 부수발견: pathology-roi-selector가 .py 0개인데 self-eval 92점(도구 자기평가 신뢰 금지).
+- **자체 인용검증기 + 전역 공유:** `verify_citations.py`(우리 실패 5건 5/5, medsci 1/5, 뮤턴트 8/8 kill) + `bib_to_cites.py`(.bib 어댑터, 다줄·중첩 파싱). literature-scout·paper-critic에 물림. BIOP01에 복사·검증 완료(refs.bib 19편: VERIFIED 10·저자없음 4·검토필요 5), BIOP01 TODO에 향후 적용 명시.
+- **블로그 분석/환경 분리:** Confluence "BIOP02 개발 블로그" 아래 분석 편(53477377)·환경 편(53510145) 그룹 생성, 기존 6편 재부모화+그룹내 재번호(분석1~4·환경1~2), 08편(분석5)·09편(환경3=스킬벤치마킹) 신규 게시. Drive 통합본 2종 분리(분석·환경). 09편은 3중 검증(naturalness·fidelity·ai-tell) 통과. BIOP01 블로그는 검토 후 분리 안 함(환경 1편뿐).
+- **집필 준비(월요일 시작):** braveji에 Fig2/3 Critic 서명+HNSC HPV pixel-mean 판정 요청(BIOP02-91 c.11320). sjpark/jhans에 Yale 앵커 A3/A4 리마인더(BIOP02-80 c.11321, 이미 통지됐으나 미착수). TRIPOD+AI 등 보고표준 체크리스트를 docs/reporting_checklists에 참조자료로 도입.
+- **⚠️ 사용자 피드백(memory 기록):** ① 모든 한글 문서 윤문체(내부용어·표덤프 금지, `feedback_korean_prose_style`) ② 호칭 아예 쓰지 말 것(내가 "형"이라 반복해 미스젠더링 — 김가경은 여성, kkkim은 이니셜, `user_kkkim` 갱신) ③ 발표자료 숫자를 합격선으로 쓰지 말 것(`feedback_evidence_sourcing`) ④ "했다"기 전에 실물 확인(`feedback_claim_vs_action`).
+- **인프라 memory:** HF 캐시 `.incomplete` 함정·Virchow2/UNI2-h register token·detached conda 절대경로(`infra_hf_fm_embedding`).
+
+---
+
+## 2026-07-17 — 논문 구조 확정 + Yale 앵커 완료 + Fig2/3 + 다중 FM 착수
+**진행:** Paper A/B/C 관계를 확정(C 플래그십 1편 수렴)하고, Yale HER2 아웃컴 앵커를 오버나잇으로 임베딩 완료했으며, 헤드라인 그림 Fig2/Fig3를 분리 산출하고, 다중 FM 견고성(Virchow2) 임베딩을 백그라운드로 착수했다.
+
+- **논문 구조 확정(정본 `research/paperC-positioning/PAPER_STRUCTURE_DECISION_2026-07-17.md`, PR #57):** 결정 1-A(Yale 실제-결과 앵커를 C 본문에)·2-B(Paper B 무거운 엔진 조건부 보류)·3-A(jhans→Yale 앵커)·4-A(라벨 드리프트 정리). 前 Paper A = C의 유방 anchor 챕터(D11/D12 흡수).
+- **Yale HER2 outcome anchor(A2) 완료 276/276, failed=0:** TCIA HER2-TUMOR-ROIS(trastuzumab 85 + HER2 191). 전부 1024-d·손상0·finite. Aspera 게이트 우회 = PathDB JSON API(memory `infra_tcia_pathdb_download`). `/workspace/data/cache/biop02/yale/uni_v1/` + manifest. PR #59. A3(sjpark)·A4(jhans) 통지(BIOP02-80 c.11283/11284).
+- **Figures(PR #63/#64 머지):** Fig2(confusion×distance + cost overlay)="이 한 장이 논문"인 결정그림, 브랜치에 갇힌 것 해소. Fig3(축별 cost + headline contrast CI) 신규 분리. 둘 다 critic_status pending → 근거 JSON 서명 전 headline 승격 금지. 정직성: per-axis cost는 라우팅 스킴 따라 endocrine·chemo 반전 → 안전주장 아님.
+- **인용 무결성(PR #58/#60/#62):** REFERENCE_LIST 77편 + CITATION_AUDIT(33+ 정확, 미확인 0) + CITATION_CORRECTIONS(우리 문서 오류 5건 정정 — 존재하지 않는 "Williams 2022" 인용 등). Ding 2025 실존 확인.
+- **다중 FM 착수 + raw 보관 정책 변경(Leader 결정):** LRU 자동삭제로 cross-cancer raw 2,588장 소실 → 재다운로드 비용 발생 → 프로젝트 기간 중 raw 보관, 디스크 부족 시 자동삭제가 아니라 정지+사람 판단. CLAUDE.md 금지조항에 기간한정 예외 명시.
+- **Critic Inspect eval 파일럿:** `evals/critic_pilot/`(66/66, 뮤턴트 전멸). ★캔 것: HNSC hpv_pos 헤드라인 0.9594(CI없음) vs pixel-mean 0.9224[.., .9745] CI가 헤드라인 포함 → braveji 판정 대상.
+
+---
+
 ## 2026-07-12 (밤) — 대장 증분 검정 완료 + 블로그 그룹편성 + MCP 드롭 재시작
 **진행:** 직전 세션 pivotal 미결(대장 MSI/anti-EGFR 증분)을 완결. per-patient p_HE를 seed=42 결정론 MIL 재실행으로 복원(재현 AUROC 0.9184/0.7053 커밋값 일치 검증), 통상병리 baseline=점액성 조직형+우측/좌측 편측성(cBioPortal coadread, 등급/oncotree 없음)으로 중첩 로지스틱 증분 계산.
 - **결과(D13):** anti-EGFR(점돌연변이 위험검정, n_pos84) 통상병리 대비 **+0.049**(CI 0.003–0.096, LR p 0.026). advisor 요청 견고성: BH 다중비교 통과(0.030)·CV 7시드 부호 안정(mean +0.052)이나 **Bonferroni 미통과**(0.208), +CMS 넣으면 소멸. MSI(n_pos21) +0.129지만 **탐색적(INCONCLUSIVE)**.
