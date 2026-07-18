@@ -25,6 +25,8 @@
 - **(저녁) 원고 폴더 신설 — kkkim 지시:** `BioProject02/manuscript/` 생성(월요일 집필 시작 목표). README(착수 가이드·**실측 숫자 표**·검증 게이트) + sections/ 5종 골격(abstract·intro·results·methods·discussion, 각 근거 파일 포인터 + `<FILL>`). 헤드라인 숫자는 결과 JSON 실측으로만(대장 BRAF 0.868·폐 LUSC 0.939·두경부 HPV 0.959·위 diffuse 0.536=정직한 음성, 전부 hypothesis_only·critic pending). Yale·다중 FM은 placeholder.
 - **(저녁) 타깃 저널 집필 준비 — kkkim 지시:** 타깃 확정 = **npj Precision Oncology**(스트레치 Nat Commun/npj Dig Med/Med). 서브에이전트로 같은 저널 H&E→분자 논문 4편(자궁내막·자궁경부·NSCLC·Dawood 2024) 실제 정독 → `manuscript/WRITING_TARGET_GUIDE.md`(논문별 7축 + 종합 골격). `TARGET_JOURNAL_GUIDE.md`에 저널규정·보고표준·갭분석·preprint경로 정리. **핵심 갭 3(월요일 우선): 코호트 특성표·대체 동등성 검정(Paper B DeLong C-Index 원형)·NPV 임상효용 이중보고.** 차별화: 사전등록+TRIPOD/CLAIM 명시(exemplar 4편 전부 없음). ⚠️ 서브에이전트 정독 수치는 요약모델 훼손(CI 상한 1.003) — 구조만 신뢰, 수치 인용 시 원문 PDF 대조.
 - **(저녁) preprint 정책 확인:** npj Prec Onc는 preprint 허용(선출판 아님). 임상 엔드포인트라 medRxiv 정합. 내부 게이트=저자정보 팀합의 + Critic 서명 후 공개.
+- **(저녁) exemplar 수치 원문 재검증:** 서브에이전트 정독 수치가 요약모델 훼손 우려 → Europe PMC REST 원문 JSON(요약모델 미경유)으로 초록 헤드라인 대조. 훼손은 **딱 1곳**(Paper A p53abn class-wise CI 상한 1.003→실제 1.000). 초록 헤드라인 전부 정확 확인(A 0.867·C 0.87/0.96/0.88/0.83·B 생존p n=545). 본문 전용 수치는 초록에 없어 인용 시 PDF 대조 필요. 세 가이드 문서에 반영. 우리 원고 숫자는 결과 JSON 직독이라 무관.
+- **(저녁) 커밋:** manuscript/ 8종 + watchdog.sh + SESSION_LOG → **c9fbe74**(feat/BIOP02-91 브랜치, 로컬 커밋·미푸시). 원고 관련이라 푸시는 확인 후.
 
 ---
 
