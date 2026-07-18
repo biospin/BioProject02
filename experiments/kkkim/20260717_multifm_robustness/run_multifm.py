@@ -36,14 +36,20 @@ sys.path.insert(0, str(ROOT / "experiments/crosscancer"))
 
 PY = "/opt/envs/spatialpatho/bin/python"          # ⚠️ conda가 detached PATH에 없다(2026-07-17 사고). 절대경로 필수.
 TILE = ROOT / "agents/embedding/scripts/tile_wsi.py"
-EXTRACT = ROOT / "agents/embedding/scripts/extract_virchow2.py"
 TILE_CFG = ROOT / "agents/embedding/configs/tile_config.yaml"
 
-EMB_DIM = 2560
+# 다중 FM 레지스트리 — 코호트당 raw 한 번 받아 모든 FM 임베딩 후 검증되면 삭제(download-once).
+# key = (임베딩 subdir, 추출기, 임베딩 dim, 파일명 suffix). dim은 검증(emb_ok)에 쓴다.
+FMS = {
+    "virchow2": {"dir": "virchow2", "script": ROOT / "agents/embedding/scripts/extract_virchow2.py",
+                 "dim": 2560, "suffix": "virchow2"},
+    "uni2h":    {"dir": "uni2h",    "script": ROOT / "agents/embedding/scripts/extract_uni2h.py",
+                 "dim": 1536, "suffix": "uni2h"},
+}
 MIN_FREE_GB = 300                                  # 디스크 가드: 이하로 떨어지면 정지(삭제 아님)
-RAW_BASE = Path.home() / "data/crosscancer_raw"    # HDD 15T. (원 드라이버는 SSD /workspace였으나 raw 보관 정책상 용량 필요)
-BRCA_RAW = Path.home() / "data/tcga_brca_wsi"
-OUT_BASE = Path("/workspace/data/cache/biop02")    # 공유 볼륨 — 팀 공유 데이터 규칙(CLAUDE.md)
+RAW_BASE = Path.home() / "data/crosscancer_raw"    # HDD 15T. 재다운로드 raw(transient). 삭제는 여기로만.
+BRCA_RAW = Path.home() / "data/tcga_brca_wsi"       # ⚠️ 기존 로컬 BRCA 데이터셋 — 절대 삭제 금지(재다운로드본 아님).
+OUT_BASE = Path("/workspace/data/cache/biop02")    # 공유 볼륨 — 팀 공유 데이터 규칙(CLAUDE.md). 영구 산출물.
 
 COHORTS = [                                        # (name, gdc_projects | None=로컬)
     ("BRCA",          None),
@@ -72,32 +78,39 @@ def free_gb(path):
 
 
 def disk_guard(where, wlog):
-    """여유<MIN_FREE_GB면 삭제하지 않고 정지+알림. 사람이 판단."""
-    fg = free_gb(where)
-    if fg >= MIN_FREE_GB:
-        return True
-    log(f"🛑 DISK GUARD: {where} 여유 {fg:.0f}GB < {MIN_FREE_GB}GB — raw 삭제하지 않고 **정지**한다. "
-        f"사람이 판단할 것(RESUME.md).", wlog)
-    (HERE / "DISK_GUARD_TRIPPED").write_text(f"{where} free={fg:.0f}GB at {time.strftime('%F %T')}\n")
-    return False
+    """여유<MIN_FREE_GB면 삭제하지 않고 정지+알림. raw(~/data)와 **영구 산출물 볼륨(/workspace)** 둘 다 본다.
+    /workspace가 차면 임베딩 쓰기 실패 → 재생성 불가한 유일한 산출물을 잃는다(GPU 시간 낭비)."""
+    for label, target in [("raw", where), ("out(/workspace)", OUT_BASE)]:
+        fg = free_gb(target)
+        if fg < MIN_FREE_GB:
+            log(f"🛑 DISK GUARD: {label} {target} 여유 {fg:.0f}GB < {MIN_FREE_GB}GB — 삭제하지 않고 **정지**. "
+                f"사람이 판단할 것(RESUME.md).", wlog)
+            (HERE / "DISK_GUARD_TRIPPED").write_text(
+                f"{label} {target} free={fg:.0f}GB at {time.strftime('%F %T')}\n")
+            return False
+    return True
 
 
-def emb_ok(p):
-    """부분/손상 파일을 성공으로 오인하지 않는다(원 드라이버 교훈)."""
+def emb_ok(p, dim):
+    """부분/손상 파일을 성공으로 오인하지 않는다(원 드라이버 교훈). dim은 FM별로 다르다."""
     try:
         import numpy as np
         a = np.load(p)
-        return a.ndim == 2 and a.shape[1] == EMB_DIM and np.isfinite(a).all()
+        return a.ndim == 2 and a.shape[1] == dim and np.isfinite(a).all()
     except Exception:
         return False
 
 
 def dirs_for(cancer):
-    out = OUT_BASE / cancer.lower() / "virchow2"
     co = OUT_BASE / cancer.lower() / "coords_v2"
-    for d in (out, co):
+    co.mkdir(parents=True, exist_ok=True)
+    emb = {}
+    for fm, spec in FMS.items():
+        d = OUT_BASE / cancer.lower() / spec["dir"]
         d.mkdir(parents=True, exist_ok=True)
-    return {"emb": out, "coords": co, "raw": (BRCA_RAW if cancer == "BRCA" else RAW_BASE / cancer)}
+        emb[fm] = d
+    return {"emb": emb, "coords": co, "raw": (BRCA_RAW if cancer == "BRCA" else RAW_BASE / cancer),
+            "is_brca": cancer == "BRCA"}
 
 
 def build_queue(cancer, projects):
@@ -115,13 +128,19 @@ def build_queue(cancer, projects):
     return recs
 
 
+def _emb_path(d, fm, name):
+    return d["emb"][fm] / f"{name}_{FMS[fm]['suffix']}_embeddings.npy"
+
+
 def process_slide(rec, d, wlog):
+    """코호트당 raw 1회 확보 → 모든 FM 임베딩 → **둘 다 검증되면** raw 삭제(crosscancer만).
+    per-FM 스킵이라 세션이 끊겨도 이어서. 삭제 게이트 = 전체 FM 검증(하나라도 실패면 raw 보존)."""
     name = rec["file_name"][:-4] if rec["file_name"].endswith(".svs") else rec["file_name"]
-    emb = d["emb"] / f"{name}_virchow2_embeddings.npy"
-    if emb.exists():
-        if emb_ok(emb):
-            return "skip"
-        emb.unlink()                                # 손상 → 재처리
+
+    # 이미 모든 FM이 검증 완료면 스킵
+    need = [fm for fm in FMS if not emb_ok(_emb_path(d, fm, name), FMS[fm]["dim"])]
+    if not need:
+        return "skip"
 
     raw = d["raw"] / rec["file_name"]
     if not raw.exists():
@@ -141,14 +160,25 @@ def process_slide(rec, d, wlog):
         if r.returncode != 0 or not coords.exists():
             log(f"  FAIL tile {name}: {r.stderr[-250:]}", wlog); return "fail_tile"
 
-    r = subprocess.run([PY, str(EXTRACT), "--coords", str(coords), "--out_dir", str(d["emb"]),
-                        "--device", "cuda"], capture_output=True, text=True, timeout=7200)
-    if r.returncode != 0 or not emb.exists():
-        log(f"  FAIL embed {name}: {r.stderr[-250:]}", wlog); return "fail_emb"
-    if not emb_ok(emb):
-        log(f"  FAIL verify {name}", wlog); emb.unlink(missing_ok=True); return "fail_verify"
-    # ⚠️ raw 삭제하지 않는다 (Leader 결정 2026-07-17). 원 드라이버는 여기서 raw.unlink() 했다.
-    log(f"  OK {name}", wlog)
+    for fm in need:                                  # 미완 FM만 추출
+        emb = _emb_path(d, fm, name)
+        if emb.exists():
+            emb.unlink()                             # 손상 → 재처리
+        r = subprocess.run([PY, str(FMS[fm]["script"]), "--coords", str(coords),
+                            "--out_dir", str(d["emb"][fm]), "--device", "cuda"],
+                           capture_output=True, text=True, timeout=7200)
+        if r.returncode != 0 or not emb.exists():
+            log(f"  FAIL embed[{fm}] {name}: {r.stderr[-250:]}", wlog); return f"fail_emb_{fm}"
+        if not emb_ok(emb, FMS[fm]["dim"]):
+            log(f"  FAIL verify[{fm}] {name}", wlog); emb.unlink(missing_ok=True); return f"fail_verify_{fm}"
+
+    # ★ 삭제 게이트: 모든 FM이 검증됐을 때만. crosscancer_raw로만 스코프(BRCA 로컬 데이터셋 절대 삭제 금지).
+    all_ok = all(emb_ok(_emb_path(d, fm, name), FMS[fm]["dim"]) for fm in FMS)
+    if all_ok and not d["is_brca"] and RAW_BASE in raw.parents:
+        raw.unlink(missing_ok=True)                  # 검증 후 삭제 = LRU(캐시압박)와 다름. 산출물(임베딩·coords)은 영구.
+        log(f"  OK {name} (전 FM 검증 → raw 삭제)", wlog)
+    else:
+        log(f"  OK {name}" + ("" if d["is_brca"] else " (raw 보존)"), wlog)
     return "ok"
 
 
@@ -169,7 +199,8 @@ def run_worker(cancer, shard_path, gpu):
 
 
 def run_master():
-    log(f"=== MULTIFM MASTER start — model=virchow2, raw 보관(삭제 안 함), guard={MIN_FREE_GB}GB ===")
+    log(f"=== MULTIFM MASTER start — FMs={list(FMS)}, guard={MIN_FREE_GB}GB "
+        f"(crosscancer raw는 전FM검증 후 삭제, BRCA raw 보존) ===")
     log(f"디스크 여유: ~/data={free_gb(Path.home()/'data'):.0f}GB /workspace={free_gb('/workspace'):.0f}GB")
     for cancer, projects in COHORTS:
         if (HERE / "DISK_GUARD_TRIPPED").exists():
@@ -198,12 +229,17 @@ def run_master():
                 [PY, __file__, "--worker", "--cancer", cancer, "--shard", str(sp), "--gpu", str(s)]))
         for p in procs:
             p.wait()
-        n_ok = len(list(d["emb"].glob("*_virchow2_embeddings.npy")))
-        log(f"{cancer}: 완료 — 임베딩 {n_ok}/{len(recs)}")
+        # 완료 = 모든 FM이 검증된 슬라이드. raw는 삭제됐어도 임베딩(.npy)은 영구라 카운트 가능.
+        def _slide_done(rec):
+            nm = rec["file_name"][:-4] if rec["file_name"].endswith(".svs") else rec["file_name"]
+            return all(emb_ok(_emb_path(d, fm, nm), FMS[fm]["dim"]) for fm in FMS)
+        n_ok = sum(_slide_done(r) for r in recs)
+        per_fm = {fm: len(list(d["emb"][fm].glob(f"*_{FMS[fm]['suffix']}_embeddings.npy"))) for fm in FMS}
+        log(f"{cancer}: 완료 — 전FM검증 {n_ok}/{len(recs)} · FM별 {per_fm}")
         if n_ok >= len(recs):
-            done_flag.write_text(f"{n_ok}/{len(recs)} at {time.strftime('%F %T')}\n")
+            done_flag.write_text(f"{n_ok}/{len(recs)} allFM at {time.strftime('%F %T')}\n")
         else:
-            log(f"⚠️ {cancer}: {len(recs)-n_ok}장 미완 — 재실행하면 이어서 처리")
+            log(f"⚠️ {cancer}: {len(recs)-n_ok}장 미완(전FM기준) — 재실행하면 이어서 처리")
     log("=== MULTIFM MASTER end ===")
     (HERE / "MASTER_DONE").write_text(time.strftime("%F %T") + "\n")
 
