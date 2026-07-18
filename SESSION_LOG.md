@@ -21,6 +21,10 @@
 - **(후반) 다중 FM 재학습 준비:** kkkim 결정=재학습 Owner는 kkkim(대행), Reviewer는 sjpark/braveji(Owner≠Reviewer). CLAM 학습시간 실측=코호트당 수분~17분(대장 UNI 267s). `run_mil_cost.py`에 `--fm {uni|virchow2|uni2h}` 파라미터화(UNI 기본 동작 불변, 회귀 스모크 확인). `multifm_retrain_watcher.py` 대기 러너 백그라운드 가동 — 대장·폐 임베딩 완료 시 자동 재학습(결과 critic_status pending). `README_multifm_retrain.md`.
 - **(후반) 버그 수정:** DONE_BRCA가 virchow2 단독 시절 표식인데 UNI2-h 추가 후 스킵 유발 → BRCA uni2h 1/1010 멈춤. 표식만 믿지 않고 FM별 임베딩 개수 실측해 스킵 판정하도록 수정. BRCA uni2h는 cross-cancer 완주 후 재실행으로 이어짐.
 - **(후반) 피드백 memory 추가:** 호칭 아예 쓰지 말 것(`user_kkkim` 갱신 — 김가경 여성·kkkim은 이니셜), 모든 한글 문서 윤문체(`feedback_korean_prose_style`), SESSION_LOG 매일 기록(`feedback_session_log_daily` — 반복 누락 지점, git 추적이라 커밋 필요).
+- **(저녁) 백그라운드 끊김 방지 점검:** 임베딩 master·재학습 러너 둘 다 독립 세션(setsid)이라 창 끊겨도 생존 확인. HNSC 임베딩 348/472(3.2분/슬라이드, 07-19 새벽 완료 예상). 프로세스가 버그로 죽을 때 자동 재기동할 `watchdog.sh` 작성(idempotent, 완료 마커 있으면 skip) — 단 시스템 crontab 등록은 자동 분류기에 막혀 스크립트만 준비, 수동 등록 2줄 안내.
+- **(저녁) 원고 폴더 신설 — kkkim 지시:** `BioProject02/manuscript/` 생성(월요일 집필 시작 목표). README(착수 가이드·**실측 숫자 표**·검증 게이트) + sections/ 5종 골격(abstract·intro·results·methods·discussion, 각 근거 파일 포인터 + `<FILL>`). 헤드라인 숫자는 결과 JSON 실측으로만(대장 BRAF 0.868·폐 LUSC 0.939·두경부 HPV 0.959·위 diffuse 0.536=정직한 음성, 전부 hypothesis_only·critic pending). Yale·다중 FM은 placeholder.
+- **(저녁) 타깃 저널 집필 준비 — kkkim 지시:** 타깃 확정 = **npj Precision Oncology**(스트레치 Nat Commun/npj Dig Med/Med). 서브에이전트로 같은 저널 H&E→분자 논문 4편(자궁내막·자궁경부·NSCLC·Dawood 2024) 실제 정독 → `manuscript/WRITING_TARGET_GUIDE.md`(논문별 7축 + 종합 골격). `TARGET_JOURNAL_GUIDE.md`에 저널규정·보고표준·갭분석·preprint경로 정리. **핵심 갭 3(월요일 우선): 코호트 특성표·대체 동등성 검정(Paper B DeLong C-Index 원형)·NPV 임상효용 이중보고.** 차별화: 사전등록+TRIPOD/CLAIM 명시(exemplar 4편 전부 없음). ⚠️ 서브에이전트 정독 수치는 요약모델 훼손(CI 상한 1.003) — 구조만 신뢰, 수치 인용 시 원문 PDF 대조.
+- **(저녁) preprint 정책 확인:** npj Prec Onc는 preprint 허용(선출판 아님). 임상 엔드포인트라 medRxiv 정합. 내부 게이트=저자정보 팀합의 + Critic 서명 후 공개.
 
 ---
 
