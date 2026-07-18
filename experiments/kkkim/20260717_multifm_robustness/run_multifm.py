@@ -216,9 +216,16 @@ def run_master():
         if (HERE / "DISK_GUARD_TRIPPED").exists():
             log("🛑 디스크 가드 발동 상태 — 남은 코호트 중단. 사람 판단 필요."); break
         done_flag = HERE / f"DONE_{cancer}"
-        if done_flag.exists():
-            log(f"{cancer}: 이미 완료 — 스킵"); continue
         d = dirs_for(cancer)
+        # ⚠️ DONE 표식 존재만으로 스킵하지 않는다. FM을 추가하면(예: virchow2 단독 → +uni2h)
+        # 옛 표식이 거짓말을 한다(2026-07-18 실사고: DONE_BRCA가 virchow2만 완료인데 스킵 유발,
+        # BRCA uni2h가 1/1010에 멈춤). 표식이 있어도 각 FM 임베딩 개수를 실측해 재확인한다.
+        if done_flag.exists():
+            per_fm_now = {fm: len(list(d["emb"][fm].glob(f"*_{FMS[fm]['suffix']}_embeddings.npy"))) for fm in FMS}
+            if per_fm_now and min(per_fm_now.values()) > 0 and len(set(per_fm_now.values())) == 1:
+                log(f"{cancer}: 이미 완료(전 FM {per_fm_now}) — 스킵"); continue
+            log(f"⚠️ {cancer}: DONE 표식 있으나 FM별 개수 불일치 {per_fm_now} — 표식 무시하고 재개(FM 추가된 듯)")
+            done_flag.rename(done_flag.with_suffix(".stale"))
         try:
             recs = build_queue(cancer, projects)      # GDC 쿼리 일시 실패가 남은 코호트를 죽이지 않게 격리
         except Exception as e:
