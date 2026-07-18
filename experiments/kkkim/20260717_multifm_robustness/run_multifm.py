@@ -46,7 +46,10 @@ FMS = {
     "uni2h":    {"dir": "uni2h",    "script": ROOT / "agents/embedding/scripts/extract_uni2h.py",
                  "dim": 1536, "suffix": "uni2h"},
 }
-MIN_FREE_GB = 300                                  # 디스크 가드: 이하로 떨어지면 정지(삭제 아님)
+MIN_FREE_GB = 300                                  # raw 볼륨(~/data, 15TB HDD) 가드 임계
+MIN_FREE_OUT_GB = 60                               # /workspace(439GB SSD, 공유) 가드 임계. ~/data와 규모가
+                                                   # 달라 같은 300을 쓰면 정상 상태(여유 165GB)에서도 걸린다.
+                                                   # 임베딩 1장 ≈ 수십 MB라 60GB면 수백 장 여유.
 RAW_BASE = Path.home() / "data/crosscancer_raw"    # HDD 15T. 재다운로드 raw(transient). 삭제는 여기로만.
 BRCA_RAW = Path.home() / "data/tcga_brca_wsi"       # ⚠️ 기존 로컬 BRCA 데이터셋 — 절대 삭제 금지(재다운로드본 아님).
 OUT_BASE = Path("/workspace/data/cache/biop02")    # 공유 볼륨 — 팀 공유 데이터 규칙(CLAUDE.md). 영구 산출물.
@@ -80,13 +83,14 @@ def free_gb(path):
 def disk_guard(where, wlog):
     """여유<MIN_FREE_GB면 삭제하지 않고 정지+알림. raw(~/data)와 **영구 산출물 볼륨(/workspace)** 둘 다 본다.
     /workspace가 차면 임베딩 쓰기 실패 → 재생성 불가한 유일한 산출물을 잃는다(GPU 시간 낭비)."""
-    for label, target in [("raw", where), ("out(/workspace)", OUT_BASE)]:
+    for label, target, thr in [("raw(~/data)", where, MIN_FREE_GB),
+                               ("out(/workspace)", OUT_BASE, MIN_FREE_OUT_GB)]:
         fg = free_gb(target)
-        if fg < MIN_FREE_GB:
-            log(f"🛑 DISK GUARD: {label} {target} 여유 {fg:.0f}GB < {MIN_FREE_GB}GB — 삭제하지 않고 **정지**. "
+        if fg < thr:
+            log(f"🛑 DISK GUARD: {label} {target} 여유 {fg:.0f}GB < {thr}GB — 삭제하지 않고 **정지**. "
                 f"사람이 판단할 것(RESUME.md).", wlog)
             (HERE / "DISK_GUARD_TRIPPED").write_text(
-                f"{label} {target} free={fg:.0f}GB at {time.strftime('%F %T')}\n")
+                f"{label} {target} free={fg:.0f}GB < {thr}GB at {time.strftime('%F %T')}\n")
             return False
     return True
 
@@ -143,6 +147,12 @@ def process_slide(rec, d, wlog):
         return "skip"
 
     raw = d["raw"] / rec["file_name"]
+    # 부분/손상 raw 감지: 크기가 GDC 원본과 다르면 지우고 재다운로드(오늘 사고: 218MB→66MB에서 끊긴 파일이
+    # openslide "missing"으로 매 재시작마다 걸렸다. md5 없는 레코드는 부분다운로드가 검증을 통과할 수 있다).
+    if raw.exists() and rec["file_id"] is not None and rec.get("size"):
+        if raw.stat().st_size != rec["size"]:
+            log(f"  손상 raw({raw.stat().st_size} vs 원본 {rec['size']}) — 삭제 후 재다운로드: {name}", wlog)
+            raw.unlink()
     if not raw.exists():
         if rec["file_id"] is None:
             log(f"  FAIL raw_missing {name} (로컬 BRCA인데 파일 없음)", wlog); return "fail_raw"
