@@ -15,6 +15,12 @@
 - **집필 준비(월요일 시작):** braveji에 Fig2/3 Critic 서명+HNSC HPV pixel-mean 판정 요청(BIOP02-91 c.11320). sjpark/jhans에 Yale 앵커 A3/A4 리마인더(BIOP02-80 c.11321, 이미 통지됐으나 미착수). TRIPOD+AI 등 보고표준 체크리스트를 docs/reporting_checklists에 참조자료로 도입.
 - **⚠️ 사용자 피드백(memory 기록):** ① 모든 한글 문서 윤문체(내부용어·표덤프 금지, `feedback_korean_prose_style`) ② 호칭 아예 쓰지 말 것(내가 "형"이라 반복해 미스젠더링 — 김가경은 여성, kkkim은 이니셜, `user_kkkim` 갱신) ③ 발표자료 숫자를 합격선으로 쓰지 말 것(`feedback_evidence_sourcing`) ④ "했다"기 전에 실물 확인(`feedback_claim_vs_action`).
 - **인프라 memory:** HF 캐시 `.incomplete` 함정·Virchow2/UNI2-h register token·detached conda 절대경로(`infra_hf_fm_embedding`).
+- **(후반) 블로그 분석/환경 분리:** Confluence "BIOP02 개발 블로그" 아래 분석 편(53477377)·환경 편(53510145) 그룹 생성, 기존 6편 재부모화+그룹내 재번호(분석1~4·환경1~2), 08편(분석5)·09편(환경3) 신규 게시. Drive 통합본 2종 분리 업로드. 09편 3중 검증 통과. 구 Drive 통합본(7/5)은 수동 휴지통 안내(MCP 삭제 불가).
+- **(후반) 인용검증기 BIOP01 공유:** `bib_to_cites.py`(.bib 어댑터) 신규, `verify_citations.py`가 프로젝트 무관 실증(BIOP01 refs 19편: VERIFIED 10·저자없음 4·검토필요 5). BIOP01 저장소에 도구 3개 복사·커밋(2d18ad0), BIOP01 TODO에 향후 적용 명시. `docs/shared_assets_2026-07-18.md`에 전역/프로젝트별 판단 산문 정리.
+- **(후반) 집필 스킬 벤치마크 + 보고표준:** 5번째 영역(집필) 완료 — TRIPOD+AI 체크리스트만 참조 차용(`docs/reporting_checklists/`, README 윤문), abstract-trimmer는 hedge 삭제라 금지. 집필 블로커 요청 2건: braveji Fig2/3 서명+HNSC HPV pixel-mean(BIOP02-91 c.11320), sjpark/jhans Yale A3/A4 리마인더(BIOP02-80 c.11321).
+- **(후반) 다중 FM 재학습 준비:** kkkim 결정=재학습 Owner는 kkkim(대행), Reviewer는 sjpark/braveji(Owner≠Reviewer). CLAM 학습시간 실측=코호트당 수분~17분(대장 UNI 267s). `run_mil_cost.py`에 `--fm {uni|virchow2|uni2h}` 파라미터화(UNI 기본 동작 불변, 회귀 스모크 확인). `multifm_retrain_watcher.py` 대기 러너 백그라운드 가동 — 대장·폐 임베딩 완료 시 자동 재학습(결과 critic_status pending). `README_multifm_retrain.md`.
+- **(후반) 버그 수정:** DONE_BRCA가 virchow2 단독 시절 표식인데 UNI2-h 추가 후 스킵 유발 → BRCA uni2h 1/1010 멈춤. 표식만 믿지 않고 FM별 임베딩 개수 실측해 스킵 판정하도록 수정. BRCA uni2h는 cross-cancer 완주 후 재실행으로 이어짐.
+- **(후반) 피드백 memory 추가:** 호칭 아예 쓰지 말 것(`user_kkkim` 갱신 — 김가경 여성·kkkim은 이니셜), 모든 한글 문서 윤문체(`feedback_korean_prose_style`), SESSION_LOG 매일 기록(`feedback_session_log_daily` — 반복 누락 지점, git 추적이라 커밋 필요).
 
 ---
 
