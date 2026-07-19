@@ -5,6 +5,26 @@
 
 ---
 
+## 2026-07-19 — 브랜치 위생·병합게이트 + G2 remediation(PR #36) + 블로그 07 초안 + watchdog 등록
+
+**브랜치 위생 + 병합 게이트**
+- BIOP01이 넘긴 "d0f3f4f는 BIOP02" 검증: split lock 정본 hash는 이미 main meta에 있고 folds 미러·stamping만 누락 → **focused PR #32**로 이관(내가 앞서 "main에 folds 있음"이라 오판 → git ls-tree exit0 함정, 정정). **용기님(braveji)이 PR #32 머지 + BIOP02-41 Critic cross-sign PASS**(6ffdeb9).
+- docs/-53가 fetch만 하고 merge 안 해 main보다 97앞/13뒤로 드리프트한 것 정리(merge origin/main, 뒤 0). **재발방지**: SessionStart 훅 `.claude/hooks/git_drift_check.sh`(개인 settings.local.json) — 세션 시작 시 앞/뒤 격차 표시. memory `feedback-branch-hygiene`.
+- **병합 게이트 봉인** `experiments/crosscancer/MERGE_TO_MAIN_CHECKLIST.md`(G1~G5) — 즉흥 병합 방지. **G1 결과확정 kkkim 승인** + G3 claim규율 검증.
+
+**G2 Critic remediation (PR #36, base main, focused)**
+- 그간 braveji G2가 reject(5 blocker)→caution. main이 "50bb7c9 remediation 병합 대기"였는데 정본 JSON이 main에 없던 provenance 불일치 → PR #36으로 전달: 5-seed 우연배제(3암종, ★두경부 HPV 0.9594 PASS thr 0.790) + pixel-mean baseline(4암종).
+- **위암 Lauren 양성대조 FAIL(0.54) 원인 진단** `LAUREN_POSCONTROL_DIAGNOSIS.md`: 파이프라인 고장·데이터희소 아님 = **Lauren 특이 site-교란**(dev 0.963→holdout 0.536, pixel-mean 0.63>MIL 0.54, 유병률 site종속 HU100%~CG18%). 권고 "위암 전체 저신뢰"→"Lauren 국한"(MSI 일반화 정상).
+- **subtype-only baseline** `sh_subtype_baseline.py`+`SUBTYPE_BASELINE_NOTE.md`: cross-cancer 대부분 순환→비순환 폐 EGFR/KRAS from histology만. EGFR 0.767<MIL 0.852(등급적) · **KRAS 0.793>MIL 0.681(필수, MIL이 histology 못넘음)**. baseline 3종 폐 변이축 완비. JIRA -96 #11168~11170.
+- kkkim 몫 G2 전부 완료 → 잔여 = sjpark #4·jhans #5 sub-check → braveji 3차 재검토(팀 대기).
+
+**블로그 07편 초안(교차암종 치환지도)**
+- `blog/2026-07-14_BIOP02_07_crosscancer-substitutability_DRAFT.md`(브랜치 `docs/BIOP02-blog07-crosscancer`). 비어있던 07 슬롯 채움(08=그림제작·09=스킬로 다른 주제, 중복 아님 검증). STYLE_CONTRACT 준수·수치 기록대조. **발행 EMBARGO(critic caution)** — 사용자 결정 (b): Critic pass 후 윤문(korean-style-rewriter Pass-2)·발행.
+
+**watchdog 등록(다중 FM 위험완화)** — 사용자 선택
+- HANDOFF의 "crontab 미등록" 진짜 원인 = **컨테이너에 cron/crontab 자체 없음**(실측). crontab 대신 **detached setsid 자기루프** `watchdog_loop.sh`(PID 873918, PPID=1, 세션 무관) 등록 — 10분마다 watchdog.sh 호출, master/재학습 러너 죽으면 idempotent 재기동. memory `infra-no-cron-use-detached-loop`. 다중 FM 임베딩은 대장 진행 중(HNSC 밤샘 완료 확인).
+- 참고: braveji=**지용기(용기님)**, '이용진' 아님(memory 정정).
+
 ## 2026-07-18 — 다중 FM 2-FM 개편 + 스킬 벤치마크 5영역 + 블로그 분석/환경 분리 + 인용검증기 공유
 **진행:** 어제 착수한 다중 FM 임베딩을 UNI2-h까지 확장(2-FM)하며 여러 버그를 잡았고, 외부 스킬 벤치마크를 5개 영역으로 마무리했으며, 블로그를 분석/환경 2계열로 나눠 Confluence·Drive에 반영하고, 인용검증기를 BIOP01과 공유했다. 집필(월요일 시작)을 위한 JIRA 요청 2건도 발송.
 
