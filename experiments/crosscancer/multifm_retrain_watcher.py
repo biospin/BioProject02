@@ -21,8 +21,14 @@ PY = "/opt/envs/spatialpatho/bin/python"
 RUN = HERE / "run_mil_cost.py"
 LOG = HERE / "multifm_retrain.log"
 
-# 대상: (코호트, 목표 임베딩 수). CANCER_CFG 대상만.
-COHORTS = {"COLORECTAL": 622, "LUNG_NSCLC": 1052}
+# 대상: (코호트, 목표 임베딩 수).
+# 2026-07-21 확장: 두경부·위 추가. 임베딩이 이미 끝났는데 폐(0/1052)를 기다리느라
+# 재학습이 안 돌던 빈틈을 메움. 특히 두경부는 우리 유일한 검정력 있는 CONFIRM(HPV 0.9594)이 있어
+# 다른 FM에서 재현되는지가 모델 비의존성 주장에 가장 값짐.
+COHORTS = {"COLORECTAL": 622, "LUNG_NSCLC": 1052, "HEADNECK_HNSC": 472, "GASTRIC_STAD": 442}
+# 암종별 실행 스크립트: 폐·대장=run_mil_cost.py(CANCER_CFG 보유) / 두경부·위=sh_mil_cost.py(격리판)
+SCRIPT_BY_COHORT = {"COLORECTAL": "run_mil_cost.py", "LUNG_NSCLC": "run_mil_cost.py",
+                    "HEADNECK_HNSC": "sh_mil_cost.py", "GASTRIC_STAD": "sh_mil_cost.py"}
 FMS = ["virchow2", "uni2h"]
 EMB = "/workspace/data/cache/biop02/{lc}/{fm}"
 POLL_SEC = 600          # 10분 폴링
@@ -48,7 +54,8 @@ def result_exists(cancer, fm):
 def train(cancer, fm, device):
     log(f"▶ 재학습 시작: {cancer} / {fm} (device={device})")
     t0 = time.time()
-    r = subprocess.run([PY, str(RUN), "--cancer", cancer, "--fm", fm, "--device", device],
+    script = HERE / SCRIPT_BY_COHORT.get(cancer, "run_mil_cost.py")
+    r = subprocess.run([PY, str(script), "--cancer", cancer, "--fm", fm, "--device", device],
                        capture_output=True, text=True, timeout=7200)
     if r.returncode == 0 and result_exists(cancer, fm):
         log(f"✅ 완료: {cancer}/{fm} ({time.time()-t0:.0f}s) → mil_cost_results_{fm}.json (critic_status pending)")
