@@ -305,3 +305,19 @@
 **배경:** BIOP01 profile-likelihood(`p3_profile_likelihood.py --subset 400`) 백그라운드 실행 중 — 타 세션, BIOP02 무관, 미개입.
 
 **세션 마무리:** 게재료(APC) 조사 → `research/publication-cost-2026-07.md`(최저 eLife $2.5k / J.Pathol.Informatics $1.47k; 한국 KESLI/NST 협정은 대학·출연연만 → 싸이토젠 소속 미커버). BIOP02-90 Subtask 생성(sjpark ER 예측, -53 하위) + sjpark 카톡 문구. **발표 블러브 최종 확정**(제목 "단일세포부터 병리 이미지까지", 연결=치료효과 01 속도/02 아형처방 → 치료효과에 다가섬; DRP·em대시·클리셰·구어체 제거, 결과 폄하 X). **SESSION_LOG 프로젝트별 분리**(BIOP01 항목 제거, 전역 ~/.claude 동기화 중단, memory `feedback-session-log-project-scoped`). HANDOFF 즉시재개 갱신(다음 창 인수인계). 커밋 `ca38fd5`까지 push.
+
+## 2026-07-17 — Critic G2 6차 재판정: Paper C **`pass`** (PR #53·#54 검증 병합)
+
+**판정: `caution` → `pass`.** 7항목 = **pass 6 · caution 1 · reject 0** (main `3c96887` 기준, 서명 커밋 별도).
+
+**승격 근거 = 자기기준 충족.** 4차에서 "pass 조건 = #1 서버검증 + #3 처리"로 못박았고 5차에 #1(PR #50), 6차에 #3(PR #54)이 충족. **기준을 사후에 올리지 않는다.**
+
+**#3 counterfactual → PASS (PR #54, kkkim).** 핵심은 **재현 게이트**: `counterfactual_faithfulness.json`의 `stored_auc` **10/10이 봉인 정본 `mil_cost_results.json`의 `endpoints.<ep>.real`과 정확 일치**(braveji 전수 대조), Δ_repro=0.0000 → 재학습 모델=봉인 모델, counterfactual이 방어 대상에 부착됨. attention-faithfulness **6/6**(AUC≥0.8 전 endpoint), 10%·20% 포함 **12/12 방향 일치**(귀무 p≈0.016). 헤드라인 **hpv_pos 마진 +0.1055 = 무작위 대비 76배**. 低AUC 4종은 N/A 처리(신호 없는 곳 채점 안 한 절제, 적정). **한계(Limitation 요망)**: random 제거가 슬라이드당 **단일 draw**(`counterfactual_attention_crosscancer.py:120`)라 endpoint별 유의성 미확립 — grade_high(+0.0166)·egfr_activating(+0.0211)은 마진 작음. 판정 근거는 개별 유의성이 아니라 **12/12 집합 증거**.
+
+**#4 cross-dataset `not_applicable` → PASS (PR #53 kkkim owner 재실행 + PR #51 jhans fix).** kkkim이 자기 초기 진단("데이터가 구조적 상보")을 **자진 철회**, 실제 원인은 `zip(dropna(), full_series)` 위치 오정렬 **코드 버그**. **Critic의 5차 not_applicable도 같은 오진에 기반했으므로 함께 정정.** 재실행: COLORECTAL 1→**30** median ρ=**0.5919**(음의 ρ 0/7), LUNG 14→**96** ρ=**0.3287**(음의 ρ 1/7). **진짜 근거는 생물학적 정합** — 대장 MAPK축(Dabrafenib +0.592·Trametinib +0.485·Selumetinib +0.349) 전부 양수, 폐 EGFR-TKI축(Osimertinib +0.329·Afatinib +0.407·Erlotinib +0.358) 일관 양수 = 두 데이터셋이 동일 약물군에서 동일 방향. 유일 음수 Bicalutamide −0.570은 n=11·p=0.067 off-target → 감점 근거로 쓰지 않음. **기록**: 임계 `median_rho>=0.3`은 **사전등록 문서에 없고** `crosscancer_subcheck.py:254` 코드에만 존재(jhans 설정이라 anti-self-reference 위반 아님, Methods에 출처 명시 필요). LUNG 0.3287은 임계 **0.03 초과**에 불과.
+
+**잔여 caution #2.** CLAM이 mean_embed를 유의하게 이기지 못함(CI 중첩). 다만 Paper C의 주장은 "형태학이 특정 축에서 분자검사를 값싸게 대체 가능한가"이지 **"MIL이 mean-embedding보다 낫다"가 아니며 후자는 Paper C가 하지 않는 주장**. H&E가 우연을 넘는 축은 shuffle-null·pixel-mean·counterfactual **3중 확립**. → #2는 전체 pass를 막지 않되 **Limitation 필수 기술** 조건을 단다.
+
+**claim 규율 불변.** `claim_level: hypothesis_only`. 사전등록 "이분법 미확립" 결론·exploratory 표기 그대로 — **pass는 "검증 절차가 온전하다"는 뜻이지 "법칙이 확증됐다"는 뜻이 아니다.**
+
+**제출 전 필수 3건:** ① #2 MIL 신호 중복성 Limitation ② #3 단일 draw Limitation ③ #4 임계 0.3 출처 Methods 명시 + LUNG 임계근접 병기.
