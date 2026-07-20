@@ -21,6 +21,7 @@
 | T4 | 07-19 | T | `pgrep -af` 카운트가 **셸 래퍼까지 세어** master 3개(중복 기동)로 오판 | `ps -eo pid,ppid,cmd`로 python 프로세스만 확인 후 판단 |
 | T5 | 07-19 | T | `cut -d, -f<N>` **필드 번호 착오**로 다른 컬럼을 읽음(histology 자리에 kras) — 그대로 갔으면 "LUSC 70/1050" 오수치 | 헤더로 컬럼명 확인 후 인덱스 확정, 또는 csv.DictReader 사용 |
 | T6 | 07-20 | T | MCP 서버가 끊기자 **JIRA 기록 자체가 불가**하다고 결론 | REST `api/3` + ADF curl 우회가 정본(memory `infra-atlassian-credentials`). "도구 하나가 죽었다"≠"경로가 없다" |
+| T7 | 07-21 | T | **댓글 헬퍼가 없어서**(desc·transition만 존재) MCP 죽자 댓글 경로가 실제로 없었음 — 스킬도 댓글만 MCP로 라우팅 | `~/bin/jira-comment` 신설(ADF POST, 검증 id 11364) + `jira-done` 스킬의 MCP 의존 제거 |
 | G1 | 07-19 | G | `git fetch`만 하고 **merge를 안 해** 브랜치가 main 대비 97앞/13뒤로 드리프트 | SessionStart 훅 `git_drift_check.sh`(앞/뒤 자동 표시) + memory `feedback-branch-hygiene` |
 | G2 | 07-19 | G | 장수 브랜치 1개에 무관한 작업을 계속 쌓음(Critic 리뷰 브랜치에 Paper C·블로그) | 티켓당 짧은 브랜치·완성 조각은 focused PR(#32·#36 방식) |
 | G3 | 07-19 | G | **정책 충돌**(프로젝트 CLAUDE.md=SESSION_LOG 커밋하라 ↔ memory=커밋 금지) 상태에서 한쪽만 보고 커밋 | 충돌을 사용자에게 보고 후 (B) 미추적으로 통일, 양쪽 문서 동시 정정 |
