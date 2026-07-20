@@ -1,6 +1,6 @@
 {
   "schema_version": "0.1",
-  "created_at": "2026-07-16T08:46:06+00:00",
+  "created_at": "2026-07-20T01:11:05+00:00",
   "reviewer": "braveji",
   "owner": "kkkim",
   "experiment": {
@@ -41,22 +41,28 @@
       "notes": "reject → caution. #2가 요구한 pixel-mean baseline(BLOCKER-3)과 5-seed 우연배제(BLOCKER-4-2)가 PR #36으로 전 암종에 산출됐고, Critic이 5-seed 판정을 독립 재계산해 10/10 일치를 확인했다. 두경부 HPV가 5-seed를 통과해 우연배제가 확립됐다. subtype-only는 여전히 미산출이나, 형태 상관물 법칙에는 pixel-mean/mean-pool 대조가 핵심이라 pass 게이트가 아니라 Limitation(MIL이 pixel-mean을 크게 넘지 못하는 endpoint 명시)으로 처리 가능. pass 승격은 #4/#5 sub-check 후."
     },
     "counterfactual_check": {
-      "status": "caution",
+      "status": "pass",
       "evidence": [
         "COLORECTAL: misroute cost(anti_egfr 0.416) + 증분 LR(CMS 투입 시 증분 소멸) — counterfactual 성격 분석 존재",
-        "LUNG / GASTRIC_STAD / HEADNECK_HNSC: 특징 제거 counterfactual 부재 (shuffle-null은 라벨 순열이지 특징 제거가 아님)"
+        "LUNG / GASTRIC_STAD / HEADNECK_HNSC: 특징 제거 counterfactual 부재 (shuffle-null은 라벨 순열이지 특징 제거가 아님)",
+        "[6차, PR #54 kkkim] 재현 게이트: counterfactual_faithfulness.json의 stored_auc 10/10이 봉인 정본 mil_cost_results.json의 endpoints.<ep>.real과 정확히 일치(braveji 전수 대조), Δ_repro=0.0000 → 재학습 모델=봉인 모델, counterfactual이 방어 대상에 부착됨.",
+        "[6차] attention-faithfulness 6/6 (AUC≥0.8 endpoint 전부, 10%·20% 제거 12/12 예측 방향): HNSC hpv_pos 마진 +0.1055(top 0.1069 vs rnd 0.0014, 76배) · LUNG histology_lusc +0.0833 · GASTRIC ebv +0.0801 · GASTRIC msi_h +0.0306 · LUNG egfr_activating +0.0211 · HNSC grade_high +0.0166. 동전던지기 귀무 하 6/6 p≈0.016.",
+        "[6차] AUC<0.8 endpoint(kras_g12c·lauren_diffuse·erbb2_amp·egfr_amp)는 N/A 처리 — 신호 없는 곳에서 faithfulness를 채점하지 않은 절제로 판단, 적정."
       ],
-      "notes": "sealed-forward 3개 암종에 counterfactual 없음. 블로커는 아니나 CONFIRM 서술 전 보완 필요."
+      "notes": "PASS. shuffle-null(라벨순열)이 못 채우던 '특징 제거' 축이 채워졌고, 특히 재현 게이트(Δ=0.0, 10/10 봉인값 일치)로 counterfactual이 실제 방어 대상 모델에 부착됨이 확인됨. 헤드라인 hpv_pos의 top-attention 제거 낙폭이 무작위 대비 76배 — Paper C의 유일한 검정력 있는 확증이 attended morphology에 의존함을 직접 시연. 한계(Limitation 기술 요망, blocker 아님): counterfactual_attention_crosscancer.py:120의 random 제거가 슬라이드당 단일 draw라 random baseline 분포가 없고 endpoint별 유의성은 미확립. 마진이 큰 hpv/lusc/ebv는 단일 draw로 뒤집힐 여지 사실상 없으나 grade_high(+0.0166)·egfr_activating(+0.0211)은 다중 draw 시 CI가 0을 걸칠 수 있음. 판정 근거는 개별 endpoint 유의성이 아니라 12/12 방향 일치라는 집합 증거이며, 이는 단일 draw로도 성립."
     },
     "cross_dataset_check": {
-      "status": "not_applicable",
+      "status": "pass",
       "evidence": [
         "[sub-check 완료, PR #47] jhans crosscancer_subcheck.py(PR #44)를 kkkim이 실데이터 실행. reviewer=jhans(non-owner) → Owner≠Reviewer 충족.",
         "#4 DepMap PRISM vs GDSC 일관성 = 판정불가(pending_data, 구조적). PRISM subsetted 파일이 GDSC와 비중첩: 대장 PRISM∩GDSC=1/∪=86, per-drug 전부 skip(PRISM미수록 또는 n<5). 폐 교집합 14로 median Spearman 낮음.",
         "근본원인(CHECK4_ROOTCAUSE_NOTE, Critic 검증): ID 조인 정상(ACH ModelID), PRISM subset이 GDSC 여집합으로 구성된 데이터 provisioning 문제 — '일치성 실패'가 아님. jhans 수정방향 3개 제시(subset 필터 재점검 / GDSC 겹치는 PRISM AUC 재수신 / #4 재설계).",
-        "[5차, PR #51 jhans] SangerModelID→ModelID 매핑 버그(zip(dropna(), full_series) 위치 오정렬) 진단·수정. dropna(subset=)로 행단위 동시필터 = 정석 해법이며 Critic 코드검토 통과. 단 재실행 산출물 0건(PR Test plan 2/2 미체크), 본문의 'COLORECTAL 30/LUNG 96'은 출처 JSON 부재로 검증 불가 → not_applicable 유지. 재실행 crosscancer_subcheck_*.json 커밋 시 즉시 재판정."
+        "[5차, PR #51 jhans] SangerModelID→ModelID 매핑 버그(zip(dropna(), full_series) 위치 오정렬) 진단·수정. dropna(subset=)로 행단위 동시필터 = 정석 해법이며 Critic 코드검토 통과. 단 재실행 산출물 0건(PR Test plan 2/2 미체크), 본문의 'COLORECTAL 30/LUNG 96'은 출처 JSON 부재로 검증 불가 → not_applicable 유지. 재실행 crosscancer_subcheck_*.json 커밋 시 즉시 재판정.",
+        "[6차, PR #53 kkkim owner 재실행 + PR #51 jhans fix] FIXED_rerun 원자료 braveji 전수 검증: COLORECTAL 교집합 1→30 median ρ=0.5919(음의 ρ 0/7), LUNG_NSCLC 14→96 median ρ=0.3287(음의 ρ 1/7). 양 암종 일치 4/7(57.1%).",
+        "[6차] 생물학적 정합이 핵심 근거: 대장 MAPK축 Dabrafenib +0.592·Trametinib +0.485·Selumetinib +0.349 전부 양수; 폐 EGFR-TKI축 Osimertinib +0.329·Afatinib +0.407·Erlotinib +0.358·Ibrutinib +0.360 일관 양수 — PRISM·GDSC가 동일 약물군에서 동일 방향.",
+        "[6차] 유일한 음수 Bicalutamide ρ=−0.570은 n=11·p=0.067(폐암에서 off-target 안드로겐 길항제) → 노이즈로 판단, 결과 감점 근거로 쓰지 않음."
       ],
-      "notes": "caution → not_applicable(구조적 판정불가). Paper C의 #4는 데이터 교집합 부족으로 현 데이터셋에서 계산 불가이며, 이는 결과 실패가 아니라 provisioning 문제다. Paper A/B/C 공통으로 DepMap/GDSC cross-dataset은 Limitation으로 기술. PRISM 재수신 시 재판정 가능하나 pass 게이트 아님(hypothesis_only claim)."
+      "notes": "PASS. 5차의 not_applicable은 kkkim 초기 오진('데이터가 구조적으로 상보적')을 근거로 삼은 것이었고, 실제 원인은 zip(dropna(), full_series) 위치 오정렬 코드 버그였다 — kkkim이 자기 진단을 자진 철회했고 jhans가 수정(PR #51), Critic의 not_applicable 판정도 같은 오진에 기반했으므로 함께 정정한다. 기록(blocker 아님): (1) 임계 median_rho>=0.3은 사전등록 문서에 없고 crosscancer_subcheck.py:254 코드에만 존재 — jhans가 설정해 Critic anti-self-reference 위반은 아니나 사후 임계로 보일 여지가 있어 Methods에 출처 명시 필요. (2) LUNG median 0.3287은 임계를 0.03 초과할 뿐이라 점추정이 임계에 근접 — Limitation 기술 요망(대장 0.5919는 여유 충분)."
     },
     "biological_plausibility": {
       "status": "pass",
@@ -88,16 +94,15 @@
       "notes": "claim 규율과 정직 라벨링 자체는 양호. 다만 위암 erbb2_amp를 '유방 HER2와 방향 일치'로 인용한 결론 2번은 근거가 null-equivalent이므로 철회 필요(블로커 1)."
     }
   },
-  "critic_status": "caution",
+  "critic_status": "pass",
   "claim_level": "hypothesis_only",
-  "summary": "G2 5차 재판정(PR #50·#51 검토) — critic_status: caution 유지, 단 #1 data_leakage가 caution→PASS 승격. 【#1 PASS】 PR #50(kkkim)이 4차 재판정의 #1 pass 조건 2건을 모두 충족: ① patient-overlap assert 4/4 암종 patient·TSS overlap=0 ALL_PASS, ② /workspace 실파일 ls가 manifest 건수와 일치(43G). braveji가 원자료로 독립 재검증 — HNSC test split 78/78 임베딩 100% 커버로 헤드라인 hpv_pos 0.9594 평가 유효(Critic이 제기한 51건 차이 우려는 결손이 train/val에 국한됨을 확인하고 기각). 증거문서 표기 2건 부정확(n_slides=523은 case 수·실슬라이드 472 / '1 slide=1 patient'는 450 고유case로 불성립)이나 split이 case 단위라 누수 결론은 유효 — 정정 요청, 판정 불변. 【#4 not_applicable 유지】 PR #51(jhans)의 ID 매핑 버그 수정은 코드검토상 타당(Critic 4차의 '데이터 부재' 원인귀속이 틀렸을 가능성 시사)하나, 재실행 산출물 0건·Test plan 미체크로 pass 근거 미확보. 코드 병합은 찬성, 판정은 산출물 도착 후. 【전체 caution】 남은 caution = #2(baseline: CLAM vs mean_embed 유의차 미확립)·#3(sealed-forward 3암종 counterfactual 미보완). 4차에 명시한 'pass 재판정 조건 = #1 서버검증 + #3 처리' 중 #1만 충족 — Critic 자신이 정한 기준을 지켜 caution 유지. reject 0, 모든 sub-check 완료.",
+  "summary": "G2 6차 재판정(main 3c96887, PR #53·#54 병합 후) — critic_status: caution → **PASS**. 7항목 = pass 6 · caution 1 · reject 0. 【승격 근거 = 4차에 명시한 자기기준 충족】 4차 재판정에서 'pass 조건 = #1 서버검증 + #3 처리'로 못박았고, 5차에 #1(PR #50), 6차에 #3(PR #54)이 충족됐다. 기준을 사후에 올리지 않는다. 【#3 PASS】 재현 게이트 Δ=0.0(stored_auc 10/10이 봉인 mil_cost_results.json과 정확 일치, braveji 전수 대조) 위에서 attention-faithfulness 6/6·12/12 방향 일치(귀무 p≈0.016). 헤드라인 hpv_pos 마진 76배. 【#4 not_applicable → PASS】 5차 판정은 kkkim 오진에 기반했고 실제 원인은 ID 매핑 코드 버그(jhans PR #51 수정) — Critic 자신의 원인귀속 오류를 정정한다. 재실행 결과 대장 ρ=0.5919·폐 0.3287, MAPK·EGFR-TKI 약물군이 두 데이터셋에서 동일 방향. 【잔여 caution #2】 baseline_comparison — CLAM이 mean_embed를 유의하게 이기지 못함(CI 중첩). 다만 Paper C의 주장은 '형태학이 특정 축에서 분자검사를 값싸게 대체 가능한가'이지 'MIL이 mean-embedding보다 낫다'가 아니며, 후자는 Paper C가 하지 않는 주장이다. H&E가 우연을 넘는다는 축은 shuffle-null·pixel-mean·counterfactual 3중으로 확립됐다. 따라서 #2 caution은 전체 pass를 막지 않되 **Limitation 필수 기술** 조건을 단다. 【claim 규율 유지】 claim_level=hypothesis_only 불변. 사전등록 법칙의 '이분법 미확립' 결론과 exploratory 표기는 그대로 — pass는 '검증 절차가 온전하다'는 뜻이지 '법칙이 확증됐다'는 뜻이 아니다.",
   "required_followups": [
-    "[kkkim] PR #50 증거문서 표기 정정 3건 — 'n_slides=523'→'523 case / 472 slide', '1 slide=1 patient' 서술 철회(manifest 472행/450 고유case), overlap_assert.py 재현 스크립트 PR 포함. (#1 pass의 조건 아님, 문서 정확성)",
+    "[제출 전 필수, #2 조건] Limitations에 'CLAM이 mean_embed 대비 유의한 부가가치를 보이지 못함(CI 중첩) = MIL 신호 중복성' 명시. 이 기술이 없으면 pass 조건 미충족.",
+    "[제출 전 필수, #3 조건] Limitations에 'counterfactual random baseline은 슬라이드당 단일 draw로 endpoint별 유의성 미검정, 판정 근거는 12/12 방향 일치의 집합 증거' 명시. grade_high·egfr_activating은 마진이 작음을 병기.",
+    "[Methods, #4 조건] cross-dataset 임계 median_rho>=0.3의 출처 명시(jhans crosscancer_subcheck.py:254, 사전등록 문서 외 설정). LUNG median 0.3287이 임계 근접임을 Limitation에 병기.",
+    "[kkkim] PR #50 증거문서 표기 정정 3건 — 'n_slides=523'→'523 case / 472 slide', '1 slide=1 patient' 서술 철회, overlap_assert.py 재현 스크립트 커밋.",
     "[kkkim] HNSC 커버리지 비무작위 결손 분석 — train 72/366(19.7%)·val 5/79(6.3%) 임베딩 결손의 라벨/TSS 편향 여부. test는 100% 커버라 헤드라인 무관하나 학습 분포 편향 가능.",
-    "[jhans] PR #51 재실행 → crosscancer_subcheck_*.json 커밋 시 #4 즉시 재판정(not_applicable→pass 가능). 또한 kkkim 실행본과 PR #51 스크립트의 계보 일치 확인 — main에 원본 .py 부재로 분기 위험.",
-    "[Paper C 서술] #3 sealed-forward 3암종(폐/위/두경부) counterfactual 보완 또는 'MIL 신호 중복성' Limitation 명시.",
-    "[Paper C 서술] #4 DepMap PRISM vs GDSC = 데이터 provisioning 한계로 Limitation 기술. subtype-only 미산출·pixel-mean 근접 endpoint도 함께.",
-    "[jhans] #4 재수신 옵션(GDSC 겹치는 PRISM AUC) 검토 — pass 게이트 아니나 cross-dataset 근거 보강 시 유용.",
-    "위 #1 서버검증 + #3 처리 완료 후 critic_status pass 재판정. 현재 모든 sub-check 완료·reject 0."
+    "[jhans/kkkim] crosscancer_subcheck.py 계보 단일화 — agents/therapeutic_evidence/scripts/ 판본과 kkkim 실행본의 분기 방지."
   ]
 }

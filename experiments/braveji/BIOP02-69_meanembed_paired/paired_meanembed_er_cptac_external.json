@@ -1,0 +1,19 @@
+{
+  "task": "er",
+  "split": "cptac_external",
+  "n": 387,
+  "n_pos": 237,
+  "auc_clam": 0.894,
+  "auc_mean_embed": 0.7653,
+  "diff_clam_minus_mean_embed": 0.1283,
+  "diff_ci_95": [
+    0.0885,
+    0.1707
+  ],
+  "p_value_approx": 0.0,
+  "significant_at_0.05": true,
+  "n_bootstrap": 2000,
+  "seed": 42,
+  "baseline_def": "modeling.baselines.trivial.MeanEmbedBaseline (sjpark 소유 정의 재사용)",
+  "note": "run_baselines.py가 proba를 저장하지 않아 공백이던 Critic #2 paired 검정을 braveji가 /workspace 임베딩에서 독립 산출"
+}
