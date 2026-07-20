@@ -1,7 +1,24 @@
-# Critic #4 (cross-dataset PRISM vs GDSC) — 판정불가 근본원인
+# Critic #4 (cross-dataset PRISM vs GDSC) — 근본원인 [정정됨]
+
+> ## ⚠️ 정정 (2026-07-16 저녁, kkkim) — 아래 초기 진단은 **틀렸음**
+> **초기 결론("데이터가 구조적으로 상보적 → 계산 불가")은 오진이었다.** 진짜 원인은 **코드 매핑 버그**다:
+> `sid_to_mid = dict(zip(model["SangerModelID"].dropna(), model["ModelID"]))` — `dropna()`를 SangerModelID에만 걸어
+> ModelID와 **행 정렬이 어긋나** Sanger→ModelID 매핑이 틀렸다. 그 결과 GDSC↔PRISM 교집합이 인위적으로 1(대장)/14(폐)로 붕괴.
+> **내 진단 스크립트도 같은 버그를 그대로 써서** "교집합 1 = 구조적"이라 오판한 것. (즉 "ID 조인 정상"이라는 아래 주장 자체가 틀렸다.)
+>
+> **jhans가 정확히 진단·수정**(`dropna(subset=[...])` 양쪽 동시 필터, **PR #51 MERGED**). **kkkim이 수정본으로 재실행 검증(owner):**
+> - 대장 교집합 **1→30**, median Spearman ρ **0.5919**, status=**pass** (Dabrafenib 0.592 p=.002, Gefitinib 0.637, Trametinib 0.485…)
+> - 폐 교집합 **14→96**, median ρ **0.3287**, status=**pass** (Osimertinib 0.329 p=.001, Afatinib 0.407, Erlotinib 0.358…)
+> - **#4 cross-dataset = PASS · `critic_upgrade_possible: true`.** 증거: `FIXED_rerun/`.
+>
+> → **braveji: #4 not_applicable → pass 재판정 가능**(5차 판정에서 열어둔 "즉시 재판정" 경로). 아래 원문은 오진 기록으로 보존(교훈: 같은 버그를 검증 스크립트에 복제하면 버그가 "데이터 특성"처럼 보인다).
+
+---
+
+# [원본·오진] Critic #4 — 판정불가 근본원인
 
 > owner(kkkim) 실행 기록, 2026-07-16. 대상: jhans `crosscancer_subcheck.py` (PR #44) #4 로직.
-> **결론: 제공된 데이터로는 #4가 구조적으로 계산 불가. "fail"이 아니라 "데이터 provisioning 문제".**
+> **결론(❌ 틀림): 제공된 데이터로는 #4가 구조적으로 계산 불가. "fail"이 아니라 "데이터 provisioning 문제".**
 
 ## 증상
 `crosscancer_subcheck.py --gdsc ... --prism_bowel ... --prism_lung ...` 실행 시:
