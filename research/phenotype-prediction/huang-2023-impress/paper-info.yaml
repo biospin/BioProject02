@@ -1,0 +1,77 @@
+document_type: paper
+title: "Artificial intelligence reveals features associated with breast cancer neoadjuvant chemotherapy responses from multi-stain histopathologic images"
+authors:
+  - Zhi Huang
+  - Wei Shao
+  - Zhi Han
+  - Ahmad Mahmoud Alkashash
+  - Carlo De la Sancha
+  - Anil V. Parwani
+  - Hiroaki Nitta
+  - Yanjun Hou
+  - Tongxin Wang
+  - Paul Salama
+  - Maher Rizkalla
+  - Jie Zhang
+  - Kun Huang
+  - Zaibo Li
+year: 2023
+venue: "npj Precision Oncology"
+volume: "7"
+article_number: "14"
+doi: "10.1038/s41698-023-00352-5"
+keywords:
+  - IMPRESS
+  - neoadjuvant chemotherapy response
+  - HER2-positive breast cancer
+  - triple-negative breast cancer
+  - multiplex IHC (PD-L1, CD8, CD163)
+  - tumor immune micro-environment
+  - interpretable histopathology features
+topics: [PHENO]
+citation:
+  key: huang-2023-impress
+  short_id: IMPRESS
+sources:
+  paper:
+    url: "https://www.nature.com/articles/s41698-023-00352-5"
+    doi: "10.1038/s41698-023-00352-5"
+    pmc: "PMC9883475"
+    status: verified (WebFetch via PMC9883475 full text + GitHub)
+  code:
+    - "https://github.com/huangzhii/IMPRESS"  # MIT license; Python + MATLAB
+    - "features/ + clinical/ folders provide pre-extracted 36 features (HER2+/TNBC) — ML step reproducible without raw WSI"
+    - "deps: PyTorch 1.6.0, scikit-learn 0.23.2, OpenCV 4.4.0, OpenSlide 1.1.2"
+  data:
+    - "H&E + multiplex IHC (PD-L1, CD8, CD163) breast cancer WSIs"
+    - "development cohort: Ohio State University (HER2+ 62, TNBC 64; accrual 2011-2016)"
+    - "external validation: n=20/subtype (10 pCR / 10 residual each); source institution [미확인]"
+categorization:
+  domain:
+    - computational pathology
+    - neoadjuvant response prediction
+  use_case:
+    - predict NAC response in HER2+ and TNBC from H&E + IHC features
+  importance:
+    level: 상
+    perspective: >
+      TARGET-JOURNAL precedent (npj Precision Oncology) for H&E -> treatment-
+      response prediction in breast cancer. Establishes the venue's expectation
+      for interpretable-feature NAC-response models and an AUC band
+      (HER2+ 0.90; TNBC 0.77 dev).
+priority:
+  level: P1
+  reason: >
+    Journal-fit exemplar (target venue) + interpretable-feature baseline +
+    external-fragility evidence. Cited on 3 axes. CAUTION on numbers: both
+    external AUCs rest on n=20/subtype (10 pCR/10 residual) so neither the
+    HER2+ 0.90 nor the TNBC 0.59 is a robust bar — the TNBC dev-0.77 ->
+    external-0.59 collapse is the salient fragility signal; the HER2+ 0.90
+    must NOT be cited as a solid upper band. Classical LASSO logistic + LOOCV
+    on 36 interpretable features (not end-to-end DL). Their HER2+ target = NAC
+    (chemo±anti-HER2) with multiplex IHC co-registration, distinct in regimen
+    AND modality from our H&E-only anti-HER2 axis anchor (Farahmand 0.80).
+workflow:
+  created: "2026-07-17"
+  last_updated: "2026-07-17"
+  tier: "deep"

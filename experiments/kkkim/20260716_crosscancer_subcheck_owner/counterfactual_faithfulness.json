@@ -1,0 +1,229 @@
+{
+  "analysis": "Critic #3 sealed-forward attention-faithfulness counterfactual",
+  "method": "top-attention vs random tile removal → held-out patient AUC 낙폭 비교",
+  "owner": "kkkim",
+  "role": "braveji #3 증거(Critic 서명 아님)",
+  "claim_level": "hypothesis_only",
+  "critic_status": "pending",
+  "gpu": "cuda:1",
+  "tol": 0.01,
+  "high_auc_threshold": 0.8,
+  "per_cancer": {
+    "LUNG_NSCLC": {
+      "histology_lusc": {
+        "stored_auc": 0.939,
+        "repro_auc": 0.939,
+        "delta": 0.0,
+        "reproduced_within_tol": true,
+        "n_pos": 153,
+        "n_holdout": 271,
+        "counterfactual": {
+          "full_auc": 0.939,
+          "removal": {
+            "10pct": {
+              "auc_top_removed": 0.9071,
+              "auc_random_removed": 0.9392,
+              "drop_top": 0.0319,
+              "drop_random": -0.0002,
+              "faithful(top>random)": true
+            },
+            "20pct": {
+              "auc_top_removed": 0.8552,
+              "auc_random_removed": 0.9385,
+              "drop_top": 0.0838,
+              "drop_random": 0.0005,
+              "faithful(top>random)": true
+            }
+          }
+        }
+      },
+      "egfr_activating": {
+        "stored_auc": 0.8518,
+        "repro_auc": 0.8518,
+        "delta": 0.0,
+        "reproduced_within_tol": true,
+        "n_pos": 15,
+        "n_holdout": 271,
+        "counterfactual": {
+          "full_auc": 0.8518,
+          "removal": {
+            "10pct": {
+              "auc_top_removed": 0.8161,
+              "auc_random_removed": 0.8526,
+              "drop_top": 0.0357,
+              "drop_random": -0.0008,
+              "faithful(top>random)": true
+            },
+            "20pct": {
+              "auc_top_removed": 0.8294,
+              "auc_random_removed": 0.8505,
+              "drop_top": 0.0224,
+              "drop_random": 0.0013,
+              "faithful(top>random)": true
+            }
+          }
+        }
+      },
+      "kras_g12c": {
+        "stored_auc": 0.6809,
+        "repro_auc": 0.6809,
+        "delta": 0.0,
+        "reproduced_within_tol": true,
+        "n_pos": 14,
+        "n_holdout": 271,
+        "counterfactual": {
+          "status": "N/A",
+          "reason": "AUC 0.6809 < 0.8 (H&E-blind, signal 없음→faithfulness 무의미)"
+        }
+      }
+    },
+    "GASTRIC_STAD": {
+      "msi_h": {
+        "stored_auc": 0.8599,
+        "repro_auc": 0.8599,
+        "delta": 0.0,
+        "reproduced_within_tol": true,
+        "n_pos": 24,
+        "n_holdout": 107,
+        "counterfactual": {
+          "full_auc": 0.8599,
+          "removal": {
+            "10pct": {
+              "auc_top_removed": 0.8504,
+              "auc_random_removed": 0.8599,
+              "drop_top": 0.0095,
+              "drop_random": 0.0,
+              "faithful(top>random)": true
+            },
+            "20pct": {
+              "auc_top_removed": 0.8238,
+              "auc_random_removed": 0.8544,
+              "drop_top": 0.0361,
+              "drop_random": 0.0055,
+              "faithful(top>random)": true
+            }
+          }
+        }
+      },
+      "ebv": {
+        "stored_auc": 0.9477,
+        "repro_auc": 0.9477,
+        "delta": 0.0,
+        "reproduced_within_tol": true,
+        "n_pos": 7,
+        "n_holdout": 89,
+        "counterfactual": {
+          "full_auc": 0.9477,
+          "removal": {
+            "10pct": {
+              "auc_top_removed": 0.8868,
+              "auc_random_removed": 0.9408,
+              "drop_top": 0.0609,
+              "drop_random": 0.0069,
+              "faithful(top>random)": true
+            },
+            "20pct": {
+              "auc_top_removed": 0.8659,
+              "auc_random_removed": 0.946,
+              "drop_top": 0.0818,
+              "drop_random": 0.0017,
+              "faithful(top>random)": true
+            }
+          }
+        }
+      },
+      "lauren_diffuse": {
+        "stored_auc": 0.5364,
+        "repro_auc": 0.5364,
+        "delta": 0.0,
+        "reproduced_within_tol": true,
+        "n_pos": 31,
+        "n_holdout": 58,
+        "counterfactual": {
+          "status": "N/A",
+          "reason": "AUC 0.5364 < 0.8 (H&E-blind, signal 없음→faithfulness 무의미)"
+        }
+      },
+      "erbb2_amp": {
+        "stored_auc": 0.6444,
+        "repro_auc": 0.6444,
+        "delta": 0.0,
+        "reproduced_within_tol": true,
+        "n_pos": 14,
+        "n_holdout": 107,
+        "counterfactual": {
+          "status": "N/A",
+          "reason": "AUC 0.6444 < 0.8 (H&E-blind, signal 없음→faithfulness 무의미)"
+        }
+      }
+    },
+    "HEADNECK_HNSC": {
+      "hpv_pos": {
+        "stored_auc": 0.9594,
+        "repro_auc": 0.9594,
+        "delta": 0.0,
+        "reproduced_within_tol": true,
+        "n_pos": 26,
+        "n_holdout": 135,
+        "counterfactual": {
+          "full_auc": 0.9594,
+          "removal": {
+            "10pct": {
+              "auc_top_removed": 0.9178,
+              "auc_random_removed": 0.958,
+              "drop_top": 0.0416,
+              "drop_random": 0.0014,
+              "faithful(top>random)": true
+            },
+            "20pct": {
+              "auc_top_removed": 0.8525,
+              "auc_random_removed": 0.958,
+              "drop_top": 0.1069,
+              "drop_random": 0.0014,
+              "faithful(top>random)": true
+            }
+          }
+        }
+      },
+      "grade_high": {
+        "stored_auc": 0.8152,
+        "repro_auc": 0.8152,
+        "delta": 0.0,
+        "reproduced_within_tol": true,
+        "n_pos": 41,
+        "n_holdout": 147,
+        "counterfactual": {
+          "full_auc": 0.8152,
+          "removal": {
+            "10pct": {
+              "auc_top_removed": 0.8187,
+              "auc_random_removed": 0.8152,
+              "drop_top": -0.0035,
+              "drop_random": 0.0,
+              "faithful(top>random)": false
+            },
+            "20pct": {
+              "auc_top_removed": 0.7982,
+              "auc_random_removed": 0.8148,
+              "drop_top": 0.017,
+              "drop_random": 0.0004,
+              "faithful(top>random)": true
+            }
+          }
+        }
+      },
+      "egfr_amp": {
+        "stored_auc": 0.6039,
+        "repro_auc": 0.6039,
+        "delta": 0.0,
+        "reproduced_within_tol": true,
+        "n_pos": 17,
+        "n_holdout": 152,
+        "counterfactual": {
+          "status": "N/A",
+          "reason": "AUC 0.6039 < 0.8 (H&E-blind, signal 없음→faithfulness 무의미)"
+        }
+      }
+    }
+  }
+}

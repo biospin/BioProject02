@@ -1,0 +1,373 @@
+{
+  "schema_version": "0.1",
+  "created_at": "2026-07-16T09:19:14.368825Z",
+  "reviewer": "jhans (non-owner, Critic 7-point #4/#5 sub-check)",
+  "owner": "kkkim",
+  "claim_level": "hypothesis_only",
+  "check_5_biological_plausibility": [
+    {
+      "cancer": "COLORECTAL",
+      "status": "pass",
+      "positive_controls": {
+        "cancer": "COLORECTAL",
+        "n_positive_controls": 3,
+        "n_pass": 3,
+        "n_fail": 0,
+        "all_pass": true,
+        "details": {
+          "Dabrafenib": {
+            "most_sensitive": "antiBRAF",
+            "ok": true,
+            "z_scores": {
+              "antiBRAF": -1.582,
+              "baseline": 0.409
+            }
+          },
+          "Trametinib": {
+            "most_sensitive": "antiBRAF",
+            "ok": true,
+            "z_scores": {
+              "antiBRAF": -1.623,
+              "baseline": -0.892
+            }
+          },
+          "Selumetinib": {
+            "most_sensitive": "antiBRAF",
+            "ok": true,
+            "z_scores": {
+              "antiBRAF": -1.32,
+              "baseline": -0.696
+            }
+          }
+        }
+      },
+      "prior_consistency": {
+        "cancer": "COLORECTAL",
+        "issues": [],
+        "checks": [
+          {
+            "drug": "Dabrafenib",
+            "axis": "antiBRAF",
+            "most_sensitive_in_map": "antiBRAF",
+            "direction_ok": true,
+            "rationale": "BRAF-V600E CRC: BRAF+MEK 병용이 표준(BEACON-CRC). Dabrafenib/Encorafenib(BRAF), Trametinib/Selumetinib(MEK) 세포주 감수성 문헌 확립."
+          },
+          {
+            "drug": "PLX-4720",
+            "axis": "antiBRAF",
+            "most_sensitive_in_map": "antiBRAF",
+            "direction_ok": true,
+            "rationale": "BRAF-V600E CRC: BRAF+MEK 병용이 표준(BEACON-CRC). Dabrafenib/Encorafenib(BRAF), Trametinib/Selumetinib(MEK) 세포주 감수성 문헌 확립."
+          }
+        ],
+        "status": "pass"
+      }
+    },
+    {
+      "cancer": "LUNG_NSCLC",
+      "status": "pass",
+      "positive_controls": {
+        "cancer": "LUNG_NSCLC",
+        "n_positive_controls": 3,
+        "n_pass": 3,
+        "n_fail": 0,
+        "all_pass": true,
+        "details": {
+          "Gefitinib": {
+            "most_sensitive": "antiEGFR",
+            "ok": true,
+            "z_scores": {
+              "antiEGFR": -2.289,
+              "antiKRAS_G12C": 0.377,
+              "chemo": -0.188
+            }
+          },
+          "Afatinib": {
+            "most_sensitive": "antiEGFR",
+            "ok": true,
+            "z_scores": {
+              "antiEGFR": -2.184,
+              "antiKRAS_G12C": 0.306,
+              "chemo": -0.105
+            }
+          },
+          "Osimertinib": {
+            "most_sensitive": "antiEGFR",
+            "ok": true,
+            "z_scores": {
+              "antiEGFR": -2.859,
+              "antiKRAS_G12C": 0.49,
+              "chemo": -0.083
+            }
+          }
+        }
+      },
+      "prior_consistency": {
+        "cancer": "LUNG_NSCLC",
+        "issues": [],
+        "checks": [
+          {
+            "drug": "Gefitinib",
+            "axis": "antiEGFR",
+            "most_sensitive_in_map": "antiEGFR",
+            "direction_ok": true,
+            "rationale": "EGFR-activating(L858R/exon19del) NSCLC: EGFR TKI 감수성 세포주 데이터가 가장 견고한 positive control 중 하나."
+          },
+          {
+            "drug": "Afatinib",
+            "axis": "antiEGFR",
+            "most_sensitive_in_map": "antiEGFR",
+            "direction_ok": true,
+            "rationale": "EGFR-activating(L858R/exon19del) NSCLC: EGFR TKI 감수성 세포주 데이터가 가장 견고한 positive control 중 하나."
+          },
+          {
+            "drug": "Osimertinib",
+            "axis": "antiEGFR",
+            "most_sensitive_in_map": "antiEGFR",
+            "direction_ok": true,
+            "rationale": "EGFR-activating(L858R/exon19del) NSCLC: EGFR TKI 감수성 세포주 데이터가 가장 견고한 positive control 중 하나."
+          },
+          {
+            "drug": "Erlotinib",
+            "axis": "antiEGFR",
+            "most_sensitive_in_map": "antiEGFR",
+            "direction_ok": true,
+            "rationale": "EGFR-activating(L858R/exon19del) NSCLC: EGFR TKI 감수성 세포주 데이터가 가장 견고한 positive control 중 하나."
+          },
+          {
+            "drug": "AZD3759",
+            "axis": "antiEGFR",
+            "most_sensitive_in_map": "antiEGFR",
+            "direction_ok": true,
+            "rationale": "EGFR-activating(L858R/exon19del) NSCLC: EGFR TKI 감수성 세포주 데이터가 가장 견고한 positive control 중 하나."
+          },
+          {
+            "drug": "[Sotorasib et al.]",
+            "axis": "antiKRAS_G12C",
+            "most_sensitive_in_map": "N/A",
+            "direction_ok": null,
+            "note": "Sotorasib/Adagrasib GDSC2 27Oct23 미수록 — MEK proxy(Selumetinib)로 간접 검증. G12C 직접 약물 PRISM 확인 필요.",
+            "rationale": "KRAS-G12C: Sotorasib(CodeBreaK100) 승인. GDSC2 미수록이라 직접 양성대조 불가; MEK 하류 대리약물로 간접 확인."
+          }
+        ],
+        "status": "pass"
+      }
+    }
+  ],
+  "check_4_cross_dataset": [
+    {
+      "cancer": "COLORECTAL",
+      "n_drugs_checked": 7,
+      "median_spearman_rho": 0.5919,
+      "n_both_consistent": 4,
+      "pct_consistent": 57.1,
+      "per_drug": [
+        {
+          "drug": "IOX2",
+          "status": "skip",
+          "reason": "PRISM 미수록"
+        },
+        {
+          "drug": "Dabrafenib",
+          "spearman_rho": 0.5919,
+          "p_value": 0.0018,
+          "n": 25,
+          "status": "both"
+        },
+        {
+          "drug": "Bicalutamide",
+          "status": "skip",
+          "reason": "공통 CL 3<5"
+        },
+        {
+          "drug": "PLX-4720",
+          "status": "skip",
+          "reason": "PRISM 미수록"
+        },
+        {
+          "drug": "CHIR-99021",
+          "status": "skip",
+          "reason": "PRISM 미수록"
+        },
+        {
+          "drug": "Elesclomol",
+          "spearman_rho": 0.6,
+          "p_value": 0.2848,
+          "n": 5,
+          "status": "p_ns"
+        },
+        {
+          "drug": "SB590885",
+          "status": "skip",
+          "reason": "PRISM 미수록"
+        },
+        {
+          "drug": "Sapitinib",
+          "status": "skip",
+          "reason": "PRISM 미수록"
+        },
+        {
+          "drug": "AZD3759",
+          "status": "skip",
+          "reason": "PRISM 미수록"
+        },
+        {
+          "drug": "CCT-018159",
+          "status": "skip",
+          "reason": "PRISM 미수록"
+        },
+        {
+          "drug": "Osimertinib",
+          "spearman_rho": 0.3512,
+          "p_value": 0.0617,
+          "n": 29,
+          "status": "p_ns"
+        },
+        {
+          "drug": "Sepantronium bromide",
+          "spearman_rho": 0.8535,
+          "p_value": 0.0,
+          "n": 18,
+          "status": "both"
+        },
+        {
+          "drug": "Tretinoin",
+          "status": "skip",
+          "reason": "PRISM 미수록"
+        },
+        {
+          "drug": "Gefitinib",
+          "spearman_rho": 0.6365,
+          "p_value": 0.0002,
+          "n": 29,
+          "status": "both"
+        },
+        {
+          "drug": "ERK_6604",
+          "status": "skip",
+          "reason": "PRISM 미수록"
+        },
+        {
+          "drug": "Trametinib",
+          "spearman_rho": 0.4852,
+          "p_value": 0.0066,
+          "n": 30,
+          "status": "both"
+        },
+        {
+          "drug": "Selumetinib",
+          "spearman_rho": 0.3491,
+          "p_value": 0.0587,
+          "n": 30,
+          "status": "p_ns"
+        }
+      ],
+      "status": "pass"
+    },
+    {
+      "cancer": "LUNG_NSCLC",
+      "n_drugs_checked": 7,
+      "median_spearman_rho": 0.3287,
+      "n_both_consistent": 4,
+      "pct_consistent": 57.1,
+      "per_drug": [
+        {
+          "drug": "Osimertinib",
+          "spearman_rho": 0.3287,
+          "p_value": 0.0012,
+          "n": 94,
+          "status": "both"
+        },
+        {
+          "drug": "AZD3759",
+          "status": "skip",
+          "reason": "PRISM 미수록"
+        },
+        {
+          "drug": "Gefitinib",
+          "spearman_rho": 0.1363,
+          "p_value": 0.1903,
+          "n": 94,
+          "status": "rho_low"
+        },
+        {
+          "drug": "Afatinib",
+          "spearman_rho": 0.4072,
+          "p_value": 0.0,
+          "n": 94,
+          "status": "both"
+        },
+        {
+          "drug": "Erlotinib",
+          "spearman_rho": 0.3582,
+          "p_value": 0.0004,
+          "n": 94,
+          "status": "both"
+        },
+        {
+          "drug": "Sapitinib",
+          "status": "skip",
+          "reason": "PRISM 미수록"
+        },
+        {
+          "drug": "Elesclomol",
+          "spearman_rho": 0.1756,
+          "p_value": 0.4344,
+          "n": 22,
+          "status": "rho_low"
+        },
+        {
+          "drug": "IOX2",
+          "status": "skip",
+          "reason": "PRISM 미수록"
+        },
+        {
+          "drug": "Bicalutamide",
+          "spearman_rho": -0.57,
+          "p_value": 0.0671,
+          "n": 11,
+          "status": "rho_low"
+        },
+        {
+          "drug": "SL0101",
+          "status": "skip",
+          "reason": "PRISM 미수록"
+        },
+        {
+          "drug": "SB505124",
+          "status": "skip",
+          "reason": "PRISM 미수록"
+        },
+        {
+          "drug": "RVX-208",
+          "status": "skip",
+          "reason": "PRISM 미수록"
+        },
+        {
+          "drug": "Ibrutinib",
+          "spearman_rho": 0.3598,
+          "p_value": 0.0007,
+          "n": 86,
+          "status": "both"
+        },
+        {
+          "drug": "N27922-53-1",
+          "status": "skip",
+          "reason": "PRISM 미수록"
+        },
+        {
+          "drug": "Cediranib",
+          "status": "skip",
+          "reason": "PRISM 미수록"
+        }
+      ],
+      "status": "pass"
+    }
+  ],
+  "summary": {
+    "check_5_overall": "pass",
+    "check_4_overall": "pass",
+    "critic_upgrade_possible": true,
+    "note": "jhans sub-check 완료."
+  }
+}

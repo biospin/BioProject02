@@ -1,0 +1,56 @@
+{
+  "figure": "Fig 2 (research-plan §9, DECISIVE)",
+  "jira": "BIOP02-91 / BIOP02-66 (FIGURES_INDEX.md)",
+  "sources": [
+    "experiments/kkkim/20260710_cost_of_substitution/patient_routing_cost_receptor.json",
+    "experiments/kkkim/20260710_cost_of_substitution/therapeutic_distance.json"
+  ],
+  "claim_level": "hypothesis_only",
+  "critic_status": "pending",
+  "note": "Cost overlay = row-normalized mis-route proportion x therapeutic distance; reproduces per_axis.mean_cost in patient_routing_cost_receptor.json (endocrine 0.035, antiHER2 0.416, chemo 0.51) as a cross-check.",
+  "confusion_row_normalized": {
+    "endocrine": {
+      "endocrine": 0.95,
+      "antiHER2": 0.0,
+      "chemo": 0.05
+    },
+    "antiHER2": {
+      "endocrine": 0.9429,
+      "antiHER2": 0.0,
+      "chemo": 0.0571
+    },
+    "chemo": {
+      "endocrine": 0.7342,
+      "antiHER2": 0.0,
+      "chemo": 0.2658
+    }
+  },
+  "cost_overlay": {
+    "endocrine": {
+      "antiHER2": 0.0,
+      "chemo": 0.0347
+    },
+    "antiHER2": {
+      "endocrine": 0.3724,
+      "chemo": 0.0437
+    },
+    "chemo": {
+      "endocrine": 0.5103,
+      "antiHER2": 0.0
+    }
+  },
+  "cross_check_row_sum_vs_mean_cost": {
+    "endocrine": {
+      "row_sum_cost": 0.0347,
+      "json_mean_cost": 0.035
+    },
+    "antiHER2": {
+      "row_sum_cost": 0.4161,
+      "json_mean_cost": 0.416
+    },
+    "chemo": {
+      "row_sum_cost": 0.5103,
+      "json_mean_cost": 0.51
+    }
+  }
+}
