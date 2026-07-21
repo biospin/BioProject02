@@ -37,14 +37,29 @@ CANCER_CFG = {
  },
 }
 
-def load_meta(cancer):
+# FM 레지스트리: 다중 FM 견고성(Paper C 모델 비의존성)용. UNI=기존 기본(동작 불변).
+# virchow2/uni2h 임베딩은 다중 FM 파이프라인 산출(/workspace/data/cache/biop02/<cancer>/<fm>/).
+FM_SPEC = {
+    "uni":      {"suffix": "uni",      "dim": 1024, "emb_dir": None},  # None = 기존 <cancer>/full/embeddings/
+    "virchow2": {"suffix": "virchow2", "dim": 2560,
+                 "emb_dir": "/workspace/data/cache/biop02/{lc}/virchow2"},
+    "uni2h":    {"suffix": "uni2h",    "dim": 1536,
+                 "emb_dir": "/workspace/data/cache/biop02/{lc}/uni2h"},
+}
+FEATURE_DIM = 1024   # main에서 --fm 에 따라 설정. 기본 UNI(기존 동작 불변).
+
+
+def load_meta(cancer, fm="uni"):
     d = HERE / cancer / "full"
     labels = {r["case_id"]: r for r in csv.DictReader(open(d/"patient_labels.csv"))}
     split = {r["case_id"]: r["split"] for r in csv.DictReader(open(d/"split.csv"))}
-    # 임베딩 매니페스트: embeddings dir에서 직접(부분/완료 무관)
+    spec = FM_SPEC[fm]
+    suffix = spec["suffix"]
+    # 임베딩 위치: UNI는 기존 <cancer>/full/embeddings/, 그 외 FM은 다중 FM 산출 경로.
+    emb_dir = (d/"embeddings") if spec["emb_dir"] is None else Path(spec["emb_dir"].format(lc=cancer.lower()))
     slides = []
-    for p in sorted((d/"embeddings").glob("*_uni_embeddings.npy")):
-        sid = p.name.replace("_uni_embeddings.npy","")
+    for p in sorted(emb_dir.glob(f"*_{suffix}_embeddings.npy")):
+        sid = p.name.replace(f"_{suffix}_embeddings.npy","")
         cid = sid[:12]
         if cid in split:
             slides.append({"slide_id":sid, "case_id":cid, "path":p, "split":split[cid]})
@@ -89,7 +104,7 @@ def train_eval(slides, labels, endpoint, device, shuffle=False, epochs=40, seed=
     if shuffle:
         ys=[l for _,l in tr]; np.random.default_rng(seed).shuffle(ys); tr=[(s,y) for (s,_),y in zip(tr,ys)]
     dev=torch.device(device if torch.cuda.is_available() else "cpu")
-    model=CLAMSB(feature_dim=1024, hidden_dim=512, att_dim=256, dropout=0.25).to(dev)
+    model=CLAMSB(feature_dim=FEATURE_DIM, hidden_dim=512, att_dim=256, dropout=0.25).to(dev)
     opt=torch.optim.Adam(model.parameters(), lr=2e-4, weight_decay=1e-4)
     lossf=nn.BCEWithLogitsLoss()
     def emb(s): return torch.from_numpy(np.load(s["path"]).astype("float32")).to(dev)
@@ -191,9 +206,15 @@ def main():
     ap.add_argument("--cancer", required=True)
     ap.add_argument("--device", default="cuda:0")
     ap.add_argument("--smoke", action="store_true", help="현 부분 임베딩으로 histology만 빠르게")
+    ap.add_argument("--fm", default="uni", choices=list(FM_SPEC),
+                    help="foundation model 임베딩 선택. uni=기존(기본), virchow2/uni2h=다중 FM 견고성")
     a=ap.parse_args()
+    global FEATURE_DIM
+    FEATURE_DIM = FM_SPEC[a.fm]["dim"]      # CLAMSB feature_dim을 FM 차원으로
     cfg=CANCER_CFG[a.cancer]
-    labels, split, slides=load_meta(a.cancer)
+    labels, split, slides=load_meta(a.cancer, a.fm)
+    if a.fm != "uni":
+        print(f"[다중 FM] {a.fm} (dim={FEATURE_DIM}) 임베딩으로 학습 — Paper C 모델 비의존성 검정")
     print(f"{a.cancer}: {len(slides)} 슬라이드(임베딩 존재), {len(labels)} 라벨환자")
     eps = [cfg["positive_control"]] if (a.smoke and cfg["positive_control"]) else cfg["endpoints"]
     results={"cancer":a.cancer,"n_slides":len(slides),"claim_level":"hypothesis_only","critic_status":"pending","endpoints":{}}
@@ -229,7 +250,11 @@ def main():
                     "type":"morphology(triage 예상)" if ep=="histology_lusc" else "targeted-mutation(H&E-blind 예상)"}
         results["endpoint_misroute_incl_histology"]=mr
         print("  costB(mis-route incl histology):", json.dumps(mr, ensure_ascii=False))
-    out=HERE/a.cancer/"full"/("mil_cost_smoke.json" if a.smoke else "mil_cost_results.json")
+    # 출력 파일명: UNI는 기존 그대로(mil_cost_results.json), 다른 FM은 접미사로 분리(덮어쓰기 방지)
+    fm_tag = "" if a.fm == "uni" else f"_{a.fm}"
+    base = "mil_cost_smoke" if a.smoke else "mil_cost_results"
+    out=HERE/a.cancer/"full"/f"{base}{fm_tag}.json"
+    results["fm"]=a.fm; results["feature_dim"]=FEATURE_DIM
     out.write_text(json.dumps(results, indent=2, ensure_ascii=False))
     print(f"  wrote {out}")
 

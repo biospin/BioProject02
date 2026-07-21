@@ -55,12 +55,19 @@ def main():
     ap=argparse.ArgumentParser()
     ap.add_argument("--cancer", required=True, choices=list(CANCER_CFG))
     ap.add_argument("--device", default="cuda:0")
+    ap.add_argument("--fm", default="uni", choices=list(m.FM_SPEC),
+                    help="foundation model 임베딩 선택. uni=기존(기본, 동작 불변), virchow2/uni2h=다중 FM 견고성")
     a=ap.parse_args()
+    # 다중 FM: CLAMSB feature_dim을 해당 FM 차원으로 (run_mil_cost 전역을 세팅해 재사용)
+    m.FEATURE_DIM = m.FM_SPEC[a.fm]["dim"]
     cfg=CANCER_CFG[a.cancer]
-    labels, split, slides = m.load_meta(a.cancer)
+    labels, split, slides = m.load_meta(a.cancer, a.fm)
+    if a.fm != "uni":
+        print(f"[다중 FM] {a.fm} (dim={m.FEATURE_DIM}) 임베딩으로 학습 — Paper C 모델 비의존성 검정")
     print(f"{a.cancer}: {len(slides)} 슬라이드(임베딩 존재), {len(labels)} 라벨환자")
     results={"cancer":a.cancer,"n_slides":len(slides),"claim_level":"hypothesis_only",
-             "critic_status":"pending","exploratory_npos_threshold":EXPLORATORY_NPOS,"endpoints":{}}
+             "critic_status":"pending","exploratory_npos_threshold":EXPLORATORY_NPOS,
+             "fm":a.fm,"feature_dim":m.FEATURE_DIM,"endpoints":{}}
     for ep in cfg["endpoints"]:
         t=time.time(); r=m.run_endpoint(slides, labels, ep, a.device)
         # exploratory 플래그
@@ -88,7 +95,9 @@ def main():
     results["cost_note"]="frozen_map(임상 치료거리) 미구축 → mean_cost=null, misroute_rate가 lead 지표(과제 지시)."
     print("  misroute(per-endpoint, cost lead):",
           json.dumps({k:{"misroute_rate":v["misroute_rate"],"auc":v["auc"]} for k,v in results["endpoint_misroute"].items()}, ensure_ascii=False))
-    out=HERE/a.cancer/"full"/"mil_cost_results.json"
+    # UNI는 기존 파일명 유지(동작 불변), 다중 FM은 FM별 파일로 분리
+    fname = "mil_cost_results.json" if a.fm=="uni" else f"mil_cost_results_{a.fm}.json"
+    out=HERE/a.cancer/"full"/fname
     out.write_text(json.dumps(results, indent=2, ensure_ascii=False))
     print(f"  wrote {out}")
 

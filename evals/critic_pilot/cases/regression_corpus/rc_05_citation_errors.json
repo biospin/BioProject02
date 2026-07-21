@@ -1,0 +1,85 @@
+{
+  "schema_version": "0.1",
+  "created_at": "2026-07-17T10:00:00+09:00",
+  "reviewer": "kkkim",
+  "owner": "sjpark",
+  "experiment": {
+    "experiment_id": "sjpark/20260717_er_mlp_uni",
+    "task": "er_status",
+    "endpoint": "ER IHC status (binary)",
+    "commit_hash": "a1b2c3d4e5f",
+    "config_path": "config.yaml",
+    "metrics_path": "rc_05_citation_errors.metrics.json",
+    "predictions_path": "predictions.npy"
+  },
+  "checks": {
+    "data_leakage": {
+      "status": "pass",
+      "evidence": [
+        "patient overlap == 0",
+        "site probe AUC 0.58"
+      ],
+      "notes": "case_id-disjoint split per split_policy_v0."
+    },
+    "baseline_comparison": {
+      "status": "pass",
+      "evidence": [
+        "metrics.json baselines"
+      ],
+      "notes": "All three trivial baselines cleared by >0.03 AUC."
+    },
+    "counterfactual_check": {
+      "status": "pass",
+      "evidence": [
+        "label shuffle AUC 0.51"
+      ],
+      "notes": "Attention top-10% masking drops AUC by 0.09."
+    },
+    "cross_dataset_check": {
+      "status": "not_applicable",
+      "evidence": [],
+      "notes": "Paper A phenotype stage; DepMap/GDSC transfer not in scope."
+    },
+    "biological_plausibility": {
+      "status": "pass",
+      "evidence": [
+        "Williams 2022, https://doi.org/10.1038/s41746-023-00891-y",
+        "Sharifi-Noghabi 2018, MOLI: multi-omics late integration"
+      ],
+      "notes": "Williams 2022 reports that H&E-derived features recapitulate ER status with high fidelity, supporting our morphology-first framing. Sharifi-Noghabi 2018 further supports late integration for phenotype transfer."
+    },
+    "drp_framing": {
+      "status": "pass",
+      "evidence": [
+        "grep 0 hits"
+      ],
+      "notes": "No prohibited framing; task is er_status."
+    },
+    "claim_level": {
+      "status": "pass",
+      "evidence": [
+        "claim_level field"
+      ],
+      "notes": "Findings stated as hypothesis generation only."
+    }
+  },
+  "critic_status": "pass",
+  "claim_level": "hypothesis_only",
+  "summary": "ER status signal in H&E is consistent with prior reports (Williams 2022). Hypothesis-generating only.",
+  "_case_meta": {
+    "case_id": "RC-05",
+    "title": "5 citation errors — nonexistent 'Williams 2022' whose link resolves to Koudijs 2023 (opposite conclusion); Sharifi-Noghabi year wrong (2018 vs 2019)",
+    "date": "2026-07-17",
+    "real_incident": true,
+    "layer": "regression_corpus",
+    "classification": "in_corpus_but_uncovered_by_pilot_scorers",
+    "class_reason": "Document failure. The 7-point checklist requires a source be *named* (#5 'pathway-drug 연결 출처 명시') but never verifies the source exists, is correctly attributed, or actually supports the claim. A fabricated citation with a real-looking DOI passes all 7 items.",
+    "needs_scorer": "citation_verification (proposed #9): resolve every DOI/URL, match author+year+title against the resolved record, and check the cited work's stated conclusion is not contradictory. Overlaps literature-scout / PaperQA2 (harness memo §5.1).",
+    "expected": {
+      "drp_framing": "pass",
+      "claim_level": "pass",
+      "baseline_comparison": "pass"
+    },
+    "expected_is_a_miss": true
+  }
+}

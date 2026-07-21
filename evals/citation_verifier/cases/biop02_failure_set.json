@@ -1,0 +1,155 @@
+{
+  "_doc": "BIOP02 citation-verifier case set. Ground truth for the 3 controls was fetched from CrossRef (exact title / first author / `issued` year) -- NOT written from memory. Each error case poisons exactly ONE field so we know which check fired (lesson from HARNESS_REVIEW_2026-07-17 §4.3.1: kkkim's 2nd trial reported a year catch that was actually an author-count artifact).",
+  "_source": "research/CITATION_CORRECTIONS_2026-07-17.md",
+  "entries": [
+    {
+      "id": "ctrl_farahmand",
+      "_note": "CONTROL. Year = CrossRef `issued` (2022). DOI slug says 2021 (epub) -- see README §Year tolerance.",
+      "expected": "VERIFIED",
+      "doi": "10.1038/s41379-021-00911-w",
+      "first_author": "Farahmand",
+      "year": 2022,
+      "title": "Deep learning trained on hematoxylin and eosin tumor region of Interest predicts HER2 status and trastuzumab treatment response in HER2+ breast cancer"
+    },
+    {
+      "id": "ctrl_koudijs",
+      "_note": "CONTROL at CrossRef issued year 2022.",
+      "expected": "VERIFIED",
+      "doi": "10.1093/bib/bbac490",
+      "first_author": "Koudijs",
+      "year": 2022,
+      "title": "Validation of transcriptome signature reversion for drug repurposing in oncology"
+    },
+    {
+      "id": "ctrl_kaczmarzyk",
+      "_note": "CONTROL. Same paper as err5_mako_scope but with NO claim attached -- proves the claim layer only fires on claims, and that correct bibliography passes.",
+      "expected": "VERIFIED",
+      "doi": "10.1038/s41746-025-02334-2",
+      "first_author": "Kaczmarzyk",
+      "year": 2026,
+      "title": "Towards interpretable prediction of recurrence risk in breast cancer using pathology foundation models"
+    },
+    {
+      "id": "ctrl_claim_supported",
+      "_note": "CONTROL for the claim layer. Without a claim that SHOULD pass, an always-CLAIM_UNSUPPORTED stub would ace the whole set -- the claim layer would be measuring nothing. '12 pathology foundation models' is really in the MAKO abstract.",
+      "expected": "VERIFIED",
+      "doi": "10.1038/s41746-025-02334-2",
+      "first_author": "Kaczmarzyk",
+      "year": 2026,
+      "title": "Towards interpretable prediction of recurrence risk in breast cancer using pathology foundation models",
+      "claims": [
+        {
+          "text": "MAKO benchmarks 12 pathology foundation models",
+          "scope_terms": [
+            "foundation models"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ctrl_pubmed_fallback",
+      "_note": "CONTROL that pins the PubMed efetch fallback. CrossRef returns NO abstract for this Cell record, so the claim layer can only pass if fetch_abstract_pubmed actually fires. Without this case the fallback is unprotected code.",
+      "expected": "VERIFIED",
+      "doi": "10.1016/j.cell.2026.04.023",
+      "first_author": "Shulman",
+      "year": 2026,
+      "title": "AI-predicted spatial transcriptomics unlocks breast cancer biomarkers from pathology",
+      "claims": [
+        {
+          "text": "Path2Space predicts spatial transcriptomics from pathology images",
+          "scope_terms": [
+            "spatial transcriptomics"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "err1_williams_fabricated",
+      "_note": "OUR ERROR #1. Fabricated -- does not exist. No DOI. medsci returned OK here (its worst failure). ACCEPT: the load-bearing guarantee is 'never VERIFIED'; NEEDS_HUMAN is also an acceptable escalation if CrossRef search ranking drifts.",
+      "expected": "NOT_FOUND",
+      "doi": null,
+      "first_author": "Williams",
+      "year": 2022,
+      "title": "LINCS transcriptional signature reversal for drug repurposing in cancer",
+      "accept": [
+        "NOT_FOUND",
+        "NEEDS_HUMAN"
+      ]
+    },
+    {
+      "id": "err2_sharifi_year",
+      "_note": "OUR ERROR #2. ONLY the year is poisoned (2024; actual 2021). Correct DOI retained to isolate the year check. diff=3, clear of the +/-1 tolerance. medsci missed this (no year comparison at all).",
+      "expected": "YEAR_MISMATCH",
+      "doi": "10.1093/bib/bbab294",
+      "first_author": "Sharifi-Noghabi",
+      "year": 2024,
+      "title": "Drug sensitivity prediction from cell line-based pharmacogenomics data: guidelines for developing machine learning models"
+    },
+    {
+      "id": "err3_path2space_author",
+      "_note": "OUR ERROR #3. ONLY the first author is poisoned (Kaminski; actual Shulman). The one error medsci caught.",
+      "expected": "AUTHOR_MISMATCH",
+      "doi": "10.1016/j.cell.2026.04.023",
+      "first_author": "Kaminski",
+      "year": 2026,
+      "title": "AI-predicted spatial transcriptomics unlocks breast cancer biomarkers from pathology"
+    },
+    {
+      "id": "err4_spearman_claim",
+      "_note": "OUR ERROR #4. Bibliography is CORRECT (2021 + Sharifi-Noghabi) -- only the attached CLAIM is wrong. 'Spearman 0.2-0.25' is not in that abstract; real values are Pearson (CTRPv2->gCSI 0.4+/-0.21, GDSCv1->gCSI 0.26+/-0.16) and live in the body, not the abstract. Out of medsci's scope entirely.",
+      "expected": "CLAIM_UNSUPPORTED",
+      "doi": "10.1093/bib/bbab294",
+      "first_author": "Sharifi-Noghabi",
+      "year": 2021,
+      "title": "Drug sensitivity prediction from cell line-based pharmacogenomics data: guidelines for developing machine learning models",
+      "claims": [
+        {
+          "text": "reports cross-dataset Spearman correlation of 0.2-0.25"
+        }
+      ]
+    },
+    {
+      "id": "err5_mako_scope",
+      "_note": "OUR ERROR #5. Bibliography CORRECT -- only the SCOPE framing is wrong. We called MAKO a 'subtype' benchmark; it predicts ROR-P (recurrence risk). Out of medsci's scope entirely.",
+      "expected": "CLAIM_UNSUPPORTED",
+      "doi": "10.1038/s41746-025-02334-2",
+      "first_author": "Kaczmarzyk",
+      "year": 2026,
+      "title": "Towards interpretable prediction of recurrence risk in breast cancer using pathology foundation models",
+      "claims": [
+        {
+          "text": "MAKO is a benchmark for predicting molecular subtype from H&E",
+          "scope_terms": [
+            "subtype"
+          ],
+          "contradicting_terms": [
+            "recurrence risk",
+            "ROR-P"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "reg_fake_doi",
+      "_note": "REGRESSION. Fabricated DOI. medsci PASSED this: DOI lookup fails -> weak PubMed title search -> any hit = OK (verify_refs.py L557-560). A fake DOI must NEVER be VERIFIED. ACCEPT: the load-bearing guarantee is 'never VERIFIED'; NEEDS_HUMAN is also an acceptable escalation if CrossRef search ranking drifts.",
+      "expected": "NOT_FOUND",
+      "doi": "10.9999/fake.2022.999999",
+      "first_author": "Williams",
+      "year": 2022,
+      "title": "LINCS transcriptional signature reversal for drug repurposing in cancer",
+      "accept": [
+        "NOT_FOUND",
+        "NEEDS_HUMAN"
+      ]
+    },
+    {
+      "id": "edge_koudijs_epub_year",
+      "_note": "EDGE CASE for the +/-1 year tolerance -- our own real ambiguity: we wrote 'Koudijs 2023', CrossRef `issued` says 2022. Kept SEPARATE from ctrl_koudijs so the tolerance rule is demonstrated without weakening a control (which would have tempted us to loosen the year rule and thereby miss err2).",
+      "expected": "NEEDS_HUMAN",
+      "doi": "10.1093/bib/bbac490",
+      "first_author": "Koudijs",
+      "year": 2023,
+      "title": "Validation of transcriptome signature reversion for drug repurposing in oncology"
+    }
+  ]
+}
