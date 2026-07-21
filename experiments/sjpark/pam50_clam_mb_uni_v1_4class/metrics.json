@@ -23,7 +23,7 @@
   "ext_auc": 0.8181,
   "ext_auprc": 0.564,
   "ext_balanced_accuracy": 0.4506,
-  "commit_hash": "pending_4class",
+  "commit_hash": "f5d0d9a8a7303366d1d59372fffa813971b6c25c",
   "split_hash": "5995f29d3978b831",
   "claim_level": "hypothesis_only",
   "critic_status": "pending",
