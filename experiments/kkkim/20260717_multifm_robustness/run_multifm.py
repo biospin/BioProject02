@@ -215,6 +215,13 @@ def run_master():
     for cancer, projects in COHORTS:
         if (HERE / "DISK_GUARD_TRIPPED").exists():
             log("🛑 디스크 가드 발동 상태 — 남은 코호트 중단. 사람 판단 필요."); break
+        # 아카이브 표식: 임베딩을 완료했으나 디스크 확보를 위해 다른 위치로 옮긴 코호트.
+        # 개수 실측이 0으로 나와 재임베딩(GPU·디스크 낭비)되는 것을 막는다.
+        # (2026-07-21 실사고: BRCA 다중 FM 72G를 /home으로 옮기자 master가 1010장 재큐잉.)
+        arch_flag = HERE / f"ARCHIVED_{cancer}"
+        if arch_flag.exists():
+            log(f"{cancer}: 아카이브됨 — 스킵. 사유·복구법 = {arch_flag}")
+            continue
         done_flag = HERE / f"DONE_{cancer}"
         d = dirs_for(cancer)
         # ⚠️ DONE 표식 존재만으로 스킵하지 않는다. FM을 추가하면(예: virchow2 단독 → +uni2h)
