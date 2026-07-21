@@ -4,9 +4,8 @@ BIOP02-59 — Biological plausibility check (Critic #5).
 sjpark의 phenotype 예측(ER/PR/HER2) + jhans draft rule(endocrine_rule_draft.py)을
 연결해 hypothesis.schema.json 형식 출력을 만들고, 최소 타당성 점검을 수행한다.
 
-⚠️ 이 스크립트는 BIOP02-60(jhans, 정식 pathway-drug 연결) 완료 전 임시 버전이다.
-   현재 rationale은 표준 종양학 지식 기반 draft이며, DepMap/GDSC 실제 데이터
-   연결은 BIOP02-60 완료 후 교체 필요.
+BIOP02-60(jhans) 완료 — endocrine_rule.py v1.0 정식 연결.
+   rationale은 BIOP02-52 consistency_scores.csv 실측 Spearman ρ 기반 confidence 포함.
 
 점검 항목:
   1. claim_level == "hypothesis_only" 강제
@@ -29,7 +28,7 @@ from pathlib import Path
 
 import sys
 sys.path.insert(0, str(Path(__file__).parents[2]))
-from therapeutic_evidence.rules.endocrine_rule_draft import endocrine_rule, check_forbidden_phrases
+from therapeutic_evidence.rules import endocrine_rule, check_forbidden_phrases
 
 
 def get_git_hash():

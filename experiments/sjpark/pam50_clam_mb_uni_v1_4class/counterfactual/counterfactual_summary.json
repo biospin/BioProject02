@@ -12,5 +12,8 @@
     0.0387
   ],
   "auc_full_minus_top_removed_p_approx": 0.061,
-  "auc_drop_significant": false
+  "auc_drop_significant": false,
+  "faithfulness_scope": "proba-level only",
+  "auc_level_significant": false,
+  "faithfulness_note": "faithfulness_confirmed=true는 예측확률(proba) 수준 한정 — top-attention 제거 시 |Δproba| top 0.052 vs random 0.0023(23x)로 성립. 그러나 슬라이드 순위(AUC) 수준에서는 non-significant(AUC drop CI[-0.0006,0.0387], p=0.061). Paper 서술: 'attention은 proba-level에서 faithful하나 슬라이드 순위는 top-타일 제거에 robust(MIL 신호 중복성)'."
 }
