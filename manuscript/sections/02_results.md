@@ -1,37 +1,86 @@
 # Results (집필 골격 — 이 논문의 중심)
 
-> 이 논문은 결정지도가 중심이라 Results가 서면 나머지가 딸려온다. 아래 숫자는 전부 실측(출처 파일 명시)이며 `hypothesis_only`·`critic_status: pending`. 헤드라인 승격 전 결정론 재계산 + Critic 서명 필요(README "검증 게이트").
+> 이 논문은 결정지도가 중심이므로 Results가 서면 나머지 절이 딸려온다. 아래 숫자는 전부 결과 파일에서 읽은 실측값이고 출처를 함께 적었으며, 현재 상태는 `hypothesis_only`·`critic_status: pending`이다. 헤드라인으로 승격하기 전에 결정론적 재계산과 Critic 서명을 거쳐야 한다(README "검증 게이트").
+>
+> 폐 임베딩이 아직 진행 중이다(2026-07-22 기준 397/1053). 완료되면 R1·R2·R5를 실측으로 갱신해야 하며, 갱신 항목은 문서 끝의 "폐 완료 시 재작성 트리거"에 정리해 두었다.
 
-## R1. 다섯 암종 치환가능성 결정지도 (헤드라인)
+## R0. 이 논문이 실제로 세운 것
 
-- **메시지:** 분자 축마다 H&E로 값싸게 대신할 수 있는 정도가 다르고, 그 경계를 비용으로 지도화한다.
-- **Fig2**(confusion×distance + cost overlay) = "이 한 장이 논문". 근거 [../../experiments/kkkim/20260710_cost_of_substitution/fig2_confusion_distance.json](../../experiments/kkkim/20260710_cost_of_substitution/fig2_confusion_distance.json).
-- **Fig3**(축별 cost + headline contrast CI). 근거 [.../fig3_axis_cost.json](../../experiments/kkkim/20260710_cost_of_substitution/fig3_axis_cost.json).
-- 실측 표(holdout AUC, site-disjoint):
-  - 폐 LUSC 조직형 0.939 [0.905–0.967] — 강하게 보임
-  - 두경부 HPV 0.959 [0.921–0.986] — 강하게 보임
-  - 대장 BRAF V600E 0.868 [0.780–0.938] — 보임
-  - 위 Lauren diffuse 0.536 [0.379–0.694] — **안 보임(정직한 음성, R3에서 정면)**
-- 대조군: shuffle-null, prevalence baseline(0.5) 각 파일에 포함. baseline 대비를 반드시 함께 서술.
+다섯 암종에서 약 열다섯 개 endpoint를 사전등록 아래 검정하였다. 그중 검정력을 갖춘 비-대조 확증은 두경부 HPV 하나였다. 나머지 변이·증폭축은 대부분 홀드아웃 양성 표본이 스물다섯 명에 못 미쳐 사전등록 규칙상 미결로 남았다. 따라서 본문은 "법칙을 다섯 암종에서 검증하였다"고 쓰지 않는다. 우리가 세운 것은 두 가지다.
 
-## R2. 유방 anchor — 수용체축과 HER2 대체불가
+첫째, 지도의 양 끝을 실측으로 고정하였다. 형태에 또렷이 보이는 축과 보이지 않는 축이 각각 무엇인지를 같은 규약 아래 측정하였다. 둘째, 지도의 가운데를 지금 정할 수 없는 이유를 정량화하였다. 이것이 R2의 검정력 천장이다.
 
-- 前 Paper A가 흡수된 챕터. 예측된 아형으로 치료를 라우팅하면 **HER2축은 스킴 불문 항상 실패**(misroute 1.00) = 분자검사 대체불가를 비용으로 증명.
-- 근거: [../../experiments/kkkim/20260710_cost_of_substitution/](../../experiments/kkkim/20260710_cost_of_substitution/) (patient_routing_cost.json, therapeutic_distance.json).
-- ⚠️ 정직성: per-axis cost는 라우팅 스킴에 따라 endocrine·chemo가 반전(0.378↔0.035, 0.105↔0.510). robust한 주장은 **antiHER2 misroute 1.00 + contrast CI가 0을 배제**한다는 것뿐. 안전주장으로 과장 금지.
+## R1. 다섯 암종 치환가능성 결정지도
 
-## R3. 정직한 음성 — 위 Lauren diffuse는 형태학에 안 보인다
+분자 축마다 H&E로 값싸게 대신할 수 있는 정도가 다르고, 이 절은 그 경계를 비용으로 환산해 지도로 만든다. 중심 그림은 Fig2(confusion×distance에 cost를 겹친 그림)이며 근거는 [fig2_confusion_distance.json](../../experiments/kkkim/20260710_cost_of_substitution/fig2_confusion_distance.json)이다. 축별 비용과 헤드라인 대비의 신뢰구간은 Fig3([fig3_axis_cost.json](../../experiments/kkkim/20260710_cost_of_substitution/fig3_axis_cost.json))으로 보인다.
 
-- shuffle-null(0.82)이 real(0.54)보다 높고 CI가 0.5를 크게 물음 → H&E가 값싸게 대신할 수 **없는** 축의 실재 증거.
-- 이걸 실패가 아니라 지도의 핵심 메시지로 세운다. "예측된다≠대체가능하다"의 가장 강한 사례.
+**보이는 끝(검정력을 갖춘 결과).** 두경부 HPV는 홀드아웃 AUROC 0.959[0.921–0.986], 양성 표본 26명으로 사전등록 기준 0.80을 크게 상회하였다. 이 축은 변이가 아니라 바이러스 감염이 만든 형태(비각화·basaloid)이므로, 법칙의 "형태학적 상관물" 조항을 새로운 종류로 확장해 검정한 사례가 된다. 양성대조인 폐 조직형 LUSC는 0.939[0.905–0.967](양성 153명), 두경부 grade는 0.815[0.742–0.882](양성 41명)로 예상대로 높게 나왔다.
 
-## R4. Yale 실제-결과 앵커 — <FILL: A3/A4 대기>
+**보이지 않는 끝(방향은 일관하나 대부분 미결).** 유방 HER2는 0.599로 사실상 무작위 수준이며 이 지도의 기준 앵커 역할을 한다. 위 ERBB2 증폭은 0.644인데 shuffle-null이 0.641로 실질적으로 같아 신호가 없다고 보아야 한다(이 때문에 braveji의 G2 검토에서 "blind 적중" 인용을 철회하였다). 폐 KRAS-G12C는 0.681이지만, 이미지를 전혀 쓰지 않고 조직형만으로 예측한 기준선이 0.793으로 오히려 더 높다. 겉보기 예측력이 변이의 형태가 아니라 LUAD 편중에서 온다는 뜻이며, 근거는 [SUBTYPE_BASELINE_NOTE.md](../../experiments/crosscancer/LUNG_NSCLC/full/SUBTYPE_BASELINE_NOTE.md)에 있다.
 
-- 항HER2 축 점수(A3, sjpark) → pCR 층화 AUROC + bootstrap CI, DeLong vs HER2-확률 baseline(A4, jhans).
-- 성공 기준: frozen-transfer가 Farahmand **CV AUC 0.80 [0.69–0.88]**에 근접/겹침(이긴다 아님). 재료 완비(276 임베딩), 결과 미착수.
-- **두 사람 산출물이 오기 전까지 placeholder.**
+모든 endpoint에는 shuffle-null(5-seed), 유병률 기준선(0.5), pixel-mean 기준선을 함께 보고한다. 폐 변이축에는 조직형만 쓰는 subtype-only 기준선까지 갖추었다.
 
-## R5. 모델-비의존성 (robustness supplement) — <FILL: 다중 FM 재학습 대기>
+인식론적 지위도 구분해야 한다. 폐·위·두경부는 예측을 결과 이전에 커밋으로 봉인한 sealed-forward 검정이지만, 대장은 결과가 예측보다 먼저 나온 회고적 분석이므로 "검정력 있는 봉인 확증" 집계에서 제외한다. 근거는 [COLORECTAL/full/LAW_TEST.md](../../experiments/crosscancer/COLORECTAL/full/LAW_TEST.md) 상단에 명시하였다.
 
-- Virchow2·UNI2-h 공간에서 CLAM 재학습 후 결정지도 순서가 유지되는지. 백그라운드 진행 중.
-- **본문 아니라 Supplement.** sjpark/braveji 크로스체크(Owner≠Reviewer) 후 채움.
+## R2. 검정력 천장 — 공개 코호트로는 변이축을 정할 수 없다
+
+이 결과는 다섯 암종을 모두 검정한 뒤에야 말할 수 있는 것이다. 임상적으로 중요한 변이·증폭축은 홀드아웃 양성 표본이 사전등록 임계인 스물다섯 명에 반복적으로 미치지 못하였다.
+
+| 축 | 홀드아웃 양성 표본 | 판정 |
+|---|---|---|
+| 폐 EGFR 활성변이 | 15 | 미결 |
+| 폐 KRAS-G12C | 14 | 미결 |
+| 위 ERBB2 증폭 | 14 | 미결(신호 없음) |
+| 위 MSI-H | 24 | 미결(임계에 한 명 부족) |
+| 위 EBV | 7 | 탐색적 |
+| 두경부 EGFR 증폭 | 17 | 미결 |
+
+즉 TCGA 규모의 공개 코호트에서 기관 분리 홀드아웃을 지키면, 실행 가능한 변이 대부분은 원리적으로 검정력이 확보되지 않는다. 이것은 우리 연구의 한계인 동시에 같은 질문을 공개 데이터로 푸는 모든 연구의 한계다.
+
+임계는 사후에 조정하지 않았다. 위 MSI가 24명으로 한 명 부족했지만 기준을 25에서 24로 낮추지 않았고, 골대를 옮기지 않은 것 자체가 결과를 신뢰할 근거가 된다. 이로부터 따라오는 함의는 분명하다. 변이축의 치환가능성을 판정하려면 기관 코호트나 전향적 수집이 필요하며, 그때까지 지도의 가운데 구간은 열어 둔다.
+
+## R3. 유방 anchor — 수용체축과 HER2 대체불가
+
+이 절은 이전에 Paper A로 준비하던 내용을 흡수한 챕터다. 예측된 아형으로 치료를 배정하면 HER2축은 라우팅 스킴과 무관하게 항상 실패하며(오배정률 1.00), 이는 분자검사를 대체할 수 없다는 사실을 비용으로 보인 것이다. 근거는 [20260710_cost_of_substitution/](../../experiments/kkkim/20260710_cost_of_substitution/)의 `patient_routing_cost.json`과 `therapeutic_distance.json`이다.
+
+다만 정직하게 적어야 할 제약이 있다. 축별 비용은 라우팅 스킴에 따라 내분비 요법과 화학요법이 서로 뒤집힌다(0.378과 0.035, 0.105와 0.510). 스킴이 바뀌어도 견고한 주장은 항HER2 오배정률 1.00과 헤드라인 대비의 신뢰구간이 0을 배제한다는 것뿐이므로, 이를 "다른 축은 안전하다"는 주장으로 확대하지 않는다.
+
+## R4. 위 Lauren diffuse — 서술 교정
+
+이전 골격은 이 결과를 "형태학에 보이지 않는 축의 실재 증거"로 세웠으나, 우리 자체 진단이 그 해석을 지지하지 않는다. 근거는 [LAUREN_POSCONTROL_DIAGNOSIS.md](../../experiments/crosscancer/GASTRIC_STAD/full/LAUREN_POSCONTROL_DIAGNOSIS.md)이다.
+
+Lauren diffuse는 원래 양성대조였다. 인환세포와 미만형은 강한 H&E 형태이므로 높게 나와야 했는데 0.536에 그쳤다. 그러나 원인은 H&E에 보이지 않아서가 아니다. 같은 파이프라인의 위 MSI는 개발셋 0.899에서 홀드아웃 0.860으로 정상 일반화하는 반면, Lauren만 개발셋 0.963에서 홀드아웃 0.536으로 0.43이나 떨어졌다. 게다가 저해상도 pixel-mean 기준선이 0.631로 MIL의 0.536보다 높으므로, 약한 형태 신호는 존재하는데 모델이 그것을 잡지 못한 것이다. Lauren 유병률이 기관마다 100퍼센트에서 18퍼센트까지 크게 다르고, 기관 분리 분할이 고유병 기관을 평가셋에 몰아넣은 것(학습 46퍼센트, 평가 88퍼센트)이 직접적인 원인이다.
+
+따라서 본문에서는 이 사례를 기관 분리 평가가 지름길 학습을 정당하게 차단한 방법론적 사례로 서술하고, 저신뢰 판정은 위암 Lauren에 국한한다. 같은 코호트의 MSI는 유효하게 남는다. "H&E가 Lauren을 보지 못한다"고 쓰지 않는다. "예측된다는 사실과 대체할 수 있다는 주장은 다르다"는 논지의 대표 사례는 Lauren이 아니라 유방 HER2와 폐 KRAS로 세운다.
+
+## R5. 모델 비의존성 (Supplement)
+
+같은 슬라이드, 같은 기관 분리 홀드아웃, 같은 endpoint에서 임베딩 공간만 교체해 CLAM을 다시 학습하였다. 근거는 [MULTIFM_COMPARISON.md](../../experiments/crosscancer/MULTIFM_COMPARISON.md)와 각 코호트의 `mil_cost_results_{virchow2,uni2h}.json`이다.
+
+| endpoint | UNI(1024차원) | Virchow2(2560차원) | UNI2-h(1536차원) |
+|---|---|---|---|
+| 두경부 HPV | 0.9594 | 0.9199 | 0.9559 |
+| 위 MSI-H | 0.8599 | 0.8795 | 0.8670 |
+| 위 Lauren(양성대조) | 0.5364 | 0.6404 | 0.6033 |
+| 위 ERBB2 증폭 | 0.6444 | 0.6682 | 0.5845 |
+| 대장 BRAF | 0.8676 | 0.9328 | 0.9377 |
+
+말할 수 있는 것은 헤드라인인 HPV 확증이 세 임베딩 공간에서 모두 유지되고, 음성 결과인 Lauren 실패와 ERBB2 무신호 역시 파운데이션 모델과 무관하게 재현된다는 점이다. 결과가 UNI 특유의 인공물이 아니라는 근거가 된다.
+
+말할 수 없는 것도 분명하다. 신뢰구간이 크게 겹치므로 모델 간 우열은 주장하지 않으며, 양성 표본 수는 그대로이므로 탐색적 지위도 변하지 않는다. 또한 신형 모델의 shuffle-null이 높다는 점이 남아 있다. Virchow2의 HPV null은 0.807로 실측값과의 여유가 0.113에 불과하다. 이를 확인하기 위한 5-seed 우연배제가 진행 중이며, 결과가 나오기 전에는 "파운데이션 모델과 무관하게 확증되었다"고 쓰지 않는다. 이 절은 본문이 아니라 Supplement로 두고, sjpark와 braveji의 교차 확인을 거쳐 확정한다.
+
+## R6. Yale 실제-결과 앵커 (A3/A4 대기)
+
+항HER2 축 점수를 산출하고(A3, sjpark), 그것으로 pCR을 층화해 AUROC와 부트스트랩 신뢰구간을 구한 뒤 HER2 확률 기준선과 DeLong 검정으로 비교한다(A4, jhans). 성공 기준은 frozen-transfer가 Farahmand의 교차검증 AUC 0.80[0.69–0.88]에 근접하거나 겹치는 것이며, 이를 능가한다는 주장은 하지 않는다. 재료인 임베딩 276건은 완비되었으나 두 사람의 산출물이 아직 없으므로 이 절은 자리만 잡아 둔다.
+
+---
+
+## 폐 완료 시 재작성 트리거
+
+폐 임베딩과 재학습이 끝나면 아래를 실측으로 갱신해야 한다. 현재 값을 그대로 두어서는 안 된다.
+
+1. R1의 결정지도에서 폐 조직형·EGFR·KRAS를 전량 1053장 기준으로 다시 계산한다. 현재 표의 폐 수치는 부분 코호트에서 나온 값이다.
+2. R2의 검정력 천장에서 폐 EGFR과 KRAS의 양성 표본이 전량 기준으로 25명을 넘는지 확인한다. 넘는다면 그 축은 미결에서 판정 가능으로 바뀌므로, R2의 주장 범위를 정직하게 축소한다.
+3. R5에 폐 Virchow2·UNI2-h 재학습 결과를 추가한다(재학습 러너가 자동으로 산출한다).
+4. 진행 중인 5-seed 우연배제 결과에 따라 R5의 "말할 수 있는 것" 문구를 조정한다.
+5. 갱신한 뒤 결정론적 재계산 게이트를 다시 통과시키고, `MULTIFM_COMPARISON.md` 및 `LAW_HELDOUT_SCOREBOARD.md`와 수치가 어긋나지 않는지 대조한다(세 문서 사이의 드리프트를 막기 위해서다).
