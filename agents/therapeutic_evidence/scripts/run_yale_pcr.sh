@@ -10,7 +10,7 @@ OUT_DIR=/workspace/experiments/jhans/yale_pcr_a4_v1
 # A3 output: sjpark가 frozen HER2 CLAM 모델을 Yale 임베딩에 적용한 결과 CSV
 # 필수 컬럼: case_id, axis_score (HER2 확률)
 # 선택 컬럼: her2_prob (DeLong baseline용; axis_score와 동일하거나 별도)
-AXIS_SCORES="/workspace/experiments/sjpark/yale_axis_scores.csv"  # TODO: A3 완료 후 갱신
+AXIS_SCORES="/workspace/agents/modeling/experiments/sjpark/yale_antiher2_axis_scores.csv"
 
 # Yale pCR 라벨 CSV (responder=1 / non=0)
 # 컬럼: case_id, pcr
@@ -23,7 +23,7 @@ $PYTHON agents/therapeutic_evidence/scripts/yale_pcr_stratification.py \
   --axis_scores  "$AXIS_SCORES" \
   --pcr_labels   "$PCR_LABELS" \
   --patient_col  case_id \
-  --score_col    axis_score \
+  --score_col    antiher2_axis_score \
   --baseline_col her2_prob \
   --n_bootstrap  2000 \
   --out_dir      "$OUT_DIR" \
