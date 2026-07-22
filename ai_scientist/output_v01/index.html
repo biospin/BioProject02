@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Scientist 설계 — BioProject02 (SpatialPathoAgent)</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
+  :root{
+    --bg:#f7f8fa; --panel:#ffffff; --ink:#1c2128; --muted:#5b6472;
+    --line:#e4e8ee; --accent:#2f6df6; --accent-soft:#eaf1ff;
+    --accent2:#8b5cf6; --ok:#16a34a; --warn:#d97706; --danger:#dc2626;
+    --code:#eef1f6; --shadow:0 1px 3px rgba(20,30,50,.06),0 8px 24px rgba(20,30,50,.05);
+    --maxw:1180px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0e1116; --panel:#161b22; --ink:#e6edf3; --muted:#9aa4b2;
+      --line:#232b36; --accent:#5b8cff; --accent-soft:#16203a;
+      --accent2:#a78bfa; --ok:#4ade80; --warn:#fbbf24; --danger:#f87171;
+      --code:#1a2029; --shadow:0 1px 3px rgba(0,0,0,.4),0 12px 30px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0e1116; --panel:#161b22; --ink:#e6edf3; --muted:#9aa4b2;
+    --line:#232b36; --accent:#5b8cff; --accent-soft:#16203a;
+    --accent2:#a78bfa; --ok:#4ade80; --warn:#fbbf24; --danger:#f87171;
+    --code:#1a2029; --shadow:0 1px 3px rgba(0,0,0,.4),0 12px 30px rgba(0,0,0,.35);
+  }
+  :root[data-theme="light"]{
+    --bg:#f7f8fa; --panel:#ffffff; --ink:#1c2128; --muted:#5b6472;
+    --line:#e4e8ee; --accent:#2f6df6; --accent-soft:#eaf1ff;
+    --accent2:#8b5cf6; --ok:#16a34a; --warn:#d97706; --danger:#dc2626;
+    --code:#eef1f6; --shadow:0 1px 3px rgba(20,30,50,.06),0 8px 24px rgba(20,30,50,.05);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;
+    line-height:1.7; font-size:16px;
+  }
+  .layout{display:grid; grid-template-columns:260px 1fr; max-width:var(--maxw); margin:0 auto; gap:0;}
+  /* Sidebar */
+  aside{
+    position:sticky; top:0; align-self:start; height:100vh; overflow-y:auto;
+    padding:28px 18px 40px; border-right:1px solid var(--line);
+  }
+  aside .brand{font-weight:800; font-size:15px; letter-spacing:.2px; margin-bottom:2px;}
+  aside .sub{color:var(--muted); font-size:12px; margin-bottom:20px;}
+  aside nav a{
+    display:block; color:var(--muted); text-decoration:none; font-size:13.5px;
+    padding:7px 10px; border-radius:8px; margin-bottom:2px; border-left:2px solid transparent;
+  }
+  aside nav a:hover{background:var(--accent-soft); color:var(--ink);}
+  aside nav a.active{color:var(--accent); background:var(--accent-soft); border-left-color:var(--accent); font-weight:600;}
+  aside nav .grp{font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin:16px 10px 6px; opacity:.7;}
+  main{padding:40px 44px 120px; min-width:0;}
+  /* Hero */
+  .hero{
+    background:linear-gradient(135deg,var(--accent) 0%,var(--accent2) 100%);
+    color:#fff; border-radius:20px; padding:40px 40px 34px; margin-bottom:34px; box-shadow:var(--shadow);
+  }
+  .hero .kicker{font-size:12.5px; text-transform:uppercase; letter-spacing:.14em; opacity:.9; font-weight:600;}
+  .hero h1{margin:.35em 0 .3em; font-size:32px; line-height:1.2; font-weight:800;}
+  .hero p{margin:0; font-size:16px; max-width:66ch; opacity:.96;}
+  .hero .tag{display:inline-block; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.28);
+    padding:4px 11px; border-radius:999px; font-size:12px; margin-top:16px; margin-right:6px; font-weight:600;}
+  section{margin-bottom:48px; scroll-margin-top:20px;}
+  section > h2{font-size:23px; font-weight:800; margin:0 0 6px; letter-spacing:-.01em;}
+  section > h2 .num{color:var(--accent); font-variant-numeric:tabular-nums;}
+  section > .lede{color:var(--muted); font-size:15px; margin:0 0 22px; max-width:74ch;}
+  h3{font-size:16.5px; font-weight:700; margin:28px 0 10px;}
+  p{margin:0 0 14px;}
+  .card{background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:22px 24px; box-shadow:var(--shadow); margin-bottom:18px;}
+  .mermaid{background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:20px; margin:6px 0 18px; overflow-x:auto; text-align:center; box-shadow:var(--shadow);}
+  .mermaid svg{max-width:100%; height:auto;}
+  .figcap{color:var(--muted); font-size:13px; margin:-8px 0 24px; padding-left:4px;}
+  table{width:100%; border-collapse:collapse; font-size:14px; margin:6px 0 18px; display:block; overflow-x:auto;}
+  th,td{text-align:left; padding:9px 13px; border-bottom:1px solid var(--line); vertical-align:top;}
+  th{font-weight:700; color:var(--ink); background:var(--accent-soft); white-space:nowrap;}
+  tbody tr:hover{background:var(--accent-soft);}
+  code{background:var(--code); padding:1.5px 6px; border-radius:5px; font-size:.88em; font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;}
+  .pill{display:inline-block; padding:2px 9px; border-radius:999px; font-size:11.5px; font-weight:700; letter-spacing:.02em;}
+  .pill.ok{background:color-mix(in srgb,var(--ok) 15%,transparent); color:var(--ok);}
+  .pill.warn{background:color-mix(in srgb,var(--warn) 16%,transparent); color:var(--warn);}
+  .pill.danger{background:color-mix(in srgb,var(--danger) 15%,transparent); color:var(--danger);}
+  .pill.accent{background:var(--accent-soft); color:var(--accent);}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  .callout{border-left:3px solid var(--accent); background:var(--accent-soft); border-radius:0 12px 12px 0; padding:14px 18px; margin:6px 0 18px; font-size:14.5px;}
+  .callout.warn{border-left-color:var(--warn); background:color-mix(in srgb,var(--warn) 10%,transparent);}
+  .callout b{color:var(--ink);}
+  .quote{font-style:italic; color:var(--ink); border-left:3px solid var(--accent2); padding:6px 18px; margin:8px 0 18px; font-size:15px;}
+  .pillars{display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-bottom:8px;}
+  .pillar{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:16px 18px; box-shadow:var(--shadow);}
+  .pillar .n{font-size:12px; font-weight:800; color:var(--accent); letter-spacing:.05em;}
+  .pillar h4{margin:4px 0 4px; font-size:15px;}
+  .pillar p{margin:0; font-size:13px; color:var(--muted);}
+  .themebtn{position:fixed; top:16px; right:18px; z-index:50; background:var(--panel); border:1px solid var(--line);
+    color:var(--ink); border-radius:10px; padding:7px 12px; font-size:13px; cursor:pointer; box-shadow:var(--shadow);}
+  .footer{color:var(--muted); font-size:13px; border-top:1px solid var(--line); padding-top:18px; margin-top:30px;}
+  .src{font-family:"SF Mono",ui-monospace,monospace; font-size:12px; color:var(--muted);}
+  @media (max-width:900px){
+    .layout{grid-template-columns:1fr;}
+    aside{position:static; height:auto; border-right:none; border-bottom:1px solid var(--line);}
+    aside nav{columns:2;}
+    main{padding:24px 18px 80px;}
+    .hero{padding:28px 22px;}
+    .hero h1{font-size:25px;}
+    .grid2,.pillars{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+<button class="themebtn" id="themebtn">◐ 테마</button>
+<div class="layout">
+  <aside>
+    <div class="brand">🔬 AI Scientist 설계</div>
+    <div class="sub">BioProject02 · SpatialPathoAgent</div>
+    <nav id="nav">
+      <a href="#overview">개요 & 4개 기둥</a>
+      <div class="grp">설계 기둥</div>
+      <a href="#arch">01 · 2-레이어 아키텍처</a>
+      <a href="#roster">02 · 다중 에이전트 명부</a>
+      <a href="#routing">03 · 라우팅 & 산출물 계약</a>
+      <a href="#review">04 · 자동 검수 & 거버넌스</a>
+      <div class="grp">사람 & 계보</div>
+      <a href="#collab">05 · 다연구자 협업</a>
+      <a href="#lineage">06 · 설계 계보</a>
+    </nav>
+  </aside>
+
+  <main>
+    <!-- HERO -->
+    <div class="hero" id="top">
+      <div class="kicker">연구 자동화 하네스 설계 회고</div>
+      <h1>연구 도구를 넘어 <br>연구 과정 전반을 자동화하는 AI Scientist</h1>
+      <p>문헌 검색·정리 → 가설 설정 → 실험 수행 → 논문 작성 → 검수까지. 이 프로젝트는 그것을
+        <b>완전 자율 기계가 아니라 "역할 분화 다중 에이전트 + 독립 Critic 게이트 + 사람 거버넌스"</b>의
+        거버넌스 중심 하네스로 설계했고, 그 위에서 연구자 6명이 협업한다.</p>
+      <div>
+        <span class="tag">2-레이어 아키텍처</span>
+        <span class="tag">다중 에이전트</span>
+        <span class="tag">자동 검수 루프</span>
+        <span class="tag">사람 거버넌스 게이트</span>
+      </div>
+    </div>
+
+    <!-- OVERVIEW -->
+    <section id="overview">
+      <h2><span class="num">◆</span> 개요 — 설계의 4개 기둥 + 협업</h2>
+      <p class="lede">한 줄 요약: 자동화의 목표는 <b>사람을 빼는 것이 아니라, 사람이 판단해야 할 지점만 남기고 나머지 노동을 에이전트가 대신하는 것.</b> 이 방향은 선행연구를 읽고 의도적으로 내린 포지셔닝이다.</p>
+
+      <div class="pillars">
+        <div class="pillar"><div class="n">기둥 1</div><h4>2-레이어 아키텍처</h4><p>도메인 <b>분석 파이프라인</b> 위에 <b>논문 생산 하네스</b>를 얹는다.</p></div>
+        <div class="pillar"><div class="n">기둥 2</div><h4>다중 에이전트 명부</h4><p>문헌·기획 / 분석 / 집필·그림 / 검수 / 발표를 역할별 에이전트로 분리.</p></div>
+        <div class="pillar"><div class="n">기둥 3</div><h4>라우팅 + 산출물 계약</h4><p>자연어를 에이전트로 배정, 단계 간 산출물을 계약으로 고정.</p></div>
+        <div class="pillar"><div class="n">기둥 4</div><h4>자동 검수 + 거버넌스</h4><p>AI가 적대적 리뷰를 대신하고, 사람은 판단항목만 처리.</p></div>
+      </div>
+
+      <div class="mermaid">
+flowchart TB
+    U["연구자 요청 (자연어)"]:::user
+    U --> R{{"자연어 라우팅<br/>CLAUDE.md 라우팅표"}}:::route
+    R --> ORCH["paper-production-orchestrator<br/>(입구 · 메인 루프 실행)"]:::orch
+
+    subgraph PLAN["① 문헌 · 기획"]
+      LS["literature-scout"]:::a
+      NS["novelty-strategist"]:::a
+      RM["research-methodologist"]:::a
+    end
+    subgraph ANA["② 분석 · 실험"]
+      SP["spatialpatho-analyst<br/>(도메인 슬롯)"]:::a
+    end
+    subgraph WRITE["③ 집필 · 그림"]
+      MW["manuscript-writer"]:::a
+      FIG["figure 스크립트"]:::a
+    end
+    subgraph QA["④ 검수 · 게이트"]
+      PC["paper-critic / reviewer"]:::a
+      GATE["검증 · 공개 게이트<br/>(사람)"]:::gate
+    end
+    PRES["presenter"]:::a
+
+    ORCH --> PLAN --> ANA --> WRITE --> QA --> PRES
+    QA -. "지적 반영" .-> WRITE
+
+    classDef user fill:#2f6df6,stroke:#2f6df6,color:#fff;
+    classDef route fill:#eef2ff,stroke:#8b5cf6,color:#3b2c6b;
+    classDef orch fill:#8b5cf6,stroke:#8b5cf6,color:#fff;
+    classDef a fill:#ffffff,stroke:#c9d3e3,color:#1c2128;
+    classDef gate fill:#fff4e6,stroke:#d97706,color:#7c4a03;
+      </div>
+      <p class="figcap">그림 0. 요청이 라우팅→오케스트레이터를 거쳐 기획→분석→집필→검수→발표 파이프라인을 흐른다. 검수는 집필로 되돌아가는 루프이며, 사람 게이트가 공개 전에 놓인다.</p>
+
+      <div class="callout">이 문서는 <b>설계 회고</b>다. 새 시스템을 만드는 것이 아니라 <code>CLAUDE.md</code>·<code>docs/HARNESS.md</code>·<code>.claude/agents/</code>·<code>agents/critic/</code>·<code>research/ai-agents/</code>에 이미 구현·기록된 설계를 한 지도로 모았다. 모든 서술은 실제 파일 근거를 가진다.</div>
+    </section>
+
+    <!-- 01 ARCH -->
+    <section id="arch">
+      <h2><span class="num">01</span> 2-레이어 아키텍처</h2>
+      <p class="lede">AI Scientist를 하나의 거대한 자율 에이전트로 만들지 않았다. 책임이 다른 두 레이어를 분리하고, 위 레이어가 아래 레이어의 산출물을 소비한다.</p>
+
+      <div class="mermaid">
+flowchart TB
+    subgraph B["레이어 B — 논문 생산 하네스 (재사용 연결조직)"]
+      direction LR
+      b1["literature-scout"]:::b
+      b2["novelty-strategist"]:::b
+      b3["research-methodologist"]:::b
+      b4["manuscript-writer"]:::b
+      b5["paper-critic / reviewer"]:::b
+      b6["presenter"]:::b
+    end
+    subgraph A["레이어 A — 도메인 분석 파이프라인"]
+      direction LR
+      a1["data"]:::a
+      a2["embedding"]:::a
+      a3["modeling"]:::a
+      a4["therapeutic_evidence"]:::a
+      a5["critic"]:::a
+    end
+    SLOT["spatialpatho-analyst<br/>(도메인 슬롯 = 레이어 A의 대표)"]:::slot
+    G1["🔒 검증 게이트<br/>headline AUC/AUPRC 재계산"]:::gate
+    G2["🔒 공개 게이트<br/>저자·소속·IP·GPU 제공처"]:::gate
+
+    A --> SLOT
+    SLOT --> B
+    B --> G1 --> G2
+
+    classDef a fill:#eaf7ee,stroke:#16a34a,color:#0f3d20;
+    classDef b fill:#eef1ff,stroke:#2f6df6,color:#1c2a5e;
+    classDef slot fill:#8b5cf6,stroke:#8b5cf6,color:#fff;
+    classDef gate fill:#fff4e6,stroke:#d97706,color:#7c4a03;
+      </div>
+      <p class="figcap">그림 1. 도메인 특수성은 단 하나의 슬롯 <code>spatialpatho-analyst</code>에 격리되고, 레이어 B는 어느 논문에도 옮겨 붙는 재사용 조직이다. 두 레이어 경계에 사람 게이트 2개.</p>
+
+      <h3>왜 두 레이어로 나눴나</h3>
+      <table>
+        <tr><th>이유</th><th>설명</th></tr>
+        <tr><td><b>재사용성</b></td><td>문헌·집필·검수·발표 벤치는 도메인 무관 연결조직. 다른 프로젝트(BIOP01)에 그대로 복사. 도메인 지식은 한 슬롯에 격리.</td></tr>
+        <tr><td><b>관심사 분리</b></td><td>분석 레이어 = "숫자가 맞나"(누수·baseline·재현성). 생산 레이어 = "정직하게 논문으로 쓰나". 검증 게이트가 경계에.</td></tr>
+        <tr><td><b>성숙도 흡수</b></td><td>집필-단계 산출물이 아직 없어 생산 레이어는 <code>&lt;FILL&gt;</code>로 미리 배선만 해둔다.</td></tr>
+      </table>
+
+      <h3>레이어 A의 의존성 체인</h3>
+      <div class="mermaid">
+flowchart LR
+    D["data<br/>manifest + split_policy_v0"]:::a --> E["embedding<br/>tiling · FM 추출"]:::a
+    E --> M["modeling<br/>MLP → attention MIL"]:::a
+    M --> T["therapeutic_evidence<br/>DepMap/GDSC 전이"]:::a
+    T --> C["critic<br/>critic_report.json"]:::a
+    C --> O["orchestrator<br/>등록 · 공유"]:::o
+    classDef a fill:#eaf7ee,stroke:#16a34a,color:#0f3d20;
+    classDef o fill:#8b5cf6,stroke:#8b5cf6,color:#fff;
+      </div>
+      <p class="figcap">그림 2. 과학 목표: H&E WSI → 형태학 임베딩 → 분자 표현형(ER/PR/HER2·PAM50) → 치료 근거 랭킹. <b>DRP가 아님</b> — 약물 구조 입력 없음, 가설 출력 전용.</p>
+
+      <div class="callout"><b>모든 실험은 5종 아티팩트로 봉인된다:</b> <code>config.yaml · model.pt · metrics.json · predictions.npy · critic_report.json</code> + <code>metrics.json</code> 안에 <code>commit_hash</code>. 이 강제 계약이 "실험을 실제로 수행했다"의 재현 가능한 증거. <span class="src">근거: AGENTS.md §5</span></div>
+    </section>
+
+    <!-- 02 ROSTER -->
+    <section id="roster">
+      <h2><span class="num">02</span> 다중 에이전트 명부</h2>
+      <p class="lede">"한 명의 만능 에이전트"가 아니라 벤치(bench)별로 역할이 나뉜 에이전트 랩. 각 에이전트는 <code>.claude/agents/&lt;name&gt;.md</code>에 시스템 프롬프트·도구·계약이 정의된다.</p>
+
+      <div class="mermaid">
+flowchart TB
+    subgraph BENCH1["📚 문헌 · 기획"]
+      LS["literature-scout<br/><small>선행연구 · related work · 스쿱</small>"]:::plan
+      NS["novelty-strategist<br/><small>차별화 각도 + 가장 싼 실험</small>"]:::plan
+      RM["research-methodologist<br/><small>가설 · 설계 · 누수/통계 감사</small>"]:::plan
+    end
+    subgraph BENCH2["🧪 분석실"]
+      SP["spatialpatho-analyst<br/><small>도메인 슬롯 · eval · 통계</small>"]:::ana
+    end
+    subgraph BENCH3["✍️ 집필실"]
+      MW["manuscript-writer<br/><small>본문 + 그림 스크립트 실행</small>"]:::wr
+      PR["presenter<br/><small>청중 맞춤 슬라이드</small>"]:::wr
+    end
+    subgraph BENCH4["🔍 심사 · QA"]
+      PC["paper-critic<br/><small>적대적 검토 + 그림 QA</small>"]:::qa
+      RV["reviewer<br/><small>venue 스타일 리뷰</small>"]:::qa
+    end
+    subgraph BENCH5["🧭 코디 · 엔지니어링"]
+      PO["paper-orchestrator<br/><small>계획만</small>"]:::eng
+      DS["design<br/><small>로고 · 그림 미감</small>"]:::eng
+    end
+
+    classDef plan fill:#eef1ff,stroke:#2f6df6,color:#1c2a5e;
+    classDef ana fill:#f3ecff,stroke:#8b5cf6,color:#3b2c6b;
+    classDef wr fill:#eaf7ee,stroke:#16a34a,color:#0f3d20;
+    classDef qa fill:#fff4e6,stroke:#d97706,color:#7c4a03;
+    classDef eng fill:#f1f4f8,stroke:#5b6472,color:#2a3340;
+      </div>
+      <p class="figcap">그림 3. 로스터에서 <code>spatialpatho-analyst</code>만 도메인 고유이고 나머지는 전부 "재사용" 연결조직이다. <span class="src">근거: docs/HARNESS.md §1</span></p>
+
+      <h3>설계상 중요한 두 구분</h3>
+      <div class="grid2">
+        <div class="card">
+          <span class="pill accent">구분 1</span>
+          <h4 style="margin:8px 0 6px">계획 에이전트 ≠ 실행 입구</h4>
+          <p style="font-size:14px;color:var(--muted);margin:0"><code>paper-orchestrator</code>(agent)는 <b>계획만</b> — 서브에이전트는 서브에이전트를 못 낳는다. 실제 실행은 <code>paper-production-orchestrator</code>(Skill)를 <b>메인 루프(PI)</b>가 돌린다.</p>
+        </div>
+        <div class="card">
+          <span class="pill accent">구분 2</span>
+          <h4 style="margin:8px 0 6px">도메인 특수성 격리</h4>
+          <p style="font-size:14px;color:var(--muted);margin:0">H&E·병리·DepMap 지식은 <code>spatialpatho-analyst</code> 한 슬롯에 가둠. 문헌·집필·검수·발표 벤치는 어느 논문에도 옮겨 붙는다.</p>
+        </div>
+      </div>
+
+      <div class="callout warn"><b>에이전트 발행 규칙:</b> 서브에이전트가 무력해 보이는 건 권한이 아니라 <b>프롬프트 문제</b>. 첫 줄에 "슬래시/스킬 쓰지 말고 Bash로 Python 직접 실행" 명시, 코드를 copy-paste 형태로 직접 포함, env 경로(<code>conda run -p /opt/envs/spatialpatho</code>) 명시. <span class="src">근거: CLAUDE.md 에이전트 발행·프롬프트 규칙</span></div>
+    </section>
+
+    <!-- 03 ROUTING -->
+    <section id="routing">
+      <h2><span class="num">03</span> 자연어 라우팅 + 산출물 계약</h2>
+      <p class="lede">에이전트가 여럿이면 "어떤 요청을 누구에게"와 "무엇을 주고받나"를 정해야 한다. 각각 <b>자연어 라우팅표</b>와 <b>산출물 계약</b>으로 고정했다.</p>
+
+      <div class="mermaid">
+flowchart LR
+    subgraph SINGLE["단일 단계 요청 → 에이전트 직행"]
+      q1["분석 돌려줘 / eval"]:::q --> SP["spatialpatho-analyst"]:::t
+      q2["초안 써줘"]:::q --> MW["manuscript-writer"]:::t
+      q3["선행연구 / 스쿱"]:::q --> LS["literature-scout"]:::t
+      q4["적대적 검토 / 인용 검증"]:::q --> PC["paper-critic"]:::t
+      q5["발표자료"]:::q --> PRS["presenter"]:::t
+    end
+    subgraph MULTI["여러 단계 엮는 요청 → 오케스트레이터"]
+      q6["풀 파이프라인 / 제출 준비<br/>그림만 다시 / critic 지적 반영"]:::q2 --> OR["paper-production-orchestrator<br/>(Skill · 메인 루프)"]:::orch
+    end
+    classDef q fill:#f7f8fa,stroke:#c9d3e3,color:#1c2128;
+    classDef q2 fill:#f3ecff,stroke:#8b5cf6,color:#3b2c6b;
+    classDef t fill:#eef1ff,stroke:#2f6df6,color:#1c2a5e;
+    classDef orch fill:#8b5cf6,stroke:#8b5cf6,color:#fff;
+      </div>
+      <p class="figcap">그림 4. 단일 단계는 직행, 여러 단계를 엮는 요청은 오케스트레이터로 모여 정해진 순서로 실행 + 부분 재실행 처리.</p>
+
+      <h3>산출물 계약 — 단계 간에 무엇을 넘기나</h3>
+      <table>
+        <tr><th>단계</th><th>Writer</th><th>산출물</th><th>다음이 읽음</th></tr>
+        <tr><td>분석·eval</td><td>spatialpatho-analyst</td><td>eval outputs + results summary</td><td>집필·검수</td></tr>
+        <tr><td>집필+그림</td><td>manuscript-writer</td><td>manuscript, figures dir</td><td>검수·리뷰·발표</td></tr>
+        <tr><td>검증 게이트</td><td>(커밋/공개 전)</td><td>headline 재계산 → summary 대조</td><td>사람</td></tr>
+        <tr><td>리뷰</td><td>paper-critic / reviewer</td><td>peer review note</td><td>집필(수정)</td></tr>
+        <tr><td>상태 핸드오프</td><td>(전원)</td><td><code>HANDOFF.md · TODO.md · SESSION_LOG.md</code></td><td>다음 세션</td></tr>
+      </table>
+
+      <div class="callout"><b>스키마로 굳힌 계약:</b> 모든 hypothesis 출력에 <code>claim_level="hypothesis_only"</code> + <code>critic_status</code> 필수(<code>schemas/hypothesis.schema.json</code>). 실험 <code>metrics.json</code>은 <code>auc·auprc·balanced_accuracy·n_train·n_val·model·embedding_model·commit_hash</code> 필수.</div>
+
+      <div class="callout warn"><b>"지어내지 않기"를 계약에 박았다.</b> <code>&lt;FILL&gt;</code> 플레이스홀더 = 아직 없는 것을 없다고 표시하는 장치. 발표자료 숫자를 합격 기준으로 쓰기 금지, 도구의 "못 찾겠다"를 통과로 처리 금지. <span class="src">근거: CLAUDE.md Absolute Prohibitions</span></div>
+    </section>
+
+    <!-- 04 REVIEW -->
+    <section id="review">
+      <h2><span class="num">04</span> 자동 검수 루프 + 거버넌스 <span class="pill danger">핵심 차별점</span></h2>
+      <p class="lede">가장 공들인 부분. 핵심 질문: <b>"AI가 몇 주간 논문을 검수·수정하는 동안 사람이 매번 병목이 되지 않게 하려면?"</b> 답: AI가 리뷰 노동을 대신하고, 사람은 판단해야만 하는 항목만 처리한다.</p>
+
+      <div class="mermaid">
+flowchart TB
+    START(["cron 주기 스캔 또는 사람 트리거"]):::start
+    START --> GATE["① 결정론 게이트<br/>auto_review_gate.py<br/><small>LLM 없이 규칙만</small>"]:::det
+    GATE -->|하드룰 위반| BLK["🚫 blocked<br/>즉시 정지 — 고쳐야 통과"]:::blk
+    GATE -->|통과| TIER{"② 티어 분류<br/>+ AI리뷰 큐 적재"}:::det
+    TIER --> DRAIN["큐 drain<br/>에이전트 호출 스펙 발행<br/>owner→reviewer 자동 배정"]:::q
+    DRAIN --> AIR["③ AI 적대적 리뷰<br/>paper-critic + reviewer<br/><small>7-point · 다중패스 · headline 재계산</small>"]:::ai
+    AIR --> REP["critic_report.json"]:::rep
+    REP --> DEC{"④ 티어별 처리"}:::det
+    DEC -->|Tier B| PROV["provisional<br/>✅ 진행·커밋 허용<br/>공유만 사람 1-클릭 confirm"]:::ok
+    DEC -->|Tier C| HUM["needs_human<br/>👤 사람이 adjudicate<br/>headline · publish"]:::hum
+
+    classDef start fill:#eef1ff,stroke:#2f6df6,color:#1c2a5e;
+    classDef det fill:#f1f4f8,stroke:#5b6472,color:#2a3340;
+    classDef q fill:#f3ecff,stroke:#8b5cf6,color:#3b2c6b;
+    classDef ai fill:#f3ecff,stroke:#8b5cf6,color:#3b2c6b;
+    classDef rep fill:#ffffff,stroke:#c9d3e3,color:#1c2128;
+    classDef ok fill:#eaf7ee,stroke:#16a34a,color:#0f3d20;
+    classDef hum fill:#fff4e6,stroke:#d97706,color:#7c4a03;
+    classDef blk fill:#fdeaea,stroke:#dc2626,color:#7f1414;
+      </div>
+      <p class="figcap">그림 5. 결정론 게이트 → 큐 → AI 적대 리뷰 → 티어별 처리. 코드는 <code>agents/critic/auto_review_*.py</code>에 실제 구현(기본값 dry-run).</p>
+
+      <h3>3단계 티어 게이트 — "사람을 어디에 둘지"</h3>
+      <table>
+        <tr><th>티어</th><th>무엇</th><th>처리</th><th>사람 개입</th></tr>
+        <tr><td><span class="pill danger">하드룰</span></td><td>금지 프레이밍("drug response prediction"…), 필수필드 누락, <code>claim_level≠hypothesis_only</code></td><td><code>blocked</code> 즉시</td><td>정지</td></tr>
+        <tr><td><span class="pill warn">Tier C</span></td><td>manuscript·preprint·abstract·법칙·publish·main figure</td><td><code>needs_human</code></td><td><b>사람 adjudicate</b></td></tr>
+        <tr><td><span class="pill ok">Tier B</span></td><td>그 외 실험·분석 결과 (기본)</td><td><code>provisional</code></td><td><b>진행·커밋 허용</b>, 공유만 1-클릭</td></tr>
+        <tr><td><span class="pill accent">Tier A</span></td><td>guide·docs·README·setup·manifest</td><td>가벼운 경로</td><td>대부분 자동</td></tr>
+      </table>
+
+      <div class="quote">"진행을 사람 리뷰에 볼모 잡지 않는다." 사람이 하드 블로킹하는 건 headline·publish(Tier C)뿐, 나머지는 AI 리뷰 통과 시 계속 굴러간다.</div>
+
+      <div class="grid2">
+        <div class="card">
+          <h4 style="margin:0 0 6px">리뷰어 부재 폴백</h4>
+          <p style="font-size:13.5px;color:var(--muted);margin:0">리더 1인만 가용해 owner=reviewer가 되면: AI 적대 <b>독립 패스 ≥3</b> + 리더 확인(<code>ai-adversarial+leader-confirm</code>), 단 <b>headline은 타인 1인 필수</b>. → 몇 주 정체 대신 계속 진행.</p>
+        </div>
+        <div class="card">
+          <h4 style="margin:0 0 6px">안전 기본값: dry-run</h4>
+          <p style="font-size:13.5px;color:var(--muted);margin:0"><code>enabled:false</code>가 기본 → "무엇을 할지"만 출력. 스터디에서 <code>&lt;DECIDE&gt;</code> 값만 채우고 <code>enabled=true</code>, <b>코드 변경 없이</b> 활성화.</p>
+        </div>
+      </div>
+
+      <h3>거버넌스 — 자동화가 넘지 못하는 선 (절대 금지)</h3>
+      <table>
+        <tr><th>금지</th><th>이유</th></tr>
+        <tr><td>❌ 약물 구조(SMILES 등) 모델 입력</td><td>DRP가 아님 — hypothesis-only</td></tr>
+        <tr><td>❌ "환자별 최적 치료 예측"·"개인 맞춤 치료" 표현</td><td>과잉 주장 금지</td></tr>
+        <tr><td>❌ Critic이 자기 임계값을 스스로 정함</td><td>anti-self-reference (LLM-judge 자기선호 편향)</td></tr>
+        <tr><td>❌ 발표자료 숫자를 합격 기준으로 사용</td><td>기준은 봉인된 사전등록 + 실물 코드뿐, <code>파일:줄</code>로 인용</td></tr>
+        <tr><td>❌ 도구의 "못 찾겠다"를 통과로 처리</td><td>가짜 DOI가 약한 제목검색으로 뚫림 → 사람/적대 검증 에스컬레이션</td></tr>
+      </table>
+    </section>
+
+    <!-- 05 COLLAB -->
+    <section id="collab">
+      <h2><span class="num">05</span> 다연구자 협업 구조</h2>
+      <p class="lede">AI Scientist 하네스는 진공에서 돌지 않는다. 연구자 6명이 각자의 컨테이너·역할·검수 짝을 갖고 그 위에서 협업한다.</p>
+
+      <div class="mermaid">
+flowchart LR
+    JIRA["JIRA (BIOP02)<br/>이슈 할당"]:::j --> OC["OpenClaw bot<br/>담당자별 자동 모니터링"]:::oc
+    OC -->|"Slack DM / #biop02-dev"| DEV["연구자"]:::dev
+    DEV -->|"실제 구현"| CC["Claude Code / Codex"]:::cc
+    CC -->|"git commit (BIOP02-번호)"| PR["PR"]:::pr
+    PR -->|"Smart Commits"| JIRA
+    classDef j fill:#eef1ff,stroke:#2f6df6,color:#1c2a5e;
+    classDef oc fill:#f3ecff,stroke:#8b5cf6,color:#3b2c6b;
+    classDef dev fill:#eaf7ee,stroke:#16a34a,color:#0f3d20;
+    classDef cc fill:#ffffff,stroke:#c9d3e3,color:#1c2128;
+    classDef pr fill:#fff4e6,stroke:#d97706,color:#7c4a03;
+      </div>
+      <p class="figcap">그림 6. OpenClaw = JIRA 모니터링 + Slack 알림 전용(코드 안 씀). Claude Code/Codex = 연구자가 직접 구동(실제 구현). 커밋이 JIRA 상태를 자동 갱신.</p>
+
+      <h3>1인 1역할 — 사람 역할과 에이전트 벤치의 대응</h3>
+      <table>
+        <tr><th>연구자</th><th>역할</th><th>대응 벤치</th></tr>
+        <tr><td>kkkim (김가경)</td><td><b>Project Leader</b> + Embedding</td><td><code>agents/embedding/</code> → spatialpatho-analyst</td></tr>
+        <tr><td>braveji (지용기)</td><td>Orchestrator + <b>Scientific Critic 총괄</b></td><td><code>agents/critic/</code> → paper-critic</td></tr>
+        <tr><td>jamie (류재면)</td><td>Data Agent</td><td><code>agents/data/</code></td></tr>
+        <tr><td>sjpark (박세진)</td><td>Modeling + 바이오 sub-check</td><td><code>agents/modeling/</code></td></tr>
+        <tr><td>jhans (서정한)</td><td>Therapeutic Evidence</td><td><code>agents/therapeutic_evidence/</code></td></tr>
+      </table>
+
+      <h3>교차검수: owner ≠ reviewer</h3>
+      <div class="mermaid">
+flowchart LR
+    sj["sjpark (모델링)"]:::w --> kk["kkkim"]:::r
+    kk2["kkkim (임베딩)"]:::w --> jm["jamie"]:::r
+    jm2["jamie (데이터/split)"]:::w --> bv["braveji"]:::r
+    jh["jhans (TE)"]:::w --> bv2["braveji 총괄<br/>+ sjpark 바이오 sub-check"]:::r
+    classDef w fill:#eaf7ee,stroke:#16a34a,color:#0f3d20;
+    classDef r fill:#fff4e6,stroke:#d97706,color:#7c4a03;
+      </div>
+      <p class="figcap">그림 7. 자기 결과를 자기가 critic 하지 않는다. 이 매핑은 자동 리뷰 루프의 <code>cross_review_map</code>에 <b>그대로 주입</b>돼 사람 규칙과 AI 자동화가 같은 규칙을 공유한다.</p>
+
+      <div class="callout"><b>공유 인프라 규약:</b> 각 연구자는 별도 Docker 컨테이너 → <code>/home/&lt;user&gt;/</code>는 서로 안 보임. <b>공유 데이터는 반드시 <code>/workspace/data/cache/biop02/</code>에 실파일로</b>, manifest 경로는 <code>/workspace/...</code> 절대경로. GPU 슬롯은 <code>#biop02-alerts</code>에 예약.</div>
+    </section>
+
+    <!-- 06 LINEAGE -->
+    <section id="lineage">
+      <h2><span class="num">06</span> 설계 계보 — 왜 "완전 자율"이 아닌가</h2>
+      <p class="lede">이 방향은 즉흥이 아니라 AI Scientist / multi-agent science 선행연구를 읽고 의도적으로 내린 포지셔닝이다. 근거는 <code>research/ai-agents/</code>에 멀티렌즈 분석으로 정리돼 있다.</p>
+
+      <div class="mermaid">
+flowchart TB
+    subgraph PRIOR["선행연구 (research/ai-agents/)"]
+      SAK["Sakana AI Scientist<br/><small>완전 자율 파이프라인</small>"]:::p
+      CO["Google co-scientist<br/><small>전문 에이전트 + Elo + in-the-loop</small>"]:::p
+      VS["VirSci<br/><small>멀티에이전트 아이디어</small>"]:::p
+      JUDGE["LLM-judge 서베이<br/><small>자기선호 편향</small>"]:::p
+    end
+    subgraph DESIGN["BioProject02 설계 선택"]
+      D1["자율성 제한 + 사람 거버넌스 게이트"]:::d
+      D2["delta = system / evaluation / governance"]:::d
+      D3["hypothesis-only + claim_level 강제"]:::d
+      D4["Critic 자기참조 금지 · owner≠reviewer"]:::d
+      D5["티어 게이트로 사람 병목 최소화"]:::d
+    end
+    SAK -->|"대조군: 반대 극단"| D1
+    VS -->|"멀티에이전트는 crowded"| D2
+    CO -->|"Reflection = 우리 Critic"| D2
+    JUDGE -->|"자기선호 편향 경고"| D4
+    SAK -->|"자율은 검증 약함"| D5
+
+    classDef p fill:#eef1ff,stroke:#2f6df6,color:#1c2a5e;
+    classDef d fill:#f3ecff,stroke:#8b5cf6,color:#3b2c6b;
+      </div>
+      <p class="figcap">그림 8. 선행연구의 두 교훈 — ①완전 자율은 검증이 약하다 ②멀티에이전트·가설 생성은 이미 붐빈다 — 이 곧 설계 원칙이 됐다.</p>
+
+      <div class="callout"><b>핵심 결론</b> (<code>research/_index/reading_list.md</code>): "형태(H&E)→분자표현형 예측은 이미 포화. 기여 = 새 method가 아니라 <b>system / evaluation / governance</b>. 경쟁자를 baseline으로 인용하고, 그 위에 표현형-매개 framing + Critic 가드레일 + cross-DB(PRISM↔GDSC) 일관성을 delta로."</div>
+
+      <div class="quote">Sakana의 AI Scientist가 "얼마나 자율적으로 갈 수 있나"를 물었다면, 이 프로젝트는 "얼마나 정직하고 검증 가능하게, 그리고 여러 사람이 함께 굴릴 수 있게 만들 수 있나"를 물었다.</div>
+
+      <div class="footer">
+        <p><b>근거 파일:</b> <span class="src">CLAUDE.md · AGENTS.md · docs/HARNESS.md · .claude/agents/*.md · .claude/skills/paper-production-orchestrator/SKILL.md · agents/critic/auto_review_*.py · agents/critic/auto_review_config.json · research/ai-agents/* · research/_index/reading_list.md</span></p>
+        <p>이 문서는 <code>ai_scientist/</code>의 6개 마크다운 회고를 mermaid + HTML로 시각화한 것이다 (output_v01). 모든 서술은 실제 파일 근거를 가지며 숫자·주장을 지어내지 않았다.</p>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+  // ---- Theme (light/dark) ----
+  const root = document.documentElement;
+  const btn = document.getElementById('themebtn');
+  function currentTheme(){
+    return root.getAttribute('data-theme') ||
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  }
+  function applyTheme(t){
+    root.setAttribute('data-theme', t);
+    try{ localStorage.setItem('ais_theme', t); }catch(e){}
+    renderMermaid(t);
+  }
+  const saved = (()=>{ try{return localStorage.getItem('ais_theme');}catch(e){return null;} })();
+  if(saved) root.setAttribute('data-theme', saved);
+  btn.addEventListener('click', ()=> applyTheme(currentTheme()==='dark'?'light':'dark'));
+
+  // ---- Mermaid ----
+  let mermaidSources = [];
+  document.querySelectorAll('.mermaid').forEach(el => mermaidSources.push(el.textContent));
+  function renderMermaid(theme){
+    const nodes = document.querySelectorAll('.mermaid');
+    nodes.forEach((el,i)=>{ el.removeAttribute('data-processed'); el.innerHTML = mermaidSources[i]; });
+    mermaid.initialize({
+      startOnLoad:false,
+      theme: theme==='dark' ? 'dark' : 'neutral',
+      themeVariables: theme==='dark'
+        ? { fontFamily:'-apple-system,Segoe UI,Noto Sans KR,sans-serif', fontSize:'14px' }
+        : { fontFamily:'-apple-system,Segoe UI,Noto Sans KR,sans-serif', fontSize:'14px' },
+      flowchart:{ htmlLabels:true, curve:'basis' }
+    });
+    mermaid.run({ nodes });
+  }
+  renderMermaid(currentTheme());
+
+  // ---- Scrollspy ----
+  const links = [...document.querySelectorAll('#nav a')];
+  const map = {};
+  links.forEach(a => { const id=a.getAttribute('href').slice(1); const s=document.getElementById(id); if(s) map[id]=a; });
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ links.forEach(l=>l.classList.remove('active')); const a=map[e.target.id]; if(a)a.classList.add('active'); }
+    });
+  }, { rootMargin:'-20% 0px -70% 0px' });
+  Object.keys(map).forEach(id=> obs.observe(document.getElementById(id)));
+</script>
+</body>
+</html>
