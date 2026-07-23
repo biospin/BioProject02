@@ -1,0 +1,72 @@
+{
+  "analysis": "Critic #2 검증 — PAM50 4-class paired bootstrap 원자료 독립 재계산",
+  "reviewer": "braveji",
+  "owner": "sjpark",
+  "ticket": "BIOP02-56",
+  "claim_level": "hypothesis_only",
+  "critic_status": "verification_only",
+  "purpose": "sjpark 커밋 mean_embed per-patient proba(ac92b88 후속)로 헤드라인 paired diff +0.165를 Critic이 처음부터 재계산해 대조. 기존엔 mean_embed proba가 미커밋이라 braveji가 BIOP02-69에서 별도 재생성해야 했음 — 이제 owner 산출물로 형식 근거가 닫힘.",
+  "method": {
+    "metric": "macro OvR AUC (sklearn roc_auc_score, multi_class=ovr)",
+    "paired_bootstrap": "동일 resample 인덱스를 두 예측기에 적용, n_boot=2000, seed=42, 4클래스 미포함 resample 제외",
+    "inputs": {
+      "mean_embed": "experiments/sjpark/pam50_uni_v1_4class_baselines/mean_embed_proba_{external_cptac,internal_val}.csv",
+      "clam": "experiments/sjpark/pam50_clam_mb_uni_v1_4class/predictions{_ext,}.npz"
+    }
+  },
+  "commit_verified": "02f9b6a916a141c38d82827f33feff597c903e66",
+  "results": {
+    "external_cptac": {
+      "n": 382,
+      "label_alignment": "382/382 일치",
+      "recorded": {
+        "auc_clam": 0.8181,
+        "auc_mean_embed": 0.653,
+        "diff": 0.165,
+        "ci95": [
+          0.1218,
+          0.2064
+        ]
+      },
+      "recomputed": {
+        "auc_clam": 0.8181,
+        "auc_mean_embed": 0.6518,
+        "diff": 0.1663,
+        "ci95": [
+          0.1235,
+          0.2078
+        ]
+      },
+      "verdict": "REPRODUCED — CLAM AUC 정확 일치, mean_embed 0.0012 차(반올림/재생성 수준, 비물질적), CI 하한 0.12대로 0 배제 견고"
+    },
+    "internal_val": {
+      "n": 123,
+      "label_alignment": "123/123 일치",
+      "recorded": {
+        "auc_clam": 0.8053,
+        "auc_mean_embed": 0.7153,
+        "diff": 0.0889,
+        "ci95": [
+          0.0394,
+          0.14
+        ]
+      },
+      "recomputed": {
+        "auc_clam": 0.8053,
+        "auc_mean_embed": 0.7145,
+        "diff": 0.0907,
+        "ci95": [
+          0.0401,
+          0.1407
+        ]
+      },
+      "verdict": "REPRODUCED — 부트스트랩 노이즈 내 일치"
+    }
+  },
+  "cross_check_braveji_BIOP02-69": "BIOP02-69에서 braveji가 독립 재생성한 mean_embed 외부 AUC 0.653과도 정합 — 서로 다른 두 경로의 mean_embed 산출이 같은 값에 수렴.",
+  "conclusion": "#2 baseline_comparison PASS의 수치 근거가 owner 원자료로 독립 재현됨. CI가 0을 넓은 마진으로 배제하므로 판정 불변(PASS).",
+  "does_not_change": [
+    "#3 counterfactual = caution 유지 (AUC-level p=0.061 비유의는 위생 문제가 아니라 실측 결과)",
+    "#5 bio_plausibility = caution 유지 (jhans sub-check 미배정, Owner≠Reviewer)"
+  ]
+}
