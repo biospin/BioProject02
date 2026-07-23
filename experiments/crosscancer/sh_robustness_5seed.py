@@ -21,6 +21,9 @@ ENDPOINTS = {
     "LUNG_NSCLC":    ["histology_lusc", "egfr_activating", "kras_g12c"],
     "GASTRIC_STAD":  ["lauren_diffuse", "msi_h", "erbb2_amp", "ebv"],
     "HEADNECK_HNSC": ["hpv_pos", "egfr_amp", "grade_high"],
+    # COLORECTAL: 다중 FM 재학습이 apples-to-apples로 돌린 유일 endpoint(run_mil_cost CANCER_CFG 기준).
+    # MULTIFM_COMPARISON.md §4가 요구한 신형 FM 5-seed 우연배제 자리.
+    "COLORECTAL":    ["braf_v600e"],
 }
 
 def one_auc(slides, labels, ep, device, shuffle, seed):
