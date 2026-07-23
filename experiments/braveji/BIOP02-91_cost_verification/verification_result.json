@@ -1,0 +1,55 @@
+{
+  "verifier": "braveji (Critic 총괄)",
+  "target": "patient_routing_cost_receptor.json",
+  "owner": "kkkim",
+  "owner_ne_reviewer": true,
+  "threshold_used": 0.5,
+  "n_bootstrap": 5000,
+  "seed": 42,
+  "n_slides": 294,
+  "n_patients": 95,
+  "confusion_true_to_pred": {
+    "endocrine": {
+      "endocrine": 171,
+      "chemo": 9
+    },
+    "antiHER2": {
+      "endocrine": 33,
+      "chemo": 2
+    },
+    "chemo": {
+      "endocrine": 58,
+      "chemo": 21
+    }
+  },
+  "per_axis": {
+    "endocrine": {
+      "n": 180,
+      "mean_cost": 0.0347,
+      "misroute_rate": 0.05
+    },
+    "antiHER2": {
+      "n": 35,
+      "mean_cost": 0.4161,
+      "misroute_rate": 1.0
+    },
+    "chemo": {
+      "n": 79,
+      "mean_cost": 0.5103,
+      "misroute_rate": 0.734
+    }
+  },
+  "headline_contrast": 0.3814,
+  "ci95_slide_level": [
+    0.347,
+    0.42
+  ],
+  "ci95_patient_level": [
+    0.331,
+    0.427
+  ],
+  "ci_widening_factor": 1.32,
+  "excludes_zero_patient_level": true,
+  "finding": "원자료 재현 전부 일치. 단 n=294는 슬라이드(환자 95명) — 커밋 CI는 슬라이드 단위 부트스트랩이라 pseudo-replication으로 과소추정. 환자 단위로는 1.32× 넓어지나 여전히 0 배제 → 헤드라인 결론 유지.",
+  "critic_status": "caution"
+}
