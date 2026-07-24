@@ -7,12 +7,12 @@
     "patient_routing_cost_receptor.json (receptor routing, primary)"
   ],
   "claim_level": "hypothesis_only",
-  "critic_status": "pending",
+  "critic_status": "caution_remediated_pending_signoff",
   "per_axis_cost": {
     "receptor": {
-      "antiHER2": 0.416,
-      "endocrine": 0.035,
-      "chemo": 0.51
+      "antiHER2": 0.4161,
+      "endocrine": 0.0347,
+      "chemo": 0.5103
     },
     "pam50": {
       "antiHER2": 0.718,
@@ -34,12 +34,17 @@
   },
   "headline_contrast": {
     "receptor": {
-      "value": 0.381,
+      "value": 0.3814,
       "ci95": [
-        0.348,
-        0.42
+        0.3309,
+        0.4266
       ],
-      "excludes_zero": true
+      "ci95_method": "patient-cluster bootstrap",
+      "excludes_zero": true,
+      "ci95_slide_level_deprecated": [
+        0.3476,
+        0.4201
+      ]
     },
     "pam50": {
       "value": 0.34,
