@@ -2,7 +2,7 @@
 
 > 목적: 치환가능성 결정지도가 **특정 파운데이션 모델(UNI)의 산물이 아닌지** 검정. 각 FM 임베딩 공간에서 CLAM을 **재학습**해야 성립하는 주장이라(HANDOFF §1 "주장 한계"), 임베딩만으로는 말할 수 없다.
 > claim_level: **hypothesis_only** · critic_status: **pending** · 2026-07-20. 산출 = `COLORECTAL/full/mil_cost_results_{virchow2,uni2h}.json`(재학습 러너 `multifm_retrain_watcher.py` 자동 실행, 07-20 01:36/01:39).
-> **Owner=kkkim(대행) → Reviewer=sjpark/braveji 크로스체크 필요**(Owner≠Reviewer).
+> **Owner=kkkim → sjpark 독립 크로스체크 PASS(2026-07-26, BIOP02-101 #11462): 3포인트(대장 uni2h FAIL 재현·폐 Spearman 1.000 재계산·서술수위 동의) 재현 확인. 범위=파생통계·순서·서술규율(real 재학습 재현은 kkkim 결정론 2회 근거 채택). braveji 7-point 최종 서명 대기(BIOP02-75).**
 
 ## 비교 조건 (apples-to-apples 확인)
 동일 endpoint(braf_v600e)·동일 site-disjoint 프로토콜·n_pos=15. 단 임베딩 커버리지가 FM별로 미세하게 달라(UNI 523장/holdout 151, 신형 526장/holdout 152) 홀드아웃이 1명 차이난다.
@@ -32,6 +32,7 @@
 
 ## 남은 일
 - [x] 신형 FM 5-seed 우연배제 — 대장·폐 완료(2026-07-23), **위·두경부 완료(2026-07-22)**. 결과 = 위 표 + `CROSSCHECK_5SEED_MULTIFM.md`(폐·대장) + 각 `full/shuffle_null_robustness_{uni2h,virchow2}.json`(위·두경부). ⚠️ **두경부 HPV virchow2 빠듯 FAIL(2/3 FM PASS)·위 lauren·erbb2 전 FM FAIL** 주의.
-- [ ] **사람 Owner≠Reviewer 사인오프**(sjpark/braveji, BIOP02-101) — 특히 대장 uni2h FAIL 재현·서술 수위 동의.
+- [x] **sjpark 독립 크로스체크 PASS**(2026-07-26, #11462) — 대장 uni2h FAIL 재현·폐 Spearman 1.000 재계산·서술수위 동의. 범위: 파생통계·순서·서술규율(real 재학습은 kkkim 결정론 근거 채택).
+- [ ] **braveji 7-point 최종 서명**(BIOP02-75) — Paper C 전체 critic 게이트.
 - [ ] (선택) 대장 나머지 endpoint(MSI·anti-EGFR) 재학습 — 대장을 단일 칸에서 다축으로 올려 순서보존 검정 가능하게.
 - [ ] **sjpark/braveji 크로스체크**: ① 결정론 재계산이 저장값과 일치하는지 ② UNI 결정지도의 **순서**가 다른 FM에서도 유지되는지(절대값이 아니라 순서가 논지).

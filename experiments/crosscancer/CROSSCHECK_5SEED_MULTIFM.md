@@ -1,6 +1,6 @@
 # 크로스체크 — 다중 FM 5-seed 우연배제 (2026-07-23, kkkim 자동 1차)
 
-> 자동 크로스체크(결정론·순서보존) 결과. **사람 Owner≠Reviewer 사인오프는 별도**(sjpark/braveji, BIOP02-101).
+> 자동 크로스체크(결정론·순서보존) 결과. **sjpark 독립 크로스체크 PASS(2026-07-26, #11462)** — 3포인트 원자료 재계산 확인, 범위=파생통계·순서·서술규율(real 재학습 미포함, kkkim 결정론 근거 채택). **braveji 7-point 최종 서명 대기(BIOP02-75).**
 > 데이터: 신형 FM(virchow2·uni2h) 5-seed shuffle-null. 기준 `real_auroc > null_mean + 2·null_sd`(ddof=1).
 
 ## 1. 결정론 재계산 대조
