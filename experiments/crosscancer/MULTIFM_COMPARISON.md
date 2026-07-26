@@ -22,12 +22,12 @@
 2. **FM 우열은 주장할 수 없다.** 세 real이 0.868~0.898로 근접하고 CI가 겹친다. "신형 FM이 더 낫다"는 서술 금지(구 stale 값 0.93대가 우열 인상을 줬으나 정정됨).
 3. **exploratory(n_pos=15 < 사전등록 25).** 5-seed PASS도 확증이 아니라 방향 근거. 대칭 규칙상 확증·반증 어느 쪽도 못 한다.
 4. **폐는 대조적으로 강함.** 폐 3 endpoint(histology/egfr/kras)는 virchow2·uni2h **6/6 PASS**이고 결정지도 순서가 세 FM에서 **Spearman 1.000**으로 보존된다(`CROSSCHECK_5SEED_MULTIFM.md`). 모델 비의존성 근거는 대장 단일 칸이 아니라 **폐 다축 순서보존**이 진짜 무게중심이다.
-5. **범위 한계.** 대장은 braf 한 endpoint(MSI·anti-EGFR 미재학습). **위·두경부는 다중 FM 5-seed까지 완료(2026-07-22)** — 각 `full/shuffle_null_robustness_{uni2h,virchow2}.json`. 단 **두경부 HPV(헤드라인)는 UNI 0.9594·uni2h 0.9559 PASS이나 virchow2는 빠듯하게 FAIL**(real 0.9199 < thr 0.9233, 마진 −0.003) → "HPV가 FM 무관 확증"이 아니라 **"3 FM 중 2개(UNI·uni2h)에서 우연배제"**로 쓴다. 위암은 msi_h·ebv가 신형 2 FM에서 모두 PASS, lauren·erbb2는 전 FM FAIL(각각 site-교란·신호0으로 기존 UNI 판정과 일치). "법칙이 모델 비의존적"이라는 일반 주장은 폐 순서보존을 근거로 조심스럽게, **대장 uni2h·두경부 HPV virchow2 미통과를 함께 보고**하며 한다.
+5. **범위 한계.** 대장은 braf 한 endpoint(MSI·anti-EGFR 미재학습). **위·두경부는 다중 FM 5-seed까지 완료(2026-07-22)** — 각 `full/shuffle_null_robustness_{uni2h,virchow2}.json`. 단 **두경부 HPV(헤드라인)는 UNI 0.9594·uni2h 0.9559 PASS이나 virchow2는 빠듯하게 FAIL**(real 0.9199 < thr 0.9234, 마진 −0.0035) → "HPV가 FM 무관 확증"이 아니라 **"3 FM 중 2개(UNI·uni2h)에서 우연배제"**로 쓴다. 위암은 msi_h·ebv가 신형 2 FM에서 모두 PASS, lauren·erbb2는 전 FM FAIL(각각 site-교란·신호0으로 기존 UNI 판정과 일치). "법칙이 모델 비의존적"이라는 일반 주장은 폐 순서보존을 근거로 조심스럽게, **대장 uni2h·두경부 HPV virchow2 미통과를 함께 보고**하며 한다.
 
 ## 현재 말할 수 있는 것 / 없는 것
 - ✅ 말할 수 있음: "폐 결정지도 순서(조직형>EGFR>KRAS)는 UNI·Virchow2·UNI2-h에서 Spearman 1.000으로 보존됐다(6/6 5-seed PASS, 전부 exploratory)."
 - ✅ 말할 수 있음: "대장 BRAF는 UNI·Virchow2에서 5-seed 우연배제를 통과했으나 UNI2-h에서는 미통과."
-- ✅ 말할 수 있음: "두경부 HPV는 UNI·UNI2-h에서 5-seed 우연배제를 통과(0.9594·0.9559), Virchow2는 빠듯하게 미통과(0.9199 < 0.9233) — 3 FM 중 2개." / "위암 MSI·EBV는 신형 2 FM에서 우연배제 통과, Lauren·ERBB2는 전 FM 미통과(site-교란·신호0)."
+- ✅ 말할 수 있음: "두경부 HPV는 UNI·UNI2-h에서 5-seed 우연배제를 통과(0.9594·0.9559), Virchow2는 빠듯하게 미통과(0.9199 < 0.9234) — 3 FM 중 2개." / "위암 MSI·EBV는 신형 2 FM에서 우연배제 통과, Lauren·ERBB2는 전 FM 미통과(site-교란·신호0)."
 - ❌ 말할 수 없음: "법칙이 모델 비의존적이다"(대장·폐 소수 축) · "신형 FM이 더 낫다"(근접·CI 겹침) · "대장 BRAF가 모델 비의존적으로 확인됐다"(uni2h FAIL) · **"HPV가 FM 무관 확증"(virchow2 5-seed 미통과)** · "확증됐다"(n_pos<25).
 
 ## 남은 일
