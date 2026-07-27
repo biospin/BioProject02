@@ -72,6 +72,8 @@ Goal: H&E WSI → morphology embedding → molecular phenotype prediction → De
 
 **Atlassian MCP (Claude Code에서 Confluence·JIRA 직접 조작):** `guide/start-project.md` §7 참조. API token은 `~/.claude/settings.json` 또는 개인 shell 환경변수에만 저장 — 절대 git commit 금지.
 
+⚠️ **JIRA 조회 시 `fields`에 `comment`를 반드시 포함한다** — 기본 응답에는 코멘트가 빠지고, 티켓의 실제 상태(승인·결정·지적)는 대개 **최신 코멘트**에 있다. 근거·실사고 = 아래 "Absolute Prohibitions"의 *티켓·파일을 열지 않고 상태를 단정하는 것*(2026-07-27).
+
 **Atlassian DNS 오류 대응:** Confluence/JIRA API 호출 중 `curl: (6) Could not resolve host: biospin-ai.atlassian.net`가 발생하면 재시도만 반복하지 말고 아래 우회 절차를 따른다.
 
 ```bash
@@ -250,6 +252,15 @@ critic_status: pass
 - `❌` **도구가 "못 찾겠다"고 한 것을 통과로 처리하는 것** (2026-07-17 실측)
   - `medsci verify-refs`는 **DOI 조회 실패 시 약한 제목 검색으로 내려가 `OK`를 준다** → **엉터리 DOI(`10.9999/fake...`)가 통과**했다. DOI를 안 쓰는 것보다 **가짜 DOI가 더 잘 뚫린다.**
   - **규칙:** DOI 부재 · **DOI 조회 실패** · `actual_authors=0` → **전부 사람/적대적 검증으로 에스컬레이션.** 도구의 `submission_safe`를 믿지 않는다(날조가 있는데도 `True`였다).
+- `❌` **티켓·파일을 열지 않고 상태를 단정하는 것 — 특히 JIRA를 코멘트 없이 조회하는 것** (2026-07-27 실사고, 하루에 3회)
+  - **JIRA 조회는 기본 응답에 코멘트가 없다.** `getJiraIssue`·`searchJiraIssuesUsingJql`을 `fields` 지정 없이(또는 `comment` 없이) 호출하면 응답에 `comment`가 **아예 빠진 채** 돌아온다 → **최신 승인·결정·지적이 보이지 않는다.** 티켓의 실제 상태는 대개 본문이 아니라 **최신 코멘트**에 있다.
+  - **규칙 ①:** 티켓을 조회할 때 **`fields`에 `comment`를 반드시 포함**한다. `getJiraIssue(issueIdOrKey="BIOP02-75", fields=["summary","status","assignee","duedate","description","comment"])`. JQL 목록 조회 결과에도 코멘트는 없으므로, **실제로 손댈 티켓은 개별로 위 호출을 한 번 더** 한다(목록 전체에 코멘트를 실으면 응답이 과대해진다).
+  - **규칙 ②:** **"없다 / 미완료 / 대기 중 / 미존재"라는 주장은 실물(코멘트·파일)을 연 뒤에만** 쓴다. 없음을 주장하는 쪽이 확인 책임을 진다.
+  - **규칙 ③:** `SESSION_LOG`·핸드오프 요약·기억은 **근거가 아니다.** 상태를 인용할 땐 **코멘트 id 또는 `파일:줄`을 명시**한다 — 위 "발표자료를 근거로 쓰지 않는다"·"계획을 자산으로 쓰지 않는다"와 같은 규율의 연장이다.
+  - **실사고 3건 (braveji, 2026-07-27 하루):**
+    - BIOP02-75 #11511에 "kkkim 승인 대기"라고 적었으나 **승인은 07-24 #11402에 이미** 있었다 → Leader에게 불필요한 재승인을 유발(코멘트 미조회).
+    - BIOP02-101 #11517에 "JSON에서 표를 자동 생성하면 허위 PASS가 실린다"고 썼으나 원고 `manuscript/sections/02_results.md` L36은 **이미 "미결"**이었다(원고 미확인 추정).
+    - BIOP02-75 #11515에 "원고 draft 미존재"로 단정했으나 `manuscript/sections/`에 **5개 섹션이 main에 존재**했다(파일 미확인). 정정 = #11520·#11521.
 - `❌` raw WSI 전량 영구 보관 — 스트리밍 다운로드 → 임베딩 추출 후 raw `.svs` 삭제(LRU). 영구 보존은 manifest·coords·embeddings·logs (Paper A scope = manifest 기반 **~1010 DX-slide BRCA cohort**, 2026-06-10 Leader 확정)
   - ⚠️ **예외 (Leader 결정 2026-07-17, 프로젝트 기간 한정): raw 자동 삭제 중단.** LRU 삭제 때문에 cross-cancer raw 2,588장이 전부 사라져 **재다운로드가 필요해졌다**(다중 FM 견고성 작업이 실제로 이 비용을 치름). 논문이 끝날 때까지는 raw를 **보관**하고, 디스크가 부족하면 **자동 삭제가 아니라 정지+사람 판단**(디스크 가드). 신규 파이프라인은 이 정책을 따른다 — 근거·운용 = `experiments/kkkim/20260717_multifm_robustness/RESUME.md` §3. 프로젝트 종료 시 위 원칙(삭제)으로 복귀.
 - `❌` **Paper A/B는 BRCA-only** — Paper A/B에서 다른 암종으로 확장 금지. **단 Paper C는 예외**: 사전등록된 **5개 암종**(유방 anchor + 폐·대장·위·두경부) cross-cancer 결정지도다("현재 스코프" 참조). Paper C가 금지하는 것은 **열린 pan-cancer 아틀라스로의 무경계 확장**(6번째 암종 즉흥 추가 등) — 사전등록 5종 경계를 넘으려면 Leader(kkkim) 승인.
