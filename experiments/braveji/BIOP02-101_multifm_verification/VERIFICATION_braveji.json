@@ -1,0 +1,46 @@
+{
+  "analysis": "Critic 검증 — 다중 FM 5-seed 우연배제 재계산 (BIOP02-101, PR #73)",
+  "reviewer": "braveji",
+  "owner": "kkkim",
+  "claim_level": "hypothesis_only",
+  "critic_status": "caution",
+  "note_not_merged": "PR #73은 kkkim이 '서명 전 병합 금지, 07/27 미팅 안건'으로 표시한 추적용 PR. 본 검증은 병합이 아니라 Owner≠Reviewer 사인오프용 근거.",
+  "method": "각 endpoint의 커밋 JSON에서 real_auroc와 5-seed null 리스트를 읽어 kkkim 자신의 기준 real > null_mean + 2*null_sd(표본 stdev, ddof=1) 재계산. 임베딩 원자료(GPU /workspace)는 미접근 — 기준 판정 로직만 검증.",
+  "reproduces_pr_summary": true,
+  "results": {
+    "LUNG_NSCLC": {
+      "uni2h": "3/3 PASS (lusc 0.961·egfr 0.882·kras 0.761)",
+      "virchow2": "3/3 PASS (lusc 0.947·egfr 0.883·kras 0.740)",
+      "verdict": "모델 비의존 견고 — 6/6"
+    },
+    "COLORECTAL_braf_v600e": {
+      "uni2h": "FAIL 0.8978 < thr 0.9272",
+      "virchow2": "PASS 0.8798 > thr 0.8688(경계)",
+      "verdict": "FM 엇갈림 — 모델 비의존 주장 불가"
+    },
+    "HNSC_hpv_pos": {
+      "uni2h": "PASS 0.9559 > thr 0.7905",
+      "virchow2": "FAIL 0.9199 < thr 0.9234(초경계, null sd 0.2408로 불안정)",
+      "verdict": "FM 엇갈림 — 헤드라인축인데 virchow2 미통과"
+    },
+    "HNSC_grade_high": {
+      "uni2h": "FAIL 0.7469 < 0.7851",
+      "virchow2": "PASS 0.8157 > 0.6815",
+      "verdict": "FM 엇갈림"
+    },
+    "HNSC_egfr_amp": {
+      "uni2h": "PASS 0.5046 > 0.4815",
+      "virchow2": "FAIL 0.5399 < 0.5411",
+      "verdict": "★ 허위 PASS — real AUROC≈0.50(우연). null 분산이 좁아 통과했을 뿐 신호 아님. positive로 보고 금지"
+    }
+  },
+  "critic_findings": [
+    "PR 본문의 정직 요약(폐 6/6·대장 uni2h 미통과·두경부 HPV virchow2 미통과)은 원자료로 재현됨 — 과대주장 없음. 좋은 보고.",
+    "[신규·중요] HNSC egfr_amp uni2h 'PASS'는 허위 신호: real AUROC 0.5046은 우연 수준이며 shuffle-null 통과는 null 분산이 좁은 데서 온 기준 아티팩트다. Results/표에서 egfr_amp를 '통과/양성'으로 표기 금지.",
+    "[신규] 모델 비의존성은 폐(6/6 양 FM)에서만 견고. 대장 BRAF·두경부 HPV·grade_high는 두 FM이 5-seed 임계에서 엇갈림 → '법칙의 모델 비의존' 주장은 폐로 한정하고, 나머지는 'FM 민감(현 검정력)'으로 서술.",
+    "[방법론] n_null=5라 μ+2σ 임계가 불안정(특히 virchow2 HPV sd 0.2408). 경계 판정(virchow2 HPV/braf/egfr_amp)은 seed 추가 없이는 뒤집힐 수 있음 — Limitation 명시."
+  ],
+  "does_not_change": {
+    "BIOP02-91_patient_CI": "별건으로 해소 확인(headline CI 환자단위 [0.3309,0.4266] 교체, braveji 검증값 [0.331,0.427]과 일치)"
+  }
+}
