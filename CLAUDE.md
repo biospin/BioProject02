@@ -33,8 +33,8 @@ Goal: H&E WSI → morphology embedding → molecular phenotype prediction → De
 | jamie (jmryu) | JamieLyu | jamie.orangecounty@gmail.com | jamie.orangecounty@gmail.com | jamie-openclaw-bot |2203 | Data Agent — TCGA/CPTAC manifests, labels, splits |
 | kkkim (gkkim) | kakyungkim | kakyung.kim@gmail.com | kakyung.kim@gmail.com | kakyung.kim-openclaw-bot | 2205 | **Project Leader** + Embedding Agent — WSI tiling, foundation model extraction (Data manifest/다운로드 역할 흡수) |
 | gglee (gklee) | Geongyu | rjsrb365@gmail.com | rjsrb365@gmail.com | ggyu-claw | 2202 | **재편입 2026-07-07** (일정으로 2026-06-09 이탈 → 재합류). 역할 재배정 별도 협의(현재 Leader=kkkim·Critic=braveji 유지). Atlassian 계정 active·배정 가능(accountId 712020:bff61238-cf1c-4ca7-a971-4411a06ccf42); GitHub org 접근만 확인 필요 |
-| sjpark | sezinie000 | sezinie000@gmail.com | sezinie000@gmail.com | sezinie-openclaw-bot | 2206 | Modeling Agent — phenotype prediction (MLP, attention MIL); Critic 바이오 sub-check 분담 |
-| braveji (ykji) | braveji18 | biospinleader@gmail.com  | biospinleader@gmail.com | yong-openclaw-bot |  2201 | Orchestrator + **Scientific Critic (총괄)** — pipeline coordination, infra, schemas; 7-point/critic_status owns, 바이오 sub-check(#4/#5)는 sjpark/jhans에 분담 |
+| sjpark | sezinie000 | sezinie000@gmail.com | sezinie000@gmail.com | sezinie-openclaw-bot | 2206 | Modeling Agent — phenotype prediction (MLP, attention MIL); Critic 바이오 sub-check **후보**(고정 배정 아님 — 선정규칙은 "Critic Cross-Review Rules") |
+| braveji (ykji) | braveji18 | biospinleader@gmail.com  | biospinleader@gmail.com | yong-openclaw-bot |  2201 | Orchestrator + **Scientific Critic (총괄)** — pipeline coordination, infra, schemas; 7-point/critic_status owns, 바이오 sub-check(#4/#5)는 **owner가 아닌 사람에게 케이스별 분담**(선정규칙 = "Critic Cross-Review Rules"; 기본 후보 sjpark/jhans이나 둘 다 owner면 Leader가 타 멤버 지정) |
 | jhans | JeonghanSeo | phoenicx16@gmail.com | phoenicx16@gmail.com |  | 2204 |  Therapeutic Evidence Agent — DepMap/GDSC drug linking |
 
 ## Infrastructure
@@ -207,7 +207,7 @@ kkkim (임베딩 완료)
   └→ sjpark (dummy → 실제 임베딩 교체)
 
 sjpark (MLP 결과)
-  └→ Critic (braveji 총괄, 바이오 sub-check = sjpark/jhans 분담) → critic_report.json
+  └→ Critic (braveji 총괄, 바이오 sub-check = owner 아닌 사람에 케이스별 분담) → critic_report.json
 
 critic_status: pass
   └→ braveji (Orchestrator: 결과 공유 + experiments registry 등록)
@@ -218,7 +218,18 @@ critic_status: pass
 - **Owner ≠ Reviewer.** Never self-review your own results.
 - All hypothesis outputs require `claim_level` + `critic_status` fields.
 - Results may not be shared without Critic pass.
-- **Scientific Critic = braveji (총괄).** braveji가 7-point 체크리스트와 최종 `critic_status`를 owns하되, 바이오 판단(#4 cross-dataset, #5 biological plausibility)을 sjpark/jhans에 분담한다. sub-reviewer는 해당 산출물 owner가 아니어야 한다(Owner≠Reviewer).
+- **Scientific Critic = braveji (총괄).** braveji가 7-point 체크리스트와 최종 `critic_status`를 owns하되, 바이오 판단(#4 cross-dataset, #5 biological plausibility)은 sub-reviewer에 분담한다.
+
+**바이오 sub-check(#4/#5) sub-reviewer 선정 — 이 절이 정본이다 (2026-07-27 정정)**
+
+우선순위대로 적용한다. **1번이 2번을 이긴다.**
+
+1. **해당 산출물 · 검증 대상 코드/rule의 owner가 아닌 사람**(Owner≠Reviewer). 이건 제약이지 권고가 아니다.
+2. 도메인 기본 후보 = **sjpark / jhans**. 단 이건 **후보 목록이고 고정 배정이 아니다.**
+3. 후보가 전부 owner면 → **다른 멤버를 Leader가 케이스별로 지정**한다(예: jamie).
+
+> ⚠️ **실사례 — BIOP02-59 (#5 biological plausibility, 2026-07-27):** 이 티켓에서 **sjpark = 산출물 owner**(`biological_plausibility_check.py`·example JSON), **jhans = 검증 대상 rule owner**(`endocrine_rule.py` v1.0, PR #30) → **후보 둘 다 리뷰 불가**였다. kkkim이 **jamie를 sub-reviewer로 지정**(#11447, *"Owner≠Reviewer 원칙상 결과 owner가 아닌 분이 보시는 게 맞습니다"*)하고 jamie가 코드·서버 실측으로 검증 완료(#11501·#11518).
+> **교훈: 구 문구 "sjpark/jhans에 분담"을 문자대로 따르면 Owner≠Reviewer를 위반한다.** 역할표의 기본 배정보다 **Owner≠Reviewer가 항상 우선**한다. 담당이 헷갈리면 역할표가 아니라 **"이 산출물을 누가 만들었나"**를 먼저 본다.
 
 **Cross-review pairings (2026-06-09 갱신 — gglee 이탈, Critic=braveji 총괄):**
 
@@ -227,7 +238,7 @@ critic_status: pass
 | sjpark (모델링 결과) | kkkim |
 | kkkim (임베딩 결과) | jamie |
 | jamie (데이터/split) | braveji |
-| jhans (TE 결과) | braveji 총괄 (생물학적 타당성 sub-check: sjpark) |
+| jhans (TE 결과) | braveji 총괄 + 바이오 sub-check는 **owner 아닌 사람**(아래 규칙). ⚠️ 구 문구 "sub-check: sjpark"은 **폐기** — sjpark이 산출물 owner인 경우(BIOP02-59) Owner≠Reviewer 위반이 된다 |
 
 **7-point Critic checklist:**
 1. Data leakage check
