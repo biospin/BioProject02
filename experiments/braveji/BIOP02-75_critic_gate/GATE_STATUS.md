@@ -46,21 +46,25 @@ kkkim이 근거 수치를 원자료에서 독립 확인한 뒤 승인. **승인 
 2. HER2는 #2·#4에서 reject다. **"대체 불가(H&E로 안 보임)"라는 정직한 음성**으로 서술하고 pass인 척하지 않는다.
 3. faithfulness는 **proba-level only** 스코프 유지(슬라이드 순위 AUC-level은 비유의). `claim_level: hypothesis_only` 유지. 이 재정의는 **-75에만 적용**하며 사전등록 법칙 기준(ρ≥0.50 등)엔 손대지 않는다.
 
-⚠️ **승인 ≠ 서명.** 조건 1이 원고 Limitation 실물을 요구하므로, **원고 draft가 없는 상태에서는 최종 서명 불가**(없는 문서를 근거로 pass 선언 금지). 서명은 2단 분리 — 1단 = 게이트 판정 확정(이 문서), 2단 = draft·Fig 2·3·저자정보 확정 후 `critic_status: pass`. 근거 = JIRA 11515.
+⚠️ **승인 ≠ 서명.** 조건 1이 **원고 Limitation 실물**을 요구하므로, 그 서술이 없는 상태에서는 최종 서명 불가(없는 문서를 근거로 pass 선언 금지). 서명은 2단 분리 — 1단 = 게이트 판정 확정(이 문서), 2단 = Limitation 서술·Fig 2·3·저자정보 확정 후 `critic_status: pass`. 근거 = JIRA 11515 → **11521로 사유 정정**.
+
+> 🔴 **정정(2026-07-27, JIRA 11521):** 11515에서 이 블로커를 **"원고 draft 미존재"**로 적었으나 **사실이 아니다.** `manuscript/sections/`에 5개 섹션이 main에 존재한다(abstract 9줄·intro 14·results 37·methods 28·discussion 13). **열어보지 않고 단정한 오류** — 같은 날 11511("kkkim 승인 대기", 실제 승인은 07-24)과 같은 종류를 두 번 저질렀다.
+> **결론은 유지되나 사유가 다르다:** `04_discussion.md`가 **13줄 자리표시자**(L3이 "exemplar 정독 후 확정"이라 자칭)이고 한계는 L11 한 줄뿐이며, **승인조건 1이 요구한 caution 3종이 없다**(전 섹션 검색: `counterfactual` 0회 · `bio_plausibility`/`pathway` 0회). 즉 블로커의 실체는 **"원고를 새로 써야 함"이 아니라 "Discussion 한계 절에 caution 3종 추가"**다.
 
 ---
 
 ## 3. 최종 서명(-75) 잔여 블로커
 
-**갱신 2026-07-27 (JIRA 11515).**
+**갱신 2026-07-27 (JIRA 11515 → 11521 정정 반영).**
 
 | 블로커 | 담당 | 상태 |
 |---|---|---|
 | 성공기준 재정의 승인 | kkkim | ✅ **해소** — 11402(07-24) + 11512(07-27) |
-| Fig 2·3 pass 승격 4건 (CI 환자 단위 교체 등) | kkkim | 🟡 receptor 완료(11400) · **PAM50 CI는 BIOP02-90(sjpark) 선행 대기** |
+| **Fig 2** pass 승격 4건 | braveji | ✅ **서명 완료 2026-07-27** — 원자료 **19/19 재계산 일치**(`reverify_4fixes.py`). PR #75 병합(`0a31c62`) |
+| **Fig 3** pass | kkkim | ⏳ **잔여 1건** — 같은 그림의 **PAM50 라우팅 CI가 여전히 슬라이드 단위**(`patient_routing_cost.json` `[0.276, 0.402]`, 메타 전부 미기재). BIOP02-90(`e0c32b0`)으로 `case_id` 확보돼 **블로커 해소** — 단 PAM50 예측확률이 커밋 CSV에 없어 braveji 독립 재계산 불가 |
 | PAM50 발현 study_id + 계산 스크립트 커밋 (#5) | kkkim | ⏳ 미해소 (PROVENANCE "남은 gap") |
 | #5 bio sub-check 재배정 (Owner≠Reviewer) | **미확정** | ⚠️ 2026-07-27 BIOP02-59가 sjpark→**jamie**로 재배정됨. CLAUDE.md·이 문서는 sjpark/jhans 분담 규정 → **담당 불일치, kkkim 확정 대기**(11515) |
-| 원고 draft 완성 (Methods/Results 리뷰 대상) | 집필 담당 | ⏳ **미존재 — 승인조건 1(Limitation 명시) 검증 불가 → 2단 서명 블로커** |
+| **Discussion 한계에 caution 3종 명시** | 집필 담당 | ⏳ **원고는 존재**(5 섹션, main). `04_discussion.md`가 13줄 자리표시자이고 한계 L11 한 줄에 **caution 3종(#3 counterfactual·#5 bio·ER/PR·HER2 #2)이 없음** → 승인조건 1 미충족 = 2단 서명 블로커. ← **11521 정정**(구 문구 "원고 draft 미존재"는 오류) |
 | 저자·소속·순서·corresponding·GPU 제공처 확정 | 팀/사람 게이트 | ⏳ (-76/-79 공통 선행) |
 
 **해소된 항목 (이번 주):** ✅ sjpark `commit_hash` 회귀 수정(`f5d0d9a…`) · ✅ `faithfulness_scope: "proba-level only"` + note 명기 — 둘 다 braveji 지적(BIOP02-56 comment 11160) 반영 확인.
