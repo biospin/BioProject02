@@ -1,0 +1,9 @@
+BRCA 다중 FM 임베딩 아카이브됨 (2026-07-21 22:35)
+
+상태: virchow2 1010/1010 · uni2h 1010/1010 = 완료. 재임베딩 불필요.
+위치: /home/kkkim/data/multifm_archive/brca/{virchow2,uni2h}
+사유: /workspace 여유가 60GB 가드 아래로 떨어져 폐 임베딩이 halt(346/1053).
+      BRCA 다중 FM은 재학습 러너 대상이 아니라(대장·폐·두경부·위만) 소비처가 없어 이동.
+복구: /workspace/data/cache/biop02/brca/MULTIFM_MOVED.md 참조 (cp -a 두 줄)
+      raw WSI 1010장도 /home/kkkim/data/tcga_brca_wsi/에 보존(재생성 가능).
+이 파일을 지우면 master가 BRCA를 다시 큐에 올린다.

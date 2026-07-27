@@ -1,30 +1,47 @@
 {
   "exp": "C1_step2B_receptor_routing",
   "routing": "HER2+>antiHER2; ER+>endocrine; else chemo",
-  "pred_source": "/home/kkkim/project/BioProject02/experiments/sjpark/cptac_ext_predictions_indexed.csv",
+  "pred_source": "experiments/sjpark/cptac_ext_predictions_indexed.csv",
   "per_axis": {
     "endocrine": {
       "n": 180,
-      "mean_cost": 0.035,
-      "misroute_rate": 0.05
+      "mean_cost": 0.0347,
+      "misroute_rate": 0.05,
+      "mean_cost_ci95_patient": [
+        0.0,
+        0.0793
+      ]
     },
     "antiHER2": {
       "n": 35,
-      "mean_cost": 0.416,
-      "misroute_rate": 1.0
+      "mean_cost": 0.4161,
+      "misroute_rate": 1.0,
+      "mean_cost_ci95_patient": [
+        0.395,
+        0.446
+      ]
     },
     "chemo": {
       "n": 79,
-      "mean_cost": 0.51,
-      "misroute_rate": 0.734
+      "mean_cost": 0.5103,
+      "misroute_rate": 0.734,
+      "mean_cost_ci95_patient": [
+        0.417,
+        0.5957
+      ]
     },
     "headline_contrast": {
-      "value": 0.381,
+      "value": 0.3814,
       "ci95": [
-        0.348,
-        0.42
+        0.3309,
+        0.4266
       ],
-      "excludes_zero": true
+      "ci95_method": "patient-cluster bootstrap",
+      "excludes_zero": true,
+      "ci95_slide_level_deprecated": [
+        0.3476,
+        0.4201
+      ]
     }
   },
   "confusion_true_to_pred": {
@@ -56,5 +73,14 @@
   "mechanism": "외부 CPTAC서 receptor head가 다수클래스로 붕괴: 예측 endocrine 89%(실제 61%)·antiHER2 0%(실제 12%)·chemo 11%(실제 27%). → (1) HER2 head 외부서 한 번도 양성 미발화(AUROC 0.53 random과 정합) → HER2+ 100% mis-route. (2) ER over-call(TNBC 73%를 ER+로) → chemo mis-route 73%. endocrine 5% mis-route는 진짜 H&E 스킬이 아니라 다수클래스 붕괴의 산물(ER+ 다수라 자명히 맞음).",
   "honest_reading": "robust 결론=HER2축(양 라우팅 100% mis-route, 분자검사 필수). endocrine/chemo per-axis cost는 라우팅 스킴·외부 calibration 의존(PAM50 51%↔receptor 5% / PAM50 14%↔receptor 73%)이라 안전 주장 근거 아님. 헤드라인 contrast(antiHER2-endocrine)만 양 라우팅서 robust(0.340/0.381, CI 0배제).",
   "claim_level": "hypothesis_only",
-  "critic_status": "pending"
+  "critic_status": "caution_remediated_pending_signoff",
+  "routing_threshold": 0.5,
+  "ci_method": {
+    "resample_unit": "patient (cluster bootstrap)",
+    "n_bootstrap": 5000,
+    "seed": 42,
+    "n_slides": 294,
+    "n_patients": 95,
+    "note": "슬라이드 단위 부트스트랩은 pseudo-replication(환자당 평균 3.09장)이라 CI 과소추정 → 환자 클러스터로 교체(braveji Critic BIOP02-91)."
+  }
 }

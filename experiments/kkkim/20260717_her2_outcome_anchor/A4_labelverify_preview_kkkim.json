@@ -1,0 +1,17 @@
+{
+  "n_patients": 85,
+  "n_pcr_pos": 36,
+  "n_pcr_neg": 49,
+  "axis_auroc": 0.5334,
+  "axis_auroc_ci_95": [
+    0.4072,
+    0.6574
+  ],
+  "falsification_ci_includes_0.5": true,
+  "success_ref_farahmand_cv_auc": [
+    0.8,
+    0.69,
+    0.88
+  ],
+  "near_reference": false
+}
