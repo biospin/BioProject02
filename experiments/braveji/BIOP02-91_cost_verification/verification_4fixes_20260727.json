@@ -1,0 +1,94 @@
+{
+  "verifier": "braveji (Critic 총괄)",
+  "date": "2026-07-27",
+  "target": "patient_routing_cost_receptor.json (branch feat/BIOP02-91-kkkim-multifm-virchow2)",
+  "owner": "kkkim",
+  "owner_ne_reviewer": true,
+  "purpose": "BIOP02-91 caution 4건 수정본을 원자료에서 독립 재계산해 대조 (필드 존재 확인 아님)",
+  "data_sources": {
+    "pred": "experiments/sjpark/cptac_ext_predictions_indexed.csv (BIOP02-90 재생성, case_id 포함)",
+    "manifest": "experiments/kkkim/20260709_cptac_official_join/embedding_manifest_cptac_uni_v1.csv (로컬 사본)"
+  },
+  "n_slides": 294,
+  "n_patients": 95,
+  "slides_per_patient": 3.09,
+  "items_checked": 19,
+  "items_matched": 19,
+  "all_match": true,
+  "four_conditions": {
+    "1_ci_patient_level": {
+      "status": "resolved",
+      "ci95": [
+        0.3309,
+        0.4266
+      ],
+      "method": "patient-cluster bootstrap",
+      "matches_prior_verification": "[0.331, 0.427]",
+      "excludes_zero": true,
+      "slide_level_preserved_as": "ci95_slide_level_deprecated"
+    },
+    "2_pred_source_repo_relative": {
+      "status": "resolved"
+    },
+    "3_routing_threshold_explicit": {
+      "status": "resolved",
+      "value": 0.5
+    },
+    "4_ci_metadata": {
+      "status": "resolved",
+      "resample_unit": "patient (cluster bootstrap)",
+      "n_bootstrap": 5000,
+      "seed": 42
+    }
+  },
+  "beyond_request": {
+    "per_axis_patient_ci_added": true,
+    "note": "braveji가 계산한 적 없는 신규 값인데 재계산과 비트 단위 일치 — 기재된 방법(seed 42, B=5000, 환자 클러스터)이 정확함의 강한 증거",
+    "endocrine": [
+      0.0,
+      0.0793
+    ],
+    "antiHER2": [
+      0.395,
+      0.446
+    ],
+    "chemo": [
+      0.417,
+      0.5957
+    ]
+  },
+  "fig2_signoff": {
+    "critic_status": "pass",
+    "date": "2026-07-27",
+    "basis": "CI 주장 없음 + 표시값(행정규화 confusion·cost overlay)이 검증 confusion에서 손검산 재현 (33/35=0.9429, 0.9429*0.395=0.3724, 0.7342*0.695=0.5103)"
+  },
+  "fig3_signoff": {
+    "critic_status": "caution",
+    "date": "2026-07-27",
+    "receptor_axis": "조건 충족 (PNG 재생성 39c3bed)",
+    "remaining_1": {
+      "finding": "같은 그림의 PAM50 라우팅 CI가 여전히 슬라이드 단위",
+      "file": "experiments/kkkim/20260710_cost_of_substitution/patient_routing_cost.json",
+      "ci95_current": [
+        0.276,
+        0.402
+      ],
+      "missing_fields": [
+        "ci95_method",
+        "resample_unit",
+        "n_bootstrap",
+        "seed"
+      ],
+      "blocker_cleared": "BIOP02-90(e0c32b0)으로 case_id 확보 → 환자 단위 재계산 가능",
+      "braveji_can_recompute": false,
+      "why_not": "PAM50 예측 확률이 커밋 CSV에 없음(er/pr/her2만) → kkkim 산출 후 재검증",
+      "expectation_not_asserted": "receptor 선례로 폭 ~1.3x 확대에도 0 배제 가능성 높으나 braveji 계산값 아니므로 단정하지 않음"
+    }
+  },
+  "claim_level": "hypothesis_only",
+  "jira": [
+    "BIOP02-66 #11516",
+    "BIOP02-91",
+    "BIOP02-101 #11517"
+  ]
+}
