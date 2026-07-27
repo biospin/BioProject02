@@ -1,0 +1,43 @@
+{
+  "schema_version": "0.1",
+  "created_at": "2026-07-27T14:22:39.007413Z",
+  "commit_hash": "2b1b8eb3b2ad3e9635ca01afec93c766809eaec6",
+  "slide": {
+    "slide_id": "TCGA-OL-A5RU-01Z-00-DX1",
+    "patient_id": "TCGA-OL-A5RU",
+    "cohort": "TCGA-BRCA"
+  },
+  "phenotype": {
+    "model": "SlideMLP/CLAM-SB (BIOP02-39/46/53)",
+    "predictions": {
+      "er_status": "Negative",
+      "pr_status": "Negative",
+      "her2_status": "Negative",
+      "pam50": null
+    }
+  },
+  "hypothesis": [
+    {
+      "rank": 1,
+      "drug_class": "Cytotoxic chemotherapy (taxane/anthracycline backbone)",
+      "rationale": "Triple-negative 표현형(ER-/PR-/HER2-)은 표적 호르몬/HER2 경로가 없어 세포독성 화학요법이 표준 backbone으로 고려됨. BRCA 세포주 일관성 분석: ρ=0.4682 (3개 매칭). ICI 계열은 본 프로젝트 범위에서 명시적으로 제외. (hypothesis_only — BIOP02-60 v1.0)",
+      "confidence": 0.5682,
+      "data_source": "both",
+      "supporting_endpoints": [
+        "er_status",
+        "pr_status",
+        "her2_status"
+      ]
+    }
+  ],
+  "claim_level": "hypothesis_only",
+  "confidence_source": "measured_rho",
+  "generated_by": "jhans",
+  "critic_status": "pending",
+  "critic_5_biological_plausibility": {
+    "status": "pass_draft",
+    "forbidden_phrase_violations": [],
+    "direction_consistency_issues": [],
+    "note": "endocrine_rule.py v1.0 (BIOP02-60). consistency_scores.csv 실측 Spearman ρ 기반 (BIOP02-52). BIOP02-111."
+  }
+}
