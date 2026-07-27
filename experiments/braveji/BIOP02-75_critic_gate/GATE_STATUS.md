@@ -63,7 +63,7 @@ kkkim이 근거 수치를 원자료에서 독립 확인한 뒤 승인. **승인 
 | **Fig 2** pass 승격 4건 | braveji | ✅ **서명 완료 2026-07-27** — 원자료 **19/19 재계산 일치**(`reverify_4fixes.py`). PR #75 병합(`0a31c62`) |
 | **Fig 3** pass | kkkim | ⏳ **잔여 1건** — 같은 그림의 **PAM50 라우팅 CI가 여전히 슬라이드 단위**(`patient_routing_cost.json` `[0.276, 0.402]`, 메타 전부 미기재). BIOP02-90(`e0c32b0`)으로 `case_id` 확보돼 **블로커 해소** — 단 PAM50 예측확률이 커밋 CSV에 없어 braveji 독립 재계산 불가 |
 | PAM50 발현 study_id + 계산 스크립트 커밋 (#5) | kkkim | ⏳ 미해소 (PROVENANCE "남은 gap") |
-| **#5 bio sub-check** | jamie(리뷰) → sjpark(재실행) | 🟡 **sub-check 실질 완료** — jamie가 코드·서버 실측으로 검증(BIOP02-59 #11501·#11518), braveji가 repo에서 4건 독립 재확인 일치(#11528). **잔여 = sjpark 재실행 1건**(커밋된 산출물 `confidence` 0.5/0.5/0.0·0.3 = **fallback 값 그대로**, `critic_status: pending`; jamie 재실행값 0.3448과 달라 숫자가 바뀜) ← **11531 정정**(구 문구 "담당 미확정·불일치"는 오류) |
+| **#5 bio sub-check** | jamie(리뷰, 완료) → **jhans(재실행, BIOP02-111)** | 🟡 **sub-check 실질 완료** — jamie가 코드·서버 실측으로 검증(BIOP02-59 #11501·#11518), braveji가 repo에서 4건 독립 재확인 일치(#11528). **잔여 = 재실행 1건 → `BIOP02-111`(assignee 서정한, 2026-07-27 신설)**로 티켓화(#11532). 커밋 산출물 `confidence` 0.5/0.5/0.0·0.3 = **fallback 값 그대로**, `critic_status: pending`; jamie 재실행값 0.3448과 달라 숫자가 바뀜 → 현 산출물로 pass 불가. ⚠️ jhans가 검증대상 rule owner이므로 **braveji가 원자료에서 독립 재계산해 대조한 뒤 서명**(이 구도의 방어선). ← **11531·11532 정정**(구 문구 "담당 미확정·불일치"는 오류) |
 | **Discussion 한계에 caution 3종 명시** | 집필 담당 | ⏳ **원고는 존재**(5 섹션, main). `04_discussion.md`가 13줄 자리표시자이고 한계 L11 한 줄에 **caution 3종(#3 counterfactual·#5 bio·ER/PR·HER2 #2)이 없음** → 승인조건 1 미충족 = 2단 서명 블로커. ← **11521 정정**(구 문구 "원고 draft 미존재"는 오류) |
 | 저자·소속·순서·corresponding·GPU 제공처 확정 | 팀/사람 게이트 | ⏳ (-76/-79 공통 선행) |
 
