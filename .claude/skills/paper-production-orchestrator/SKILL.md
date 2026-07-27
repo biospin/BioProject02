@@ -1,6 +1,6 @@
 ---
 name: paper-production-orchestrator
-description: 논문 생산 루프의 입구(진행표/팀장) — SpatialPathoAgent(BioProject02). "논문 풀 파이프라인 돌려줘", "프리프린트 업데이트해서 제출 준비", "분석→집필→그림→검수까지 한 번에", "그림만 다시", "리뷰만 다시", "critic 지적 반영해", "최신 결과로 본문 갱신" 같이 분석·집필·그림·검수·검증·발표를 엮는 요청에서 사용한다. 기존 멤버(spatialpatho-analyst, manuscript-writer, 그림 스크립트, paper-critic, reviewer, presenter)를 정해진 순서로 호출하고 부분 재실행을 처리한다. 새 agent는 만들지 않는다.
+description: 논문 생산 루프의 입구(진행표/팀장) — SpatialPathoAgent(BioProject02). "논문 풀 파이프라인 돌려줘", "프리프린트 업데이트해서 제출 준비", "분석→집필→그림→검수까지 한 번에", "그림만 다시", "리뷰만 다시", "critic 지적 반영해", "최신 결과로 본문 갱신" 같이 분석·집필·그림·검수·검증·발표를 엮는 요청에서 사용한다. 기존 멤버(spatialpatho-analyst, manuscript-writer, 그림 스크립트, paper-critic, venue-reviewer, presenter)를 정해진 순서로 호출하고 부분 재실행을 처리한다. 새 agent는 만들지 않는다.
 ---
 
 # paper-production-orchestrator (논문 생산 루프 진행표 / 팀장) — SpatialPathoAgent
@@ -20,7 +20,7 @@ description: 논문 생산 루프의 입구(진행표/팀장) — SpatialPathoAg
 3. `spatialpatho-analyst`의 LLM 기반 sub-분석이 **offline mock**로 돌았는지 확인 → mock이면 "실 결과 아님/데모" 명시.
 
 ## 멤버 구성 (전원 기존 재사용)
-`spatialpatho-analyst`(도메인 슬롯 = data/embedding/modeling/therapeutic_evidence/critic 파이프라인 대표), manuscript-writer(그림 포함), paper-critic, reviewer, presenter. (기획 선택: research-methodologist, literature-scout, novelty-strategist.)
+`spatialpatho-analyst`(도메인 슬롯 = data/embedding/modeling/therapeutic_evidence/critic 파이프라인 대표), manuscript-writer(그림 포함), paper-critic, venue-reviewer, presenter. (기획 선택: research-methodologist, literature-scout, novelty-strategist.)
 
 > 그림 생성은 agent가 아니라 스크립트로 둔다. `manuscript-writer`가 `<FILL: figure-generation script>`를 실행해 결과 파일에서 만든다.
 
@@ -34,10 +34,12 @@ description: 논문 생산 루프의 입구(진행표/팀장) — SpatialPathoAg
 2. (선택) 기획·근거 — 새 방향일 때만.
 3. **분석·eval** — `spatialpatho-analyst` → result 파일 + consolidated summary 갱신. mock 경고 확인. Scientific Critic 체크리스트 대조.
 4. **집필 + 그림** — `manuscript-writer` → manuscript. 그림은 figure 스크립트 → figures/.
-5. **검수 (자동 리뷰 오케스트레이터 경유)** — `agents/critic/auto_review_orchestrator.py`가 **결정론 게이트 → 큐 → AI 적대적 리뷰**(`AI_REVIEW_PROMPT.md` 스펙으로 `paper-critic`+`reviewer` 실행) → `critic_report.json`. 하드룰 위반=`blocked`, Tier B=`provisional`(진행·커밋 허용, **공유만** 사람 확인), Tier C=`needs_human`(사람 adjudicate). reject/blocked면 6으로. (config `enabled=false`면 dry-run 안전대기.)
+5. **검수 (자동 리뷰 오케스트레이터 경유)** — `agents/critic/auto_review_orchestrator.py`가 **결정론 게이트 → 큐 → AI 적대적 리뷰**(`AI_REVIEW_PROMPT.md` 스펙으로 `paper-critic` 실행) → `critic_report.json`. 하드룰 위반=`blocked`, Tier B=`provisional`(진행·커밋 허용, **공유만** 사람 확인), Tier C=`needs_human`(사람 adjudicate). reject/blocked면 6으로. (config `enabled=false`면 dry-run 안전대기.) **`venue-reviewer`는 여기서 호출하지 않는다 — 7을 통과한 뒤 8에서만 부른다(BIOP02-103).**
 6. **수정** — `manuscript-writer`가 반영.
-7. (선택) 정식 리뷰 — `reviewer` → `<FILL: peer review note path>`.
-8. **검증 게이트** — `<FILL: verify-gate — headline AUC/AUPRC를 모델 eval 출력에서 결정론적 재계산 → summary 대조>`. 실패하면 멈추고 사람에게 보고, 커밋·발행 금지.
+7. **검증 게이트 ①(결과 검증)** — 헤드라인 숫자를 결정론적으로 재계산해 결과 파일과 대조한다. **실패하면 멈추고 사람에게 보고**, 커밋·발행하지 않는다. 원본 하네스 규칙: *"paper-critic + gate FIRST, then reviewer — reviewer assumes pre-submission QA is done"* (`paper-production-harness/agents/paper-orchestrator.md:23`). 검증되지 않은 숫자를 리뷰에 보내지 않는다. (BIOP02-103)
+   > ⚠️ **이 게이트의 실행 명령이 아직 없다.** BIOP01의 `p3_concordance.py` 계열에 해당하는 **BIOP02용 결정론 재계산 스크립트가 리포에 존재하지 않는다**(실측 2026-07-27). `agents/critic/auto_review_gate.py`는 DRP 스코프·claim level·metrics 표기를 보는 **문서 규칙 검사**이지 수치 재계산이 아니다. 이 자리가 채워지기 전까지 게이트 ①은 **사람이 수동 대조**한다. 무엇을 재계산으로 삼을지는 별도 결정 사항이다.
+8. **(선택) 정식 리뷰** — `venue-reviewer` → `manuscript/REVIEW-<venue>-<date>.md`. **7을 통과한 원고만** 입력한다. 원고 패키지만 읽고 내부 논의·분석 과정·critic 노트는 보지 않는다(격리).
+8.5 **검증 게이트 ②(패키지 검증, 공개 직전)** — 본문 숫자 ↔ 결과 파일 재대조 + 그림·표·supplementary 동봉 확인. 리뷰 반영으로 본문이 바뀌었을 수 있으므로 **공개 전 한 번 더** 돌린다.
 9. (선택) 발표 — `presenter` → 덱·발제.
 
 각 단계 산출물은 파일로 남긴다.
@@ -48,7 +50,9 @@ description: 논문 생산 루프의 입구(진행표/팀장) — SpatialPathoAg
 | 분석·eval | spatialpatho-analyst | `<FILL: eval outputs>`, `<FILL: results summary>` | 집필·검수 |
 | 집필+그림 | manuscript-writer | `<FILL: manuscript>`, `<FILL: figures dir>` | 검수·리뷰·발표 |
 | 검수 | paper-critic (+ agents/critic/) | 적대 노트 + 그림 QA | 집필(수정) |
-| 검증 게이트 | (커밋/공개 전) | `<FILL: verify-gate command>` | 사람 |
+| 검증 게이트 ① | (커밋 전) | 헤드라인 숫자 재계산 → 결과 파일 대조 — **실행 명령 미정(위 7 참조)** | 사람 |
+| 정식 리뷰 | venue-reviewer | `manuscript/REVIEW-<venue>-<date>.md` | 집필(수정) |
+| 검증 게이트 ② | (공개 전) | 본문 숫자 재대조 + 동봉물 확인 | 사람 |
 | 발표 | presenter | 슬라이드/발제 | 사람 |
 | 상태 핸드오프 | (전원) | `HANDOFF.md`, `TODO.md`, `SESSION_LOG.md` | 다음 세션 |
 

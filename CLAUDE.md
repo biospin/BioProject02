@@ -345,7 +345,7 @@ JIRA (BIOP02)
 | "가설·실험설계·분석계획 점검·감사" | `research-methodologist` |
 | "제출 전 적대적 자체검토 / 그림 QA" | `paper-critic` (+ `agents/critic/` 체크리스트 병행) |
 | "인용 검증 / 참고문헌 확인 / 이 논문 진짜 있나" | `paper-critic` (제출 게이트) 또는 `literature-scout` (문헌 추가 시 intake). **둘 다 `agents/critic/scripts/verify_citations.py`를 실행한다 — 눈으로 보지 않는다** |
-| "정식 venue 리뷰 시뮬레이션" | `reviewer` (전역, 선택) |
+| "정식 venue 리뷰 시뮬레이션" | `venue-reviewer` (**프로젝트 로컬**, 선택) — 검증 게이트 ① 통과 후에만 |
 | "발표자료/슬라이드/발제" | `presenter` |
 | "로고·아이콘·브랜드·그림 미감" | `design` |
 | "여러 단계를 어떤 순서로 엮을지 계획만" | `paper-orchestrator` (계획만; 실행은 메인 루프) |
