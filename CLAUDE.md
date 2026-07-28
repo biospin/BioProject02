@@ -33,8 +33,8 @@ Goal: H&E WSI → morphology embedding → molecular phenotype prediction → De
 | jamie (jmryu) | JamieLyu | jamie.orangecounty@gmail.com | jamie.orangecounty@gmail.com | jamie-openclaw-bot |2203 | Data Agent — TCGA/CPTAC manifests, labels, splits |
 | kkkim (gkkim) | kakyungkim | kakyung.kim@gmail.com | kakyung.kim@gmail.com | kakyung.kim-openclaw-bot | 2205 | **Project Leader** + Embedding Agent — WSI tiling, foundation model extraction (Data manifest/다운로드 역할 흡수) |
 | gglee (gklee) | Geongyu | rjsrb365@gmail.com | rjsrb365@gmail.com | ggyu-claw | 2202 | **재편입 2026-07-07** (일정으로 2026-06-09 이탈 → 재합류). 역할 재배정 별도 협의(현재 Leader=kkkim·Critic=braveji 유지). Atlassian 계정 active·배정 가능(accountId 712020:bff61238-cf1c-4ca7-a971-4411a06ccf42); GitHub org 접근만 확인 필요 |
-| sjpark | sezinie000 | sezinie000@gmail.com | sezinie000@gmail.com | sezinie-openclaw-bot | 2206 | Modeling Agent — phenotype prediction (MLP, attention MIL); Critic 바이오 sub-check 분담 |
-| braveji (ykji) | braveji18 | biospinleader@gmail.com  | biospinleader@gmail.com | yong-openclaw-bot |  2201 | Orchestrator + **Scientific Critic (총괄)** — pipeline coordination, infra, schemas; 7-point/critic_status owns, 바이오 sub-check(#4/#5)는 sjpark/jhans에 분담 |
+| sjpark | sezinie000 | sezinie000@gmail.com | sezinie000@gmail.com | sezinie-openclaw-bot | 2206 | Modeling Agent — phenotype prediction (MLP, attention MIL); Critic 바이오 sub-check **후보**(고정 배정 아님 — 선정규칙은 "Critic Cross-Review Rules") |
+| braveji (ykji) | braveji18 | biospinleader@gmail.com  | biospinleader@gmail.com | yong-openclaw-bot |  2201 | Orchestrator + **Scientific Critic (총괄)** — pipeline coordination, infra, schemas; 7-point/critic_status owns, 바이오 sub-check(#4/#5)는 **owner가 아닌 사람에게 케이스별 분담**(선정규칙 = "Critic Cross-Review Rules"; 기본 후보 sjpark/jhans이나 둘 다 owner면 Leader가 타 멤버 지정) |
 | jhans | JeonghanSeo | phoenicx16@gmail.com | phoenicx16@gmail.com |  | 2204 |  Therapeutic Evidence Agent — DepMap/GDSC drug linking |
 
 ## Infrastructure
@@ -71,6 +71,8 @@ Goal: H&E WSI → morphology embedding → molecular phenotype prediction → De
 | `#biop02-alerts` | GPU 슬롯 예약, 서버 장애 알림 |
 
 **Atlassian MCP (Claude Code에서 Confluence·JIRA 직접 조작):** `guide/start-project.md` §7 참조. API token은 `~/.claude/settings.json` 또는 개인 shell 환경변수에만 저장 — 절대 git commit 금지.
+
+⚠️ **JIRA 조회 시 `fields`에 `comment`를 반드시 포함한다** — 기본 응답에는 코멘트가 빠지고, 티켓의 실제 상태(승인·결정·지적)는 대개 **최신 코멘트**에 있다. 근거·실사고 = 아래 "Absolute Prohibitions"의 *티켓·파일을 열지 않고 상태를 단정하는 것*(2026-07-27).
 
 **Atlassian DNS 오류 대응:** Confluence/JIRA API 호출 중 `curl: (6) Could not resolve host: biospin-ai.atlassian.net`가 발생하면 재시도만 반복하지 말고 아래 우회 절차를 따른다.
 
@@ -205,7 +207,7 @@ kkkim (임베딩 완료)
   └→ sjpark (dummy → 실제 임베딩 교체)
 
 sjpark (MLP 결과)
-  └→ Critic (braveji 총괄, 바이오 sub-check = sjpark/jhans 분담) → critic_report.json
+  └→ Critic (braveji 총괄, 바이오 sub-check = owner 아닌 사람에 케이스별 분담) → critic_report.json
 
 critic_status: pass
   └→ braveji (Orchestrator: 결과 공유 + experiments registry 등록)
@@ -216,7 +218,18 @@ critic_status: pass
 - **Owner ≠ Reviewer.** Never self-review your own results.
 - All hypothesis outputs require `claim_level` + `critic_status` fields.
 - Results may not be shared without Critic pass.
-- **Scientific Critic = braveji (총괄).** braveji가 7-point 체크리스트와 최종 `critic_status`를 owns하되, 바이오 판단(#4 cross-dataset, #5 biological plausibility)을 sjpark/jhans에 분담한다. sub-reviewer는 해당 산출물 owner가 아니어야 한다(Owner≠Reviewer).
+- **Scientific Critic = braveji (총괄).** braveji가 7-point 체크리스트와 최종 `critic_status`를 owns하되, 바이오 판단(#4 cross-dataset, #5 biological plausibility)은 sub-reviewer에 분담한다.
+
+**바이오 sub-check(#4/#5) sub-reviewer 선정 — 이 절이 정본이다 (2026-07-27 정정)**
+
+우선순위대로 적용한다. **1번이 2번을 이긴다.**
+
+1. **해당 산출물 · 검증 대상 코드/rule의 owner가 아닌 사람**(Owner≠Reviewer). 이건 제약이지 권고가 아니다.
+2. 도메인 기본 후보 = **sjpark / jhans**. 단 이건 **후보 목록이고 고정 배정이 아니다.**
+3. 후보가 전부 owner면 → **다른 멤버를 Leader가 케이스별로 지정**한다(예: jamie).
+
+> ⚠️ **실사례 — BIOP02-59 (#5 biological plausibility, 2026-07-27):** 이 티켓에서 **sjpark = 산출물 owner**(`biological_plausibility_check.py`·example JSON), **jhans = 검증 대상 rule owner**(`endocrine_rule.py` v1.0, PR #30) → **후보 둘 다 리뷰 불가**였다. kkkim이 **jamie를 sub-reviewer로 지정**(#11447, *"Owner≠Reviewer 원칙상 결과 owner가 아닌 분이 보시는 게 맞습니다"*)하고 jamie가 코드·서버 실측으로 검증 완료(#11501·#11518).
+> **교훈: 구 문구 "sjpark/jhans에 분담"을 문자대로 따르면 Owner≠Reviewer를 위반한다.** 역할표의 기본 배정보다 **Owner≠Reviewer가 항상 우선**한다. 담당이 헷갈리면 역할표가 아니라 **"이 산출물을 누가 만들었나"**를 먼저 본다.
 
 **Cross-review pairings (2026-06-09 갱신 — gglee 이탈, Critic=braveji 총괄):**
 
@@ -225,7 +238,7 @@ critic_status: pass
 | sjpark (모델링 결과) | kkkim |
 | kkkim (임베딩 결과) | jamie |
 | jamie (데이터/split) | braveji |
-| jhans (TE 결과) | braveji 총괄 (생물학적 타당성 sub-check: sjpark) |
+| jhans (TE 결과) | braveji 총괄 + 바이오 sub-check는 **owner 아닌 사람**(아래 규칙). ⚠️ 구 문구 "sub-check: sjpark"은 **폐기** — sjpark이 산출물 owner인 경우(BIOP02-59) Owner≠Reviewer 위반이 된다 |
 
 **7-point Critic checklist:**
 1. Data leakage check
@@ -250,6 +263,15 @@ critic_status: pass
 - `❌` **도구가 "못 찾겠다"고 한 것을 통과로 처리하는 것** (2026-07-17 실측)
   - `medsci verify-refs`는 **DOI 조회 실패 시 약한 제목 검색으로 내려가 `OK`를 준다** → **엉터리 DOI(`10.9999/fake...`)가 통과**했다. DOI를 안 쓰는 것보다 **가짜 DOI가 더 잘 뚫린다.**
   - **규칙:** DOI 부재 · **DOI 조회 실패** · `actual_authors=0` → **전부 사람/적대적 검증으로 에스컬레이션.** 도구의 `submission_safe`를 믿지 않는다(날조가 있는데도 `True`였다).
+- `❌` **티켓·파일을 열지 않고 상태를 단정하는 것 — 특히 JIRA를 코멘트 없이 조회하는 것** (2026-07-27 실사고, 하루에 3회)
+  - **JIRA 조회는 기본 응답에 코멘트가 없다.** `getJiraIssue`·`searchJiraIssuesUsingJql`을 `fields` 지정 없이(또는 `comment` 없이) 호출하면 응답에 `comment`가 **아예 빠진 채** 돌아온다 → **최신 승인·결정·지적이 보이지 않는다.** 티켓의 실제 상태는 대개 본문이 아니라 **최신 코멘트**에 있다.
+  - **규칙 ①:** 티켓을 조회할 때 **`fields`에 `comment`를 반드시 포함**한다. `getJiraIssue(issueIdOrKey="BIOP02-75", fields=["summary","status","assignee","duedate","description","comment"])`. JQL 목록 조회 결과에도 코멘트는 없으므로, **실제로 손댈 티켓은 개별로 위 호출을 한 번 더** 한다(목록 전체에 코멘트를 실으면 응답이 과대해진다).
+  - **규칙 ②:** **"없다 / 미완료 / 대기 중 / 미존재"라는 주장은 실물(코멘트·파일)을 연 뒤에만** 쓴다. 없음을 주장하는 쪽이 확인 책임을 진다.
+  - **규칙 ③:** `SESSION_LOG`·핸드오프 요약·기억은 **근거가 아니다.** 상태를 인용할 땐 **코멘트 id 또는 `파일:줄`을 명시**한다 — 위 "발표자료를 근거로 쓰지 않는다"·"계획을 자산으로 쓰지 않는다"와 같은 규율의 연장이다.
+  - **실사고 3건 (braveji, 2026-07-27 하루):**
+    - BIOP02-75 #11511에 "kkkim 승인 대기"라고 적었으나 **승인은 07-24 #11402에 이미** 있었다 → Leader에게 불필요한 재승인을 유발(코멘트 미조회).
+    - BIOP02-101 #11517에 "JSON에서 표를 자동 생성하면 허위 PASS가 실린다"고 썼으나 원고 `manuscript/sections/02_results.md` L36은 **이미 "미결"**이었다(원고 미확인 추정).
+    - BIOP02-75 #11515에 "원고 draft 미존재"로 단정했으나 `manuscript/sections/`에 **5개 섹션이 main에 존재**했다(파일 미확인). 정정 = #11520·#11521.
 - `❌` raw WSI 전량 영구 보관 — 스트리밍 다운로드 → 임베딩 추출 후 raw `.svs` 삭제(LRU). 영구 보존은 manifest·coords·embeddings·logs (Paper A scope = manifest 기반 **~1010 DX-slide BRCA cohort**, 2026-06-10 Leader 확정)
   - ⚠️ **예외 (Leader 결정 2026-07-17, 프로젝트 기간 한정): raw 자동 삭제 중단.** LRU 삭제 때문에 cross-cancer raw 2,588장이 전부 사라져 **재다운로드가 필요해졌다**(다중 FM 견고성 작업이 실제로 이 비용을 치름). 논문이 끝날 때까지는 raw를 **보관**하고, 디스크가 부족하면 **자동 삭제가 아니라 정지+사람 판단**(디스크 가드). 신규 파이프라인은 이 정책을 따른다 — 근거·운용 = `experiments/kkkim/20260717_multifm_robustness/RESUME.md` §3. 프로젝트 종료 시 위 원칙(삭제)으로 복귀.
 - `❌` **Paper A/B는 BRCA-only** — Paper A/B에서 다른 암종으로 확장 금지. **단 Paper C는 예외**: 사전등록된 **5개 암종**(유방 anchor + 폐·대장·위·두경부) cross-cancer 결정지도다("현재 스코프" 참조). Paper C가 금지하는 것은 **열린 pan-cancer 아틀라스로의 무경계 확장**(6번째 암종 즉흥 추가 등) — 사전등록 5종 경계를 넘으려면 Leader(kkkim) 승인.
@@ -345,7 +367,7 @@ JIRA (BIOP02)
 | "가설·실험설계·분석계획 점검·감사" | `research-methodologist` |
 | "제출 전 적대적 자체검토 / 그림 QA" | `paper-critic` (+ `agents/critic/` 체크리스트 병행) |
 | "인용 검증 / 참고문헌 확인 / 이 논문 진짜 있나" | `paper-critic` (제출 게이트) 또는 `literature-scout` (문헌 추가 시 intake). **둘 다 `agents/critic/scripts/verify_citations.py`를 실행한다 — 눈으로 보지 않는다** |
-| "정식 venue 리뷰 시뮬레이션" | `reviewer` (전역, 선택) |
+| "정식 venue 리뷰 시뮬레이션" | `venue-reviewer` (**프로젝트 로컬**, 선택) — 검증 게이트 ① 통과 후에만 |
 | "발표자료/슬라이드/발제" | `presenter` |
 | "로고·아이콘·브랜드·그림 미감" | `design` |
 | "여러 단계를 어떤 순서로 엮을지 계획만" | `paper-orchestrator` (계획만; 실행은 메인 루프) |
