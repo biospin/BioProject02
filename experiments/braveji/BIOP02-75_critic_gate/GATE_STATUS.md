@@ -48,6 +48,30 @@ kkkim이 근거 수치를 원자료에서 독립 확인한 뒤 승인. **승인 
 
 ⚠️ **승인 ≠ 서명.** 조건 1이 **원고 Limitation 실물**을 요구하므로, 그 서술이 없는 상태에서는 최종 서명 불가(없는 문서를 근거로 pass 선언 금지). 서명은 2단 분리 — 1단 = 게이트 판정 확정(이 문서), 2단 = Limitation 서술·Fig 2·3·저자정보 확정 후 `critic_status: pass`. 근거 = JIRA 11515 → **11521로 사유 정정**.
 
+### ✍️ 1단 서명 완료 — 2026-07-28 (JIRA 11560)
+
+**확정한 것:** 7항목 × 4엔드포인트 **판정 완료**(§1 매트릭스 28칸, 미판정 0건) + 각 판정이 원자료 재현으로 버팀.
+**확정하지 않은 것:** `critic_status: pass`. 승인조건 1 미충족 → **2단 보류.**
+
+서명 직전 실물 재확인(기억·SESSION_LOG 아님):
+
+| 항목 | 근거 파일 | 결과 |
+|---|---|---|
+| #1 | `experiments/braveji/split_integrity_verification.json` | 존재 · overlap 0 |
+| #2 | `experiments/braveji/BIOP02-69_meanembed_paired/FINAL_baseline_comparison.md` | 존재(최종표 lock) |
+| #3 | `experiments/braveji/BIOP02-56_counterfactual_recompute/VERIFICATION_braveji.json` | 4엔드포인트 `max_abs_diff=0.0` · `all_reproduced=true` · pam50 `auc_drop_significant=false` |
+| #4 | `experiments/registry/cross_validation_registry.jsonl` | 존재 |
+| Fig 2 | `experiments/braveji/BIOP02-91_cost_verification/reverify_4fixes.py` · `0a31c62` | 스크립트 존재 · 커밋 main 포함 |
+
+**집필에 넘긴 확정 Limitation 목록(승인조건 1 이행 명세)** — 상세 문안은 JIRA 11560 §3:
+1. **#3 counterfactual** — faithfulness는 proba-level 한정(무작위 대비 10~23×), AUC-level은 비유의(ER 0.0009 · PAM50 p=0.061) = MIL 신호 중복성. 슬라이드 순위 faithfulness 주장 금지.
+2. **#5 bio_plausibility** — PAM50 라벨소스 Parker 2009 계산본·manifest 1009/1009 추적 확인, 단 발현행렬 study_id·계산 스크립트 미커밋 + 산출물 재실행 진행(BIOP02-111) → caution 유지.
+3. **#2/#4** — ER/PR = SIGNAL, NOT ADDITIVE(subtype_only에 외부 역전) · **HER2 = reject → "H&E로 안 보임 = 대체 불가" 정직한 음성** · PAM50-4c만 CI 비중첩 상회.
+
+⚠️ **문안 집필은 집필 담당(현 `manuscript/` 커밋 이력상 kkkim)이 한다.** Critic이 Limitation을 직접 쓰고 그 충족을 자기가 서명하면 Owner≠Reviewer 위반(자기검수). Critic은 "무엇을 써야 하는가"만 명세하고, **위 3종의 사실관계가 담기면 충족으로 판정**한다.
+
+📌 `manuscript/README.md` L1 기준 이 폴더 = **Paper C 플래그십**이고 유방(前 Paper A)은 **anchor 챕터로 흡수**됨 → caution 3종은 **플래그십 원고 한계 절**에 들어간다(별도 Paper A 원고 신설 불요).
+
 > 🔴 **정정(2026-07-27, JIRA 11521):** 11515에서 이 블로커를 **"원고 draft 미존재"**로 적었으나 **사실이 아니다.** `manuscript/sections/`에 5개 섹션이 main에 존재한다(abstract 9줄·intro 14·results 37·methods 28·discussion 13). **열어보지 않고 단정한 오류** — 같은 날 11511("kkkim 승인 대기", 실제 승인은 07-24)과 같은 종류를 두 번 저질렀다.
 > **결론은 유지되나 사유가 다르다:** `04_discussion.md`가 **13줄 자리표시자**(L3이 "exemplar 정독 후 확정"이라 자칭)이고 한계는 L11 한 줄뿐이며, **승인조건 1이 요구한 caution 3종이 없다**(전 섹션 검색: `counterfactual` 0회 · `bio_plausibility`/`pathway` 0회). 즉 블로커의 실체는 **"원고를 새로 써야 함"이 아니라 "Discussion 한계 절에 caution 3종 추가"**다.
 
@@ -55,7 +79,7 @@ kkkim이 근거 수치를 원자료에서 독립 확인한 뒤 승인. **승인 
 
 ## 3. 최종 서명(-75) 잔여 블로커
 
-**갱신 2026-07-27 (JIRA 11515 → 11521·11531 정정 반영).** 잔여 = **3·5·6** (2·4는 전진).
+**갱신 2026-07-28 (1단 서명 JIRA 11560 반영).** 잔여 = **Fig 3 · Discussion caution 3종 · 저자정보** — **전부 braveji 외 담당**이다. 판정 자체는 §2의 1단 서명으로 확정됐다.
 
 | 블로커 | 담당 | 상태 |
 |---|---|---|
