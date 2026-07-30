@@ -1,6 +1,7 @@
-# Introduction (집필 골격)
+# Introduction (초안 — 방향·프레이밍 확정 대상)
 
-> 근거: literature-scout 산출물 [../../research/paperC-positioning/](../../research/paperC-positioning/) (scoop·gap 분석), [../../research/REFERENCE_LIST.md](../../research/REFERENCE_LIST.md)(77편). 인용은 verify_citations.py 기계 검증 후에만 확정.
+> ⚠️ **이 초안은 재료다. 서사 아크·강조·차별화 논지·최종 문안은 주저자(이건규)가 방향을 확정한다.** kkkim이 기존 골격을 산문화한 것이며, 재작성 자유.
+> 근거: literature-scout 산출물 [../../research/paperC-positioning/](../../research/paperC-positioning/) (scoop·gap 분석), [../../research/REFERENCE_LIST.md](../../research/REFERENCE_LIST.md). 인용은 verify_citations.py 기계 검증 후에만 확정.
 
 H&E 조직 이미지에서 종양의 분자 상태를 예측하는 연구는 성숙한 분야다. 미세위성 불안정성·유전자 변이·발현 아형이 딥러닝으로 예측되어 왔고[Coudray 2018, Kather 2019·2020, Naik 2020], 병리 파운데이션 모델(UNI, Virchow 등)이 그 성능을 끌어올렸으며, 최근에는 분자 아형과 약물 감수성으로까지 확장되었다[Fernandez-Romero 2026, Dawood 2024]. "예측된다"는 명제는 이미 널리 입증되었다.
 
