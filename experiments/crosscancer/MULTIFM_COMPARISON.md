@@ -2,7 +2,7 @@
 
 > 목적: 치환가능성 결정지도가 **특정 파운데이션 모델(UNI)의 산물이 아닌지** 검정. 각 FM 임베딩 공간에서 CLAM을 **재학습**해야 성립하는 주장이라(HANDOFF §1 "주장 한계"), 임베딩만으로는 말할 수 없다.
 > claim_level: **hypothesis_only** · critic_status: **pending** · 2026-07-20. 산출 = `COLORECTAL/full/mil_cost_results_{virchow2,uni2h}.json`(재학습 러너 `multifm_retrain_watcher.py` 자동 실행, 07-20 01:36/01:39).
-> **Owner=kkkim → sjpark 독립 크로스체크 PASS(2026-07-26, BIOP02-101 #11462): 3포인트(대장 uni2h FAIL 재현·폐 Spearman 1.000 재계산·서술수위 동의) 재현 확인. 범위=파생통계·순서·서술규율(real 재학습 재현은 kkkim 결정론 2회 근거 채택). braveji 7-point 최종 서명 대기(BIOP02-75).**
+> **Owner=kkkim → sjpark 독립 크로스체크 PASS(2026-07-26, BIOP02-101 #11462): 3포인트(대장 uni2h FAIL 재현·폐 Spearman 1.000 재계산·서술수위 동의) 재현 확인. 범위=파생통계·순서·서술규율(real 재학습 재현은 kkkim 결정론 2회 근거 채택). braveji 다중 FM 판정 = caution(2026-07-27, PR#74): findings 3건(egfr_amp 허위 PASS·모델비의존성 폐 한정·n_null 불안정) 원고 반영 조건 → R5·Discussion 반영 완료(926fdc4). 7-point 최종 서명(BIOP02-75) 대기.**
 
 ## 비교 조건 (apples-to-apples 확인)
 동일 endpoint(braf_v600e)·동일 site-disjoint 프로토콜·n_pos=15. 단 임베딩 커버리지가 FM별로 미세하게 달라(UNI 523장/holdout 151, 신형 526장/holdout 152) 홀드아웃이 1명 차이난다.
