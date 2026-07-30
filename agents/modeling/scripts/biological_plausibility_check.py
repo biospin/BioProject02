@@ -1,11 +1,12 @@
 """
 BIOP02-59 — Biological plausibility check (Critic #5).
 
-sjpark의 phenotype 예측(ER/PR/HER2) + jhans draft rule(endocrine_rule_draft.py)을
+sjpark의 phenotype 예측(ER/PR/HER2) + jhans endocrine_rule.py v1.0 을
 연결해 hypothesis.schema.json 형식 출력을 만들고, 최소 타당성 점검을 수행한다.
 
 BIOP02-60(jhans) 완료 — endocrine_rule.py v1.0 정식 연결.
-   rationale은 BIOP02-52 consistency_scores.csv 실측 Spearman ρ 기반 confidence 포함.
+confidence는 BIOP02-52 consistency_scores.csv 실측 Spearman ρ 기반.
+산출물 owner: jhans (BIOP02-111).
 
 점검 항목:
   1. claim_level == "hypothesis_only" 강제
@@ -17,7 +18,7 @@ Run:
     python agents/modeling/scripts/biological_plausibility_check.py \
         --slide_id TCGA-EXAMPLE \
         --er Positive --pr Positive --her2 Negative --pam50 LumA \
-        --out experiments/sjpark/biological_plausibility/example.json
+        --out experiments/jhans/biological_plausibility/example.json
 """
 
 import argparse
@@ -98,12 +99,14 @@ def main():
         },
         "hypothesis": hypotheses,
         "claim_level": "hypothesis_only",
+        "confidence_source": "measured_rho",
+        "generated_by": "jhans",
         "critic_status": "pending",
         "critic_5_biological_plausibility": {
             "status": "caution" if (forbidden or direction_issues) else "pass_draft",
             "forbidden_phrase_violations": forbidden,
             "direction_consistency_issues": direction_issues,
-            "note": "BIOP02-60(jhans) 완료 전 draft 검증. 정식 DepMap/GDSC 연결 후 재검증 필요.",
+            "note": "endocrine_rule.py v1.0 (BIOP02-60). consistency_scores.csv 실측 Spearman ρ 기반 (BIOP02-52). BIOP02-111.",
         },
     }
 
