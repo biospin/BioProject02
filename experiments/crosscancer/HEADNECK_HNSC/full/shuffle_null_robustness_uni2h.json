@@ -44,7 +44,9 @@
     0.359,
     0.4519,
     0.4096
-   ]
+   ],
+   "pass_reliable": false,
+   "caveat": "허위 PASS: real_auroc 0.5046은 우연 수준(≈0.5)인데 null_sd 0.052가 좁아 기준 real>null_mean+2sd를 기계적으로 통과. n_null=5 임계 불안정(자유도4)의 산물. 어떤 축의 통과 근거로도 쓰지 말 것. 원고 Results=미결 처리. 근거=CROSSCHECK_5SEED_MULTIFM.md §5, braveji BIOP02-101 #11466 finding."
   },
   "grade_high": {
    "real_auroc": 0.7469,
