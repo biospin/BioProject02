@@ -25,6 +25,7 @@
 | [03_routing_and_artifact_contract.md](03_routing_and_artifact_contract.md) | 라우팅 + 산출물 계약 + 스키마 | 계약 확정 시 |
 | [04_automated_review_and_governance.md](04_automated_review_and_governance.md) | 검수 3층 · 티어 게이트 · 금지선 | 검수 설계 시 |
 | [05_human_collaboration.md](05_human_collaboration.md) | 1인1역할 · owner≠reviewer · 인프라 규약 | 팀 구성 시 |
+| **[INTEGRATIONS.md](INTEGRATIONS.md)** | **Git · 트래커 · 위키 · 알림 연동** (정본 분리 · 스마트 커밋 · 봇 배선) | 도구 배선 시 |
 | [06_positioning_method.md](06_positioning_method.md) | **포지셔닝 방법론**(결론 아님) | 기획 초기 |
 | [APPENDIX_CASE_BIOP02.md](APPENDIX_CASE_BIOP02.md) | 실사례·사고 기록 (참고용) | 규칙의 이유가 궁금할 때 |
 

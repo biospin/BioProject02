@@ -79,9 +79,12 @@
 | 슬롯 | 설명 | 값 |
 |---|---|---|
 | `{{TRACKER}}` / `{{TRACKER_KEY}}` | 이슈 트래커 · 프로젝트 키 | |
+| `{{TRACKER_HOST}}` | 트래커·위키 호스트명 (API 호출용) | |
 | `{{WIKI}}` | 문서 공간 | |
+| `{{WIKI_SPACE_ID}}` / `{{WIKI_PARENT_ID}}` | 위키 스페이스 id · 상위 페이지 id | |
 | `{{CHANNELS}}` | 알림 채널 (공지 / 개발 / 결과공유 / 장애) | |
 | `{{NOTIFY_BOT}}` | 트래커 → 채널 알림 봇 | |
+| `{{SOURCE_OF_TRUTH}}` | ⚠️ **정보별 정본 표** — 어느 시스템이 무엇의 정본인가 ([INTEGRATIONS §0](INTEGRATIONS.md)) | |
 | `{{SHARED_VOLUME}}` | **계정 간 공유되는 경로** (개인 홈은 공유 안 됨) | |
 | `{{COMPUTE}}` | 연산 자원 + 예약 규칙 | |
 | `{{ENV}}` | 실행 환경 (인터프리터·경로) | |

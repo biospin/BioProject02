@@ -66,7 +66,9 @@
 - [ ] `{{TEAM_TABLE}}` 1인 1역할
 - [ ] `{{CROSS_REVIEW_MAP}}` — **owner ≠ reviewer**, 같은 매핑을 자동 루프에도 주입
 - [ ] `{{SUBCHECK_RULE}}` — 고정 배정이 아니라 **선정규칙**으로 쓴다
-- [ ] `{{TRACKER}}` → `{{NOTIFY_BOT}}` → `{{CHANNELS}}` → CLI 흐름 연결
+- [ ] `{{TRACKER}}` → `{{NOTIFY_BOT}}` → `{{CHANNELS}}` → CLI 흐름 연결 → **[INTEGRATIONS.md](INTEGRATIONS.md)**
+- [ ] ⚠️ **`{{SOURCE_OF_TRUTH}}` 정본 표를 먼저 채운다** — 네 시스템(코드·작업·지식·신호)에 같은 내용을 중복 저장하면 반드시 어긋난다
+- [ ] 스마트 커밋 동작 확인(커밋 이메일 = 트래커 계정), 티켓 조회에 **코멘트 포함**
 - [ ] `{{HANDOFF_FILES}}` 규약 + 개인 로그의 **백업 위치**(홈 디렉토리는 유실 위험)
 
 ## Phase 6 — 포지셔닝
