@@ -49,9 +49,21 @@ JIRA Smart Commits 자동 연동 (이슈 상태 자동 업데이트)
 | sjpark (모델링) | kkkim |
 | kkkim (임베딩) | jamie |
 | jamie (데이터/split) | braveji |
-| jhans (TE) | braveji 총괄 (바이오 sub-check: sjpark) |
+| jhans (TE) | braveji 총괄 + 바이오 sub-check는 **owner가 아닌 사람**(아래 선정규칙) |
 
 이 매핑은 **자동 리뷰 루프에도 그대로 주입**된다 — `auto_review_config.json`의 `cross_review_map`(`sjpark→kkkim, kkkim→jamie, jamie→braveji, jhans→braveji`)이 큐 drain 시 리뷰어를 자동 배정한다([04](04_automated_review_and_governance.md) 참조). 즉 사람 협업 규칙과 AI 자동화가 같은 규칙을 공유한다.
+
+### 바이오 sub-check(#4/#5) 선정규칙 — **"고정 배정"이 아니다** (2026-07-27 정정)
+
+이 규칙은 실제 사고를 겪고 다시 쓰였다. 우선순위대로 적용하며 **1번이 2번을 이긴다**:
+
+1. **해당 산출물·검증 대상 rule의 owner가 아닌 사람** (제약이지 권고가 아님)
+2. 도메인 기본 후보 = **sjpark / jhans** — **후보 목록이고 고정 배정이 아니다**
+3. 후보가 전부 owner면 → **Leader가 다른 멤버를 케이스별 지정**(예: jamie)
+
+> ⚠️ **실사례 BIOP02-59:** sjpark = **산출물 owner**, jhans = **검증 대상 rule owner** → **기본 후보 둘 다 리뷰 불가**였다. 구 문구 *"sub-check는 sjpark/jhans에 분담"* 을 문자대로 따르면 **Owner≠Reviewer를 위반**한다. Leader가 jamie를 지정한 것이 규율상 정답이었고, **문서가 현실보다 뒤처져 있었다.**
+>
+> 교훈: 담당이 헷갈리면 역할표가 아니라 **"이 산출물을 누가 만들었나"** 를 먼저 본다.
 
 ## (D) 공유 인프라 규약 — 협업이 깨지지 않게
 

@@ -40,7 +40,8 @@
 | 가설 설정·실험 설계·통계 감사 | `research-methodologist` | `.claude/agents/research-methodologist.md` |
 | 실험 수행·eval·통계 | `spatialpatho-analyst` (도메인 슬롯 = `agents/data\|embedding\|modeling\|therapeutic_evidence/`) | `.claude/agents/spatialpatho-analyst.md` |
 | 논문 작성·그림 생성 | `manuscript-writer` (+ figure 스크립트) | `.claude/agents/manuscript-writer.md` |
-| 자동 검수·인용 검증 | `paper-critic`, `reviewer`, `agents/critic/` 7-point + 자동 리뷰 루프 | `.claude/agents/paper-critic.md`, `agents/critic/auto_review_*.py` |
+| 자동 검수·인용 검증 | `paper-critic`, `agents/critic/` 7-point + 자동 리뷰 루프 + **CI 검증기** | `.claude/agents/paper-critic.md`, `agents/critic/auto_review_*.py`, `.github/workflows/critic-validators.yml` |
+| 외부 리뷰 시뮬레이션 | `venue-reviewer` (검증 게이트 ① 통과 후, 격리) | `.claude/agents/venue-reviewer.md` |
 | 발표자료 | `presenter` | `.claude/agents/presenter.md` |
 | 전 과정 오케스트레이션 | `paper-production-orchestrator` (실행), `paper-orchestrator` (계획) | `.claude/skills/paper-production-orchestrator/SKILL.md` |
 
@@ -48,6 +49,25 @@
 
 ## 어디서부터 읽나
 
+- **무엇이 최근 바뀌었나** → 바로 아래 "변경 이력".
 - 이 설계를 **처음 보는 사람** → [01_two_layer_architecture.md](01_two_layer_architecture.md) 부터 순서대로.
 - **"왜 완전 자율이 아니냐"** 가 궁금하면 → [06_design_lineage.md](06_design_lineage.md).
 - **실제 운영 규칙·라우팅표 원본** → 리포 루트 `CLAUDE.md`의 *Agent routing & artifact contract* 절, `docs/HARNESS.md`.
+
+---
+
+## 변경 이력 (설계 자체가 바뀐 지점)
+
+이 설계서는 **살아 있는 하네스**를 기술한다. 초판(`89848ed`, 2026-07-22) 이후 실제 설계가 바뀐 부분:
+
+| 일자 | 변경 | 근거 | 반영 문서 |
+|---|---|---|---|
+| 2026-07-27 | **검증 게이트 ↔ 리뷰 순서 스왑** + 게이트 1개 → **2개**(① 커밋 전 결과검증 / ② 공개 전 패키지검증). *"검증 안 된 숫자를 리뷰에 보내지 않는다"* | BIOP02-103 · `374345f` · `SKILL.md` 7/8/8.5 | [01](01_two_layer_architecture.md), [03](03_routing_and_artifact_contract.md) |
+| 2026-07-27 | **`reviewer`(전역) → `venue-reviewer`(프로젝트 로컬) 실체화.** 내부 검수(`paper-critic`)와 외부 referee 시뮬레이션을 **격리** | BIOP02-103 · `.claude/agents/venue-reviewer.md` | [01](01_two_layer_architecture.md), [02](02_agents_and_roster.md), [03](03_routing_and_artifact_contract.md) |
+| 2026-07-27 | 바이오 sub-check 담당 = **"owner 아닌 사람" 케이스별**(구 "sjpark/jhans 고정 분담"은 폐기 — 문자대로 따르면 Owner≠Reviewer 위반) | BIOP02-59 · `bea26f6` | [05](05_human_collaboration.md) |
+| 2026-07-27 | 금지 항목 신설 — **티켓·파일을 열지 않고 상태 단정 금지**(JIRA 조회 시 `comment` 필수) | `9963b08` | [04](04_automated_review_and_governance.md) |
+| 2026-08-03 | **CI 검증 레이어 신설** — PR/push에서 결정론 검증기 3종 blocking 실행. 검수가 **3층**(CI 기계 → AI 적대 → 사람 게이트)이 됨 | BIOP02-106/107 · `.github/workflows/critic-validators.yml` | [04](04_automated_review_and_governance.md) |
+
+**미해결로 남은 것 (설계서가 기록하는 미완성 지점):**
+- 🔴 **검증 게이트 ①의 실행 명령이 없다** — BIOP02용 결정론 재계산 스크립트가 리포에 부재. `auto_review_gate.py`는 문서 규칙 검사이지 수치 재계산이 아니다. 채워질 때까지 사람이 수동 대조.
+- 🔴 **`auto_review_config.json`의 `ai_review.agents`가 아직 `["paper-critic", "reviewer"]`** — `SKILL.md`는 5단계를 `paper-critic` 단독으로 고쳤는데 config가 따라오지 않았다. `enabled=false`(dry-run)라 실害는 없으나 **활성화 전 정리 필요**.
