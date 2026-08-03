@@ -18,8 +18,9 @@
 
 | 파일 | 역할 | 언제 읽나 |
 |---|---|---|
-| **[PROJECT_SLOTS.md](PROJECT_SLOTS.md)** | **치환표** — 이 프로젝트의 값을 채우는 단 한 장 | **제일 먼저** |
-| **[BOOTSTRAP.md](BOOTSTRAP.md)** | 설치·부트스트랩 순서 + 최소 구성 | 슬롯 채운 직후 |
+| **[GETTING_STARTED.md](GETTING_STARTED.md)** | **step-by-step 시작 가이드** — 첫 2주 일정 · 명령 · 파일 골격 · 채워진 예시 | **처음 시작할 때** |
+| **[PROJECT_SLOTS.md](PROJECT_SLOTS.md)** | **치환표** — 이 프로젝트의 값을 채우는 단 한 장 | Step 2에서 |
+| **[BOOTSTRAP.md](BOOTSTRAP.md)** | 설치 Phase 체크리스트 + 최소 구성 (**무엇을** 세우나) | 전체 조망 |
 | [01_two_layer_architecture.md](01_two_layer_architecture.md) | 2-레이어 분리 원칙 + 게이트 배치 | 구조 설계 시 |
 | [02_agents_and_roster.md](02_agents_and_roster.md) | 에이전트 명부 · 권한 · 격리 원칙 | 에이전트 정의 시 |
 | [03_routing_and_artifact_contract.md](03_routing_and_artifact_contract.md) | 라우팅 + 산출물 계약 + 스키마 | 계약 확정 시 |
@@ -43,8 +44,12 @@
 ## 시작하기
 
 ```
+0. GETTING_STARTED.md 를 연다        ← 처음이면 여기부터. Step 0~8 을 그대로 따라간다
 1. PROJECT_SLOTS.md 를 채운다        ← 여기서 막히면 설계가 아직 안 정해진 것이다
-2. BOOTSTRAP.md 순서대로 설치한다
+2. BOOTSTRAP.md 로 빠진 Phase 가 없는지 대조한다
 3. 01~05 를 읽고 프로젝트 문서로 복사·조정한다
 4. 06 으로 포지셔닝을 직접 수행한다  ← 결론을 베끼지 않는다
 ```
+
+**두 문서의 관계:** `GETTING_STARTED` = **어떻게**(명령·예시·일정) · `BOOTSTRAP` = **무엇을**(Phase 체크리스트·원칙).
+처음이면 GETTING_STARTED를 따라가고, BOOTSTRAP은 누락 점검용으로 쓴다.
