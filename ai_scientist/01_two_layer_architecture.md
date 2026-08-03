@@ -60,9 +60,11 @@ research-methodologist / literature-scout / novelty-strategist   (기획·근거
             └─▶ (수정) manuscript-writer
    └─▶ 🔒 검증 게이트 ① 결과 검증 (커밋 전)                        (숫자 재계산)
    └─▶ venue-reviewer (선택, 격리)                                 (외부 referee 시뮬)
-            └─▶ (수정) manuscript-writer
+            └─▶ (수정) manuscript-writer  ⚠️ 게이트 ① 이후의 수정
    └─▶ 🔒 검증 게이트 ② 패키지 검증 (공개 직전) ──▶ presenter       (재대조→발표)
 ```
+
+> ⚠️ **게이트 ① 뒤의 "수정"은 검증을 무효화할 수 있다.** `manuscript-writer`는 `Write`를 보유해(`Read, Write, Edit, Bash, Grep, Glob`) 리뷰 반영 과정에서 원고를 **통째로 다시 쓸 수 있고**, 그때 게이트 ①이 확인한 숫자·인용이 조용히 바뀌어도 **에러가 나지 않는다.** 게이트 ②가 공개 직전에 재대조하도록 설계된 이유가 이것이지만, ②는 **사후 탐지**이지 사전 차단이 아니다. 같은 성격의 방어가 CI에도 있다 — `check_number_drift.py` 역시 드리프트를 **발견**할 뿐 발생을 막지 않는다([04](04_automated_review_and_governance.md) CI 절).
 
 > ⚠️ **2026-07-27 순서 스왑(BIOP02-103).** 이전 설계는 `리뷰 → 검증 게이트` 순이었으나 **`검증 게이트 → 리뷰`로 뒤집혔다.** 근거는 원본 하네스 규칙 *"paper-critic + gate **FIRST**, then reviewer — reviewer assumes pre-submission QA is done"*. 요지: **검증되지 않은 숫자를 리뷰에 보내지 않는다.** 동시에 게이트가 1개 → **2개**(① 커밋 전 결과 검증 / ② 공개 직전 패키지 재검증)로 늘었다 — 리뷰 반영으로 본문이 바뀌었을 수 있어 공개 전 한 번 더 돌린다.
 

@@ -71,3 +71,8 @@
 **미해결로 남은 것 (설계서가 기록하는 미완성 지점):**
 - 🔴 **검증 게이트 ①의 실행 명령이 없다** — BIOP02용 결정론 재계산 스크립트가 리포에 부재. `auto_review_gate.py`는 문서 규칙 검사이지 수치 재계산이 아니다. 채워질 때까지 사람이 수동 대조.
 - 🔴 **`auto_review_config.json`의 `ai_review.agents`가 아직 `["paper-critic", "reviewer"]`** — `SKILL.md`는 5단계를 `paper-critic` 단독으로 고쳤는데 config가 따라오지 않았다. `enabled=false`(dry-run)라 실害는 없으나 **활성화 전 정리 필요**.
+- 🔴 **게이트 ① 이후의 "수정"에 권한 제약이 없다** — `manuscript-writer`가 `Write`를 보유해 리뷰 반영 중 검증된 숫자를 다시 쓸 수 있고, 방어는 게이트 ②의 **사후 재대조**뿐이다. 같은 규율이 `paper-critic`에는 **도구 수준으로**(쓰기 권한 없음) 걸려 있어, 하네스 안에 *권한으로 막은 곳*과 *말로만 막은 곳*이 섞여 있다. 부수로 `venue-reviewer`는 `tools:` **미선언 → 전체 도구 상속**이라 격리가 프롬프트로만 강제된다. → [01](01_two_layer_architecture.md), [02](02_agents_and_roster.md), [03](03_routing_and_artifact_contract.md)
+- 🔴 **판정 어휘에 "더 해도 pass가 안 되는 것"을 적을 칸이 없다** — `critic_status`(`pass·caution·reject`)에 *"현재 데이터로는 식별 불가"* 가 없어 그런 항목이 `caution`으로 뭉뚱그려진다. BIOP02-75가 이 빈칸 때문에 **티켓 성공 기준 자체를 재정의**해 우회했다. → [04](04_automated_review_and_governance.md)
+- 🔴 **비판 자체를 검증하는 층이 없다** — 루프가 비판을 생산(③)한 뒤 곧바로 확인 주체 배정(④)으로 넘어가, **Critic의 산출물만은 Critic을 거치지 않는다.** 2026-07-27 하루에 Critic 코멘트 4건이 작성자 본인에게 사후 정정된 것이 그 비용이다. → [04](04_automated_review_and_governance.md)
+
+> ⚠️ 위 3건은 **관찰된 갭이지 채택된 설계 변경이 아니다.** 따라서 위 "변경 이력"에는 넣지 않았다. 셋 다 고치려면 `.claude/agents/*`·`schemas/*`·`auto_review_config.json`을 건드려야 하고, 그것은 **Critic이 자기 검수 기준을 스스로 정하는 일**이라 `CLAUDE.md`의 `❌ anti-self-reference`에 걸린다 → **Leader 승인 사안.** 특히 판정 어휘는 기존 `critic_report.json`의 유효성에 영향을 주므로 **BIOP02-75 최종 서명 이후**가 맞다.
