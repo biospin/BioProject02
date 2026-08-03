@@ -40,8 +40,25 @@
 3. **여전히 exploratory.** braf n_pos=15 < 사전등록 25. 5-seed PASS도 확증이 아니라 방향 근거. claim_level=hypothesis_only, critic_status=pending 유지.
 4. **FM 우열 주장 금지**(CI 겹침, 기존 가드 유지). 5-seed는 "법칙 성립"이 아니라 "모델 비의존성" 근거이며, 대장 1축·폐 3축이라 법칙 일반화엔 불충분.
 
-## 5. 남은 것 — 사람 Owner≠Reviewer 사인오프
-kkkim은 결과 owner라 최종 판정 불가. **sjpark/braveji 크로스체크 요청**(BIOP02-101):
-- (1) 결정론 재계산이 저장값과 일치하는지 독립 확인(특히 대장 uni2h FAIL 재현).
-- (2) 순서보존 Spearman 1.000 독립 재계산.
-- (3) 대장 uni2h FAIL의 서술 수위(§4-2) 동의 여부.
+## 5. 방법 한계 — n_null=5 임계 불안정 (허위 PASS/FAIL 위험)
+
+**기준 `real > null_mean + 2·null_sd`는 null 표본이 5개뿐이라 임계값이 불안정하다.** null_sd가 우연히 작으면 임계가 real 바로 아래로 내려와 **신호가 없어도 기계적으로 PASS**하고(허위 PASS), 반대로 null_sd가 크면 real이 충분히 높아도 FAIL한다. 즉 경계 근처 판정은 신호의 유무가 아니라 **5-seed null의 산포 추정 오차**에 좌우된다. n_null=5는 sd 추정 자유도 4로, 이 산포 자체가 노이즈다.
+
+**경계 판정 3건(이 영역에 실제로 걸림):**
+| 사례 | real | thr | 마진 | null_sd | 문제 |
+|---|---|---|---|---|---|
+| 두경부 HPV / virchow2 | 0.9199 | 0.9234 | **−0.0035** | 0.2408(큼) | 큰 null 산포로 FAIL — 신호 부재 아님(real 0.92) |
+| 대장 BRAF / virchow2 | 0.8798 | 0.8688 | **+0.011** | — | 빠듯한 PASS, sd 요동에 취약 |
+| 두경부 egfr_amp / uni2h | 0.5046 | 0.4815 | +0.023 | 0.052(작음) | **허위 PASS** — real≈0.5(우연)인데 좁은 null_sd로 통과 |
+
+**대응(과대주장 차단):**
+- 경계 마진(|real−thr| 작음) 판정은 **단독 결론 근거로 쓰지 않는다.** HPV·대장 BRAF의 모델 비의존성은 "2/3 FM 통과"로만 서술하고, 경계 FAIL/PASS를 확증·반증으로 승격하지 않는다(§4).
+- **egfr_amp uni2h "PASS"는 허위다** — real 0.5046은 우연 수준이고 좁은 null_sd의 산물이다. **어떤 축의 통과 근거로도 쓰지 않는다.** 원고 Results는 egfr_amp를 "미결"로 처리한다(통과축 아님). 산출 JSON(`HEADNECK_HNSC/full/shuffle_null_robustness_uni2h.json`)의 `egfr_amp`에도 caveat를 명기해 자동 재생성 시 오독을 방지한다.
+- 무게중심은 경계 사례가 아니라 **마진이 큰 폐 3축(6/6, Spearman 1.000)**에 둔다.
+
+## 6. Owner≠Reviewer 사인오프 (완료)
+- (1) 결정론 재계산 저장값 일치 — kkkim 2회 독립 재현(대장 virchow2 0.8798).
+- (2) 순서보존 Spearman 1.000 — sjpark 독립 재계산 확인.
+- (3) 대장 uni2h FAIL 재현 + 서술 수위 동의 — **sjpark PASS(2026-07-26, BIOP02-101 #11462)**.
+- braveji 다중 FM 판정 = **R5 사인오프 통과(2026-07-29, #11466)** — findings 3건(egfr_amp 허위 PASS·모델비의존 폐 한정·n_null=5 불안정) 반영 확인. 본 §5가 그 n_null=5 한계 절이다. claim_level=hypothesis_only·Supplement 유지 조건.
+- 잔여: BIOP02-75 7-point 최종 서명(별개 게이트, Discussion caution·저자정보 대기).
