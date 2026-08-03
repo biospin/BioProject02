@@ -1,0 +1,37 @@
+# PR 검증 게이트 (BIOP02-106).
+#
+# 배경 — 리포에 검증 자산은 갖춰져 있는데 .github/workflows/ 가 없어, 만들어 둔 검증이
+#   PR 에서 한 번도 자동으로 돌지 않았다(사람이 기억해서 돌릴 때만). 이번 주 불일치 3건이
+#   전부 눈으로 대조해야만 발견되는 종류였고 5일~2주씩 방치됐다. BIOP01 harness-doctor.yml 선례.
+#
+# 범위(최소안) — 결정론·오프라인·현재 통과하는 검증기만 blocking 으로 건다.
+#   1) critic_pilot mutation_check — scorer 가 케이스에 실제로 제약되는지(회귀)
+#   2) citation_verifier mutation_check — medsci 회귀 버그(약한 제목검색 통과 등)가 죽어 있는지
+#   3) check_number_drift --strict — JSON 정본 ↔ markdown 표 수치 드리프트(BIOP02-107)
+#
+# 명시적 비범위 — agents/critic/auto_review_config.json 의 enabled 플래그는 건드리지 않는다
+#   (M7: 팬텀 배선. BIOP02 하네스 스왑 전 활성화 금지). 라우터 문서도 손대지 않는다.
+name: critic-validators
+on:
+  pull_request:
+    branches: [ main, feat/BIOP02-91-kkkim-multifm-virchow2 ]
+  push:
+    branches: [ main ]
+
+jobs:
+  validators:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: critic_pilot 회귀 (scorer mutation)
+        run: python evals/critic_pilot/mutation_check.py
+
+      - name: citation_verifier 회귀 (medsci 버그 replica 사망 확인)
+        run: python evals/citation_verifier/mutation_check.py
+
+      - name: 숫자 드리프트 (JSON 정본 ↔ markdown 표, BIOP02-107)
+        run: python agents/critic/scripts/check_number_drift.py --strict
