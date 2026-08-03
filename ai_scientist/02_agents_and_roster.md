@@ -13,7 +13,7 @@ AI Scientist는 "한 명의 만능 에이전트"가 아니라 **벤치(bench)별
 | **집필실** | `manuscript-writer` | 프리프린트/저널/블로그 본문·초안 + **그림 스크립트 실행** | Read, Write, Edit, Bash, Grep, Glob |
 | **집필실** | `presenter` | 청중 맞춤 슬라이드·발표(랩미팅/학회/블로그). 숫자는 논문·결과파일에서만 | Read, Write, Edit, Bash, Grep, Glob |
 | **심사·QA** | `paper-critic` | 제출 전 **적대적 자체검토** + 그림 QA(이미지 열어 tofu/overflow 확인) + 인용 검증 게이트 | Read, Grep, Glob, Bash, WebSearch, WebFetch |
-| **심사·QA** | `reviewer` (전역, 선택) | 정식 venue 스타일 리뷰 문서 | — |
+| **심사·QA** | `venue-reviewer` (**프로젝트 로컬**, 선택) | 정식 venue 스타일 시뮬레이션 리뷰(referee). **검증 게이트 ① 통과 후에만** 호출 · 원고 패키지만 읽고 내부 논의·critic 노트는 **격리** | ⚠️ All tools (`tools:` **미선언 → 전체 상속**) |
 | **코디네이션** | `paper-orchestrator` | 멀티-에이전트 작업 **계획만**(실행은 메인 루프) | Read, Grep, Glob, Write |
 | **엔지니어링** | `design` | 로고·아이콘·브랜드·그림 미감(SVG 마스터 + PNG) | Read, Write, Edit, Bash |
 | **엔지니어링** | figure 스크립트 (agent 아님) | 결과 파일에서 그림 생성·번호 정합 | — |
@@ -30,6 +30,20 @@ AI Scientist는 "한 명의 만능 에이전트"가 아니라 **벤치(bench)별
 ### (2) 도메인 특수성은 단 하나의 슬롯에 격리했다
 
 로스터에서 `spatialpatho-analyst`만 이 프로젝트 고유(도메인 슬롯)이고, 나머지는 전부 **"재사용"** 표시다(`docs/HARNESS.md` §1의 상태 칼럼). 즉 문헌·집필·검수·발표 벤치는 **어느 논문 프로젝트에도 그대로 옮겨 붙는 연결조직**으로 설계했고, H&E·병리·DepMap 같은 도메인 지식은 한 슬롯 안에 가뒀다. 그 슬롯 자체도 단일 스크립트가 아니라 `agents/data|embedding|modeling|therapeutic_evidence/` 역할 워크스페이스들의 대표다(`.claude/agents/spatialpatho-analyst.md`).
+
+### (3) 내부 검수와 외부 리뷰를 **격리**했다 (2026-07-27 신설, BIOP02-103)
+
+`paper-critic`(내부 적대검수)과 `venue-reviewer`(외부 referee 시뮬레이션)는 **다른 자리**다.
+
+| | `paper-critic` | `venue-reviewer` |
+|---|---|---|
+| 언제 | 실행 흐름 **5단계** (자동 리뷰 루프 안) | 실행 흐름 **8단계** (게이트 ① 통과 후) |
+| 입력 | 원고 + 결과 파일 + 내부 노트 | **원고 패키지만** — 분석 과정·내부 논의·critic 노트 **접근 금지** |
+| 역할 | 고치라고 잡아내는 자기검수 | 심사자 눈으로 보는 시뮬레이션 |
+
+격리 이유: 리뷰어가 내부 맥락을 알면 **실제 심사자가 겪을 정보 부족을 재현하지 못한다.** 또한 리뷰 상단에 **사용 모델·입력 범위**를 기록하고, 같은 모델 계열이면 "simulated review (외부 referee 아님)"임을 명시한다 — 진짜 리뷰 다양성이 필요하면 **다른 모델 계열**로 실행한다(`.claude/agents/venue-reviewer.md`).
+
+> ⚠️ **다만 이 격리는 프롬프트로만 강제된다 (2026-08-03 실측).** `venue-reviewer.md`는 프론트매터에 `tools:`를 선언하지 않아 **전체 도구를 상속**한다 — 원고를 읽기만 해야 할 에이전트가 `Write`·`Edit`·`Bash`를 전부 갖고 있다. 로스터 10종 중 `tools:` 미선언은 이 하나뿐이다. 대조적으로 `paper-critic`은 `Read, Grep, Glob, Bash, WebSearch, WebFetch`로 **쓰기 권한이 애초에 없어** 같은 규율이 도구 수준에서 강제된다. 즉 하네스 안에 **"권한으로 막은 곳"과 "말로만 막은 곳"이 섞여 있다.**
 
 ## 에이전트 발행 규칙 (구현 디테일)
 

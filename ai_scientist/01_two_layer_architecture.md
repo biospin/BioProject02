@@ -9,7 +9,7 @@ AI Scientist를 **하나의 거대한 자율 에이전트로 만들지 않았다
 │  레이어 B — 논문 생산 하네스 (paper-production harness)           │
 │  결과 → 논문·그림·검수·발표. .claude/agents/ + .claude/skills/    │
 │  literature-scout · novelty-strategist · research-methodologist  │
-│  manuscript-writer · paper-critic · reviewer · presenter · design│
+│  manuscript-writer · paper-critic · venue-reviewer · presenter   │
 │  입구 = paper-production-orchestrator (Skill, 메인 루프가 실행)   │
 └───────────────────────────▲─────────────────────────────────────┘
                             │  result 파일 + consolidated summary 소비
@@ -56,16 +56,26 @@ data (manifest + split_policy_v0)
 research-methodologist / literature-scout / novelty-strategist   (기획·근거)
    └─▶ spatialpatho-analyst ──▶ result files + summary            (분석·검증)
    └─▶ manuscript-writer ──▶ manuscript (+ figure 스크립트 → figures)  (집필·그림)
-   └─▶ paper-critic (+ agents/critic/ 체크리스트) ──▶ reviewer    (심사)
+   └─▶ paper-critic (+ agents/critic/ 체크리스트)                  (내부 적대검수)
             └─▶ (수정) manuscript-writer
-   └─▶ [검증 게이트: headline AUC/AUPRC 재계산] ──▶ presenter      (검증→발표)
+   └─▶ 🔒 검증 게이트 ① 결과 검증 (커밋 전)                        (숫자 재계산)
+   └─▶ venue-reviewer (선택, 격리)                                 (외부 referee 시뮬)
+            └─▶ (수정) manuscript-writer  ⚠️ 게이트 ① 이후의 수정
+   └─▶ 🔒 검증 게이트 ② 패키지 검증 (공개 직전) ──▶ presenter       (재대조→발표)
 ```
 
-## 두 레이어 경계의 두 게이트 (사람이 통과시킨다)
+> ⚠️ **게이트 ① 뒤의 "수정"은 검증을 무효화할 수 있다.** `manuscript-writer`는 `Write`를 보유해(`Read, Write, Edit, Bash, Grep, Glob`) 리뷰 반영 과정에서 원고를 **통째로 다시 쓸 수 있고**, 그때 게이트 ①이 확인한 숫자·인용이 조용히 바뀌어도 **에러가 나지 않는다.** 게이트 ②가 공개 직전에 재대조하도록 설계된 이유가 이것이지만, ②는 **사후 탐지**이지 사전 차단이 아니다. 같은 성격의 방어가 CI에도 있다 — `check_number_drift.py` 역시 드리프트를 **발견**할 뿐 발생을 막지 않는다([04](04_automated_review_and_governance.md) CI 절).
 
-레이어 경계는 **자동화하지 않은 사람 게이트** 두 개로 지킨다 (`docs/HARNESS.md` §2, `CLAUDE.md` 사람 승인 게이트):
+> ⚠️ **2026-07-27 순서 스왑(BIOP02-103).** 이전 설계는 `리뷰 → 검증 게이트` 순이었으나 **`검증 게이트 → 리뷰`로 뒤집혔다.** 근거는 원본 하네스 규칙 *"paper-critic + gate **FIRST**, then reviewer — reviewer assumes pre-submission QA is done"*. 요지: **검증되지 않은 숫자를 리뷰에 보내지 않는다.** 동시에 게이트가 1개 → **2개**(① 커밋 전 결과 검증 / ② 공개 직전 패키지 재검증)로 늘었다 — 리뷰 반영으로 본문이 바뀌었을 수 있어 공개 전 한 번 더 돌린다.
 
-1. **검증 게이트 (verify-gate).** 커밋·공개 전, headline AUC/AUPRC를 모델 eval 출력에서 **결정론적으로 재계산**해 요약과 대조. 캐시·이전 세션 출력을 그대로 믿지 않는다. 실패하면 멈추고 사람에게 보고.
-2. **공개 게이트 (publication gate).** 저자·소속·저자순서·corresponding email·IP·GPU 제공처(Modulabs) 확정 전까지 공개 보류. 팀 프로젝트라 저자-대면 내용은 팀 합의 필요.
+## 레이어 경계의 게이트 (사람이 통과시킨다)
+
+레이어 경계는 **자동화하지 않은 사람 게이트**로 지킨다 (`SKILL.md` 실행 흐름 7·8.5, `CLAUDE.md` 사람 승인 게이트):
+
+1. **검증 게이트 ① — 결과 검증 (커밋 전).** headline 숫자를 결과 파일에서 **결정론적으로 재계산**해 대조. 캐시·이전 세션 출력을 그대로 믿지 않는다. 실패하면 멈추고 사람에게 보고, 커밋·발행 금지.
+2. **검증 게이트 ② — 패키지 검증 (공개 직전).** 본문 숫자 ↔ 결과 파일 재대조 + 그림·표·supplementary 동봉 확인.
+3. **공개 게이트 (publication gate).** 저자·소속·저자순서·corresponding email·IP·GPU 제공처(Modulabs) 확정 전까지 공개 보류. 팀 프로젝트라 저자-대면 내용은 팀 합의 필요.
+
+> 🔴 **게이트 ①은 아직 실행 명령이 없다(리포 실측 2026-07-27, `SKILL.md` 7단계 경고).** BIOP01의 `p3_concordance.py`에 해당하는 **BIOP02용 결정론 재계산 스크립트가 리포에 존재하지 않는다.** `agents/critic/auto_review_gate.py`는 DRP 스코프·claim level·metrics 표기를 보는 **문서 규칙 검사이지 수치 재계산이 아니다.** 그 자리가 채워지기 전까지 게이트 ①은 **사람이 수동 대조**한다 — 이 설계서가 기록하는 하네스의 가장 큰 미완성 지점이다.
 
 → 다음: [02_agents_and_roster.md](02_agents_and_roster.md)

@@ -16,7 +16,7 @@
 | "가설·실험설계·분석계획 점검·감사" | `research-methodologist` |
 | "제출 전 적대적 자체검토 / 그림 QA" | `paper-critic` |
 | "인용 검증 / 이 논문 진짜 있나" | `paper-critic` 또는 `literature-scout` — **둘 다 `agents/critic/scripts/verify_citations.py`를 실행**(눈으로 보지 않는다) |
-| "정식 venue 리뷰 시뮬레이션" | `reviewer` |
+| "정식 venue 리뷰 시뮬레이션" | `venue-reviewer` (프로젝트 로컬, 선택) — **검증 게이트 ① 통과 후에만** |
 | "발표자료/슬라이드/발제" | `presenter` |
 | "로고·아이콘·브랜드·그림 미감" | `design` |
 | "여러 단계를 어떤 순서로 엮을지 계획만" | `paper-orchestrator` (계획만) |
@@ -32,10 +32,16 @@
 |---|---|---|---|
 | 분석·eval | `spatialpatho-analyst` | eval outputs + consolidated results summary | 집필·검수 |
 | 집필+그림 | `manuscript-writer` | manuscript, figures dir | 검수·리뷰·발표 |
-| 검증 게이트 | (커밋/공개 전) | headline AUC/AUPRC 재계산 → summary 대조 | 사람 |
-| 리뷰 | `paper-critic` / `reviewer` | peer review note | 집필(수정) |
+| 검수 | `paper-critic` (+ `agents/critic/`) | 적대 노트 + 그림 QA | 집필(수정) |
+| **검증 게이트 ①** | (커밋 전) | 헤드라인 숫자 재계산 → 결과 파일 대조 — ⚠️ **실행 명령 미정** | 사람 |
+| 정식 리뷰 | `venue-reviewer` | `manuscript/REVIEW-<venue>-<date>.md` | 집필(수정) |
+| **검증 게이트 ②** | (공개 전) | 본문 숫자 재대조 + 그림·표·supplementary 동봉 확인 | 사람 |
 | 발표 | `presenter` | 슬라이드/발제 | 사람 |
 | 상태 핸드오프 | (전원) | `HANDOFF.md`, `TODO.md`, `SESSION_LOG.md` | 다음 세션 |
+
+> ⚠️ **2026-07-27 갱신(BIOP02-103).** 표의 순서가 바뀌었다 — 구 계약은 `검수 → 검증 게이트 → 리뷰`였고 게이트가 1개였다. 현재는 **게이트가 리뷰보다 앞서고**(검증 안 된 숫자를 리뷰에 보내지 않는다) **2개**로 분리됐다. 근거 = `.claude/skills/paper-production-orchestrator/SKILL.md` 실행 흐름 7 / 8 / 8.5.
+>
+> ⚠️ **"정식 리뷰 → 집필(수정)" 화살표에는 계약이 없다.** 이 수정은 **게이트 ① 이후**에 일어나고, 수행자 `manuscript-writer`는 `Write`를 보유한다 — 검증된 숫자를 다시 쓰는 것을 막는 계약이 산출물 계약에도, 도구 권한에도 없다. 현재 방어는 게이트 ②의 **사후 재대조** 하나뿐이다([01](01_two_layer_architecture.md) 흐름도 주석 참조).
 
 이 계약 덕분에 **부분 재실행**이 가능하다 — "그림만 다시"는 figure 스크립트만, "critic 지적 반영"은 하류 집필 단계만 돌린다. 오케스트레이터의 실행 모드 분기가 이를 처리한다 (`SKILL.md` "실행 모드 분기").
 

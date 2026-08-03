@@ -177,8 +177,8 @@ flowchart TB
       FIG["figure 스크립트"]:::a
     end
     subgraph QA["④ 검수 · 게이트"]
-      PC["paper-critic / reviewer"]:::a
-      GATE["검증 · 공개 게이트<br/>(사람)"]:::gate
+      PC["paper-critic<br/>(내부 적대검수)"]:::a
+      GATE["🔒 게이트 ① 결과검증 → venue-reviewer<br/>→ 🔒 게이트 ② 패키지검증 (사람)"]:::gate
     end
     PRES["presenter"]:::a
 
@@ -191,7 +191,19 @@ flowchart TB
     classDef a fill:#ffffff,stroke:#c9d3e3,color:#1c2128;
     classDef gate fill:#fff4e6,stroke:#d97706,color:#7c4a03;
       </div>
-      <p class="figcap">그림 0. 요청이 라우팅→오케스트레이터를 거쳐 기획→분석→집필→검수→발표 파이프라인을 흐른다. 검수는 집필로 되돌아가는 루프이며, 사람 게이트가 공개 전에 놓인다.</p>
+      <p class="figcap">그림 0. 요청이 라우팅→오케스트레이터를 거쳐 기획→분석→집필→검수→발표 파이프라인을 흐른다. 검수는 집필로 되돌아가는 루프이며, <b>검증 게이트 ①이 외부 리뷰보다 앞에</b> 놓인다(2026-07-27 스왑).</p>
+
+      <h3>변경 이력 — 초판(2026-07-22) 이후 설계가 실제로 바뀐 지점</h3>
+      <table>
+        <tr><th>일자</th><th>변경</th><th>근거</th></tr>
+        <tr><td>07-27</td><td><b>검증 게이트 ↔ 리뷰 순서 스왑</b> + 게이트 1개 → <b>2개</b>(① 커밋 전 결과검증 / ② 공개 전 패키지검증). <i>"검증 안 된 숫자를 리뷰에 보내지 않는다"</i></td><td>BIOP02-103 · <code>374345f</code></td></tr>
+        <tr><td>07-27</td><td><code>reviewer</code>(전역) → <b><code>venue-reviewer</code></b>(프로젝트 로컬) 실체화. 내부 검수와 외부 referee를 <b>격리</b></td><td><code>.claude/agents/venue-reviewer.md</code></td></tr>
+        <tr><td>07-27</td><td>바이오 sub-check 담당 = <b>"owner 아닌 사람" 케이스별</b>(구 고정 분담은 폐기 — 문자대로면 Owner≠Reviewer 위반)</td><td>BIOP02-59 · <code>bea26f6</code></td></tr>
+        <tr><td>07-27</td><td>금지 신설 — <b>티켓·파일 안 열고 상태 단정 금지</b>(JIRA 조회 시 <code>comment</code> 필수)</td><td><code>9963b08</code></td></tr>
+        <tr><td>08-03</td><td><b>CI 검증 레이어 신설</b> — PR/push에서 결정론 검증기 3종 blocking. 검수가 <b>3층</b>(CI→AI→사람)이 됨</td><td>BIOP02-106/107</td></tr>
+      </table>
+
+      <div class="callout warn"><b>미해결로 남은 것</b> — 🔴 <b>검증 게이트 ①의 실행 명령이 아직 없다</b>(BIOP02용 결정론 재계산 스크립트 부재. <code>auto_review_gate.py</code>는 문서 규칙 검사이지 수치 재계산이 아님) → 사람이 수동 대조. 🔴 <code>auto_review_config.json</code>의 <code>ai_review.agents</code>가 아직 <code>["paper-critic","reviewer"]</code> — <code>SKILL.md</code>와 불일치, <code>enabled=false</code>라 실害는 없으나 <b>활성화 전 정리 필요</b>.</div>
 
       <div class="callout">이 문서는 <b>설계 회고</b>다. 새 시스템을 만드는 것이 아니라 <code>CLAUDE.md</code>·<code>docs/HARNESS.md</code>·<code>.claude/agents/</code>·<code>agents/critic/</code>·<code>research/ai-agents/</code>에 이미 구현·기록된 설계를 한 지도로 모았다. 모든 서술은 실제 파일 근거를 가진다.</div>
     </section>
@@ -209,7 +221,7 @@ flowchart TB
       b2["novelty-strategist"]:::b
       b3["research-methodologist"]:::b
       b4["manuscript-writer"]:::b
-      b5["paper-critic / reviewer"]:::b
+      b5["paper-critic · venue-reviewer"]:::b
       b6["presenter"]:::b
     end
     subgraph A["레이어 A — 도메인 분석 파이프라인"]
@@ -221,7 +233,7 @@ flowchart TB
       a5["critic"]:::a
     end
     SLOT["spatialpatho-analyst<br/>(도메인 슬롯 = 레이어 A의 대표)"]:::slot
-    G1["🔒 검증 게이트<br/>headline AUC/AUPRC 재계산"]:::gate
+    G1["🔒 검증 게이트 ①·②<br/>결과검증(커밋 전) · 패키지검증(공개 전)"]:::gate
     G2["🔒 공개 게이트<br/>저자·소속·IP·GPU 제공처"]:::gate
 
     A --> SLOT
@@ -233,7 +245,7 @@ flowchart TB
     classDef slot fill:#8b5cf6,stroke:#8b5cf6,color:#fff;
     classDef gate fill:#fff4e6,stroke:#d97706,color:#7c4a03;
       </div>
-      <p class="figcap">그림 1. 도메인 특수성은 단 하나의 슬롯 <code>spatialpatho-analyst</code>에 격리되고, 레이어 B는 어느 논문에도 옮겨 붙는 재사용 조직이다. 두 레이어 경계에 사람 게이트 2개.</p>
+      <p class="figcap">그림 1. 도메인 특수성은 단 하나의 슬롯 <code>spatialpatho-analyst</code>에 격리되고, 레이어 B는 어느 논문에도 옮겨 붙는 재사용 조직이다. 경계에 <b>검증 게이트 ①·②</b> + 공개 게이트(사람).</p>
 
       <h3>왜 두 레이어로 나눴나</h3>
       <table>
@@ -280,7 +292,7 @@ flowchart TB
     end
     subgraph BENCH4["🔍 심사 · QA"]
       PC["paper-critic<br/><small>적대적 검토 + 그림 QA</small>"]:::qa
-      RV["reviewer<br/><small>venue 스타일 리뷰</small>"]:::qa
+      RV["venue-reviewer<br/><small>게이트 ① 통과 후 · 격리</small>"]:::qa
     end
     subgraph BENCH5["🧭 코디 · 엔지니어링"]
       PO["paper-orchestrator<br/><small>계획만</small>"]:::eng
@@ -341,8 +353,10 @@ flowchart LR
         <tr><th>단계</th><th>Writer</th><th>산출물</th><th>다음이 읽음</th></tr>
         <tr><td>분석·eval</td><td>spatialpatho-analyst</td><td>eval outputs + results summary</td><td>집필·검수</td></tr>
         <tr><td>집필+그림</td><td>manuscript-writer</td><td>manuscript, figures dir</td><td>검수·리뷰·발표</td></tr>
-        <tr><td>검증 게이트</td><td>(커밋/공개 전)</td><td>headline 재계산 → summary 대조</td><td>사람</td></tr>
-        <tr><td>리뷰</td><td>paper-critic / reviewer</td><td>peer review note</td><td>집필(수정)</td></tr>
+        <tr><td>검수</td><td>paper-critic</td><td>적대 노트 + 그림 QA</td><td>집필(수정)</td></tr>
+        <tr><td><b>검증 게이트 ①</b></td><td>(커밋 전)</td><td>헤드라인 숫자 재계산 → 결과 파일 대조 ⚠️ 실행 명령 미정</td><td>사람</td></tr>
+        <tr><td>정식 리뷰</td><td>venue-reviewer</td><td><code>manuscript/REVIEW-&lt;venue&gt;-&lt;date&gt;.md</code></td><td>집필(수정)</td></tr>
+        <tr><td><b>검증 게이트 ②</b></td><td>(공개 전)</td><td>본문 숫자 재대조 + 동봉물 확인</td><td>사람</td></tr>
         <tr><td>상태 핸드오프</td><td>(전원)</td><td><code>HANDOFF.md · TODO.md · SESSION_LOG.md</code></td><td>다음 세션</td></tr>
       </table>
 
@@ -363,7 +377,7 @@ flowchart TB
     GATE -->|하드룰 위반| BLK["🚫 blocked<br/>즉시 정지 — 고쳐야 통과"]:::blk
     GATE -->|통과| TIER{"② 티어 분류<br/>+ AI리뷰 큐 적재"}:::det
     TIER --> DRAIN["큐 drain<br/>에이전트 호출 스펙 발행<br/>owner→reviewer 자동 배정"]:::q
-    DRAIN --> AIR["③ AI 적대적 리뷰<br/>paper-critic + reviewer<br/><small>7-point · 다중패스 · headline 재계산</small>"]:::ai
+    DRAIN --> AIR["③ AI 적대적 리뷰<br/>paper-critic<br/><small>7-point · 다중패스 · headline 재계산</small>"]:::ai
     AIR --> REP["critic_report.json"]:::rep
     REP --> DEC{"④ 티어별 처리"}:::det
     DEC -->|Tier B| PROV["provisional<br/>✅ 진행·커밋 허용<br/>공유만 사람 1-클릭 confirm"]:::ok
@@ -378,7 +392,7 @@ flowchart TB
     classDef hum fill:#fff4e6,stroke:#d97706,color:#7c4a03;
     classDef blk fill:#fdeaea,stroke:#dc2626,color:#7f1414;
       </div>
-      <p class="figcap">그림 5. 결정론 게이트 → 큐 → AI 적대 리뷰 → 티어별 처리. 코드는 <code>agents/critic/auto_review_*.py</code>에 실제 구현(기본값 dry-run).</p>
+      <p class="figcap">그림 5. 결정론 게이트 → 큐 → AI 적대 리뷰(<b>paper-critic</b>; venue-reviewer는 여기서 부르지 않는다) → 티어별 처리. 코드는 <code>agents/critic/auto_review_*.py</code>(기본값 dry-run).</p>
 
       <h3>3단계 티어 게이트 — "사람을 어디에 둘지"</h3>
       <table>

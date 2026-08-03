@@ -32,7 +32,7 @@
 | 완전 자율은 검증이 약함 | **자율성 제한 + 사람 거버넌스 게이트** (검증 게이트·공개 게이트) | [01](01_two_layer_architecture.md), [04](04_automated_review_and_governance.md) |
 | 멀티에이전트 자체는 novelty 아님 | delta를 **독립 Critic 게이트·재현성 산출물**에 둠 | [04](04_automated_review_and_governance.md), 5종 아티팩트 계약 |
 | 가설 생성도 crowded | **hypothesis-only** 출력 + `claim_level` 강제, DRP 프레이밍 금지 | [03](03_routing_and_artifact_contract.md), 스키마 |
-| LLM-judge는 자기선호 편향 있음 | **Critic 자기참조 금지, owner≠reviewer, 독립 다중패스** | [04](04_automated_review_and_governance.md), [05](05_human_collaboration.md) |
+| LLM-judge는 자기선호 편향 있음 | **Critic 자기참조 금지, owner≠reviewer** ⚠️ (+ "독립 다중패스"를 대응책으로 두었으나 **같은 모델 반복이라 이 편향은 못 막는다** — [04](04_automated_review_and_governance.md) 폴백 절) | [04](04_automated_review_and_governance.md), [05](05_human_collaboration.md) |
 | 사람이 병목이면 몇 주 정체 | **티어 게이트로 사람 개입 최소화**(Tier B 진행 허용, C만 사람) | [04](04_automated_review_and_governance.md) |
 
 ## 한 줄로
