@@ -1,0 +1,64 @@
+[
+  {
+    "endpoint": "egfr_activating",
+    "cancer": "LUNG_NSCLC",
+    "overall": {
+      "auroc": 0.8514,
+      "ci": [
+        0.722,
+        0.953
+      ],
+      "n": 271,
+      "n_pos": 15
+    },
+    "within_LUAD": {
+      "auroc": 0.7867,
+      "ci": [
+        0.628,
+        0.922
+      ],
+      "n": 118,
+      "n_pos": 14
+    },
+    "within_LUSC": {
+      "auroc": 0.6678,
+      "n": 153,
+      "n_pos": 1
+    },
+    "prevalence_LUAD": 0.1186,
+    "prevalence_LUSC": 0.0065,
+    "corr_pred_vs_histprob": -0.621,
+    "exploratory": true
+  },
+  {
+    "endpoint": "kras_g12c",
+    "cancer": "LUNG_NSCLC",
+    "overall": {
+      "auroc": 0.6809,
+      "ci": [
+        0.577,
+        0.782
+      ],
+      "n": 271,
+      "n_pos": 14
+    },
+    "within_LUAD": {
+      "auroc": 0.3606,
+      "ci": [
+        0.207,
+        0.52
+      ],
+      "n": 118,
+      "n_pos": 14
+    },
+    "within_LUSC": {
+      "auroc": null,
+      "n": 153,
+      "n_pos": 0
+    },
+    "prevalence_LUAD": 0.1186,
+    "prevalence_LUSC": 0.0,
+    "corr_pred_vs_histprob": -0.547,
+    "exploratory": true
+  }
+]
