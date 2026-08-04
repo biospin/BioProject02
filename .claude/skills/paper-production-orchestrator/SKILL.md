@@ -36,8 +36,9 @@ description: 논문 생산 루프의 입구(진행표/팀장) — SpatialPathoAg
 4. **집필 + 그림** — `manuscript-writer` → manuscript. 그림은 figure 스크립트 → figures/.
 5. **검수 (자동 리뷰 오케스트레이터 경유)** — `agents/critic/auto_review_orchestrator.py`가 **결정론 게이트 → 큐 → AI 적대적 리뷰**(`AI_REVIEW_PROMPT.md` 스펙으로 `paper-critic`+`reviewer` 실행) → `critic_report.json`. 하드룰 위반=`blocked`, Tier B=`provisional`(진행·커밋 허용, **공유만** 사람 확인), Tier C=`needs_human`(사람 adjudicate). reject/blocked면 6으로. (config `enabled=false`면 dry-run 안전대기.)
 6. **수정** — `manuscript-writer`가 반영.
-7. (선택) 정식 리뷰 — `reviewer` → `<FILL: peer review note path>`.
-8. **검증 게이트** — `<FILL: verify-gate — headline AUC/AUPRC를 모델 eval 출력에서 결정론적 재계산 → summary 대조>`. 실패하면 멈추고 사람에게 보고, 커밋·발행 금지.
+7. **검증 게이트 ① (결과 검증)** — `<FILL: verify-gate — headline AUC/AUPRC를 모델 eval 출력에서 결정론적 재계산 → summary 대조>`. 실패하면 멈추고 사람에게 보고, 커밋·발행 금지.
+8. (선택) 정식 리뷰 — `reviewer` → `<FILL: peer review note path>`. 리뷰어는 7을 통과한(숫자 검증 완료) 원고만 입력받는다.
+8.5 **검증 게이트 ② (패키지 검증)** — 리뷰 반영으로 본문이 바뀌었을 수 있으므로 공개 직전 한 번 더: 본문 숫자 ↔ 결과 파일 재대조 + 그림·표·supplementary 동봉 확인.
 9. (선택) 발표 — `presenter` → 덱·발제.
 
 각 단계 산출물은 파일로 남긴다.
