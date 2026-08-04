@@ -1,0 +1,45 @@
+{
+  "analysis": "Critic 독립검증 — PAM50 라우팅 CI 환자단위 (BIOP02-75 블로커 #3)",
+  "reviewer": "braveji",
+  "owner": "kkkim",
+  "claim_level": "hypothesis_only",
+  "critic_status": "verified",
+  "context": "stage-1 서명(comment 11560)에서 '#3 Fig3 PAM50 라우팅 CI = PAM50 예측확률 미커밋으로 braveji 독립 재계산 불가'로 보류. kkkim이 predictions_ext_indexed.csv 커밋(83da89d)으로 언블록 → 커밋 CSV에서 환자-클러스터 부트스트랩 독립 재계산.",
+  "input": "experiments/sjpark/pam50_clam_mb_uni_v1/predictions_ext_indexed.csv (382행/115환자, per-slide cost·true_axis·case_id)",
+  "method": "환자 클러스터 부트스트랩 B=5000 seed=42, headline=mean(cost|antiHER2)-mean(cost|endocrine), percentile[2.5,97.5]. /workspace 무접근이나 커밋 CSV에 cost 완비되어 로컬 재현 가능.",
+  "recomputed": {
+    "headline": 0.3396,
+    "patient_ci95": [
+      0.2508,
+      0.4254
+    ],
+    "excludes_zero": true,
+    "per_axis_ci": {
+      "endocrine": [
+        0.307,
+        0.4436
+      ],
+      "antiHER2": [
+        0.6583,
+        0.765
+      ],
+      "chemo": [
+        0.0478,
+        0.1647
+      ]
+    },
+    "n_slides": 382,
+    "n_patients": 115
+  },
+  "committed": {
+    "headline": 0.3396,
+    "patient_ci95": [
+      0.2508,
+      0.4254
+    ],
+    "n_slides": 382,
+    "n_patients": 115
+  },
+  "verdict": "완전 일치 — headline·patient-CI·per_axis 3종·n_slides·n_patients 전부 정확 재현. 환자단위 CI가 0을 배제(pseudo-replication 교정 후에도 헤드라인 대비 유효).",
+  "closes": "BIOP02-75 stage-2 블로커 #3 (Fig3 PAM50 라우팅 CI 환자단위)"
+}
