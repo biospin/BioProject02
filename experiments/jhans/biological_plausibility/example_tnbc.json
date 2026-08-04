@@ -33,11 +33,12 @@
   "claim_level": "hypothesis_only",
   "confidence_source": "measured_rho",
   "generated_by": "jhans",
-  "critic_status": "pending",
+  "critic_status": "pass",
   "critic_5_biological_plausibility": {
     "status": "pass_draft",
     "forbidden_phrase_violations": [],
     "direction_consistency_issues": [],
     "note": "endocrine_rule.py v1.0 (BIOP02-60). consistency_scores.csv 실측 Spearman ρ 기반 (BIOP02-52). BIOP02-111."
-  }
+  },
+  "critic_report_path": "experiments/braveji/BIOP02-59_bioplausibility_recompute/VERIFICATION_braveji.json"
 }

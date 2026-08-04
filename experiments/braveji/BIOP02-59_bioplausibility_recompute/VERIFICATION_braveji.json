@@ -1,0 +1,94 @@
+{
+ "track": "Critic #5 biological plausibility 독립 재계산 (braveji)",
+ "raw_source": "/workspace/experiments/jhans/20260702_consistency/consistency_scores.csv",
+ "raw_md5": "52547edcff04c4585f46ebb761ff2718",
+ "method": "endocrine_rule.py 를 import 하지 않고 규칙을 재구현해 산출",
+ "recomputed": {
+  "Anti-HER2 (TKI)": 0.5927,
+  "Endocrine ± CDK4/6i": 0.3448,
+  "Cytotoxic chemo": 0.5682
+ },
+ "committed": {
+  "Anti-HER2 (TKI)": 0.5927,
+  "Endocrine ± CDK4/6i": 0.3448,
+  "Cytotoxic chemo": 0.5682
+ },
+ "all_match": true,
+ "evidence": {
+  "HER2": {
+   "n_found": 2,
+   "n_both": 2,
+   "mean_rho": 0.4927,
+   "drugs": [
+    [
+     "AFATINIB",
+     0.5678,
+     "both"
+    ],
+    [
+     "LAPATINIB",
+     0.4176,
+     "both"
+    ]
+   ]
+  },
+  "ET": {
+   "n_found": 2,
+   "n_both": 0,
+   "mean_rho": 0.1129,
+   "drugs": [
+    [
+     "FULVESTRANT",
+     0.3247,
+     "prism_only"
+    ],
+    [
+     "TAMOXIFEN",
+     -0.0989,
+     "prism_only"
+    ]
+   ]
+  },
+  "CDK": {
+   "n_found": 2,
+   "n_both": 1,
+   "mean_rho": 0.4768,
+   "drugs": [
+    [
+     "PALBOCICLIB",
+     0.4768,
+     "both"
+    ],
+    [
+     "RIBOCICLIB",
+     0.1099,
+     "prism_only"
+    ]
+   ]
+  },
+  "CHEMO": {
+   "n_found": 3,
+   "n_both": 3,
+   "mean_rho": 0.4682,
+   "drugs": [
+    [
+     "GEMCITABINE",
+     0.5158,
+     "both"
+    ],
+    [
+     "PACLITAXEL",
+     0.4631,
+     "both"
+    ],
+    [
+     "DOCETAXEL",
+     0.4258,
+     "both"
+    ]
+   ]
+  },
+  "combined_rho": 0.2949,
+  "combined_n_both": 1
+ }
+}
