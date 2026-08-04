@@ -185,6 +185,30 @@
     "critic_report_path": {
       "type": "string",
       "description": "Relative path to the associated critic_report.json"
+    },
+    "confidence_source": {
+      "type": "string",
+      "enum": ["measured_rho", "fallback"],
+      "description": "Provenance of hypothesis confidence: 'measured_rho' = real DepMap/GDSC Spearman ρ (BIOP02-59/111); 'fallback' = placeholder default. Added 2026-08-04 (BIOP02-116, Leader decision) so fallback vs measured is distinguishable from the file alone."
+    },
+    "generated_by": {
+      "type": "string",
+      "description": "Producer provenance (username or pipeline id) of this artifact. Added 2026-08-04 (BIOP02-116)."
+    },
+    "critic_5_biological_plausibility": {
+      "type": "object",
+      "description": "Embedded Critic #5 (pathway-drug biological plausibility) sub-check result. Added 2026-08-04 (BIOP02-116). Reviewer must differ from owner (Owner≠Reviewer).",
+      "required": ["status"],
+      "properties": {
+        "status": { "type": "string", "enum": ["pass", "caution", "reject", "pending"] },
+        "forbidden_phrase_violations": { "type": "array", "items": { "type": "string" } },
+        "direction_consistency_issues": { "type": "array", "items": { "type": "string" } },
+        "note": { "type": "string" },
+        "reviewer": { "type": "string" },
+        "reviewer_comment_id": { "type": "string" },
+        "reviewed_at": { "type": "string" }
+      },
+      "additionalProperties": true
     }
   },
   "additionalProperties": false,
