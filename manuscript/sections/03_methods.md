@@ -10,7 +10,7 @@
 
 각 whole-slide image는 20× 배율에서 256×256 픽셀 타일로 분할하였다. 조직 영역은 Otsu 임계로 배경과 분리하고, 환자당 최대 5,000 타일로 상한을 두어 대형 슬라이드의 과대표집을 막았다(설정 [../../agents/embedding/configs/tile_config.yaml](../../agents/embedding/configs/tile_config.yaml)). 좌표는 슬라이드별로 저장해 이후 임베딩·재현에 재사용하였다.
 
-각 타일은 병리 파운데이션 모델로 특징 벡터로 인코딩하였다. 헤드라인 임베딩은 **UNI v1(1024차원)**이며, 모델 비의존성 검정을 위해 동일 좌표에 대해 Virchow2(2560차원)와 UNI2-h(1536차원)로도 재추출하였다(M8, Supplement). 슬라이드 단위 인터페이스인 EXAONE Path 2.0은 좌표 기반 파이프라인과 호환되지 않아 이 견고성 세트에서 제외하였다. 임베딩은 영구 보관하고(manifest에 `/workspace` 절대경로), raw WSI는 추출 후 스트리밍 캐시에서 삭제하였다.
+각 타일은 병리 파운데이션 모델로 특징 벡터로 인코딩하였다. 헤드라인 임베딩은 **UNI v1(1024차원)**이며, 모델 비의존성 검정을 위해 동일 좌표에 대해 Virchow2(2560차원)와 UNI2-h(1536차원)로도 재추출하였다(M8, Supplement). Virchow2 임베딩은 CLS 토큰과 패치 토큰 평균을 이어붙인 값(1280+1280=2560차원)으로, register 토큰을 제외해 산출하였다. 슬라이드 단위 인터페이스인 EXAONE Path 2.0은 좌표 기반 파이프라인과 호환되지 않아 이 견고성 세트에서 제외하였다. 타일은 각 모델의 입력 규격(224×224)으로 리사이즈하고 ImageNet 통계(mean 0.485/0.456/0.406, std 0.229/0.224/0.225)로 채널 정규화하였다. **H&E 염색 정규화(Macenko·Reinhard 등)는 적용하지 않았으며**, 이로 인한 염색 변이 미보정은 한계로 명시한다(추출 코드 [../../agents/embedding/scripts/extract_uni.py](../../agents/embedding/scripts/extract_uni.py)·[../../agents/embedding/scripts/extract_virchow2.py](../../agents/embedding/scripts/extract_virchow2.py)). 임베딩은 영구 보관하고(manifest에 `/workspace` 절대경로), raw WSI는 추출 후 스트리밍 캐시에서 삭제하였다.
 
 ## M3. 모델 · 학습
 
