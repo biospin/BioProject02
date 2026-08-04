@@ -14,7 +14,7 @@
 | 2 | baseline_comparison | ⚠️ caution | ⚠️ caution | ❌ reject | **✅ PASS** |
 | 3 | counterfactual | ⚠️ caution | ⚠️ caution | ⚠️ caution | ⚠️ caution |
 | 4 | cross_dataset | ⚠️ caution | ⚠️ caution | ❌ reject | **✅ PASS** |
-| 5 | bio_plausibility | ⚠️ caution | ⚠️ caution | ⚠️ caution | ⚠️ caution |
+| 5 | bio_plausibility | ✅ **PASS** | ✅ **PASS** | ✅ **PASS** | ✅ **PASS** |
 | 6 | drp_framing | ✅ pass | ✅ pass | ✅ pass | ✅ pass |
 | 7 | claim_level | ✅ pass | ✅ pass | ✅ pass | ✅ pass |
 | — | **종합** | SIGNAL, NOT ADDITIVE | SIGNAL, NOT ADDITIVE | **REJECT** | **caution (pass 후보 1순위)** |
@@ -24,7 +24,7 @@
 - **#2** 최종표 lock(BIOP02-69, `FINAL_baseline_comparison.md`). ER/PR은 mean_embed는 유의하게 이기나(ext +0.128/+0.223) subtype_only에 외부 역전 → **비가산**. HER2는 mean_embed조차 못 이김. PAM50-4c만 유효 기준선(mean_embed)을 내부·외부 **CI 비중첩**으로 상회(+0.089/+0.165).
 - **#3** braveji GPU 독립 재실행(BIOP02-56, 4엔드포인트 diff 0). proba-level faithful(10~23×)이나 **AUC-level 비유의**(ER drop 0.0009 / PAM50 p=0.061).
 - **#4** registry 5엔트리 + braveji 재계산 일치. PAM50-4c만 ext(0.8181) ≥ int(0.8053).
-- **#5** PAM50 라벨소스 = Parker 2009 계산본 확정, manifest **1009/1009 100% 추적**(braveji 검증). 잔여 = 발현행렬 study_id·계산 스크립트 미커밋 + jhans sub-check 미배정.
+- **#5** ✅ **PASS(2026-08-04)** — jhans 재실행 산출물을 braveji가 **원자료에서 독립 재계산해 3/3 일치**(`0.5927 / 0.3448 / 0.5682`). PAM50 라벨소스 = Parker 2009 계산본, manifest **1009/1009 100% 추적**. ⚠️ 잔여 재현성 gap(발현행렬 study_id·계산 스크립트 미커밋)은 **원고 한계에 명시 서술됨**(`04_discussion.md:25`)이라 판정을 막지 않는다. 별건 스키마 결함 = §6.
 - **#6/#7** DRP 표현 없음, `hypothesis_only` 전면 적용, 4-class vs 5-class 비교주장 철회(`fc07e5c`), Fig 1 서명 pass.
 
 ---
@@ -79,7 +79,13 @@ kkkim이 근거 수치를 원자료에서 독립 확인한 뒤 승인. **승인 
 
 ## 3. 최종 서명(-75) 잔여 블로커
 
-**갱신 2026-07-28 (1단 서명 JIRA 11560 반영).** 잔여 = **Fig 3 · Discussion caution 3종 · 저자정보** — **전부 braveji 외 담당**이다. 판정 자체는 §2의 1단 서명으로 확정됐다.
+**갱신 2026-08-04 (승인조건 1 충족 11586 · #5 독립 재계산 완료·PASS 서명).** 잔여 = **Fig 3(kkkim) · 저자정보(팀)** — **braveji 몫의 잔여는 없다.**
+판정 자체는 §2의 1단 서명으로 확정됐고, **Discussion caution 3종 해소 + #5 caution→PASS**.
+
+> ✍️ **#5 PASS 서명 2026-08-04.** GPU 머신 원자료(`/workspace/…/consistency_scores.csv`, md5 `52547edc…`)에서 **`endocrine_rule.py`를 import하지 않고 규칙을 재구현해** 독립 산출 → 커밋값과 **3/3 일치(차이 0.00e+00)**.
+> `Anti-HER2 0.5927`(ρ=0.4927, n_both=2) · `Endocrine±CDK4/6i 0.3448`(ET ρ=0.1129 + CDK ρ=0.4768 → 결합 0.2949, n_both=1) · `Cytotoxic chemo 0.5682`(ρ=0.4682, n_both=3).
+> 재현 스크립트·원자료 스냅샷·결과 = `experiments/braveji/BIOP02-59_bioplausibility_recompute/`.
+> ⚠️ **별건 결함 2종은 #5와 분리해 남긴다**(아래 §6).
 
 | 블로커 | 담당 | 상태 |
 |---|---|---|
@@ -87,8 +93,8 @@ kkkim이 근거 수치를 원자료에서 독립 확인한 뒤 승인. **승인 
 | **Fig 2** pass 승격 4건 | braveji | ✅ **서명 완료 2026-07-27** — 원자료 **19/19 재계산 일치**(`reverify_4fixes.py`). PR #75 병합(`0a31c62`) |
 | **Fig 3** pass | kkkim | ⏳ **잔여 1건** — 같은 그림의 **PAM50 라우팅 CI가 여전히 슬라이드 단위**(`patient_routing_cost.json` `[0.276, 0.402]`, 메타 전부 미기재). BIOP02-90(`e0c32b0`)으로 `case_id` 확보돼 **블로커 해소** — 단 PAM50 예측확률이 커밋 CSV에 없어 braveji 독립 재계산 불가 |
 | PAM50 발현 study_id + 계산 스크립트 커밋 (#5) | kkkim | ⏳ 미해소 (PROVENANCE "남은 gap") |
-| **#5 bio sub-check** | jamie(리뷰, 완료) → **jhans(실행+산출물 owner, BIOP02-111)** | 🟡 **sub-check 실질 완료** — jamie가 코드·서버 실측으로 검증(BIOP02-59 #11501·#11518), braveji가 repo에서 4건 독립 재확인 일치(#11528). **잔여 = 재실행 1건 → `BIOP02-111`**(assignee 서정한, 2026-07-27 신설). 커밋 산출물 `confidence` 0.5/0.5/0.0·0.3 = **fallback 값 그대로**, `critic_status: pending`; jamie 재실행값 0.3448과 달라 숫자가 바뀜 → 현 산출물로 pass 불가. **산출물 owner도 sjpark→jhans 이관**(#11535), 경로 `experiments/sjpark/…` → `experiments/jhans/biological_plausibility/`(실행코드 참조 0건 확인, docstring 사용예 1곳만 정정). ⚠️ **소유 집중**: jhans가 rule·입력데이터·실행·산출물 전부를 가짐 → Owner≠Reviewer 위반은 아니나(검토자 jamie·braveji는 owner 아님) 남는 외부점검이 **braveji 독립 재계산 하나**뿐 → **그 재계산은 서명의 전제 조건**. ← **11531·11532·11535 정정**(구 문구 "담당 미확정·불일치"는 오류) |
-| **Discussion 한계에 caution 3종 명시** | 집필 담당 | ⏳ **원고는 존재**(5 섹션, main). `04_discussion.md`가 13줄 자리표시자이고 한계 L11 한 줄에 **caution 3종(#3 counterfactual·#5 bio·ER/PR·HER2 #2)이 없음** → 승인조건 1 미충족 = 2단 서명 블로커. ← **11521 정정**(구 문구 "원고 draft 미존재"는 오류) |
+| **#5 bio sub-check** | jamie(리뷰, 완료) → **jhans(실행+산출물 owner, BIOP02-111)** | 🟡 **sub-check 실질 완료** — jamie가 코드·서버 실측으로 검증(BIOP02-59 #11501·#11518), braveji가 repo에서 4건 독립 재확인 일치(#11528). **잔여 = 재실행 1건 → `BIOP02-111`**(assignee 서정한, 2026-07-27 신설). 커밋 산출물 `confidence` 0.5/0.5/0.0·0.3 = **fallback 값 그대로**, `critic_status: pending`; jamie 재실행값 0.3448과 달라 숫자가 바뀜 → 현 산출물로 pass 불가. **산출물 owner도 sjpark→jhans 이관**(#11535), 경로 `experiments/sjpark/…` → `experiments/jhans/biological_plausibility/`(실행코드 참조 0건 확인, docstring 사용예 1곳만 정정). ⚠️ **소유 집중**: jhans가 rule·입력데이터·실행·산출물 전부를 가짐 → Owner≠Reviewer 위반은 아니나(검토자 jamie·braveji는 owner 아님) 남는 외부점검이 **braveji 독립 재계산 하나**뿐 → **그 재계산은 서명의 전제 조건**. ← **11531·11532·11535 정정**(구 문구 "담당 미확정·불일치"는 오류). **갱신 2026-08-04(JIRA 11587):** jhans 재실행 완료·main 병합(`07a32ee`), BIOP02-111 **Done**. braveji **구조 검증 통과** — 커밋 실측 `0.5927 / 0.3448 / 0.5682`이 보고값과 일치, 요건 5종(`confidence_source: measured_rho`·`generated_by`·`commit_hash` 갱신·`critic_status: pending` 유지·구 sjpark 경로 삭제) 전부 반영, **fallback 값 소멸**. ⛔ **단 서명 불가** — 원자료 `consistency_scores.csv`가 리포에 없고 `/workspace` 미마운트라 **독립 재계산 미수행**. 구조·형식 검증 ≠ 수치 검증. **갱신 2026-08-04: 재계산 완료 → ✅ PASS 서명**(§3 상단 인용). GPU 원자료에서 규칙 재구현으로 독립 산출, 커밋값과 **3/3 일치(0.00e+00)**. 재현물 = `experiments/braveji/BIOP02-59_bioplausibility_recompute/`. 산출물 `critic_status: pending → pass`, `critic_report_path` 연결. ⚠️ 별건 스키마 결함 2종은 §6으로 분리 |
+| ~~Discussion 한계에 caution 3종 명시~~ | 집필 | ✅ **해소 2026-08-04**(JIRA 11586) — `04_discussion.md` §한계(커밋 `926fdc4`)에 3종 + HER2 전용 문단 실물 반영. **승인조건 1·2·3 모두 충족.** 수치를 **1차 근거와 대조해 전부 일치**: ER +0.1283 / PR +0.2230 / subtype-only 역전 −0.067·−0.1343 / HER2 mean-embed **−0.054** p=.368 / PAM50-4c +0.0889·+0.165 CI 비중첩(`FINAL_baseline_comparison.md:14-17`) · 10~23배·ER 0.0009·PAM50 p=0.061(`VERIFICATION_braveji.json:85`) · 1009/1009 및 "남은 gap"(`agents/data/manifests/tcga_brca_pam50_computed_PROVENANCE.md:20,23-24`). 하드룰 스캔 **실히트 0건**. ⚠️ 문안은 braveji가 쓰지 않았으므로 이 판정은 자기검수가 아니다(명세=11560, 집필=타인) |
 | 저자·소속·순서·corresponding·GPU 제공처 확정 | 팀/사람 게이트 | ⏳ (-76/-79 공통 선행) |
 
 **해소된 항목 (이번 주):** ✅ sjpark `commit_hash` 회귀 수정(`f5d0d9a…`) · ✅ `faithfulness_scope: "proba-level only"` + note 명기 — 둘 다 braveji 지적(BIOP02-56 comment 11160) 반영 확인.
@@ -108,3 +114,29 @@ kkkim이 근거 수치를 원자료에서 독립 확인한 뒤 승인. **승인 
 
 ## 5. 갱신 규칙
 이 문서는 **-75 서명 시점의 단일 근거**다. 항목 상태가 바뀌면 근거(파일:줄 또는 JIRA comment id)와 함께 이 표를 갱신한다. 판정 변경은 braveji(Critic 총괄)만 수행한다.
+
+---
+
+## 6. 별건 결함 — #5 서명과 분리해 기록 (2026-08-04, braveji)
+
+#5 재계산 중 발견. **수치와 무관하고 #5 판정에 영향을 주지 않으나**, 아티팩트 계약 위반이라 별도로 처리한다.
+
+### (a) hypothesis 산출물이 `schemas/hypothesis.schema.json`을 만족하지 않는다
+
+| 위반 | 내용 |
+|---|---|
+| 필수 필드 누락 | **`embedding`** — 스키마 `required`에 있으나 산출물에 없음 |
+| `additionalProperties: false` 위반 | `critic_5_biological_plausibility` · `confidence_source` · `generated_by` |
+
+**귀책 구분(중요):**
+- `embedding` 누락과 `critic_5_biological_plausibility`는 **구 placeholder(`802ef9b`, 2026-07-08)에도 이미 있었다** → jhans가 만든 문제가 **아니다**.
+- `confidence_source`·`generated_by`는 **braveji가 BIOP02-111에서 신설을 요청**한 필드다. **스키마의 `additionalProperties: false`를 확인하지 않고 요청한 내 실수다.** 두 필드 자체는 유용하므로(fallback↔실측 구분) **스키마를 확장하는 쪽**을 권고하나, 그 결정은 Leader 승인 사안이다.
+
+### (b) 더 근본적 — 이 스키마를 **실제로 검증하는 코드가 리포에 없다**
+
+`biological_plausibility_check.py:5`·`run_hypothesis_pipeline.py:3`은 docstring에서 *"hypothesis.schema.json 형식 출력"* 이라고 **말할 뿐** 검증하지 않는다. 리포 전체에서 `jsonschema` 사용처는 `evals/critic_pilot/`(픽스처)와 `experiments/registry/`(다른 스키마)뿐이다.
+
+→ **"스키마 형식"이라는 주장이 한 번도 검증된 적이 없고**, 그래서 위 (a)가 최소 4주간 드러나지 않았다.
+이는 이 프로젝트가 반복해 만난 실패와 **같은 모양**이다: *검증 게이트 ①의 실행 명령 부재* · *CI가 없어 만들어 둔 검증이 안 돌던 것*. **문서에만 있는 보장은 보장이 아니다.**
+
+**권고:** ① 스키마에 3필드 추가 여부 결정(Leader) ② `embedding` 채우기(생성자만 값을 안다) ③ **산출 시 스키마 검증을 강제**하고 CI blocking에 편입. → 별도 티켓 권장.
