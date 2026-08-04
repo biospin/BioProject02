@@ -42,11 +42,14 @@
   "claim_level": "hypothesis_only",
   "confidence_source": "measured_rho",
   "generated_by": "jhans",
-  "critic_status": "pending",
+  "critic_status": "pass",
   "critic_5_biological_plausibility": {
-    "status": "pass_draft",
+    "status": "pass",
     "forbidden_phrase_violations": [],
     "direction_consistency_issues": [],
-    "note": "endocrine_rule.py v1.0 (BIOP02-60). consistency_scores.csv 실측 Spearman ρ 기반 (BIOP02-52). BIOP02-111."
+    "note": "endocrine_rule.py v1.0 (BIOP02-60). consistency_scores.csv 실측 Spearman ρ 기반 (BIOP02-52). BIOP02-111.",
+    "reviewer": "braveji",
+    "reviewer_comment_id": "11569",
+    "reviewed_at": "2026-07-30"
   }
 }
