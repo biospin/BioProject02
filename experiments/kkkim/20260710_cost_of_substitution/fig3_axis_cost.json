@@ -47,12 +47,17 @@
       ]
     },
     "pam50": {
-      "value": 0.34,
+      "value": 0.3396,
       "ci95": [
-        0.276,
-        0.402
+        0.2508,
+        0.4254
       ],
-      "excludes_zero": true
+      "ci95_method": "patient-cluster bootstrap",
+      "excludes_zero": true,
+      "ci95_slide_level_deprecated": [
+        0.2765,
+        0.4004
+      ]
     }
   },
   "honest_reading": "robust 결론=HER2축(양 라우팅 100% mis-route, 분자검사 필수). endocrine/chemo per-axis cost는 라우팅 스킴·외부 calibration 의존(PAM50 51%↔receptor 5% / PAM50 14%↔receptor 73%)이라 안전 주장 근거 아님. 헤드라인 contrast(antiHER2-endocrine)만 양 라우팅서 robust(0.340/0.381, CI 0배제).",
