@@ -9,32 +9,58 @@
       "n": 220,
       "mean_cost": 0.378,
       "misroute_rate": 0.514,
-      "dropped_rate": 0.3
+      "dropped_rate": 0.3,
+      "mean_cost_ci95_patient": [
+        0.307,
+        0.4436
+      ]
     },
     "antiHER2": {
       "n": 39,
       "mean_cost": 0.718,
       "misroute_rate": 1.0,
-      "dropped_rate": 0.077
+      "dropped_rate": 0.077,
+      "mean_cost_ci95_patient": [
+        0.6583,
+        0.765
+      ]
     },
     "chemo": {
       "n": 123,
       "mean_cost": 0.105,
       "misroute_rate": 0.138,
-      "dropped_rate": 0.13
+      "dropped_rate": 0.13,
+      "mean_cost_ci95_patient": [
+        0.0478,
+        0.1647
+      ]
     }
   },
   "headline_contrast_antiHER2_minus_endocrine": {
-    "value": 0.34,
+    "value": 0.3396,
     "ci95": [
-      0.276,
-      0.402
+      0.2508,
+      0.4254
     ],
-    "excludes_zero": true
+    "ci95_method": "patient-cluster bootstrap",
+    "excludes_zero": true,
+    "ci95_slide_level_deprecated": [
+      0.2765,
+      0.4004
+    ]
   },
   "caveat": [
     "PAM50-축 매핑(HER2E≈antiHER2)은 receptor-status와 근사",
     "Normal-like 예측=무치료 최대페널티 처리",
     "단일 라우팅(PAM50); ER/HER2 receptor 라우팅 병행 필요"
-  ]
+  ],
+  "ci_method": {
+    "resample_unit": "patient (cluster bootstrap)",
+    "n_bootstrap": 5000,
+    "seed": 42,
+    "n_slides": 382,
+    "n_patients": 115,
+    "index_source": "predictions_ext_indexed.csv (npz↔manifest has_pam50 행별 label 완전일치로 case_id 복원)"
+  },
+  "indexed_predictions": "experiments/sjpark/pam50_clam_mb_uni_v1/predictions_ext_indexed.csv"
 }
