@@ -1,0 +1,84 @@
+{
+  "analysis": "operating_point",
+  "task": "BIOP02-124#3",
+  "embedding_model": "UNI_v1(+multiFM in R5)",
+  "model": "CLAM-SB (재분석, 재학습 없음)",
+  "model_pt": "N/A (재분석)",
+  "predictions_npy": "N/A (커밋된 예측 재사용)",
+  "commit_hash": "ca906818db006d41fa9713a6a8c2f1131680bcf1",
+  "n_endpoints": 15,
+  "powered_endpoints": [
+    "brca_er",
+    "brca_pr",
+    "brca_her2",
+    "lauren_diffuse",
+    "hpv_pos",
+    "grade_high",
+    "histology_lusc"
+  ],
+  "headline": {
+    "hpv_pos": {
+      "auroc": 0.9594,
+      "n": 135,
+      "n_pos": 26,
+      "unit": "patient",
+      "powered": true,
+      "sens_0p5": 0.5,
+      "spec_0p5": 0.9908,
+      "ppv_0p5": 0.9286,
+      "rule_in_sens": 0.8846,
+      "ece": 0.089
+    },
+    "histology_lusc": {
+      "auroc": 0.9389,
+      "n": 271,
+      "n_pos": 153,
+      "unit": "patient",
+      "powered": true,
+      "sens_0p5": 0.8824,
+      "spec_0p5": 0.8729,
+      "ppv_0p5": 0.9,
+      "rule_in_sens": 0.8497,
+      "ece": 0.0519
+    },
+    "lauren_diffuse": {
+      "auroc": 0.5364,
+      "n": 58,
+      "n_pos": 31,
+      "unit": "patient",
+      "powered": true,
+      "sens_0p5": 0.5161,
+      "spec_0p5": 0.5556,
+      "ppv_0p5": 0.5714,
+      "rule_in_sens": 0.2903,
+      "ece": 0.356
+    },
+    "brca_her2": {
+      "auroc": 0.5297,
+      "n": 294,
+      "n_pos": 35,
+      "unit": "slide(미집계)",
+      "powered": true,
+      "sens_0p5": 0.0,
+      "spec_0p5": 1.0,
+      "ppv_0p5": null,
+      "rule_in_sens": 0.0571,
+      "ece": 0.1006
+    },
+    "brca_er": {
+      "auroc": 0.9129,
+      "n": 118,
+      "n_pos": 81,
+      "unit": "patient(집계)",
+      "powered": true,
+      "sens_0p5": 0.963,
+      "spec_0p5": 0.2703,
+      "ppv_0p5": 0.7429,
+      "rule_in_sens": 0.8889,
+      "ece": 0.1922
+    }
+  },
+  "claim_level": "hypothesis_only",
+  "critic_status": "pending",
+  "reviewer": "braveji"
+}
