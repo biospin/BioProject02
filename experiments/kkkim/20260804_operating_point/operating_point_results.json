@@ -1,0 +1,1742 @@
+[
+  {
+    "endpoint": "brca_er",
+    "cancer": "BRCA",
+    "unit": "patient(집계)",
+    "cohort": "CPTAC-ext",
+    "source": "er_status_clam_uni_v2 (slide→case 집계, 118 cases)",
+    "n": 118,
+    "n_pos": 81,
+    "prevalence": 0.6864,
+    "exploratory": false,
+    "powered": true,
+    "auroc": 0.9129,
+    "at_threshold_0p5": {
+      "thr": 0.5,
+      "tp": 78,
+      "fp": 27,
+      "tn": 10,
+      "fn": 3,
+      "sensitivity": 0.9629629629629629,
+      "specificity": 0.2702702702702703,
+      "ppv": 0.7428571428571429,
+      "npv": 0.7692307692307693
+    },
+    "at_threshold_0p5_ci": {
+      "sensitivity": [
+        0.919,
+        1.0
+      ],
+      "specificity": [
+        0.125,
+        0.4
+      ],
+      "ppv": [
+        0.657,
+        0.821
+      ],
+      "npv": [
+        0.5,
+        1.0
+      ]
+    },
+    "youden_optimal": {
+      "thr": 0.7047,
+      "tp": 72,
+      "fp": 2,
+      "tn": 35,
+      "fn": 9,
+      "sensitivity": 0.8888888888888888,
+      "specificity": 0.9459459459459459,
+      "ppv": 0.972972972972973,
+      "npv": 0.7954545454545454
+    },
+    "rule_out_sens90": {
+      "thr": 0.6747,
+      "tp": 73,
+      "fp": 8,
+      "tn": 29,
+      "fn": 8,
+      "sensitivity": 0.9012345679012346,
+      "specificity": 0.7837837837837838,
+      "ppv": 0.9012345679012346,
+      "npv": 0.7837837837837838
+    },
+    "rule_in_spec90": {
+      "thr": 0.7016,
+      "tp": 72,
+      "fp": 3,
+      "tn": 34,
+      "fn": 9,
+      "sensitivity": 0.8888888888888888,
+      "specificity": 0.918918918918919,
+      "ppv": 0.96,
+      "npv": 0.7906976744186046
+    },
+    "calibration": {
+      "ece_10bin": 0.1922,
+      "brier": 0.1414
+    },
+    "decision_curve": [
+      {
+        "pt": 0.1,
+        "nb_model": 0.6516,
+        "nb_treat_all": 0.6516,
+        "nb_treat_none": 0.0
+      },
+      {
+        "pt": 0.2,
+        "nb_model": 0.6081,
+        "nb_treat_all": 0.6081,
+        "nb_treat_none": 0.0
+      },
+      {
+        "pt": 0.3,
+        "nb_model": 0.5521,
+        "nb_treat_all": 0.5521,
+        "nb_treat_none": 0.0
+      }
+    ],
+    "prevalence_sensitivity": {
+      "evaluated_at": "rule_in",
+      "sens": 0.8888888888888888,
+      "spec": 0.918918918918919,
+      "shifts": [
+        {
+          "target_prev": 0.343,
+          "ppv": 0.8512664861193793,
+          "npv": 0.9406221781381443
+        },
+        {
+          "target_prev": 0.95,
+          "ppv": 0.9952220845867988,
+          "npv": 0.30327056491575827
+        }
+      ]
+    }
+  },
+  {
+    "endpoint": "brca_pam50_HER2subtype",
+    "cancer": "BRCA",
+    "unit": "patient(집계)",
+    "cohort": "CPTAC-ext",
+    "source": "pam50 one-vs-rest (slide→case 집계, 115 cases)",
+    "n": 115,
+    "n_pos": 14,
+    "prevalence": 0.1217,
+    "exploratory": true,
+    "powered": false,
+    "auroc": 0.7164,
+    "at_threshold_0p5": {
+      "thr": 0.5,
+      "tp": 0,
+      "fp": 0,
+      "tn": 101,
+      "fn": 14,
+      "sensitivity": 0.0,
+      "specificity": 1.0,
+      "ppv": NaN,
+      "npv": 0.8782608695652174
+    },
+    "at_threshold_0p5_ci": {
+      "sensitivity": [
+        0.0,
+        0.0
+      ],
+      "specificity": [
+        1.0,
+        1.0
+      ],
+      "ppv": [
+        null,
+        null
+      ],
+      "npv": [
+        0.817,
+        0.939
+      ]
+    },
+    "youden_optimal": {
+      "thr": 0.1022,
+      "tp": 13,
+      "fp": 49,
+      "tn": 52,
+      "fn": 1,
+      "sensitivity": 0.9285714285714286,
+      "specificity": 0.5148514851485149,
+      "ppv": 0.20967741935483872,
+      "npv": 0.9811320754716981
+    },
+    "rule_out_sens90": {
+      "thr": 0.1022,
+      "tp": 13,
+      "fp": 49,
+      "tn": 52,
+      "fn": 1,
+      "sensitivity": 0.9285714285714286,
+      "specificity": 0.5148514851485149,
+      "ppv": 0.20967741935483872,
+      "npv": 0.9811320754716981
+    },
+    "rule_in_spec90": {
+      "thr": 0.1473,
+      "tp": 3,
+      "fp": 10,
+      "tn": 91,
+      "fn": 11,
+      "sensitivity": 0.21428571428571427,
+      "specificity": 0.900990099009901,
+      "ppv": 0.23076923076923078,
+      "npv": 0.8921568627450981
+    },
+    "calibration": {
+      "ece_10bin": 0.066,
+      "brier": 0.1028
+    },
+    "decision_curve": [
+      {
+        "pt": 0.1,
+        "nb_model": 0.0618,
+        "nb_treat_all": 0.0242,
+        "nb_treat_none": 0.0
+      },
+      {
+        "pt": 0.2,
+        "nb_model": -0.0022,
+        "nb_treat_all": -0.0978,
+        "nb_treat_none": 0.0
+      },
+      {
+        "pt": 0.3,
+        "nb_model": 0.0,
+        "nb_treat_all": -0.2547,
+        "nb_treat_none": 0.0
+      }
+    ],
+    "prevalence_sensitivity": {
+      "evaluated_at": "rule_in",
+      "sens": 0.21428571428571427,
+      "spec": 0.900990099009901,
+      "shifts": [
+        {
+          "target_prev": 0.061,
+          "ppv": 0.12326684139973192,
+          "npv": 0.9463861202461598
+        },
+        {
+          "target_prev": 0.243,
+          "ppv": 0.40994048182440745,
+          "npv": 0.7812905311202042
+        }
+      ]
+    }
+  },
+  {
+    "endpoint": "brca_pr",
+    "cancer": "BRCA",
+    "unit": "slide(미집계)",
+    "cohort": "CPTAC-ext",
+    "source": "sjpark/pr_status_clam_uni_v2/predictions_ext.npy (case_id 없음 → slide 단위)",
+    "n": 375,
+    "n_pos": 202,
+    "prevalence": 0.5387,
+    "exploratory": false,
+    "powered": true,
+    "auroc": 0.7776,
+    "at_threshold_0p5": {
+      "thr": 0.5,
+      "tp": 149,
+      "fp": 50,
+      "tn": 123,
+      "fn": 53,
+      "sensitivity": 0.7376237623762376,
+      "specificity": 0.7109826589595376,
+      "ppv": 0.7487437185929648,
+      "npv": 0.6988636363636364
+    },
+    "at_threshold_0p5_ci": {
+      "sensitivity": [
+        0.677,
+        0.794
+      ],
+      "specificity": [
+        0.645,
+        0.775
+      ],
+      "ppv": [
+        0.685,
+        0.806
+      ],
+      "npv": [
+        0.629,
+        0.761
+      ]
+    },
+    "youden_optimal": {
+      "thr": 0.5034,
+      "tp": 148,
+      "fp": 49,
+      "tn": 124,
+      "fn": 54,
+      "sensitivity": 0.7326732673267327,
+      "specificity": 0.7167630057803468,
+      "ppv": 0.751269035532995,
+      "npv": 0.6966292134831461
+    },
+    "rule_out_sens90": {
+      "thr": 0.3476,
+      "tp": 182,
+      "fp": 98,
+      "tn": 75,
+      "fn": 20,
+      "sensitivity": 0.900990099009901,
+      "specificity": 0.43352601156069365,
+      "ppv": 0.65,
+      "npv": 0.7894736842105263
+    },
+    "rule_in_spec90": {
+      "thr": 0.6798,
+      "tp": 62,
+      "fp": 17,
+      "tn": 156,
+      "fn": 140,
+      "sensitivity": 0.3069306930693069,
+      "specificity": 0.9017341040462428,
+      "ppv": 0.7848101265822784,
+      "npv": 0.527027027027027
+    },
+    "calibration": {
+      "ece_10bin": 0.0743,
+      "brier": 0.1943
+    },
+    "decision_curve": [
+      {
+        "pt": 0.1,
+        "nb_model": 0.4883,
+        "nb_treat_all": 0.4874,
+        "nb_treat_none": 0.0
+      },
+      {
+        "pt": 0.2,
+        "nb_model": 0.4287,
+        "nb_treat_all": 0.4233,
+        "nb_treat_none": 0.0
+      },
+      {
+        "pt": 0.3,
+        "nb_model": 0.3924,
+        "nb_treat_all": 0.341,
+        "nb_treat_none": 0.0
+      }
+    ],
+    "prevalence_sensitivity": {
+      "evaluated_at": "rule_in",
+      "sens": 0.3069306930693069,
+      "spec": 0.9017341040462428,
+      "shifts": [
+        {
+          "target_prev": 0.269,
+          "ppv": 0.5347545791456215,
+          "npv": 0.7795235077960905
+        },
+        {
+          "target_prev": 0.95,
+          "ppv": 0.9834288802671454,
+          "npv": 0.06408890118204084
+        }
+      ]
+    }
+  },
+  {
+    "endpoint": "brca_her2",
+    "cancer": "BRCA",
+    "unit": "slide(미집계)",
+    "cohort": "CPTAC-ext",
+    "source": "sjpark/her2_status_clam_uni_v2/predictions_ext.npy (case_id 없음 → slide 단위)",
+    "n": 294,
+    "n_pos": 35,
+    "prevalence": 0.119,
+    "exploratory": false,
+    "powered": true,
+    "auroc": 0.5297,
+    "at_threshold_0p5": {
+      "thr": 0.5,
+      "tp": 0,
+      "fp": 0,
+      "tn": 259,
+      "fn": 35,
+      "sensitivity": 0.0,
+      "specificity": 1.0,
+      "ppv": NaN,
+      "npv": 0.8809523809523809
+    },
+    "at_threshold_0p5_ci": {
+      "sensitivity": [
+        0.0,
+        0.0
+      ],
+      "specificity": [
+        1.0,
+        1.0
+      ],
+      "ppv": [
+        null,
+        null
+      ],
+      "npv": [
+        0.844,
+        0.915
+      ]
+    },
+    "youden_optimal": {
+      "thr": 0.118,
+      "tp": 34,
+      "fp": 212,
+      "tn": 47,
+      "fn": 1,
+      "sensitivity": 0.9714285714285714,
+      "specificity": 0.18146718146718147,
+      "ppv": 0.13821138211382114,
+      "npv": 0.9791666666666666
+    },
+    "rule_out_sens90": {
+      "thr": 0.1289,
+      "tp": 32,
+      "fp": 204,
+      "tn": 55,
+      "fn": 3,
+      "sensitivity": 0.9142857142857143,
+      "specificity": 0.21235521235521235,
+      "ppv": 0.13559322033898305,
+      "npv": 0.9482758620689655
+    },
+    "rule_in_spec90": {
+      "thr": 0.334,
+      "tp": 2,
+      "fp": 25,
+      "tn": 234,
+      "fn": 33,
+      "sensitivity": 0.05714285714285714,
+      "specificity": 0.9034749034749034,
+      "ppv": 0.07407407407407407,
+      "npv": 0.8764044943820225
+    },
+    "calibration": {
+      "ece_10bin": 0.1006,
+      "brier": 0.1212
+    },
+    "decision_curve": [
+      {
+        "pt": 0.1,
+        "nb_model": 0.0299,
+        "nb_treat_all": 0.0212,
+        "nb_treat_none": 0.0
+      },
+      {
+        "pt": 0.2,
+        "nb_model": -0.0451,
+        "nb_treat_all": -0.1012,
+        "nb_treat_none": 0.0
+      },
+      {
+        "pt": 0.3,
+        "nb_model": -0.0515,
+        "nb_treat_all": -0.2585,
+        "nb_treat_none": 0.0
+      }
+    ],
+    "prevalence_sensitivity": {
+      "evaluated_at": "rule_in",
+      "sens": 0.05714285714285714,
+      "spec": 0.9034749034749034,
+      "shifts": [
+        {
+          "target_prev": 0.06,
+          "ppv": 0.03641134984418565,
+          "npv": 0.9375479515114316
+        },
+        {
+          "target_prev": 0.238,
+          "ppv": 0.1560489801704736,
+          "npv": 0.7541759083964816
+        }
+      ]
+    }
+  },
+  {
+    "endpoint": "braf_v600e",
+    "cancer": "COLORECTAL",
+    "unit": "patient",
+    "cohort": "TCGA-holdout",
+    "source": "experiments/crosscancer/COLORECTAL/full/mil_cost_results.json",
+    "n": 151,
+    "n_pos": 15,
+    "prevalence": 0.0993,
+    "exploratory": true,
+    "powered": false,
+    "auroc": 0.8676,
+    "at_threshold_0p5": {
+      "thr": 0.5,
+      "tp": 4,
+      "fp": 2,
+      "tn": 134,
+      "fn": 11,
+      "sensitivity": 0.26666666666666666,
+      "specificity": 0.9852941176470589,
+      "ppv": 0.6666666666666666,
+      "npv": 0.9241379310344827
+    },
+    "at_threshold_0p5_ci": {
+      "sensitivity": [
+        0.062,
+        0.5
+      ],
+      "specificity": [
+        0.963,
+        1.0
+      ],
+      "ppv": [
+        0.2,
+        1.0
+      ],
+      "npv": [
+        0.876,
+        0.965
+      ]
+    },
+    "youden_optimal": {
+      "thr": 0.0032,
+      "tp": 15,
+      "fp": 48,
+      "tn": 88,
+      "fn": 0,
+      "sensitivity": 1.0,
+      "specificity": 0.6470588235294118,
+      "ppv": 0.23809523809523808,
+      "npv": 1.0
+    },
+    "rule_out_sens90": {
+      "thr": 0.0051,
+      "tp": 14,
+      "fp": 42,
+      "tn": 94,
+      "fn": 1,
+      "sensitivity": 0.9333333333333333,
+      "specificity": 0.6911764705882353,
+      "ppv": 0.25,
+      "npv": 0.9894736842105263
+    },
+    "rule_in_spec90": {
+      "thr": 0.1234,
+      "tp": 7,
+      "fp": 13,
+      "tn": 123,
+      "fn": 8,
+      "sensitivity": 0.4666666666666667,
+      "specificity": 0.9044117647058824,
+      "ppv": 0.35,
+      "npv": 0.9389312977099237
+    },
+    "calibration": {
+      "ece_10bin": 0.0633,
+      "brier": 0.075
+    },
+    "decision_curve": [
+      {
+        "pt": 0.1,
+        "nb_model": 0.0361,
+        "nb_treat_all": -0.0007,
+        "nb_treat_none": 0.0
+      },
+      {
+        "pt": 0.2,
+        "nb_model": 0.0298,
+        "nb_treat_all": -0.1258,
+        "nb_treat_none": 0.0
+      },
+      {
+        "pt": 0.3,
+        "nb_model": 0.0255,
+        "nb_treat_all": -0.2867,
+        "nb_treat_none": 0.0
+      }
+    ],
+    "prevalence_sensitivity": {
+      "evaluated_at": "rule_in",
+      "sens": 0.4666666666666667,
+      "spec": 0.9044117647058824,
+      "shifts": [
+        {
+          "target_prev": 0.05,
+          "ppv": 0.20442344857204214,
+          "npv": 0.9698973521843788
+        },
+        {
+          "target_prev": 0.199,
+          "ppv": 0.5481031005980159,
+          "npv": 0.8722158317284965
+        }
+      ]
+    }
+  },
+  {
+    "endpoint": "lauren_diffuse",
+    "cancer": "GASTRIC_STAD",
+    "unit": "patient",
+    "cohort": "TCGA-holdout",
+    "source": "experiments/crosscancer/GASTRIC_STAD/full/mil_cost_results.json",
+    "n": 58,
+    "n_pos": 31,
+    "prevalence": 0.5345,
+    "exploratory": false,
+    "powered": true,
+    "auroc": 0.5364,
+    "at_threshold_0p5": {
+      "thr": 0.5,
+      "tp": 16,
+      "fp": 12,
+      "tn": 15,
+      "fn": 15,
+      "sensitivity": 0.5161290322580645,
+      "specificity": 0.5555555555555556,
+      "ppv": 0.5714285714285714,
+      "npv": 0.5
+    },
+    "at_threshold_0p5_ci": {
+      "sensitivity": [
+        0.333,
+        0.697
+      ],
+      "specificity": [
+        0.36,
+        0.75
+      ],
+      "ppv": [
+        0.379,
+        0.758
+      ],
+      "npv": [
+        0.312,
+        0.697
+      ]
+    },
+    "youden_optimal": {
+      "thr": 0.8166,
+      "tp": 12,
+      "fp": 3,
+      "tn": 24,
+      "fn": 19,
+      "sensitivity": 0.3870967741935484,
+      "specificity": 0.8888888888888888,
+      "ppv": 0.8,
+      "npv": 0.5581395348837209
+    },
+    "rule_out_sens90": {
+      "thr": 0.0205,
+      "tp": 28,
+      "fp": 26,
+      "tn": 1,
+      "fn": 3,
+      "sensitivity": 0.9032258064516129,
+      "specificity": 0.037037037037037035,
+      "ppv": 0.5185185185185185,
+      "npv": 0.25
+    },
+    "rule_in_spec90": {
+      "thr": 0.9122,
+      "tp": 9,
+      "fp": 2,
+      "tn": 25,
+      "fn": 22,
+      "sensitivity": 0.2903225806451613,
+      "specificity": 0.9259259259259259,
+      "ppv": 0.8181818181818182,
+      "npv": 0.5319148936170213
+    },
+    "calibration": {
+      "ece_10bin": 0.356,
+      "brier": 0.3524
+    },
+    "decision_curve": [
+      {
+        "pt": 0.1,
+        "nb_model": 0.3391,
+        "nb_treat_all": 0.4828,
+        "nb_treat_none": 0.0
+      },
+      {
+        "pt": 0.2,
+        "nb_model": 0.2543,
+        "nb_treat_all": 0.4181,
+        "nb_treat_none": 0.0
+      },
+      {
+        "pt": 0.3,
+        "nb_model": 0.1552,
+        "nb_treat_all": 0.335,
+        "nb_treat_none": 0.0
+      }
+    ],
+    "prevalence_sensitivity": {
+      "evaluated_at": "rule_in",
+      "sens": 0.2903225806451613,
+      "spec": 0.9259259259259259,
+      "shifts": [
+        {
+          "target_prev": 0.267,
+          "ppv": 0.5880790740253973,
+          "npv": 0.781747773757935
+        },
+        {
+          "target_prev": 0.95,
+          "ppv": 0.9867493054071382,
+          "npv": 0.06425669513307358
+        }
+      ]
+    }
+  },
+  {
+    "endpoint": "msi_h",
+    "cancer": "GASTRIC_STAD",
+    "unit": "patient",
+    "cohort": "TCGA-holdout",
+    "source": "experiments/crosscancer/GASTRIC_STAD/full/mil_cost_results.json",
+    "n": 107,
+    "n_pos": 24,
+    "prevalence": 0.2243,
+    "exploratory": true,
+    "powered": false,
+    "auroc": 0.8602,
+    "at_threshold_0p5": {
+      "thr": 0.5,
+      "tp": 14,
+      "fp": 7,
+      "tn": 76,
+      "fn": 10,
+      "sensitivity": 0.5833333333333334,
+      "specificity": 0.9156626506024096,
+      "ppv": 0.6666666666666666,
+      "npv": 0.8837209302325582
+    },
+    "at_threshold_0p5_ci": {
+      "sensitivity": [
+        0.381,
+        0.8
+      ],
+      "specificity": [
+        0.848,
+        0.974
+      ],
+      "ppv": [
+        0.444,
+        0.867
+      ],
+      "npv": [
+        0.815,
+        0.949
+      ]
+    },
+    "youden_optimal": {
+      "thr": 0.0689,
+      "tp": 19,
+      "fp": 16,
+      "tn": 67,
+      "fn": 5,
+      "sensitivity": 0.7916666666666666,
+      "specificity": 0.8072289156626506,
+      "ppv": 0.5428571428571428,
+      "npv": 0.9305555555555556
+    },
+    "rule_out_sens90": {
+      "thr": 0.0018,
+      "tp": 22,
+      "fp": 39,
+      "tn": 44,
+      "fn": 2,
+      "sensitivity": 0.9166666666666666,
+      "specificity": 0.5301204819277109,
+      "ppv": 0.36065573770491804,
+      "npv": 0.9565217391304348
+    },
+    "rule_in_spec90": {
+      "thr": 0.3977,
+      "tp": 16,
+      "fp": 8,
+      "tn": 75,
+      "fn": 8,
+      "sensitivity": 0.6666666666666666,
+      "specificity": 0.9036144578313253,
+      "ppv": 0.6666666666666666,
+      "npv": 0.9036144578313253
+    },
+    "calibration": {
+      "ece_10bin": 0.098,
+      "brier": 0.1216
+    },
+    "decision_curve": [
+      {
+        "pt": 0.1,
+        "nb_model": 0.1433,
+        "nb_treat_all": 0.1381,
+        "nb_treat_none": 0.0
+      },
+      {
+        "pt": 0.2,
+        "nb_model": 0.1308,
+        "nb_treat_all": 0.0304,
+        "nb_treat_none": 0.0
+      },
+      {
+        "pt": 0.3,
+        "nb_model": 0.1135,
+        "nb_treat_all": -0.1081,
+        "nb_treat_none": 0.0
+      }
+    ],
+    "prevalence_sensitivity": {
+      "evaluated_at": "rule_in",
+      "sens": 0.6666666666666666,
+      "spec": 0.9036144578313253,
+      "shifts": [
+        {
+          "target_prev": 0.112,
+          "ppv": 0.4659182036888533,
+          "npv": 0.9555419520220377
+        },
+        {
+          "target_prev": 0.449,
+          "ppv": 0.8493128831559517,
+          "npv": 0.7688753550563748
+        }
+      ]
+    }
+  },
+  {
+    "endpoint": "erbb2_amp",
+    "cancer": "GASTRIC_STAD",
+    "unit": "patient",
+    "cohort": "TCGA-holdout",
+    "source": "experiments/crosscancer/GASTRIC_STAD/full/mil_cost_results.json",
+    "n": 107,
+    "n_pos": 14,
+    "prevalence": 0.1308,
+    "exploratory": true,
+    "powered": false,
+    "auroc": 0.6444,
+    "at_threshold_0p5": {
+      "thr": 0.5,
+      "tp": 0,
+      "fp": 0,
+      "tn": 93,
+      "fn": 14,
+      "sensitivity": 0.0,
+      "specificity": 1.0,
+      "ppv": NaN,
+      "npv": 0.8691588785046729
+    },
+    "at_threshold_0p5_ci": {
+      "sensitivity": [
+        0.0,
+        0.0
+      ],
+      "specificity": [
+        1.0,
+        1.0
+      ],
+      "ppv": [
+        null,
+        null
+      ],
+      "npv": [
+        0.813,
+        0.925
+      ]
+    },
+    "youden_optimal": {
+      "thr": 0.0853,
+      "tp": 12,
+      "fp": 40,
+      "tn": 53,
+      "fn": 2,
+      "sensitivity": 0.8571428571428571,
+      "specificity": 0.5698924731182796,
+      "ppv": 0.23076923076923078,
+      "npv": 0.9636363636363636
+    },
+    "rule_out_sens90": {
+      "thr": 0.0567,
+      "tp": 13,
+      "fp": 57,
+      "tn": 36,
+      "fn": 1,
+      "sensitivity": 0.9285714285714286,
+      "specificity": 0.3870967741935484,
+      "ppv": 0.18571428571428572,
+      "npv": 0.972972972972973
+    },
+    "rule_in_spec90": {
+      "thr": 0.1768,
+      "tp": 1,
+      "fp": 9,
+      "tn": 84,
+      "fn": 13,
+      "sensitivity": 0.07142857142857142,
+      "specificity": 0.9032258064516129,
+      "ppv": 0.1,
+      "npv": 0.865979381443299
+    },
+    "calibration": {
+      "ece_10bin": 0.0672,
+      "brier": 0.1151
+    },
+    "decision_curve": [
+      {
+        "pt": 0.1,
+        "nb_model": 0.0228,
+        "nb_treat_all": 0.0343,
+        "nb_treat_none": 0.0
+      },
+      {
+        "pt": 0.2,
+        "nb_model": -0.014,
+        "nb_treat_all": -0.0864,
+        "nb_treat_none": 0.0
+      },
+      {
+        "pt": 0.3,
+        "nb_model": -0.004,
+        "nb_treat_all": -0.2417,
+        "nb_treat_none": 0.0
+      }
+    ],
+    "prevalence_sensitivity": {
+      "evaluated_at": "rule_in",
+      "sens": 0.07142857142857142,
+      "spec": 0.9032258064516129,
+      "shifts": [
+        {
+          "target_prev": 0.065,
+          "ppv": 0.0488070727867264,
+          "npv": 0.9332976840711457
+        },
+        {
+          "target_prev": 0.262,
+          "ppv": 0.20762820185081035,
+          "npv": 0.7326137934876747
+        }
+      ]
+    }
+  },
+  {
+    "endpoint": "ebv",
+    "cancer": "GASTRIC_STAD",
+    "unit": "patient",
+    "cohort": "TCGA-holdout",
+    "source": "experiments/crosscancer/GASTRIC_STAD/full/mil_cost_results.json",
+    "n": 89,
+    "n_pos": 7,
+    "prevalence": 0.0787,
+    "exploratory": true,
+    "powered": false,
+    "auroc": 0.9477,
+    "at_threshold_0p5": {
+      "thr": 0.5,
+      "tp": 5,
+      "fp": 6,
+      "tn": 76,
+      "fn": 2,
+      "sensitivity": 0.7142857142857143,
+      "specificity": 0.926829268292683,
+      "ppv": 0.45454545454545453,
+      "npv": 0.9743589743589743
+    },
+    "at_threshold_0p5_ci": {
+      "sensitivity": [
+        0.333,
+        1.0
+      ],
+      "specificity": [
+        0.87,
+        0.976
+      ],
+      "ppv": [
+        0.167,
+        0.769
+      ],
+      "npv": [
+        0.934,
+        1.0
+      ]
+    },
+    "youden_optimal": {
+      "thr": 0.4921,
+      "tp": 6,
+      "fp": 6,
+      "tn": 76,
+      "fn": 1,
+      "sensitivity": 0.8571428571428571,
+      "specificity": 0.926829268292683,
+      "ppv": 0.5,
+      "npv": 0.987012987012987
+    },
+    "rule_out_sens90": {
+      "thr": 0.0584,
+      "tp": 7,
+      "fp": 21,
+      "tn": 61,
+      "fn": 0,
+      "sensitivity": 1.0,
+      "specificity": 0.7439024390243902,
+      "ppv": 0.25,
+      "npv": 1.0
+    },
+    "rule_in_spec90": {
+      "thr": 0.3624,
+      "tp": 6,
+      "fp": 8,
+      "tn": 74,
+      "fn": 1,
+      "sensitivity": 0.8571428571428571,
+      "specificity": 0.9024390243902439,
+      "ppv": 0.42857142857142855,
+      "npv": 0.9866666666666667
+    },
+    "calibration": {
+      "ece_10bin": 0.0826,
+      "brier": 0.0671
+    },
+    "decision_curve": [
+      {
+        "pt": 0.1,
+        "nb_model": 0.0449,
+        "nb_treat_all": -0.0237,
+        "nb_treat_none": 0.0
+      },
+      {
+        "pt": 0.2,
+        "nb_model": 0.0281,
+        "nb_treat_all": -0.1517,
+        "nb_treat_none": 0.0
+      },
+      {
+        "pt": 0.3,
+        "nb_model": 0.0241,
+        "nb_treat_all": -0.3162,
+        "nb_treat_none": 0.0
+      }
+    ],
+    "prevalence_sensitivity": {
+      "evaluated_at": "rule_in",
+      "sens": 0.8571428571428571,
+      "spec": 0.9024390243902439,
+      "shifts": [
+        {
+          "target_prev": 0.039,
+          "ppv": 0.2628349131554436,
+          "npv": 0.9936167155027186
+        },
+        {
+          "target_prev": 0.157,
+          "ppv": 0.6206730305660014,
+          "npv": 0.9713623461788284
+        }
+      ]
+    }
+  },
+  {
+    "endpoint": "hpv_pos",
+    "cancer": "HEADNECK_HNSC",
+    "unit": "patient",
+    "cohort": "TCGA-holdout",
+    "source": "experiments/crosscancer/HEADNECK_HNSC/full/mil_cost_results.json",
+    "n": 135,
+    "n_pos": 26,
+    "prevalence": 0.1926,
+    "exploratory": false,
+    "powered": true,
+    "auroc": 0.9594,
+    "at_threshold_0p5": {
+      "thr": 0.5,
+      "tp": 13,
+      "fp": 1,
+      "tn": 108,
+      "fn": 13,
+      "sensitivity": 0.5,
+      "specificity": 0.9908256880733946,
+      "ppv": 0.9285714285714286,
+      "npv": 0.8925619834710744
+    },
+    "at_threshold_0p5_ci": {
+      "sensitivity": [
+        0.286,
+        0.7
+      ],
+      "specificity": [
+        0.971,
+        1.0
+      ],
+      "ppv": [
+        0.764,
+        1.0
+      ],
+      "npv": [
+        0.835,
+        0.942
+      ]
+    },
+    "youden_optimal": {
+      "thr": 0.0368,
+      "tp": 23,
+      "fp": 10,
+      "tn": 99,
+      "fn": 3,
+      "sensitivity": 0.8846153846153846,
+      "specificity": 0.908256880733945,
+      "ppv": 0.696969696969697,
+      "npv": 0.9705882352941176
+    },
+    "rule_out_sens90": {
+      "thr": 0.0057,
+      "tp": 24,
+      "fp": 20,
+      "tn": 89,
+      "fn": 2,
+      "sensitivity": 0.9230769230769231,
+      "specificity": 0.8165137614678899,
+      "ppv": 0.5454545454545454,
+      "npv": 0.978021978021978
+    },
+    "rule_in_spec90": {
+      "thr": 0.0368,
+      "tp": 23,
+      "fp": 10,
+      "tn": 99,
+      "fn": 3,
+      "sensitivity": 0.8846153846153846,
+      "specificity": 0.908256880733945,
+      "ppv": 0.696969696969697,
+      "npv": 0.9705882352941176
+    },
+    "calibration": {
+      "ece_10bin": 0.089,
+      "brier": 0.0805
+    },
+    "decision_curve": [
+      {
+        "pt": 0.1,
+        "nb_model": 0.1309,
+        "nb_treat_all": 0.1029,
+        "nb_treat_none": 0.0
+      },
+      {
+        "pt": 0.2,
+        "nb_model": 0.1241,
+        "nb_treat_all": -0.0093,
+        "nb_treat_none": 0.0
+      },
+      {
+        "pt": 0.3,
+        "nb_model": 0.1228,
+        "nb_treat_all": -0.1534,
+        "nb_treat_none": 0.0
+      }
+    ],
+    "prevalence_sensitivity": {
+      "evaluated_at": "rule_in",
+      "sens": 0.8846153846153846,
+      "spec": 0.908256880733945,
+      "shifts": [
+        {
+          "target_prev": 0.096,
+          "ppv": 0.505919547961792,
+          "npv": 0.9866886487146608
+        },
+        {
+          "target_prev": 0.385,
+          "ppv": 0.857878668023589,
+          "npv": 0.9263300183450807
+        }
+      ]
+    }
+  },
+  {
+    "endpoint": "egfr_amp",
+    "cancer": "HEADNECK_HNSC",
+    "unit": "patient",
+    "cohort": "TCGA-holdout",
+    "source": "experiments/crosscancer/HEADNECK_HNSC/full/mil_cost_results.json",
+    "n": 152,
+    "n_pos": 17,
+    "prevalence": 0.1118,
+    "exploratory": true,
+    "powered": false,
+    "auroc": 0.6024,
+    "at_threshold_0p5": {
+      "thr": 0.5,
+      "tp": 1,
+      "fp": 1,
+      "tn": 134,
+      "fn": 16,
+      "sensitivity": 0.058823529411764705,
+      "specificity": 0.9925925925925926,
+      "ppv": 0.5,
+      "npv": 0.8933333333333333
+    },
+    "at_threshold_0p5_ci": {
+      "sensitivity": [
+        0.0,
+        0.2
+      ],
+      "specificity": [
+        0.977,
+        1.0
+      ],
+      "ppv": [
+        0.0,
+        1.0
+      ],
+      "npv": [
+        0.845,
+        0.94
+      ]
+    },
+    "youden_optimal": {
+      "thr": 0.0058,
+      "tp": 13,
+      "fp": 75,
+      "tn": 60,
+      "fn": 4,
+      "sensitivity": 0.7647058823529411,
+      "specificity": 0.4444444444444444,
+      "ppv": 0.14772727272727273,
+      "npv": 0.9375
+    },
+    "rule_out_sens90": {
+      "thr": 0.0005,
+      "tp": 16,
+      "fp": 111,
+      "tn": 24,
+      "fn": 1,
+      "sensitivity": 0.9411764705882353,
+      "specificity": 0.17777777777777778,
+      "ppv": 0.12598425196850394,
+      "npv": 0.96
+    },
+    "rule_in_spec90": {
+      "thr": 0.2195,
+      "tp": 4,
+      "fp": 13,
+      "tn": 122,
+      "fn": 13,
+      "sensitivity": 0.23529411764705882,
+      "specificity": 0.9037037037037037,
+      "ppv": 0.23529411764705882,
+      "npv": 0.9037037037037037
+    },
+    "calibration": {
+      "ece_10bin": 0.0902,
+      "brier": 0.1037
+    },
+    "decision_curve": [
+      {
+        "pt": 0.1,
+        "nb_model": 0.0183,
+        "nb_treat_all": 0.0132,
+        "nb_treat_none": 0.0
+      },
+      {
+        "pt": 0.2,
+        "nb_model": 0.0099,
+        "nb_treat_all": -0.1102,
+        "nb_treat_none": 0.0
+      },
+      {
+        "pt": 0.3,
+        "nb_model": 0.0,
+        "nb_treat_all": -0.2688,
+        "nb_treat_none": 0.0
+      }
+    ],
+    "prevalence_sensitivity": {
+      "evaluated_at": "rule_in",
+      "sens": 0.23529411764705882,
+      "spec": 0.9037037037037037,
+      "shifts": [
+        {
+          "target_prev": 0.056,
+          "ppv": 0.12659923638555828,
+          "npv": 0.952201605341281
+        },
+        {
+          "target_prev": 0.224,
+          "ppv": 0.413600678392647,
+          "npv": 0.8036897066930864
+        }
+      ]
+    }
+  },
+  {
+    "endpoint": "grade_high",
+    "cancer": "HEADNECK_HNSC",
+    "unit": "patient",
+    "cohort": "TCGA-holdout",
+    "source": "experiments/crosscancer/HEADNECK_HNSC/full/mil_cost_results.json",
+    "n": 147,
+    "n_pos": 41,
+    "prevalence": 0.2789,
+    "exploratory": false,
+    "powered": true,
+    "auroc": 0.8151,
+    "at_threshold_0p5": {
+      "thr": 0.5,
+      "tp": 0,
+      "fp": 0,
+      "tn": 106,
+      "fn": 41,
+      "sensitivity": 0.0,
+      "specificity": 1.0,
+      "ppv": NaN,
+      "npv": 0.7210884353741497
+    },
+    "at_threshold_0p5_ci": {
+      "sensitivity": [
+        0.0,
+        0.0
+      ],
+      "specificity": [
+        1.0,
+        1.0
+      ],
+      "ppv": [
+        null,
+        null
+      ],
+      "npv": [
+        0.646,
+        0.789
+      ]
+    },
+    "youden_optimal": {
+      "thr": 0.1118,
+      "tp": 34,
+      "fp": 30,
+      "tn": 76,
+      "fn": 7,
+      "sensitivity": 0.8292682926829268,
+      "specificity": 0.7169811320754716,
+      "ppv": 0.53125,
+      "npv": 0.9156626506024096
+    },
+    "rule_out_sens90": {
+      "thr": 0.0651,
+      "tp": 37,
+      "fp": 45,
+      "tn": 61,
+      "fn": 4,
+      "sensitivity": 0.9024390243902439,
+      "specificity": 0.5754716981132075,
+      "ppv": 0.45121951219512196,
+      "npv": 0.9384615384615385
+    },
+    "rule_in_spec90": {
+      "thr": 0.2262,
+      "tp": 18,
+      "fp": 10,
+      "tn": 96,
+      "fn": 23,
+      "sensitivity": 0.43902439024390244,
+      "specificity": 0.9056603773584906,
+      "ppv": 0.6428571428571429,
+      "npv": 0.8067226890756303
+    },
+    "calibration": {
+      "ece_10bin": 0.1586,
+      "brier": 0.1923
+    },
+    "decision_curve": [
+      {
+        "pt": 0.1,
+        "nb_model": 0.2063,
+        "nb_treat_all": 0.1988,
+        "nb_treat_none": 0.0
+      },
+      {
+        "pt": 0.2,
+        "nb_model": 0.1071,
+        "nb_treat_all": 0.0986,
+        "nb_treat_none": 0.0
+      },
+      {
+        "pt": 0.3,
+        "nb_model": 0.0428,
+        "nb_treat_all": -0.0301,
+        "nb_treat_none": 0.0
+      }
+    ],
+    "prevalence_sensitivity": {
+      "evaluated_at": "rule_in",
+      "sens": 0.43902439024390244,
+      "spec": 0.9056603773584906,
+      "shifts": [
+        {
+          "target_prev": 0.139,
+          "ppv": 0.42899152731543044,
+          "npv": 0.909092762498196
+        },
+        {
+          "target_prev": 0.558,
+          "ppv": 0.8545450459272292,
+          "npv": 0.561176420495233
+        }
+      ]
+    }
+  },
+  {
+    "endpoint": "histology_lusc",
+    "cancer": "LUNG_NSCLC",
+    "unit": "patient",
+    "cohort": "TCGA-holdout",
+    "source": "experiments/crosscancer/LUNG_NSCLC/full/mil_cost_results.json",
+    "n": 271,
+    "n_pos": 153,
+    "prevalence": 0.5646,
+    "exploratory": false,
+    "powered": true,
+    "auroc": 0.9389,
+    "at_threshold_0p5": {
+      "thr": 0.5,
+      "tp": 135,
+      "fp": 15,
+      "tn": 103,
+      "fn": 18,
+      "sensitivity": 0.8823529411764706,
+      "specificity": 0.8728813559322034,
+      "ppv": 0.9,
+      "npv": 0.8512396694214877
+    },
+    "at_threshold_0p5_ci": {
+      "sensitivity": [
+        0.833,
+        0.933
+      ],
+      "specificity": [
+        0.809,
+        0.925
+      ],
+      "ppv": [
+        0.847,
+        0.941
+      ],
+      "npv": [
+        0.787,
+        0.917
+      ]
+    },
+    "youden_optimal": {
+      "thr": 0.7174,
+      "tp": 129,
+      "fp": 9,
+      "tn": 109,
+      "fn": 24,
+      "sensitivity": 0.8431372549019608,
+      "specificity": 0.923728813559322,
+      "ppv": 0.9347826086956522,
+      "npv": 0.8195488721804511
+    },
+    "rule_out_sens90": {
+      "thr": 0.4083,
+      "tp": 138,
+      "fp": 19,
+      "tn": 99,
+      "fn": 15,
+      "sensitivity": 0.9019607843137255,
+      "specificity": 0.8389830508474576,
+      "ppv": 0.8789808917197452,
+      "npv": 0.868421052631579
+    },
+    "rule_in_spec90": {
+      "thr": 0.6559,
+      "tp": 130,
+      "fp": 11,
+      "tn": 107,
+      "fn": 23,
+      "sensitivity": 0.8496732026143791,
+      "specificity": 0.9067796610169492,
+      "ppv": 0.9219858156028369,
+      "npv": 0.823076923076923
+    },
+    "calibration": {
+      "ece_10bin": 0.0519,
+      "brier": 0.0903
+    },
+    "decision_curve": [
+      {
+        "pt": 0.1,
+        "nb_model": 0.5264,
+        "nb_treat_all": 0.5162,
+        "nb_treat_none": 0.0
+      },
+      {
+        "pt": 0.2,
+        "nb_model": 0.5046,
+        "nb_treat_all": 0.4557,
+        "nb_treat_none": 0.0
+      },
+      {
+        "pt": 0.3,
+        "nb_model": 0.4892,
+        "nb_treat_all": 0.378,
+        "nb_treat_none": 0.0
+      }
+    ],
+    "prevalence_sensitivity": {
+      "evaluated_at": "rule_in",
+      "sens": 0.8496732026143791,
+      "spec": 0.9067796610169492,
+      "shifts": [
+        {
+          "target_prev": 0.282,
+          "ppv": 0.781652661216268,
+          "npv": 0.9388686301920665
+        },
+        {
+          "target_prev": 0.95,
+          "ppv": 0.9942587747276926,
+          "npv": 0.24097325463296893
+        }
+      ]
+    }
+  },
+  {
+    "endpoint": "egfr_activating",
+    "cancer": "LUNG_NSCLC",
+    "unit": "patient",
+    "cohort": "TCGA-holdout",
+    "source": "experiments/crosscancer/LUNG_NSCLC/full/mil_cost_results.json",
+    "n": 271,
+    "n_pos": 15,
+    "prevalence": 0.0554,
+    "exploratory": true,
+    "powered": false,
+    "auroc": 0.8514,
+    "at_threshold_0p5": {
+      "thr": 0.5,
+      "tp": 12,
+      "fp": 41,
+      "tn": 215,
+      "fn": 3,
+      "sensitivity": 0.8,
+      "specificity": 0.83984375,
+      "ppv": 0.22641509433962265,
+      "npv": 0.9862385321100917
+    },
+    "at_threshold_0p5_ci": {
+      "sensitivity": [
+        0.571,
+        1.0
+      ],
+      "specificity": [
+        0.794,
+        0.883
+      ],
+      "ppv": [
+        0.118,
+        0.346
+      ],
+      "npv": [
+        0.968,
+        1.0
+      ]
+    },
+    "youden_optimal": {
+      "thr": 0.8456,
+      "tp": 12,
+      "fp": 31,
+      "tn": 225,
+      "fn": 3,
+      "sensitivity": 0.8,
+      "specificity": 0.87890625,
+      "ppv": 0.27906976744186046,
+      "npv": 0.9868421052631579
+    },
+    "rule_out_sens90": {
+      "thr": 0.0003,
+      "tp": 14,
+      "fp": 136,
+      "tn": 120,
+      "fn": 1,
+      "sensitivity": 0.9333333333333333,
+      "specificity": 0.46875,
+      "ppv": 0.09333333333333334,
+      "npv": 0.9917355371900827
+    },
+    "rule_in_spec90": {
+      "thr": 0.907,
+      "tp": 10,
+      "fp": 25,
+      "tn": 231,
+      "fn": 5,
+      "sensitivity": 0.6666666666666666,
+      "specificity": 0.90234375,
+      "ppv": 0.2857142857142857,
+      "npv": 0.9788135593220338
+    },
+    "calibration": {
+      "ece_10bin": 0.1546,
+      "brier": 0.1376
+    },
+    "decision_curve": [
+      {
+        "pt": 0.1,
+        "nb_model": 0.0209,
+        "nb_treat_all": -0.0496,
+        "nb_treat_none": 0.0
+      },
+      {
+        "pt": 0.2,
+        "nb_model": -0.0018,
+        "nb_treat_all": -0.1808,
+        "nb_treat_none": 0.0
+      },
+      {
+        "pt": 0.3,
+        "nb_model": -0.0269,
+        "nb_treat_all": -0.3495,
+        "nb_treat_none": 0.0
+      }
+    ],
+    "prevalence_sensitivity": {
+      "evaluated_at": "rule_in",
+      "sens": 0.6666666666666666,
+      "spec": 0.90234375,
+      "shifts": [
+        {
+          "target_prev": 0.028,
+          "ppv": 0.16433582465954422,
+          "npv": 0.989470653559824
+        },
+        {
+          "target_prev": 0.111,
+          "ppv": 0.46015205615876026,
+          "npv": 0.955909528885496
+        }
+      ]
+    }
+  },
+  {
+    "endpoint": "kras_g12c",
+    "cancer": "LUNG_NSCLC",
+    "unit": "patient",
+    "cohort": "TCGA-holdout",
+    "source": "experiments/crosscancer/LUNG_NSCLC/full/mil_cost_results.json",
+    "n": 271,
+    "n_pos": 14,
+    "prevalence": 0.0517,
+    "exploratory": true,
+    "powered": false,
+    "auroc": 0.6809,
+    "at_threshold_0p5": {
+      "thr": 0.5,
+      "tp": 0,
+      "fp": 4,
+      "tn": 253,
+      "fn": 14,
+      "sensitivity": 0.0,
+      "specificity": 0.9844357976653697,
+      "ppv": 0.0,
+      "npv": 0.947565543071161
+    },
+    "at_threshold_0p5_ci": {
+      "sensitivity": [
+        0.0,
+        0.0
+      ],
+      "specificity": [
+        0.967,
+        0.996
+      ],
+      "ppv": [
+        0.0,
+        0.0
+      ],
+      "npv": [
+        0.918,
+        0.97
+      ]
+    },
+    "youden_optimal": {
+      "thr": 0.0046,
+      "tp": 14,
+      "fp": 147,
+      "tn": 110,
+      "fn": 0,
+      "sensitivity": 1.0,
+      "specificity": 0.4280155642023346,
+      "ppv": 0.08695652173913043,
+      "npv": 1.0
+    },
+    "rule_out_sens90": {
+      "thr": 0.0057,
+      "tp": 13,
+      "fp": 140,
+      "tn": 117,
+      "fn": 1,
+      "sensitivity": 0.9285714285714286,
+      "specificity": 0.45525291828793774,
+      "ppv": 0.08496732026143791,
+      "npv": 0.9915254237288136
+    },
+    "rule_in_spec90": {
+      "thr": 0.2364,
+      "tp": 2,
+      "fp": 25,
+      "tn": 232,
+      "fn": 12,
+      "sensitivity": 0.14285714285714285,
+      "specificity": 0.9027237354085603,
+      "ppv": 0.07407407407407407,
+      "npv": 0.9508196721311475
+    },
+    "calibration": {
+      "ece_10bin": 0.0704,
+      "brier": 0.0613
+    },
+    "decision_curve": [
+      {
+        "pt": 0.1,
+        "nb_model": -0.009,
+        "nb_treat_all": -0.0537,
+        "nb_treat_none": 0.0
+      },
+      {
+        "pt": 0.2,
+        "nb_model": -0.0203,
+        "nb_treat_all": -0.1854,
+        "nb_treat_none": 0.0
+      },
+      {
+        "pt": 0.3,
+        "nb_model": -0.0179,
+        "nb_treat_all": -0.3548,
+        "nb_treat_none": 0.0
+      }
+    ],
+    "prevalence_sensitivity": {
+      "evaluated_at": "rule_in",
+      "sens": 0.14285714285714285,
+      "spec": 0.9027237354085603,
+      "shifts": [
+        {
+          "target_prev": 0.026,
+          "ppv": 0.03772327981392408,
+          "npv": 0.9752803557379516
+        },
+        {
+          "target_prev": 0.103,
+          "ppv": 0.14429859468181372,
+          "npv": 0.9016894514203796
+        }
+      ]
+    }
+  }
+]

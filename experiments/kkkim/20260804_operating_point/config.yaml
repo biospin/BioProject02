@@ -1,0 +1,13 @@
+# BIOP02-124 #3 operating-point 재분석 설정 (재학습 없음)
+analysis: operating_point
+inputs:
+  brca_er:   experiments/sjpark/er_status_clam_uni_v2/predictions_ext_indexed.csv   # slide→case 집계
+  brca_pam50: experiments/sjpark/pam50_clam_mb_uni_v1/predictions_ext_indexed.csv   # HER2 아형 one-vs-rest, slide→case 집계
+  brca_pr:   experiments/sjpark/pr_status_clam_uni_v2/predictions_ext.npy           # slide 단위(case_id 없음)
+  brca_her2: experiments/sjpark/her2_status_clam_uni_v2/predictions_ext.npy         # slide 단위
+  crosscancer: experiments/crosscancer/*/full/mil_cost_results.json                 # patient_proba/patient_true
+thresholds: {default: 0.5, rule_in_spec_min: 0.90, rule_out_sens_min: 0.90, youden: true}
+calibration: {ece_bins: 10, brier: true}
+decision_curve_pt: [0.1, 0.2, 0.3]
+bootstrap: {n: 1000, seed: 42}
+power_min_pos: 25   # 사전등록 검정력 하한; n_pos<25=exploratory
