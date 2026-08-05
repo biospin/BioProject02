@@ -1,0 +1,41 @@
+# Cross-cancer 신규 코호트 config — run_cohort_pipeline.py 입력 예시 (BIOP02 Week 19 확장)
+# 사용: python run_cohort_pipeline.py --cohort EXAMPLE --config experiments/crosscancer/cohorts/EXAMPLE.yaml
+# 실제 코호트는 이 파일을 cohorts/<COHORT>.yaml (대문자, <COHORT>=디렉터리명)로 복사해 값만 채운다.
+
+# 코호트 이름 = experiments/crosscancer/<COHORT>/full 디렉터리명(정본). --cohort 와 일치시킬 것.
+cohort: EXAMPLE
+description: "예시 코호트 — 표적축(H&E-blind 예상) vs 형태학 양성대조(triage 예상)"
+
+# --- 임베딩 (헤드라인 = UNI) --------------------------------------------------
+embedding_model: uni                 # uni(기본) | virchow2 | uni2h (다중 FM 견고성; 기본 경로 아님)
+tile_config: agents/embedding/configs/tile_config.yaml   # 기존 타일링 설정 재사용(256px, 0.5mpp)
+device: cuda:0                        # GPU 스테이지(embed/mil/fiveseed)용
+
+# --- 슬라이드 입력 (임베딩 대상) ----------------------------------------------
+# run_batch_embedding.py 가 읽는 manifest CSV. 필수 컬럼 slide_path (옵션: slide_id, case_id, file_id).
+# 미지정 시 임베딩 스테이지는 스킵되고, 이미 배치된 <COHORT>/full/embeddings/ 를 그대로 사용한다.
+# (GDC에서 TCGA 진단슬라이드를 자동수집하려면 run_embed_crosscancer.py 참고 — 단 코호트 하드코딩/별도 env.)
+slide_manifest: data/manifests/example_slides.csv
+# tile_dir: experiments/crosscancer/EXAMPLE/full/coords   # 생략 시 <COHORT>/full/coords
+
+# --- MIL 러너 선택 -------------------------------------------------------------
+# 신규 코호트는 아래 러너 중 하나의 CANCER_CFG 에 endpoints·route_axis·positive_control 이 등록돼 있어야 한다.
+#   run_mil_cost.py  : frozen_map(치료거리) 있는 코호트 — cost-of-substitution 라우팅 산출 (예: LUNG_NSCLC, COLORECTAL)
+#   sh_mil_cost.py   : frozen_map 없는 코호트 — endpoint별 misroute_rate 가 cost lead (예: GASTRIC_STAD, HEADNECK_HNSC)
+# 생략하면 드라이버가 두 러너에서 자동 탐색한다.
+mil_runner: sh_mil_cost.py
+
+# --- endpoint (기록용; 실제 학습 대상은 러너 CANCER_CFG / sh_robustness_5seed.ENDPOINTS 가 정본) -----
+# 각 endpoint 컬럼은 <COHORT>/full/patient_labels.csv 에 0/1 로 존재해야 한다(데이터 에이전트가 배치).
+endpoints:
+  - {name: positive_control_morph, expect: "H&E-triageable (양성대조: real≫shuffle 이어야 정상)"}
+  - {name: target_mutation_A,      expect: "H&E-blind (형태학 상관물 약함 예상)"}
+
+# --- 선행 데이터 (드라이버가 만들지 않음, 존재만 확인) --------------------------
+label_file: experiments/crosscancer/EXAMPLE/full/patient_labels.csv   # 분자 라벨(cBioPortal/GDC)
+# frozen_map: experiments/crosscancer/EXAMPLE/frozen_map.json          # run_mil_cost 러너 사용 시에만 필요
+
+# --- 규율(리마인더) ------------------------------------------------------------
+# claim_level: hypothesis_only · critic_status: pending (러너가 결과 JSON에 기록)
+# split = site-disjoint (make_split.py) 재사용 — 새 split 정책 발명 금지
+# 헤드라인 수치는 결과 파일에서만 인용. Owner != Reviewer: 크로스체크 필수.
