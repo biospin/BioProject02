@@ -1,0 +1,457 @@
+{
+ "analysis": "BIOP02-124 #3 operating-point",
+ "threshold": 0.5,
+ "claim_level": "hypothesis_only",
+ "critic_status": "pending",
+ "note": "threshold 0.5 고정. sens/spec는 유병률 독립, PPV/NPV는 관측 유병률 기준 + prevalence_sensitivity(Bayes 재투영). rule-in/rule-out threshold 재조정·calibration(ECE)·decision-curve는 후속.",
+ "endpoints": {
+  "BRCA:ER": {
+   "n": 118,
+   "n_pos": 81,
+   "prevalence": 0.6864,
+   "thr": 0.5,
+   "tp": 78,
+   "fp": 27,
+   "tn": 10,
+   "fn": 3,
+   "sensitivity": 0.963,
+   "specificity": 0.2703,
+   "ppv": 0.7429,
+   "npv": 0.7692,
+   "prevalence_sensitivity": {
+    "prev_0.05": {
+     "ppv": 0.0649,
+     "npv": 0.9928
+    },
+    "prev_0.1": {
+     "ppv": 0.1279,
+     "npv": 0.985
+    },
+    "prev_0.2": {
+     "ppv": 0.2481,
+     "npv": 0.9669
+    },
+    "prev_0.3": {
+     "ppv": 0.3613,
+     "npv": 0.9446
+    }
+   }
+  },
+  "BRCA:HER2": {
+   "n": 95,
+   "n_pos": 13,
+   "prevalence": 0.1368,
+   "thr": 0.5,
+   "tp": 0,
+   "fp": 0,
+   "tn": 82,
+   "fn": 13,
+   "sensitivity": 0.0,
+   "specificity": 1.0,
+   "ppv": NaN,
+   "npv": 0.8632,
+   "prevalence_sensitivity": {
+    "prev_0.05": {
+     "ppv": NaN,
+     "npv": 0.95
+    },
+    "prev_0.1": {
+     "ppv": NaN,
+     "npv": 0.9
+    },
+    "prev_0.2": {
+     "ppv": NaN,
+     "npv": 0.8
+    },
+    "prev_0.3": {
+     "ppv": NaN,
+     "npv": 0.7
+    }
+   }
+  },
+  "BRCA:PR": {
+   "n": 113,
+   "n_pos": 68,
+   "prevalence": 0.6018,
+   "thr": 0.5,
+   "tp": 52,
+   "fp": 12,
+   "tn": 33,
+   "fn": 16,
+   "sensitivity": 0.7647,
+   "specificity": 0.7333,
+   "ppv": 0.8125,
+   "npv": 0.6735,
+   "prevalence_sensitivity": {
+    "prev_0.05": {
+     "ppv": 0.1311,
+     "npv": 0.9834
+    },
+    "prev_0.1": {
+     "ppv": 0.2416,
+     "npv": 0.9656
+    },
+    "prev_0.2": {
+     "ppv": 0.4175,
+     "npv": 0.9257
+    },
+    "prev_0.3": {
+     "ppv": 0.5513,
+     "npv": 0.8791
+    }
+   }
+  },
+  "COLORECTAL:braf_v600e": {
+   "n": 151,
+   "n_pos": 15,
+   "prevalence": 0.0993,
+   "thr": 0.5,
+   "tp": 4,
+   "fp": 2,
+   "tn": 134,
+   "fn": 11,
+   "sensitivity": 0.2667,
+   "specificity": 0.9853,
+   "ppv": 0.6667,
+   "npv": 0.9241,
+   "prevalence_sensitivity": {
+    "prev_0.05": {
+     "ppv": 0.4885,
+     "npv": 0.9623
+    },
+    "prev_0.1": {
+     "ppv": 0.6684,
+     "npv": 0.9236
+    },
+    "prev_0.2": {
+     "ppv": 0.8194,
+     "npv": 0.8431
+    },
+    "prev_0.3": {
+     "ppv": 0.886,
+     "npv": 0.7582
+    }
+   }
+  },
+  "GASTRIC_STAD:ebv": {
+   "n": 89,
+   "n_pos": 7,
+   "prevalence": 0.0787,
+   "thr": 0.5,
+   "tp": 5,
+   "fp": 6,
+   "tn": 76,
+   "fn": 2,
+   "sensitivity": 0.7143,
+   "specificity": 0.9268,
+   "ppv": 0.4545,
+   "npv": 0.9744,
+   "prevalence_sensitivity": {
+    "prev_0.05": {
+     "ppv": 0.3393,
+     "npv": 0.984
+    },
+    "prev_0.1": {
+     "ppv": 0.5202,
+     "npv": 0.9669
+    },
+    "prev_0.2": {
+     "ppv": 0.7093,
+     "npv": 0.9284
+    },
+    "prev_0.3": {
+     "ppv": 0.807,
+     "npv": 0.8833
+    }
+   }
+  },
+  "GASTRIC_STAD:erbb2_amp": {
+   "n": 107,
+   "n_pos": 14,
+   "prevalence": 0.1308,
+   "thr": 0.5,
+   "tp": 0,
+   "fp": 0,
+   "tn": 93,
+   "fn": 14,
+   "sensitivity": 0.0,
+   "specificity": 1.0,
+   "ppv": NaN,
+   "npv": 0.8692,
+   "prevalence_sensitivity": {
+    "prev_0.05": {
+     "ppv": NaN,
+     "npv": 0.95
+    },
+    "prev_0.1": {
+     "ppv": NaN,
+     "npv": 0.9
+    },
+    "prev_0.2": {
+     "ppv": NaN,
+     "npv": 0.8
+    },
+    "prev_0.3": {
+     "ppv": NaN,
+     "npv": 0.7
+    }
+   }
+  },
+  "GASTRIC_STAD:lauren_diffuse": {
+   "n": 58,
+   "n_pos": 31,
+   "prevalence": 0.5345,
+   "thr": 0.5,
+   "tp": 16,
+   "fp": 12,
+   "tn": 15,
+   "fn": 15,
+   "sensitivity": 0.5161,
+   "specificity": 0.5556,
+   "ppv": 0.5714,
+   "npv": 0.5,
+   "prevalence_sensitivity": {
+    "prev_0.05": {
+     "ppv": 0.0576,
+     "npv": 0.9562
+    },
+    "prev_0.1": {
+     "ppv": 0.1143,
+     "npv": 0.9118
+    },
+    "prev_0.2": {
+     "ppv": 0.225,
+     "npv": 0.8212
+    },
+    "prev_0.3": {
+     "ppv": 0.3323,
+     "npv": 0.7282
+    }
+   }
+  },
+  "GASTRIC_STAD:msi_h": {
+   "n": 107,
+   "n_pos": 24,
+   "prevalence": 0.2243,
+   "thr": 0.5,
+   "tp": 14,
+   "fp": 7,
+   "tn": 76,
+   "fn": 10,
+   "sensitivity": 0.5833,
+   "specificity": 0.9157,
+   "ppv": 0.6667,
+   "npv": 0.8837,
+   "prevalence_sensitivity": {
+    "prev_0.05": {
+     "ppv": 0.267,
+     "npv": 0.9766
+    },
+    "prev_0.1": {
+     "ppv": 0.4346,
+     "npv": 0.9519
+    },
+    "prev_0.2": {
+     "ppv": 0.6337,
+     "npv": 0.8979
+    },
+    "prev_0.3": {
+     "ppv": 0.7478,
+     "npv": 0.8368
+    }
+   }
+  },
+  "HEADNECK_HNSC:egfr_amp": {
+   "n": 152,
+   "n_pos": 17,
+   "prevalence": 0.1118,
+   "thr": 0.5,
+   "tp": 1,
+   "fp": 1,
+   "tn": 134,
+   "fn": 16,
+   "sensitivity": 0.0588,
+   "specificity": 0.9926,
+   "ppv": 0.5,
+   "npv": 0.8933,
+   "prevalence_sensitivity": {
+    "prev_0.05": {
+     "ppv": 0.2949,
+     "npv": 0.9525
+    },
+    "prev_0.1": {
+     "ppv": 0.4689,
+     "npv": 0.9047
+    },
+    "prev_0.2": {
+     "ppv": 0.6652,
+     "npv": 0.8084
+    },
+    "prev_0.3": {
+     "ppv": 0.773,
+     "npv": 0.711
+    }
+   }
+  },
+  "HEADNECK_HNSC:grade_high": {
+   "n": 147,
+   "n_pos": 41,
+   "prevalence": 0.2789,
+   "thr": 0.5,
+   "tp": 0,
+   "fp": 0,
+   "tn": 106,
+   "fn": 41,
+   "sensitivity": 0.0,
+   "specificity": 1.0,
+   "ppv": NaN,
+   "npv": 0.7211,
+   "prevalence_sensitivity": {
+    "prev_0.05": {
+     "ppv": NaN,
+     "npv": 0.95
+    },
+    "prev_0.1": {
+     "ppv": NaN,
+     "npv": 0.9
+    },
+    "prev_0.2": {
+     "ppv": NaN,
+     "npv": 0.8
+    },
+    "prev_0.3": {
+     "ppv": NaN,
+     "npv": 0.7
+    }
+   }
+  },
+  "HEADNECK_HNSC:hpv_pos": {
+   "n": 135,
+   "n_pos": 26,
+   "prevalence": 0.1926,
+   "thr": 0.5,
+   "tp": 13,
+   "fp": 1,
+   "tn": 108,
+   "fn": 13,
+   "sensitivity": 0.5,
+   "specificity": 0.9908,
+   "ppv": 0.9286,
+   "npv": 0.8926,
+   "prevalence_sensitivity": {
+    "prev_0.05": {
+     "ppv": 0.741,
+     "npv": 0.9741
+    },
+    "prev_0.1": {
+     "ppv": 0.8579,
+     "npv": 0.9469
+    },
+    "prev_0.2": {
+     "ppv": 0.9314,
+     "npv": 0.888
+    },
+    "prev_0.3": {
+     "ppv": 0.9588,
+     "npv": 0.8222
+    }
+   }
+  },
+  "LUNG_NSCLC:egfr_activating": {
+   "n": 271,
+   "n_pos": 15,
+   "prevalence": 0.0554,
+   "thr": 0.5,
+   "tp": 12,
+   "fp": 41,
+   "tn": 215,
+   "fn": 3,
+   "sensitivity": 0.8,
+   "specificity": 0.8398,
+   "ppv": 0.2264,
+   "npv": 0.9862,
+   "prevalence_sensitivity": {
+    "prev_0.05": {
+     "ppv": 0.2081,
+     "npv": 0.9876
+    },
+    "prev_0.1": {
+     "ppv": 0.3569,
+     "npv": 0.9742
+    },
+    "prev_0.2": {
+     "ppv": 0.5552,
+     "npv": 0.9438
+    },
+    "prev_0.3": {
+     "ppv": 0.6815,
+     "npv": 0.9074
+    }
+   }
+  },
+  "LUNG_NSCLC:histology_lusc": {
+   "n": 271,
+   "n_pos": 153,
+   "prevalence": 0.5646,
+   "thr": 0.5,
+   "tp": 135,
+   "fp": 15,
+   "tn": 103,
+   "fn": 18,
+   "sensitivity": 0.8824,
+   "specificity": 0.8729,
+   "ppv": 0.9,
+   "npv": 0.8512,
+   "prevalence_sensitivity": {
+    "prev_0.05": {
+     "ppv": 0.2676,
+     "npv": 0.993
+    },
+    "prev_0.1": {
+     "ppv": 0.4355,
+     "npv": 0.9853
+    },
+    "prev_0.2": {
+     "ppv": 0.6345,
+     "npv": 0.9674
+    },
+    "prev_0.3": {
+     "ppv": 0.7485,
+     "npv": 0.9454
+    }
+   }
+  },
+  "LUNG_NSCLC:kras_g12c": {
+   "n": 271,
+   "n_pos": 14,
+   "prevalence": 0.0517,
+   "thr": 0.5,
+   "tp": 0,
+   "fp": 4,
+   "tn": 253,
+   "fn": 14,
+   "sensitivity": 0.0,
+   "specificity": 0.9844,
+   "ppv": 0.0,
+   "npv": 0.9476,
+   "prevalence_sensitivity": {
+    "prev_0.05": {
+     "ppv": 0.0,
+     "npv": 0.9492
+    },
+    "prev_0.1": {
+     "ppv": 0.0,
+     "npv": 0.8986
+    },
+    "prev_0.2": {
+     "ppv": 0.0,
+     "npv": 0.7975
+    },
+    "prev_0.3": {
+     "ppv": 0.0,
+     "npv": 0.6967
+    }
+   }
+  }
+ }
+}
