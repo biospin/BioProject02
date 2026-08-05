@@ -32,6 +32,13 @@ CANCER_CFG = {
    "route_axis": {"hpv_pos": "deescalate", "egfr_amp": "antiEGFR"},
    "route_default": "standard",
  },
+ # UCEC 자궁내막 — cross-cancer 6번째. ⚠️탐색적 확장(사전등록 5암종 밖, sealed law 집계 제외). BIOP02-125/Week19
+ "UCEC": {
+   "endpoints": ["histology_serous", "msi_h", "her2_amp", "pole"],
+   "positive_control": "histology_serous", # serous vs endometrioid = 강한 형태(양성대조)
+   "route_axis": {"msi_h": "antiPD1", "her2_amp": "antiHER2"},  # dMMR→IO(dostarlimab), serous HER2-amp→antiHER2
+   "route_default": "standard",
+ },
 }
 
 def misroute_per_endpoint(results):

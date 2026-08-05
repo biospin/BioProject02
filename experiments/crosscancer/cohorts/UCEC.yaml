@@ -1,0 +1,37 @@
+# UCEC (자궁내막암) — cross-cancer 6번째 코호트 config (run_cohort_pipeline.py 입력)
+# ⚠️ 탐색적 확장: 사전등록 5암종(유방·폐·대장·위·두경부) 밖. sealed substitutability law 집계 대상 아님.
+#    지도를 6번째 장기로 확장하고, 특히 HER2-amp(serous)로 HER2 앵커를 3번째 장기에 복제한다.
+# 근거: BIOP02-125 / Week 19 cross-cancer 확장. 착수 전 팀 리뷰(kkkim 섹션오너).
+
+cohort: UCEC
+description: "자궁내막 — 가시축(histology serous 양성대조·MSI-H 면역→IO) vs blind(HER2-amp serous, HER2 앵커 3장기 복제)"
+
+# --- 임베딩 (헤드라인 = UNI) ---
+embedding_model: uni
+tile_config: agents/embedding/configs/tile_config.yaml
+device: cuda:0
+
+# --- 슬라이드 입력 (TCGA-UCEC 진단슬라이드, 기존 .svs 파이프라인) ---
+# 데이터 에이전트가 build_manifest.py / list_nas_wsi.py 로 TCGA-UCEC manifest 생성 후 채운다.
+slide_manifest: agents/data/manifests/tcga_ucec_manifest.csv
+
+# --- MIL 러너 = sh_mil_cost.py (frozen_map 없는 코호트; misroute_rate 가 cost lead) ---
+mil_runner: sh_mil_cost.py
+
+# --- endpoint (러너 CANCER_CFG/sh_robustness_5seed.ENDPOINTS 에 등록 완료) ---
+# 각 컬럼은 <COHORT>/full/patient_labels.csv 에 0/1 로 존재해야 함(cBioPortal ucec_tcga_pan_can_atlas_2018).
+endpoints:
+  - {name: histology_serous, axis: visible,     expect: "H&E 양성대조 — serous vs endometrioid 강한 형태(real≫shuffle)"}
+  - {name: msi_h,            axis: visible,     expect: "면역/TIL 가시(MLH1-메틸화 등) — triageable, dMMR→IO(dostarlimab)"}
+  - {name: her2_amp,         axis: blind,       expect: "serous EC HER2 증폭 — 형태학 상관물 약함(유방·위 HER2 앵커 복제), →antiHER2"}
+  - {name: pole,             axis: exploratory, expect: "POLE ultramutated — TIL 있으나 예후용, 탐색적"}
+
+# --- 선행 데이터 (드라이버가 만들지 않음, 존재만 확인) ---
+label_file: experiments/crosscancer/UCEC/full/patient_labels.csv
+# 라벨 출처: cBioPortal ucec_tcga_pan_can_atlas_2018 (histology, MSI status, ERBB2 amplification(GISTIC), POLE hotspot).
+
+# --- 규율 ---
+# claim_level: hypothesis_only · critic_status: pending
+# split = site-disjoint(make_split.py) 재사용. 새 split 정책 발명 금지.
+# ⚠️ 사전등록 밖 탐색적 확장 — 본문에서 "법칙을 6암종에서 검정"으로 승격 금지.
+#    HER2-amp 결과가 blind로 나오면 유방·위 HER2 앵커의 3번째 장기 복제로만 서술(확증 강도는 검정력에 따름).
