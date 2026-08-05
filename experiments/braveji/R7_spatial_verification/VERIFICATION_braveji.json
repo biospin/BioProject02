@@ -1,0 +1,74 @@
+{
+  "analysis": "Critic 선제검증 — R7 공간전사체 (유방 ERBB2 floor + 대장 ST/IMC)",
+  "reviewer": "braveji",
+  "claim_level": "hypothesis_only",
+  "critic_status": "reviewed_supporting",
+  "scope": "manuscript/sections/02_results.md R7 절. supporting·exploratory(헤드라인 아님) 유지 조건의 사전 검증 — 원자료 대조 + 프레이밍 정직성.",
+  "breast_erbb2_floor": {
+    "source": "experiments/kkkim/angle_A_spatial_erbb2/spatial_erbb2_floor_v2.json (Andersson 2021 HER2+ ST, n=8)",
+    "verified": {
+      "theta_median": {
+        "manuscript": 0.158,
+        "raw": 0.158,
+        "match": true
+      },
+      "theta_range": {
+        "manuscript": [
+          0.023,
+          0.424
+        ],
+        "raw": [
+          0.023,
+          0.424
+        ],
+        "match": true
+      },
+      "ci_excludes_0": {
+        "manuscript": "8/8",
+        "raw": "8/8",
+        "match": true
+      },
+      "kill_interior": {
+        "manuscript": "7/8",
+        "raw_summary": "7/8",
+        "match": true
+      },
+      "kill_depth_conditioned": {
+        "manuscript": "3/3",
+        "raw_summary": "3/3 (high-ρ subset only)",
+        "match": true,
+        "note": "3/3은 depth_rho_residual 높은(교란 우려) 3명 조건부 생존. 8명 전체 depth_cond>0(8/8)과 혼동 주의 — 원고·JSON 모두 '조건부 3/3'이 정확."
+      }
+    },
+    "governance": "claim_level hypothesis_only · critic_status pending · 한계 명시(mRNA≠단백/증폭 · spot≠cell · ST≠TCGA · 내부ref=HER2+ co-section이라 보수적 하한). n=8 환자=복제단위 소표본 명시."
+  },
+  "colorectal_st": {
+    "source": "COLORECTAL/ST/msi_immune_colocation.json · ST_IMC/su_imc_msi_colocation.json",
+    "verified": {
+      "CMS1_immune_morph_rho": {
+        "manuscript": "≈0",
+        "raw": -0.007,
+        "ci": [
+          -0.04,
+          0.026
+        ],
+        "match": true
+      },
+      "su_imc_abundance_p": {
+        "manuscript": 0.56,
+        "raw": 0.5611,
+        "match": true
+      },
+      "cohort": {
+        "n_patients": 40,
+        "n_MSI_H": 8,
+        "n_MSS": 32,
+        "match": true
+      }
+    },
+    "governance": "claim_level hypothesis_only · critic_status pending · '미시연/열린 문제'로 정직 서술(Visium 해상도 한계·co-registered H&E 부재)."
+  },
+  "verdict": "R7 전 수치가 원자료와 일치(불일치 0). 프레이밍은 hypothesis_only·supporting·헤드라인 아님으로 적정 격리. → R7은 supporting/exploratory 지위로 유지 가능(critic_status pending→reviewed_supporting). 본문 헤드라인 승격은 여전히 금지.",
+  "not_promoted": "이 검증은 '수치·프레이밍이 정직하다'는 확인이지 '메커니즘이 확증됐다'가 아니다. ST≠TCGA(다른 코호트)·mRNA≠단백·spot≠cell 한계로 메커니즘 시연에 머문다.",
+  "recommendation": "제출 시 R7을 Supplement 또는 Discussion 메커니즘 보강으로 배치, Results 헤드라인 인용 금지. 원고 현 서술이 이미 이 조건을 지킴."
+}
