@@ -5,15 +5,26 @@ manifest의 split 컬럼 기준으로 patient-level(case_id) 및 site-level(TCGA
 disjointness를 assert로 검증하고 결과를 로그(json)로 남긴다. CLAM/MLP 학습 스크립트와
 독립적으로 언제든 재실행 가능 — split_policy가 바뀔 때마다 재검증하는 용도.
 
-Run:
+계약 (BIOP02-130):
+    - 입력 CSV에는 **split·case_id 컬럼이 반드시 있어야 한다.** 없으면 통과가 아니라 **실패**한다.
+      (예전에는 split 컬럼이 없으면 전 행을 건너뛰고 "무결"로 통과했다 — 검사행 0의 공허한 통과.
+       하필 문서가 사용법으로 가리키던 embedding_manifest_*.csv 에 split 컬럼이 없어,
+       문서대로 실행하면 누수 검사가 작동하지 않는데 통과처럼 보였다. BIOP02-129 하네스가 적발.)
+    - 검사한 행이 0이면 실패한다. "검사할 게 없었다"는 무결의 증거가 아니다.
+    - 실패해도 결과 JSON을 기록한다(진단 가능하도록). 종료코드는 실패 시 1.
+
+Run (정본 입력 = 코호트 split.csv):
     python agents/modeling/scripts/verify_split_integrity.py \
-        --manifest /workspace/data/cache/biop02/embedding_manifest_uni.csv \
+        --manifest experiments/crosscancer/LUNG_NSCLC/full/split.csv \
         --out experiments/sjpark/site_disjoint_verification.json
+
+    # embedding_manifest 를 쓰려면 split 을 먼저 조인해야 한다(그 파일에는 split 컬럼이 없다).
 """
 
 import argparse
 import csv
 import json
+import sys
 from collections import defaultdict
 from itertools import combinations
 from pathlib import Path
@@ -26,6 +37,14 @@ def tss_code(case_id: str) -> str:
     return f"UNKNOWN:{case_id}"
 
 
+def _write(out: str, payload: dict) -> None:
+    """실패든 성공이든 결과 JSON을 남긴다 — 실패 시 보고서가 없으면 진단할 수 없다."""
+    out_path = Path(out)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text(json.dumps(payload, indent=2, ensure_ascii=False))
+    print(f"Saved: {out_path}")
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--manifest", required=True)
@@ -36,11 +55,29 @@ def main():
     split_cases = defaultdict(set)
     n_rows = defaultdict(int)
 
+    REQUIRED = ("split", "case_id")
+    n_skipped = 0
     with open(args.manifest, newline="") as f:
-        for row in csv.DictReader(f):
-            split = row.get("split", "").strip()
-            case_id = row.get("case_id", "").strip()
+        reader = csv.DictReader(f)
+        header = reader.fieldnames or []
+        missing = [c for c in REQUIRED if c not in header]
+        if missing:
+            # 공허통과 차단: 검사에 필요한 컬럼이 없으면 통과가 아니라 실패다.
+            print(f"[FAIL] manifest에 필수 컬럼 없음: {missing}\n"
+                  f"       파일: {args.manifest}\n"
+                  f"       헤더: {header}\n"
+                  f"       → split.csv 를 쓰거나, manifest에 split 을 조인한 뒤 재실행하십시오.",
+                  file=sys.stderr)
+            _write(args.out, {"manifest": args.manifest, "status": "FAIL",
+                              "reason": "missing_required_columns", "missing": missing,
+                              "header": header, "rows_checked": 0,
+                              "site_disjoint": None, "patient_disjoint": None})
+            return 1
+        for row in reader:
+            split = (row.get("split") or "").strip()
+            case_id = (row.get("case_id") or "").strip()
             if not split or not case_id:
+                n_skipped += 1
                 continue
             split_sites[split].add(tss_code(case_id))
             split_cases[split].add(case_id)
@@ -69,17 +106,37 @@ def main():
         "patient_disjoint": all_case_clear,
     }
 
+    n_checked = sum(n_rows.values())
+    result["rows_checked"] = n_checked
+    result["rows_skipped_blank"] = n_skipped
+
     print(json.dumps(result, indent=2))
 
-    assert all_case_clear, f"patient-level leakage 발견: {result['case_id_overlap_detail']}"
-    assert all_site_clear, f"site-level leakage 발견: {result['site_overlap_detail']}"
-    print("\n[ASSERT PASS] site-disjoint AND patient-disjoint 확인됨.")
+    # 0행 통과 금지 — 검사할 게 없었다는 건 무결의 증거가 아니다.
+    if n_checked == 0:
+        result["status"] = "FAIL"
+        result["reason"] = "no_rows_checked"
+        _write(args.out, result)
+        print(f"\n[FAIL] 검사된 행이 0입니다(빈 스킵 {n_skipped}행) — 통과로 판정하지 않습니다.",
+              file=sys.stderr)
+        return 1
 
-    out_path = Path(args.out)
-    out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(json.dumps(result, indent=2))
-    print(f"Saved: {out_path}")
+    # 누수는 assert 대신 명시적 실패로 알린다(보고서를 남기고, python -O 에서도 살아남도록).
+    if not all_case_clear or not all_site_clear:
+        result["status"] = "FAIL"
+        result["reason"] = "leakage"
+        _write(args.out, result)
+        if not all_case_clear:
+            print(f"[FAIL] patient-level leakage 발견: {result['case_id_overlap_detail']}", file=sys.stderr)
+        if not all_site_clear:
+            print(f"[FAIL] site-level leakage 발견: {result['site_overlap_detail']}", file=sys.stderr)
+        return 1
+
+    result["status"] = "PASS"
+    _write(args.out, result)
+    print(f"\n[PASS] site-disjoint AND patient-disjoint 확인됨 (검사 {n_checked}행).")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

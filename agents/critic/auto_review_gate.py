@@ -14,6 +14,9 @@ import argparse, json, re, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
+# evidence 안의 "진짜 파일경로"만 잡는다(디렉터리 세그먼트 + 알려진 확장자).
+# 산문에 흔한 "LUNG/GASTRIC_STAD", "10%·20%" 같은 표현은 걸리지 않는다.
+EVIDENCE_PATH_RE = re.compile(r"(?:[\w.-]+/)+[\w.-]+\.(?:json|md|csv|py|ya?ml|npy|npz)")
 
 def rel(f: Path):
     try:
@@ -153,6 +156,49 @@ def check_metrics(p: Path):
     return {"present": True, "file": rel(mfs[0]), "missing_fields": missing}
 
 
+def check_critic_evidence(p):
+    """critic_report.json 의 'pass' 주장이 증거로 뒷받침되는지 대조한다 (BIOP02-131).
+
+    데이터가 뒷받침하지 않는데 7항목을 pass 로 적는 위조를 막는다. 규칙은 둘뿐이다:
+      - status 가 pass 인데 evidence 가 비어 있으면 무근거 pass.
+      - evidence 가 파일경로 꼴인데 실재하지 않으면 근거 없음.
+    판정하지 않고 위반 목록만 돌려준다 — 강등은 호출부(hard_fail)가 한다.
+
+    스키마 변형 둘을 모두 인식한다: 실물은 'checks', 템플릿은 'checklist'.
+    """
+    target = Path(p)
+    rep = target / "critic_report.json" if target.is_dir() else target
+    if rep.name != "critic_report.json" or not rep.exists():
+        return None                      # 대상 아님 — 검사 생략(없는 걸 통과로 치지 않음)
+    try:
+        d = json.loads(rep.read_text())
+    except Exception as e:
+        return {"unreadable": str(e)}
+    items = d.get("checks") or d.get("checklist") or {}
+    violations = []
+    for name, v in items.items():
+        if not isinstance(v, dict):
+            continue                     # 템플릿의 null 등 — 주장 자체가 없음
+        if str(v.get("status", "")).lower() != "pass":
+            continue
+        ev = v.get("evidence") or []
+        if not ev:
+            violations.append({"item": name, "why": "pass 인데 evidence 비어 있음"})
+            continue
+        # evidence 는 산문 문장인 경우가 많다. 파일 확장자를 갖춘 경로 토큰만 골라 존재를 본다.
+        missing = []
+        for e in ev:
+            if not isinstance(e, str):
+                continue
+            for tok in EVIDENCE_PATH_RE.findall(e):
+                # 경로는 repo 루트 기준일 수도, 보고서가 놓인 디렉터리 기준일 수도 있다.
+                if not ((ROOT / tok).exists() or (rep.parent / tok).exists()):
+                    missing.append(tok)
+        if missing:
+            violations.append({"item": name, "why": "evidence 경로 부재", "missing": missing[:3]})
+    return {"n_items": len(items), "violations": violations}
+
+
 def gate(path: str, tier_override=None, owner=None):
     p = (ROOT / path).resolve() if not Path(path).is_absolute() else Path(path)
     if not p.exists():
@@ -170,6 +216,11 @@ def gate(path: str, tier_override=None, owner=None):
         hard_fail.append({"rule": "claim_level != hypothesis_only", "detail": cl_bad[:5]})
     if metrics and metrics.get("missing_fields"):
         hard_fail.append({"rule": "metrics.json 필수필드 결측", "detail": metrics["missing_fields"]})
+    # BIOP02-131: 증거 없는 critic pass 는 pass 가 아니다.
+    ev_check = check_critic_evidence(path)
+    if ev_check and ev_check.get("violations"):
+        hard_fail.append({"rule": "critic pass 무근거(evidence 없음/경로부재)",
+                          "detail": ev_check["violations"][:5]})
 
     # verdict
     human_items = []
@@ -195,6 +246,7 @@ def gate(path: str, tier_override=None, owner=None):
             "drp_forbidden": {"pass": not drp, "hits": drp[:5]},
             "claim_level": {"seen": cl_seen, "pass": not cl_bad, "bad": cl_bad[:5]},
             "metrics_required": metrics,
+            "critic_evidence": ev_check,
         },
         "critic_status": status,
         "ai_review_pending": ai_review_pending,
@@ -211,6 +263,8 @@ def main():
     ap.add_argument("path", nargs="?")
     ap.add_argument("--tier", choices=list("ABC"))
     ap.add_argument("--owner")
+    ap.add_argument("--strict", action="store_true",
+                    help="blocked 이면 exit 1 (CI용). 기본은 기존 호환 위해 항상 0")
     ap.add_argument("--write", action="store_true", help="산출물 옆에 gate_report.json 기록")
     ap.add_argument("--scan", help="하위 experiment 디렉토리 일괄 게이트")
     a = ap.parse_args()
@@ -228,15 +282,20 @@ def main():
     else:
         ap.error("path 또는 --scan 필요")
 
+    blocked = 0
     for t in targets:
         rep = gate(str(t), a.tier, a.owner)
         print(json.dumps(rep, ensure_ascii=False, indent=1))
+        if rep.get("critic_status") == "blocked":
+            blocked += 1
         if a.write and "error" not in rep:
             tp = (ROOT / rep["path"])
             out = (tp / "gate_report.json") if tp.is_dir() else (tp.parent / f"{tp.stem}.gate_report.json")
             out.write_text(json.dumps(rep, ensure_ascii=False, indent=1))
             print(f"  → {out}")
+    # 종료코드 계약(BIOP02-131): 기존 호출부 호환을 위해 --strict 일 때만 비정상 종료.
+    return 1 if (a.strict and blocked) else 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
