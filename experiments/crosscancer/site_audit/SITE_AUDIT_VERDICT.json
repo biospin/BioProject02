@@ -1,0 +1,120 @@
+{
+  "analysis": "BIOP02-123 #2 site/batch audit — 종합 판정 (BIOP02-122 심판)",
+  "method": "UNI mean-pool. site-predictability=임베딩→TSS 5foldCV macro-AUROC. LOSO=random CV vs site-grouped(GroupKFold on TSS) 같은 모델 비교. 기존 임베딩·라벨 재사용(신규 데이터 없음).",
+  "site_predictability": "4/4 코호트 macro-AUROC 0.955~0.989 (null≈0.50) — 임베딩이 TSS site 강하게 인코딩(Howard 2021).",
+  "loso_by_endpoint": {
+    "COLORECTAL": {
+      "braf_v600e": {
+        "n": 516,
+        "n_pos": 47,
+        "n_sites": 36,
+        "random_cv_auroc": 0.8013,
+        "site_grouped_cv_auroc": 0.7264,
+        "drop_random_minus_grouped": 0.0749,
+        "verdict": "🟡 부분 site교란"
+      }
+    },
+    "GASTRIC_STAD": {
+      "msi_h": {
+        "n": 411,
+        "n_pos": 76,
+        "n_sites": 22,
+        "random_cv_auroc": 0.8369,
+        "site_grouped_cv_auroc": 0.83,
+        "drop_random_minus_grouped": 0.0069,
+        "verdict": "🟢 site-독립(유지)"
+      },
+      "lauren_diffuse": {
+        "n": 162,
+        "n_pos": 79,
+        "n_sites": 20,
+        "random_cv_auroc": 0.8977,
+        "site_grouped_cv_auroc": 0.7432,
+        "drop_random_minus_grouped": 0.1545,
+        "verdict": "🔴 site-driven(하락)"
+      },
+      "ebv": {
+        "n": 358,
+        "n_pos": 28,
+        "n_sites": 21,
+        "random_cv_auroc": 0.8634,
+        "site_grouped_cv_auroc": 0.8113,
+        "drop_random_minus_grouped": 0.0522,
+        "verdict": "🟡 부분 site교란"
+      },
+      "erbb2_amp": {
+        "n": 411,
+        "n_pos": 52,
+        "n_sites": 22,
+        "random_cv_auroc": 0.5497,
+        "site_grouped_cv_auroc": 0.5627,
+        "drop_random_minus_grouped": -0.013,
+        "verdict": "🟢 site-독립(유지)"
+      }
+    },
+    "HEADNECK_HNSC": {
+      "hpv_pos": {
+        "n": 412,
+        "n_pos": 42,
+        "n_sites": 25,
+        "random_cv_auroc": 0.9025,
+        "site_grouped_cv_auroc": 0.8409,
+        "drop_random_minus_grouped": 0.0616,
+        "verdict": "🟡 부분 site교란"
+      },
+      "egfr_amp": {
+        "n": 440,
+        "n_pos": 50,
+        "n_sites": 26,
+        "random_cv_auroc": 0.4779,
+        "site_grouped_cv_auroc": 0.5659,
+        "drop_random_minus_grouped": -0.0881,
+        "verdict": "🟢 site-독립(유지)"
+      },
+      "grade_high": {
+        "n": 431,
+        "n_pos": 113,
+        "n_sites": 26,
+        "random_cv_auroc": 0.6973,
+        "site_grouped_cv_auroc": 0.6525,
+        "drop_random_minus_grouped": 0.0448,
+        "verdict": "🟢 site-독립(유지)"
+      }
+    },
+    "LUNG_NSCLC": {
+      "histology_lusc": {
+        "n": 930,
+        "n_pos": 459,
+        "n_sites": 68,
+        "random_cv_auroc": 0.966,
+        "site_grouped_cv_auroc": 0.8641,
+        "drop_random_minus_grouped": 0.1019,
+        "verdict": "🔴 site-driven(하락)"
+      },
+      "egfr_activating": {
+        "n": 930,
+        "n_pos": 52,
+        "n_sites": 68,
+        "random_cv_auroc": 0.7757,
+        "site_grouped_cv_auroc": 0.8138,
+        "drop_random_minus_grouped": -0.0382,
+        "verdict": "🟢 site-독립(유지)"
+      },
+      "kras_g12c": {
+        "n": 930,
+        "n_pos": 62,
+        "n_sites": 68,
+        "random_cv_auroc": 0.7327,
+        "site_grouped_cv_auroc": 0.7023,
+        "drop_random_minus_grouped": 0.0304,
+        "verdict": "🟢 site-독립(유지)"
+      }
+    }
+  },
+  "verdict": {
+    "molecular_anchors": "HPV(🟡0.84)·MSI(🟢0.83)·BRAF(🟡0.73)·EGFR(🟢)·KRAS(🟢) — site-grouped에서 대체로 생존. 분자 앵커 신호는 대부분 site-독립.",
+    "morphology_defined": "LUNG histology(🔴 drop 0.10)·GASTRIC Lauren(🔴 drop 0.15) — site-driven, caveat 필수.",
+    "for_BIOP02-122": "TCGA=다기관 논거는 분자 앵커에 한해 부분 성립(LOSO 생존) → #1을 전향검증으로 강등할 근거 있음. 단 site-predictability 0.95~0.99이 강하므로 LOSO/site-disjoint 증거 전면화 + 형태학 endpoint caveat 필수. 완전한 external validation 대체는 아님.",
+    "gate": "🟡 조건부 — 분자 앵커 🟢/🟡, 형태학 🔴. 서술 수위는 jamie 교차검토."
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "cohort": "HEADNECK_HNSC",
+  "n_slides": 468,
+  "label_site_imbalance": {
+    "hpv_pos": {
+      "n": 433,
+      "n_pos": 43,
+      "cramers_v_label_vs_site": 0.397,
+      "top_site_pos_fraction": 0.209
+    },
+    "egfr_amp": {
+      "n": 462,
+      "n_pos": 52,
+      "cramers_v_label_vs_site": 0.196,
+      "top_site_pos_fraction": 0.308
+    },
+    "grade_high": {
+      "n": 452,
+      "n_pos": 119,
+      "cramers_v_label_vs_site": 0.298,
+      "top_site_pos_fraction": 0.319
+    }
+  },
+  "site_predictability": {
+    "n_site_classes": 14,
+    "macro_auroc": 0.9819,
+    "permutation_null_mean": 0.5006,
+    "permutation_null_sd": 0.0198,
+    "above_null": true,
+    "interpretation": "높은 AUROC = H&E 임베딩이 TSS site를 강하게 예측 → site 서명 학습 경고(Howard 2021)"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "cohort": "LUNG_NSCLC",
+  "endpoints": {
+    "histology_lusc": {
+      "n": 930,
+      "n_pos": 459,
+      "n_sites": 68,
+      "random_cv_auroc": 0.966,
+      "site_grouped_cv_auroc": 0.8641,
+      "drop_random_minus_grouped": 0.1019,
+      "verdict": "🔴 site-driven(하락)"
+    },
+    "egfr_activating": {
+      "n": 930,
+      "n_pos": 52,
+      "n_sites": 68,
+      "random_cv_auroc": 0.7757,
+      "site_grouped_cv_auroc": 0.8138,
+      "drop_random_minus_grouped": -0.0382,
+      "verdict": "🟢 site-독립(유지)"
+    },
+    "kras_g12c": {
+      "n": 930,
+      "n_pos": 62,
+      "n_sites": 68,
+      "random_cv_auroc": 0.7327,
+      "site_grouped_cv_auroc": 0.7023,
+      "drop_random_minus_grouped": 0.0304,
+      "verdict": "🟢 site-독립(유지)"
+    }
+  }
+}

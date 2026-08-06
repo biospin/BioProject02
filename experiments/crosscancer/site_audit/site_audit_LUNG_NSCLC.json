@@ -1,0 +1,32 @@
+{
+  "cohort": "LUNG_NSCLC",
+  "n_slides": 1026,
+  "label_site_imbalance": {
+    "histology_lusc": {
+      "n": 1026,
+      "n_pos": 493,
+      "cramers_v_label_vs_site": 1.0,
+      "top_site_pos_fraction": 0.101
+    },
+    "egfr_activating": {
+      "n": 1026,
+      "n_pos": 66,
+      "cramers_v_label_vs_site": 0.36,
+      "top_site_pos_fraction": 0.242
+    },
+    "kras_g12c": {
+      "n": 1026,
+      "n_pos": 65,
+      "cramers_v_label_vs_site": 0.355,
+      "top_site_pos_fraction": 0.231
+    }
+  },
+  "site_predictability": {
+    "n_site_classes": 31,
+    "macro_auroc": 0.984,
+    "permutation_null_mean": 0.5043,
+    "permutation_null_sd": 0.0115,
+    "above_null": true,
+    "interpretation": "높은 AUROC = H&E 임베딩이 TSS site를 강하게 예측 → site 서명 학습 경고(Howard 2021)"
+  }
+}

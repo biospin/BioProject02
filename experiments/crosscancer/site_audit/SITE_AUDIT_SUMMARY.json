@@ -1,0 +1,46 @@
+{
+  "analysis": "BIOP02-123 #2 site/batch audit — site-predictability + label-site imbalance",
+  "note": "UNI 임베딩 mean-pool → TSS site 예측(5-fold CV macro-AUROC) + permutation null; endpoint label × site Cramér's V. 기존 임베딩·라벨 재사용.",
+  "cohorts": {
+    "COLORECTAL": {
+      "n_slides": 523,
+      "site_pred_macro_auroc": 0.9546,
+      "site_pred_null": 0.5,
+      "label_site_cramersV": {
+        "braf_v600e": 0.333
+      }
+    },
+    "GASTRIC_STAD": {
+      "n_slides": 439,
+      "site_pred_macro_auroc": 0.9887,
+      "site_pred_null": 0.4945,
+      "label_site_cramersV": {
+        "msi_h": 0.288,
+        "erbb2_amp": 0.169,
+        "ebv": 0.161,
+        "lauren_diffuse": 0.563
+      }
+    },
+    "HEADNECK_HNSC": {
+      "n_slides": 468,
+      "site_pred_macro_auroc": 0.9819,
+      "site_pred_null": 0.5006,
+      "label_site_cramersV": {
+        "hpv_pos": 0.397,
+        "egfr_amp": 0.196,
+        "grade_high": 0.298
+      }
+    },
+    "LUNG_NSCLC": {
+      "n_slides": 1026,
+      "site_pred_macro_auroc": 0.984,
+      "site_pred_null": 0.5043,
+      "label_site_cramersV": {
+        "histology_lusc": 1.0,
+        "egfr_activating": 0.36,
+        "kras_g12c": 0.355
+      }
+    }
+  },
+  "headline": "4/4 코호트에서 H&E 임베딩이 TSS site를 macro-AUROC 0.95~0.99로 예측(null≈0.50) — 강한 site 서명(Howard 2021). label-site 교란은 endpoint별 상이(LUNG histology V=1.0·GASTRIC Lauren 0.563 심함, HPV/BRAF/EGFR/MSI 중간). endpoint 신호의 site-독립성은 LOSO로 판정 필요."
+}

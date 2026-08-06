@@ -1,0 +1,41 @@
+{
+  "cohort": "GASTRIC_STAD",
+  "endpoints": {
+    "msi_h": {
+      "n": 411,
+      "n_pos": 76,
+      "n_sites": 22,
+      "random_cv_auroc": 0.8369,
+      "site_grouped_cv_auroc": 0.83,
+      "drop_random_minus_grouped": 0.0069,
+      "verdict": "🟢 site-독립(유지)"
+    },
+    "lauren_diffuse": {
+      "n": 162,
+      "n_pos": 79,
+      "n_sites": 20,
+      "random_cv_auroc": 0.8977,
+      "site_grouped_cv_auroc": 0.7432,
+      "drop_random_minus_grouped": 0.1545,
+      "verdict": "🔴 site-driven(하락)"
+    },
+    "ebv": {
+      "n": 358,
+      "n_pos": 28,
+      "n_sites": 21,
+      "random_cv_auroc": 0.8634,
+      "site_grouped_cv_auroc": 0.8113,
+      "drop_random_minus_grouped": 0.0522,
+      "verdict": "🟡 부분 site교란"
+    },
+    "erbb2_amp": {
+      "n": 411,
+      "n_pos": 52,
+      "n_sites": 22,
+      "random_cv_auroc": 0.5497,
+      "site_grouped_cv_auroc": 0.5627,
+      "drop_random_minus_grouped": -0.013,
+      "verdict": "🟢 site-독립(유지)"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "cohort": "COLORECTAL",
+  "endpoints": {
+    "braf_v600e": {
+      "n": 516,
+      "n_pos": 47,
+      "n_sites": 36,
+      "random_cv_auroc": 0.8013,
+      "site_grouped_cv_auroc": 0.7264,
+      "drop_random_minus_grouped": 0.0749,
+      "verdict": "🟡 부분 site교란"
+    }
+  }
+}

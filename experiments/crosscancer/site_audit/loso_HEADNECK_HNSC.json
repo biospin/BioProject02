@@ -1,0 +1,32 @@
+{
+  "cohort": "HEADNECK_HNSC",
+  "endpoints": {
+    "hpv_pos": {
+      "n": 412,
+      "n_pos": 42,
+      "n_sites": 25,
+      "random_cv_auroc": 0.9025,
+      "site_grouped_cv_auroc": 0.8409,
+      "drop_random_minus_grouped": 0.0616,
+      "verdict": "🟡 부분 site교란"
+    },
+    "egfr_amp": {
+      "n": 440,
+      "n_pos": 50,
+      "n_sites": 26,
+      "random_cv_auroc": 0.4779,
+      "site_grouped_cv_auroc": 0.5659,
+      "drop_random_minus_grouped": -0.0881,
+      "verdict": "🟢 site-독립(유지)"
+    },
+    "grade_high": {
+      "n": 431,
+      "n_pos": 113,
+      "n_sites": 26,
+      "random_cv_auroc": 0.6973,
+      "site_grouped_cv_auroc": 0.6525,
+      "drop_random_minus_grouped": 0.0448,
+      "verdict": "🟢 site-독립(유지)"
+    }
+  }
+}
