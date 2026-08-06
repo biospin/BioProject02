@@ -121,6 +121,20 @@ def main():
               file=sys.stderr)
         return 1
 
+    # 단일 split 그룹 통과 금지 (BIOP02-136) — 같은 이유의 다른 얼굴.
+    # 그룹이 하나뿐이면 "그룹 간" disjoint 가 자명하게 성립해, 누수검사가 실제로는
+    # 아무것도 대조하지 않고 PASS 가 찍힌다. train-only 매니페스트나 필터 버그로
+    # test 행이 전부 탈락한 파일이 여기 걸린다.
+    if len(n_rows) < 2:
+        result["status"] = "FAIL"
+        result["reason"] = "single_split_group"
+        _write(args.out, result)
+        print(f"\n[FAIL] split 그룹이 {len(n_rows)}개뿐입니다({list(n_rows)}) — "
+              f"대조할 상대가 없어 disjoint 가 자명하게 성립하므로 통과로 판정하지 않습니다.\n"
+              f"       → train/val/test 가 모두 담긴 split.csv 인지 확인하십시오.",
+              file=sys.stderr)
+        return 1
+
     # 누수는 assert 대신 명시적 실패로 알린다(보고서를 남기고, python -O 에서도 살아남도록).
     if not all_case_clear or not all_site_clear:
         result["status"] = "FAIL"
