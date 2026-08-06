@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "schemas/hypothesis.schema.json",
+  "$id": "urn:biospin-ai:biop02:hypothesis.schema.json",
   "title": "SpatialPathoAgent Hypothesis Output v0.1",
   "description": "H&E WSI → phenotype prediction → ranked therapeutic hypothesis. BRCA-only, academic research, hypothesis_only output.",
   "type": "object",

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "schemas/cv_registry.schema.json",
+  "$id": "urn:biospin-ai:biop02:cv_registry.schema.json",
   "title": "SpatialPathoAgent Cross-Validation Registry Entry v0.1 (rev: +auc_ci_95, +ext_label_source, +mean_embed_auc)",
   "description": "One entry in the cross-dataset validation registry (train TCGA-BRCA -> test CPTAC-BRCA). One JSON object per line in experiments/registry/cross_validation_registry.jsonl. An entry may only be marked shareable after critic_status is pass (Critic owner = braveji; bio sub-checks #4/#5 delegated to jhans/sjpark).",
   "type": "object",

@@ -283,18 +283,26 @@ def main():
         ap.error("path 또는 --scan 필요")
 
     blocked = 0
+    errored = 0
     for t in targets:
         rep = gate(str(t), a.tier, a.owner)
         print(json.dumps(rep, ensure_ascii=False, indent=1))
         if rep.get("critic_status") == "blocked":
             blocked += 1
+        # 대상을 못 읽은 것을 통과로 치지 않는다 (BIOP02-136).
+        # 경로 오타·리네임이 CI 에서 조용히 초록이 되던 구멍.
+        if "error" in rep:
+            errored += 1
+            print(f"  [ERROR] 게이트가 대상을 읽지 못했습니다: {rep['error']}", file=sys.stderr)
         if a.write and "error" not in rep:
             tp = (ROOT / rep["path"])
             out = (tp / "gate_report.json") if tp.is_dir() else (tp.parent / f"{tp.stem}.gate_report.json")
             out.write_text(json.dumps(rep, ensure_ascii=False, indent=1))
             print(f"  → {out}")
-    # 종료코드 계약(BIOP02-131): 기존 호출부 호환을 위해 --strict 일 때만 비정상 종료.
-    return 1 if (a.strict and blocked) else 0
+    # 종료코드 계약(BIOP02-131, -136): 기존 호출부 호환을 위해 --strict 일 때만 비정상 종료.
+    # blocked(위조 pass)뿐 아니라 errored(대상 부재·판독불가)도 실패로 센다 —
+    # "검사하지 못한 것"은 "통과"가 아니다.
+    return 1 if (a.strict and (blocked or errored)) else 0
 
 
 if __name__ == "__main__":
