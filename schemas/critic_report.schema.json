@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "schemas/critic_report.schema.json",
+  "$id": "urn:biospin-ai:biop02:critic_report.schema.json",
   "title": "SpatialPathoAgent Critic Report v0.1",
   "description": "Seven-item scientific critic report for BRCA-only phenotype experiments. Results may be shared only when critic_status is pass.",
   "type": "object",
