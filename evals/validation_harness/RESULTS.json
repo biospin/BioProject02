@@ -1,0 +1,106 @@
+{
+  "results": [
+    {
+      "case": "split_leak_patient",
+      "desc": "★환자 누수 — test 환자를 train 에도 넣음",
+      "detector": "verify_split_integrity.py",
+      "verdict": "CAUGHT",
+      "note": "assert all_case_clear, f\"patient-level leakage 발견: {result['case_id_overlap_detail']}\"",
+      "detail": {
+        "leaked_case": "TCGA-34-2596",
+        "n": 1051
+      }
+    },
+    {
+      "case": "split_leak_site",
+      "desc": "★기관 누수 — test 기관 환자를 train 에 넣음",
+      "detector": "verify_split_integrity.py",
+      "verdict": "CAUGHT",
+      "note": "assert all_site_clear, f\"site-level leakage 발견: {result['site_overlap_detail']}\"",
+      "detail": {
+        "leaked_site": "34",
+        "injected": "TCGA-34-9X9X",
+        "same_site_as": "TCGA-34-2596",
+        "n": 1051
+      }
+    },
+    {
+      "case": "split_drop_column",
+      "desc": "split 컬럼 제거 — 도구가 조용히 스킵하는가",
+      "detector": "verify_split_integrity.py",
+      "verdict": "SURVIVED",
+      "note": "변조본을 통과시킴(검사행 0)",
+      "detail": {
+        "n": 1050,
+        "note": "split 컬럼 제거"
+      }
+    },
+    {
+      "case": "real_manifest_contract",
+      "desc": "실물 embedding_manifest 로 부를 때의 계약(변조 없음)",
+      "detector": "verify_split_integrity.py",
+      "verdict": "VACUOUS",
+      "note": "split 컬럼이 없어 전 행 스킵 → 아무것도 검사하지 않고 통과",
+      "detail": {
+        "manifest": "experiments/crosscancer/COLORECTAL/full/embedding_manifest_colorectal_uni.csv",
+        "columns": [
+          "case_id",
+          "slide_id",
+          "embedding_path",
+          "embedding_model",
+          "file_id"
+        ],
+        "rows_checked": 0
+      }
+    },
+    {
+      "case": "critic_report_forgery",
+      "desc": "critic 7항목을 증거 없이 전부 pass 로 위조",
+      "detector": "auto_review_gate.py",
+      "verdict": "SURVIVED",
+      "note": "증거 없는 전항목 pass 를 통과시킴 — 위조 대조 게이트 부재",
+      "detail": {
+        "n_items": 7,
+        "items": [
+          "baseline_comparison",
+          "biological_plausibility",
+          "claim_level",
+          "counterfactual_check",
+          "cross_dataset_check",
+          "data_leakage",
+          "drp_framing"
+        ],
+        "gate_exit": 0
+      }
+    },
+    {
+      "case": "manuscript_number_drift",
+      "desc": "스코어보드 헤드라인 수치 위조(0.939→0.9233, 정본 부재값)",
+      "detector": "check_number_drift.py --strict",
+      "verdict": "CAUGHT",
+      "note": "--strict 가 드리프트로 차단",
+      "detail": {
+        "doc": "LAW_HELDOUT_SCOREBOARD.md",
+        "control_exit": 0,
+        "mutated_exit": 1,
+        "mutation": "0.939→0.9233 (정본 부재값)"
+      }
+    },
+    {
+      "case": "operating_point_tamper",
+      "desc": "임계 조작으로 지표 부풀리기",
+      "detector": null,
+      "verdict": "NOT_TESTED",
+      "note": "operating-point 산출물(BIOP02-124)이 아직 없음 — 나오면 케이스 추가",
+      "detail": {}
+    },
+    {
+      "case": "citation_fabrication",
+      "desc": "가짜 인용",
+      "detector": null,
+      "verdict": "NOT_TESTED",
+      "note": "evals/citation_verifier 가 이미 커버(중복 방지)",
+      "detail": {}
+    }
+  ]
+}
