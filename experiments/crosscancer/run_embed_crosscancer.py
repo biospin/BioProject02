@@ -20,7 +20,9 @@ import urllib.request, urllib.error, urllib.parse
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]          # repo root
-PY = "/home/kkkim/miniconda3/bin/python3"
+# 워커 인터프리터: 실행 중인 파이썬을 그대로 쓴다(컨테이너별 경로 하드코딩 금지).
+# 기존 값 /home/kkkim/miniconda3/bin/python3 은 kkkim 컨테이너에만 존재해 타 컨테이너에서 FileNotFoundError.
+PY = os.environ.get("BIOP02_WORKER_PY", sys.executable)
 TILE = ROOT / "agents/embedding/scripts/tile_wsi.py"
 EXTRACT = ROOT / "agents/embedding/scripts/extract_uni.py"
 TILE_CFG = ROOT / "agents/embedding/configs/tile_config.yaml"
@@ -30,6 +32,7 @@ GDC_DATA = "https://api.gdc.cancer.gov/data/"
 CANCERS = {
     "LUNG_NSCLC": {"cohorts": ["TCGA-LUAD", "TCGA-LUSC"]},
     "COLORECTAL": {"cohorts": ["TCGA-COAD", "TCGA-READ"]},
+    "UCEC": {"cohorts": ["TCGA-UCEC"]},   # 6번째(탐색적 확장, BIOP02-128)
 }
 RAW_BASE = Path("/workspace/data/cache/biop02/_crosscancer_raw")  # SSD LRU (transient) — 동시 I/O가 HDD보다 훨씬 빠름
 
