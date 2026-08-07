@@ -109,6 +109,8 @@ def load_canonical(root):
             d = json.load(open(f))
         except Exception:
             continue
+        if not isinstance(d, dict):   # list형 JSON(shard_*.json·queue.json 등)은 d.get() 크래시 → 건너뜀 (BIOP02-107 kkkim 리뷰 🔴)
+            continue
         recs = d.get("endpoints") or d.get("axes")
         if not isinstance(recs, dict):
             continue
