@@ -15,6 +15,9 @@
 #      고쳐 놓은 공허통과·위조통과가 다시 열리면 여기서 즉시 실패한다.
 #   5) manuscript_parity_ko_en --strict — 국/영문 판본의 수치·heading·인용·표 정합(BIOP02-133).
 #      EN 원고가 없으면 대조 쌍이 없어 통과하므로, 영문화 이전에도 안전하게 걸어 둘 수 있다.
+#   6-b) test_gate_vacuous_pass — 136 이 만든 회귀 테스트. braveji 실측(#11759)대로
+#        이게 없으면 136 의 가드가 통째로 되돌아가도 CI 가 초록이었다(스텝 4 하네스가 미커버).
+#        하네스에도 같은 두 케이스를 넣었으나, 전용 테스트도 함께 건다(중복이 아니라 이중 그물).
 #   6) verify_split_integrity — 실제 코호트 split.csv 로 누수 검사(BIOP02-130 수정 후 계약 확인).
 #      임베딩·GPU 불요(split.csv 만 읽음).
 #
@@ -53,6 +56,9 @@ jobs:
           python agents/modeling/scripts/verify_split_integrity.py \
             --manifest experiments/crosscancer/LUNG_NSCLC/full/split.csv \
             --out /tmp/split_integrity_ci.json
+
+      - name: 게이트 공허통과 회귀 (BIOP02-130/131/136, 10 케이스)
+        run: python agents/critic/tests/test_gate_vacuous_pass.py
 
       - name: 국/영문 정합 (BIOP02-133, EN 없으면 통과)
         run: |
