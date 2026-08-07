@@ -14,6 +14,12 @@ velocity 의 claim_level 격상을 베끼지 않는다. 여기서 재는 것은 
     **데이터에서** 발생하는 실패이므로, 데이터 mutation 이라야 그 게이트를 실제로 시험한다.
   - detector 는 in-process import 가 아니라 **CLI 서브프로세스**로 부른다(종료코드/보고서가 계약이므로).
 
+확장 2026-08-07 (BIOP02-136, braveji #11759 지적 반영):
+  하네스가 136 의 두 가드를 안 보고 있었다 — 가드를 무력화해도 이 하네스는 초록이었다.
+  즉 "구멍 0"이 실제로는 "안 본 구멍이 있음"이었다. 두 케이스를 넣어 그 사각을 없앤다.
+    split_single_group  그룹이 1개면 대조할 게 없는데 통과하는가
+    gate_missing_path   없는 경로를 줘도 --strict 가 통과시키는가
+
 판정(BIOP02 어휘):
   CAUGHT      detector 가 mutated 산출물을 거부(비정상 종료 또는 보고서에 실패 기록)
   SURVIVED    detector 가 통과시킴 = 게이트 구멍 (이 하네스의 실패 조건)
@@ -74,6 +80,7 @@ def make_split_manifest(src_split: Path, dst: Path, mutation: str):
       patient_leak    test 환자 1명을 train 에도 추가(같은 환자 양쪽) ← 가장 비싼 실수
       site_leak       test 기관(tss)의 환자를 train 에 추가(기관 누수)
       drop_split_col  split 컬럼 자체를 제거(도구가 조용히 스킵하는지 시험)
+      single_group    split 을 전부 'train' 으로(그룹이 하나면 disjoint 가 자명 — BIOP02-136 ①)
     """
     rows = list(csv.DictReader(src_split.open()))
     if mutation == "drop_split_col":
@@ -86,7 +93,13 @@ def make_split_manifest(src_split: Path, dst: Path, mutation: str):
 
     out = [dict(r) for r in rows]
     detail = {}
-    if mutation == "patient_leak":
+    if mutation == "single_group":
+        # BIOP02-136 ①: 그룹이 하나뿐이면 '그룹 간' 누수는 자명하게 없다.
+        # 검사한 행은 많지만 실제로 대조한 것은 없다 — 0행과 같은 종류의 공허한 통과.
+        for r in out:
+            r["split"] = "train"
+        detail = {"note": "split 전부 train (단일 그룹)"}
+    elif mutation == "patient_leak":
         victim = next(r for r in rows if r["split"] == "test")
         out.append({**victim, "split": "train"})     # 같은 case_id 가 train·test 양쪽에
         detail = {"leaked_case": victim["case_id"]}
@@ -167,6 +180,26 @@ def case_real_manifest_vacuous():
         return (CAUGHT if not ok else SURVIVED), f"검사행 {seen}", detail
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
+
+
+# ── 계약: 존재하지 않는 경로 (BIOP02-136 ②) ────────────────────────────────
+
+def case_gate_missing_path():
+    """없는 경로를 게이트에 주면 --strict 에서 막히는가.
+
+    CI 에서 경로 오타·리네임이 나면 게이트가 조용히 초록이 되는 자리다.
+    변조가 아니라 '계약' 검사라 control 이 따로 없다 — 없는 경로는 그 자체로 실패해야 한다.
+    """
+    gate = REPO / "agents/critic/auto_review_gate.py"
+    if not gate.exists():
+        return NOT_TESTED, "auto_review_gate 없음", {}
+    missing = REPO / "experiments" / "_NO_SUCH_DIR_biop02_136"
+    p = subprocess.run([sys.executable, str(gate), str(missing), "--tier", "A", "--strict"],
+                       capture_output=True, text=True, cwd=str(REPO))
+    detail = {"path": str(missing.relative_to(REPO)), "exit": p.returncode}
+    if p.returncode != 0:
+        return CAUGHT, "--strict 가 경로부재를 exit≠0 으로 차단", detail
+    return SURVIVED, "없는 경로인데 --strict 가 exit 0 — CI 가 조용히 초록이 된다", detail
 
 
 # ── mutation: critic_report 7항목 위조 ──────────────────────────────────────
@@ -250,8 +283,12 @@ REGISTRY = [
      lambda: case_split_leakage("LUNG_NSCLC", "site_leak"), "verify_split_integrity.py"),
     ("split_drop_column", "split 컬럼 제거 — 도구가 조용히 스킵하는가",
      lambda: case_split_leakage("LUNG_NSCLC", "drop_split_col"), "verify_split_integrity.py"),
+    ("split_single_group", "★split 그룹이 1개뿐 — 대조할 게 없는데 통과하는가(BIOP02-136①)",
+     lambda: case_split_leakage("LUNG_NSCLC", "single_group"), "verify_split_integrity.py"),
     ("real_manifest_contract", "실물 embedding_manifest 로 부를 때의 계약(변조 없음)",
      case_real_manifest_vacuous, "verify_split_integrity.py"),
+    ("gate_missing_path", "없는 경로를 게이트에 줌 — --strict 가 막는가(BIOP02-136②)",
+     case_gate_missing_path, "auto_review_gate.py --strict"),
     ("critic_report_forgery", "critic 7항목을 증거 없이 전부 pass 로 위조",
      case_critic_forgery, "auto_review_gate.py"),
     ("manuscript_number_drift", "스코어보드 헤드라인 수치 위조(0.939→0.9233, 정본 부재값)",
