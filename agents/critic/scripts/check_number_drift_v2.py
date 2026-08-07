@@ -33,7 +33,13 @@ FM별 행 — endpoint가 앞선 절 제목에만 있고 행 자체엔 없음)�
 
 사용법:
     python3 agents/critic/scripts/check_number_drift_v2.py [--repo <root>] [--strict]
-    --strict : 미확인 수치가 하나라도 있으면 exit 1 (CI blocking용)
+    --strict : **표 행** 미확인 수치가 하나라도 있으면 exit 1 (CI blocking용)
+
+⚠️ **--strict는 표 행에만 건다(2026-08-07, kkkim PR #121 리뷰 반영).** prose 미확인은 원래
+"주장스러운 임계값·마진·상관계수" 같은 정당한 비드리프트 비중이 높아(실측 15건 전부 그 경우),
+--strict에 그대로 걸면 정상 원고가 상시 빨강이 되는 doctor anti-pattern(braveji BIOP02-116 경고)이
+된다. 표 행(v1과 같은 "|"로 시작하는 행 = endpoint 1:1 대응이 명확한 자리)만 CI 게이트로 쓰고,
+prose는 report-only로 계속 보여주되 exit code에 영향 주지 않는다.
 """
 import argparse, json, re, sys, glob, os
 
@@ -148,15 +154,23 @@ def strip_code_and_paths(text):
 
 
 DEC = re.compile(r'(?<![\w.])[+\-−]?\d+\.\d+')  # BIOP01 check_manuscript_numbers.py 패턴
+RANGE = re.compile(r'\d+\.\d+\s*-\s*\d+\.\d+')  # CI/사전등록 범위(v1과 같은 취지). line의 –/− 정규화 후 적용
+ANCHOR_MARK = re.compile(r"\(anchor\)")  # 유방(anchor) 행 = Paper C crosscancer 코퍼스 밖(Paper A/B 스코프)
 
 
 def claim_like(line, s, e):
-    """수치가 '주장'스러운 문맥인지(DOI·날짜ID·버전·연도 배제). BIOP01 패턴 재사용."""
+    """수치가 '주장'스러운 문맥인지(DOI·날짜ID·버전·연도·임계비교·마진 배제). BIOP01 패턴 + 표 FP 보강."""
     tok = line[s:e]
     if e < len(line) and line[e] in "./":
         return False
     pre = line[max(0, s - 4):s]
     if pre.endswith("10.") or pre.endswith("/"):
+        return False
+    pre_op = line[max(0, s - 6):s].rstrip()
+    if pre_op and pre_op[-1] in "≤≥~<>":  # 사전등록 임계·근사 비교("≥0.82", "~0.53") — 관측값 아님
+        return False
+    pre_wide = line[max(0, s - 8):s]
+    if "마진" in pre_wide or "margin" in pre_wide.lower():  # "마진 0.011" — 파생 차이값, 관측값 아님
         return False
     v = abs(float(tok.replace('+', '').replace('−', '-')))
     if 1900 <= v <= 2035:
@@ -173,14 +187,21 @@ def check_doc(path, canon):
     stripped = strip_code_and_paths(raw_text)
     context_ep = None
     for i, raw in enumerate(stripped.splitlines(), 1):
-        hits = endpoint_hits(raw)
-        if len(hits) == 1:
-            context_ep = hits[0]
-        elif len(hits) > 1:
-            context_ep = None  # 모호한 줄은 문맥 갱신 안 함(v1의 "모호행 스킵"과 같은 정신)
+        if ANCHOR_MARK.search(raw):
+            # 유방(anchor) 행: crosscancer 코퍼스(Paper C) 밖의 Paper A/B 앵커값 — 직전 crosscancer
+            # endpoint 문맥을 이어받으면 오귀속(예: PAM50 행이 braf_v600e로 오검사)이 되므로 강제 리셋.
+            context_ep = None
+            hits = []
+        else:
+            hits = endpoint_hits(raw)
+            if len(hits) == 1:
+                context_ep = hits[0]
+            elif len(hits) > 1:
+                context_ep = None  # 모호한 줄은 문맥 갱신 안 함(v1의 "모호행 스킵"과 같은 정신)
 
         line = raw.replace('−', '-').replace('–', '-')
-        nums = [(m.group(), m.start(), m.end()) for m in DEC.finditer(line)]
+        masked = RANGE.sub(lambda m: ' ' * len(m.group()), line)
+        nums = [(m.group(), m.start(), m.end()) for m in DEC.finditer(masked)]
         if not nums:
             continue
         ep = hits[0] if len(hits) == 1 else context_ep
@@ -188,12 +209,13 @@ def check_doc(path, canon):
             unattributed += len(nums)
             continue
         pool = canon[ep]
+        is_table = raw.strip().startswith("|")  # v1과 같은 표 행 판정 — --strict 게이트 대상
         for tok, s, e in nums:
             if not claim_like(line, s, e):
                 continue
             val = float(tok.replace('+', ''))
             if not any(abs(val - k) <= TOL for k in pool):
-                misses.append((i, tok, ep, raw.strip()[:100]))
+                misses.append((i, tok, ep, raw.strip()[:100], is_table))
     return misses, unattributed
 
 
@@ -206,24 +228,36 @@ def main():
     n_vals = sum(len(v) for v in canon.values())
     print(f"[check_number_drift_v2] 정본 JSON {len(files)}개, endpoint/axis {len(canon)}종"
           f"(routing 포함), 수치 {n_vals}건 로드")
-    total = 0
+    total_table = 0
+    total_prose = 0
     total_unattr = 0
     for doc in DOCS:
         p = os.path.join(a.repo, doc)
         misses, unattr = check_doc(p, canon)
         total_unattr += unattr
-        if misses:
-            print(f"\n=== {doc} — 정본 미확인 수치 {len(misses)}건 ===")
-            for ln, tok, ep, txt in misses:
+        table_misses = [m for m in misses if m[4]]
+        prose_misses = [m for m in misses if not m[4]]
+        if table_misses:
+            print(f"\n=== {doc} — 표 행 미확인 수치 {len(table_misses)}건 (--strict 게이트 대상) ===")
+            for ln, tok, ep, txt, _ in table_misses:
                 print(f"  L{ln}: {tok}  (귀속 endpoint={ep})")
                 print(f"        | {txt}")
-            total += len(misses)
-    print(f"\n[결과] 정본 미확인 후보 {total}건, 귀속 불가로 미검사 {total_unattr}건.")
+            total_table += len(table_misses)
+        if prose_misses:
+            print(f"\n--- {doc} — prose 미확인 수치 {len(prose_misses)}건 (report-only) ---")
+            for ln, tok, ep, txt, _ in prose_misses:
+                print(f"  L{ln}: {tok}  (귀속 endpoint={ep})")
+                print(f"        | {txt}")
+            total_prose += len(prose_misses)
+    print(f"\n[결과] 표 행 미확인 {total_table}건(--strict 대상), prose 미확인 {total_prose}건(report-only),"
+          f" 귀속 불가로 미검사 {total_unattr}건.")
     print("       **판정 아님** — endpoint 문맥에 귀속된 수치만 검사한다(v1과 동일 원칙,")
     print("       표 행 대신 모든 줄에 적용 + 직전 endpoint 문맥 승계). 귀속 불가(예: R7")
     print("       공간전사체 절처럼 endpoint 키워드가 아예 없는 문단)는 드리프트 여부를")
     print("       판단할 근거가 없어 건너뛴다 — 통과 처리가 아니라 미검사임에 유의.")
-    if a.strict and total:
+    print("       prose 미확인은 report-only다(임계값·마진·상관계수 등 정당한 비드리프트 비중이")
+    print("       높아 --strict에 걸면 상시 빨강이 된다 — kkkim PR #121 리뷰, BIOP02-107).")
+    if a.strict and total_table:
         sys.exit(1)
 
 
