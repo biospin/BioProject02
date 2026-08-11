@@ -10,11 +10,14 @@
     }
   },
   "site_predictability": {
+    "cv": "StratifiedGroupKFold(5) on case_id",
+    "n_patients": 516,
+    "n_multislide_extra": 7,
     "n_site_classes": 17,
-    "macro_auroc": 0.9546,
-    "permutation_null_mean": 0.5,
-    "permutation_null_sd": 0.0089,
+    "macro_auroc": 0.9513,
+    "permutation_null_mean": 0.498,
+    "permutation_null_sd": 0.01,
     "above_null": true,
-    "interpretation": "높은 AUROC = H&E 임베딩이 TSS site를 강하게 예측 → site 서명 학습 경고(Howard 2021)"
+    "interpretation": "높은 AUROC = H&E 임베딩이 TSS site를 강하게 예측 → site 서명 학습 경고(Howard 2021). group-aware CV(환자단위)라 다중슬라이드 leakage 배제된 값."
   }
 }

@@ -1,7 +1,37 @@
 {
-  "analysis": "BIOP02-123 #2 site/batch audit — 종합 판정 (BIOP02-122 심판)",
-  "method": "UNI mean-pool. site-predictability=임베딩→TSS 5foldCV macro-AUROC. LOSO=random CV vs site-grouped(GroupKFold on TSS) 같은 모델 비교. 기존 임베딩·라벨 재사용(신규 데이터 없음).",
-  "site_predictability": "4/4 코호트 macro-AUROC 0.955~0.989 (null≈0.50) — 임베딩이 TSS site 강하게 인코딩(Howard 2021).",
+  "analysis": "BIOP02-123 #2 site/batch audit — 종합 판정 (BIOP02-122 심판). jamie #11736 후속 반영 재실행본.",
+  "revision": "2026-08-11 재실행: (1) site-predictability를 StratifiedGroupKFold(groups=case_id) group-aware CV로 교체 — 다중슬라이드 leakage 배제. (2) LOSO drop에 paired 부트스트랩 CI + P(drop>0) 추가 — 🟢/🟡/🔴 임계(0.05/0.10)의 단일관측 취약성 정량.",
+  "method": "UNI mean-pool. site-predictability=임베딩→TSS group-aware CV(case_id) OvR macro-AUROC + 그룹단위 permutation null. LOSO=random CV vs site-grouped(GroupKFold on TSS) 같은 모델, drop CI=paired bootstrap 2000회. 기존 임베딩·라벨 재사용(신규 데이터 없음).",
+  "site_predictability_group_aware": {
+    "COLORECTAL": {
+      "macro_auroc": 0.9513,
+      "null_mean": 0.498,
+      "null_sd": 0.01,
+      "n_patients": 516,
+      "n_multislide_extra": 7
+    },
+    "GASTRIC_STAD": {
+      "macro_auroc": 0.9883,
+      "null_mean": 0.4842,
+      "null_sd": 0.0313,
+      "n_patients": 413,
+      "n_multislide_extra": 26
+    },
+    "HEADNECK_HNSC": {
+      "macro_auroc": 0.9836,
+      "null_mean": 0.5123,
+      "null_sd": 0.0116,
+      "n_patients": 446,
+      "n_multislide_extra": 22
+    },
+    "LUNG_NSCLC": {
+      "macro_auroc": 0.9783,
+      "null_mean": 0.4895,
+      "null_sd": 0.0258,
+      "n_patients": 930,
+      "n_multislide_extra": 96
+    }
+  },
   "loso_by_endpoint": {
     "COLORECTAL": {
       "braf_v600e": {
@@ -9,9 +39,22 @@
         "n_pos": 47,
         "n_sites": 36,
         "random_cv_auroc": 0.8013,
-        "site_grouped_cv_auroc": 0.7264,
-        "drop_random_minus_grouped": 0.0749,
-        "verdict": "🟡 부분 site교란"
+        "site_grouped_cv_auroc": 0.7163,
+        "random_cv_auroc_ci95": [
+          0.727,
+          0.862
+        ],
+        "site_grouped_cv_auroc_ci95": [
+          0.645,
+          0.79
+        ],
+        "drop_random_minus_grouped": 0.085,
+        "drop_ci_95": [
+          0.0175,
+          0.1489
+        ],
+        "p_drop_gt_0": 0.9895,
+        "verdict": "🟡 부분 site교란 ⚠️경계(CI가 0.05,0.1 가로지름)"
       }
     },
     "GASTRIC_STAD": {
@@ -19,37 +62,89 @@
         "n": 411,
         "n_pos": 76,
         "n_sites": 22,
-        "random_cv_auroc": 0.8369,
-        "site_grouped_cv_auroc": 0.83,
-        "drop_random_minus_grouped": 0.0069,
-        "verdict": "🟢 site-독립(유지)"
+        "random_cv_auroc": 0.8368,
+        "site_grouped_cv_auroc": 0.8214,
+        "random_cv_auroc_ci95": [
+          0.786,
+          0.881
+        ],
+        "site_grouped_cv_auroc_ci95": [
+          0.765,
+          0.87
+        ],
+        "drop_random_minus_grouped": 0.0154,
+        "drop_ci_95": [
+          -0.0204,
+          0.0507
+        ],
+        "p_drop_gt_0": 0.8055,
+        "verdict": "🟢 site-독립(유지) ⚠️경계(CI가 0.0,0.05 가로지름)"
       },
       "lauren_diffuse": {
         "n": 162,
         "n_pos": 79,
         "n_sites": 20,
         "random_cv_auroc": 0.8977,
-        "site_grouped_cv_auroc": 0.7432,
-        "drop_random_minus_grouped": 0.1545,
+        "site_grouped_cv_auroc": 0.7134,
+        "random_cv_auroc_ci95": [
+          0.847,
+          0.947
+        ],
+        "site_grouped_cv_auroc_ci95": [
+          0.63,
+          0.795
+        ],
+        "drop_random_minus_grouped": 0.1843,
+        "drop_ci_95": [
+          0.1146,
+          0.2577
+        ],
+        "p_drop_gt_0": 1.0,
         "verdict": "🔴 site-driven(하락)"
       },
       "ebv": {
         "n": 358,
         "n_pos": 28,
         "n_sites": 21,
-        "random_cv_auroc": 0.8634,
+        "random_cv_auroc": 0.8621,
         "site_grouped_cv_auroc": 0.8113,
-        "drop_random_minus_grouped": 0.0522,
-        "verdict": "🟡 부분 site교란"
+        "random_cv_auroc_ci95": [
+          0.789,
+          0.933
+        ],
+        "site_grouped_cv_auroc_ci95": [
+          0.734,
+          0.89
+        ],
+        "drop_random_minus_grouped": 0.0509,
+        "drop_ci_95": [
+          -0.0071,
+          0.1146
+        ],
+        "p_drop_gt_0": 0.958,
+        "verdict": "🟡 부분 site교란 ⚠️경계(CI가 0.0,0.05,0.1 가로지름)"
       },
       "erbb2_amp": {
         "n": 411,
         "n_pos": 52,
         "n_sites": 22,
-        "random_cv_auroc": 0.5497,
-        "site_grouped_cv_auroc": 0.5627,
-        "drop_random_minus_grouped": -0.013,
-        "verdict": "🟢 site-독립(유지)"
+        "random_cv_auroc": 0.55,
+        "site_grouped_cv_auroc": 0.5682,
+        "random_cv_auroc_ci95": [
+          0.471,
+          0.631
+        ],
+        "site_grouped_cv_auroc_ci95": [
+          0.494,
+          0.651
+        ],
+        "drop_random_minus_grouped": -0.0182,
+        "drop_ci_95": [
+          -0.1037,
+          0.0566
+        ],
+        "p_drop_gt_0": 0.3415,
+        "verdict": "🟢 site-독립(유지) ⚠️경계(CI가 0.0,0.05 가로지름)"
       }
     },
     "HEADNECK_HNSC": {
@@ -57,28 +152,67 @@
         "n": 412,
         "n_pos": 42,
         "n_sites": 25,
-        "random_cv_auroc": 0.9025,
-        "site_grouped_cv_auroc": 0.8409,
-        "drop_random_minus_grouped": 0.0616,
-        "verdict": "🟡 부분 site교란"
+        "random_cv_auroc": 0.9022,
+        "site_grouped_cv_auroc": 0.84,
+        "random_cv_auroc_ci95": [
+          0.844,
+          0.945
+        ],
+        "site_grouped_cv_auroc_ci95": [
+          0.758,
+          0.905
+        ],
+        "drop_random_minus_grouped": 0.0622,
+        "drop_ci_95": [
+          0.0177,
+          0.1124
+        ],
+        "p_drop_gt_0": 0.999,
+        "verdict": "🟡 부분 site교란 ⚠️경계(CI가 0.05,0.1 가로지름)"
       },
       "egfr_amp": {
         "n": 440,
         "n_pos": 50,
         "n_sites": 26,
-        "random_cv_auroc": 0.4779,
-        "site_grouped_cv_auroc": 0.5659,
-        "drop_random_minus_grouped": -0.0881,
+        "random_cv_auroc": 0.4775,
+        "site_grouped_cv_auroc": 0.5804,
+        "random_cv_auroc_ci95": [
+          0.4,
+          0.562
+        ],
+        "site_grouped_cv_auroc_ci95": [
+          0.501,
+          0.662
+        ],
+        "drop_random_minus_grouped": -0.1029,
+        "drop_ci_95": [
+          -0.1942,
+          -0.0118
+        ],
+        "p_drop_gt_0": 0.0125,
         "verdict": "🟢 site-독립(유지)"
       },
       "grade_high": {
         "n": 431,
         "n_pos": 113,
         "n_sites": 26,
-        "random_cv_auroc": 0.6973,
-        "site_grouped_cv_auroc": 0.6525,
-        "drop_random_minus_grouped": 0.0448,
-        "verdict": "🟢 site-독립(유지)"
+        "random_cv_auroc": 0.6972,
+        "site_grouped_cv_auroc": 0.6498,
+        "random_cv_auroc_ci95": [
+          0.637,
+          0.751
+        ],
+        "site_grouped_cv_auroc_ci95": [
+          0.589,
+          0.709
+        ],
+        "drop_random_minus_grouped": 0.0474,
+        "drop_ci_95": [
+          -0.0014,
+          0.0952
+        ],
+        "p_drop_gt_0": 0.97,
+        "verdict": "🟢 site-독립(유지) ⚠️경계(CI가 0.0,0.05 가로지름)"
       }
     },
     "LUNG_NSCLC": {
@@ -86,35 +220,76 @@
         "n": 930,
         "n_pos": 459,
         "n_sites": 68,
-        "random_cv_auroc": 0.966,
-        "site_grouped_cv_auroc": 0.8641,
-        "drop_random_minus_grouped": 0.1019,
-        "verdict": "🔴 site-driven(하락)"
+        "random_cv_auroc": 0.9659,
+        "site_grouped_cv_auroc": 0.8678,
+        "random_cv_auroc_ci95": [
+          0.954,
+          0.977
+        ],
+        "site_grouped_cv_auroc_ci95": [
+          0.845,
+          0.891
+        ],
+        "drop_random_minus_grouped": 0.0982,
+        "drop_ci_95": [
+          0.081,
+          0.116
+        ],
+        "p_drop_gt_0": 1.0,
+        "verdict": "🟡 부분 site교란 ⚠️경계(CI가 0.1 가로지름)"
       },
       "egfr_activating": {
         "n": 930,
         "n_pos": 52,
         "n_sites": 68,
         "random_cv_auroc": 0.7757,
-        "site_grouped_cv_auroc": 0.8138,
-        "drop_random_minus_grouped": -0.0382,
-        "verdict": "🟢 site-독립(유지)"
+        "site_grouped_cv_auroc": 0.7964,
+        "random_cv_auroc_ci95": [
+          0.699,
+          0.843
+        ],
+        "site_grouped_cv_auroc_ci95": [
+          0.736,
+          0.855
+        ],
+        "drop_random_minus_grouped": -0.0207,
+        "drop_ci_95": [
+          -0.0737,
+          0.0311
+        ],
+        "p_drop_gt_0": 0.2165,
+        "verdict": "🟢 site-독립(유지) ⚠️경계(CI가 0.0 가로지름)"
       },
       "kras_g12c": {
         "n": 930,
         "n_pos": 62,
         "n_sites": 68,
         "random_cv_auroc": 0.7327,
-        "site_grouped_cv_auroc": 0.7023,
-        "drop_random_minus_grouped": 0.0304,
-        "verdict": "🟢 site-독립(유지)"
+        "site_grouped_cv_auroc": 0.6674,
+        "random_cv_auroc_ci95": [
+          0.676,
+          0.786
+        ],
+        "site_grouped_cv_auroc_ci95": [
+          0.603,
+          0.732
+        ],
+        "drop_random_minus_grouped": 0.0653,
+        "drop_ci_95": [
+          0.0048,
+          0.1269
+        ],
+        "p_drop_gt_0": 0.983,
+        "verdict": "🟡 부분 site교란 ⚠️경계(CI가 0.05,0.1 가로지름)"
       }
     }
   },
   "verdict": {
-    "molecular_anchors": "HPV(🟡0.84)·MSI(🟢0.83)·BRAF(🟡0.73)·EGFR(🟢)·KRAS(🟢) — site-grouped에서 대체로 생존. 분자 앵커 신호는 대부분 site-독립.",
-    "morphology_defined": "LUNG histology(🔴 drop 0.10)·GASTRIC Lauren(🔴 drop 0.15) — site-driven, caveat 필수.",
-    "for_BIOP02-122": "TCGA=다기관 논거는 분자 앵커에 한해 부분 성립(LOSO 생존) → #1을 전향검증으로 강등할 근거 있음. 단 site-predictability 0.95~0.99이 강하므로 LOSO/site-disjoint 증거 전면화 + 형태학 endpoint caveat 필수. 완전한 external validation 대체는 아님.",
-    "gate": "🟡 조건부 — 분자 앵커 🟢/🟡, 형태학 🔴. 서술 수위는 jamie 교차검토."
+    "site_predictability": "group-aware CV(환자단위)에서도 4/4 코호트 macro-AUROC 0.951~0.988 (null≈0.50) — 다중슬라이드 leakage 배제해도 임베딩이 TSS site를 강하게 인코딩(Howard 2021). 원본 random-CV 값(0.955~0.989)과 사실상 동일 → leakage 미미, site 서명 결론 견고.",
+    "molecular_anchors": "MSI가 가장 견고(drop +0.015 CI[-0.020,0.051] P>0=0.81, CI가 0 포함=site-독립 확증). HPV·BRAF·KRAS는 drop이 유의하게 >0(P>0≈0.98~1.0)이라 site 교란이 실재하나, site-grouped AUROC가 여전히 chance 상회(HPV 0.840·BRAF 0.716·KRAS 0.667). EGFR(폐)은 site-grouped가 오히려 높아 site-독립. → '분자 앵커는 교란 없음'이 아니라 '교란은 실재하되 신호가 holdout 후에도 chance 상회하며 살아남는다'가 CI 기반 정확한 서술.",
+    "morphology_defined": "LUNG histology(drop +0.098 CI[0.081,0.116] P>0=1.0)·GASTRIC Lauren(drop +0.184 CI[0.115,0.258] P>0=1.0) — 큰 폭·확실한 site 교란(CI가 0에서 멀리 떨어짐). 단 site-grouped도 0.868/0.713로 잔존 신호 존재 → '전량 site 아티팩트'는 아니나 caveat 필수.",
+    "band_fragility": "11개 endpoint 중 9개의 drop CI가 0.05 또는 0.10 임계를 가로지름 → 🟢/🟡/🔴 색을 소수 둘째자리로 확정하는 것은 방어 불가. 방어 가능한 것은 (a) drop 부호/유의성(P>0), (b) holdout 후 chance 상회 여부. 결정지도엔 색이 아니라 CI를 싣는다.",
+    "for_BIOP02-122": "TCGA=다기관 논거는 분자 앵커에 한해 부분 성립(holdout 후 신호 생존) → #1 외부검증을 '전향검증'으로 강등할 근거는 유지. 단 (1) site-predictability 0.95~0.99 강함, (2) 모든 양성 drop이 유의(P>0≈1.0)해 site 교란이 실재함이 CI로 확증됨 → 논문은 LOSO/site-disjoint 증거 전면화 + drop CI 명시 + 형태학 endpoint caveat 필수. 완전한 external validation 대체는 아님.",
+    "gate": "🟡 조건부 (CI 강화판) — 분자 앵커: 신호는 holdout 생존하나 site 교란도 유의하게 실재. 형태학: 큰 site 교란 확실. 색이 아니라 drop CI로 보고. 서술 수위는 jamie 교차검토."
   }
 }

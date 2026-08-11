@@ -5,28 +5,67 @@
       "n": 412,
       "n_pos": 42,
       "n_sites": 25,
-      "random_cv_auroc": 0.9025,
-      "site_grouped_cv_auroc": 0.8409,
-      "drop_random_minus_grouped": 0.0616,
-      "verdict": "🟡 부분 site교란"
+      "random_cv_auroc": 0.9022,
+      "site_grouped_cv_auroc": 0.84,
+      "random_cv_auroc_ci95": [
+        0.844,
+        0.945
+      ],
+      "site_grouped_cv_auroc_ci95": [
+        0.758,
+        0.905
+      ],
+      "drop_random_minus_grouped": 0.0622,
+      "drop_ci_95": [
+        0.0177,
+        0.1124
+      ],
+      "p_drop_gt_0": 0.999,
+      "verdict": "🟡 부분 site교란 ⚠️경계(CI가 0.05,0.1 가로지름)"
     },
     "egfr_amp": {
       "n": 440,
       "n_pos": 50,
       "n_sites": 26,
-      "random_cv_auroc": 0.4779,
-      "site_grouped_cv_auroc": 0.5659,
-      "drop_random_minus_grouped": -0.0881,
+      "random_cv_auroc": 0.4775,
+      "site_grouped_cv_auroc": 0.5804,
+      "random_cv_auroc_ci95": [
+        0.4,
+        0.562
+      ],
+      "site_grouped_cv_auroc_ci95": [
+        0.501,
+        0.662
+      ],
+      "drop_random_minus_grouped": -0.1029,
+      "drop_ci_95": [
+        -0.1942,
+        -0.0118
+      ],
+      "p_drop_gt_0": 0.0125,
       "verdict": "🟢 site-독립(유지)"
     },
     "grade_high": {
       "n": 431,
       "n_pos": 113,
       "n_sites": 26,
-      "random_cv_auroc": 0.6973,
-      "site_grouped_cv_auroc": 0.6525,
-      "drop_random_minus_grouped": 0.0448,
-      "verdict": "🟢 site-독립(유지)"
+      "random_cv_auroc": 0.6972,
+      "site_grouped_cv_auroc": 0.6498,
+      "random_cv_auroc_ci95": [
+        0.637,
+        0.751
+      ],
+      "site_grouped_cv_auroc_ci95": [
+        0.589,
+        0.709
+      ],
+      "drop_random_minus_grouped": 0.0474,
+      "drop_ci_95": [
+        -0.0014,
+        0.0952
+      ],
+      "p_drop_gt_0": 0.97,
+      "verdict": "🟢 site-독립(유지) ⚠️경계(CI가 0.0,0.05 가로지름)"
     }
   }
 }
