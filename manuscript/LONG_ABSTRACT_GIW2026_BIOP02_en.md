@@ -1,58 +1,50 @@
 # When is it safe to replace a molecular test with H&E? A cost-of-substitution frame across five cancers
 
-*Two-page long abstract, GIW/ISCB-Asia 2026. Blind: no author, affiliation or funding is given. All numbers are measured and traceable to the full manuscript.*
+*GIW/ISCB-Asia 2026 two-page long abstract. Blinded — no authors, affiliations or funding. All values are measured and traceable to the source manuscript.*
 
-## The gap
+## Introduction
 
-H&E histology can be mined for molecular status, and the field has shown this repeatedly for microsatellite instability, mutations and expression subtypes. Reported performance, however, is silent on the question a clinic actually faces: if the prediction is wrong, which treatment does the patient receive instead. The same AUROC carries very different consequences depending on where the error lands. Predictability and substitutability are two claims, and only the second licenses replacing a test.
+Predicting molecular status from H&E histology is a well-developed field. Microsatellite instability, mutations and expression subtypes have been predicted repeatedly by deep learning. The performance that gets reported, however, does not answer the question the clinic actually faces: when the prediction is wrong, which treatment does the patient receive instead? At the same AUROC, the clinical consequence differs by where the errors fall. Predictability and substitutability are different claims, and only the second licenses replacing a test.
 
-## The frame
+We define cost of substitution as the confusion matrix weighted by treatment distance. Each prediction error is then converted into a departure from treatment assignment under a routing fixed in advance, with a distance-free misassignment rate as the headline measure. The definition does not predict drug response; it measures only the cost incurred at the point of assignment when a marker call is wrong. Applied endpoint by endpoint, it separates axes that can be substituted cheaply from those that cannot, and — most importantly — isolates the axes that cannot be decided with the data at hand.
 
-We define substitution cost by multiplying the confusion matrix by therapeutic distance, so that every prediction error becomes a displacement in treatment assignment under a routing fixed in advance. The lead indicator is the distance-independent misroute rate. The frame does not predict drug response; it measures only what a wrong marker call costs at the point of assignment. Applied axis by axis, it separates axes that can be substituted cheaply from axes that cannot, and, critically, from axes the data cannot yet decide.
+## Methods
 
-## Design
+One pre-registered protocol was applied identically across five cancers. Breast (TCGA-BRCA, approximately 1,010 diagnostic slides) served as the anchor, analysed together with lung, colorectal, gastric and head and neck. Slides were tiled at 256×256 under 20× magnification with Otsu tissue segmentation, capped at 5,000 tiles per patient. Embeddings came from UNI v1 (1024-dimensional) and patient-level scores from CLAM-SB attention MIL. Evaluation was performed only on a site-disjoint holdout, so that slides from the same institution never appeared in both training and evaluation.
 
-Five cancers under one pre-registered protocol: breast (TCGA-BRCA, ~1,010 diagnostic slides) as anchor, plus lung (1,026), colorectal (523), gastric (439) and head and neck (468). Slides were tiled at 20x into 256x256 patches with Otsu tissue selection, capped at 5,000 tiles per patient, and embedded with UNI v1 (1024-d). Patient scores came from CLAM-SB attention MIL. Evaluation used a site-disjoint holdout, so slides from one tissue source site never appear in both training and evaluation. Every endpoint carries three controls: a five-seed label-shuffled null (chance-exclusion requires real AUROC > null mean + 2 SD), a prevalence baseline, and a subtype-only or pixel-mean baseline. Confidence intervals are 1,000-fold bootstrap. Adjudication thresholds come only from a sealed pre-registration, including the power rule that fewer than 25 holdout positives leaves an axis undecided.
+Three controls were applied to every endpoint: a five-seed label-shuffled null (the observed AUROC must exceed the null mean plus two standard deviations), a prevalence baseline, and baselines using subtype alone or pixel mean alone. Confidence intervals are 1,000-fold bootstrap. Decision thresholds are quoted only from the sealed pre-registration document, which also contains the power rule that leaves any endpoint with fewer than 25 holdout positives undecided.
 
-## What survived
+## Results
 
-Of about fifteen axes, **one** powered, non-control confirmation emerged.
+Of roughly fifteen endpoints, exactly **one** non-control confirmation was adequately powered.
 
-| Axis | AUROC | Positives | Verdict |
+| Endpoint | AUROC | Holdout positives | Verdict |
 |---|---|---|---|
-| Head and neck HPV | 0.959 [0.921-0.986] | 26 | **Confirmed** (single FM family; see limits) |
-| Lung LUSC histology | 0.939 [0.905-0.967] | 153 | Positive control, **disqualified by audit** |
-| Gastric MSI-H | 0.860 | 24 | Undecided, one positive short |
-| Lung KRAS-G12C | 0.681 | 14 | Undecided; below a no-image baseline (0.793) |
-| Gastric ERBB2 amp. | 0.644 | 14 | No signal (shuffle-null 0.641) |
-| Breast HER2 | 0.599 | near chance | **Negative anchor** |
+| Head and neck HPV | 0.959 [0.921–0.986] | 26 | **Confirmed** (single FM family) |
+| Lung LUSC histology | 0.939 [0.905–0.967] | 153 | Positive control, disqualified by audit |
+| Gastric MSI-H | 0.860 | 24 | Undecided (one short of threshold) |
+| Lung KRAS-G12C | 0.681 | 14 | Undecided |
+| Gastric ERBB2 amplification | 0.644 | 14 | No signal (null 0.641) |
+| Breast HER2 | 0.599 | 88 | **Negative anchor** |
 
-Head and neck HPV is the only axis where substitution can even be discussed. It is shaped by a viral infection with a real morphological correlate (non-keratinising, basaloid), which extends the frame's "morphological correlate" clause to a new kind of alteration. Even here the result is qualified: chance-exclusion passed in UNI and UNI2-h but failed in Virchow2 (0.9199 against a threshold of 0.9234), and the site audit found label-site structure at Cramer's V = 0.378.
+Head and neck HPV is the only endpoint where substitution can be discussed at all. It is an axis created by viral infection rather than mutation, with real morphological correlates (non-keratinising, basaloid), showing that the frame's "morphological correlate" clause extends to a new class of alteration. The confirmation still carries limits: chance exclusion passed under UNI and UNI2-h but failed under Virchow2 (0.9199 against a threshold of 0.9234), and the site audit found structure between label and institution (Cramér's V = 0.378).
 
-## What the audit disqualified
+**Site-confounding audit.** The frame disqualifies our own best-looking result. Lung histology scored 0.939, the highest positive control in this study. The audit returned V(site, label) = 1.000: TCGA institution codes coincide exactly with LUAD/LUSC status. Morphological signal and site signature cannot be separated, so a result that conventional evaluation would report as a success is classified here as undecidable. Lung KRAS-G12C shows the same problem from the other side. It scored 0.681, but a baseline using histology alone and no image at all reaches 0.793. With 14 holdout positives this endpoint is undecided under our rule, so the contrast is recorded as an observation and no mechanistic conclusion is attached.
 
-The frame earns its keep by removing a result that looked good. Lung histology scored 0.939, the highest positive control in the study. The site audit then gave V(site, label) = 1.000: TCGA institution codes coincide perfectly with LUAD/LUSC status, so morphology cannot be separated from the site signature. A number that would ordinarily be reported as a success is instead reported as undecidable.
+**Negative control.** In the breast anchor, anti-HER2 routing based on H&E-predicted subtype misassigned every candidate (misassignment rate 1.00). Endpoint-level costs invert between endocrine therapy and chemotherapy depending on the routing scheme (0.378 versus 0.035; 0.105 versus 0.510). What survives a change of scheme is only the anti-HER2 misassignment rate and the fact that the headline contrast's confidence interval excludes zero. The operating-point analysis that would fix these thresholds in advance is not yet complete, so the misassignment rate is reported but not extended into a safety verdict. Linking actual treatment outcome gave the same direction: in an exploratory check on an external pCR cohort the anti-HER2 axis did not stratify pathological complete response (0.533 [0.411–0.653]), short of the 0.80 [0.69–0.88] reported by a model based on measured HER2. This is outcome confirmation, not independent validation.
 
-Lung KRAS-G12C shows the same lesson from the other side. It reached 0.681, but a baseline using no image at all, predicting from histology type alone, reached 0.793. With 14 holdout positives this axis is undecided under our own rule, so we record the contrast as an observation and draw no mechanistic conclusion from it.
+**Power.** Most clinically important endpoints did not meet the pre-registered decision criterion: lung EGFR 15, lung KRAS 14, gastric ERBB2 14, gastric MSI-H 24, gastric EBV 7 and head and neck EGFR amplification 17, against a threshold of 25. Gastric MSI fell one patient short and the threshold was not lowered.
 
-## The negative anchor
+## Discussion
 
-In the breast anchor, anti-HER2 routing from H&E-predicted subtype misassigned every candidate (misroute rate 1.00). Per-axis cost flips between endocrine and chemotherapy depending on the routing scheme (0.378 versus 0.035; 0.105 versus 0.510), so only the anti-HER2 rate and the confidence interval of the headline contrast are robust to that choice. The operating-point analysis that would fix these thresholds in advance is not yet complete, and we therefore report the misroute rate without extending it into a safety verdict.
+All results are retrospective, cohort-level and hypothesis-level. A site-disjoint split blocks leakage but does not block confounding; the coupling between label and institution remains and was quantified in five endpoints. Across three foundation models the ordering of the lung endpoints and the principal negative results were preserved, but whether an individual endpoint cleared chance exclusion varied by model, and **no endpoint cleared it under all three.** This is ordering stability, not model independence.
 
-Attaching a real treatment outcome gave the same answer. In an exploratory check on an external pCR cohort, the anti-HER2 axis did not stratify pathological complete response (0.533 [0.411-0.653]), short of the 0.80 [0.69-0.88] benchmark reported for a measured-HER2 model. This is an outcome check, not independent validation.
+## Conclusion
 
-Most clinically actionable axes never reached decidability: lung EGFR 15 positives, lung KRAS 14, gastric ERBB2 14, gastric MSI-H 24, gastric EBV 7, head and neck EGFR amplification 17, against a pre-registered threshold of 25. Gastric MSI came one patient short and the criterion was not lowered.
-
-## Limits
-
-All results are retrospective, cohort-level and hypothesis-level. Site-disjoint splitting blocks leakage but not confounding: label-site coupling remains, and was quantified in five endpoints. Across three foundation models the ordering of lung endpoints was preserved and the negative results reproduced, but whether an individual axis clears chance-exclusion varied by model, and no single cell of the map passed in all three. This is ordering stability, not model independence.
-
-## Why this matters
-
-The contribution is not a better predictor. It is a way of asking, per axis, whether substitution is safe, and of saying plainly which axes the available data cannot decide. Applied here, the answer is that one axis held and the rest still need the molecular test itself rather than an AI substitute. The same instrument is what makes a negative result reportable and an apparently strong result reviewable, and it transfers directly to any group proposing an H&E surrogate for a molecular assay.
+The contribution of this study is not a better predictor. It is a procedure for asking, endpoint by endpoint, whether substitution is safe, and for reporting the axes that cannot be decided with current data as undecided. Applied here, one endpoint survived; for the rest, the molecular test itself is required rather than an AI prediction. The same procedure makes negative results reportable and requires further scrutiny even of high performance. It transfers directly to any study proposing an H&E surrogate.
 
 ---
 
-**Fig 1.** Observed substitution-cost map: misassignment loss overlaid on the confusion matrix weighted by therapeutic distance, per axis and cancer.
+**Figure 1.** Observed cost-of-substitution map. Misassignment loss overlaid on the treatment-distance-weighted confusion matrix, by cancer and endpoint.
 
-**Fig 2.** Power ceiling: holdout positives per axis against the pre-registered decidability threshold of 25, showing which axes are negative and which are merely undecided.
+**Figure 2.** The power ceiling. Holdout positive counts per endpoint against the pre-registered decision threshold of 25.
