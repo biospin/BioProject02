@@ -1,0 +1,110 @@
+{
+  "msi_h": {
+    "label": "msi_h (MANTIS/MSIsensor 불일치 제외)",
+    "n_holdout_before": 107,
+    "n_excluded": 0,
+    "n_holdout_after": 107,
+    "auroc_before": 0.8602,
+    "ci95_before": [
+      0.768,
+      0.9357
+    ],
+    "auroc_after": 0.8602,
+    "ci95_after": [
+      0.768,
+      0.9357
+    ],
+    "headline_auc_ci95": [
+      0.8599,
+      [
+        0.7592,
+        0.9408
+      ]
+    ],
+    "concordance": {
+      "n_both_scores": 437,
+      "n_agree": 436,
+      "n_disagree": 1,
+      "agreement_rate": 0.9977,
+      "cohens_kappa": 0.9925,
+      "disagree_case_ids": [
+        "TCGA-BR-8284"
+      ]
+    }
+  },
+  "LUNG_NSCLC.kras_g12c": {
+    "label": "LUNG_NSCLC/kras_g12c (VAF<0.10 양성 제외)",
+    "n_holdout_before": 271,
+    "n_excluded": 1,
+    "n_holdout_after": 270,
+    "auroc_before": 0.6809,
+    "ci95_before": [
+      0.5688,
+      0.7843
+    ],
+    "auroc_after": 0.6983,
+    "ci95_after": [
+      0.6021,
+      0.7968
+    ],
+    "headline_auc_ci95": [
+      0.6809,
+      [
+        0.577,
+        0.7825
+      ]
+    ],
+    "n_low_vaf_positive_total": 1,
+    "n_low_vaf_positive_in_holdout": 1
+  },
+  "LUNG_NSCLC.egfr_activating": {
+    "label": "LUNG_NSCLC/egfr_activating (VAF<0.10 양성 제외)",
+    "n_holdout_before": 271,
+    "n_excluded": 1,
+    "n_holdout_after": 270,
+    "auroc_before": 0.8514,
+    "ci95_before": [
+      0.7306,
+      0.955
+    ],
+    "auroc_after": 0.8408,
+    "ci95_after": [
+      0.7101,
+      0.9469
+    ],
+    "headline_auc_ci95": [
+      0.8518,
+      [
+        0.7247,
+        0.953
+      ]
+    ],
+    "n_low_vaf_positive_total": 1,
+    "n_low_vaf_positive_in_holdout": 1
+  },
+  "COLORECTAL.braf_v600e": {
+    "label": "COLORECTAL/braf_v600e (VAF<0.10 양성 제외)",
+    "n_holdout_before": 151,
+    "n_excluded": 0,
+    "n_holdout_after": 151,
+    "auroc_before": 0.8676,
+    "ci95_before": [
+      0.7857,
+      0.9404
+    ],
+    "auroc_after": 0.8676,
+    "ci95_after": [
+      0.7857,
+      0.9404
+    ],
+    "headline_auc_ci95": [
+      0.8676,
+      [
+        0.7798,
+        0.9384
+      ]
+    ],
+    "n_low_vaf_positive_total": 0,
+    "n_low_vaf_positive_in_holdout": 0
+  }
+}
