@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""long abstract 수치 검증 — 엔드포인트 귀속 대조.
+r"""long abstract 수치 검증 — 엔드포인트 귀속 대조.
+
+정규식 주의: \w 는 유니코드라 한글을 포함한다. (?![\w]) 를 쓰면 "25명" "3종"
+"1,010장" 처럼 한글 단위가 붙은 숫자가 통째로 미검사로 빠진다 — 표 안의 숫자만
+검사되고 산문은 거의 안 보게 된다. 영숫자만 차단한다.
 
 TOL=0.004: 초록은 소수 3자리, 정본 JSON 은 4자리라 정확일치로는 안 맞는다.
 정본 드리프트 체커(check_number_drift.py)와 같은 허용오차를 쓴다.
@@ -111,26 +115,39 @@ def main():
     t = io.open(TARGET, encoding="utf-8").read()
 
     missing, checked, skipped = [], 0, 0
+    last_ep = None
+    NUM = r"(?<![0-9A-Za-z_.])(\d+(?:,\d{3})*(?:\.\d+)?)(?![0-9A-Za-z_])"
     for ln_no, line in enumerate(t.split("\n"), 1):
         if line.startswith("#") or line.startswith("*GIW"):
             continue
-        ep = match_ep(line)
-        nums = [m for m in re.finditer(r"(?<![\w.])(\d+(?:,\d{3})*(?:\.\d+)?)(?![\w])", line)]
-        if not nums:
-            continue
-        if not ep:
-            skipped += len(nums)
-            continue
-        allow = by.get(ep, set())
-        for m in nums:
-            raw = m.group(1)
-            if raw in WHITELIST:
+        # 줄 전체를 한 엔드포인트에 귀속시키면 한 줄에 여러 엔드포인트가 있을 때
+        # 나머지가 전부 오탐이 된다. 문장(표는 셀) 단위로 쪼갠다.
+        if line.strip().startswith("|"):
+            units = [c for c in line.split("|") if c.strip()]
+        else:
+            sents = re.split(r"(?<=[.。])\s+|(?<=다[.])\s*", line)
+            units = [u for s in sents for u in re.split(r"[,،]\s*", s)]
+        for unit in units:
+            nums = list(re.finditer(NUM, unit))
+            hit = match_ep(unit)
+            if hit:
+                last_ep = hit          # 문맥 갱신
+            if not nums:
                 continue
-            v = float(raw.replace(",", ""))
-            checked += 1
-            if not any(abs(v - a) <= TOL for a in allow):
-                i = m.start()
-                missing.append((ln_no, ep, raw, line.strip()[max(0, i - 35):i + 35]))
+            ep = hit or last_ep        # 없으면 직전 엔드포인트 승계
+            if not ep:
+                skipped += len(nums)
+                continue
+            allow = by.get(ep, set())
+            for m in nums:
+                raw = m.group(1)
+                if raw in WHITELIST:
+                    continue
+                val = float(raw.replace(",", ""))
+                checked += 1
+                if not any(abs(val - a) <= TOL for a in allow):
+                    i = m.start()
+                    missing.append((ln_no, ep, raw, unit.strip()[max(0, i - 35):i + 35]))
 
     print(f"엔드포인트 귀속 완료: {len(by)}개")
     print(f"대조한 수치 {checked}건 · 엔드포인트 미특정으로 건너뜀 {skipped}건")
