@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """long abstract 수치 검증 — 엔드포인트 귀속 대조.
 
+TOL=0.004: 초록은 소수 3자리, 정본 JSON 은 4자리라 정확일치로는 안 맞는다.
+정본 드리프트 체커(check_number_drift.py)와 같은 허용오차를 쓴다.
+
 v1 은 무력했다. 정본 JSON·markdown 의 모든 숫자를 한 집합으로 합쳐 "코퍼스
 어딘가에 있으면 통과"로 만들었더니, 지어낸 값(유방 HER2 n_pos=88)도 코퍼스
 어딘가에 88이 있다는 이유로 통과했다. 검사한 건 많은데 대조한 게 없었다.
@@ -15,17 +18,22 @@ v2 는 줄이 말하는 엔드포인트를 먼저 특정하고, 그 엔드포인
 import io, os, re, json, glob, sys
 
 ROOT = "/home/gglee/project/BioProject02"
+TOL = 0.004  # 반올림 허용오차 (check_number_drift.py 와 동일)
 TARGET = os.path.join(ROOT, "manuscript/LONG_ABSTRACT_GIW2026_BIOP02_ko.md")
 
 # 줄에 이 말이 있으면 해당 엔드포인트로 귀속
 KW = [
+    # 대장암 — '대장암 MSI-high' 가 'msi-h' 를 포함하므로 위암 규칙보다 먼저 둔다
+    (("대장암 anti-egfr", "anti_egfr"), "anti_egfr"),
+    (("대장암 msi-high", "msi_high"), "msi_high"),
+    (("대장암 braf", "braf"), "braf_v600e"),
     (("두경부암 hpv", "hpv"), "hpv_pos"),
-    (("lusc", "폐암 조직학적 아형", "폐암 lusc"), "histology_lusc"),
-    (("위암 msi", "msi-h"), "msi_h"),
+    (("lusc", "폐암 조직학적 아형", "폐암 lusc", "histology_lusc"), "histology_lusc"),
+    (("위암 msi", "msi-h", "msi_h"), "msi_h"),
     (("kras",), "kras_g12c"),
     (("erbb2",), "erbb2_amp"),
-    (("폐암 egfr", "egfr 활성"), "egfr_activating"),
-    (("두경부암 egfr", "egfr 증폭"), "egfr_amp"),
+    (("폐암 egfr", "egfr 활성", "egfr_activating"), "egfr_activating"),
+    (("두경부암 egfr", "egfr 증폭", "egfr_amp"), "egfr_amp"),
     (("ebv",), "ebv"),
     (("유방암 her2", "항her2", "유방 | her2", "유방(anchor) | her2"), "_breast_her2"),
 ]
@@ -120,7 +128,7 @@ def main():
                 continue
             v = float(raw.replace(",", ""))
             checked += 1
-            if round(v, 4) not in allow:
+            if not any(abs(v - a) <= TOL for a in allow):
                 i = m.start()
                 missing.append((ln_no, ep, raw, line.strip()[max(0, i - 35):i + 35]))
 
