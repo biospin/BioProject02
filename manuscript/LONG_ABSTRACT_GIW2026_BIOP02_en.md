@@ -35,7 +35,7 @@ The frame earns its keep by removing a result that looked good. Lung histology s
 
 Lung KRAS-G12C shows the same lesson from the other side. It reached 0.681, but a baseline using no image at all, predicting from histology type alone, reached 0.793. With 14 holdout positives this axis is undecided under our own rule, so we record the contrast as an observation and draw no mechanistic conclusion from it.
 
-## What failed, honestly
+## The negative anchor
 
 In the breast anchor, anti-HER2 routing from H&E-predicted subtype misassigned every candidate (misroute rate 1.00). Per-axis cost flips between endocrine and chemotherapy depending on the routing scheme (0.378 versus 0.035; 0.105 versus 0.510), so only the anti-HER2 rate and the confidence interval of the headline contrast are robust to that choice. The operating-point analysis that would fix these thresholds in advance is not yet complete, and we therefore report the misroute rate without extending it into a safety verdict.
 
@@ -43,7 +43,7 @@ Attaching a real treatment outcome gave the same answer. In an exploratory check
 
 Most clinically actionable axes never reached decidability: lung EGFR 15 positives, lung KRAS 14, gastric ERBB2 14, gastric MSI-H 24, gastric EBV 7, head and neck EGFR amplification 17, against a pre-registered threshold of 25. Gastric MSI came one patient short and the criterion was not lowered.
 
-## Limits, stated in front
+## Limits
 
 All results are retrospective, cohort-level and hypothesis-level. Site-disjoint splitting blocks leakage but not confounding: label-site coupling remains, and was quantified in five endpoints. Across three foundation models the ordering of lung endpoints was preserved and the negative results reproduced, but whether an individual axis clears chance-exclusion varied by model, and no single cell of the map passed in all three. This is ordering stability, not model independence.
 
