@@ -1,55 +1,57 @@
 {
   "schema_version": "0.1",
-  "created_at": "2026-07-27T14:22:38.736599Z",
-  "commit_hash": "2b1b8eb3b2ad3e9635ca01afec93c766809eaec6",
+  "created_at": "2026-08-10T00:00:00Z",
+  "commit_hash": "5e306f1798e8430d569ec9f8d732c25e5794d9ab",
   "slide": {
-    "slide_id": "TCGA-3C-AALI-01Z-00-DX1",
-    "patient_id": "TCGA-3C-AALI",
+    "slide_id": "TCGA-AC-A23C-01Z-00-DX1",
+    "patient_id": "TCGA-AC-A23C",
     "cohort": "TCGA-BRCA"
   },
+  "embedding": {
+    "model": "UNI",
+    "feature_dim": 1024,
+    "n_tiles": 1082,
+    "tile_config": {
+      "tile_size": 256,
+      "target_mpp": 0.5,
+      "per_patient_cap": 5000
+    },
+    "coords_path": "/workspace/data/cache/biop02/brca/coords_v2/TCGA-AC-A23C-01Z-00-DX1.0E67C785-83D3-49AF-B600-FB5B909AE6ED_coords.npy",
+    "embedding_path": "/workspace/data/cache/biop02/uni_v1/TCGA-AC-A23C-01Z-00-DX1.0E67C785-83D3-49AF-B600-FB5B909AE6ED_uni_embeddings.npy"
+  },
   "phenotype": {
-    "model": "SlideMLP/CLAM-SB (BIOP02-39/46/53)",
+    "model": "SlideMLP/CLAM-SB (BIOP02-39/46/53, uni_v2)",
     "predictions": {
-      "er_status": "Positive",
-      "pr_status": "Positive",
-      "her2_status": "Positive",
-      "pam50": "HER2"
+      "er_status": { "prob_positive": 0.964342, "predicted_label": 1 },
+      "pr_status":  { "prob_positive": 0.895596, "predicted_label": 1 },
+      "her2_status":{ "prob_positive": 0.133109, "predicted_label": 0 },
+      "pam50": {
+        "LumA": 0.427144,
+        "LumB": 0.180946,
+        "Basal": 0.046902,
+        "HER2E": 0.100165,
+        "Normal": 0.244842
+      }
     }
   },
   "hypothesis": [
     {
       "rank": 1,
-      "drug_class": "Anti-HER2 therapy (TKI: lapatinib/afatinib class)",
-      "rationale": "HER2 양성 표현형은 표준 종양학 가이드라인상 항HER2 표적 치료 대상군으로 알려져 있음. BRCA 세포주 DepMap/GDSC 일관성 분석 결과: Spearman ρ=0.493 (2개 약물 매칭, 2개 both). (hypothesis_only — 개별 환자 처방 근거 아님, BIOP02-60 v1.0)",
-      "confidence": 0.5927,
-      "data_source": "both",
-      "supporting_endpoints": [
-        "her2_status"
-      ]
-    },
-    {
-      "rank": 2,
       "drug_class": "Endocrine therapy (SERM/aromatase inhibitor) ± CDK4/6 inhibitor",
       "rationale": "ER+·PR+ 표현형은 호르몬 수용체 경로 의존성과 연관된 아형으로 내분비 치료 계열이 표준적으로 고려됨. BRCA 세포주 일관성 분석(BIOP02-52): ET: ρ=0.1129 (2개), CDK4/6i: ρ=0.4768 (2개). (hypothesis_only — BIOP02-60 v1.0)",
       "confidence": 0.3448,
       "data_source": "both",
-      "supporting_endpoints": [
-        "er_status",
-        "pr_status"
-      ]
+      "supporting_endpoints": ["er_status", "pr_status"]
     }
   ],
   "claim_level": "hypothesis_only",
+  "critic_status": "pending",
   "confidence_source": "measured_rho",
   "generated_by": "jhans",
-  "critic_status": "pass",
   "critic_5_biological_plausibility": {
-    "status": "pass",
+    "status": "pending",
     "forbidden_phrase_violations": [],
     "direction_consistency_issues": [],
-    "note": "endocrine_rule.py v1.0 (BIOP02-60). consistency_scores.csv 실측 Spearman ρ 기반 (BIOP02-52). BIOP02-111.",
-    "reviewer": "braveji",
-    "reviewer_comment_id": "11569",
-    "reviewed_at": "2026-07-30"
+    "note": "슬라이드 교체(TCGA-3C-AALI→TCGA-AC-A23C) 및 스키마 교정(BIOP02-116)으로 재검증 대기. endocrine_rule.py v1.0 (BIOP02-60)."
   }
 }
