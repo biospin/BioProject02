@@ -1,0 +1,51 @@
+{
+  "verifier": "braveji (Critic 총괄)",
+  "date": "2026-08-19",
+  "target": "experiments/kkkim/20260710_cost_of_substitution/patient_routing_cost.json",
+  "owner": "kkkim",
+  "owner_ne_reviewer": true,
+  "target_commit": "83da89d (Fig3 PAM50 라우팅 CI 환자단위 + 인덱스 CSV 커밋)",
+  "method": "생산 스크립트 미호출. 커밋 예측 CSV + therapeutic_distance.json 에서 라우팅·비용 규칙을 재구현해 산출 후 대조. cost 컬럼도 읽지 않고 규칙에서 재생성(순환 방지).",
+  "items_checked": 25,
+  "items_matched": 25,
+  "all_match": true,
+  "precheck_rule_vs_stored_cost_max_diff": 0.0,
+  "headline": {
+    "value": 0.3396,
+    "ci95_patient": [
+      0.2508,
+      0.4254
+    ],
+    "method": "patient-cluster bootstrap (B=5000, seed=42)",
+    "n_slides": 382,
+    "n_patients": 115,
+    "excludes_zero": true,
+    "slide_level_deprecated": [
+      0.2765,
+      0.4004
+    ]
+  },
+  "per_axis_ci95_patient": {
+    "endocrine": [
+      0.307,
+      0.4436
+    ],
+    "antiHER2": [
+      0.6583,
+      0.765
+    ],
+    "chemo": [
+      0.0478,
+      0.1647
+    ]
+  },
+  "pitfalls_for_next_reviewer": [
+    "예측 파일이 둘이다 — JSON 이 쓰는 것은 pam50_clam_mb_uni_v1(5-class). _4class 로 계산하면 per-axis n 은 맞고 cost 만 전부 어긋나 '거의 맞는' 착시가 생긴다.",
+    "무치료(Normal-like 예측) 페널티는 '전역 최대 0.765'다. JSON note 의 '최대페널티'가 true 축 기준 최대로도 읽혀, 그렇게 읽으면 endocrine 만 0.357 vs 0.378 로 어긋난다(차이 0.07 = 0.765-0.695)."
+  ],
+  "documentation_recommendation": "JSON note 에 무치료 페널티 정의(전역 최대 0.765)를 명시하면 재현자가 두 해석 사이에서 헤매지 않는다.",
+  "verdict": "pass",
+  "scope": "Fig 3 PAM50 라우팅 축의 환자단위 CI. receptor 축은 2026-07-27 별도 서명(19/19).",
+  "claim_level": "hypothesis_only",
+  "jira": "BIOP02-75 / BIOP02-91"
+}
