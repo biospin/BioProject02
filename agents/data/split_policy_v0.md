@@ -1,6 +1,6 @@
 # split_policy_v0 — TCGA-BRCA / CPTAC-BRCA Data Split Policy
 
-> **상태: data-owner LOCKED (2026-07-11, kkkim) — Critic cross-sign(braveji) pending.** data-owner가 fold 정의를 동결했고 `split_hash=5995f29d3978b831` 를 모든 `metrics.json`에 기록 완료. Critic 최종 서명(§9, owner≠reviewer)까지는 **완전한 lock 아님** — Critic-pass 게이트는 braveji 서명 후 개방.
+> **상태: data-owner LOCKED (2026-07-11, kkkim) + Critic cross-sign 완료(2026-07-13, braveji).** data-owner가 fold 정의를 동결했고 `split_hash=5995f29d3978b831` 를 모든 `metrics.json`에 기록 완료. §9 sign-off 양쪽(data-owner·Critic) 모두 완료되어 **완전한 lock** 상태 — Critic-pass 게이트 개방됨(Critic-pass 실험에 한함).
 > Sign-off 후 fold 정의를 **동결(lock)**, 정의 해시를 모든 `metrics.json`에 기록한다 (CLAUDE.md "locked after sign-off, no changes").
 >
 > 근거: Bussola 2020 (patient-level), Yagis 2021 (leakage 29–55% 부풀림), Howard 2021 (site signature + PreservedSiteCV).
@@ -139,7 +139,7 @@ split 정의(JSON: case_id → fold) → sha256 →  split_hash
 | **학습 manifest 정합** | UNI/CONCH/EXAONE embedding manifest(`/workspace/data/cache/biop02/`) 3종 dedup case_id→fold **1010/1010 일치, fold 불일치 0** (2026-07-11 검증) → sjpark 전 실험이 잠긴 split 사용 확인. |
 | 산출물 | `agents/data/manifests/split_policy_v0_folds.json`(case_id→fold 미러), `split_manifest_meta.json`(해시·balance) |
 | metrics.json stamping | 실 실험 14개 = `5995f29d3978b831`, `experiments/template` = placeholder (2026-07-11). |
-| ⚠️ 미완 | **Critic cross-sign(braveji)** — owner≠reviewer, data-owner가 self-review 불가. §9 참조. |
+| ✅ 완료 | **Critic cross-sign(braveji)** — 2026-07-13 signed, §9 lock criteria 전항 통과(BIOP02-41 cross-sign pass). §9 참조. |
 
 ---
 
