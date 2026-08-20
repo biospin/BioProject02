@@ -26,19 +26,27 @@ def load_uni(device):
     return m, tf
 
 
-def make_norm():
+def make_norm(mdev="cpu"):
+    # mdev="cpu"(기본, BRCA run 일관성) 또는 "cuda:N"(미래 교차암 대량 재추출 — 실측 5.6배 가속).
+    # 프로파일(2026-08-20): Macenko-CPU 324ms/타일이 병목(87%), GPU 17ms(19배). read(HDD) 51ms.
     import torchstain
     to255 = transforms.Compose([transforms.ToTensor(), transforms.Lambda(lambda x: x*255)])
     n = torchstain.normalizers.MacenkoNormalizer(backend="torch")
-    n.fit(to255(Image.open(REF_TILE).convert("RGB")))
-    return n, to255
+    ref = to255(Image.open(REF_TILE).convert("RGB"))
+    if mdev != "cpu":
+        ref = ref.to(mdev)
+    n.fit(ref)
+    return n, to255, mdev
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--shard", type=int, default=0)
     ap.add_argument("--nshards", type=int, default=3)
-    ap.add_argument("--device", default="cuda:0")
+    ap.add_argument("--device", default="cuda:0", help="UNI 추출 device")
+    ap.add_argument("--macenko-device", dest="macenko_device", default="cpu",
+                    help="Macenko 정규화 device. 기본 cpu(현 BRCA run 일관성). "
+                         "미래 교차암 대량 재추출은 cuda:N으로 ~5.6배 가속(프로파일 2026-08-20).")
     ap.add_argument("--batch_size", type=int, default=64)
     a = ap.parse_args()
 
@@ -48,7 +56,7 @@ def main():
     mine = [c for i, c in enumerate(cjs) if i % a.nshards == a.shard]
     dev = a.device if torch.cuda.is_available() else "cpu"
     model, tf = load_uni(dev)
-    normalizer, to255 = make_norm()
+    normalizer, to255, mdev = make_norm(a.macenko_device)
     log = HERE / f"queue_shard{a.shard}.log"
     def w(m):
         with open(log, "a") as f: f.write(m+"\n")
@@ -76,8 +84,11 @@ def main():
                 for x, y in coords[s:e]:
                     im = sl.read_region((int(x), int(y)), 0, (rs, rs)).convert("RGB")
                     try:
-                        Inorm, _, _ = normalizer.normalize(I=to255(im), stains=False)
-                        im = Image.fromarray(Inorm.numpy().astype(np.uint8))
+                        I = to255(im)
+                        if mdev != "cpu":
+                            I = I.to(mdev)
+                        Inorm, _, _ = normalizer.normalize(I=I, stains=False)
+                        im = Image.fromarray(Inorm.cpu().numpy().astype(np.uint8))
                     except Exception:
                         nfail += 1
                     pil.append(im)
