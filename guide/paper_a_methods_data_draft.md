@@ -47,22 +47,35 @@ imputed.
 **PAM50 intrinsic subtype (4-class).** Modeled as LumA / LumB / HER2-enriched / Basal; the
 Normal-like class is excluded per the split policy (weak, unreliable morphological signal on
 H&E; consistent with Tafavvoghi et al. 2024). For TCGA, PAM50 is not present in the clinical
-biotab and is joined from a separate external source (cBioPortal TCGA-BRCA PAM50 calls, lineage
-of the Parker et al. 2009 classifier), as specified by `split_policy_v0.md` §10. For CPTAC, PAM50
+biotab. **Corrected 2026-08-20** (BIOP02-49's provenance follow-up, `tcga_brca_pam50_computed_
+PROVENANCE.md`, landed on `main` after this draft was first written): the committed TCGA PAM50
+calls are **not** a cBioPortal-sourced file — they are a locally-computed nearest-centroid
+classification (Parker et al. 2009 method, confidence range 0.808–0.925) run against expression
+data outside this repo. `split_policy_v0.md` §10 names cBioPortal TCGA-BRCA PAM50 as the
+*primary* source with the local/genefu computation as a *fallback for coverage gaps* — the
+manifest as committed uses the fallback for the entire cohort, not cBioPortal. For CPTAC, PAM50
 comes from the same `brca_cptac_2020` release as the other endpoints; class naming was normalized
 across cohorts (CPTAC's `Her2` → `HER2`) so both use identical class labels.
 
-**Known limitation — PAM50 source pinning.** A post-hoc QC pass (BIOP02-49) cross-checked the
-committed TCGA PAM50 calls against a different public source (cBioPortal
-`brca_tcga_pan_can_atlas_2018` SUBTYPE field) and found only 57.0% concordance (514/902 overlapping
-patients) — HER2 status, by contrast, matched the raw biotab at 100% (1,010/1,010). This is
-consistent with the known instability of TCGA PAM50 re-calling across processing batches, but it
-also means we cannot yet cite an exact cBioPortal `study_id` for the PAM50 file actually used
-(the original file was supplied out-of-band and is not itself committed to the repo, only its
-join output is). This is flagged as an open item for the data-owner (kkkim) before submission —
-not a correctness bug, but a provenance-pinning gap that should be closed so the label source is
-fully citable. It does not affect the split (§D.4), which is defined over the full patient set
-independent of any single label's availability.
+**Open item — PAM50 source pinned, but policy vs. practice needs a data-owner decision.**
+Re-verified 2026-08-20 with the exact cBioPortal source pinned: study `brca_tcga_pan_can_atlas_2018`,
+attribute `SUBTYPE` (PATIENT-level, values prefixed `BRCA_`), coverage **981/1,010 patients
+(97.1%)**. Against this source, the committed (local/genefu) PAM50 calls match at **57.0%**
+(514/902 overlapping labeled patients) — confirms BIOP02-49's original finding, now with the
+comparison source's `study_id`/attribute fully citable. Mismatches concentrate in two known-hard
+boundaries, not random noise: local=LumB vs. cBioPortal=LumA (141 patients) and local=Normal vs.
+cBioPortal=LumA (101 patients) — consistent with the literature's documented LumA/LumB boundary
+instability and Normal-like call instability across PAM50 implementations, not evidence either
+source is simply wrong. **The open question for the data-owner (kkkim):** §10 authorizes the
+local/genefu fallback only when cBioPortal coverage is short, but cBioPortal coverage here is
+97.1% — high, not short. Should the manifest switch to cBioPortal PAM50 as primary per the
+letter of §10, or is there a documented reason (e.g. cBioPortal's curated calls trailing a TCGA
+reprocessing batch) the local computation was used as primary in practice? Either answer is
+fine, but the repo should say which and why before this is cited as "single source, version-
+pinned" per `split_policy_v0.md` §7. Does not affect the split (§D.4), which is defined over the
+full patient set independent of any single label's availability. Reproducible via
+`agents/data/scripts/pam50_source_reconcile.py`, output
+`agents/data/manifests/pam50_source_reconcile_biop02-74.json`.
 
 **Missingness handling.** Each endpoint's missing/excluded values (§ above) are masked
 per-task via boolean `has_er / has_pr / has_her2 / has_pam50` columns. Missingness never removes
@@ -127,4 +140,9 @@ data version that produced it.
 
 *상태: 초안 v0.1. 모델/학습/평가 절(M.1–M.9)은 sjpark 초안([guide/paper_a_methods_modeling_draft.md](paper_a_methods_modeling_draft.md))과 상호 연결 — 특히 M.2(tiling/embedding), M.5(split 수치)가 이 문서를 "Data Methods"로 지칭하고 있어 정합 확인 완료. braveji가 M.7에서 지적한 mean-embed≠pixel-mean 용어 문제(-72 코멘트 11387 ①)는 이 문서 범위 밖(모델링 절 소관).*
 
-*미해결 항목(투고 전 kkkim 확인 필요): PAM50 라벨의 정확한 cBioPortal `study_id`가 레포에 미고정(§D.3 "Known limitation"). HER2는 원본 biotab과 100% 일치 확인됐으나 PAM50은 대체 소스와 57% 일치라 재확인 없이는 "단일 소스 고정" 요구사항(split_policy_v0.md §7)을 완전히 충족한다고 말하기 어려움.*
+*미해결 항목(투고 전 kkkim 결정 필요, 2026-08-20 갱신): PAM50 cBioPortal 대조 소스의 study_id는
+이제 고정됨(`brca_tcga_pan_can_atlas_2018`, `SUBTYPE` 속성, 커버리지 981/1010=97.2%). 남은 건
+study_id 미고정이 아니라 **정책(§10: cBioPortal 1순위·genefu는 커버리지 부족시 fallback) vs
+실제 사용(전체 코호트가 genefu)의 불일치** — 커버리지가 97.2%로 "부족"이 아닌데 fallback이
+1순위처럼 쓰이고 있음. kkkim 결정 필요(§D.3 "Open item" 참조, 재현
+스크립트=`agents/data/scripts/pam50_source_reconcile.py`).*
