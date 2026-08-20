@@ -134,13 +134,14 @@
     <nav id="nav">
       <a href="#overview">개요 · 4개 기둥</a>
       <a href="#loop" class="new">✅ 닫힌 루프 — 하네스가 실제로 작동한 증거</a>
-      <a href="#gaps" class="gap">⚠️ 아직 열린 갭 6건</a>
+      <a href="#gaps" class="gap">⚠️ 아직 열린 갭 5건</a>
       <div class="grp">설계 기둥</div>
       <a href="#arch">01 · 2-레이어 아키텍처</a>
       <a href="#roster">02 · 에이전트 명부 · 권한</a>
       <a href="#routing">03 · 라우팅 · 계약 · 기준선</a>
       <a href="#review">04 · 검수 3층 · 거버넌스</a>
       <div class="grp">사람 · 계보</div>
+      <a href="#persist" class="new">⭐ 세션을 넘는 상태 인계</a>
       <a href="#collab">05 · 다연구자 협업</a>
       <a href="#lineage">06 · 설계 계보</a>
       <div class="grp">이력</div>
@@ -159,7 +160,7 @@
         <div class="stat"><div class="v" style="color:var(--accent)">2</div><div class="k">레이어<br>분석 + 논문 생산</div></div>
         <div class="stat"><div class="v" style="color:var(--violet)">10</div><div class="k">에이전트<br>도메인 슬롯 1 + 재사용 9</div></div>
         <div class="stat"><div class="v" style="color:var(--ok)">7</div><div class="k">CI blocking 검증기</div><div class="d">▲ v02 대비 +4</div></div>
-        <div class="stat"><div class="v" style="color:var(--danger)">6</div><div class="k">아직 열린 갭</div><div class="d" style="color:var(--muted)">1건은 닫힘</div></div>
+        <div class="stat"><div class="v" style="color:var(--danger)">5</div><div class="k">아직 열린 갭</div><div class="d">▼ 2건 닫힘</div></div>
       </div>
     </div>
 
@@ -243,12 +244,51 @@ flowchart LR
         </ul>
       </div>
 
+      <div class="callout ok"><b>두 번째로 닫힌 것 — config ↔ SKILL.md 불일치.</b>
+        v02·v03 초판이 갭으로 적었던 <code>ai_review.agents = ["paper-critic", "reviewer"]</code>(폐기된 <code>reviewer</code>를 5단계에서 호출)는
+        <b>Leader 승인</b>(2026-08-18)을 받아 <code>["paper-critic"]</code> 단독으로 정렬됐다.
+        ⚠️ 이 수정이 <code>anti-self-reference</code>에 걸리지 않은 이유는 단순하다 — <b>Critic이 스스로 정한 게 아니라 Leader가 승인했기 때문</b>이다.
+        같은 이유로 GAP 3·4·5는 아직 열려 있다.</div>
+
       <div class="quote">규율을 문서에 쓰면 잊히고, 사람에게 맡기면 지치고, <b>기계에 넣으면 남는다.</b></div>
+
+      <h3>⭐ 메타-학습 루프 — 실수에 이름을 붙여 장치로 만든다</h3>
+      <p>위 두 사례는 우연이 아니라 <b>정해진 파이프라인</b>의 산물이다. 이 프로젝트는 실수를 지우지 않고 <b>레지스트리에 쌓고, 각 항목에 재발방지 장치를 강제로 붙인다.</b></p>
+
+      <div class="mermaid">
+flowchart LR
+    I["① 사고 발생<br/><small>오판 · 함정 · 회귀</small>"]:::i
+    R["② PITFALLS_REGISTRY 등재<br/><small>ID · 분류(A/T/G/C) · 한 줄</small>"]:::r
+    D["③ <b>재발방지 장치를 반드시 적는다</b><br/><small>규칙 ②: 교훈만 적고 장치가 없으면 재발한다</small>"]:::d
+    G["④ 장치를 어디에 박나"]:::g
+    G1["금지조항<br/><small>CLAUDE.md</small>"]:::g1
+    G2["검증 스크립트"]:::g2
+    G3["CI blocking 검증기"]:::g3
+    I --> R --> D --> G
+    G --> G1
+    G --> G2
+    G --> G3
+    G3 -.->|"같은 실수가 다시 들어오면<br/>기계가 먼저 잡는다"| I
+    classDef i fill:#ffecec,stroke:#c62828,color:#7a1616
+    classDef r fill:#fff6e3,stroke:#b06f00,color:#5a3800
+    classDef d fill:#f2ecff,stroke:#7b3fe4,color:#3a2a5e
+    classDef g fill:#e8f0ff,stroke:#0f62fe,color:#0a2f6b
+    classDef g1 fill:#f7f8fa,stroke:#c3ccd8,color:#14181f
+    classDef g2 fill:#f7f8fa,stroke:#c3ccd8,color:#14181f
+    classDef g3 fill:#0e7a3d,stroke:#0e7a3d,color:#fff
+      </div>
+      <p class="figcap"><b>그림 3.</b> <code>docs/PITFALLS_REGISTRY.md</code>(29개 항목)의 규칙 ②가 이 루프의 핵심이다 —
+        <i>"재발방지 장치를 반드시 적는다. 교훈만 적고 장치가 없으면 재발한다."</i>
+        <b>CI 7종 중 게이트 mutation·공허통과 회귀가 바로 이 루프의 산물</b>이다: 실수를 잡으면 재발방지 장치를 CI로 박는다.</p>
+
+      <div class="callout"><b>왜 "교훈"이 아니라 "장치"인가.</b> 레지스트리에는 <code>A5</code>(발표자료 관측값을 합격 기준으로 옮겨 적음),
+        <code>A6</code>(계획을 자산으로 착각), <code>T1</code>(도구가 DOI 조회 실패를 <code>OK</code> 처리) 같은 항목이 있고,
+        <b>각 줄의 마지막 칸이 "무엇을 박았나"</b>다. 교훈은 잊히지만 장치는 남는다 — 이 설계서 전체를 관통하는 명제의 운영 버전이다.</div>
     </section>
 
     <!-- GAPS -->
     <section id="gaps">
-      <h2><span class="num">⚠️</span> 아직 열린 갭 6건</h2>
+      <h2><span class="num">⚠️</span> 아직 열린 갭 5건</h2>
       <p class="lede">v03 작성 시점에 <b>전부 실물로 재검증</b>했다. 닫힌 것은 위로 옮겼고, 아래는 <b>지금도 열려 있다.</b></p>
 
       <div class="gapcard">
@@ -256,15 +296,7 @@ flowchart LR
         <p>헤드라인 수치를 <b>모델 eval 출력에서</b> 결정론적으로 재계산하는 명령이 아직 없다.
           주변은 크게 메워졌다 — 숫자 드리프트·초록 수치·국영문 정합 검사가 CI에 들어왔다.
           <b>그러나 그것들은 문서 ↔ 문서, 문서 ↔ JSON 대조</b>이지 <b>원자료 재계산이 아니다.</b> 게이트 ①은 계속 사람이 수동 대조한다.</p>
-        <div class="ev">SKILL.md:40 "이 게이트의 실행 명령이 아직 없다" — 2026-08-20 현재 문구 유지</div>
-      </div>
-
-      <div class="gapcard">
-        <div class="hd"><span class="pill p-dan">GAP 2</span><h4>config가 SKILL.md를 아직 따라오지 않았다</h4></div>
-        <p><code>SKILL.md</code>는 5단계 자동 리뷰를 <code>paper-critic</code> 단독으로 고쳤는데
-          <code>auto_review_config.json</code>의 <code>ai_review.agents</code>는 여전히 <code>["paper-critic", "reviewer"]</code>다.
-          <code>enabled=false</code>(dry-run)라 실害는 없으나 <b>활성화 전 정리 필요</b>.</p>
-        <div class="ev">실측 2026-08-20: agents = ['paper-critic', 'reviewer'] · enabled = False</div>
+        <div class="ev">SKILL.md:40 "이 게이트의 실행 명령이 아직 없다" — 2026-08-20 현재 문구 유지 · CI의 "숫자 드리프트"는 JSON ↔ md 정합 검사이지 <b>raw 재산출 검증이 아님</b>(kkkim #11983 ③)</div>
       </div>
 
       <div class="gapcard">
@@ -340,7 +372,40 @@ flowchart TB
     classDef slot fill:#7b3fe4,stroke:#7b3fe4,color:#fff
     classDef gate fill:#ffecec,stroke:#c62828,color:#7a1616
       </div>
-      <p class="figcap"><b>그림 3.</b> 도메인 특수성은 슬롯 하나에 격리되고, 레이어 B는 어느 논문에도 옮겨 붙는다. 경계에 <b>사람 게이트 3개</b>.</p>
+      <p class="figcap"><b>그림 4.</b> 도메인 특수성은 슬롯 하나에 격리되고, 레이어 B는 어느 논문에도 옮겨 붙는다. 경계에 <b>사람 게이트 3개</b>.</p>
+
+      <h3>⭐ 레이어 A 상세 — 실제 과학 엔진</h3>
+      <p>"AI Scientist"의 핵심은 사실 <b>레이어 A</b>다. 레이어 B(논문 생산)가 에이전트·라우팅·CI까지 상세한 데 비해
+        A는 한 칸으로 그려지기 쉬운데, 실제로는 <b>5개 역할 워크스페이스가 순서 의존으로 물린 파이프라인</b>이다.</p>
+
+      <div class="mermaid">
+flowchart LR
+    subgraph LA["레이어 A — 도메인 분석 파이프라인 (agents/)"]
+      direction LR
+      D["<b>data</b><br/>manifest · label<br/>split_policy"]:::a
+      E["<b>embedding</b><br/>WSI tiling<br/>foundation model 추출"]:::a
+      M["<b>modeling</b><br/>MLP → attention MIL<br/>표현형 예측"]:::a
+      T["<b>therapeutic_evidence</b><br/>DepMap · GDSC 전이<br/>가설 순위화"]:::a
+      C["<b>critic</b><br/>7-point 대조<br/>critic_report"]:::c
+      D --> E --> M --> T --> C
+    end
+    ART["<b>experiments/&lt;user&gt;/&lt;date&gt;/</b><br/>config.yaml · model.pt · metrics.json<br/>predictions.npy · critic_report.json<br/>+ commit_hash"]:::art
+    B["레이어 B<br/>집필 · 검수 · 발표"]:::b
+    C --> ART
+    ART -->|"<b>A→B 산출물 계약</b><br/>숫자는 이 파일에서만<br/>메모리 재유도 금지"| B
+    classDef a fill:#e5f5ec,stroke:#0e7a3d,color:#0b3a1f
+    classDef c fill:#fff6e3,stroke:#b06f00,color:#5a3800
+    classDef art fill:#0f62fe,stroke:#0f62fe,color:#fff
+    classDef b fill:#e8f0ff,stroke:#0f62fe,color:#0a2f6b
+      </div>
+      <p class="figcap"><b>그림 5.</b> 과학 목표: H&amp;E WSI → 형태학 임베딩 → 분자 표현형(ER/PR/HER2·PAM50) → 치료 근거 랭킹.
+        <b>DRP가 아니다</b> — 약물 구조 입력 없음, 가설 출력 전용.
+        <b>두 레이어를 잇는 것은 대화가 아니라 파일</b>이다(파란 칸).</p>
+
+      <div class="callout"><b>A→B 계약이 이 하네스의 목줄이다.</b>
+        레이어 B는 <b>오직 <code>experiments/…</code>의 실물 파일에서만</b> 숫자를 읽는다 — 기억·요약·발표자료에서 재유도하지 않는다.
+        의존성도 순서를 갖는다: <code>data</code>의 split이 잠기기 전엔 <code>embedding</code>이 무엇을 처리할지 정할 수 없고,
+        실험은 <b>5종 아티팩트 + 커밋 해시</b>로 봉인돼야 "수행했다"의 증거가 된다.</div>
 
       <div class="callout ok"><b>🔴 v03 정정 — "집필-단계 산출물이 아직 없다"는 더 이상 사실이 아니다.</b>
         초판은 <i>"분석 진행 단계라 manuscript/figures가 아직 없다"</i>고 적었으나,
@@ -372,7 +437,7 @@ flowchart TB
     classDef gate fill:#fff6e3,stroke:#b06f00,color:#5a3800
     classDef detect fill:#f7f8fa,stroke:#5a6472,color:#28303a
       </div>
-      <p class="figcap"><b>그림 4 (GAP 3).</b> 같은 규율이 한쪽은 <b>도구로</b>, 다른 쪽은 <b>말로만</b> 걸려 있다.
+      <p class="figcap"><b>그림 6 (GAP 3).</b> 같은 규율이 한쪽은 <b>도구로</b>, 다른 쪽은 <b>말로만</b> 걸려 있다.
         외부 참조: <i>"LLM에게 '조금만 고쳐'라고 하면 통째로 다시 쓰고, 검증이 끝난 인용과 수치가 조용히 바뀐다"</i>(hyperresearch).</p>
 
       <div class="grid3">
@@ -405,7 +470,7 @@ flowchart LR
     classDef p fill:#f2ecff,stroke:#7b3fe4,color:#3a2a5e
     classDef demo fill:#ffecec,stroke:#c62828,color:#7a1616
       </div>
-      <p class="figcap"><b>그림 5.</b> mock 분기가 이 하네스의 성격을 보여준다 — <b>데모로 돌린 것을 실 결과처럼 넘기지 않는 장치</b>이고,
+      <p class="figcap"><b>그림 7.</b> mock 분기가 이 하네스의 성격을 보여준다 — <b>데모로 돌린 것을 실 결과처럼 넘기지 않는 장치</b>이고,
         <i>"없는 것을 없다고 표시한다"</i>의 <b>실행 시점 버전</b>이다.</p>
 
       <h3>품질 기준선 — 계약 위에 얹히는 공통 규율</h3>
@@ -467,7 +532,7 @@ flowchart TB
     classDef humc fill:#fff6e3,stroke:#b06f00,color:#5a3800
     classDef blk fill:#ffecec,stroke:#c62828,color:#7a1616
       </div>
-      <p class="figcap"><b>그림 6.</b> v02의 3종에서 <b>7종</b>으로. 진한 두 칸(<b>게이트 mutation</b>·<b>공허통과 회귀</b>)이 v03의 새 이야기 —
+      <p class="figcap"><b>그림 8.</b> v02의 3종에서 <b>7종</b>으로. 진한 두 칸(<b>게이트 mutation</b>·<b>공허통과 회귀</b>)이 v03의 새 이야기 —
         검증기가 <b>자기 자신을 시험</b>한다. <span class="src">실측: .github/workflows/critic-validators.yml</span></p>
 
       <h3>⭐ 검증기를 검증하는 층 — "통과만 하는 게이트는 게이트가 아니다"</h3>
@@ -487,7 +552,7 @@ flowchart LR
     classDef bad fill:#ffecec,stroke:#c62828,color:#7a1616
     classDef fail fill:#c62828,stroke:#c62828,color:#fff
       </div>
-      <p class="figcap"><b>그림 7.</b> 하네스가 재는 것은 하나다 — <i>"실무자가 저지를 법한 실수를 심었을 때, 우리 게이트가 실제로 잡는가?"</i>
+      <p class="figcap"><b>그림 9.</b> 하네스가 재는 것은 하나다 — <i>"실무자가 저지를 법한 실수를 심었을 때, 우리 게이트가 실제로 잡는가?"</i>
         <b>검증을 만드는 것과 검증이 실제로 잡는 것은 다른 일</b>이라는 인식이 코드가 됐다.</p>
 
       <h3>티어 게이트와 <code>required_followups</code></h3>
@@ -515,6 +580,54 @@ flowchart LR
         그래서 규칙도 같은 모양이다: <i>근거는 실물뿐이고, 인용할 땐 출처를 밝힌다.</i></div>
     </section>
 
+    <!-- PERSISTENCE -->
+    <section id="persist">
+      <h2><span class="num">⭐</span> 세션을 넘는 상태 인계</h2>
+      <p class="lede">이 하네스는 한 세션에서 끝나지 않는다. <b>수 주에 걸쳐, 여러 세션·여러 사람·여러 프로젝트를 오가며</b> 굴러간다.
+        그래서 "닫힌 루프"(한 세션 안의 발견 → 도구화)와 별개로, <b>세션이 끊겨도 상태가 살아남는 층</b>이 따로 있다.</p>
+
+      <div class="mermaid">
+flowchart TB
+    S1["세션 N"]:::s
+    S2["세션 N+1<br/><small>컨텍스트 0에서 시작</small>"]:::s
+    subgraph P["상태 지속 레이어 — 대화가 아니라 파일"]
+      direction LR
+      H["<b>HANDOFF.md</b><br/><small>다음이 이어받을 상태</small>"]:::h
+      L["<b>SESSION_LOG.md</b><br/><small>그날 한 일 · 역시간순</small>"]:::h
+      T["<b>TODO.md</b><br/><small>남은 일</small>"]:::h
+      MEM["<b>memory/</b><br/><small>세션 간 지속되는 사실<br/>(사용자·피드백·프로젝트·참조)</small>"]:::m
+      REG["<b>PITFALLS_REGISTRY</b><br/><small>실수 + 재발방지 장치</small>"]:::m
+    end
+    EXT["트래커 코멘트 · PR 본문 · registry<br/><small>팀 공유 영구 기록</small>"]:::e
+    S1 -->|"같은 턴에 함께 쓴다"| P
+    P -->|"재개 시 먼저 읽는다"| S2
+    S1 --> EXT --> S2
+    classDef s fill:#e8f0ff,stroke:#0f62fe,color:#0a2f6b
+    classDef h fill:#e5f5ec,stroke:#0e7a3d,color:#0b3a1f
+    classDef m fill:#f2ecff,stroke:#7b3fe4,color:#3a2a5e
+    classDef e fill:#fff6e3,stroke:#b06f00,color:#5a3800
+      </div>
+      <p class="figcap"><b>그림 10.</b> 세션은 끊기지만 파일은 남는다. <b>HANDOFF와 SESSION_LOG는 목적이 다르다</b> —
+        전자는 <i>"다음이 이어받을 상태"</i>, 후자는 <i>"그날 한 일의 날짜별 기록"</i>. 그래서 <b>같은 턴에 함께</b> 쓴다.</p>
+
+      <div class="grid2">
+        <div class="card"><h4>왜 두 층인가</h4>
+          <p style="margin:0;font-size:13.3px;color:var(--muted)">핸드오프만 있으면 <b>왜 그렇게 됐는지</b>가 사라지고,
+            로그만 있으면 <b>지금 무엇부터 해야 하는지</b>를 매번 재구성해야 한다. 둘은 대체재가 아니다.</p></div>
+        <div class="card"><h4>개인 기록 ≠ 팀 기록</h4>
+          <p style="margin:0;font-size:13.3px;color:var(--muted)">세 파일은 <b>개인 작업일지</b>라 git 미추적이다.
+            팀 공유 영구 기록은 <b>트래커 코멘트·PR 본문·registry</b>가 담당한다 — 중간 상태를 팀 히스토리에 섞지 않는다.</p></div>
+      </div>
+
+      <div class="callout dan"><b>⚠️ 이 층의 실패는 조용하고 되돌릴 수 없다.</b>
+        git 미추적 파일은 로컬 디스크와 함께 사라진다 — 이 프로젝트는 실제로 <b>한 달치 세션 로그를 잃었고</b>,
+        그 구간은 트래커 코멘트가 유일한 기록으로 남았다. 그래서 규칙이 둘 붙었다:
+        <b>① 공유 볼륨에 백업</b> · <b>② 상태를 인용할 땐 기억이 아니라 <code>파일:줄</code>·커밋·코멘트 id</b>.</div>
+
+      <div class="quote">이 하네스에서 "상태"는 대화에 있지 않다. <b>파일에 있다.</b>
+        그래서 세션이 끊겨도, 사람이 바뀌어도, 몇 주가 지나도 이어받을 수 있다.</div>
+    </section>
+
     <!-- 05 COLLAB -->
     <section id="collab">
       <h2><span class="num">05</span> 다연구자 협업 구조</h2>
@@ -533,7 +646,7 @@ flowchart LR
     classDef cc fill:#f7f8fa,stroke:#c3ccd8,color:#14181f
     classDef pr fill:#fff6e3,stroke:#b06f00,color:#5a3800
       </div>
-      <p class="figcap"><b>그림 8.</b> 알림 봇은 <b>코드를 쓰지 않는다</b>. 구현은 사람이 CLI로 한다. 커밋이 트래커 상태를 자동 갱신한다.</p>
+      <p class="figcap"><b>그림 11.</b> 알림 봇은 <b>코드를 쓰지 않는다</b>. 구현은 사람이 CLI로 한다. 커밋이 트래커 상태를 자동 갱신한다.</p>
 
       <div class="mermaid">
 flowchart LR
@@ -544,7 +657,7 @@ flowchart LR
     classDef w fill:#e5f5ec,stroke:#0e7a3d,color:#0b3a1f
     classDef r fill:#fff6e3,stroke:#b06f00,color:#5a3800
       </div>
-      <p class="figcap"><b>그림 9.</b> 자기 결과를 자기가 검수하지 않는다. 이 매핑은 자동 리뷰 루프의 <code>cross_review_map</code>에 <b>그대로 주입</b>된다.</p>
+      <p class="figcap"><b>그림 12.</b> 자기 결과를 자기가 검수하지 않는다. 이 매핑은 자동 리뷰 루프의 <code>cross_review_map</code>에 <b>그대로 주입</b>된다.</p>
 
       <div class="callout warn"><b>sub-check는 고정 배정이 아니다.</b>
         ① <b>산출물·검증 대상 코드의 owner가 아닌 사람</b>(제약) → ② 도메인 기본 후보(<b>후보 목록일 뿐</b>) → ③ 후보가 전부 owner면 Leader가 타 멤버 지정.
@@ -582,7 +695,7 @@ flowchart TB
     classDef d fill:#f2ecff,stroke:#7b3fe4,color:#3a2a5e
     classDef gapn fill:#fff5f5,stroke:#c62828,color:#7a1616
       </div>
-      <p class="figcap"><b>그림 10.</b> 두 교훈 — ① 완전 자율은 검증이 약하다 ② 멀티에이전트·가설 생성은 이미 붐빈다 — 이 곧 설계 원칙이 됐다.
+      <p class="figcap"><b>그림 13.</b> 두 교훈 — ① 완전 자율은 검증이 약하다 ② 멀티에이전트·가설 생성은 이미 붐빈다 — 이 곧 설계 원칙이 됐다.
         다만 <b>인용한 문헌 하나가 현재 구현을 반박</b>한다(점선).</p>
 
       <div class="quote">Sakana의 AI Scientist가 "얼마나 자율적으로 갈 수 있나"를 물었다면,
@@ -598,11 +711,11 @@ flowchart TB
         <tr><th></th><th>v02 (08-03)</th><th>v03 (08-20)</th></tr>
         <tr><td>CI 검증기</td><td>3종</td><td><b>7종</b> — 게이트 mutation · 공허통과 회귀 · split 누수 · 국영문 정합 추가</td></tr>
         <tr><td>검수의 성격</td><td>결과를 검증</td><td><b>검증기 자신을 검증</b>(mutation)</td></tr>
-        <tr><td>미해결 갭</td><td>5건</td><td><b>6건</b>(SKILL.md 낡음 추가) · <b>1건 닫힘</b>(스키마)</td></tr>
+        <tr><td>미해결 갭</td><td>5건</td><td><b>5건</b> · <b>2건 닫힘</b>(스키마 · config 정렬)</td></tr>
         <tr><td>03 문서</td><td>라우팅 + 계약</td><td>+ <b>품질 기준선</b> · <b>실행·보고 계약</b> · <b>mock 분기</b></td></tr>
         <tr><td>04 문서</td><td>티어 게이트</td><td>+ <b><code>required_followups</code></b>(노동 ≠ 판단)</td></tr>
         <tr><td>01 문서</td><td>"원고 아직 없음"</td><td>🔴 <b>정정</b> — 원고 존재(5섹션 + Discussion 한계)</td></tr>
-        <tr><td>다이어그램</td><td>12종</td><td><b>10종</b>(재구성 — 닫힌 루프·mock 분기·mutation 신규)</td></tr>
+        <tr><td>다이어그램</td><td>12종</td><td><b>13종</b> — 닫힌 루프 · 메타학습 루프 · <b>Layer A 상세</b> · mock 분기 · mutation · <b>세션 지속</b> 신규</td></tr>
       </table>
 
       <h3>설계가 실제로 바뀐 지점 (누적)</h3>
@@ -623,7 +736,7 @@ flowchart TB
           <span class="src">SKILL.md L10·L18·L40 · auto_review_config.json · .claude/agents/*.md frontmatter ·
           schemas/{hypothesis,critic_report}.schema.json · .github/workflows/critic-validators.yml</span>.
           v02가 갭으로 적었던 스키마 항목은 재검증 결과 <b>닫혀 있어</b> "닫힌 루프"로 옮겼다.</p>
-        <p>v03 — <code>ai_scientist/</code> 설계서 7개(README + 01~06)를 mermaid 10종 + HTML로 시각화.
+        <p>v03 — <code>ai_scientist/</code> 설계서 7개(README + 01~06)를 mermaid 13종 + HTML로 시각화.
           <code>mermaid.min.js</code>를 로컬 우선으로 읽고 없으면 CDN 폴백 → <b>오프라인 렌더 가능</b>.
           모든 서술은 실제 파일 근거를 가지며 숫자·주장을 지어내지 않았다.</p>
       </div>
