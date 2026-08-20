@@ -1,0 +1,140 @@
+{
+  "cancer": "LUNG_NSCLC",
+  "claim_level": "hypothesis_only",
+  "critic_status": "pending",
+  "scope": "v1 — LUNG only (BIOP02-140 pre-registered reduced scope)",
+  "method": "5-fold StratifiedKFold in-holdout CV (pre-registration addendum 2026-08-20)",
+  "endpoints": {
+    "histology_lusc": {
+      "n_holdout": 271,
+      "n_pos": 153,
+      "include_cohort_covariate": false,
+      "he_only_auc_cited_from_mil_cost": 0.939,
+      "covariate_only_auc": {
+        "auc": 0.5859,
+        "ci95": [
+          0.5161,
+          0.6537
+        ]
+      },
+      "combined_auc": {
+        "auc": 0.9308,
+        "ci95": [
+          0.8954,
+          0.9622
+        ]
+      },
+      "delta_auroc_combined_minus_covariate": {
+        "delta": 0.345,
+        "ci95": [
+          0.2781,
+          0.4147
+        ]
+      },
+      "cohort_only_auc_single_covariate_check": null,
+      "verdict": "🟢 유지"
+    },
+    "egfr_activating": {
+      "n_holdout": 271,
+      "n_pos": 15,
+      "include_cohort_covariate": true,
+      "he_only_auc_cited_from_mil_cost": 0.8518,
+      "covariate_only_auc": {
+        "auc": 0.8161,
+        "ci95": [
+          0.7004,
+          0.9064
+        ]
+      },
+      "combined_auc": {
+        "auc": 0.881,
+        "ci95": [
+          0.7664,
+          0.9524
+        ]
+      },
+      "delta_auroc_combined_minus_covariate": {
+        "delta": 0.0648,
+        "ci95": [
+          0.0064,
+          0.1267
+        ]
+      },
+      "cohort_only_auc_single_covariate_check": 0.7173,
+      "verdict": "판정 불가 (n_pos<25, 프로젝트 exploratory 기준 미달)"
+    },
+    "kras_g12c": {
+      "n_holdout": 271,
+      "n_pos": 14,
+      "include_cohort_covariate": true,
+      "he_only_auc_cited_from_mil_cost": 0.6809,
+      "covariate_only_auc": {
+        "auc": 0.8017,
+        "ci95": [
+          0.738,
+          0.8544
+        ]
+      },
+      "combined_auc": {
+        "auc": 0.8013,
+        "ci95": [
+          0.7385,
+          0.8549
+        ]
+      },
+      "delta_auroc_combined_minus_covariate": {
+        "delta": -0.0004,
+        "ci95": [
+          -0.0086,
+          0.0066
+        ]
+      },
+      "cohort_only_auc_single_covariate_check": 0.7795,
+      "verdict": "판정 불가 (n_pos<25, 프로젝트 exploratory 기준 미달) + 🔴 공변량-only가 H&E 이상(본문 명시 대상)"
+    }
+  },
+  "purity_stratification": {
+    "egfr_activating": {
+      "holdout_median_purity": 0.46,
+      "high_purity": {
+        "n": 140,
+        "n_pos": 5,
+        "auc": 0.8622,
+        "ci95": [
+          0.6704,
+          0.9854
+        ]
+      },
+      "low_purity": {
+        "n": 131,
+        "n_pos": 10,
+        "auc": 0.8421,
+        "ci95": [
+          0.6771,
+          0.9736
+        ]
+      }
+    },
+    "kras_g12c": {
+      "holdout_median_purity": 0.46,
+      "high_purity": {
+        "n": 140,
+        "n_pos": 7,
+        "auc": 0.7562,
+        "ci95": [
+          0.6165,
+          0.8817
+        ]
+      },
+      "low_purity": {
+        "n": 131,
+        "n_pos": 7,
+        "auc": 0.595,
+        "ci95": [
+          0.4179,
+          0.7618
+        ]
+      }
+    }
+  }
+}
