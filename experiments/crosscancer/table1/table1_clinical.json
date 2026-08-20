@@ -1,0 +1,143 @@
+{
+  "BREAST": {
+    "n_patients": 1010,
+    "age": {
+      "median": 58.5,
+      "iqr": [
+        49.0,
+        68.0
+      ],
+      "n": 996
+    },
+    "sex_dist": {
+      "Female": 984,
+      "Male": 12
+    },
+    "stage_dist": {
+      "II": 569,
+      "I": 167,
+      "III": 227,
+      "missing": 31,
+      "IV": 16
+    },
+    "grade_coverage_n": 0,
+    "grade_coverage_pct": 0.0,
+    "grade_dist": {},
+    "tss_n_sites": 37
+  },
+  "LUNG": {
+    "n_patients": 1050,
+    "age": {
+      "median": 67.0,
+      "iqr": [
+        60.0,
+        73.0
+      ],
+      "n": 968
+    },
+    "sex_dist": {
+      "Male": 594,
+      "Female": 402
+    },
+    "stage_dist": {
+      "III": 166,
+      "II": 280,
+      "I": 513,
+      "missing": 57,
+      "IV": 34
+    },
+    "grade_coverage_n": 0,
+    "grade_coverage_pct": 0.0,
+    "grade_dist": {},
+    "tss_n_sites": 69
+  },
+  "COLORECTAL": {
+    "n_patients": 534,
+    "age": {
+      "median": 67.0,
+      "iqr": [
+        57.0,
+        75.0
+      ],
+      "n": 532
+    },
+    "sex_dist": {
+      "Male": 277,
+      "Female": 255
+    },
+    "stage_dist": {
+      "III": 151,
+      "II": 201,
+      "IV": 73,
+      "I": 95,
+      "missing": 14
+    },
+    "grade_coverage_n": 0,
+    "grade_coverage_pct": 0.0,
+    "grade_dist": {},
+    "tss_n_sites": 37
+  },
+  "GASTRIC": {
+    "n_patients": 440,
+    "age": {
+      "median": 67.0,
+      "iqr": [
+        58.0,
+        73.0
+      ],
+      "n": 436
+    },
+    "sex_dist": {
+      "Male": 284,
+      "Female": 156
+    },
+    "stage_dist": {
+      "missing": 19,
+      "II": 131,
+      "I": 58,
+      "III": 188,
+      "IV": 44
+    },
+    "grade_coverage_n": 440,
+    "grade_coverage_pct": 100.0,
+    "grade_dist": {
+      "G3": 263,
+      "G2": 156,
+      "GX": 9,
+      "G1": 12
+    },
+    "tss_n_sites": 22
+  },
+  "HEADNECK": {
+    "n_patients": 523,
+    "age": {
+      "median": 61.0,
+      "iqr": [
+        53.0,
+        68.0
+      ],
+      "n": 522
+    },
+    "sex_dist": {
+      "Male": 382,
+      "Female": 141
+    },
+    "stage_dist": {
+      "IV": 269,
+      "III": 80,
+      "missing": 70,
+      "I": 27,
+      "II": 77
+    },
+    "grade_coverage_n": 519,
+    "grade_coverage_pct": 99.2,
+    "grade_dist": {
+      "G3": 123,
+      "G2": 308,
+      "G1": 63,
+      "GX": 18,
+      "G4": 7
+    },
+    "tss_n_sites": 28
+  }
+}
