@@ -55,6 +55,14 @@
 
 설계 의도(`SKILL.md`): **"진행을 사람 리뷰에 볼모 잡지 않는다."** 사람이 하드 블로킹하는 건 headline·publish(Tier C)뿐이고, 나머지는 AI 리뷰 통과 시 계속 굴러간다.
 
+### 사람에게 넘기는 것은 "판단"뿐 — `required_followups`
+
+티어가 *언제* 사람을 부를지를 정한다면, `required_followups`는 *무엇을* 넘길지를 정한다.
+AI가 리뷰 노동(7-point 대조 · 적대적 다중패스 · 헤드라인 수치 재계산)을 **전부 수행**하고, 사람에게는 **surface된 판단항목만** 올린다 (`SKILL.md` *자동 리뷰 루프*).
+
+> 이 구분이 루프의 핵심이다. 사람이 리뷰 **노동**을 하면 몇 주가 걸리고 그동안 프로젝트가 멈춘다.
+> 사람이 리뷰 **판단**만 하면 분 단위로 끝난다. 자동화가 줄이는 것은 판단의 수가 아니라 **판단에 도달하기까지의 노동**이다.
+
 ### 🔴 판정 어휘의 빈칸 — "더 해도 pass가 안 되는 것"을 적을 자리가 없다
 
 판정 어휘는 두 축이다(`schemas/critic_report.schema.json` 실측): 종합 `critic_status` = `pass · caution · reject`, 개별 항목 `check.status` = 여기에 `not_applicable` 추가. 티어 처리(`blocked · provisional · needs_human`)는 **누가 확인하느냐**를 정하는 별개 축이다.
