@@ -1,0 +1,19 @@
+=== Registry-Replay: 7 validator baseline + fixtures run log ===
+date: 2026-08-20T08:33:32Z  commit: ad108d1
+
+--- T1 (fake DOI) via real verifier, offline from cache ---
+  err1_williams_fabricated: verdict=NOT_FOUND expected=NOT_FOUND ok=True
+  reg_fake_doi: verdict=NOT_FOUND expected=NOT_FOUND ok=True
+
+--- 7 validator baseline (exit codes; all wired in .github/workflows/critic-validators.yml) ---
+  check_number_drift --strict            exit=0
+  manuscript_parity_ko_en --strict       exit=0
+  test_gate_vacuous_pass (10 cases)      exit=0
+  verify_split_integrity (real cohort)   exit=0
+  citation_verifier/mutation_check       exit=0
+  critic_pilot/mutation_check            exit=0
+  validation_harness --strict            exit=0
+
+  (exit=0 => green/pass. validation_harness: 8/8 CAUGHT of its OWN synthetic defect classes
+   — split leak/single-group/drop-col/missing-path/forgery/number-drift — none of which are
+   registry incidents. Confirms gates function; separate from registry mapping.)

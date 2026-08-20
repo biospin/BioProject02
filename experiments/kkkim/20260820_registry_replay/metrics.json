@@ -1,0 +1,41 @@
+{
+  "experiment": "registry_replay",
+  "date": "2026-08-20",
+  "commit_hash": "ad108d1",
+  "question": "우리 7종 CI 검증기가 PITFALLS_REGISTRY 27건 사고 중 몇 건을 실제로 잡는가",
+  "n_total": 27,
+  "n_mechanizable": 4,
+  "n_caught": 1,
+  "n_missed": 3,
+  "n_out_of_ci_scope": 23,
+  "catch_rate": 0.25,
+  "catch_rate_definition": "n_caught / n_mechanizable  (기계화가능 중 CAUGHT)",
+  "directly_caught_over_total": "1/27",
+  "mechanizable_criterion": "결정론적·오프라인으로 커밋 산출물/이력만 보고, 도메인/의미 판단 없이 잡을 수 있는 결함",
+  "caught_ids": ["T1"],
+  "missed_ids": ["A2", "G1", "G5"],
+  "missed_reason": "기계화 가능하나 7종 CI 게이트 어느 것도 커버 안 함(A2=커밋시각, G1=브랜치 ahead/behind, G5=임베딩 개수/마커). G1·G5는 7종 밖 비-CI 안전장치가 별도로 존재.",
+  "out_of_ci_scope_ids": ["A1","A3","A4","A5","A6","A7","A8","T2","T3","T4","T5","T6","T7","G2","G3","G4","C1","C2","C3","C4","C5","C6","C7"],
+  "sensitivity": {
+    "strict_covered_class_only": {"catch_rate": "1/1", "note": "게이트가 겨냥한 결함클래스에 속한 사고만 분모에 — T1뿐. 오해소지(100%)라 헤드라인으로 부적합"},
+    "reported_middle": {"catch_rate": "1/4", "note": "범용 결정론 게이트로 잡힐 수 있는 결함(T1,A2,G1,G5)을 분모에 — 본 실험 채택값"},
+    "loose_incl_bespoke": {"catch_rate": "1/5~1/6", "note": "A4(전용 단위테스트)·T5(하류 드리프트 backstop)까지 분모에 넣으면 더 낮아짐"}
+  },
+  "validator_coverage_of_registry": {
+    "citation_verifier/mutation_check.py": {"registry_incidents": ["T1"], "caught": ["T1"]},
+    "check_number_drift.py": {"registry_incidents": [], "note": "T5 하류(잘못수치가 md표에 실릴 경우) backstop만"},
+    "manuscript_parity_ko_en.py": {"registry_incidents": []},
+    "verify_split_integrity.py": {"registry_incidents": []},
+    "test_gate_vacuous_pass.py": {"registry_incidents": []},
+    "critic_pilot/mutation_check.py": {"registry_incidents": []},
+    "validation_harness/run_validation.py": {"registry_incidents": [], "note": "자체 합성 결함클래스 8/8 CAUGHT이나 그 클래스들은 registry 27건에 없음"}
+  },
+  "baseline_all_validators_green": true,
+  "key_finding": "7종 검증기와 27건 registry는 도메인이 거의 서로소다. 검증기는 산출물-무결성 결함(split누수·수치드리프트·국영문·인용·공허통과)을 겨냥하는데, registry는 프로세스/협업/셸/git 실수가 지배적이라 T1 하나만 겹친다.",
+  "verified_end_to_end": true,
+  "evidence": {
+    "T1": "reg_fake_doi(DOI 10.9999/fake.2022.999999) → 실 verifier verdict=NOT_FOUND; doi_fail_passes 뮤턴트가 reg_fake_doi로 사망(citation_verifier/mutation_check)",
+    "A2_G1_G5": "7종 소스 전수 grep — git 이력·카운트 미검사 확인",
+    "baseline": "fixtures/run_log.txt — 7종 전부 exit=0"
+  }
+}

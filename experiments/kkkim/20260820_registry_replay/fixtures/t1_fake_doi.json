@@ -1,0 +1,31 @@
+{
+  "_doc": "T1 재현 fixture — medsci가 OK로 통과시킨 가짜 DOI(10.9999/fake...) 사고. 정본=evals/citation_verifier/cases/biop02_failure_set.json",
+  "entries": [
+    {
+      "id": "err1_williams_fabricated",
+      "_note": "OUR ERROR #1. Fabricated -- does not exist. No DOI. medsci returned OK here (its worst failure). ACCEPT: the load-bearing guarantee is 'never VERIFIED'; NEEDS_HUMAN is also an acceptable escalation if CrossRef search ranking drifts.",
+      "expected": "NOT_FOUND",
+      "doi": null,
+      "first_author": "Williams",
+      "year": 2022,
+      "title": "LINCS transcriptional signature reversal for drug repurposing in cancer",
+      "accept": [
+        "NOT_FOUND",
+        "NEEDS_HUMAN"
+      ]
+    },
+    {
+      "id": "reg_fake_doi",
+      "_note": "REGRESSION. Fabricated DOI. medsci PASSED this: DOI lookup fails -> weak PubMed title search -> any hit = OK (verify_refs.py L557-560). A fake DOI must NEVER be VERIFIED. ACCEPT: the load-bearing guarantee is 'never VERIFIED'; NEEDS_HUMAN is also an acceptable escalation if CrossRef search ranking drifts.",
+      "expected": "NOT_FOUND",
+      "doi": "10.9999/fake.2022.999999",
+      "first_author": "Williams",
+      "year": 2022,
+      "title": "LINCS transcriptional signature reversal for drug repurposing in cancer",
+      "accept": [
+        "NOT_FOUND",
+        "NEEDS_HUMAN"
+      ]
+    }
+  ]
+}
