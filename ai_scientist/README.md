@@ -28,6 +28,15 @@
 | 5 | **다연구자 협업 구조** | JIRA→OpenClaw→Slack→Claude Code, 1인1역할, owner≠reviewer 교차검수 | [05_human_collaboration.md](05_human_collaboration.md) |
 | 6 | **설계 계보 (왜 이렇게 설계했나)** | AI Scientist·multi-agent science 선행연구를 읽고 governance-centric으로 포지셔닝 | [06_design_lineage.md](06_design_lineage.md) |
 
+**보충 — 세션을 넘는 작업 규율(도구 무관)**
+
+| 문서 | 내용 | 작성 |
+|---|---|---|
+| [cross_session_work_discipline.md](cross_session_work_discipline.md) | **착수 전수 스캔(3관문) · 마무리 4구역 반영 · 개인기록↔팀기록 분리** | kkkim |
+
+> [05](05_human_collaboration.md) §(E)가 *무엇을 남기나*(파일 층)라면 이 문서는 *세션을 열고 닫을 때 무엇을 하나*(행동 층)다. 둘은 짝이다 — **파일만 있고 규율이 없으면 쓰긴 쓰는데 안 읽고, 읽어도 일부만 본다.**
+> 개인 워크플로에서 **원칙만** 뽑아 도구 무관으로 일반화했다: *"통일하는 것은 도구가 아니라 규율이다."*
+
 ---
 
 ## AI Scientist가 수행하는 연구 과정 (요청하신 "연구 과정 전반")
@@ -52,6 +61,7 @@
 - **무엇이 최근 바뀌었나** → 바로 아래 "변경 이력".
 - 이 설계를 **처음 보는 사람** → [01_two_layer_architecture.md](01_two_layer_architecture.md) 부터 순서대로.
 - **"왜 완전 자율이 아니냐"** 가 궁금하면 → [06_design_lineage.md](06_design_lineage.md).
+- **세션이 끊겨도 이어가려면** → [cross_session_work_discipline.md](cross_session_work_discipline.md) (착수·마무리 규율).
 - **실제 운영 규칙·라우팅표 원본** → 리포 루트 `CLAUDE.md`의 *Agent routing & artifact contract* 절, `docs/HARNESS.md`.
 
 ---
