@@ -21,7 +21,10 @@ v2 는 줄이 말하는 엔드포인트를 먼저 특정하고, 그 엔드포인
 """
 import io, os, re, json, glob, sys
 
-ROOT = "/home/gglee/project/BioProject02"
+# repo 루트를 스크립트 위치(agents/critic/scripts/)에서 유도 — 컨테이너별 홈 경로 다름(CLAUDE.md).
+# 하드코딩 금지(BIOP02-146 jamie 재현 버그). BIOP02_ROOT 환경변수로 오버라이드 가능.
+ROOT = os.environ.get("BIOP02_ROOT") or os.path.dirname(
+    os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 TOL = 0.004  # 반올림 허용오차 (check_number_drift.py 와 동일)
 TARGET = os.path.join(ROOT, "manuscript/LONG_ABSTRACT_GIW2026_BIOP02_ko.md")
 
