@@ -1,5 +1,7 @@
 # CLAUDE.md
 
+> ⚠️ **운영 상수 살균됨 (public 저장소).** 서버 IP·SSH 포트·팀 이메일 등은 `<PLACEHOLDER>`로 대체돼 있다. 실값은 **공개 저장소에 두지 않으며**, 팀 개인 infra config(gitignore, 예 `~/.claude/biop02_infra.local`) 또는 사내 채널에서 관리한다. ⚠️ **주의: 이 살균은 현재 파일만 정리하며 git 히스토리엔 과거 실값이 남아 public 검색 가능하다** — 완전 조치는 (1)노출된 자격/접속정보 로테이션 (2)저장소 private 전환 검토 (3)필요시 히스토리 재작성이며, 모두 팀·사람 결정이다.
+
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project Overview
@@ -30,24 +32,24 @@ Goal: H&E WSI → morphology embedding → molecular phenotype prediction → De
 
 | Username | github id | atlassian id | slack id  | slack app name for openclaw | SSH Port | Role |
 |---|---|---|---|---|---|---|
-| jamie (jmryu) | JamieLyu | jamie.orangecounty@gmail.com | jamie.orangecounty@gmail.com | jamie-openclaw-bot |2203 | Data Agent — TCGA/CPTAC manifests, labels, splits |
-| kkkim (gkkim) | kakyungkim | kakyung.kim@gmail.com | kakyung.kim@gmail.com | kakyung.kim-openclaw-bot | 2205 | **Project Leader** + Embedding Agent — WSI tiling, foundation model extraction (Data manifest/다운로드 역할 흡수) |
-| gglee (gklee) | Geongyu | rjsrb365@gmail.com | rjsrb365@gmail.com | ggyu-claw | 2202 | **재편입 2026-07-07** (일정으로 2026-06-09 이탈 → 재합류). 역할 재배정 별도 협의(현재 Leader=kkkim·Critic=braveji 유지). Atlassian 계정 active·배정 가능(accountId 712020:bff61238-cf1c-4ca7-a971-4411a06ccf42); GitHub org 접근만 확인 필요 |
-| sjpark | sezinie000 | sezinie000@gmail.com | sezinie000@gmail.com | sezinie-openclaw-bot | 2206 | Modeling Agent — phenotype prediction (MLP, attention MIL); Critic 바이오 sub-check **후보**(고정 배정 아님 — 선정규칙은 "Critic Cross-Review Rules") |
-| braveji (ykji) | braveji18 | biospinleader@gmail.com  | biospinleader@gmail.com | yong-openclaw-bot |  2201 | Orchestrator + **Scientific Critic (총괄)** — pipeline coordination, infra, schemas; 7-point/critic_status owns, 바이오 sub-check(#4/#5)는 **owner가 아닌 사람에게 케이스별 분담**(선정규칙 = "Critic Cross-Review Rules"; 기본 후보 sjpark/jhans이나 둘 다 owner면 Leader가 타 멤버 지정) |
-| jhans | JeonghanSeo | phoenicx16@gmail.com | phoenicx16@gmail.com |  | 2204 |  Therapeutic Evidence Agent — DepMap/GDSC drug linking |
+| jamie (jmryu) | JamieLyu | <jamie_email> | <jamie_email> | jamie-openclaw-bot | <port> | Data Agent — TCGA/CPTAC manifests, labels, splits |
+| kkkim (gkkim) | kakyungkim | <kkkim_email> | <kkkim_email> | kakyung.kim-openclaw-bot | <port> | **Project Leader** + Embedding Agent — WSI tiling, foundation model extraction (Data manifest/다운로드 역할 흡수) |
+| gglee (gklee) | Geongyu | <gglee_email> | <gglee_email> | ggyu-claw | <port> | **재편입 2026-07-07** (일정으로 2026-06-09 이탈 → 재합류). 역할 재배정 별도 협의(현재 Leader=kkkim·Critic=braveji 유지). Atlassian 계정 active·배정 가능(accountId 712020:bff61238-cf1c-4ca7-a971-4411a06ccf42); GitHub org 접근만 확인 필요 |
+| sjpark | sezinie000 | <sjpark_email> | <sjpark_email> | sezinie-openclaw-bot | <port> | Modeling Agent — phenotype prediction (MLP, attention MIL); Critic 바이오 sub-check **후보**(고정 배정 아님 — 선정규칙은 "Critic Cross-Review Rules") |
+| braveji (ykji) | braveji18 | <braveji_email>  | <braveji_email> | yong-openclaw-bot | <port> | Orchestrator + **Scientific Critic (총괄)** — pipeline coordination, infra, schemas; 7-point/critic_status owns, 바이오 sub-check(#4/#5)는 **owner가 아닌 사람에게 케이스별 분담**(선정규칙 = "Critic Cross-Review Rules"; 기본 후보 sjpark/jhans이나 둘 다 owner면 Leader가 타 멤버 지정) |
+| jhans | JeonghanSeo | <jhans_email> | <jhans_email> |  | <port> |  Therapeutic Evidence Agent — DepMap/GDSC drug linking |
 
 ## Infrastructure
 
-- **Server (현행):** RTX A6000 49GB × 3, 32 vCPU, 503 GiB RAM — `121.126.38.195` (내부망 `192.168.0.85`), SSH key only (컨테이너/overlay 환경).
-- **접속(정본, 2026-07-11 — bastion 폐기):** **직접접속** `ssh -p <본인포트> <계정>@121.126.38.195`. 구 방식(bastion `61.109.239.220` 경유 `-J`)은 A100 서버 시절 방식으로 **폐기** — 쓰지 않는다. 정본 = BIOP01 `docs/SHARED-INFRA-GUIDE.md` §1.
-- **SSH 포트:** 팀원별 포트는 위 Team & Roles 표 기준 (2026-06-30 현행 서버로 정정: braveji 2201 / jamie 2203 / kkkim 2205 / jhans 2204 / sjpark 2206).
+- **Server (현행):** RTX A6000 49GB × 3, 32 vCPU, 503 GiB RAM — `<SERVER_IP>` (내부망 `<SERVER_INTERNAL_IP>`), SSH key only (컨테이너/overlay 환경).
+- **접속(정본, 2026-07-11 — bastion 폐기):** **직접접속** `ssh -p <본인포트> <계정>@<SERVER_IP>`. 구 방식(bastion `<OLD_BASTION_IP_deprecated>` 경유 `-J`)은 A100 서버 시절 방식으로 **폐기** — 쓰지 않는다. 정본 = BIOP01 `docs/SHARED-INFRA-GUIDE.md` §1.
+- **SSH 포트:** 팀원별 포트는 위 Team & Roles 표 기준 (팀원별 SSH 포트 = 개인 infra config 참조. 실값은 공개 저장소에 두지 않는다.).
 - **Data layout:** raw WSI(NAS/로컬 캐시) → 타일·임베딩 처리. 공용 `/workspace/data/cache/biop02/`, 개인 대용량 `~/data/`(15 TB, LRU). embeddings = permanent.
 - **GPU:** A6000 3장(`cuda:0/1/2`). 사용 전 `#biop02-alerts`에 GPU 인덱스 예약(until `gpu.lock` wrapper is ready).
 - **스토리지:** `/workspace`·`/data` = SATA SSD 447 GB(공용, ext4) | `~/data` = **HDD 14.6 TB**(개인, ext4, 회전식). raw WSI·임베딩이 HDD에 있어 타일 읽기 I/O가 병목.
-- **소프트웨어:** Ubuntu 22.04.4(Docker), NVIDIA 드라이버 535.309.01, CUDA 12.4, torch 2.6.0+cu124. 외부 IP=SSH IP(NAT 없음), 리전=한국(IP 121.126.x).
+- **소프트웨어:** Ubuntu 22.04.4(Docker), NVIDIA 드라이버 535.309.01, CUDA 12.4, torch 2.6.0+cu124. 외부 IP=SSH IP(NAT 없음), 리전=한국(IP <SERVER_IP_prefix>).
 - **제공처/비용:** **모두의연구소(Modulabs) 제공(추정), 비용 무료.** 조건: **논문 Acknowledgments에 GPU 자원 제공처로 명시.** 계약기간·연장·idle 정책은 미확인(담당자 확인 권장).
-- **공동 JupyterLab (협업):** 실시간 동시편집 + 채팅. jupyter는 **kkkim 컨테이너**에서 1개 기동, 팀 전원이 터널로 공유. 각자 본인 계정 접속(kkkim 계정 공유 X). 접속(정본, 2026-07-11 — bastion 폐기, **직접접속**): `ssh -p <본인포트> -L 8899:<kkkim 컨테이너 IP>:8899 <계정>@121.126.38.195` → `http://localhost:8899`(웹 비밀번호는 Slack 공유). **목적지는 `localhost`가 아니라 kkkim 컨테이너 IP**(예 `172.18.0.5`, 기동 로그의 "★ kkkim 컨테이너 IP"; 재시작 시 바뀜) — `localhost`로 쓰면 자기 컨테이너로 해석돼 접속 불가. kkkim 본인만 `-L 8899:localhost:8899` 가능. 공용 작업폴더 `~/collab_workspace`. SSH 세션 종료 시 터널도 끊기므로 사용 중 터미널 유지. 정본 = BIOP01 `docs/SHARED-INFRA-GUIDE.md` §2.
+- **공동 JupyterLab (협업):** 실시간 동시편집 + 채팅. jupyter는 **kkkim 컨테이너**에서 1개 기동, 팀 전원이 터널로 공유. 각자 본인 계정 접속(kkkim 계정 공유 X). 접속(정본, 2026-07-11 — bastion 폐기, **직접접속**): `ssh -p <본인포트> -L 8899:<kkkim 컨테이너 IP>:8899 <계정>@<SERVER_IP>` → `http://localhost:8899`(웹 비밀번호는 Slack 공유). **목적지는 `localhost`가 아니라 kkkim 컨테이너 IP**(예 `<CONTAINER_IP_example>`, 기동 로그의 "★ kkkim 컨테이너 IP"; 재시작 시 바뀜) — `localhost`로 쓰면 자기 컨테이너로 해석돼 접속 불가. kkkim 본인만 `-L 8899:localhost:8899` 가능. 공용 작업폴더 `~/collab_workspace`. SSH 세션 종료 시 터널도 끊기므로 사용 중 터미널 유지. 정본 = BIOP01 `docs/SHARED-INFRA-GUIDE.md` §2.
 - **GPU env (BIOP02 전용):** **`spatialpatho`** — Python 3.13, torch 2.6.0+cu124(3 devices). 활성화 `conda activate /opt/envs/spatialpatho`(**full-path 권장**; 이름만 쓰면 개인 원본 `~/miniconda3/envs/spatialpatho`가 우선순위상 먼저 잡힘). canonical = `guide/gpu_env_biop02.md`. ⚠️ **BIOP01 velocity env(`velo-*`)와 통합·rename 금지 — BIOP02 전용 격리 env.**
 - **Workspace:** `/workspace/agents/<role>/` per person
 
@@ -120,7 +122,7 @@ Every experiment directory must include all five artifacts above plus a git comm
 
 ## Foundation Models (embedding)
 
-HF 게이팅 접근은 **BIOP02-24(2026-05-17)에서 5종 전종 승인 완료** — HF 계정 `irobii`, 기관 이메일 `kkkim@cytogenlab.com`(신규 신청 시에도 기관 이메일; `@gmail`/`@naver` 거부 사례). Prov-GigaPath는 **2026-07-12 추가 승인**(BIOP02-24 댓글). **UNI v1이 헤드라인 임베딩(1024-d)**이고, Virchow2·UNI2-h·Prov-GigaPath는 **SOTA 다중 FM 견고성 검증용**(치환가능성 법칙의 모델 비의존성, Paper C).
+HF 게이팅 접근은 **BIOP02-24(2026-05-17)에서 5종 전종 승인 완료** — HF 계정 `irobii`, 기관 이메일 `<institutional_email>`(신규 신청 시에도 기관 이메일; `@gmail`/`@naver` 거부 사례). Prov-GigaPath는 **2026-07-12 추가 승인**(BIOP02-24 댓글). **UNI v1이 헤드라인 임베딩(1024-d)**이고, Virchow2·UNI2-h·Prov-GigaPath는 **SOTA 다중 FM 견고성 검증용**(치환가능성 법칙의 모델 비의존성, Paper C).
 
 | Priority | Model | Dim | License | 접근 |
 |---|---|---|---|---|
@@ -138,8 +140,8 @@ All licenses are academic non-commercial — project is **academic research only
 ## Key Commands
 
 ```bash
-# SSH access (직접접속 정본; kkkim 포트=2205. bastion 경유는 폐기)
-ssh -p <port> <username>@121.126.38.195
+# SSH access (직접접속 정본; kkkim 포트=<port>. bastion 경유는 폐기)
+ssh -p <port> <username>@<SERVER_IP>
 
 # Environment setup (embedding agent)
 bash agents/embedding/setup.sh   # installs openslide-tools, libvips, pyvips, timm, huggingface_hub
