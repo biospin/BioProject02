@@ -194,6 +194,24 @@ For each endpoint we quantified whether the site-disjoint split confounds the la
 - **Table R1** Observed substitution-cost spectrum · **Table R2** Power ceiling · **Table R5** Multiple foundation models (Supplement)
 - **Table 1** (planned) Cohort characteristics — n, label prevalence and split for the 5 cancers
 
+## Declarations
+
+**Ethics approval and consent to participate.** `<FILL: TCGA and CPTAC are public, de-identified datasets, so not applicable. The Yale cohort IRB/DUA wording is to be confirmed against the terms under which the source data were provided.>`
+
+**Consent for publication.** Not applicable.
+
+**Availability of data and materials.** This study uses TCGA (five cancers), CPTAC and a Yale cohort. Access conditions and manifests for each cohort are attached as Supplement. Analysis code and deterministic recomputation scripts: `<FILL: repository/DOI + license>`.
+
+**Competing interests.** `<FILL: to be declared once the author list is final>`
+
+**Funding.** This research was supported by the “Open Source AI·SW Developer and Community Support Program” funded by the Ministry of Science and ICT (MSIT), Republic of Korea.
+
+**Authors’ contributions.** `<FILL: to be agreed by all co-authors>`
+
+**Acknowledgements.** The authors thank Pseudo Lab, a non-profit AI/ML research community, for providing the collaborative environment that brought the authors together and enabled this research.
+
+GPU resources were provided by Modulabs.
+
 ## Open items
 
 - Citations are provisional (brackets) until machine-verified by `verify_citations.py`.

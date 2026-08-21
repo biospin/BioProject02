@@ -194,6 +194,24 @@ CLAM-SB attention MIL을 사용하였다(hidden 512·attention 256, 40–50 epoc
 - **표 R1** 치환비용 관찰 스펙트럼 · **표 R2** 검정력 천장 · **표 R5** 다중 FM(Supplement)
 - **Table 1**(예정) 코호트 특성 — 5암종 n·라벨 유병률·split
 
+## Declarations
+
+**Ethics approval and consent to participate.** `<FILL: TCGA·CPTAC는 공개·비식별 데이터로 해당 없음. Yale 코호트 IRB/DUA 문구는 원자료 제공 조건 확인 후 확정>`
+
+**Consent for publication.** Not applicable.
+
+**Availability of data and materials.** TCGA(다섯 개 암종)·CPTAC·Yale 코호트를 사용하였다. 각 코호트의 접근 조건과 매니페스트는 Supplement에 첨부한다. 분석 코드와 결정론 재실행 스크립트: `<FILL: repository/DOI + license>`.
+
+**Competing interests.** `<FILL: 저자 구성 확정 후 선언>`
+
+**Funding.** 본 연구는 과학기술정보통신부(MSIT)가 지원하는 “오픈소스 AI·SW 개발자 및 커뮤니티 지원 사업”의 지원을 받아 수행되었다.
+
+**Authors' contributions.** `<FILL: 전 공동저자 합의 후 확정>`
+
+**Acknowledgements.** The authors thank Pseudo Lab, a non-profit AI/ML research community, for providing the collaborative environment that brought the authors together and enabled this research.
+
+GPU 자원은 Modulabs(모두의연구소)가 제공하였다.
+
 ## 남은 것
 
 - 인용은 `verify_citations.py` 기계 검증 후 확정(현재 대괄호는 잠정).
