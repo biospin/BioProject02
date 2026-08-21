@@ -97,6 +97,18 @@
 - `schemas/hypothesis.schema.json` — 가설 출력 구조. 모든 hypothesis 출력에 `claim_level`(반드시 `"hypothesis_only"`) + `critic_status`(`pass`/`caution`/`reject`) 필수 (`AGENTS.md` §4).
 - 실험 `metrics.json` 필수필드: `auc·auprc·balanced_accuracy·n_train·n_val·model·embedding_model·commit_hash` (`AGENTS.md` §5).
 
+### 스키마는 "선언"이 아니라 "검증"이어야 한다
+
+한동안 이 계약에는 구멍이 있었다. 산출 스크립트들이 docstring에서 *"hypothesis.schema.json 형식 출력"* 이라고 **말할 뿐 검증하지 않았고**, 리포에 그 스키마를 검사하는 코드가 아예 없었다. 그래서 위반(필수 필드 누락 등)이 **최소 4주간 아무에게도 안 보였다.**
+
+대응은 두 갈래였다:
+1. **스키마를 확장**한다 — 현장에서 실제로 필요해 붙은 필드(예: *fallback 값인지 실측인지* 구분하는 표시)를 **삭제하는 대신 정식 등재**. 규율을 지키려고 유용한 정보를 버리지 않는다.
+2. **검증기를 만든다** — `agents/critic/scripts/validate_hypothesis.py`. 이제 "형식"이 **주장이 아니라 검사**다.
+
+> ⚠️ **다만 이 검증기는 아직 CI에 blocking으로 걸지 않았다 — 의도적이다.**
+> 기존 산출물에 위반이 남아 있는 상태로 blocking을 켜면 **"원래 빨간 CI"** 가 되고, 그러면 아무도 CI를 보지 않는다. 먼저 위반을 해소하고, 그다음에 켠다.
+> **순서를 지키는 것도 설계다** — 게이트를 켜는 시점이 잘못되면 게이트 자체가 무력해진다.
+
 ## "지어내지 않기"를 계약에 박았다
 
 산출물 계약 곳곳에 `<FILL>` 플레이스홀더가 있다(예: `SKILL.md:18`의 `<FILL: docs/manuscript/preprint.md (미존재)>`). 이는 **아직 없는 것을 없다고 표시**하는 장치다.
