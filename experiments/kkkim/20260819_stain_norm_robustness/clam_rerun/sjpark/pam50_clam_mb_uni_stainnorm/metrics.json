@@ -1,0 +1,32 @@
+{
+  "schema_version": "0.1",
+  "created_at": "2026-08-24T03:51:41.090361Z",
+  "task": "pam50",
+  "model": "CLAM-MB",
+  "num_classes": 5,
+  "class_names": [
+    "LumA",
+    "LumB",
+    "Basal",
+    "HER2",
+    "Normal"
+  ],
+  "embedding_model": "uni_stainnorm",
+  "smoke_test": false,
+  "n_train": 707,
+  "n_val": 151,
+  "label_shuffle_sanity_check": false,
+  "best_val_loss": 1.4258,
+  "auc": 0.7396,
+  "auprc": 0.4622,
+  "balanced_accuracy": 0.4047,
+  "ext_test_manifest": null,
+  "ext_auc": null,
+  "ext_auprc": null,
+  "ext_balanced_accuracy": null,
+  "commit_hash": "1c610448eb1cd63521306bc6ef8b14565367f3e3",
+  "claim_level": "hypothesis_only",
+  "critic_status": "pending",
+  "wandb_run_id": null,
+  "mlflow_run_id": null
+}
