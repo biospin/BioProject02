@@ -1,5 +1,7 @@
 # BioProject02 — SpatialPathoAgent
 
+> ⚠️ **운영 상수 살균됨 (public 저장소).** 서버 IP·SSH 포트 등은 `<PLACEHOLDER>`로 대체돼 있다. 실값은 **공개 저장소에 두지 않으며**, 팀 개인 infra config(gitignore, 예 `~/.claude/biop02_infra.local`) 또는 사내 채널에서 관리한다. ⚠️ **주의: 이 살균은 현재 파일만 정리하며 git 히스토리엔 과거 실값이 남아 public 검색 가능하다** — 완전 조치는 (1)노출된 자격/접속정보 로테이션 (2)저장소 private 전환 검토 (3)필요시 히스토리 재작성이며, 모두 팀·사람 결정이다.
+
 H&E 전체 슬라이드 이미지(WSI)에서 분자 표현형을 예측하고 치료 가설을 순위화하는 멀티에이전트 AI 연구 파이프라인.
 
 **목표:** H&E WSI → 형태학적 임베딩 → 분자 표현형 예측 → DepMap/GDSC 전이 → 순위화된 치료 가설 + Scientific Critic 검증
@@ -12,12 +14,12 @@ H&E 전체 슬라이드 이미지(WSI)에서 분자 표현형을 예측하고 �
 
 | 사용자명 | GitHub | 역할 | SSH 포트 |
 |---|---|---|---|
-| jamie (jmryu) | [JamieLyu](https://github.com/JamieLyu) | Data Agent — TCGA/CPTAC 매니페스트, 레이블, 분할 | 2203 |
-| kkkim | [kakyungkim](https://github.com/kakyungkim) | **프로젝트 리더** + Embedding Agent — WSI 타일링, 파운데이션 모델 특징 추출 | 2205 |
-| gglee | [Geongyu](https://github.com/Geongyu) | 재편입 2026-07-07 (일정으로 6/9 이탈→재합류). 이탈 중 리더→kkkim·Critic→braveji 재배정, 재편입 후에도 유지(역할 재배정 별도 협의) | 2202 |
-| sjpark | [sezinie000](https://github.com/sezinie000) | Modeling Agent — 표현형 예측 (MLP, attention MIL); Critic 바이오 sub-check 분담 | 2206 |
-| braveji (ykji) | [braveji18](https://github.com/braveji18) | Orchestrator + **Scientific Critic (총괄)** — 파이프라인 조율, 인프라, 스키마 | 2201 |
-| jhans | [JeonghanSeo](https://github.com/JeonghanSeo) | Therapeutic Evidence Agent — DepMap/GDSC 약물 연결 | 2204 |
+| jamie (jmryu) | [JamieLyu](https://github.com/JamieLyu) | Data Agent — TCGA/CPTAC 매니페스트, 레이블, 분할 | <포트> |
+| kkkim | [kakyungkim](https://github.com/kakyungkim) | **프로젝트 리더** + Embedding Agent — WSI 타일링, 파운데이션 모델 특징 추출 | <포트> |
+| gglee | [Geongyu](https://github.com/Geongyu) | 재편입 2026-07-07 (일정으로 6/9 이탈→재합류). 이탈 중 리더→kkkim·Critic→braveji 재배정, 재편입 후에도 유지(역할 재배정 별도 협의) | <포트> |
+| sjpark | [sezinie000](https://github.com/sezinie000) | Modeling Agent — 표현형 예측 (MLP, attention MIL); Critic 바이오 sub-check 분담 | <포트> |
+| braveji (ykji) | [braveji18](https://github.com/braveji18) | Orchestrator + **Scientific Critic (총괄)** — 파이프라인 조율, 인프라, 스키마 | <포트> |
+| jhans | [JeonghanSeo](https://github.com/JeonghanSeo) | Therapeutic Evidence Agent — DepMap/GDSC 약물 연결 | <포트> |
 
 주간 동기화: **매주 금요일** 60분. 리더: kkkim. 오케스트레이터/회의록: braveji.
 
@@ -25,17 +27,17 @@ H&E 전체 슬라이드 이미지(WSI)에서 분자 표현형을 예측하고 �
 
 ## 인프라
 
-- **서버(현행):** RTX A6000 49GB × 3, 32 vCPU, RAM 503 GiB — `121.126.38.195` (내부망 `192.168.0.85`), SSH 키 전용 (컨테이너 환경). (SSH 포트는 위 팀 표 기준, 2026-06-30 정정)
-- **접속(정본, 2026-07-11 — bastion 폐기):** **직접접속** `ssh -p <포트> <계정>@121.126.38.195`. 구 방식(bastion `61.109.239.220` 경유 `-J`, A100 서버 시절)은 **폐기**.
+- **서버(현행):** RTX A6000 49GB × 3, 32 vCPU, RAM 503 GiB — `<SERVER_IP>` (내부망 `<SERVER_INTERNAL_IP>`), SSH 키 전용 (컨테이너 환경). (팀원별 SSH 포트 = 개인 infra config 참조. 실값은 공개 저장소에 두지 않는다.)
+- **접속(정본, 2026-07-11 — bastion 폐기):** **직접접속** `ssh -p <포트> <계정>@<SERVER_IP>`. 구 방식(bastion `<OLD_BASTION_IP_deprecated>` 경유 `-J`, A100 서버 시절)은 **폐기**.
 - **데이터 레이아웃:** 원본 WSI(NAS/로컬 캐시) → 타일·임베딩 처리 | 공용 `/workspace/data/cache/biop02/`, 개인 대용량 `~/data/`(15 TB, LRU) | 임베딩 = 영구 보존
 - **GPU:** A6000 3장(`cuda:0/1/2`) — 사용 전 Slack `#biop02-alerts`에 GPU 인덱스 예약
 - **제공처:** 모두의연구소(Modulabs) 제공(추정), 비용 무료. **논문 Acknowledgments에 GPU 자원 제공처 명시 필요.**
-- **공동 JupyterLab (협업):** 실시간 동시편집 + 채팅 — `ssh -p <포트> -L 8899:<kkkim 컨테이너 IP>:8899 <사용자명>@121.126.38.195` → `http://localhost:8899` (비밀번호 Slack 공유). 목적지는 localhost가 아니라 **kkkim 컨테이너 IP**(`~/start_collab_jupyter.sh` 기동 로그의 "★ kkkim 컨테이너 IP" 확인, 재시작 시 바뀜; kkkim 본인만 localhost 가능). 공용 작업폴더 `/home/kkkim/collab_workspace`
+- **공동 JupyterLab (협업):** 실시간 동시편집 + 채팅 — `ssh -p <포트> -L 8899:<kkkim 컨테이너 IP>:8899 <사용자명>@<SERVER_IP>` → `http://localhost:8899` (비밀번호 Slack 공유). 목적지는 localhost가 아니라 **kkkim 컨테이너 IP**(`~/start_collab_jupyter.sh` 기동 로그의 "★ kkkim 컨테이너 IP" 확인, 재시작 시 바뀜; kkkim 본인만 localhost 가능). 공용 작업폴더 `/home/kkkim/collab_workspace`
 - **작업 공간:** `/workspace/agents/<role>/` (팀원별)
 
 ```bash
 # 본서버 접속 (직접접속)
-ssh -p <포트> <사용자명>@121.126.38.195
+ssh -p <포트> <사용자명>@<SERVER_IP>
 ```
 
 ---
