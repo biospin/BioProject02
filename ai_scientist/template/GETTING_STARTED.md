@@ -299,6 +299,7 @@ curl -sS -X POST "https://api.telegram.org/bot$TELEGRAM_TOKEN/sendMessage" \
 - [ ] owner ≠ reviewer 매핑이 사람 규칙과 자동 루프에 **동일하게** 들어갔다
 - [ ] 토큰이 커밋되지 않았다
 - [ ] 결과 공유 채널이 **검수 통과 후에만** 쓰인다
+- [ ] **세션 착수·마무리 규율**을 팀이 합의했다([05 §(F)](05_human_collaboration.md)) — "할 일 없다"·"반영 다 했다"는 **전수 확인 뒤에만**
 
 ## 흔한 실수 6가지
 

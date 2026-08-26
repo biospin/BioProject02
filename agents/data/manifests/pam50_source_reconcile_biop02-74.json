@@ -1,0 +1,64 @@
+{
+  "cbio_study_id": "brca_tcga_pan_can_atlas_2018",
+  "cbio_attribute": "SUBTYPE",
+  "cbio_level": "PATIENT",
+  "n_manifest_pam50": 1009,
+  "n_cbio_pam50": 981,
+  "cbio_coverage_of_manifest_cohort_pct": 97.2,
+  "n_overlap": 902,
+  "n_match": 514,
+  "concordance_pct": 57.0,
+  "top_mismatch_pairs_local_vs_cbio": [
+    {
+      "local": "LumB",
+      "cbio": "LumA",
+      "n": 141
+    },
+    {
+      "local": "Normal",
+      "cbio": "LumA",
+      "n": 101
+    },
+    {
+      "local": "HER2",
+      "cbio": "LumB",
+      "n": 30
+    },
+    {
+      "local": "LumA",
+      "cbio": "LumB",
+      "n": 22
+    },
+    {
+      "local": "Basal",
+      "cbio": "Normal",
+      "n": 19
+    },
+    {
+      "local": "HER2",
+      "cbio": "LumA",
+      "n": 17
+    },
+    {
+      "local": "Basal",
+      "cbio": "LumA",
+      "n": 16
+    },
+    {
+      "local": "LumB",
+      "cbio": "Basal",
+      "n": 15
+    },
+    {
+      "local": "LumB",
+      "cbio": "HER2",
+      "n": 6
+    },
+    {
+      "local": "HER2",
+      "cbio": "Basal",
+      "n": 5
+    }
+  ],
+  "policy_check": "split_policy_v0.md §10: local/genefu fallback authorized only if cBioPortal coverage short. Measured coverage=97.2% (HIGH — fallback condition NOT met)"
+}

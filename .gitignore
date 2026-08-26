@@ -290,3 +290,7 @@ experiments/kkkim/20260710_pcr_impress/outputs/
 # BLOCKER-5 이관 로그·manifest 백업(재생성 가능)
 experiments/crosscancer/BLOCKER5_COPY.log
 experiments/crosscancer/*/full/*.prehome_bak
+
+# 시각화용 vendored mermaid 런타임 (3.2MB×N) — Leader 결정으로 미커밋 유지.
+# 없으면 index.html 이 CDN 폴백으로 렌더된다. (BIOP02-113, kkkim #11915)
+ai_scientist/output_v*/mermaid.min.js

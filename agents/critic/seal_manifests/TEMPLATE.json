@@ -1,0 +1,13 @@
+{
+  "_doc": "회고적 사전등록 탐지용 seal manifest. check_seal_timeline.py 입력.",
+  "_rule": "각 seal: prediction 커밋 시각 < result 커밋 시각 이어야 sealed-forward. 위반 시 게이트 FAIL.",
+  "_how": "prediction/result_commit = git SHA, 또는 prediction/result_path = 파일(마지막 커밋 시각).",
+  "_populate": "실제 봉인 주장(예: 교차암 폐·위·두경부 sealed-forward)을 여기 채운다. 근거 타임라인 = experiments/crosscancer/LAW_HELDOUT_SCOREBOARD.md('폐 예측 07-12 05:06 < 결과 15:35' 등).",
+  "seals": [
+    {
+      "claim": "(예시) 폐 histology sealed-forward",
+      "prediction_commit": "<예측 커밋 SHA>",
+      "result_commit": "<결과 커밋 SHA>"
+    }
+  ]
+}

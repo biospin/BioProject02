@@ -55,7 +55,7 @@
   },
 
   "ai_review": {
-    "agents": ["paper-critic", "reviewer"],
+    "agents": ["paper-critic"],
     "checklist": "agents/critic/checklist_v1.md",
     "prompt_template": "agents/critic/AI_REVIEW_PROMPT.md",
     "independent_passes": 2,

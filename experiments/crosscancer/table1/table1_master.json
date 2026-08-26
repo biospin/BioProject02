@@ -1,0 +1,323 @@
+{
+  "cancers": {
+    "BREAST": {
+      "n_patients": 1010,
+      "n_slides": 1010,
+      "split": {
+        "test": 151,
+        "val": 152,
+        "train": 707
+      },
+      "n_holdout": 303,
+      "age": {
+        "median": 58.5,
+        "iqr": [
+          49.0,
+          68.0
+        ],
+        "n": 996
+      },
+      "sex_dist": {
+        "Female": 984,
+        "Male": 12
+      },
+      "stage_dist": {
+        "II": 569,
+        "I": 167,
+        "III": 227,
+        "missing": 31,
+        "IV": 16
+      },
+      "grade_coverage_n": 0,
+      "grade_coverage_pct": 0.0,
+      "grade_dist": {},
+      "tss_n_sites": 37,
+      "endpoints": {
+        "er_status": {
+          "n_holdout_or_total": 1010,
+          "n_has_label": 1010,
+          "n_pos": 782,
+          "missing_pct": 0.0,
+          "assay_source": "IHC(임상 병리검사)"
+        },
+        "pr_status": {
+          "n_holdout_or_total": 1010,
+          "n_has_label": 1005,
+          "n_pos": 672,
+          "missing_pct": 0.5,
+          "assay_source": "IHC(임상 병리검사)"
+        },
+        "her2_status": {
+          "n_holdout_or_total": 1010,
+          "n_has_label": 698,
+          "n_pos": 159,
+          "missing_pct": 30.9,
+          "assay_source": "IHC/FISH(임상 병리검사, BIOP02-49 QC 완료)"
+        },
+        "pam50": {
+          "n_holdout_or_total": 1010,
+          "n_has_label": 882,
+          "class_dist": {
+            "HER2": 120,
+            "LumB": 321,
+            "LumA": 243,
+            "Basal": 198
+          },
+          "n_pos": null,
+          "missing_pct": 12.7,
+          "assay_source": "유전자발현 분류기(계산값, tcga_brca_pam50_computed.csv)"
+        }
+      }
+    },
+    "LUNG": {
+      "n_patients": 1050,
+      "n_slides": 1026,
+      "split": {
+        "train": 735,
+        "val": 158,
+        "test": 157
+      },
+      "n_holdout": 315,
+      "age": {
+        "median": 67.0,
+        "iqr": [
+          60.0,
+          73.0
+        ],
+        "n": 968
+      },
+      "sex_dist": {
+        "Male": 594,
+        "Female": 402
+      },
+      "stage_dist": {
+        "III": 166,
+        "II": 280,
+        "I": 513,
+        "missing": 57,
+        "IV": 34
+      },
+      "grade_coverage_n": 0,
+      "grade_coverage_pct": 0.0,
+      "grade_dist": {},
+      "tss_n_sites": 69,
+      "endpoints": {
+        "egfr_activating": {
+          "n_total_cohort": 1050,
+          "n_has_label": 1050,
+          "n_pos_cohort": 61,
+          "missing_pct": 0.0,
+          "n_holdout": 271,
+          "n_pos_holdout": 15,
+          "assay_source": "체세포변이 콜(MAF, WES-derived)"
+        },
+        "kras_g12c": {
+          "n_total_cohort": 1050,
+          "n_has_label": 1050,
+          "n_pos_cohort": 70,
+          "missing_pct": 0.0,
+          "n_holdout": 271,
+          "n_pos_holdout": 14,
+          "assay_source": "체세포변이 콜(MAF, WES-derived)"
+        },
+        "histology_lusc": {
+          "n_total_cohort": 1050,
+          "n_has_label": 1050,
+          "n_pos_cohort": 484,
+          "missing_pct": 0.0,
+          "n_holdout": 271,
+          "n_pos_holdout": 153,
+          "assay_source": "병리 진단(조직형, 임상)"
+        }
+      }
+    },
+    "COLORECTAL": {
+      "n_patients": 534,
+      "n_slides": 523,
+      "split": {
+        "test": 80,
+        "val": 80,
+        "train": 374
+      },
+      "n_holdout": 160,
+      "age": {
+        "median": 67.0,
+        "iqr": [
+          57.0,
+          75.0
+        ],
+        "n": 532
+      },
+      "sex_dist": {
+        "Male": 277,
+        "Female": 255
+      },
+      "stage_dist": {
+        "III": 151,
+        "II": 201,
+        "IV": 73,
+        "I": 95,
+        "missing": 14
+      },
+      "grade_coverage_n": 0,
+      "grade_coverage_pct": 0.0,
+      "grade_dist": {},
+      "tss_n_sites": 37,
+      "endpoints": {
+        "braf_v600e": {
+          "n_total_cohort": 534,
+          "n_has_label": 534,
+          "n_pos_cohort": 48,
+          "missing_pct": 0.0,
+          "n_holdout": 151,
+          "n_pos_holdout": 15,
+          "assay_source": "체세포변이 콜(MAF, WES-derived)"
+        }
+      }
+    },
+    "GASTRIC": {
+      "n_patients": 440,
+      "n_slides": 439,
+      "split": {
+        "val": 66,
+        "test": 66,
+        "train": 308
+      },
+      "n_holdout": 132,
+      "age": {
+        "median": 67.0,
+        "iqr": [
+          58.0,
+          73.0
+        ],
+        "n": 436
+      },
+      "sex_dist": {
+        "Male": 284,
+        "Female": 156
+      },
+      "stage_dist": {
+        "missing": 19,
+        "II": 131,
+        "I": 58,
+        "III": 188,
+        "IV": 44
+      },
+      "grade_coverage_n": 440,
+      "grade_coverage_pct": 100.0,
+      "grade_dist": {
+        "G3": 263,
+        "G2": 156,
+        "GX": 9,
+        "G1": 12
+      },
+      "tss_n_sites": 22,
+      "endpoints": {
+        "msi_h": {
+          "n_total_cohort": 440,
+          "n_has_label": 438,
+          "n_pos_cohort": 82,
+          "missing_pct": 0.5,
+          "n_holdout": 107,
+          "n_pos_holdout": 24,
+          "assay_source": "MSIsensor score≥3.5(NGS-derived, SUBTYPE STAD_MSI 교차확인)"
+        },
+        "erbb2_amp": {
+          "n_total_cohort": 440,
+          "n_has_label": 438,
+          "n_pos_cohort": 58,
+          "missing_pct": 0.5,
+          "n_holdout": 107,
+          "n_pos_holdout": 14,
+          "assay_source": "CNA(GISTIC) 증폭 콜"
+        },
+        "lauren_diffuse": {
+          "n_total_cohort": 440,
+          "n_has_label": 170,
+          "n_pos_cohort": 83,
+          "missing_pct": 61.4,
+          "n_holdout": 58,
+          "n_pos_holdout": 31,
+          "assay_source": "병리 조직분류(ICD_O_3_HISTOLOGY, 임상)"
+        },
+        "ebv": {
+          "n_total_cohort": 440,
+          "n_has_label": 383,
+          "n_pos_cohort": 30,
+          "missing_pct": 13.0,
+          "n_holdout": 89,
+          "n_pos_holdout": 7,
+          "assay_source": "TCGA 분자아형(SUBTYPE, 바이러스 검출 복합판정)"
+        }
+      }
+    },
+    "HEADNECK": {
+      "n_patients": 523,
+      "n_slides": 468,
+      "split": {
+        "train": 366,
+        "val": 79,
+        "test": 78
+      },
+      "n_holdout": 157,
+      "age": {
+        "median": 61.0,
+        "iqr": [
+          53.0,
+          68.0
+        ],
+        "n": 522
+      },
+      "sex_dist": {
+        "Male": 382,
+        "Female": 141
+      },
+      "stage_dist": {
+        "IV": 269,
+        "III": 80,
+        "missing": 70,
+        "I": 27,
+        "II": 77
+      },
+      "grade_coverage_n": 519,
+      "grade_coverage_pct": 99.2,
+      "grade_dist": {
+        "G3": 123,
+        "G2": 308,
+        "G1": 63,
+        "GX": 18,
+        "G4": 7
+      },
+      "tss_n_sites": 28,
+      "endpoints": {
+        "hpv_pos": {
+          "n_total_cohort": 523,
+          "n_has_label": 487,
+          "n_pos_cohort": 72,
+          "missing_pct": 6.9,
+          "n_holdout": 135,
+          "n_pos_holdout": 26,
+          "assay_source": "TCGA 분자아형(SUBTYPE HNSC_HPV+, p16+바이러스검출 복합판정)"
+        },
+        "egfr_amp": {
+          "n_total_cohort": 523,
+          "n_has_label": 517,
+          "n_pos_cohort": 54,
+          "missing_pct": 1.1,
+          "n_holdout": 152,
+          "n_pos_holdout": 17,
+          "assay_source": "CNA(GISTIC) 증폭 콜"
+        },
+        "grade_high": {
+          "n_total_cohort": 523,
+          "n_has_label": 501,
+          "n_pos_cohort": 130,
+          "missing_pct": 4.2,
+          "n_holdout": 147,
+          "n_pos_holdout": 41,
+          "assay_source": "병리 등급(SAMPLE-level GRADE, 임상)"
+        }
+      }
+    }
+  }
+}
