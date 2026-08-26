@@ -9,7 +9,7 @@
 3. **유방 HER2 대체불가.** 예측 아형 라우팅이 HER2축을 항상 실패시킴 = 분자검사가 필수인 영역을 비용으로 증명. ⚠️ per-axis cost의 스킴 의존성(endocrine·chemo 반전)은 정직하게 서술, robust 주장은 antiHER2 misroute 1.00 + contrast CI로 한정.
 4. **실증 이빨(Yale).** <FILL: A3/A4 후> — 후향적 지도에 실제 치료결과 층화를 달아 격상. HER2 blind면 정직한 음성도 C 논지와 일관.
 5. **한계.** 전부 후향적·코호트 수준·hypothesis_only. 개인 benefit 아님. 전향 검증 필요. site-disjoint로 leakage는 통제했으나 다기관 일반화는 추가 검증 대상.
-6. **모델 비의존성.** <FILL: 다중 FM 재학습 후> — 법칙이 특정 FM에 기대지 않음(Supplement).
+6. **모델 비의존성 (Supplement, hypothesis_only).** 헤드라인 UNI(1024-d) 외에 UNI2-h(1536-d)·Virchow2(2560-d)로 동일 파이프라인을 재학습하였고, 법칙의 방향은 특정 FM에 기대지 않는다. 검정력을 갖춘 확증은 세 FM에서 일관하게 재현된다 — 두경부 HPV는 20-seed 우연배제에서 3/3 FM PASS(UNI 0.959·UNI2-h 0.956·Virchow2 0.920), 폐 조직형(LUSC) 양성대조는 0.939·0.961·0.947, 위 MSI-H는 0.860·0.867·0.880이다. 정직한 음성 또한 모델 비의존적이다 — 위 Lauren diffuse는 세 FM 전부 우연배제에 실패(0.536·0.603·0.640)하여 site-교란이 UNI 고유의 산물이 아님을 보이고, 위 ERBB2 증폭도 세 FM 전부 신호가 없어(0.644·0.585·0.668) G2에서 철회한 인용이 모델과 무관하게 재현된다. 검정력이 부족한 경계 축(두경부 EGFR 증폭, 대장 BRAF 등)에서는 FM 간 소폭의 불일치가 남으나, 이는 본문이 이미 한계로 명시한 n_null=5 임계 불안정(M8)과 정합하며 해당 축을 INCONCLUSIVE로 유지하는 근거를 오히려 강화한다. 근거: `experiments/crosscancer/*/full/{mil_cost_results,shuffle_null_robustness}_{uni2h,virchow2}.json`, 20-seed = `experiments/kkkim/20260820_shuffle_null_20seed/`.
 7. **임상·연구 함의.** 어디서 H&E 선별 후 표적 분자검사만 시행하면 비용을 아끼는지, 어디서 대체가 위험한지의 실무 지침.
 
 ## 한계 (Limitations) — 표현형 예측의 신뢰도 (Critic 7-point 게이트 반영, BIOP02-75)
