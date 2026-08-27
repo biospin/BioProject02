@@ -4,7 +4,7 @@
 
 **목적:** Paper A(cost-of-substitution) figure의 **단일 출처·버전 규칙**과 현재 상태를 한 곳에 정리. Confluence(VC) 공유의 근거 문서.
 **관리자:** braveji(Orchestrator). **정본 figure 계획:** `research/paperA-positioning/2026-07-10_research-plan.md` §9.
-**최종 갱신:** 2026-07-15 · 근거 = origin/main + 진행 중 PR.
+**최종 갱신:** 2026-08-27 · 근거 = origin/main 실물 + 재계산 검증.
 
 ---
 
@@ -27,7 +27,7 @@ Paper A가 **표현형 예측 → cost-of-substitution**으로 재정립되면�
 |---|---|---|---|---|---|
 | **Fig 1** | Pipeline + governance schematic (개념도) | ✅ **critic_status: pass** (braveji 서명 2026-07-21) — DRP framing·claim-level·사실정합·시각 QA 통과. 수치 주장 없는 도식 | `agents/modeling/scripts/make_fig1_pipeline.py` → `experiments/braveji/fig1_pipeline/fig1_pipeline.{png,pdf}` | braveji | BIOP02-62 |
 | **Fig 2** ⭐ | label↔therapy 해리 2-panel (**최결정 그림**) | ✅ **critic_status: pass** (braveji 서명 2026-07-27) — 근거 JSON 4건 수정 완료분을 원자료에서 **19/19 재계산 일치**. Fig 2는 CI 주장이 없고 행정규화 confusion·cost overlay가 검증된 confusion(171·9/33·2/58·21)과 손검산 일치(`0.9429×0.395=0.3724` 등) | `experiments/kkkim/20260710_cost_of_substitution/make_fig2_confusion_distance.py` → `fig2_confusion_distance.{png,pdf,json}` | kkkim/sjpark | BIOP02-91 |
-| **Fig 3** | 축별 cost + headline 대비 (cost bar + CI) | ⚠️ **critic_status: caution** (braveji 재검증 2026-07-27) — **receptor 축은 조건 충족**(환자단위 CI `[0.3309, 0.4266]` 재계산 일치, PNG 재생성 `39c3bed`). **잔여 1건: 같은 그림의 PAM50 라우팅 CI `[0.276, 0.402]`가 여전히 슬라이드 단위**(`patient_routing_cost.json` — `ci95_method`·리샘플 단위·B·seed 전부 미기재) = receptor에서 고친 pseudo-replication이 PAM50 칸에 남음 | `experiments/kkkim/20260710_cost_of_substitution/make_fig3_axis_cost.py` → `fig3_axis_cost.{png,pdf,json}` | kkkim/sjpark | BIOP02-91 |
+| **Fig 3** | 축별 cost + headline 대비 (cost bar + CI) | ✅ **critic_status: pass** (braveji 서명 2026-08-19) — receptor 축 19/19(07-27)에 이어 **PAM50 라우팅 CI를 환자 클러스터 부트스트랩으로 교체한 `83da89d`를 원자료에서 25/25 재계산 일치** 확인(`[0.2508, 0.4254]`, 0 배제). 비용 컬럼도 규칙에서 재생성(최대차 0.00e+00) | `experiments/kkkim/20260710_cost_of_substitution/make_fig3_axis_cost.py` → `fig3_axis_cost.{png,pdf,json}` | kkkim/sjpark | BIOP02-91 |
 | **Fig 4** | C2 positive-control recall + miss-rate | ⏳ 미착수 (fig4_external_sanity_lock는 구 프레이밍) | `experiments/sjpark/fig4_external_sanity_lock.png`(구), 재작성 필요 | sjpark | — |
 | **Fig 5** (선택) | Dawood baseline 대조 | ⏳ 미착수 | — | — | — |
 
@@ -53,13 +53,13 @@ Paper A가 **표현형 예측 → cost-of-substitution**으로 재정립되면�
 - VC 스페이스 figure 페이지에 canonical 표 + 최신 PNG 게시. 상태: **이 레지스트리 페이지 게시** → 이미지 첨부는 후속(REST attachment).
 - 블로그 6편은 이미 Confluence 게시됨(별건).
 
-## Critic 서명 현황 (2026-07-27 갱신)
+## Critic 서명 현황 (2026-08-19 갱신 — Fig 1·2·3 전부 pass)
 
 | Fig | critic_status | 서명/검증 | 잔여 |
 |---|---|---|---|
 | Fig 1 | **pass** | braveji 2026-07-21 | — |
 | **Fig 2** | **pass** | **braveji 2026-07-27** (근거 4건 수정분 19/19 재계산 일치) | — |
-| **Fig 3** | **caution** | braveji 2026-07-27 (receptor 축 충족) | **PAM50 라우팅 CI 환자단위 교체 1건** |
+| **Fig 3** | **pass** | **braveji 2026-08-19** (receptor 19/19 + PAM50 25/25 독립 재계산 일치) | — |
 | Fig 4·5 | — | 미착수 | 산출 자체 |
 
 ### ✅ Fig 2·3 pass 승격 조건 4건 — 전부 해소 확인 (2026-07-27, braveji 독립 재계산)
@@ -72,18 +72,22 @@ Paper A가 **표현형 예측 → cost-of-substitution**으로 재정립되면�
 4. ✅ `ci_method`: resample_unit=patient(cluster bootstrap) · n_bootstrap=5000 · seed=42 · n_slides=294 · n_patients=95 + note
    - **추가 반영(권고 이상):** per-axis `mean_cost_ci95_patient`도 환자 단위로 신설 — 제가 계산한 적 없는 값인데 재계산과 **비트 단위 일치**(endocrine `[0.0, 0.0793]` · antiHER2 `[0.395, 0.446]` · chemo `[0.417, 0.5957]`).
 
-### ⚠️ Fig 3 잔여 1건 — PAM50 라우팅 CI (신규 발견)
+### ✅ Fig 3 PAM50 라우팅 CI — 해소·서명 (2026-08-19)
 
-Fig 3은 receptor·PAM50 **두 라우팅을 같은 그림에 표시**한다. receptor 축은 환자 단위로 고쳤으나, **PAM50 축(`patient_routing_cost.json`)의 `ci95: [0.276, 0.402]`는 여전히 슬라이드 단위**이고 `ci95_method`·리샘플 단위·B·seed가 **전부 미기재**다 — receptor에서 고친 pseudo-replication이 같은 그림의 다른 칸에 남아 있다.
+Fig 3은 receptor·PAM50 **두 라우팅을 같은 그림에 표시**한다. receptor 축은 2026-07-27에 환자 단위로 고쳤으나 **PAM50 축이 슬라이드 단위로 남아 있었다**(pseudo-replication이 같은 그림의 다른 칸에 잔존).
 
-- **블로커 해소됨:** kkkim이 이 항목을 "BIOP02-90(sjpark) 도착 후 후속"으로 잡았으나(11402), **BIOP02-90은 커밋 `e0c32b0`으로 완료**되어 예측 CSV에 `case_id`가 들어왔다 → **환자 단위 재계산이 지금 가능**하다.
-- **예상:** 폭 ~1.3× 확대 시에도 0을 배제할 가능성이 높으나(receptor 사례), **braveji가 계산한 값이 아니므로 단정하지 않는다.** 실제 재계산 후 대조 필요.
-- PAM50 예측 확률은 커밋 CSV에 없어(er/pr/her2만) braveji가 독립 재계산 불가 → **kkkim 산출 후 재검증.**
+kkkim이 `83da89d`로 PAM50 축을 **환자 클러스터 부트스트랩**으로 교체하고 **독립검증용 인덱스 CSV를 함께 커밋**했다. braveji가 생산 스크립트를 호출하지 않고 라우팅·비용 규칙을 재구현해 대조 → **25/25 완전일치**.
+
+- headline `0.3396` · 환자단위 CI `[0.2508, 0.4254]` · **0 배제 유지**(슬라이드 단위 `[0.2765, 0.4004]`는 `_deprecated` 보존)
+- per-axis CI 3종 · `mean_cost` · `misroute_rate` · `dropped_rate` · n_slides 382 · n_patients 115 · B=5000 · seed=42 전부 일치
+- **`cost` 컬럼도 읽지 않고 규칙에서 재생성**해 대조(순환 검증 방지, 최대차 `0.00e+00`)
+
+⚠️ **재현 함정 2건**(둘 다 검증자가 실제로 밟음) — 예측 파일이 `pam50_clam_mb_uni_v1`(5-class)과 `_4class` 둘이라 후자로 계산하면 per-axis n은 맞고 cost만 어긋난다 · 무치료 페널티는 **전역 최대 0.765**(true 축 기준 최대 아님). 상세 = `experiments/braveji/BIOP02-75_fig3_pam50_verification/`. kkkim이 JSON note에 페널티 정의를 명시해 해소(`f5bd15c`).
 
 근거·재현 스크립트: `experiments/braveji/BIOP02-91_cost_verification/`
 
 ## 남은 작업
 - ~~Fig 2(최결정) 2-panel 확정~~ → ✅ 초안·main 병합(PR #63). ~~Fig 3 분리 산출~~ → ✅ 초안(2026-07-17). ~~Critic 검증~~ → ✅ 완료. ~~pass 승격 4건~~ → ✅ 해소·재계산 검증(2026-07-27) → **Fig 2 pass 서명 완료.**
-- **Fig 3 pass 잔여 1건** — PAM50 라우팅 CI 환자 단위 교체(kkkim). BIOP02-90 완료로 블로커 해소, 산출 후 braveji 재검증.
+- ~~Fig 3 pass 잔여 1건~~ → ✅ **해소·서명 완료(2026-08-19)** — PAM50 라우팅 CI 환자 단위 교체(kkkim `83da89d`) 후 braveji 25/25 재계산 일치. **Fig 1·2·3 전부 pass.**
 - Fig 4 positive-control 재작성 — sjpark.
 - ~~Confluence PNG 첨부~~ → **Leader 결정(2026-07-27, BIOP02-66 #11513): PNG 첨부는 선택 항목.** REST attachment 403은 인증 환경 제약이지 이 작업의 미완이 아님 → 버전 고정 Git 링크로 접근 보장. **최종 제출 패키지 시점에 웹 UI 수동 업로드** — BIOP02-76/79 제출 체크리스트로 이관.
