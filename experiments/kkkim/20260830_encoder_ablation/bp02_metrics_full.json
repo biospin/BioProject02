@@ -1,0 +1,162 @@
+[
+  {
+    "embedding_model": "uni_v1",
+    "task": "er",
+    "auc": 0.8092,
+    "auprc": 0.9331,
+    "balanced_accuracy": 0.6994,
+    "n_train": 706,
+    "n_val": 153,
+    "positives_test": 118
+  },
+  {
+    "embedding_model": "uni_v1",
+    "task": "pr",
+    "auc": 0.7871,
+    "auprc": 0.8961,
+    "balanced_accuracy": 0.7295,
+    "n_train": 703,
+    "n_val": 153,
+    "positives_test": 107
+  },
+  {
+    "embedding_model": "uni_v1",
+    "task": "her2",
+    "auc": 0.6852,
+    "auprc": 0.3397,
+    "balanced_accuracy": 0.6746,
+    "n_train": 491,
+    "n_val": 102,
+    "positives_test": 18
+  },
+  {
+    "embedding_model": "uni_v1",
+    "task": "pam50_subtype",
+    "auc": 0.7097,
+    "auprc": 0.3632,
+    "balanced_accuracy": 0.368,
+    "n_train": 705,
+    "n_val": 153,
+    "positives_test": null
+  },
+  {
+    "embedding_model": "uni_stainnorm_v1",
+    "task": "er",
+    "auc": 0.8918,
+    "auprc": 0.9644,
+    "balanced_accuracy": 0.7978,
+    "n_train": 706,
+    "n_val": 153,
+    "positives_test": 118
+  },
+  {
+    "embedding_model": "uni_stainnorm_v1",
+    "task": "pr",
+    "auc": 0.7899,
+    "auprc": 0.8795,
+    "balanced_accuracy": 0.7622,
+    "n_train": 703,
+    "n_val": 153,
+    "positives_test": 107
+  },
+  {
+    "embedding_model": "uni_stainnorm_v1",
+    "task": "her2",
+    "auc": 0.6918,
+    "auprc": 0.3164,
+    "balanced_accuracy": 0.6825,
+    "n_train": 491,
+    "n_val": 102,
+    "positives_test": 18
+  },
+  {
+    "embedding_model": "uni_stainnorm_v1",
+    "task": "pam50_subtype",
+    "auc": 0.7212,
+    "auprc": 0.3802,
+    "balanced_accuracy": 0.4432,
+    "n_train": 705,
+    "n_val": 153,
+    "positives_test": null
+  },
+  {
+    "embedding_model": "conch_v1",
+    "task": "er",
+    "auc": 0.8743,
+    "auprc": 0.943,
+    "balanced_accuracy": 0.7666,
+    "n_train": 706,
+    "n_val": 153,
+    "positives_test": 118
+  },
+  {
+    "embedding_model": "conch_v1",
+    "task": "pr",
+    "auc": 0.798,
+    "auprc": 0.8817,
+    "balanced_accuracy": 0.7186,
+    "n_train": 703,
+    "n_val": 153,
+    "positives_test": 107
+  },
+  {
+    "embedding_model": "conch_v1",
+    "task": "her2",
+    "auc": 0.6065,
+    "auprc": 0.2992,
+    "balanced_accuracy": 0.5714,
+    "n_train": 491,
+    "n_val": 102,
+    "positives_test": 18
+  },
+  {
+    "embedding_model": "conch_v1",
+    "task": "pam50_subtype",
+    "auc": 0.7219,
+    "auprc": 0.4097,
+    "balanced_accuracy": 0.4229,
+    "n_train": 705,
+    "n_val": 153,
+    "positives_test": null
+  },
+  {
+    "embedding_model": "exaone_v2",
+    "task": "er",
+    "auc": 0.8278,
+    "auprc": 0.9183,
+    "balanced_accuracy": 0.7708,
+    "n_train": 706,
+    "n_val": 153,
+    "positives_test": 118
+  },
+  {
+    "embedding_model": "exaone_v2",
+    "task": "pr",
+    "auc": 0.7296,
+    "auprc": 0.8252,
+    "balanced_accuracy": 0.7093,
+    "n_train": 703,
+    "n_val": 153,
+    "positives_test": 107
+  },
+  {
+    "embedding_model": "exaone_v2",
+    "task": "her2",
+    "auc": 0.7487,
+    "auprc": 0.5593,
+    "balanced_accuracy": 0.6746,
+    "n_train": 491,
+    "n_val": 102,
+    "positives_test": 18
+  },
+  {
+    "embedding_model": "exaone_v2",
+    "task": "pam50_subtype",
+    "auc": 0.7463,
+    "auprc": 0.4314,
+    "balanced_accuracy": 0.4688,
+    "n_train": 705,
+    "n_val": 153,
+    "positives_test": null
+  }
+]

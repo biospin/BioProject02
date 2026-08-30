@@ -1,0 +1,31 @@
+{
+ "schema": "auto_review_gate/v1",
+ "path": "experiments/kkkim/20260830_encoder_ablation",
+ "tier": "B",
+ "tier_reason": "hint:results-dir",
+ "owner": "kkkim",
+ "hard_rule_checks": {
+  "drp_forbidden": {
+   "pass": true,
+   "hits": []
+  },
+  "claim_level": {
+   "seen": true,
+   "pass": true,
+   "bad": []
+  },
+  "metrics_required": {
+   "present": true,
+   "file": "experiments/kkkim/20260830_encoder_ablation/metrics.json",
+   "missing_fields": []
+  },
+  "critic_evidence": null
+ },
+ "critic_status": "provisional",
+ "ai_review_pending": true,
+ "ai_review_cmd": "세션/OpenClaw에서: paper-critic + Critic 7-point 에이전트로 'experiments/kkkim/20260830_encoder_ablation' 적대적 리뷰 → critic_report.json 갱신",
+ "human_adjudication_items": [
+  "AI 리뷰 후 비동기 1-클릭 확인(공유 전)"
+ ],
+ "note": "결정론적 기계검사만. 최종 pass/reject는 정책 Tier에 따라 AI리뷰+사람."
+}
