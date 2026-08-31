@@ -294,3 +294,7 @@ experiments/crosscancer/*/full/*.prehome_bak
 # 시각화용 vendored mermaid 런타임 (3.2MB×N) — Leader 결정으로 미커밋 유지.
 # 없으면 index.html 이 CDN 폴백으로 렌더된다. (BIOP02-113, kkkim #11915)
 ai_scientist/output_v*/mermaid.min.js
+
+# BIOP02-149 인코더 ablation 로컬 캐시 (TCGA 임상 원본·casemean npz 12.5MB) — 미커밋 유지.
+# 무결성은 experiments/kkkim/20260830_encoder_ablation/_cache_manifest.sha256 으로 대조. (kkkim 2026-08-31)
+experiments/**/_cache/

@@ -1,0 +1,117 @@
+{
+  "schema_version": "0.1",
+  "created_at": "2026-08-31T00:00:00Z",
+  "reviewer": "ai-adversarial+leader-confirm",
+  "owner": "kkkim",
+  "experiment": {
+    "experiment_id": "20260830_encoder_ablation",
+    "task": "encoder ablation (er / pr / her2 / pam50_subtype), mean-pool + linear probe",
+    "endpoint": "ER/PR/HER2 IHC status (binary) + PAM50 subtype (OvR macro AUROC), test 분할 보고",
+    "commit_hash": "f2c0a2b6c90a8a408e8d268bf576a7e83f409908",
+    "config_path": "(미존재) experiments/kkkim/20260830_encoder_ablation/config.yaml",
+    "metrics_path": "experiments/kkkim/20260830_encoder_ablation/metrics.json",
+    "predictions_path": "(미존재) experiments/kkkim/20260830_encoder_ablation/predictions.npy",
+    "embedding_manifest_path": "(미기재) ~/data/embeddings/biop02/tcga/<encoder>/ 개인 홈 경로만 코드에 있음",
+    "split_policy_path": "(레포 미존재) ~/data/split_policy_v1.csv"
+  },
+  "checks": {
+    "data_leakage": {
+      "status": "reject",
+      "evidence": [
+        "NOTES.md:23 · bp02_encoder_ablation.py:100 · bp02_bootstrap.py:37: 사용 분할이 개인 홈 경로 `~/data/split_policy_v1.csv`이고, NOTES는 그 크기를 train 706 / val 151 / test 153으로 적었다. 레포에는 이 파일이 없어 리뷰어가 case 단위 분리와 site-disjoint를 직접 확인할 수 없다(grep 결과 레포 내 실체 없음, 참조만 존재).",
+        "agents/data/manifests/split_policy_v0_folds.json: 잠긴 정본 분할은 n_patients 1010, fold_counts train 707 / val 152 / test 151, split_hash 5995f29d3978b831. 내가 이 JSON을 직접 열어 재집계해 확인했다.",
+        "bp02_encoder_ablation.json:14,20,33(uni_v1 er/pr/pam50) 외 4개 인코더 전부 n_test=153: 잠긴 test fold(151건)로는 나올 수 없는 수치다. 즉 이 실험이 쓴 분할은 잠긴 분할과 다르거나, 최소한 동일성이 입증되지 않았다. CLAUDE.md:305 '분할은 sign-off 후 잠금, 변경 금지' 및 split_policy_v0.md:127 '잠금 후 변경 = 새 버전 + 새 해시 + 재서명' 위반 소지.",
+        "metrics.json:15 · bp02_metrics.py:79: split_hash 값이 해시가 아니라 파일명 문자열 \"split_policy_v1.csv\"다. split_policy_v0.md:126이 요구하는 sha256 기록이 아니어서, 결정론적 게이트(gate_report.json)가 분할 불일치를 구조적으로 잡지 못한다.",
+        "split_policy_v0.md:213: site-disjoint(37 TSS, fold 교차 0건)와 patient-disjoint(707+152+151)는 '잠긴 분할'에 대해서만 cross-sign됐다. 나는 split_policy_v0_folds.json에서 TSS를 재계산해 37개 site 중 fold를 넘는 site 0건임을 확인했으나, 이 실험이 실제로 쓴 분할에는 같은 검증 기록이 없다(확인 불가).",
+        "experiments/kkkim/20260703_3way/comparison.md 'Site-confound' 표 · split_policy_v0.md:213: UNI 임베딩의 submitting-site macro-AUROC 0.9977, CONCH 0.9782. 임베딩이 제출기관을 사실상 완벽히 인코딩하므로, site-disjoint가 확인되지 않은 분할에서는 잔여 site 누수를 배제할 수 없다. checklist_v1.md:52-54 판정표 기준 site AUC >= 0.75는 site 통제 없이는 reject 구간이다.",
+        "bp02_encoder_ablation.py 전체 · bp02_metrics.py 전체: checklist_v1.md:31-35가 요구하는 `assert len(set(train_ids) & set(test_ids)) == 0` 하드 assert가 어느 스크립트에도 없다. bp02_bootstrap.py:69-74의 인코더 간 test 집합 동일성 확인은 누수 assert가 아니다.",
+        "bp02_encoder_ablation.py:124-126 · bp02_bootstrap.py:56-58: PAM50 클래스 선별(`vc = y[ok].value_counts(); ok &= y.isin(vc[vc>=20].index)`)의 vc가 train이 아니라 train+val+test 라벨 전체로 계산된다. test 라벨 분포를 보고 평가 클래스를 정하는 경미한 test 참조이며, NOTES.md:22의 '테스트 20건 미만 클래스 제외'라는 서술과도 다르다."
+      ],
+      "notes": "환자 단위 분할 자체는 코드가 case_id 기준으로 동작하므로 슬라이드/타일 누수(AP-01)는 없다고 본다. 문제는 '어떤 분할인지'다. 관측된 n_test=153이 잠긴 test fold 151과 어긋나므로, 잠긴 split_hash 5995f29d3978b831과의 일치를 재계산으로 증명하기 전에는 site-disjoint 보증이 이 실험에 전이되지 않는다. 임베딩의 site 신호가 0.9977인 코호트에서 이 보증은 결과 전체의 전제다. 따라서 pass 불가."
+    },
+    "baseline_comparison": {
+      "status": "reject",
+      "evidence": [
+        "실험 디렉터리 전체(ls 확인)에 random / subtype-only / pixel-mean 어떤 baseline 수치도 없다. metrics.json에 baseline_random_auc·baseline_subtype_auc·baseline_pixelmean_auc 필드가 모두 없다 = anti_patterns.md AP-02.",
+        "checklist_v1.md:87 판정표: 'baseline 미달 OR baseline 수치 누락'은 reject로 규정돼 있다.",
+        "prevalence 바닥선도 없다. metrics.json:26 positives_test=118/153(ER 유병률 0.771)인데 AUPRC 0.9644를 이 기준선 없이 제시했고, HER2는 18/102(0.176) 대비 AUPRC 0.2992~0.5593이라 conch_v1(0.2992)은 유병률 바닥선을 겨우 넘는다.",
+        "프로젝트 내 더 강한 비교 대상이 이미 있는데 대조하지 않았다. experiments/kkkim/20260703_critic_biop02-53/critic_report.json: 잠긴 분할에서 ER CLAM-SB 0.901, mean_embed 0.816, random 0.526, subtype_only 0.918이 기록돼 있다. 이번 실험의 최고값(uni_stainnorm_v1 ER 0.8918)은 같은 계열의 mean-pool 프로브인데, 기존 attention MIL 0.901과의 관계가 언급되지 않는다.",
+        "선행 실험 experiments/kkkim/20260703_3way/comparison.md는 같은 인코더 4종을 patient-grouped 5-fold로 이미 비교했고(UNI ER 0.8551 [0.8279, 0.8824], CONCH 0.8419, EXAONE_pm 0.8517), NOTES.md는 이 선행 결과와의 방향 일치 여부를 대조하지 않았다."
+      ],
+      "notes": "인코더 간 상대 비교가 목적이라 해도, 보고된 AUROC를 표로 싣는 이상 바닥선은 필요하다. 특히 ER은 유병률이 0.77이라 AUPRC 0.96이 얼마나 의미 있는지 바닥선 없이는 읽을 수 없다. 최소 비용 보완: 이미 캐시된 case-mean 임베딩으로 (1) 라벨 셔플 random, (2) 유병률 상수 예측, (3) 슬라이드 픽셀 평균 또는 임베딩 전역 평균 프로브 3종을 같은 분할에서 돌려 같은 표에 넣는다."
+    },
+    "counterfactual_check": {
+      "status": "caution",
+      "evidence": [
+        "이 실험에는 라벨 셔플 null도, 피처 ablation도 없다. bp02_encoder_ablation.py / bp02_bootstrap.py / bp02_metrics.py 어디에도 permutation 경로가 없다.",
+        "checklist_v1.md:106-110 판정표: ablation 부재 + 셔플 pass면 caution, 셔플 자체가 없으면 근거가 비어 있다.",
+        "프로젝트에 선행 셔플 실험이 있으나(experiments/sjpark/pam50_clam_mb_uni_v1_labelshuffle) 모델·분할·집계가 달라 이 프로토콜의 null로 전용할 수 없다.",
+        "차원이 큰 편이다. n_train=706에 uni 계열 1024차원 선형 프로브라 train 쪽 과적합 여지가 있고, 셔플 null이 없으면 '집계+프로브 파이프라인 자체의 바닥선'을 모른다."
+      ],
+      "notes": "held-out 환자 test에서 잰 값이라 셔플 없이도 심각한 왜곡 가능성은 낮다고 본다. 다만 비용이 매우 싸다. 캐시된 임베딩으로 train 라벨만 셔플해 인코더 4종 × 표현형 4종을 20회 반복하면 몇 분 안에 null 분포가 나오고, 특히 PAM50 5-class macro OvR의 바닥선(클래스 불균형 때문에 0.5가 아닐 수 있다)을 확정할 수 있다."
+    },
+    "cross_dataset_check": {
+      "status": "not_applicable",
+      "evidence": [
+        "checklist_v1.md:120: Paper A 표현형 예측 단계는 DepMap/GDSC 교차 검증 대상이 아니므로 not_applicable.",
+        "이 실험에 DepMap·GDSC·약물 연결 산출물이 없다(디렉터리 전체 확인)."
+      ],
+      "notes": "다만 이 실험의 헤드라인 주장이 '염색 정규화 이득'이라는 점에서, 실질적 교차 검증 대상은 CPTAC-BRCA다. 염색·스캐너가 다른 외부 코호트에서 uni_v1과 uni_stainnorm_v1의 격차가 유지되는지가 결정적 증거이고, 선행 실험이 이미 ER 내부 0.901 대 CPTAC 0.894 전이를 기록했으므로(experiments/kkkim/20260703_critic_biop02-53/critic_report.json) 비교 틀은 이미 있다. required_followups에 넣었다."
+    },
+    "biological_plausibility": {
+      "status": "caution",
+      "evidence": [
+        "PAM50이 4-class가 아니라 Normal-like 포함 5-class로 평가됐다. bp02_encoder_ablation.py:69-71의 load_labels는 pam50_subtype을 그대로 병합하고 Normal 제외 로직이 없으며, 소스 CSV(agents/data/manifests/tcga_brca_pam50_computed.csv)의 Normal은 134건이라 vc>=20 필터를 통과한다. 내가 잠긴 folds JSON으로 재계산한 결과, Normal 포함 시 train 707 / test 151, 제외 시 train 628 / test 131이 된다. 보고값은 n_train 705 / n_test 153이라 5-class임이 사실상 확정된다.",
+        "split_policy_v0.md:92: 'PAM50 (4-class) LumA/LumB/HER2-E/Basal. Normal-like는 제외'가 잠긴 라벨 정책이다. guide/pam50_4class_implementation_20260710.md도 같은 방향이다. 즉 이 실험의 PAM50 수치는 프로젝트의 선행 PAM50 결과와 직접 비교할 수 없다.",
+        "Normal-like는 종양 순도·정상 조직 혼입의 산물에 가까워, 형태학 모델이 '분자 아형'이 아닌 종양 함량을 학습해 macro OvR AUROC를 올릴 수 있다. 이번 PAM50 1위가 exaone_v2(0.746)인데 exaone은 타일링 파이프라인 자체가 다르므로 이 경로가 특히 열려 있다.",
+        "HER2는 test 양성 18건(metrics.json:46)이다. AI_REVIEW_PROMPT.md:25 기준(n_pos<25)의 저검정력 구간이고, 유일하게 0을 배제한 HER2 쌍(exaone_v2 > conch_v1, ci95 [-0.2536, -0.0269])이 이 18건 위에 서 있다.",
+        "인코더 간 비교가 인코더만의 비교가 아니다. agents/embedding/scripts/extract_exaone.py:7과 compare_models.py:186은 'EXAONE = internal tiling + Macenko@0.5mpp'라고 명시한다. 즉 exaone_v2 arm은 타일링·배율·염색 정규화·집계가 모두 다르다. NOTES.md:58은 집계 경로 차이만 적었고 타일링·Macenko 차이는 빠졌다. 선행 문서 comparison.md의 'deltas conflate model + tiling pipeline, not model alone' 경고가 이번 NOTES에서 사라졌다.",
+        "manuscript/sections/03_methods.md:13은 'H&E 염색 정규화(Macenko·Reinhard 등)는 적용하지 않았으며'라고 확정 서술하고 있고, EXAONE Path 2.0은 좌표 파이프라인 비호환으로 견고성 세트에서 제외한다고 적혀 있다. 이 실험의 uni_stainnorm_v1·exaone_v2 편입은 원고 Methods와 정면 충돌한다.",
+        "ICI·약물 추천 관련 서술 없음(grep 0건) → AP-04 위험 없음."
+      ],
+      "notes": "생물학적으로 말이 안 되는 방향은 없다. ER·PR이 높고 HER2가 낮은 순서는 형태학 문헌과 일치한다. 문제는 라벨 정의(PAM50 5-class)와 비교 층위(인코더 대 전처리 파이프라인)가 프로젝트 잠금 정책·원고 서술과 어긋난다는 점이다."
+    },
+    "drp_framing": {
+      "status": "pass",
+      "evidence": [
+        "실험 디렉터리 전체 grep(대소문자 무시): 'drug response prediction', 'personalized therapy', 'patient-specific ... treatment', 'optimal treatment', 'pembrolizumab', 'immune checkpoint' 0건.",
+        "metrics.json:3 task='er_status', bp02_metrics_full.json의 task는 er/pr/her2/pam50_subtype로 허용 범위 안.",
+        "metrics.json:7 claim_level='hypothesis_only'.",
+        "NOTES.md 전체에 치료 선택·환자 맞춤 치료 표현 없음. README의 'DRP 모델이 아니다' 제약 위반 없음."
+      ],
+      "notes": "이 항목은 깨끗하다. gate_report.json:8-11의 결정론적 검사 결과와도 일치한다."
+    },
+    "claim_level": {
+      "status": "caution",
+      "evidence": [
+        "NOTES.md:49-50 '염색 정규화의 이득이 ER에서 실재한다 ... 전처리 선택을 근거로 방어할 수 있다': 근거를 넘어선다. (1) 단일 test 분할, 단일 학습 실행이고, (2) NOTES.md:60이 스스로 밝히듯 부트스트랩은 test 환자 재표집만 반영해 학습 변동을 포함하지 않으므로 이 CI는 '이 학습된 모델이 이 test에서 더 높다'를 말할 뿐 '인코더/전처리가 더 낫다'를 말하지 않는다. (3) uni_stainnorm_v1 임베딩의 추출 스크립트가 레포에 없어(agents/embedding/scripts/에 extract_uni_stainnorm 계열 부재) 정규화 방법·기준 이미지·타일 좌표 동일성이 확인 불가다.",
+        "다중비교 미보정. bp02_encoder_ablation_ci.json에 표현형 4종 × 쌍 6개 = 24개 쌍대비교가 있고 excludes_zero=true는 3개다. 무보정 alpha=0.05에서 기대 위양성은 약 1.2개라, 관측된 3건 중 일부는 우연으로 설명된다. bp02_bootstrap.py:110의 'excludes_zero'를 유의성으로 읽는 것은 보정 없이는 성립하지 않는다.",
+        "경계 사례가 헤드라인에 포함됐다. bp02_encoder_ablation_ci.json의 'uni_stainnorm_v1 - exaone_v2'(er) ci95 하한이 0.00024626이다. 사실상 0이며 어떤 보정에서도 살아남지 못한다. NOTES.md:44는 이를 다른 결과와 같은 무게로 나열한다.",
+        "염색 정규화 효과의 방향성이 ER에서만 나타난다. PR 델타 0.0028, HER2 0.0066, PAM50 0.0114로 모두 0 근처다(bp02_encoder_ablation_ci.json). 4개 엔드포인트 중 1개에서만 나온 효과를 '실재한다'로 못 박으면 다중비교 문제를 그대로 떠안는다.",
+        "split_policy_v0.md:155가 이미 반대 방향의 경고를 담고 있다. 'stain normalization은 보조일 뿐 단독 방어 아님(Howard #4)'. site 신호가 0.9977인 코호트에서 염색 정규화는 site 시그니처 노출을 바꾸는 조작이므로, ER 이득이 형태학 신호 개선인지 site 시그니처 재배치인지 이 실험으로는 구분되지 않는다.",
+        "긍정 확인: NOTES.md의 헤드라인 16개 AUROC와 CI 전부를 bp02_encoder_ablation_ci.json에서 재대조한 결과 소수 셋째 자리까지 일치했고, '0을 배제하는 쌍' 3건 목록도 JSON과 일치했다. 수치 날조는 없다.",
+        "긍정 확인: bp02_bootstrap.py:78,104는 인코더 전체에 동일한 boot_idx를 쓰고 69-74에서 test 환자 집합 동일성을 assert하므로, paired 비교 구현 자체는 실제로 paired다."
+      ],
+      "notes": "claim_level 필드는 hypothesis_only로 올바르게 박혀 있고, NOTES.md:53·55-61의 한계 서술은 여러 축에서 정직하다. 하지만 '읽는 법' 1번 문장이 데이터가 지지하는 범위를 넘는다. checklist_v1.md:198 기준으로 '표현이 과장됐으나 데이터 범위 내'에 해당해 caution으로 둔다. 권고 문구: '이 단일 분할·단일 학습에서 ER 한 엔드포인트에 한해 정규화판이 높았다. 다중비교 보정과 분할 반복 전까지는 탐색적이며, 원고 Methods의 염색 정규화 미적용 서술을 바꿀 근거로 쓰지 않는다.'"
+    }
+  },
+  "critic_status": "reject",
+  "claim_level": "hypothesis_only",
+  "summary": "인코더 4종 × 표현형 4종을 한 프로토콜에 올린 시도 자체는 타당하고, paired 부트스트랩 구현과 한계 서술은 이 팀 평균보다 정직하다. NOTES.md의 헤드라인 16개 AUROC와 CI, '0을 배제하는 쌍' 3건을 결과 JSON에서 전부 재대조해 일치를 확인했으니 수치 날조는 없다. 그럼에도 reject다. 첫째, 사용 분할이 잠긴 분할과 어긋난다. 잠긴 정본은 train 707 / val 152 / test 151(split_hash 5995f29d3978b831)인데 이 실험은 모든 인코더에서 n_test=153을 보고하고, metrics.json:15의 split_hash 자리에는 해시가 아니라 파일명이 들어가 있어 게이트가 이 불일치를 잡을 수 없다. 임베딩의 submitting-site AUROC가 0.9977인 코호트에서 site-disjoint 보증이 전이되지 않으면 결과 전체의 전제가 무너진다. 둘째, trivial baseline 3종이 전무해 checklist_v1.md:87의 명시적 reject 조건에 걸린다. 셋째, PAM50이 잠긴 정책(Normal-like 제외 4-class)과 달리 5-class로 평가돼 선행 결과와 비교 불가하다. 넷째, 헤드라인 주장인 염색 정규화 이득은 추출 코드가 레포에 없는 임베딩에 기대고 있고, 24개 쌍대비교 무보정 상태이며(경계 사례 하한 0.00025 포함), 원고 03_methods.md:13의 '염색 정규화 미적용' 서술과 충돌한다. 분할 해시 재계산과 baseline 3종은 반나절 안에 끝나는 작업이므로 재제출 비용은 낮다.",
+  "required_followups": [
+    "[차단] `~/data/split_policy_v1.csv`의 sha256 split_hash(build_manifest.split_hash 정의)를 재계산해 잠긴 5995f29d3978b831과 대조하고 결과를 로그로 첨부한다. 불일치하면 잠긴 분할로 전면 재실행하고, 일치하면 n_test가 왜 151이 아니라 153인지 설명한다.",
+    "[차단] 사용 분할에 대해 patient-overlap==0 · TSS site-disjoint==True 하드 assert를 스크립트에 넣고 출력 로그를 첨부한다(checklist_v1.md:31-35).",
+    "[차단] trivial baseline 3종(라벨 셔플 random, 유병률 상수, 임베딩 전역평균 또는 픽셀평균)을 같은 분할에서 돌려 표에 넣고, 잠긴 분할 기준 기존 최고치(ER CLAM-SB 0.901)와의 관계를 명시한다.",
+    "[차단] PAM50을 Normal-like 제외 4-class로 재실행하거나, 5-class임을 표·본문에 명시하고 선행 4-class 결과와 비교 불가임을 기재한다. 클래스 선별 필터는 train 라벨 분포로만 계산하도록 고친다(현재 test 참조).",
+    "[차단] uni_stainnorm_v1의 추출 스크립트·정규화 방법(Macenko/Vahadane/Reinhard)·기준 이미지·타일 좌표가 uni_v1과 동일한지 여부를 커밋한다. 슬라이드별 타일 수가 두 임베딩 간 같은지 수치로 확인한다(타일 선택 차이가 이득을 만든 것이 아님을 배제).",
+    "[강력권고] uni_stainnorm_v1의 site-probe macro-AUROC를 측정해 uni_v1의 0.9977과 비교한다. 염색 정규화가 site 신호를 실제로 줄였는지가 ER 이득 해석의 분기점이다.",
+    "[강력권고] 24개 쌍대비교에 Benjamini-Hochberg 또는 Bonferroni를 적용하거나, ER 1건을 사전지정 주비교로 선언하고 나머지를 탐색적으로 강등한다. 부트스트랩 양측 p값을 함께 보고한다.",
+    "[강력권고] exaone_v2를 동급 인코더 arm이 아니라 별도 파이프라인 계열로 표기한다(내부 타일링 + Macenko@0.5mpp + 사전계산 patch_mean). 동일 좌표 재추출이 불가하면 인코더 순위 주장에서 제외한다.",
+    "[권고] NOTES.md:49-50 '염색 정규화의 이득이 ER에서 실재한다 ... 방어할 수 있다'를 탐색적 표현으로 완화하고, manuscript/sections/03_methods.md:13의 '염색 정규화 미적용' 서술과의 충돌을 원고 담당자와 정리한다.",
+    "[권고] 분할 반복(site-disjoint 재분할 10~20회) 또는 CPTAC-BRCA 외부 검증으로 ER 격차가 유지되는지 확인한다. 현 CI는 test 재표집만 반영해 인코더 우열 주장을 지지하지 못한다.",
+    "[권고] 아티팩트 5종 완비: config.yaml·predictions.npy 부재로 리뷰어가 AUROC/CI를 원자료에서 독립 재계산할 수 없었다(확인 불가로 남김). metrics.json의 n_val은 실제로 test 건수이므로(bp02_metrics.py:56) 필드명을 정정한다.",
+    "[권고] commit_hash 재기록. bp02_metrics.py:75는 None을 쓰는데 metrics.json:14에는 f2c0a2b6가 수기 삽입돼 있고, 그 커밋(2026-08-30 20:10:33)은 최종 결과 파일(20:14 갱신)보다 앞선다.",
+    "[권고] 상태 어휘 통일. NOTES.md:5 'pending', gate_report.json:24 'provisional', 스키마 enum은 pass/caution/reject다. 세 어휘가 달라 자동 게이트와 스키마가 서로 검증하지 못한다.",
+    "[사람 판단] 이 리포트는 owner 세션에서 구동된 AI 적대적 리뷰다. 교차리뷰 표상 kkkim 임베딩 결과의 담당 Critic은 jamie이므로, 공유 전 jamie 또는 braveji의 사람 확인이 필요하다."
+  ]
+}
