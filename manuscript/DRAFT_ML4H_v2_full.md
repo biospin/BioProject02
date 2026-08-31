@@ -18,7 +18,51 @@ That a tumour's molecular phenotype can be predicted from haematoxylin-and-eosin
 
 ## 1. Introduction
 
-Predicting molecular status from H&E histology is by now a mature field. Microsatellite instability, gene mutations and expression subtypes have been predicted with deep learning [Coudray 2018; Kather 2019, 2020; Naik 2020], and pathology foundation models have pushed this further into molecular subtypes and drug sensitivity [Fernandez-Romero 2026; Dawood 2024]. That these targets *can* be predicted is well established.
+Research using AI to analyse histopathological H&E images has been pursued across several organs as digital pathology has spread [CITE-I1]. With the wider use of CLAM-family weakly supervised multiple-instance learning [CITE-I2], work expanded in urological cancers [CITE-I3], breast cancer [CITE-I4], pancreatic cancer [CITE-I5], and other settings, and knowledge distillation and pathology foundation models have improved performance [CITE-I6]. Within this field, there has been persistent interest in predicting the molecular state of tissue from images. The reason lies in what is being replaced. IHC staining and tissue-destructive molecular tests, the usual methods for assessing molecular state, are generally costly and slow, whereas H&E staining is relatively inexpensive and is already acquired in routine care [CITE-I7]. Yet these molecular tests play important roles in early detection, prognostic prediction, and treatment direction across several cancer types [CITE-I8]. If inexpensive images can substitute for expensive tests, the potential gain is large. And the basic fact that molecular state can be learned and predicted from H&E has been shown repeatedly [CITE-I9].
+
+> ### Introduction reference list (APA 7th)
+>
+> Markers `[CITE-I1]`–`[CITE-I9]` in the text resolve here. Every entry was checked against the source or publisher page; nothing is entered from memory. Re-verify with `verify_citations.py` before submission.
+>
+> **[CITE-I1]** Spread of digital pathology and computer-aided pathology
+> - Nam, S., Chong, Y., Jung, C. K., Kwak, T. Y., Lee, J. Y., Park, J., ... & Go, H. (2020). Introduction to digital pathology and computer-aided pathology. *Journal of Pathology and Translational Medicine, 54*(2), 125–134.
+>
+> **[CITE-I2]** Uptake of weakly supervised WSI learning and CLAM-family MIL
+> - Lu, M. Y., Williamson, D. F. K., Chen, T. Y., Chen, R. J., Barbieri, M., & Mahmood, F. (2021). Data-efficient and weakly supervised computational pathology on whole-slide images. *Nature Biomedical Engineering, 5*(6), 555–570. https://doi.org/10.1038/s41551-020-00682-w
+> - Ilse, M., Tomczak, J., & Welling, M. (2018). Attention-based deep multiple instance learning. *Proceedings of the 35th International Conference on Machine Learning (PMLR), 80*, 2127–2136.
+>
+> **[CITE-I3]** H&E AI studies in urological (prostate, bladder) cancer
+> - Paik, I., Lee, G., Lee, J., Kwak, T. Y., & Ha, H. K. (2025). Artificial intelligence–driven digital pathology in urological cancers: Current trends and future directions. *Prostate International*.
+> - Cho, Y., Shin, D., Hong, S., Lee, J., Park, S., Lee, G., ... & Ha, H. K. (2026). Efficient AI-driven multi-section whole slide image analysis for biochemical recurrence prediction in prostate cancer. *arXiv*. https://arxiv.org/abs/2603.20273
+>
+> **[CITE-I4]** H&E WSI AI studies in breast cancer
+> - Lee, G., Lee, J., Kwak, T. Y., Kim, S. W., Kwon, Y., Kim, C., & Chang, H. (2025). Assessing the risk of recurrence in early-stage breast cancer through H&E stained whole slide images. *Scientific Reports, 15*(1), 35069.
+> - Lee, J., Lee, G., Kwak, T. Y., Kim, S. W., Jin, M. S., Kim, C., & Chang, H. (2024). MurSS: A multi-resolution selective segmentation model for breast cancer. *Bioengineering, 11*(5), 463.
+> - Lee, G., Kim, C., Kwak, T. Y., Kim, S. W., & Chang, H. (2023). Predicting protein receptor status from H&E-stained images in breast cancer. *Cancer Research, 83*(7_Supplement), 5404.
+>
+> **[CITE-I5]** Extension to pancreatic and other organs
+> - Lee, J., Lee, G., Kwak, T. Y., Kim, S. W., & Chang, H. (2022). A deep learning based pancreatic adenocarcinoma survival prediction model applicable to adenocarcinoma of other organs. *Cancer Research, 82*(12_Supplement), 5060.
+>
+> **[CITE-I6]** Knowledge distillation and pathology foundation models improving performance
+> - Cho, Y., Lee, S., Lee, G., Lee, M., Park, J., & Shin, D. (2026). G2L: From giga-scale to cancer-specific large-scale pathology foundation models via knowledge distillation. *Proceedings of the AAAI Conference on Artificial Intelligence*. (arXiv:2510.11176)
+> - Kim, H., Kwak, T. Y., Chang, H., Kim, S. W., & Kim, I. (2023). RCKD: Response-based cross-task knowledge distillation for pathological image analysis. *Bioengineering, 10*(11), 1279.
+> - Chen, R. J., Ding, T., Lu, M. Y., Williamson, D. F. K., Jaume, G., Song, A. H., ... & Mahmood, F. (2024). Towards a general-purpose foundation model for computational pathology. *Nature Medicine, 30*(3), 850–862. https://doi.org/10.1038/s41591-024-02857-3
+>
+> **[CITE-I7]** Cost and turnaround burden of IHC and tissue-destructive molecular tests relative to H&E
+> - Erfani, P., Gaga, E., Hakizimana, E., Kayitare, E., Mugunga, J. C., Shyirambere, C., Milner, D. A., Shulman, L. N., Ruhangaza, D., & Fadelu, T. (2023). Breast cancer molecular diagnostics in Rwanda: A cost-minimization study of immunohistochemistry versus a novel GeneXpert mRNA expression assay. *Bulletin of the World Health Organization, 101*(1), 10–19. https://doi.org/10.2471/BLT.22.288800
+> - Sharma, A., Shah, P., Ranade, M., Pai, T., Sahay, A., Patil, A., Shet, T., Gupta, H., Chauhan, D., Somal, P., Sancheti, S., & Desai, S. (2025). Digital pathology enabling lean management of HER2/neu testing in breast cancer. *Journal of Pathology Informatics, 19*, 100515. https://doi.org/10.1016/j.jpi.2025.100515
+>
+> **[CITE-I8]** Clinical role of molecular tests in early detection, prognosis and treatment direction
+> - Zhou, Y., Tao, L., Qiu, J., Xu, J., Yang, X., Zhang, Y., Tian, X., Guan, X., Cen, X., & Zhao, Y. (2024). Tumor biomarkers for diagnosis, prognosis and targeted therapy. *Signal Transduction and Targeted Therapy, 9*, 132. https://doi.org/10.1038/s41392-024-01823-2
+>
+> **[CITE-I9]** Repeated demonstrations that molecular state can be predicted from H&E
+> - Coudray, N., Ocampo, P. S., Sakellaropoulos, T., Narula, N., Snuderl, M., Fenyö, D., Moreira, A. L., Razavian, N., & Tsirigos, A. (2018). Classification and mutation prediction from non–small cell lung cancer histopathology images using deep learning. *Nature Medicine, 24*(10), 1559–1567. https://doi.org/10.1038/s41591-018-0177-5
+> - Kather, J. N., Pearson, A. T., Halama, N., Jäger, D., Krause, J., Loosen, S. H., et al. (2019). Deep learning can predict microsatellite instability directly from histology in gastrointestinal cancer. *Nature Medicine, 25*(7), 1054–1056. https://doi.org/10.1038/s41591-019-0462-y
+> - Kather, J. N., Heij, L. R., Grabsch, H. I., Loeffler, C., Echle, A., Muti, H. S., et al. (2020). Pan-cancer image-based detection of clinically actionable genetic alterations. *Nature Cancer, 1*(8), 789–799. https://doi.org/10.1038/s43018-020-0087-6
+> - Naik, N., Madani, A., Esteva, A., et al. (2020). Deep learning-enabled breast cancer hormonal receptor status determination from base-level H&E stains. *Nature Communications, 11*, 5727. https://doi.org/10.1038/s41467-020-19334-3
+> - Schmauch, B., Romagnoni, A., Pronier, E., et al. (2020). A deep learning model to predict RNA-Seq expression of tumours from whole slide images. *Nature Communications, 11*, 3877. https://doi.org/10.1038/s41467-020-17678-4
+>
+> ⚠️ **To complete before submission.** Full author lists for Kather 2019, Kather 2020, Naik 2020 and Schmauch 2020 are not yet confirmed and are left as `et al.`; APA 7 lists up to 20 authors. Volume/issue/pages are unconfirmed for Paik 2025; AAAI publication details for G2L 2026; final venue for Cho 2026 (prostate).
 
 But being predictable does not mean it is acceptable to replace a molecular test clinically. Reporting predictive performance alone is silent about the clinical cost of substitution — the loss incurred when a wrong prediction assigns the wrong treatment. The same AUROC carries entirely different clinical consequences depending on which treatment decision the error lands in. This gap is where the present work sits.
 
