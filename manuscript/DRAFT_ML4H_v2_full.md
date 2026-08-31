@@ -291,7 +291,7 @@ Markers `[CITE-I1]`–`[CITE-I9]` in the text resolve here. Every entry was chec
 **[CITE-I10]** Clinical decision loss of substituting a molecular test — performance alone does not establish clinical acceptability
 - Vickers, A. J., Van Calster, B., & Steyerberg, E. W. (2016). Net benefit approaches to the evaluation of prediction models, molecular markers, and diagnostic tests. *BMJ, 352*, i6. https://doi.org/10.1136/bmj.i6
 - Vickers, A. J., & Elkin, E. B. (2006). Decision curve analysis: A novel method for evaluating prediction models. *Medical Decision Making, 26*(6), 565–574. https://doi.org/10.1177/0272989X06295361
-- Van Calster, B., Collins, G. S., Vickers, A. J., Wynants, L., Kerr, K. F., Barreñada, L., et al. (2025). Evaluation of performance measures in predictive artificial intelligence models to support medical decisions: Overview and guidance. *The Lancet Digital Health, 7*(12), 100916.
+- Van Calster, B., Collins, G. S., Vickers, A. J., Wynants, L., Kerr, K. F., Barreñada, L., ... & Steyerberg, E. W. (2025). Evaluation of performance measures in predictive artificial intelligence models to support medical decisions: Overview and guidance. *The Lancet Digital Health, 7*(12), 100916.
 
 **[CITE-I11]** Biomarkers guide different diagnostic, prognostic and targeted-treatment decisions, so the consequence of an error depends on the downstream decision
 - `zhou-2024-tumor-biomarkers` · `chakravarty-2017-oncokb` · `griffith-2017-civic`

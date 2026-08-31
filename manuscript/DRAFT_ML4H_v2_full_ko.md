@@ -293,7 +293,7 @@ CLAM-SB attention MIL을 사용하였다(hidden 512·attention 256, 40–50 epoc
 **[CITE-I10]** 분자검사 대체의 임상 의사결정 손실 — 예측 성능만으로는 임상 수용 가능성이 서지 않는다
 - Vickers, A. J., Van Calster, B., & Steyerberg, E. W. (2016). Net benefit approaches to the evaluation of prediction models, molecular markers, and diagnostic tests. *BMJ, 352*, i6. https://doi.org/10.1136/bmj.i6
 - Vickers, A. J., & Elkin, E. B. (2006). Decision curve analysis: A novel method for evaluating prediction models. *Medical Decision Making, 26*(6), 565–574. https://doi.org/10.1177/0272989X06295361
-- Van Calster, B., Collins, G. S., Vickers, A. J., Wynants, L., Kerr, K. F., Barreñada, L., et al. (2025). Evaluation of performance measures in predictive artificial intelligence models to support medical decisions: Overview and guidance. *The Lancet Digital Health, 7*(12), 100916.
+- Van Calster, B., Collins, G. S., Vickers, A. J., Wynants, L., Kerr, K. F., Barreñada, L., ... & Steyerberg, E. W. (2025). Evaluation of performance measures in predictive artificial intelligence models to support medical decisions: Overview and guidance. *The Lancet Digital Health, 7*(12), 100916.
 
 **[CITE-I11]** 바이오마커가 진단·예후·표적치료 결정을 각각 다르게 가르므로, 오류의 결과는 하류 결정에 달려 있다
 - `zhou-2024-tumor-biomarkers` · `chakravarty-2017-oncokb` · `griffith-2017-civic`
