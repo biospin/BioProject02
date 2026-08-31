@@ -41,7 +41,7 @@ Of roughly 15 endpoints, **exactly one non-control endpoint met the pre-register
 | Lung KRAS-G12C | 0.681 | [0.577–0.783] | 14 | Undecided |
 | Gastric ERBB2 amplification | 0.644 | [0.523–0.771] | 14 | No signal |
 
-† The head and neck HPV confirmation holds under the primary model (UNI). Of 3 foundation models, UNI and UNI2-h cleared the null but Virchow2 did not (0.9199 against a threshold of 0.9234). The site audit also found an association between label and tissue source site (Cramér's V = 0.378).
+† The head and neck HPV confirmation holds under the primary model (UNI). Of 3 foundation models, UNI and UNI2-h cleared the null but Virchow2 did not (0.9199 against a threshold of 0.9234). The site audit also found an association between label and tissue source site (Cramér's V = 0.397).
 
 **Table 2. Anchor and retrospective cohorts — breast and colorectal (not counted).**
 
