@@ -1,0 +1,536 @@
+{
+  "version": "v2 (Critic reject 반영)",
+  "split_source": "agents/data/manifests/split_policy_v0_folds.json",
+  "split_hash": "5995f29d3978b831",
+  "fold_counts": {
+    "test": 151,
+    "val": 152,
+    "train": 707
+  },
+  "pam50_policy": "4-class, Normal-like 제외 (split_policy_v0.md §92)",
+  "n_boot": 2000,
+  "multiple_comparison": "Benjamini-Hochberg on bootstrap two-sided p",
+  "caveat_exaone": "exaone_v2는 내부 타일링과 Macenko 정규화를 거친 별도 파이프라인이라 인코더 단독 차이로 읽으면 안 된다",
+  "claim_level": "hypothesis_only",
+  "results": {
+    "er": {
+      "per_encoder": {
+        "uni_v1": {
+          "balanced_acc": 0.7074,
+          "auroc": 0.7737,
+          "auprc": 0.8893,
+          "ci95": [
+            0.6932,
+            0.8518
+          ]
+        },
+        "uni_stainnorm_v1": {
+          "balanced_acc": 0.7351,
+          "auroc": 0.7961,
+          "auprc": 0.8863,
+          "ci95": [
+            0.7126,
+            0.8762
+          ]
+        },
+        "conch_v1": {
+          "balanced_acc": 0.7145,
+          "auroc": 0.7455,
+          "auprc": 0.8701,
+          "ci95": [
+            0.6604,
+            0.8301
+          ]
+        },
+        "exaone_v2": {
+          "balanced_acc": 0.7583,
+          "auroc": 0.8277,
+          "auprc": 0.8986,
+          "ci95": [
+            0.7502,
+            0.902
+          ]
+        }
+      },
+      "n_train": 707,
+      "n_test": 151,
+      "classes": [
+        "0",
+        "1"
+      ],
+      "baseline": {
+        "random_uniform": {
+          "balanced_acc": 0.5057,
+          "auroc": 0.5,
+          "auprc": 0.7152
+        },
+        "prevalence": {
+          "balanced_acc": 0.447,
+          "auroc": 0.447,
+          "auprc": 0.6945
+        },
+        "majority": {
+          "balanced_acc": 0.5,
+          "auroc": 0.5,
+          "auprc": 0.7152
+        },
+        "embedding_mean_1d": {
+          "balanced_acc": 0.4274,
+          "auroc": 0.4063,
+          "auprc": 0.6385
+        },
+        "prevalence_positive_rate": 0.7152
+      }
+    },
+    "pr": {
+      "per_encoder": {
+        "uni_v1": {
+          "balanced_acc": 0.6517,
+          "auroc": 0.7317,
+          "auprc": 0.8069,
+          "ci95": [
+            0.6503,
+            0.8142
+          ]
+        },
+        "uni_stainnorm_v1": {
+          "balanced_acc": 0.6845,
+          "auroc": 0.7073,
+          "auprc": 0.7186,
+          "ci95": [
+            0.6141,
+            0.7977
+          ]
+        },
+        "conch_v1": {
+          "balanced_acc": 0.6883,
+          "auroc": 0.745,
+          "auprc": 0.8017,
+          "ci95": [
+            0.6628,
+            0.8207
+          ]
+        },
+        "exaone_v2": {
+          "balanced_acc": 0.7104,
+          "auroc": 0.7614,
+          "auprc": 0.7744,
+          "ci95": [
+            0.6744,
+            0.8408
+          ]
+        }
+      },
+      "n_train": 705,
+      "n_test": 149,
+      "classes": [
+        "0",
+        "1"
+      ],
+      "baseline": {
+        "random_uniform": {
+          "balanced_acc": 0.5439,
+          "auroc": 0.5,
+          "auprc": 0.5906
+        },
+        "prevalence": {
+          "balanced_acc": 0.5112,
+          "auroc": 0.5112,
+          "auprc": 0.5961
+        },
+        "majority": {
+          "balanced_acc": 0.5,
+          "auroc": 0.5,
+          "auprc": 0.5906
+        },
+        "embedding_mean_1d": {
+          "balanced_acc": 0.4604,
+          "auroc": 0.4352,
+          "auprc": 0.5305
+        },
+        "prevalence_positive_rate": 0.5906
+      }
+    },
+    "her2": {
+      "per_encoder": {
+        "uni_v1": {
+          "balanced_acc": 0.5503,
+          "auroc": 0.552,
+          "auprc": 0.3898,
+          "ci95": [
+            0.4078,
+            0.6893
+          ]
+        },
+        "uni_stainnorm_v1": {
+          "balanced_acc": 0.5079,
+          "auroc": 0.4979,
+          "auprc": 0.3279,
+          "ci95": [
+            0.3606,
+            0.6284
+          ]
+        },
+        "conch_v1": {
+          "balanced_acc": 0.5873,
+          "auroc": 0.5638,
+          "auprc": 0.3591,
+          "ci95": [
+            0.4215,
+            0.6991
+          ]
+        },
+        "exaone_v2": {
+          "balanced_acc": 0.5899,
+          "auroc": 0.562,
+          "auprc": 0.3788,
+          "ci95": [
+            0.4161,
+            0.6966
+          ]
+        }
+      },
+      "n_train": 496,
+      "n_test": 90,
+      "classes": [
+        "0",
+        "1"
+      ],
+      "baseline": {
+        "random_uniform": {
+          "balanced_acc": 0.5714,
+          "auroc": 0.5,
+          "auprc": 0.3
+        },
+        "prevalence": {
+          "balanced_acc": 0.4947,
+          "auroc": 0.4947,
+          "auprc": 0.2979
+        },
+        "majority": {
+          "balanced_acc": 0.5,
+          "auroc": 0.5,
+          "auprc": 0.3
+        },
+        "embedding_mean_1d": {
+          "balanced_acc": 0.3942,
+          "auroc": 0.3045,
+          "auprc": 0.2216
+        },
+        "prevalence_positive_rate": 0.3
+      }
+    },
+    "pam50_4c": {
+      "per_encoder": {
+        "uni_v1": {
+          "balanced_acc": 0.4248,
+          "auroc": 0.7193,
+          "auprc": null,
+          "ci95": [
+            0.6558,
+            0.7782
+          ]
+        },
+        "uni_stainnorm_v1": {
+          "balanced_acc": 0.4856,
+          "auroc": 0.7372,
+          "auprc": null,
+          "ci95": [
+            0.6764,
+            0.7958
+          ]
+        },
+        "conch_v1": {
+          "balanced_acc": 0.5089,
+          "auroc": 0.7827,
+          "auprc": null,
+          "ci95": [
+            0.7238,
+            0.8358
+          ]
+        },
+        "exaone_v2": {
+          "balanced_acc": 0.493,
+          "auroc": 0.7468,
+          "auprc": null,
+          "ci95": [
+            0.6837,
+            0.8066
+          ]
+        }
+      },
+      "n_train": 628,
+      "n_test": 131,
+      "classes": [
+        "Basal",
+        "HER2",
+        "LumA",
+        "LumB"
+      ],
+      "baseline": {
+        "random_uniform": {
+          "balanced_acc": 0.2263,
+          "auroc": 0.5,
+          "auprc": null
+        },
+        "prevalence": {
+          "balanced_acc": 0.242,
+          "auroc": 0.4942,
+          "auprc": null
+        },
+        "majority": {
+          "balanced_acc": 0.25,
+          "auroc": 0.5,
+          "auprc": null
+        },
+        "embedding_mean_1d": {
+          "balanced_acc": 0.2036,
+          "auroc": 0.4346,
+          "auprc": null
+        }
+      }
+    }
+  },
+  "pairwise": {
+    "er|uni_v1 - uni_stainnorm_v1": {
+      "delta": -0.0224,
+      "ci95": [
+        -0.0822,
+        0.0383
+      ],
+      "p_boot": 0.47,
+      "q_bh": 0.7425,
+      "significant_bh05": false
+    },
+    "er|uni_v1 - conch_v1": {
+      "delta": 0.0282,
+      "ci95": [
+        -0.042,
+        0.0964
+      ],
+      "p_boot": 0.41,
+      "q_bh": 0.708,
+      "significant_bh05": false
+    },
+    "er|uni_v1 - exaone_v2": {
+      "delta": -0.054,
+      "ci95": [
+        -0.1408,
+        0.0258
+      ],
+      "p_boot": 0.198,
+      "q_bh": 0.6789,
+      "significant_bh05": false
+    },
+    "er|uni_stainnorm_v1 - conch_v1": {
+      "delta": 0.0506,
+      "ci95": [
+        -0.0086,
+        0.1101
+      ],
+      "p_boot": 0.091,
+      "q_bh": 0.6789,
+      "significant_bh05": false
+    },
+    "er|uni_stainnorm_v1 - exaone_v2": {
+      "delta": -0.0316,
+      "ci95": [
+        -0.1079,
+        0.0398
+      ],
+      "p_boot": 0.379,
+      "q_bh": 0.708,
+      "significant_bh05": false
+    },
+    "er|conch_v1 - exaone_v2": {
+      "delta": -0.0822,
+      "ci95": [
+        -0.1641,
+        -0.0085
+      ],
+      "p_boot": 0.026,
+      "q_bh": 0.312,
+      "significant_bh05": false
+    },
+    "pr|uni_v1 - uni_stainnorm_v1": {
+      "delta": 0.0244,
+      "ci95": [
+        -0.0671,
+        0.115
+      ],
+      "p_boot": 0.606,
+      "q_bh": 0.808,
+      "significant_bh05": false
+    },
+    "pr|uni_v1 - conch_v1": {
+      "delta": -0.0133,
+      "ci95": [
+        -0.0781,
+        0.0543
+      ],
+      "p_boot": 0.729,
+      "q_bh": 0.856,
+      "significant_bh05": false
+    },
+    "pr|uni_v1 - exaone_v2": {
+      "delta": -0.0297,
+      "ci95": [
+        -0.126,
+        0.0718
+      ],
+      "p_boot": 0.574,
+      "q_bh": 0.808,
+      "significant_bh05": false
+    },
+    "pr|uni_stainnorm_v1 - conch_v1": {
+      "delta": -0.0377,
+      "ci95": [
+        -0.123,
+        0.0464
+      ],
+      "p_boot": 0.413,
+      "q_bh": 0.708,
+      "significant_bh05": false
+    },
+    "pr|uni_stainnorm_v1 - exaone_v2": {
+      "delta": -0.0541,
+      "ci95": [
+        -0.1244,
+        0.0174
+      ],
+      "p_boot": 0.159,
+      "q_bh": 0.6789,
+      "significant_bh05": false
+    },
+    "pr|conch_v1 - exaone_v2": {
+      "delta": -0.0164,
+      "ci95": [
+        -0.0976,
+        0.0677
+      ],
+      "p_boot": 0.707,
+      "q_bh": 0.856,
+      "significant_bh05": false
+    },
+    "her2|uni_v1 - uni_stainnorm_v1": {
+      "delta": 0.0541,
+      "ci95": [
+        -0.0758,
+        0.1914
+      ],
+      "p_boot": 0.408,
+      "q_bh": 0.708,
+      "significant_bh05": false
+    },
+    "her2|uni_v1 - conch_v1": {
+      "delta": -0.0118,
+      "ci95": [
+        -0.1493,
+        0.1182
+      ],
+      "p_boot": 0.865,
+      "q_bh": 0.9339,
+      "significant_bh05": false
+    },
+    "her2|uni_v1 - exaone_v2": {
+      "delta": -0.01,
+      "ci95": [
+        -0.1401,
+        0.1246
+      ],
+      "p_boot": 0.895,
+      "q_bh": 0.9339,
+      "significant_bh05": false
+    },
+    "her2|uni_stainnorm_v1 - conch_v1": {
+      "delta": -0.0659,
+      "ci95": [
+        -0.201,
+        0.0628
+      ],
+      "p_boot": 0.308,
+      "q_bh": 0.708,
+      "significant_bh05": false
+    },
+    "her2|uni_stainnorm_v1 - exaone_v2": {
+      "delta": -0.0641,
+      "ci95": [
+        -0.1908,
+        0.0665
+      ],
+      "p_boot": 0.325,
+      "q_bh": 0.708,
+      "significant_bh05": false
+    },
+    "her2|conch_v1 - exaone_v2": {
+      "delta": 0.0018,
+      "ci95": [
+        -0.1421,
+        0.1565
+      ],
+      "p_boot": 0.941,
+      "q_bh": 0.941,
+      "significant_bh05": false
+    },
+    "pam50_4c|uni_v1 - uni_stainnorm_v1": {
+      "delta": -0.0179,
+      "ci95": [
+        -0.0726,
+        0.0296
+      ],
+      "p_boot": 0.495,
+      "q_bh": 0.7425,
+      "significant_bh05": false
+    },
+    "pam50_4c|uni_v1 - conch_v1": {
+      "delta": -0.0634,
+      "ci95": [
+        -0.1128,
+        -0.0171
+      ],
+      "p_boot": 0.004,
+      "q_bh": 0.096,
+      "significant_bh05": false
+    },
+    "pam50_4c|uni_v1 - exaone_v2": {
+      "delta": -0.0275,
+      "ci95": [
+        -0.0755,
+        0.0176
+      ],
+      "p_boot": 0.242,
+      "q_bh": 0.708,
+      "significant_bh05": false
+    },
+    "pam50_4c|uni_stainnorm_v1 - conch_v1": {
+      "delta": -0.0455,
+      "ci95": [
+        -0.1031,
+        0.0158
+      ],
+      "p_boot": 0.145,
+      "q_bh": 0.6789,
+      "significant_bh05": false
+    },
+    "pam50_4c|uni_stainnorm_v1 - exaone_v2": {
+      "delta": -0.0096,
+      "ci95": [
+        -0.0688,
+        0.0478
+      ],
+      "p_boot": 0.749,
+      "q_bh": 0.856,
+      "significant_bh05": false
+    },
+    "pam50_4c|conch_v1 - exaone_v2": {
+      "delta": 0.0359,
+      "ci95": [
+        -0.0174,
+        0.0888
+      ],
+      "p_boot": 0.196,
+      "q_bh": 0.6789,
+      "significant_bh05": false
+    }
+  }
+}
