@@ -22,24 +22,50 @@
 
 조직병리 H&E 이미지를 AI로 분석하려는 연구는 디지털 병리의 확산과 함께 여러 장기에서 이루어져 왔다[CITE-I1]. CLAM 계열의 weakly-supervised multiple-instance learning이 퍼지면서[CITE-I2], 비뇨기암[CITE-I3]·유방암[CITE-I4]·췌장암[CITE-I5] 등에서 연구가 활발히 이루어졌고, 지식 증류와 병리 파운데이션 모델이 그 성능을 끌어올렸다[CITE-I6]. 그중에서도 이미지에서 조직의 분자 상태를 예측하려는 요구는 계속되어 왔다. 그 이유는 대체 대상 쪽에 있다. 분자 상태를 확인하는 통상적 방법인 IHC 염색이나 조직파괴적 분자검사는 대체로 비싸고 오래 걸리는 반면, H&E 염색은 상대적으로 저렴하고 통상 진료에서 이미 촬영된다[CITE-I7]. 그런데 이 분자검사들은 여러 암종에서 조기 발견·예후 예측·치료 방향 결정에 중요한 역할을 한다[CITE-I8]. 값싼 영상이 비싼 검사를 대신할 수 있다면 얻는 것이 크다는 뜻이다. 그리고 H&E로부터 분자 상태를 학습·예측할 수 있다는 것 자체는 반복적으로 입증되어 왔다[CITE-I9].
 
-> **인용 채울 자리.** 후보는 `research/REFERENCE_LIST.md` 등재 slug 만 쓴다. 지어낸 인용 없음.
+> ### Introduction 인용 목록 (APA 7th)
 >
-> | 표식 | 뒷받침해야 할 내용 | 배정 | 성격 |
-> |---|---|---|---|
-> | `[CITE-I1]` | 디지털 병리·computer-aided pathology 의 확산 | `nam-2020-digitalpath-intro` | 정식(리뷰) |
-> | `[CITE-I2]` | weakly-supervised WSI 학습과 CLAM 계열 MIL의 확산 | `lu-2021-clam` · `ilse-2018-abmil` | 정식 |
-> | `[CITE-I3]` | 비뇨기암(전립선·방광) H&E AI 연구 | `paik-2025-urologic-dp` · `cho-2026-prostate-br` | 정식·프리프린트 |
-> | `[CITE-I4]` | 유방암 H&E WSI AI 연구 | `lee-2025-brca-recurrence` · `lee-2024-murss` · `lee-2023-receptor-status` | 정식·정식·학회초록 |
-> | `[CITE-I5]` | 췌장 등 타 장기로의 확장 | `lee-2022-pdac-survival` | 학회초록 |
-> | `[CITE-I6]` | 지식 증류·파운데이션 모델이 성능을 끌어올림 | `cho-2026-g2l` · `kim-2023-rckd` · `chen-2024-uni` | 정식 |
-> | `[CITE-I7]` | IHC·조직파괴 분자검사의 비용·소요시간 부담 (H&E 대비) | `erfani-2023-rwanda-ihc-cost` · `sharma-2025-her2-tat` | 정식 |
-> | `[CITE-I8]` | 분자검사의 조기 발견·예후·치료 방향 결정 역할 | `zhou-2024-tumor-biomarkers` | 정식(리뷰) |
-> | `[CITE-I9]` | H&E로부터 분자 상태 예측이 반복 입증됨 | `coudray-2018-natmed` · `kather-2019-msi` · `kather-2020-actionable` · `naik-2020-natcommun` · `schmauch-2020-he2rna` | 정식 |
+> 본문 표식 `[CITE-I1]`–`[CITE-I9]` 에 대응한다. 서지사항은 원문 또는 출판사 페이지에서 대조했으며 추정 기입은 없다. 최종 제출 시 `verify_citations.py` 로 재검증한다.
 >
-> `I1`·`I3`–`I5` 는 **분야가 여러 장기에서 활발했다는 넓이 근거**다. 학회 초록도 이 용도로는 유효하다.
-> `I7` 실측 근거: IHC 바이오마커 분석 **환자당 US$67.33**(르완다 원가최소화 연구) · HER2 IHC 평균 **TAT 15.65일**(관행 워크플로). 본문에 수치를 넣을지는 주저자 판단.
-> ⚠️ `cho-2026-g2l` AAAI 게재연도, `cho-2026-prostate-br` 최종 게재처 미확정.
-> ⚠️ `lee-2023-receptor-status` 는 유방 수용체(HER2/ER/PR) 예측으로 본 연구 유방 앵커와 주제가 가장 가깝다. 넓이 인용으로 두되, Related work 에 선행연구로 한 문장 세울지 검토할 것.
+> **[CITE-I1]** 디지털 병리·computer-aided pathology 의 확산
+> - Nam, S., Chong, Y., Jung, C. K., Kwak, T. Y., Lee, J. Y., Park, J., ... & Go, H. (2020). Introduction to digital pathology and computer-aided pathology. *Journal of Pathology and Translational Medicine, 54*(2), 125–134.
+>
+> **[CITE-I2]** weakly-supervised WSI 학습과 CLAM 계열 MIL 의 확산
+> - Lu, M. Y., Williamson, D. F. K., Chen, T. Y., Chen, R. J., Barbieri, M., & Mahmood, F. (2021). Data-efficient and weakly supervised computational pathology on whole-slide images. *Nature Biomedical Engineering, 5*(6), 555–570. https://doi.org/10.1038/s41551-020-00682-w
+> - Ilse, M., Tomczak, J., & Welling, M. (2018). Attention-based deep multiple instance learning. *Proceedings of the 35th International Conference on Machine Learning (PMLR), 80*, 2127–2136.
+>
+> **[CITE-I3]** 비뇨기암(전립선·방광) H&E AI 연구
+> - Paik, I., Lee, G., Lee, J., Kwak, T. Y., & Ha, H. K. (2025). Artificial intelligence–driven digital pathology in urological cancers: Current trends and future directions. *Prostate International*.
+> - Cho, Y., Shin, D., Hong, S., Lee, J., Park, S., Lee, G., ... & Ha, H. K. (2026). Efficient AI-driven multi-section whole slide image analysis for biochemical recurrence prediction in prostate cancer. *arXiv*. https://arxiv.org/abs/2603.20273
+>
+> **[CITE-I4]** 유방암 H&E WSI AI 연구
+> - Lee, G., Lee, J., Kwak, T. Y., Kim, S. W., Kwon, Y., Kim, C., & Chang, H. (2025). Assessing the risk of recurrence in early-stage breast cancer through H&E stained whole slide images. *Scientific Reports, 15*(1), 35069.
+> - Lee, J., Lee, G., Kwak, T. Y., Kim, S. W., Jin, M. S., Kim, C., & Chang, H. (2024). MurSS: A multi-resolution selective segmentation model for breast cancer. *Bioengineering, 11*(5), 463.
+> - Lee, G., Kim, C., Kwak, T. Y., Kim, S. W., & Chang, H. (2023). Predicting protein receptor status from H&E-stained images in breast cancer. *Cancer Research, 83*(7_Supplement), 5404.
+>
+> **[CITE-I5]** 췌장 등 타 장기로의 확장
+> - Lee, J., Lee, G., Kwak, T. Y., Kim, S. W., & Chang, H. (2022). A deep learning based pancreatic adenocarcinoma survival prediction model applicable to adenocarcinoma of other organs. *Cancer Research, 82*(12_Supplement), 5060.
+>
+> **[CITE-I6]** 지식 증류·병리 파운데이션 모델이 성능을 끌어올림
+> - Cho, Y., Lee, S., Lee, G., Lee, M., Park, J., & Shin, D. (2026). G2L: From giga-scale to cancer-specific large-scale pathology foundation models via knowledge distillation. *Proceedings of the AAAI Conference on Artificial Intelligence*. (arXiv:2510.11176)
+> - Kim, H., Kwak, T. Y., Chang, H., Kim, S. W., & Kim, I. (2023). RCKD: Response-based cross-task knowledge distillation for pathological image analysis. *Bioengineering, 10*(11), 1279.
+> - Chen, R. J., Ding, T., Lu, M. Y., Williamson, D. F. K., Jaume, G., Song, A. H., ... & Mahmood, F. (2024). Towards a general-purpose foundation model for computational pathology. *Nature Medicine, 30*(3), 850–862. https://doi.org/10.1038/s41591-024-02857-3
+>
+> **[CITE-I7]** IHC·조직파괴 분자검사의 비용·소요시간 부담 (H&E 대비)
+> - Erfani, P., Gaga, E., Hakizimana, E., Kayitare, E., Mugunga, J. C., Shyirambere, C., Milner, D. A., Shulman, L. N., Ruhangaza, D., & Fadelu, T. (2023). Breast cancer molecular diagnostics in Rwanda: A cost-minimization study of immunohistochemistry versus a novel GeneXpert mRNA expression assay. *Bulletin of the World Health Organization, 101*(1), 10–19. https://doi.org/10.2471/BLT.22.288800
+> - Sharma, A., Shah, P., Ranade, M., Pai, T., Sahay, A., Patil, A., Shet, T., Gupta, H., Chauhan, D., Somal, P., Sancheti, S., & Desai, S. (2025). Digital pathology enabling lean management of HER2/neu testing in breast cancer. *Journal of Pathology Informatics, 19*, 100515. https://doi.org/10.1016/j.jpi.2025.100515
+>
+> **[CITE-I8]** 분자검사의 조기 발견·예후·치료 방향 결정 역할
+> - Zhou, Y., Tao, L., Qiu, J., Xu, J., Yang, X., Zhang, Y., Tian, X., Guan, X., Cen, X., & Zhao, Y. (2024). Tumor biomarkers for diagnosis, prognosis and targeted therapy. *Signal Transduction and Targeted Therapy, 9*, 132. https://doi.org/10.1038/s41392-024-01823-2
+>
+> **[CITE-I9]** H&E 로부터 분자 상태 예측이 반복 입증됨
+> - Coudray, N., Ocampo, P. S., Sakellaropoulos, T., Narula, N., Snuderl, M., Fenyö, D., Moreira, A. L., Razavian, N., & Tsirigos, A. (2018). Classification and mutation prediction from non–small cell lung cancer histopathology images using deep learning. *Nature Medicine, 24*(10), 1559–1567. https://doi.org/10.1038/s41591-018-0177-5
+> - Kather, J. N., Pearson, A. T., Halama, N., Jäger, D., Krause, J., Loosen, S. H., et al. (2019). Deep learning can predict microsatellite instability directly from histology in gastrointestinal cancer. *Nature Medicine, 25*(7), 1054–1056. https://doi.org/10.1038/s41591-019-0462-y
+> - Kather, J. N., Heij, L. R., Grabsch, H. I., Loeffler, C., Echle, A., Muti, H. S., et al. (2020). Pan-cancer image-based detection of clinically actionable genetic alterations. *Nature Cancer, 1*(8), 789–799. https://doi.org/10.1038/s43018-020-0087-6
+> - Naik, N., Madani, A., Esteva, A., et al. (2020). Deep learning-enabled breast cancer hormonal receptor status determination from base-level H&E stains. *Nature Communications, 11*, 5727. https://doi.org/10.1038/s41467-020-19334-3
+> - Schmauch, B., Romagnoni, A., Pronier, E., et al. (2020). A deep learning model to predict RNA-Seq expression of tumours from whole slide images. *Nature Communications, 11*, 3877. https://doi.org/10.1038/s41467-020-17678-4
+>
+> ⚠️ **제출 전 보완.** Kather 2019·Kather 2020·Naik 2020·Schmauch 2020 은 저자 전체 목록을 확인하지 못해 `et al.` 로 두었다 — APA 7 은 저자 20인까지 나열하므로 최종본에서 채운다. `paik-2025` 는 권·호·페이지, `cho-2026-g2l` 은 AAAI 게재연도·페이지, `cho-2026-prostate-br` 은 최종 게재처가 미확정이다.
+> `I7` 실측 근거: IHC 바이오마커 분석 **환자당 US\$67.33**(전체 진단비 \$138.29의 48.7%) · HER2 IHC 재검 평균 **TAT 15.65일**(관행 워크플로 기준). 본문에 수치를 넣을지는 주저자 판단.
 
 
 우리는 cost-of-substitution 프레임을 제안한다. 예측 오류를 치료 라우팅의 오분류 비용으로 환산해, 각 분자 축에서 H&E가 값싸게 대체될 수 있는지 아니면 분자검사가 필수인지를 묻는다. 기준은 예측 가능성이 아니라 대체 안전성이다. 이 프레임은 약물 반응을 예측하지 않으며, 마커에서 치료 배정으로 가는 치환비용만 조작화하고, 약물 구조를 입력으로 받지 않는다.
