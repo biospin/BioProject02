@@ -249,7 +249,9 @@ CLAM-SB attention MIL을 사용하였다(hidden 512·attention 256, 40–50 epoc
 
 ### Introduction
 
-본문 표식 `[CITE-I1]`–`[CITE-I9]` 에 대응한다. 서지사항은 원문 또는 출판사 페이지에서 대조했으며 추정 기입은 없다. 최종 제출 시 `verify_citations.py` 로 재검증한다.
+본문 표식 `[CITE-I1]`–`[CITE-I13]` 에 대응한다. 아래 서지는 원문 또는 출판사 페이지에서 대조했으며 추정 기입은 없다.
+
+⚠️ `[CITE-I11]`–`[CITE-I13]` 은 아직 저장소 slug 로만 적혀 있다. APA 서지를 작성·대조하지 않았다.
 
 **[CITE-I1]** 디지털 병리·computer-aided pathology 의 확산
 - Nam, S., Chong, Y., Jung, C. K., Kwak, T. Y., Lee, J. Y., Park, J., ... & Go, H. (2020). Introduction to digital pathology and computer-aided pathology. *Journal of Pathology and Translational Medicine, 54*(2), 125–134.

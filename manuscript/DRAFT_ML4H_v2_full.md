@@ -247,7 +247,9 @@ Markers `[CITE-Ix]` in the text resolve here. This section grows section by sect
 
 ### Introduction
 
-Markers `[CITE-I1]`–`[CITE-I9]` in the text resolve here. Every entry was checked against the source or publisher page; nothing is entered from memory. Re-verify with `verify_citations.py` before submission.
+Markers `[CITE-I1]`–`[CITE-I13]`. Every entry below was checked against the source or publisher page; nothing is entered from memory.
+
+⚠️ `[CITE-I11]`–`[CITE-I13]` are still listed by repository slug, not APA. Their APA entries have not been written or verified yet.
 
 **[CITE-I1]** Spread of digital pathology and computer-aided pathology
 - Nam, S., Chong, Y., Jung, C. K., Kwak, T. Y., Lee, J. Y., Park, J., ... & Go, H. (2020). Introduction to digital pathology and computer-aided pathology. *Journal of Pathology and Translational Medicine, 54*(2), 125–134.
