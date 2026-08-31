@@ -304,4 +304,4 @@ Markers `[CITE-I1]`–`[CITE-I9]` in the text resolve here. Every entry was chec
 
 **카운슬 판정 기록 (codex 집필 → agy 적대검토 → codex 반박 1회 → Claude 정리).** 초안의 I10–I20 표식 11개 중 7개를 삭제했다. 사유는 전부 동일 — **우리 논문 자신의 주장·설계·결과·기여에 인용을 붙인 것**이다. 특히 (a) 논지 문장 "But being predictable does not mean..." 에 선행연구를 걸면 4문단 뒤 기여 주장("다른 질문의 정립")과 자기모순이 된다. (b) 염색정규화·conformal 문헌을 기여 목록에 붙인 것은 인용 채우기였다. (c) 사전등록 근거로 leakage·site-batch 문헌을 든 것은 논거가 다르다.
 남은 자리가 4개뿐인 것은 Introduction ¶2–¶5 가 대부분 우리 프레임 설명이기 때문이다. **인용 밀도는 Methods(현재 0개)와 Results(현재 2개)에서 확보해야 한다.**
-⚠️ **To complete before submission.** Full author lists for Kather 2019, Kather 2020, Naik 2020 and Schmauch 2020 are not yet confirmed and are left as `et al.`; APA 7 lists up to 20 authors. Volume/issue/pages are unconfirmed for Paik 2025; AAAI publication details for G2L 2026; final venue for Cho 2026 (prostate).
+⚠️ **To complete before submission.** Author lists are complete as of 2026-08-31. Three publication details remain unconfirmed: volume/issue/pages for Paik 2025, AAAI publication details for G2L 2026, and the final venue for Cho 2026 (prostate).
