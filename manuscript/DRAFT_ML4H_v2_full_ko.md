@@ -140,7 +140,7 @@ Lauren diffuse는 원래 양성대조였다. 인환세포와 미만형은 강한
 
 ### R6. 외부 치료결과 앵커(Yale pCR) — 잠정 · Critic 대기
 
-탐색적 점검으로, 항HER2 축 점수를 frozen-transfer로 산출해 Yale 코호트의 병리학적 완전관해(pCR)를 층화하고, AUROC와 부트스트랩 신뢰구간으로 평가한 뒤 측정 HER2 확률 기준선과 DeLong 검정으로 비교하였다. 사전 비교기준(성패 판정이 아니라 눈금 대조)은 Farahmand 등이 보고한 교차검증 AUC 0.80 [0.69–0.88]에 근접·중첩하는 것으로 정의하였다.
+탐색적 점검으로, 항HER2 축 점수를 frozen-transfer로 산출해 Yale 코호트의 병리학적 완전관해(pCR)를 층화하고, AUROC와 부트스트랩 신뢰구간으로 평가한 뒤 측정 HER2 확률 기준선과 DeLong 검정[CITE-M12]으로 비교하였다. 사전 비교기준(성패 판정이 아니라 눈금 대조)은 Farahmand 등이 보고한 교차검증 AUC 0.80 [0.69–0.88]에 근접·중첩하는 것으로 정의하였다.
 
 **이 결과는 `critic_status: pending`이며 본문으로 승격하지 않는다.** 여기에는 대기 포인터로만 남긴다 — 항HER2 축은 H&E-예측 표현형으로 pCR을 층화하지 못했고, 이는 후향적 지도의 HER2 음성과 방향적으로 일관되지만, Critic 서명 전까지 그 수치는 Abstract와 헤드라인 주장에서 제외한다. 전체 방법과 잠정 값은 M7에 있고, Discussion은 이를 아직 서명을 기다리는 실증 앵커("실증 이빨 대기")로 다룬다.
 
@@ -172,7 +172,7 @@ Lauren diffuse는 원래 양성대조였다. 인환세포와 미만형은 강한
 
 **앵커 표현형 예측 신뢰성(유방).** 네 가지 한계를 정면에 둔다. (i) 형태의 부가가치는 endpoint별로 다르며 사소한 기준선 위에 가산되지 않는다 — ER/PR 예측은 slide-mean-embedding 기준선을 외부에서 이기지만(+0.128/+0.223) subtype-only 기준선에는 외부에서 역전당하고, HER2는 mean-embedding 기준선조차 이기지 못한다. 네 endpoint 중 PAM50 4-class만이 유효 기준선(mean-embedding)을 내부·외부 모두에서 CI 비중첩으로 넘는다(+0.089/+0.165). (ii) attention 반사실 충실도는 슬라이드 순위(AUROC) 수준이 아니라 확률 수준에서만 주장한다(무작위 제거 대비 10–23×) — MIL 신호가 중복적이기 때문이다. (iii) HER2는 정직한 음성으로(기준선·교차데이터 점검 모두에서 기각), 파이프라인 실패가 아니라 지도의 앵커다. (iv) 치료 가설은 세포주-환자 전이 한계를 물려받으며 `hypothesis_only`다. <!-- src: 04_discussion.md Limitations 1–4; experiments/braveji/BIOP02-75_critic_gate/GATE_STATUS.md -->
 
-**PAM50 라벨 출처 주기.** PAM50은 이 논문에서 비중이 있다(유효 기준선을 내부·외부 모두에서 넘는 유일한 앵커 endpoint다). manifest PAM50 라벨(로컬/genefu 계산, Parker 2009)은 cBioPortal PanCancer Atlas SUBTYPE 라벨과 **57.0% 일치**(일치 514/902)하며, 곧 **43.0% 불일치**(불일치 388/902)로, 가장 큰 불일치는 LumB↔LumA와 Normal→LumA다. <!-- src: agents/data/manifests/pam50_source_reconcile_biop02-74.json (concordance_pct=57.0, n_match=514/n_overlap=902) --> manifest 코호트에 대한 cBioPortal 실측 커버리지가 높으므로(97.2%), 로컬/genefu 라벨을 쓰기 위한 사전등록 fallback 조건(`split_policy_v0.md §10`: cBioPortal 커버리지가 부족할 때만 fallback 허용)은 **충족되지 않았다**. 따라서 앵커 endpoint의 정본 PAM50 라벨 출처를 무엇으로 할지는 Methods의 미결 정합 항목이며, 여기서는 해결이 아니라 표시만 한다. <!-- src: pam50_source_reconcile_biop02-74.json policy_check field -->
+**PAM50 라벨 출처 주기.** PAM50은 이 논문에서 비중이 있다(유효 기준선을 내부·외부 모두에서 넘는 유일한 앵커 endpoint다). manifest PAM50 라벨(로컬/genefu 계산, Parker 2009)[CITE-M2]은 cBioPortal PanCancer Atlas SUBTYPE 라벨[CITE-M3]과 **57.0% 일치**(일치 514/902)하며, 곧 **43.0% 불일치**(불일치 388/902)로, 가장 큰 불일치는 LumB↔LumA와 Normal→LumA다. <!-- src: agents/data/manifests/pam50_source_reconcile_biop02-74.json (concordance_pct=57.0, n_match=514/n_overlap=902) --> manifest 코호트에 대한 cBioPortal 실측 커버리지가 높으므로(97.2%), 로컬/genefu 라벨을 쓰기 위한 사전등록 fallback 조건(`split_policy_v0.md §10`: cBioPortal 커버리지가 부족할 때만 fallback 허용)은 **충족되지 않았다**. 따라서 앵커 endpoint의 정본 PAM50 라벨 출처를 무엇으로 할지는 Methods의 미결 정합 항목이며, 여기서는 해결이 아니라 표시만 한다. <!-- src: pam50_source_reconcile_biop02-74.json policy_check field -->
 
 임상·연구 함의는 다음과 같다. 이 관찰 지도는 H&E 대체가 뚜렷하게 위험한 음성 축(유방 HER2)과 현재 자료로 판정할 수 없는 미결 축을 식별함으로써, 향후 전향 검증 연구의 우선순위를 정하는 의사결정 틀이 된다. 어디서 H&E 선별이 실제로 비용을 절감하는지는 전향 검증 이전에 권고할 수 없으며, 이 논문은 임상 권고나 전면 대체를 주장하지 않는다. 가치는 비싸거나 느리거나 희소한 분자검사와 자원제한 세팅에 집중된다. 요컨대 우리의 기여는 "골드스탠다드를 이긴다"가 아니라 "값싼 H&E가 언제 분자검사를 pre-screen하거나 triage할 수 있고 언제 불가한지를 지도로 예측 가능하게 만든다"는 데 있다.
 
@@ -181,16 +181,16 @@ Lauren diffuse는 원래 양성대조였다. 인환세포와 미만형은 강한
 ## 4. Methods
 
 ### M1. 코호트와 라벨
-유방암(TCGA-BRCA, 약 1,010 진단 슬라이드)을 앵커로 삼고 폐·대장·위·두경부를 더한 다섯 암종을 다룬다. 각 코호트의 슬라이드 수는 결과 JSON에 실측되어 있다(대장 523, 폐 1,026, 위 439, 두경부 468). <!-- src: 03_methods.md M1 --> 라벨 출처와 환자 단위 split은 `agents/data/`에서 관리하며, 사전등록된 축 경계는 봉인 문서(`experiments/crosscancer/SUBSTITUTABILITY_LAW_PREREGISTRATION.md`)에 기록되어 있다. 유방 PAM50 endpoint의 경우 manifest 라벨(로컬/genefu, Parker 2009)과 cBioPortal PanCancer Atlas SUBTYPE 라벨은 중첩 환자의 57.0%에서 일치하고(514/902; 43.0% 불일치), cBioPortal 커버리지가 높으므로(97.2%) 로컬 라벨을 쓰기 위한 사전등록 fallback 조건(`split_policy_v0.md §10`)이 충족되지 않았으며, PAM50 라벨 출처의 정본 확정은 미결 정합 항목이다. <!-- src: pam50_source_reconcile_biop02-74.json -->
+유방암(TCGA-BRCA, 약 1,010 진단 슬라이드)[CITE-M1]을 앵커로 삼고 폐·대장·위·두경부를 더한 다섯 암종을 다룬다. 각 코호트의 슬라이드 수는 결과 JSON에 실측되어 있다(대장 523, 폐 1,026, 위 439, 두경부 468). <!-- src: 03_methods.md M1 --> 라벨 출처와 환자 단위 split은 `agents/data/`에서 관리하며, 사전등록된 축 경계는 봉인 문서(`experiments/crosscancer/SUBSTITUTABILITY_LAW_PREREGISTRATION.md`)에 기록되어 있다. 유방 PAM50 endpoint의 경우 manifest 라벨(로컬/genefu, Parker 2009)과 cBioPortal PanCancer Atlas SUBTYPE 라벨은 중첩 환자의 57.0%에서 일치하고(514/902; 43.0% 불일치), cBioPortal 커버리지가 높으므로(97.2%) 로컬 라벨을 쓰기 위한 사전등록 fallback 조건(`split_policy_v0.md §10`)이 충족되지 않았으며, PAM50 라벨 출처의 정본 확정은 미결 정합 항목이다. <!-- src: pam50_source_reconcile_biop02-74.json -->
 
 ### M2. 타일링·임베딩
-각 whole-slide image는 20× 배율에서 256×256 픽셀 타일로 분할하고, 조직 영역은 Otsu 임계로 배경과 분리하며, 환자당 최대 5,000 타일로 상한을 두었다. 헤드라인 임베딩은 UNI v1(1024차원)이며, 모델 비의존성 검정을 위해 동일 좌표에 Virchow2(2560차원, CLS 토큰과 mean patch 토큰 결합, register 토큰 제외)와 UNI2-h(1536차원)로도 재추출하였다. 슬라이드 단위 EXAONE Path 2.0 인터페이스는 좌표 기반 파이프라인과 비호환이라 견고성 세트에서 제외하였다. 타일은 224×224로 리사이즈하고 ImageNet 통계로 채널 정규화하였다. H&E 염색 정규화는 주 파이프라인에 적용하지 않았으며, 그로 인한 미보정 염색 변이는 한계로 명시하고 염색 정규화 견고성 점검(M10)으로 별도 검증한다. <!-- src: 03_methods.md M2 -->
+각 whole-slide image는 20× 배율에서 256×256 픽셀 타일로 분할하고, 조직 영역은 Otsu 임계[CITE-M4]로 배경과 분리하며, 환자당 최대 5,000 타일로 상한을 두었다. 헤드라인 임베딩은 UNI v1(1024차원)[CITE-M5]이며, 모델 비의존성 검정을 위해 동일 좌표에 Virchow2[CITE-M6](2560차원, CLS 토큰과 mean patch 토큰 결합, register 토큰 제외)와 UNI2-h(1536차원)로도 재추출하였다. 슬라이드 단위 EXAONE Path 2.0[CITE-M7] 인터페이스는 좌표 기반 파이프라인과 비호환이라 견고성 세트에서 제외하였다. 타일은 224×224로 리사이즈하고 ImageNet 통계[CITE-M8]로 채널 정규화하였다. H&E 염색 정규화는 주 파이프라인에 적용하지 않았으며, 그로 인한 미보정 염색 변이는 한계로 명시하고[CITE-M17] 염색 정규화 견고성 점검(M10)으로 별도 검증한다. <!-- src: 03_methods.md M2 -->
 
 ### M3. 모델·학습
-CLAM-SB attention MIL을 사용하였다(hidden 512·attention 256, 40–50 epoch, 시드 42 고정). 예측은 슬라이드 단위로 산출한 뒤 환자 단위로 집계하였다. <!-- src: 03_methods.md M3; experiments/crosscancer/run_mil_cost.py -->
+CLAM-SB attention MIL[CITE-M9]을 사용하였다(hidden 512·attention 256, 40–50 epoch, 시드 42 고정). 예측은 슬라이드 단위로 산출한 뒤 환자 단위로 집계하였다. <!-- src: 03_methods.md M3; experiments/crosscancer/run_mil_cost.py -->
 
 ### M4. 평가 설계
-모든 평가는 site-disjoint holdout에서 수행하였다. 같은 제출 기관(TSS)의 슬라이드가 학습과 평가에 동시에 들어가지 않도록 분할해 기관 지문에 의한 leakage를 차단하였고, 검정력을 위해 validation과 test를 합쳤다. 대조군은 shuffle-null, 유병률 기준선(0.5), subtype-only 또는 pixel-mean 기준선 세 가지다. 신뢰구간은 1,000회 부트스트랩 95% CI로 보고하며, 환자 군집이 중요한 경우(수용체 라우팅)에는 CI를 환자 단위로 재계산하였다. <!-- src: 03_methods.md M4 -->
+모든 평가는 site-disjoint holdout에서 수행하였다. 같은 제출 기관(TSS)의 슬라이드가 학습과 평가에 동시에 들어가지 않도록 분할해 기관 지문에 의한 leakage를 차단하였[CITE-M10]고, 검정력을 위해 validation과 test를 합쳤다. 대조군은 shuffle-null, 유병률 기준선(0.5), subtype-only 또는 pixel-mean 기준선 세 가지다. 신뢰구간은 1,000회 부트스트랩 95% CI[CITE-M11]로 보고하며, 환자 군집이 중요한 경우(수용체 라우팅)에는 CI를 환자 단위로 재계산하였다. <!-- src: 03_methods.md M4 -->
 
 ### M5. cost-of-substitution 프레임
 치환비용은 confusion matrix에 치료 거리를 곱해, 측정 마커로 정한 치료와 H&E-예측 마커로 정한 치료가 갈리는 곳에서 발생하는 오분류 비용으로 정의한다. 선도지표는 거리무관 misroute_rate다. 이 프레임은 약물 반응을 예측하지 않으며 약물 구조를 입력으로 받지 않는다. <!-- src: 03_methods.md M5; experiments/kkkim/20260710_cost_of_substitution/ -->
@@ -199,16 +199,16 @@ CLAM-SB attention MIL을 사용하였다(hidden 512·attention 256, 40–50 epoc
 판정 임계는 슬라이드나 관찰값이 아니라 봉인된 사전등록 문서에서만 인용한다. 검정력 규칙(양성 25 미만 → 탐색적 → INCONCLUSIVE)은 결과를 본 뒤 옮기지 않으며 확증과 반증에 대칭으로 적용한다. 모든 산출은 `hypothesis_only`이고 후향적이다. <!-- src: 03_methods.md M6 -->
 
 ### M7. Yale 앵커 (잠정, Critic 대기)
-항HER2 축 점수를 frozen-transfer(앵커 모델을 추가 학습 없이 적용)로 산출하고 Yale 코호트의 pCR을 층화해 AUROC와 부트스트랩 95% 신뢰구간을 구한 뒤 측정 HER2 확률 기준선과 DeLong 검정으로 비교하였다. 사전 비교기준은 Farahmand 등의 0.80 [0.69–0.88] 근접·중첩으로 정의하였다. 잠정 결과는 AUROC 0.533 [0.411–0.653]으로 — 항HER2 축이 H&E-예측 표현형으로는 pCR을 층화하지 못했으며 이는 지도의 HER2 음성과 방향적으로 일관되지만 — 이 값은 `critic_status: pending`이라 Abstract나 헤드라인 주장으로 옮기지 않는다. <!-- src: 02_results.md R6 (0.533 [0.411–0.653]); status pending per task instruction -->
+항HER2 축 점수를 frozen-transfer(앵커 모델을 추가 학습 없이 적용)로 산출하고 Yale 코호트의 pCR을 층화해 AUROC와 부트스트랩 95% 신뢰구간을 구한 뒤 측정 HER2 확률 기준선과 DeLong 검정으로 비교하였다. 사전 비교기준은 Farahmand 등의 0.80[CITE-M13] [0.69–0.88] 근접·중첩으로 정의하였다. 잠정 결과는 AUROC 0.533 [0.411–0.653]으로 — 항HER2 축이 H&E-예측 표현형으로는 pCR을 층화하지 못했으며 이는 지도의 HER2 음성과 방향적으로 일관되지만 — 이 값은 `critic_status: pending`이라 Abstract나 헤드라인 주장으로 옮기지 않는다. <!-- src: 02_results.md R6 (0.533 [0.411–0.653]); status pending per task instruction -->
 
 ### M8. 다중 모델 견고성
-각 파운데이션 모델 임베딩 공간에서 CLAM을 처음부터 재학습하였다(좌표계가 다르므로 예측 모델을 각각 다시 적합해야 같은 층위의 비교가 된다). 판정 기준은 5-seed shuffle-null 우연배제(real AUROC > null 평균 + 2×표준편차, ddof = 1)이며 시드는 42·1·2·3·4를 사용하였다. 결정론은 동일 시드 재실행 2회로 확인하였다(대장 BRAF Virchow2 시드 42 = 0.8798 재현). 정본 결과는 `CROSSCHECK_5SEED_MULTIFM.md`와 `MULTIFM_COMPARISON.md`에 있다. sjpark이 커밋된 소스로부터 독립 재계산하였고(BIOP02-101, 교차검증 PASS), braveji의 최종 다중 FM Critic 서명은 진행 중이다. <!-- src: 03_methods.md M8; MULTIFM_COMPARISON.md header -->
+각 파운데이션 모델 임베딩 공간에서 CLAM을 처음부터 재학습하였다[CITE-M14](좌표계가 다르므로 예측 모델을 각각 다시 적합해야 같은 층위의 비교가 된다). 판정 기준은 5-seed shuffle-null 우연배제(real AUROC > null 평균 + 2×표준편차, ddof = 1)이며 시드는 42·1·2·3·4를 사용하였다. 결정론은 동일 시드 재실행 2회로 확인하였다(대장 BRAF Virchow2 시드 42 = 0.8798 재현). 정본 결과는 `CROSSCHECK_5SEED_MULTIFM.md`와 `MULTIFM_COMPARISON.md`에 있다. sjpark이 커밋된 소스로부터 독립 재계산하였고(BIOP02-101, 교차검증 PASS), braveji의 최종 다중 FM Critic 서명은 진행 중이다. <!-- src: 03_methods.md M8; MULTIFM_COMPARISON.md header -->
 
 ### M9. site/batch 교란 감사
-각 endpoint에서 site-disjoint 분할이 라벨을 조직원천기관(TSS)과 교란하는지 정량화하였다. site와 label의 Cramér's V와 순열 p, train/test 유병률 시프트, test 양성의 site 집중도 순열검정을 산출하였다. 이는 교란의 필요조건을 보는 분석이며, 모델이 실제로 site를 사용하는지에 대한 최종 판정은 H&E로부터의 site 예측성과 leave-one-site-out 성능으로 한다. <!-- src: 03_methods.md M9; site_audit_results.json -->
+각 endpoint에서 site-disjoint 분할이 라벨을 조직원천기관(TSS)과 교란하는지 정량화하였다. site와 label의 Cramér's V[CITE-M15]와 순열 p, train/test 유병률 시프트, test 양성의 site 집중도 순열검정을 산출하였다. 이는 교란의 필요조건을 보는 분석이며, 모델이 실제로 site를 사용하는지에 대한 최종 판정은 H&E로부터의 site 예측성과 leave-one-site-out 성능으로 한다. <!-- src: 03_methods.md M9; site_audit_results.json -->
 
 ### M10. 염색 정규화 견고성 (유방 앵커)
-앵커 결과가 미보정 H&E 염색 변이의 아티팩트인지 검정하기 위해, 유방 앵커 슬라이드에서 Macenko 염색 정규화(torchstain 1.3.0, 고정된 조밀조직 참조 타일)로 임베딩을 재추출하고 같은 fold(`split_policy_v0`, fold hash 5995f29d3978b831)에서 ER·HER2·PAM50에 대해 CLAM을 재학습하였다. HER2 표현형 예측은 우연 수준에 머물렀고(AUROC 0.641), ER은 높게 유지(0.917), PAM50은 보존(0.740)되었으며, 앵커 순위 ER > PAM50 > HER2는 정규화 미적용 앵커 순서(표 R1: ER 0.901, PAM50 0.759, HER2 0.599)와 일치한다. 표현형 예측만 재실행했고 라우팅/비용 파이프라인은 재실행하지 않았으며, 염색 정규화 실행에는 shuffle-null을 계산하지 않았다. 이 견고성 점검은 유방 앵커에만 해당하며, 다암종 raw 슬라이드는 소실되어 염색 정규화 재추출은 보류한다. <!-- src: experiments/kkkim/20260819_stain_norm_robustness/RESUME.md; clam_rerun/sjpark/*/metrics.json (0.6408/0.9166/0.7396) -->
+앵커 결과가 미보정 H&E 염색 변이의 아티팩트인지 검정하기 위해, 유방 앵커 슬라이드에서 Macenko 염색 정규화[CITE-M16](torchstain 1.3.0, 고정된 조밀조직 참조 타일)로 임베딩을 재추출하고 같은 fold(`split_policy_v0`, fold hash 5995f29d3978b831)에서 ER·HER2·PAM50에 대해 CLAM을 재학습하였다. HER2 표현형 예측은 우연 수준에 머물렀고(AUROC 0.641), ER은 높게 유지(0.917), PAM50은 보존(0.740)되었으며, 앵커 순위 ER > PAM50 > HER2는 정규화 미적용 앵커 순서(표 R1: ER 0.901, PAM50 0.759, HER2 0.599)와 일치한다. 표현형 예측만 재실행했고 라우팅/비용 파이프라인은 재실행하지 않았으며, 염색 정규화 실행에는 shuffle-null을 계산하지 않았다. 이 견고성 점검은 유방 앵커에만 해당하며, 다암종 raw 슬라이드는 소실되어 염색 정규화 재추출은 보류한다. <!-- src: experiments/kkkim/20260819_stain_norm_robustness/RESUME.md; clam_rerun/sjpark/*/metrics.json (0.6408/0.9166/0.7396) -->
 
 ---
 
@@ -317,3 +317,31 @@ CLAM-SB attention MIL을 사용하였다(hidden 512·attention 256, 40–50 epoc
 **추가 확보 — ① 임상 의사결정 손실은 해결(I10, Vickers 계열 3편 신규 등재).** 남은 2종은 이번 Introduction 에서 해당 마커를 삭제해 당장은 불필요하나, 사전등록 근거나 검정력·다중성 주장을 본문에 다시 세울 경우 ② 사전등록·registered report 방법론 ③ 통계적 검정력·다중성 통제 문헌이 필요하다.
 ✅ **서지 확정(2026-08-31).** Introduction 인용 문헌의 저자·서지 확인 완료. 남은 것은 출판 진행에 따라 바뀌는 항목뿐이다 — `paik-2025` 는 권·호·페이지가 아직 부여되지 않았고(Prostate International, PII S2287888225000066), `cho-2026-prostate-br` 은 arXiv 프리프린트로 최종 게재처 미정이다. 교정 단계에서 다시 확인한다. `cho-2026-g2l` 은 AAAI **본회의가 아니라 2026 워크숍(W3PHIAI) 구두발표**로 정정했다.
 `I7` 실측 근거: IHC 바이오마커 분석 **환자당 US\$67.33**(전체 진단비 \$138.29의 48.7%) · HER2 IHC 재검 평균 **TAT 15.65일**(관행 워크플로 기준). 본문에 수치를 넣을지는 주저자 판단.
+
+### Methods
+
+⚠️ 아래 배정은 `research/REFERENCE_LIST.md` 등재 문헌과의 **매칭까지만** 끝난 상태다. APA 서지는 아직 작성·대조하지 않았다 (Introduction 과 같은 절차로 확정할 것).
+
+| 표식 | 뒷받침해야 할 내용 | 배정 |
+|---|---|---|
+| `[CITE-M1]` | TCGA-BRCA 코호트 | `tcga-brca-2012` (Nature 2012) |
+| `[CITE-M2]` | PAM50 라벨 정의 | `parker-2009-pam50` (JCO 2009) |
+| `[CITE-M3]` | cBioPortal PanCancer Atlas SUBTYPE 라벨 출처 | `cbioportal-cerami-2012` (Cancer Discov 2012) · `cbioportal-gao-2013` (Sci Signal 2013) |
+| `[CITE-M4]` | Otsu 임계에 의한 조직/배경 분리 | **미확보** — Otsu 1979 (IEEE SMC). 등재 없음 |
+| `[CITE-M5]` | UNI v1 임베딩 | `chen-2024-uni` (Nat Med 2024) — Introduction `[CITE-I6]` 과 동일 문헌 |
+| `[CITE-M6]` | Virchow2 임베딩 | `zimmermann-2024-virchow2` (arXiv 2408.00738) |
+| `[CITE-M7]` | EXAONE Path 2.0 (제외 사유) | `lgai-2025-exaonepath2` (arXiv 2507.06639) |
+| `[CITE-M8]` | ImageNet 통계 채널 정규화 | **미확보** — ImageNet (Deng 2009 / Russakovsky 2015). 등재 없음 |
+| `[CITE-M9]` | CLAM-SB attention MIL | `lu-2021-clam` (Nat BME 2021) · `ilse-2018-abmil` (ICML 2018) — `[CITE-I2]` 와 동일 |
+| `[CITE-M10]` | site-disjoint 분할의 근거 (기관 지문 leakage) | `howard-2021-site-signatures` (Nat Commun 2021) · `bussola-2020-patientlevel` (medRxiv 2020) |
+| `[CITE-M11]` | 부트스트랩 신뢰구간 | **미확보** — Efron 계열. 등재 없음 |
+| `[CITE-M12]` | DeLong AUROC 비교 검정 | **미확보** — DeLong 1988 (Biometrics). 등재 없음 |
+| `[CITE-M13]` | Farahmand 등의 사전 비교기준 0.80 | `farahmand-2022-modpathol` — `[CITE-I12]` 와 동일 |
+| `[CITE-M14]` | FM 교체 시 재학습·벤치마킹 관행 | `neidlinger-2024-fmbenchmark` (arXiv 2408.15823) · `campanella-2025-clinicalbench` (Nat Commun 2025) |
+| `[CITE-M15]` | Cramér's V (명목변수 연관 측도) | **미확보** — Cramér 1946. 등재 없음 |
+| `[CITE-M16]` | Macenko 염색 정규화 | `macenko-2009` (IEEE ISBI 2009) |
+| `[CITE-M17]` | 염색 변이·정규화·증강이 성능에 미치는 영향 | `tellez-2019` (Med Image Anal) · `vahadane-2016` (IEEE TMI) · `reinhard-2001` (IEEE CG&A) |
+
+**M5(치환비용 프레임)·M6(사전등록·claim 규율)에는 인용을 붙이지 않았다.** 우리 논문 자신의 프레임과 규율이므로, Introduction 검토에서 확인한 원칙(자기 주장에 인용을 달지 않는다)을 그대로 적용했다.
+
+**미확보 5건은 전부 고전 방법론 문헌이다** — Otsu·ImageNet·부트스트랩·DeLong·Cramér's V. 현행 REFERENCE_LIST 는 병리 AI 선행연구 중심이라 통계·영상처리 기본 문헌 계열이 비어 있다. Methods 를 인용 없이 두는 것보다 이 다섯을 확보하는 편이 낫다.
