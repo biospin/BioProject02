@@ -34,7 +34,7 @@
 
 8. **20-seed HPV/Virchow2 non-adoption stated (Discussion).** New: 20-seed indicated the Virchow2 HPV threshold stabilises (≈0.837) and *would* flip that cell to pass, but **not adopted** pending braveji (BIOP02-123); reported status stays "2 of 3 models". Source: `04_discussion.md` item 6; `experiments/kkkim/20260820_shuffle_null_20seed/`.
 
-9. **Site-confounding + stain-scope co-located (Discussion).** Per review guidance, the site-audit limits (HPV V = 0.378; lung V = 1.000) and the stain-normalisation scope limit are placed in **one** Limitations paragraph, so it is clear that neither fully covers the headline HPV/lung results.
+9. **Site-confounding + stain-scope co-located (Discussion).** Per review guidance, the site-audit limits (HPV V = 0.397; lung V = 1.000) and the stain-normalisation scope limit are placed in **one** Limitations paragraph, so it is clear that neither fully covers the headline HPV/lung results.
 
 10. **Two anchor limitation blocks preserved** from `04_discussion.md` (BIOP02-75 critic gate): endpoint-specific baseline value, probability-level fidelity, HER2 honest negative, cell-line transfer.
 
