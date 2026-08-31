@@ -18,15 +18,15 @@ That a tumour's molecular phenotype can be predicted from haematoxylin-and-eosin
 
 ## 1. Introduction
 
-Predicting molecular status from H&E histology is by now a mature field. Microsatellite instability, gene mutations and expression subtypes have been predicted with deep learning [Coudray 2018; Kather 2019, 2020; Naik 2020], and pathology foundation models have pushed this further into molecular subtypes and drug sensitivity [Fernandez-Romero 2026; Dawood 2024]. That these targets *can* be predicted is well established.
+Research using AI to analyse histopathological H&E images has been pursued across several organs as digital pathology has spread [CITE-I1]. With the wider use of CLAM-family weakly supervised multiple-instance learning [CITE-I2], work expanded in urological cancers [CITE-I3], breast cancer [CITE-I4], pancreatic cancer [CITE-I5], and other settings, and knowledge distillation and pathology foundation models have improved performance [CITE-I6]. Within this field, there has been persistent interest in predicting the molecular state of tissue from images. The reason lies in what is being replaced. IHC staining and tissue-destructive molecular tests, the usual methods for assessing molecular state, are generally costly and slow, whereas H&E staining is relatively inexpensive and is already acquired in routine care [CITE-I7]. Yet these molecular tests play important roles in early detection, prognostic prediction, and treatment direction across several cancer types [CITE-I8]. If inexpensive images can substitute for expensive tests, the potential gain is large. And the basic fact that molecular state can be learned and predicted from H&E has been shown repeatedly [CITE-I9].
 
-But being predictable does not mean it is acceptable to replace a molecular test clinically. Reporting predictive performance alone is silent about the clinical cost of substitution — the loss incurred when a wrong prediction assigns the wrong treatment. The same AUROC carries entirely different clinical consequences depending on which treatment decision the error lands in. This gap is where the present work sits.
+But being predictable does not mean it is acceptable to replace a molecular test clinically. Reporting predictive performance alone is silent about the clinical cost of substitution — the loss incurred when a wrong prediction assigns the wrong treatment [CITE-I10]. The same AUROC carries entirely different clinical consequences depending on which treatment decision the error lands in [CITE-I11]. This gap is where the present work sits.
 
 We propose a cost-of-substitution frame. By converting prediction errors into the misassignment cost of treatment routing, we ask, for each molecular axis, whether H&E can substitute cheaply or whether molecular testing is required. The criterion is safety of substitution, not predictability. The frame does not predict drug response; it operationalises only the substitution cost from marker to treatment assignment, and it takes no drug structure as input.
 
 We test this with a pre-registered morphological-correlate law across five cancers, anchored on breast (plus lung, colorectal, gastric and head and neck). The law states that H&E can cheaply stand in for a test only when the molecular alteration has a morphological correlate recognisable at H&E resolution. The five cancers are a deliberate boundary for testing the law, not an open pan-cancer atlas expansion; and sealing predictions before results does not by itself confer confirmatory strength — it provides claim discipline that suppresses post-hoc selection.
 
-This paper makes four contributions. First, the cost-of-substitution frame itself, together with the separation of confirmable axes from undecided ones obtained by applying one pre-registered protocol across five cancers. Second, an honest negative anchor: the breast HER2 axis shows no signal supporting H&E-based substitution, and this negative is robust to H&E stain normalisation. Third, claim discipline — explicit adjudication of insufficient power on the many mutation and amplification axes that our pre-registered split cannot decide, rather than reporting only the axes that happen to score high. Fourth, the framing of a different question — "when is substitution safe?" — rather than a contest over predictive accuracy. Unlike single-cohort breast prediction [Fernandez-Romero 2026] or drug-sensitivity prediction [Dawood 2024], this study contributes a methodological frame that applies one pre-registered evaluation protocol and a substitution-cost lens across a multi-cancer cohort. An external treatment-outcome check (Yale pCR) and a spatial-transcriptomics mechanistic look are reported only as provisional, Critic-pending exploratory analyses (§R6, §R7), not as contributions.
+This paper makes four contributions. First, the cost-of-substitution frame itself, together with the separation of confirmable axes from undecided ones obtained by applying one pre-registered protocol across five cancers. Second, an honest negative anchor: the breast HER2 axis shows no signal supporting H&E-based substitution, and this negative is robust to H&E stain normalisation. Third, claim discipline — explicit adjudication of insufficient power on the many mutation and amplification axes that our pre-registered split cannot decide, rather than reporting only the axes that happen to score high. Fourth, the framing of a different question — "when is substitution safe?" — rather than a contest over predictive accuracy. Unlike single-cohort breast prediction [CITE-I12] or drug-sensitivity prediction [CITE-I13], this study contributes a methodological frame that applies one pre-registered evaluation protocol and a substitution-cost lens across a multi-cancer cohort. An external treatment-outcome check (Yale pCR) and a spatial-transcriptomics mechanistic look are reported only as provisional, Critic-pending exploratory analyses (§R6, §R7), not as contributions.
 
 <!-- v2 change: contribution list cut from five to four. v1 (iii) "Yale + ST 비용 증명" and (iv) "Yale 앵커" removed as standalone contributions because Yale is critic-pending and ST is hypothesis_only. -->
 
@@ -238,3 +238,77 @@ To test whether the anchor results are an artefact of uncorrected H&E stain vari
 - **Citations** are provisional (brackets) until machine-verified by `agents/critic/scripts/verify_citations.py`.
 - **Venue** — npj Precision Oncology vs ML4H 2026: format/length constraints `<FILL: ML4H 2026 CFP 원문 — 사람 확정>`; compression likely needed for a workshop venue (Leader decision).
 - **Reporting-standard mappings** (TRIPOD+AI done; CLAIM/PROBAST/STROBE pending) and **Table 1 (cohort characteristics)** to be attached as Supplement.
+
+---
+
+## References (working)
+
+Markers `[CITE-Ix]` in the text resolve here. This section grows section by section; re-verify with `verify_citations.py` before submission.
+
+### Introduction
+
+Markers `[CITE-I1]`–`[CITE-I13]`. Every entry below was checked against the source or publisher page; nothing is entered from memory.
+
+**[CITE-I1]** Spread of digital pathology and computer-aided pathology
+- Nam, S., Chong, Y., Jung, C. K., Kwak, T. Y., Lee, J. Y., Park, J., ... & Go, H. (2020). Introduction to digital pathology and computer-aided pathology. *Journal of Pathology and Translational Medicine, 54*(2), 125–134.
+
+**[CITE-I2]** Uptake of weakly supervised WSI learning and CLAM-family MIL
+- Lu, M. Y., Williamson, D. F. K., Chen, T. Y., Chen, R. J., Barbieri, M., & Mahmood, F. (2021). Data-efficient and weakly supervised computational pathology on whole-slide images. *Nature Biomedical Engineering, 5*(6), 555–570. https://doi.org/10.1038/s41551-020-00682-w
+- Ilse, M., Tomczak, J., & Welling, M. (2018). Attention-based deep multiple instance learning. *Proceedings of the 35th International Conference on Machine Learning (PMLR), 80*, 2127–2136.
+
+**[CITE-I3]** H&E AI studies in urological (prostate, bladder) cancer
+- Paik, I., Lee, G., Lee, J., Kwak, T. Y., & Ha, H. K. (2025). Artificial intelligence–driven digital pathology in urological cancers: Current trends and future directions. *Prostate International*.
+- Cho, Y., Shin, D., Hong, S., Lee, J., Park, S., Lee, G., ... & Ha, H. K. (2026). Efficient AI-driven multi-section whole slide image analysis for biochemical recurrence prediction in prostate cancer. *arXiv preprint* arXiv:2603.20273. https://arxiv.org/abs/2603.20273
+
+**[CITE-I4]** H&E WSI AI studies in breast cancer
+- Lee, G., Lee, J., Kwak, T. Y., Kim, S. W., Kwon, Y., Kim, C., & Chang, H. (2025). Assessing the risk of recurrence in early-stage breast cancer through H&E stained whole slide images. *Scientific Reports, 15*(1), 35069. https://doi.org/10.1038/s41598-025-16679-x
+- Lee, J., Lee, G., Kwak, T. Y., Kim, S. W., Jin, M. S., Kim, C., & Chang, H. (2024). MurSS: A multi-resolution selective segmentation model for breast cancer. *Bioengineering, 11*(5), 463.
+- Lee, G., Kim, C., Kwak, T. Y., Kim, S. W., & Chang, H. (2023). Predicting protein receptor status from H&E-stained images in breast cancer. *Cancer Research, 83*(7_Supplement), 5404.
+
+**[CITE-I5]** Extension to pancreatic and other organs
+- Lee, J., Lee, G., Kwak, T. Y., Kim, S. W., & Chang, H. (2022). A deep learning based pancreatic adenocarcinoma survival prediction model applicable to adenocarcinoma of other organs. *Cancer Research, 82*(12_Supplement), 5060.
+
+**[CITE-I6]** Knowledge distillation and pathology foundation models improving performance
+- Cho, Y., Lee, S., Lee, G., Lee, M., Park, J., & Shin, D. (2026). G2L: From giga-scale to cancer-specific large-scale pathology foundation models via knowledge distillation. *AAAI 2026 Workshop (W3PHIAI)* [oral]. https://arxiv.org/abs/2510.11176
+- Kim, H., Kwak, T. Y., Chang, H., Kim, S. W., & Kim, I. (2023). RCKD: Response-based cross-task knowledge distillation for pathological image analysis. *Bioengineering, 10*(11), 1279.
+- Chen, R. J., Ding, T., Lu, M. Y., Williamson, D. F. K., Jaume, G., Song, A. H., ... & Mahmood, F. (2024). Towards a general-purpose foundation model for computational pathology. *Nature Medicine, 30*(3), 850–862. https://doi.org/10.1038/s41591-024-02857-3
+
+**[CITE-I7]** Cost and turnaround burden of IHC and tissue-destructive molecular tests relative to H&E
+- Erfani, P., Gaga, E., Hakizimana, E., Kayitare, E., Mugunga, J. C., Shyirambere, C., Milner, D. A., Shulman, L. N., Ruhangaza, D., & Fadelu, T. (2023). Breast cancer molecular diagnostics in Rwanda: A cost-minimization study of immunohistochemistry versus a novel GeneXpert mRNA expression assay. *Bulletin of the World Health Organization, 101*(1), 10–19. https://doi.org/10.2471/BLT.22.288800
+- Sharma, A., Shah, P., Ranade, M., Pai, T., Sahay, A., Patil, A., Shet, T., Gupta, H., Chauhan, D., Somal, P., Sancheti, S., & Desai, S. (2025). Digital pathology enabling lean management of HER2/neu testing in breast cancer. *Journal of Pathology Informatics, 19*, 100515. https://doi.org/10.1016/j.jpi.2025.100515
+
+**[CITE-I8]** Clinical role of molecular tests in early detection, prognosis and treatment direction
+- Zhou, Y., Tao, L., Qiu, J., Xu, J., Yang, X., Zhang, Y., Tian, X., Guan, X., Cen, X., & Zhao, Y. (2024). Tumor biomarkers for diagnosis, prognosis and targeted therapy. *Signal Transduction and Targeted Therapy, 9*, 132. https://doi.org/10.1038/s41392-024-01823-2
+
+**[CITE-I9]** Repeated demonstrations that molecular state can be predicted from H&E
+- Coudray, N., Ocampo, P. S., Sakellaropoulos, T., Narula, N., Snuderl, M., Fenyö, D., Moreira, A. L., Razavian, N., & Tsirigos, A. (2018). Classification and mutation prediction from non–small cell lung cancer histopathology images using deep learning. *Nature Medicine, 24*(10), 1559–1567. https://doi.org/10.1038/s41591-018-0177-5
+- Kather, J. N., Pearson, A. T., Halama, N., Jäger, D., Krause, J., Loosen, S. H., ... & Luedde, T. (2019). Deep learning can predict microsatellite instability directly from histology in gastrointestinal cancer. *Nature Medicine, 25*(7), 1054–1056. https://doi.org/10.1038/s41591-019-0462-y
+- Kather, J. N., Heij, L. R., Grabsch, H. I., Loeffler, C., Echle, A., Muti, H. S., ... & Luedde, T. (2020). Pan-cancer image-based detection of clinically actionable genetic alterations. *Nature Cancer, 1*(8), 789–799. https://doi.org/10.1038/s43018-020-0087-6
+- Naik, N., Madani, A., Esteva, A., Keskar, N. S., Press, M. F., Ruderman, D., ... & Socher, R. (2020). Deep learning-enabled breast cancer hormonal receptor status determination from base-level H&E stains. *Nature Communications, 11*(1), 5727. https://doi.org/10.1038/s41467-020-19334-3
+- Schmauch, B., Romagnoni, A., Pronier, E., Saillard, C., Maillé, P., Calderaro, J., ... & Wainrib, G. (2020). A deep learning model to predict RNA-Seq expression of tumours from whole slide images. *Nature Communications, 11*(1), 3877. https://doi.org/10.1038/s41467-020-17678-4
+
+
+**[CITE-I10]** Clinical decision loss of substituting a molecular test — performance alone does not establish clinical acceptability
+- Vickers, A. J., Van Calster, B., & Steyerberg, E. W. (2016). Net benefit approaches to the evaluation of prediction models, molecular markers, and diagnostic tests. *BMJ, 352*, i6. https://doi.org/10.1136/bmj.i6
+- Vickers, A. J., & Elkin, E. B. (2006). Decision curve analysis: A novel method for evaluating prediction models. *Medical Decision Making, 26*(6), 565–574. https://doi.org/10.1177/0272989X06295361
+- Van Calster, B., Collins, G. S., Vickers, A. J., Wynants, L., Kerr, K. F., Barreñada, L., ... & Steyerberg, E. W. (2025). Evaluation of performance measures in predictive artificial intelligence models to support medical decisions: Overview and guidance. *The Lancet Digital Health, 7*(12), 100916.
+
+**[CITE-I11]** Biomarkers guide different diagnostic, prognostic and targeted-treatment decisions, so the consequence of an error depends on the downstream decision
+- Zhou, Y., Tao, L., Qiu, J., Xu, J., Yang, X., Zhang, Y., Tian, X., Guan, X., Cen, X., & Zhao, Y. (2024). Tumor biomarkers for diagnosis, prognosis and targeted therapy. *Signal Transduction and Targeted Therapy, 9*, 132. (= [CITE-I8])
+- Chakravarty, D., Gao, J., Phillips, S., Kundra, R., Zhang, H., Wang, J., ... & Schultz, N. (2017). OncoKB: A precision oncology knowledge base. *JCO Precision Oncology, 1*, 1–16.
+- Griffith, M., Spies, N. C., Krysiak, K., McMichael, J. F., Coffman, A. C., Danos, A. M., ... & Griffith, O. L. (2017). CIViC is a community knowledgebase for expert crowdsourcing the clinical interpretation of variants in cancer. *Nature Genetics, 49*(2), 170–174.
+
+**[CITE-I12]** Prior single-cohort or breast-focused H&E studies predicting receptor status, subtype or biomarkers
+- Tafavvoghi, M., Sildnes, A., Rakaee, M., Shvetsov, N., Bongo, L. A., Busund, L. T. R., & Møllersen, K. (2025). Deep learning-based classification of breast cancer molecular subtypes from H&E whole-slide images. *Journal of Pathology Informatics, 16*, 100410.
+- Farahmand, S., Fernandez, A. I., Ahmed, F. S., Rimm, D. L., Chuang, J. H., Reisenbichler, E., & Zarringhalam, K. (2022). Deep learning trained on hematoxylin and eosin tumor region of interest predicts HER2 status and trastuzumab treatment response in HER2+ breast cancer. *Modern Pathology, 35*(1), 44–51.
+- Gamble, P., Jaroensri, R., Wang, H., Tan, F., Moran, M., Brown, T., ... & Chen, P. H. C. (2021). Determining breast cancer biomarker status and associated morphological features using deep learning. *Communications Medicine, 1*(1), 14.
+- Couture, H. D., Williams, L. A., Geradts, J., Nyante, S. J., Butler, E. N., Marron, J. S., ... & Niethammer, M. (2018). Image analysis with deep learning to predict breast cancer grade, ER status, histologic subtype, and intrinsic subtype. *npj Breast Cancer, 4*(1), 30.
+- Naik, N., Madani, A., Esteva, A., Keskar, N. S., Press, M. F., Ruderman, D., ... & Socher, R. (2020). Deep learning-enabled breast cancer hormonal receptor status determination from base-level H&E stains. *Nature Communications, 11*(1), 5727. (= [CITE-I9])
+- Fernandez-Romero, J., Ramos-Berciano, P., Perez-Perez, M., Benavides, D., Robles-Frias, A., Garcia-Gutierrez, J., & Macias-Garcia, L. (2026). Domain generalisation challenges in breast cancer molecular classification using foundation models: A cross-cohort exploratory study. *Medical & Biological Engineering & Computing, 64*, 2321–2331. https://doi.org/10.1007/s11517-026-03590-4 — 프로젝트가 지목한 **최근접 스쿱**
+
+**[CITE-I13]** Prior histology-based work framing the task as drug-sensitivity prediction
+- Dawood, M., Vu, Q. D., Young, L. S., Branson, K., Jones, L., Rajpoot, N., & Minhas, F. U. A. A. (2024). Cancer drug sensitivity prediction from routine histology images. *npj Precision Oncology, 8*(1), 5.
+
+**카운슬 판정 기록 (codex 집필 → agy 적대검토 → codex 반박 1회 → Claude 정리).** 초안의 I10–I20 표식 11개 중 7개를 삭제했다. 사유는 전부 동일 — **우리 논문 자신의 주장·설계·결과·기여에 인용을 붙인 것**이다. 특히 (a) 논지 문장 "But being predictable does not mean..." 에 선행연구를 걸면 4문단 뒤 기여 주장("다른 질문의 정립")과 자기모순이 된다. (b) 염색정규화·conformal 문헌을 기여 목록에 붙인 것은 인용 채우기였다. (c) 사전등록 근거로 leakage·site-batch 문헌을 든 것은 논거가 다르다.
+남은 자리가 4개뿐인 것은 Introduction ¶2–¶5 가 대부분 우리 프레임 설명이기 때문이다. **인용 밀도는 Methods(현재 0개)와 Results(현재 2개)에서 확보해야 한다.**
+✅ **Bibliography settled (2026-08-31).** Authors and bibliographic details are confirmed for every Introduction reference. What remains depends on publication progress: Paik 2025 has no volume/issue/pages assigned yet (Prostate International, PII S2287888225000066), and Cho 2026 (prostate) is an arXiv preprint with no final venue. Re-check at proof stage. G2L 2026 was corrected to an AAAI 2026 **workshop** (W3PHIAI, oral), not the main conference.
