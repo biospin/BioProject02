@@ -51,29 +51,37 @@ biotab. **Corrected 2026-08-20** (BIOP02-49's provenance follow-up, `tcga_brca_p
 PROVENANCE.md`, landed on `main` after this draft was first written): the committed TCGA PAM50
 calls are **not** a cBioPortal-sourced file — they are a locally-computed nearest-centroid
 classification (Parker et al. 2009 method, confidence range 0.808–0.925) run against expression
-data outside this repo. `split_policy_v0.md` §10 names cBioPortal TCGA-BRCA PAM50 as the
-*primary* source with the local/genefu computation as a *fallback for coverage gaps* — the
-manifest as committed uses the fallback for the entire cohort, not cBioPortal. For CPTAC, PAM50
+data outside this repo. `split_policy_v0.md` §10 originally named cBioPortal TCGA-BRCA PAM50 as
+the *primary* source with the local computation as a *fallback for coverage gaps*, which did not
+describe what the manifest actually does; that policy text has since been corrected to name the
+computed calls as the source of record (§10.1, data-owner decision 2026-08-20). For CPTAC, PAM50
 comes from the same `brca_cptac_2020` release as the other endpoints; class naming was normalized
 across cohorts (CPTAC's `Her2` → `HER2`) so both use identical class labels.
 
-**Open item — PAM50 source pinned, but policy vs. practice needs a data-owner decision.**
+**Resolved 2026-08-20 — source pinned and the data-owner has ruled.**
 Re-verified 2026-08-20 with the exact cBioPortal source pinned: study `brca_tcga_pan_can_atlas_2018`,
-attribute `SUBTYPE` (PATIENT-level, values prefixed `BRCA_`), coverage **981/1,010 patients
-(97.1%)**. Against this source, the committed (local/genefu) PAM50 calls match at **57.0%**
+attribute `SUBTYPE` (PATIENT-level, values prefixed `BRCA_`), covering **981 of the 1,009
+patients carrying a manifest PAM50 call (97.2%)**. Against this source, the committed
+(local/genefu) PAM50 calls match at **57.0%**
 (514/902 overlapping labeled patients) — confirms BIOP02-49's original finding, now with the
 comparison source's `study_id`/attribute fully citable. Mismatches concentrate in two known-hard
 boundaries, not random noise: local=LumB vs. cBioPortal=LumA (141 patients) and local=Normal vs.
 cBioPortal=LumA (101 patients) — consistent with the literature's documented LumA/LumB boundary
 instability and Normal-like call instability across PAM50 implementations, not evidence either
-source is simply wrong. **The open question for the data-owner (kkkim):** §10 authorizes the
-local/genefu fallback only when cBioPortal coverage is short, but cBioPortal coverage here is
-97.1% — high, not short. Should the manifest switch to cBioPortal PAM50 as primary per the
-letter of §10, or is there a documented reason (e.g. cBioPortal's curated calls trailing a TCGA
-reprocessing batch) the local computation was used as primary in practice? Either answer is
-fine, but the repo should say which and why before this is cited as "single source, version-
-pinned" per `split_policy_v0.md` §7. Does not affect the split (§D.4), which is defined over the
-full patient set independent of any single label's availability. Reproducible via
+source is simply wrong. **Data-owner decision (kkkim, 2026-08-20):** the surfaced conflict was
+that §10 authorized the local/genefu computation only as a fallback for short cBioPortal
+coverage, yet coverage is 97.2% — high, not short — while the manifest used the computed calls
+across the whole cohort. **The Parker-2009 computed calls stay as the source of record; the
+manifest does not switch to cBioPortal.** Rationale: the Paper A/C analyses were already run and
+verified against these labels (manifest agrees 1,009/1,009 with the committed source file), and
+re-deriving them would be an unmotivated moving of the goalposts; the Parker centroid classifier
+is the canonical PAM50 method and is directly citable. The 57.0% figure is therefore reported
+here as a transparency item, not as an unresolved defect, and `split_policy_v0.md` §10 has been
+corrected to name actual practice (see its §10.1). One non-blocking gap remains: the script and
+input expression matrix that produced the computed calls are not in this repo, so the labels are
+not yet end-to-end reproducible — follow-up per the provenance note. Does not affect the split
+(§D.4), which is defined over the full patient set independent of any single label's
+availability. Reproducible via
 `agents/data/scripts/pam50_source_reconcile.py`, output
 `agents/data/manifests/pam50_source_reconcile_biop02-74.json`.
 
@@ -140,9 +148,16 @@ data version that produced it.
 
 *상태: 초안 v0.1. 모델/학습/평가 절(M.1–M.9)은 sjpark 초안([guide/paper_a_methods_modeling_draft.md](paper_a_methods_modeling_draft.md))과 상호 연결 — 특히 M.2(tiling/embedding), M.5(split 수치)가 이 문서를 "Data Methods"로 지칭하고 있어 정합 확인 완료. braveji가 M.7에서 지적한 mean-embed≠pixel-mean 용어 문제(-72 코멘트 11387 ①)는 이 문서 범위 밖(모델링 절 소관).*
 
-*미해결 항목(투고 전 kkkim 결정 필요, 2026-08-20 갱신): PAM50 cBioPortal 대조 소스의 study_id는
-이제 고정됨(`brca_tcga_pan_can_atlas_2018`, `SUBTYPE` 속성, 커버리지 981/1010=97.2%). 남은 건
-study_id 미고정이 아니라 **정책(§10: cBioPortal 1순위·genefu는 커버리지 부족시 fallback) vs
-실제 사용(전체 코호트가 genefu)의 불일치** — 커버리지가 97.2%로 "부족"이 아닌데 fallback이
-1순위처럼 쓰이고 있음. kkkim 결정 필요(§D.3 "Open item" 참조, 재현
-스크립트=`agents/data/scripts/pam50_source_reconcile.py`).*
+*해소됨(2026-08-20 kkkim 결정, Jira 11999): PAM50 대조 소스의 study_id 고정
+(`brca_tcga_pan_can_atlas_2018`, `SUBTYPE` 속성, manifest PAM50 코호트 커버리지 981/1009=97.2%)에 이어, 그 과정에서
+드러난 **정책 vs 실사용 불일치**(§10은 cBioPortal 1순위·genefu는 커버리지 부족시 fallback이라
+했으나 커버리지가 97.2%로 "부족"이 아닌데 전 코호트가 계산본을 사용)도 결론이 났다. **결정:
+Parker 2009 계산본(`tcga_brca_pam50_computed.csv`)을 정본으로 유지**하고 cBioPortal로 전환하지
+않는다 — 분석이 이미 이 라벨로 검증됐고(manifest 1009/1009 일치) Parker centroid는 PAM50 정본
+분류기이기 때문. 57.0% 불일치는 오류가 아니라 로컬 계산본 vs curated atlas의 파생 차이이며 위
+Methods 본문에 투명성 항목으로 보고했다. `split_policy_v0.md` §10 문구도 실사용에 맞게 정정
+(§10.1 신설). 재현 스크립트=`agents/data/scripts/pam50_source_reconcile.py`.*
+
+*잔여(비차단): 계산본을 생성한 스크립트와 입력 발현 행렬(study_id·버전)이 레포에 없어 완전
+재현은 아직 불가 — PROVENANCE "남은 gap"의 후속 과제이며 braveji가 `594ef6b`에서 비블로커로
+확인했다.*
