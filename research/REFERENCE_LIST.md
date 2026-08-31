@@ -4,7 +4,7 @@
 > 자동생성(paper-info.yaml 기준) + 갭(인용됐으나 미분석)은 §마지막. 최종갱신 2026-07-17.
 
 
-## §Intro/Related — H&E→분자 예측(선행·스쿱)  (phenotype-prediction, 11편)
+## §Intro/Related — H&E→분자 예측(선행·스쿱)  (phenotype-prediction, 18편)
 
 | 상태 | 문헌 | 연도 | venue | 제목 |
 |---|---|---|---|---|
@@ -19,6 +19,13 @@
 | brief | kather-2019-msi | 2019 | Nature Medicine | Deep learning can predict microsatellite instability |
 | brief | couture-2018-npjbc | 2018 | npj Breast Cancer | Image analysis with deep learning to predict breast  |
 | brief | coudray-2018-natmed | 2018 | Nature Medicine | Classification and mutation prediction from non-smal |
+| brief | paik-2025-urologic-dp | 2025 | Prostate International | AI-driven digital pathology in urological cancers: c |
+| brief | lee-2025-brca-recurrence | 2025 | Scientific Reports | Assessing the risk of recurrence in early-stage brea |
+| brief | lee-2024-murss | 2024 | Bioengineering | MurSS: A multi-resolution selective segmentation mod |
+| brief | cho-2026-g2l | 2026 | AAAI (accepted) | G2L: From Giga-Scale to Cancer-Specific Large-Scale  |
+| brief | cho-2026-prostate-br | 2026 | arXiv 2603.20273 | Efficient AI-Driven Multi-Section WSI Analysis for B |
+| brief | lee-2023-receptor-status | 2023 | Cancer Res 83(7_Suppl) AACR | Predicting protein receptor status from H&E-stained  |
+| brief | lee-2022-pdac-survival | 2022 | Cancer Res 82(12_Suppl) AACR | A deep learning based pancreatic adenocarcinoma surv |
 
 ## §Related/Paper B — H&E→약물·cell-line  (morphology-drug, 9편)
 
