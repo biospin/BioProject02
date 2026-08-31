@@ -77,6 +77,34 @@ kkkim이 근거 수치를 원자료에서 독립 확인한 뒤 승인. **승인 
 
 ---
 
+### ✅✅ 2단 최종 서명 완료 — 2026-08-27 (`critic_status: pass`, JIRA 12053)
+
+**확정:** Critic 7-point **과학 게이트 통과**. 재정의된 성공 기준(*"7항목 전부 판정 완료 + caution은 Limitation 명시"*, kkkim 승인 11402·11512)을 충족.
+
+**⚠️ 이 서명이 열지 않는 것:** **외부 공개(preprint·투고)는 그대로 닫혀 있다.** 저자·소속·순서·corresponding·Funding 확정은 **별도 공개 게이트**이며 미해소다(BIOP02-114).
+
+**게이트 분리 결정 (braveji, #12051 → 승인 A안):** 저자 메타데이터는 어떤 과학적 주장의 타당성에도 영향을 주지 않는다. 7-point는 과학 게이트, 저자정보는 공개 게이트다. 두 게이트를 한 조건에 묶은 것은 **braveji 자신의 2단 정의(#11515)**였고 그 때문에 Critic 게이트가 과학과 무관한 사유로 닫히지 못했다. 범위를 과학 게이트로 한정해 서명하되 **공개 차단은 유지**한다. kkkim 이의 시 되돌릴 수 있다.
+
+**서명 직전 실물 재확인**(기억·SESSION_LOG 아님, origin/main `6390f9b`):
+
+| 조건 | 근거 |
+|---|---|
+| 7항목 × 4엔드포인트 판정 완료 | §1 매트릭스 28칸, **미판정 0** |
+| #2 baseline (ER/PR 비가산) | `04_discussion.md:19` |
+| #3 counterfactual (proba-level 한정) | `04_discussion.md:21` |
+| #2/#4 HER2 정직한 음성(reject) | `04_discussion.md:23` |
+| #5 bio_plausibility | `04_discussion.md:25` |
+| DRP 금지표현 스캔 | 전 섹션 + 전체초안 **실히트 0** |
+| Fig 1 / 2 / 3 | pass(07-21) / pass(07-27, 19/19) / **pass(08-19, 25/25)** |
+
+> 🔎 **자기정정:** 1차 스캔에서 caution 3종이 **0히트**로 나왔으나 원인은 원고가 아니라 **내 grep 문법 오류**였다(`-E`에서 `\|`는 리터럴 파이프 → 검색어 자체가 존재하지 않는 문자열). **도구가 "못 찾겠다"고 한 것을 사실로 처리하지 않고 조사해 확인**했다 — CLAUDE.md 금지항목 그대로.
+
+**비블로커 잔여 2건(판정에 영향 없음):** PAM50 발현 study_id·계산 스크립트 미커밋(원고 한계에 서술, kkkim #11967 확인) · `04_discussion.md:10`의 stale `<FILL: A3/A4 후>`(Yale 0.533은 전체 초안 R6에 실재 — 집필 담당 정리 대상).
+
+**산출물:** `critic_report.json`(이 폴더) + 재현물 4종(`BIOP02-59_bioplausibility_recompute` · `BIOP02-75_fig3_pam50_verification` · `BIOP02-91_cost_verification` · `BIOP02-56_counterfactual_recompute`).
+
+---
+
 ## 3. 최종 서명(-75) 잔여 블로커
 
 **갱신 2026-08-19 (Fig 3 PAM50 CI 25/25 검증·서명 완료).** 잔여 = **저자·소속·순서·corresponding 확정(팀 게이트) · PAM50 발현 study_id 커밋(kkkim)** — **braveji 몫의 기술 잔여는 없다.**

@@ -89,7 +89,7 @@ TCGA biotab의 결측 토큰: `[not available] / [not applicable] / [unknown] / 
 | **ER status (IHC)** | binary (Positive/Negative). 결측 → 해당 환자를 **ER task에서 제외** (전체 제거 아님). |
 | **PR status (IHC)** | 동일 (binary, 결측 시 PR task 제외). |
 | **HER2 status (IHC)** | binary. `equivocal`(IHC 2+, FISH 미확정)은 **결측 처리** → HER2 task 제외 (소음 라벨 차단). |
-| **PAM50 (4-class)** | LumA/LumB/HER2-E/Basal. Normal-like는 **제외** (형태학 신호 빈약, Tafavvoghi 정렬). PAM50은 biotab clinical_patient에 없음 → **별도 소스(TCGA-BRCA 2012 / cBioPortal)에서 환자 단위 join** 후 채움. |
+| **PAM50 (4-class)** | LumA/LumB/HER2-E/Basal. Normal-like는 **제외** (형태학 신호 빈약, Tafavvoghi 정렬). PAM50은 biotab clinical_patient에 없음 → **별도 소스에서 환자 단위 join** 후 채움. 정본 소스 = `tcga_brca_pam50_computed.csv`(Parker 2009 nearest-centroid 계산본, §10.1) — cBioPortal curated study가 아니다. |
 
 **중요: 결측은 task별(per-target)로 행을 마스킹**하되 split 배정에는 영향을 주지 않는다.
 즉 split은 환자 전체 집합에 대해 **한 번** 결정되고, 각 phenotype head는 자기 라벨이 있는 환자 부분집합에서만 학습/평가한다 → split 정의가 target마다 달라지는 것을 방지 (재현성).
@@ -151,7 +151,7 @@ split 정의(JSON: case_id → fold) → sha256 →  split_hash
 - [ ] **site-disjoint == True** : 어떤 `tss_code`도 둘 이상 fold에 없음.
 - [ ] **CPTAC 격리** : CPTAC 케이스가 TCGA train/val에 0건.
 - [ ] **site-classifier probe AUC 보고** : FM 임베딩으로 submitting-site 예측 (one-vs-rest AUROC). Howard 기준선(0.964–0.998) 대비 residual site leakage 강도를 **숫자로** 리포트 (Exp2-A). 높을수록 site-aware split의 정당성이 강해짐.
-- [ ] **라벨 정의 단일 소스** : ER/PR/HER2 = biotab IHC, PAM50 = 단일 외부 소스 고정 (train/test 간 정의 드리프트 차단).
+- [ ] **라벨 정의 단일 소스** : ER/PR/HER2 = biotab IHC, PAM50 = `tcga_brca_pam50_computed.csv`(Parker 2009 계산본) 단일 고정 (train/test 간 정의 드리프트 차단). 소스 확정 근거·정정 경위는 §10.1.
 - [ ] **temporal/parametric 채널 명시** : FM(UNI/CONCH)의 parametric 지식은 통제 불가 채널로 잔존 → de Jong 2025 (FM이 medical-center 시그니처 인코딩) 인용하고 floor로 site-probe AUC를 보고. stain normalization은 보조일 뿐 단독 방어 아님 (Howard #4).
 
 ---
@@ -217,4 +217,14 @@ Critic cross-sign 완료(2026-07-13): split_policy_v0 + split_hash **5995f29d397
 
 ## 10. Leader 결정 반영 (2026-06-10, kkkim)
 - **Subset = 전체 1010 (full BRCA cohort)** — Paper A 범위를 1010으로 확정. ⚠️ CLAUDE.md "~150 subset" 금지조항(line 220/239) override → 거버넌스 갱신 필요. site-disjoint split 검정력 확보.
-- **PAM50 소스 = cBioPortal TCGA-BRCA PAM50** (1순위, 분류기 정의 Parker 2009 인용); 커버리지 부족 시 TCGA RNA-seq + genefu(Parker centroids) fallback. → §4·§7 라벨 정책에 반영.
+- ~~**PAM50 소스 = cBioPortal TCGA-BRCA PAM50** (1순위, 분류기 정의 Parker 2009 인용); 커버리지 부족 시 TCGA RNA-seq + genefu(Parker centroids) fallback.~~ → **2026-08-20 Leader 결정으로 대체됨(아래 §10.1).**
+
+## 10.1 PAM50 소스 정정 (2026-08-20, kkkim — BIOP02-74)
+
+위 06-10 결정문("cBioPortal 1순위, 커버리지 부족 시에만 fallback")은 **실사용과 어긋나 있었다**. 기록을 지우지 않고 정정 경위를 남긴다.
+
+- **실제 정본 소스 = `agents/data/manifests/tcga_brca_pam50_computed.csv`** — cBioPortal의 curated study가 아니라 **Parker 2009 nearest-centroid classifier로 발현에서 계산한 라벨**이다(Parker et al. 2009, JCO, DOI `10.1200/JCO.2008.18.1370`). 근거: `tcga_brca_pam50_computed_PROVENANCE.md`(BIOP02-49 후속, kkkim 2026-07-10) — `tcga_brca_manifest.csv`의 pam50 보유 case **1009/1009(100%)**가 이 파일과 일치해 소스가 확정됨.
+- **06-10 문구가 어긋났던 이유**: fallback은 "cBioPortal 커버리지 부족 시"에만 승인됐는데, 실측 커버리지는 부족하지 않았다 — 대조 소스 `brca_tcga_pan_can_atlas_2018`(`SUBTYPE`, PATIENT-level)이 manifest PAM50 코호트를 덮는 비율 **981/1009 = 97.2%**(`cbio_coverage_of_manifest_cohort_pct`). 즉 fallback 발동 조건이 충족된 적이 없는데 fallback 쪽이 전 코호트에 쓰이고 있었다(BIOP02-74에서 실측, `pam50_source_reconcile.py` / `pam50_source_reconcile_biop02-74.json`).
+- **결정(kkkim, Jira 11999)**: **Parker 계산본을 정본으로 유지한다.** cBioPortal로 전환하지 않는다. 이유 — (a) Paper A/C 분석이 이미 이 라벨로 수행·검증됐고(manifest 100% 일치 + PROVENANCE), 전환은 전면 재실행이자 근거 없는 골대이동이다. (b) Parker centroid는 PAM50의 정본 분류기라 인용 가능하다.
+- **57.0% 불일치(514/902)는 오류가 아니라 파생 차이다** — 로컬 발현-계산본 vs curated atlas. 불일치는 무작위가 아니라 문헌상 알려진 두 경계에 집중된다(local=LumB↔cBio=LumA 141명, local=Normal↔cBio=LumA 101명). **투명성 항목으로 Methods에 보고**한다(어느 쪽이 틀렸다는 뜻이 아니다).
+- **잔여 gap(비차단)**: 이 CSV를 만든 계산 스크립트와 입력 발현 행렬(study_id·버전)은 아직 레포에 없다 — 완전 재현용 후속 과제(PROVENANCE "남은 gap", braveji `594ef6b`에서도 비블로커로 확인).
