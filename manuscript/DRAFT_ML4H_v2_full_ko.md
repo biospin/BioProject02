@@ -306,7 +306,7 @@ CLAM-SB attention MIL을 사용하였다(hidden 512·attention 256, 40–50 epoc
 - Gamble, P., Jaroensri, R., Wang, H., Tan, F., Moran, M., Brown, T., ... & Chen, P. H. C. (2021). Determining breast cancer biomarker status and associated morphological features using deep learning. *Communications Medicine, 1*(1), 14.
 - Couture, H. D., Williams, L. A., Geradts, J., Nyante, S. J., Butler, E. N., Marron, J. S., ... & Niethammer, M. (2018). Image analysis with deep learning to predict breast cancer grade, ER status, histologic subtype, and intrinsic subtype. *npj Breast Cancer, 4*(1), 30.
 - Naik, N., Madani, A., Esteva, A., Keskar, N. S., Press, M. F., Ruderman, D., ... & Socher, R. (2020). Deep learning-enabled breast cancer hormonal receptor status determination from base-level H&E stains. *Nature Communications, 11*(1), 5727. (= [CITE-I9])
-- ⚠️ `fernandez-romero-2026-domaingen` — **서지 미확정.** 저장소에 요약형(Domain generalisation…FM, Med Biol Eng Comput 64)으로만 기록돼 있다. 프로젝트가 지목한 **최근접 스쿱**이므로 정확한 서지가 필요하다.
+- Fernandez-Romero, J., Ramos-Berciano, P., Perez-Perez, M., Benavides, D., Robles-Frias, A., Garcia-Gutierrez, J., & Macias-Garcia, L. (2026). Domain generalisation challenges in breast cancer molecular classification using foundation models: A cross-cohort exploratory study. *Medical & Biological Engineering & Computing, 64*, 2321–2331. https://doi.org/10.1007/s11517-026-03590-4 — 프로젝트가 지목한 **최근접 스쿱**
 
 **[CITE-I13]** 선행 조직영상 기반 약물감수성 예측
 - Dawood, M., Vu, Q. D., Young, L. S., Branson, K., Jones, L., Rajpoot, N., & Minhas, F. U. A. A. (2024). Cancer drug sensitivity prediction from routine histology images. *npj Precision Oncology, 8*(1), 5.

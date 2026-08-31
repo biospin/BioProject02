@@ -171,7 +171,7 @@
 
 | 상태 | 문헌(확정 서지) | slug | 우리 논문에서 |
 |---|---|---|---|
-| DEEP | **Fernandez-Romero 2026** — Domain generalisation…FM (Med Biol Eng Comput 64) | fernandez-romero-2026-domaingen | 최근접 스쿱(유방 subtype, 외부열화) → 치환프레임 pivot |
+| DEEP | **Fernandez-Romero 2026** — Domain generalisation challenges in breast cancer molecular classification using foundation models: a cross-cohort exploratory study (Med Biol Eng Comput 64:2321-2331, doi:10.1007/s11517-026-03590-4) | fernandez-romero-2026-domaingen | 최근접 스쿱(유방 subtype, 외부열화) → 치환프레임 pivot |
 | DEEP | **Kaczmarzyk 2026 (MAKO)** — ROR-P 재발위험 예측 (npj Digital Med 9:149) | kaczmarzyk-2026-mako | "예측 포화" 근거(⚠️ subtype 아니라 ROR-P) |
 | brief | **Shulman 2026 (Path2Space)** — AI 공간전사체 (Cell 189, 교신 Ruppin) | shulman-2026-path2space | 반대방향(복원 vs 치환 audit) ⚠️문서엔 "Kaminski" 오기 |
 | DEEP★ | **Farahmand 2022** (Mod Pathol 35:44) | farahmand-2022-modpathol | **Yale 앵커 head-to-head 바 = trastuzumab반응 CV AUC 0.80** (HER2 CV0.90/외부0.81) |
