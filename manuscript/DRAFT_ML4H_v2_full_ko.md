@@ -66,7 +66,9 @@
 >
 >
 > **[CITE-I10]** 분자검사 대체의 임상 의사결정 손실 — 예측 성능만으로는 임상 수용 가능성이 서지 않는다
-> - ⚠️ **미확보.** 필요한 종류: 의사결정 분석 / decision-curve analysis·net benefit / 임상 효용. 보유 목록의 보정·불확실성·conformal 문헌은 모델 신뢰도를 다루지 대체의 임상 손실을 다루지 않는다.
+> - Vickers, A. J., Van Calster, B., & Steyerberg, E. W. (2016). Net benefit approaches to the evaluation of prediction models, molecular markers, and diagnostic tests. *BMJ, 352*, i6. https://doi.org/10.1136/bmj.i6
+> - Vickers, A. J., & Elkin, E. B. (2006). Decision curve analysis: A novel method for evaluating prediction models. *Medical Decision Making, 26*(6), 565–574. https://doi.org/10.1177/0272989X06295361
+> - Van Calster, B., Collins, G. S., Vickers, A. J., Wynants, L., Kerr, K. F., Barreñada, L., et al. (2025). Evaluation of performance measures in predictive artificial intelligence models to support medical decisions: Overview and guidance. *The Lancet Digital Health, 7*(12), 100916.
 >
 > **[CITE-I11]** 바이오마커가 진단·예후·표적치료 결정을 각각 다르게 가르므로, 오류의 결과는 하류 결정에 달려 있다
 > - `zhou-2024-tumor-biomarkers` · `chakravarty-2017-oncokb` · `griffith-2017-civic`
@@ -80,7 +82,7 @@
 > **카운슬 판정 기록 (codex 집필 → agy 적대검토 → codex 반박 1회 → Claude 정리).** 초안이 ¶2–¶5 에 단 마커 11개 중 7개를 삭제했다. 사유는 전부 동일 — **우리 논문 자신의 주장·설계·결과·기여에 인용을 붙인 것**이다. (a) 논지 문장 "그러나 예측된다는 것이 곧 …" 에 선행연구를 걸면 4문단 뒤 기여 주장("다른 질문의 정립")과 자기모순이 된다. (b) 염색정규화·conformal 문헌을 기여 목록에 붙인 것은 인용 채우기다. (c) 사전등록 근거로 leakage·site-batch 문헌을 든 것은 논거가 다르다.
 > 남은 자리가 4개뿐인 것은 Introduction ¶2–¶5 가 대부분 우리 프레임 설명이기 때문이다. **인용 밀도는 Methods(현재 0개)와 Results(현재 2개)에서 확보한다.**
 >
-> **추가 확보 필요 3종** — ① 임상 의사결정 손실(decision curve·net benefit) ② 사전등록·registered report 방법론 ③ 통계적 검정력·다중성 통제. 셋 다 현행 REFERENCE_LIST 에 없는 계열이다.
+> **추가 확보 — ① 임상 의사결정 손실은 해결(I10, Vickers 계열 3편 신규 등재).** 남은 2종은 이번 Introduction 에서 해당 마커를 삭제해 당장은 불필요하나, 사전등록 근거나 검정력·다중성 주장을 본문에 다시 세울 경우 ② 사전등록·registered report 방법론 ③ 통계적 검정력·다중성 통제 문헌이 필요하다.
 > ⚠️ **제출 전 보완.** Kather 2019·Kather 2020·Naik 2020·Schmauch 2020 은 저자 전체 목록을 확인하지 못해 `et al.` 로 두었다 — APA 7 은 저자 20인까지 나열하므로 최종본에서 채운다. `paik-2025` 는 권·호·페이지, `cho-2026-g2l` 은 AAAI 게재연도·페이지, `cho-2026-prostate-br` 은 최종 게재처가 미확정이다.
 > `I7` 실측 근거: IHC 바이오마커 분석 **환자당 US\$67.33**(전체 진단비 \$138.29의 48.7%) · HER2 IHC 재검 평균 **TAT 15.65일**(관행 워크플로 기준). 본문에 수치를 넣을지는 주저자 판단.
 
