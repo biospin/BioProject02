@@ -32,12 +32,12 @@
 > | `[CITE-I4]` | 유방암 H&E WSI AI 연구 | `lee-2025-brca-recurrence` · `lee-2024-murss` · `lee-2023-receptor-status` | 정식·정식·학회초록 |
 > | `[CITE-I5]` | 췌장 등 타 장기로의 확장 | `lee-2022-pdac-survival` | 학회초록 |
 > | `[CITE-I6]` | 지식 증류·파운데이션 모델이 성능을 끌어올림 | `cho-2026-g2l` · `kim-2023-rckd` · `chen-2024-uni` | 정식 |
-> | `[CITE-I7]` | IHC·조직파괴 분자검사의 비용·소요시간 부담 (H&E 대비) | **미확보 — 우선순위 높음** | |
-> | `[CITE-I8]` | 분자검사의 조기 발견·예후·치료 방향 결정 역할 | **미확보 — 우선순위 높음** | |
+> | `[CITE-I7]` | IHC·조직파괴 분자검사의 비용·소요시간 부담 (H&E 대비) | `erfani-2023-rwanda-ihc-cost` · `sharma-2025-her2-tat` | 정식 |
+> | `[CITE-I8]` | 분자검사의 조기 발견·예후·치료 방향 결정 역할 | `zhou-2024-tumor-biomarkers` | 정식(리뷰) |
 > | `[CITE-I9]` | H&E로부터 분자 상태 예측이 반복 입증됨 | `coudray-2018-natmed` · `kather-2019-msi` · `kather-2020-actionable` · `naik-2020-natcommun` · `schmauch-2020-he2rna` | 정식 |
 >
 > `I1`·`I3`–`I5` 는 **분야가 여러 장기에서 활발했다는 넓이 근거**다. 학회 초록도 이 용도로는 유효하다.
-> ⚠️ `I7`·`I8` 두 자리가 이 문단의 논지(비용 비대칭)를 떠받친다. 넓이 주장이 아니라 **구체적 사실 주장**이 실리므로 정식 논문이 필요하다.
+> `I7` 실측 근거: IHC 바이오마커 분석 **환자당 US$67.33**(르완다 원가최소화 연구) · HER2 IHC 평균 **TAT 15.65일**(관행 워크플로). 본문에 수치를 넣을지는 주저자 판단.
 > ⚠️ `cho-2026-g2l` AAAI 게재연도, `cho-2026-prostate-br` 최종 게재처 미확정.
 > ⚠️ `lee-2023-receptor-status` 는 유방 수용체(HER2/ER/PR) 예측으로 본 연구 유방 앵커와 주제가 가장 가깝다. 넓이 인용으로 두되, Related work 에 선행연구로 한 문장 세울지 검토할 것.
 

@@ -29,6 +29,19 @@
 | brief | nam-2020-digitalpath-intro | 2020 | J Pathol Transl Med | Introduction to digital pathology and computer-aided |
 | brief | kim-2023-rckd | 2023 | Bioengineering | RCKD: Response-based cross-task knowledge distillati |
 
+
+## §Intro — 임상 맥락: 분자검사의 비용·소요시간·역할  (clinical-context, 3편)
+
+> 치환비용 논지의 전제(대체 대상이 비싸고 느리며 임상적으로 중요하다)를 뒷받침. 전부 DOI·PMID 대조 완료.
+
+| 상태 | 문헌 | 연도 | venue | 제목 | 식별자 |
+|---|---|---|---|---|---|
+| brief | erfani-2023-rwanda-ihc-cost | 2023 | Bull World Health Organ 101(1):10-19 | Breast cancer molecular diagnostics in Rwanda: a cost-minimization study of immunohistochemistry versus a novel GeneXpert mRNA expression assay | doi:10.2471/BLT.22.288800 · PMID 36593782 |
+| brief | sharma-2025-her2-tat | 2025 | J Pathol Inform 19:100515 | Digital pathology enabling lean management of HER2/neu testing in breast cancer | doi:10.1016/j.jpi.2025.100515 · PMID 41070375 |
+| brief | zhou-2024-tumor-biomarkers | 2024 | Signal Transduct Target Ther 9:132 | Tumor biomarkers for diagnosis, prognosis and targeted therapy | doi:10.1038/s41392-024-01823-2 · PMID 38763973 |
+
+**실측 수치(본문 인용 시).** erfani: IHC 바이오마커 분석 환자당 US$67.33 (전체 진단비 $138.29의 48.7%). sharma: HER2 IHC 재검 케이스 평균 TAT 15.65일(관행) → 8.775일(디지털). zhou: 조기선별·진단·예후·재발감시·표적치료를 포괄한 리뷰.
+
 ## §Related/Paper B — H&E→약물·cell-line  (morphology-drug, 9편)
 
 | 상태 | 문헌 | 연도 | venue | 제목 |
