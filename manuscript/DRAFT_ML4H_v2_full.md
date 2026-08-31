@@ -258,10 +258,10 @@ Markers `[CITE-I1]`–`[CITE-I9]` in the text resolve here. Every entry was chec
 
 **[CITE-I3]** H&E AI studies in urological (prostate, bladder) cancer
 - Paik, I., Lee, G., Lee, J., Kwak, T. Y., & Ha, H. K. (2025). Artificial intelligence–driven digital pathology in urological cancers: Current trends and future directions. *Prostate International*.
-- Cho, Y., Shin, D., Hong, S., Lee, J., Park, S., Lee, G., ... & Ha, H. K. (2026). Efficient AI-driven multi-section whole slide image analysis for biochemical recurrence prediction in prostate cancer. *arXiv*. https://arxiv.org/abs/2603.20273
+- Cho, Y., Shin, D., Hong, S., Lee, J., Park, S., Lee, G., ... & Ha, H. K. (2026). Efficient AI-driven multi-section whole slide image analysis for biochemical recurrence prediction in prostate cancer. *arXiv preprint* arXiv:2603.20273. https://arxiv.org/abs/2603.20273
 
 **[CITE-I4]** H&E WSI AI studies in breast cancer
-- Lee, G., Lee, J., Kwak, T. Y., Kim, S. W., Kwon, Y., Kim, C., & Chang, H. (2025). Assessing the risk of recurrence in early-stage breast cancer through H&E stained whole slide images. *Scientific Reports, 15*(1), 35069.
+- Lee, G., Lee, J., Kwak, T. Y., Kim, S. W., Kwon, Y., Kim, C., & Chang, H. (2025). Assessing the risk of recurrence in early-stage breast cancer through H&E stained whole slide images. *Scientific Reports, 15*(1), 35069. https://doi.org/10.1038/s41598-025-16679-x
 - Lee, J., Lee, G., Kwak, T. Y., Kim, S. W., Jin, M. S., Kim, C., & Chang, H. (2024). MurSS: A multi-resolution selective segmentation model for breast cancer. *Bioengineering, 11*(5), 463.
 - Lee, G., Kim, C., Kwak, T. Y., Kim, S. W., & Chang, H. (2023). Predicting protein receptor status from H&E-stained images in breast cancer. *Cancer Research, 83*(7_Supplement), 5404.
 
@@ -269,7 +269,7 @@ Markers `[CITE-I1]`–`[CITE-I9]` in the text resolve here. Every entry was chec
 - Lee, J., Lee, G., Kwak, T. Y., Kim, S. W., & Chang, H. (2022). A deep learning based pancreatic adenocarcinoma survival prediction model applicable to adenocarcinoma of other organs. *Cancer Research, 82*(12_Supplement), 5060.
 
 **[CITE-I6]** Knowledge distillation and pathology foundation models improving performance
-- Cho, Y., Lee, S., Lee, G., Lee, M., Park, J., & Shin, D. (2026). G2L: From giga-scale to cancer-specific large-scale pathology foundation models via knowledge distillation. *Proceedings of the AAAI Conference on Artificial Intelligence*. (arXiv:2510.11176)
+- Cho, Y., Lee, S., Lee, G., Lee, M., Park, J., & Shin, D. (2026). G2L: From giga-scale to cancer-specific large-scale pathology foundation models via knowledge distillation. *AAAI 2026 Workshop (W3PHIAI)* [oral]. https://arxiv.org/abs/2510.11176
 - Kim, H., Kwak, T. Y., Chang, H., Kim, S. W., & Kim, I. (2023). RCKD: Response-based cross-task knowledge distillation for pathological image analysis. *Bioengineering, 10*(11), 1279.
 - Chen, R. J., Ding, T., Lu, M. Y., Williamson, D. F. K., Jaume, G., Song, A. H., ... & Mahmood, F. (2024). Towards a general-purpose foundation model for computational pathology. *Nature Medicine, 30*(3), 850–862. https://doi.org/10.1038/s41591-024-02857-3
 
@@ -304,4 +304,4 @@ Markers `[CITE-I1]`–`[CITE-I9]` in the text resolve here. Every entry was chec
 
 **카운슬 판정 기록 (codex 집필 → agy 적대검토 → codex 반박 1회 → Claude 정리).** 초안의 I10–I20 표식 11개 중 7개를 삭제했다. 사유는 전부 동일 — **우리 논문 자신의 주장·설계·결과·기여에 인용을 붙인 것**이다. 특히 (a) 논지 문장 "But being predictable does not mean..." 에 선행연구를 걸면 4문단 뒤 기여 주장("다른 질문의 정립")과 자기모순이 된다. (b) 염색정규화·conformal 문헌을 기여 목록에 붙인 것은 인용 채우기였다. (c) 사전등록 근거로 leakage·site-batch 문헌을 든 것은 논거가 다르다.
 남은 자리가 4개뿐인 것은 Introduction ¶2–¶5 가 대부분 우리 프레임 설명이기 때문이다. **인용 밀도는 Methods(현재 0개)와 Results(현재 2개)에서 확보해야 한다.**
-⚠️ **To complete before submission.** Author lists are complete as of 2026-08-31. Three publication details remain unconfirmed: volume/issue/pages for Paik 2025, AAAI publication details for G2L 2026, and the final venue for Cho 2026 (prostate).
+⚠️ **To complete before submission.** Author lists are complete as of 2026-08-31. One detail remains unconfirmed: volume/issue/pages for Paik 2025 (Prostate International, PII S2287888225000066; publisher page not reachable). G2L 2026 was corrected to an AAAI 2026 **workshop** (W3PHIAI, oral), not the main conference. Cho 2026 (prostate) is still an arXiv preprint; update when a final venue is set.

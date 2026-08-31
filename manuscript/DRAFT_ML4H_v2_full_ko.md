@@ -260,10 +260,10 @@ CLAM-SB attention MIL을 사용하였다(hidden 512·attention 256, 40–50 epoc
 
 **[CITE-I3]** 비뇨기암(전립선·방광) H&E AI 연구
 - Paik, I., Lee, G., Lee, J., Kwak, T. Y., & Ha, H. K. (2025). Artificial intelligence–driven digital pathology in urological cancers: Current trends and future directions. *Prostate International*.
-- Cho, Y., Shin, D., Hong, S., Lee, J., Park, S., Lee, G., ... & Ha, H. K. (2026). Efficient AI-driven multi-section whole slide image analysis for biochemical recurrence prediction in prostate cancer. *arXiv*. https://arxiv.org/abs/2603.20273
+- Cho, Y., Shin, D., Hong, S., Lee, J., Park, S., Lee, G., ... & Ha, H. K. (2026). Efficient AI-driven multi-section whole slide image analysis for biochemical recurrence prediction in prostate cancer. *arXiv preprint* arXiv:2603.20273. https://arxiv.org/abs/2603.20273
 
 **[CITE-I4]** 유방암 H&E WSI AI 연구
-- Lee, G., Lee, J., Kwak, T. Y., Kim, S. W., Kwon, Y., Kim, C., & Chang, H. (2025). Assessing the risk of recurrence in early-stage breast cancer through H&E stained whole slide images. *Scientific Reports, 15*(1), 35069.
+- Lee, G., Lee, J., Kwak, T. Y., Kim, S. W., Kwon, Y., Kim, C., & Chang, H. (2025). Assessing the risk of recurrence in early-stage breast cancer through H&E stained whole slide images. *Scientific Reports, 15*(1), 35069. https://doi.org/10.1038/s41598-025-16679-x
 - Lee, J., Lee, G., Kwak, T. Y., Kim, S. W., Jin, M. S., Kim, C., & Chang, H. (2024). MurSS: A multi-resolution selective segmentation model for breast cancer. *Bioengineering, 11*(5), 463.
 - Lee, G., Kim, C., Kwak, T. Y., Kim, S. W., & Chang, H. (2023). Predicting protein receptor status from H&E-stained images in breast cancer. *Cancer Research, 83*(7_Supplement), 5404.
 
@@ -271,7 +271,7 @@ CLAM-SB attention MIL을 사용하였다(hidden 512·attention 256, 40–50 epoc
 - Lee, J., Lee, G., Kwak, T. Y., Kim, S. W., & Chang, H. (2022). A deep learning based pancreatic adenocarcinoma survival prediction model applicable to adenocarcinoma of other organs. *Cancer Research, 82*(12_Supplement), 5060.
 
 **[CITE-I6]** 지식 증류·병리 파운데이션 모델이 성능을 끌어올림
-- Cho, Y., Lee, S., Lee, G., Lee, M., Park, J., & Shin, D. (2026). G2L: From giga-scale to cancer-specific large-scale pathology foundation models via knowledge distillation. *Proceedings of the AAAI Conference on Artificial Intelligence*. (arXiv:2510.11176)
+- Cho, Y., Lee, S., Lee, G., Lee, M., Park, J., & Shin, D. (2026). G2L: From giga-scale to cancer-specific large-scale pathology foundation models via knowledge distillation. *AAAI 2026 Workshop (W3PHIAI)* [oral]. https://arxiv.org/abs/2510.11176
 - Kim, H., Kwak, T. Y., Chang, H., Kim, S. W., & Kim, I. (2023). RCKD: Response-based cross-task knowledge distillation for pathological image analysis. *Bioengineering, 10*(11), 1279.
 - Chen, R. J., Ding, T., Lu, M. Y., Williamson, D. F. K., Jaume, G., Song, A. H., ... & Mahmood, F. (2024). Towards a general-purpose foundation model for computational pathology. *Nature Medicine, 30*(3), 850–862. https://doi.org/10.1038/s41591-024-02857-3
 
@@ -308,5 +308,5 @@ CLAM-SB attention MIL을 사용하였다(hidden 512·attention 256, 40–50 epoc
 남은 자리가 4개뿐인 것은 Introduction ¶2–¶5 가 대부분 우리 프레임 설명이기 때문이다. **인용 밀도는 Methods(현재 0개)와 Results(현재 2개)에서 확보한다.**
 
 **추가 확보 — ① 임상 의사결정 손실은 해결(I10, Vickers 계열 3편 신규 등재).** 남은 2종은 이번 Introduction 에서 해당 마커를 삭제해 당장은 불필요하나, 사전등록 근거나 검정력·다중성 주장을 본문에 다시 세울 경우 ② 사전등록·registered report 방법론 ③ 통계적 검정력·다중성 통제 문헌이 필요하다.
-⚠️ **제출 전 보완.** 저자 목록은 전건 완료(2026-08-31). 남은 미확정은 게재정보 3건 — `paik-2025` 권·호·페이지, `cho-2026-g2l` AAAI 게재연도·페이지, `cho-2026-prostate-br` 최종 게재처. 모두 주저자 확인 대상이다.
+⚠️ **제출 전 보완.** 저자 목록 전건 완료(2026-08-31). 남은 미확정 1건 — `paik-2025` 의 권·호·페이지(Prostate International, PII S2287888225000066; 출판사 페이지 접근 불가). `cho-2026-g2l` 은 AAAI **본회의가 아니라 2026 워크숍(W3PHIAI) 구두발표**로 확인해 정정했다(주저자 사이트). `cho-2026-prostate-br` 은 현재도 arXiv 프리프린트로, 최종 게재처가 정해지면 갱신한다.
 `I7` 실측 근거: IHC 바이오마커 분석 **환자당 US\$67.33**(전체 진단비 \$138.29의 48.7%) · HER2 IHC 재검 평균 **TAT 15.65일**(관행 워크플로 기준). 본문에 수치를 넣을지는 주저자 판단.
