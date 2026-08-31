@@ -8,7 +8,7 @@
 
 | 상태 | 문헌 | 연도 | venue | 제목 |
 |---|---|---|---|---|
-| **DEEP** | tafavvoghi-2024-jpi | 2024 | Journal of Pathology Informa | Deep learning-based classification of breast cancer  |
+| **DEEP** | tafavvoghi-2024-jpi | 2025 | J Pathol Inform 16:100410 | Deep learning-based classification of breast cancer molecular subtypes from H&E whole-slide images ⚠️slug는 2024이나 게재는 2025 |
 | brief | shamai-2024-commsmed | 2024 | Communications Medicine | Clinical utility of receptor status prediction and m |
 | brief | farahmand-2022-modpathol | 2022 | Modern Pathology | Deep learning trained on H&E tumor ROIs predicts HER |
 | brief | gamble-2021-commsmed | 2021 | Communications Medicine | Determining breast cancer biomarker status and assoc |

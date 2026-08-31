@@ -251,8 +251,6 @@ CLAM-SB attention MIL을 사용하였다(hidden 512·attention 256, 40–50 epoc
 
 본문 표식 `[CITE-I1]`–`[CITE-I13]` 에 대응한다. 아래 서지는 원문 또는 출판사 페이지에서 대조했으며 추정 기입은 없다.
 
-⚠️ `[CITE-I11]`–`[CITE-I13]` 은 아직 저장소 slug 로만 적혀 있다. APA 서지를 작성·대조하지 않았다.
-
 **[CITE-I1]** 디지털 병리·computer-aided pathology 의 확산
 - Nam, S., Chong, Y., Jung, C. K., Kwak, T. Y., Lee, J. Y., Park, J., ... & Go, H. (2020). Introduction to digital pathology and computer-aided pathology. *Journal of Pathology and Translational Medicine, 54*(2), 125–134.
 
@@ -298,13 +296,20 @@ CLAM-SB attention MIL을 사용하였다(hidden 512·attention 256, 40–50 epoc
 - Van Calster, B., Collins, G. S., Vickers, A. J., Wynants, L., Kerr, K. F., Barreñada, L., ... & Steyerberg, E. W. (2025). Evaluation of performance measures in predictive artificial intelligence models to support medical decisions: Overview and guidance. *The Lancet Digital Health, 7*(12), 100916.
 
 **[CITE-I11]** 바이오마커가 진단·예후·표적치료 결정을 각각 다르게 가르므로, 오류의 결과는 하류 결정에 달려 있다
-- `zhou-2024-tumor-biomarkers` · `chakravarty-2017-oncokb` · `griffith-2017-civic`
+- Zhou, Y., Tao, L., Qiu, J., Xu, J., Yang, X., Zhang, Y., Tian, X., Guan, X., Cen, X., & Zhao, Y. (2024). Tumor biomarkers for diagnosis, prognosis and targeted therapy. *Signal Transduction and Targeted Therapy, 9*, 132. (= [CITE-I8])
+- Chakravarty, D., Gao, J., Phillips, S., Kundra, R., Zhang, H., Wang, J., ... & Schultz, N. (2017). OncoKB: A precision oncology knowledge base. *JCO Precision Oncology, 1*, 1–16.
+- Griffith, M., Spies, N. C., Krysiak, K., McMichael, J. F., Coffman, A. C., Danos, A. M., ... & Griffith, O. L. (2017). CIViC is a community knowledgebase for expert crowdsourcing the clinical interpretation of variants in cancer. *Nature Genetics, 49*(2), 170–174.
 
 **[CITE-I12]** 선행 단일코호트·유방 중심 H&E 연구 (수용체·아형·바이오마커 예측)
-- `tafavvoghi-2024-jpi` · `farahmand-2022-modpathol` · `gamble-2021-commsmed` · `naik-2020-natcommun` · `couture-2018-npjbc` · `fernandez-romero-2026-domaingen` (프로젝트가 기록한 최근접 스쿱)
+- Tafavvoghi, M., Sildnes, A., Rakaee, M., Shvetsov, N., Bongo, L. A., Busund, L. T. R., & Møllersen, K. (2025). Deep learning-based classification of breast cancer molecular subtypes from H&E whole-slide images. *Journal of Pathology Informatics, 16*, 100410.
+- Farahmand, S., Fernandez, A. I., Ahmed, F. S., Rimm, D. L., Chuang, J. H., Reisenbichler, E., & Zarringhalam, K. (2022). Deep learning trained on hematoxylin and eosin tumor region of interest predicts HER2 status and trastuzumab treatment response in HER2+ breast cancer. *Modern Pathology, 35*(1), 44–51.
+- Gamble, P., Jaroensri, R., Wang, H., Tan, F., Moran, M., Brown, T., ... & Chen, P. H. C. (2021). Determining breast cancer biomarker status and associated morphological features using deep learning. *Communications Medicine, 1*(1), 14.
+- Couture, H. D., Williams, L. A., Geradts, J., Nyante, S. J., Butler, E. N., Marron, J. S., ... & Niethammer, M. (2018). Image analysis with deep learning to predict breast cancer grade, ER status, histologic subtype, and intrinsic subtype. *npj Breast Cancer, 4*(1), 30.
+- Naik, N., Madani, A., Esteva, A., Keskar, N. S., Press, M. F., Ruderman, D., ... & Socher, R. (2020). Deep learning-enabled breast cancer hormonal receptor status determination from base-level H&E stains. *Nature Communications, 11*(1), 5727. (= [CITE-I9])
+- ⚠️ `fernandez-romero-2026-domaingen` — **서지 미확정.** 저장소에 요약형(Domain generalisation…FM, Med Biol Eng Comput 64)으로만 기록돼 있다. 프로젝트가 지목한 **최근접 스쿱**이므로 정확한 서지가 필요하다.
 
 **[CITE-I13]** 선행 조직영상 기반 약물감수성 예측
-- `dawood-2024-hids`
+- Dawood, M., Vu, Q. D., Young, L. S., Branson, K., Jones, L., Rajpoot, N., & Minhas, F. U. A. A. (2024). Cancer drug sensitivity prediction from routine histology images. *npj Precision Oncology, 8*(1), 5.
 
 **카운슬 판정 기록 (codex 집필 → agy 적대검토 → codex 반박 1회 → Claude 정리).** 초안이 ¶2–¶5 에 단 마커 11개 중 7개를 삭제했다. 사유는 전부 동일 — **우리 논문 자신의 주장·설계·결과·기여에 인용을 붙인 것**이다. (a) 논지 문장 "그러나 예측된다는 것이 곧 …" 에 선행연구를 걸면 4문단 뒤 기여 주장("다른 질문의 정립")과 자기모순이 된다. (b) 염색정규화·conformal 문헌을 기여 목록에 붙인 것은 인용 채우기다. (c) 사전등록 근거로 leakage·site-batch 문헌을 든 것은 논거가 다르다.
 남은 자리가 4개뿐인 것은 Introduction ¶2–¶5 가 대부분 우리 프레임 설명이기 때문이다. **인용 밀도는 Methods(현재 0개)와 Results(현재 2개)에서 확보한다.**

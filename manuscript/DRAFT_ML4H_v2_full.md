@@ -249,8 +249,6 @@ Markers `[CITE-Ix]` in the text resolve here. This section grows section by sect
 
 Markers `[CITE-I1]`–`[CITE-I13]`. Every entry below was checked against the source or publisher page; nothing is entered from memory.
 
-⚠️ `[CITE-I11]`–`[CITE-I13]` are still listed by repository slug, not APA. Their APA entries have not been written or verified yet.
-
 **[CITE-I1]** Spread of digital pathology and computer-aided pathology
 - Nam, S., Chong, Y., Jung, C. K., Kwak, T. Y., Lee, J. Y., Park, J., ... & Go, H. (2020). Introduction to digital pathology and computer-aided pathology. *Journal of Pathology and Translational Medicine, 54*(2), 125–134.
 
@@ -296,13 +294,20 @@ Markers `[CITE-I1]`–`[CITE-I13]`. Every entry below was checked against the so
 - Van Calster, B., Collins, G. S., Vickers, A. J., Wynants, L., Kerr, K. F., Barreñada, L., ... & Steyerberg, E. W. (2025). Evaluation of performance measures in predictive artificial intelligence models to support medical decisions: Overview and guidance. *The Lancet Digital Health, 7*(12), 100916.
 
 **[CITE-I11]** Biomarkers guide different diagnostic, prognostic and targeted-treatment decisions, so the consequence of an error depends on the downstream decision
-- `zhou-2024-tumor-biomarkers` · `chakravarty-2017-oncokb` · `griffith-2017-civic`
+- Zhou, Y., Tao, L., Qiu, J., Xu, J., Yang, X., Zhang, Y., Tian, X., Guan, X., Cen, X., & Zhao, Y. (2024). Tumor biomarkers for diagnosis, prognosis and targeted therapy. *Signal Transduction and Targeted Therapy, 9*, 132. (= [CITE-I8])
+- Chakravarty, D., Gao, J., Phillips, S., Kundra, R., Zhang, H., Wang, J., ... & Schultz, N. (2017). OncoKB: A precision oncology knowledge base. *JCO Precision Oncology, 1*, 1–16.
+- Griffith, M., Spies, N. C., Krysiak, K., McMichael, J. F., Coffman, A. C., Danos, A. M., ... & Griffith, O. L. (2017). CIViC is a community knowledgebase for expert crowdsourcing the clinical interpretation of variants in cancer. *Nature Genetics, 49*(2), 170–174.
 
 **[CITE-I12]** Prior single-cohort or breast-focused H&E studies predicting receptor status, subtype or biomarkers
-- `tafavvoghi-2024-jpi` · `farahmand-2022-modpathol` · `gamble-2021-commsmed` · `naik-2020-natcommun` · `couture-2018-npjbc` · `fernandez-romero-2026-domaingen` (프로젝트가 기록한 최근접 스쿱)
+- Tafavvoghi, M., Sildnes, A., Rakaee, M., Shvetsov, N., Bongo, L. A., Busund, L. T. R., & Møllersen, K. (2025). Deep learning-based classification of breast cancer molecular subtypes from H&E whole-slide images. *Journal of Pathology Informatics, 16*, 100410.
+- Farahmand, S., Fernandez, A. I., Ahmed, F. S., Rimm, D. L., Chuang, J. H., Reisenbichler, E., & Zarringhalam, K. (2022). Deep learning trained on hematoxylin and eosin tumor region of interest predicts HER2 status and trastuzumab treatment response in HER2+ breast cancer. *Modern Pathology, 35*(1), 44–51.
+- Gamble, P., Jaroensri, R., Wang, H., Tan, F., Moran, M., Brown, T., ... & Chen, P. H. C. (2021). Determining breast cancer biomarker status and associated morphological features using deep learning. *Communications Medicine, 1*(1), 14.
+- Couture, H. D., Williams, L. A., Geradts, J., Nyante, S. J., Butler, E. N., Marron, J. S., ... & Niethammer, M. (2018). Image analysis with deep learning to predict breast cancer grade, ER status, histologic subtype, and intrinsic subtype. *npj Breast Cancer, 4*(1), 30.
+- Naik, N., Madani, A., Esteva, A., Keskar, N. S., Press, M. F., Ruderman, D., ... & Socher, R. (2020). Deep learning-enabled breast cancer hormonal receptor status determination from base-level H&E stains. *Nature Communications, 11*(1), 5727. (= [CITE-I9])
+- ⚠️ `fernandez-romero-2026-domaingen` — **서지 미확정.** 저장소에 요약형(Domain generalisation…FM, Med Biol Eng Comput 64)으로만 기록돼 있다. 프로젝트가 지목한 **최근접 스쿱**이므로 정확한 서지가 필요하다.
 
 **[CITE-I13]** Prior histology-based work framing the task as drug-sensitivity prediction
-- `dawood-2024-hids`
+- Dawood, M., Vu, Q. D., Young, L. S., Branson, K., Jones, L., Rajpoot, N., & Minhas, F. U. A. A. (2024). Cancer drug sensitivity prediction from routine histology images. *npj Precision Oncology, 8*(1), 5.
 
 **카운슬 판정 기록 (codex 집필 → agy 적대검토 → codex 반박 1회 → Claude 정리).** 초안의 I10–I20 표식 11개 중 7개를 삭제했다. 사유는 전부 동일 — **우리 논문 자신의 주장·설계·결과·기여에 인용을 붙인 것**이다. 특히 (a) 논지 문장 "But being predictable does not mean..." 에 선행연구를 걸면 4문단 뒤 기여 주장("다른 질문의 정립")과 자기모순이 된다. (b) 염색정규화·conformal 문헌을 기여 목록에 붙인 것은 인용 채우기였다. (c) 사전등록 근거로 leakage·site-batch 문헌을 든 것은 논거가 다르다.
 남은 자리가 4개뿐인 것은 Introduction ¶2–¶5 가 대부분 우리 프레임 설명이기 때문이다. **인용 밀도는 Methods(현재 0개)와 Results(현재 2개)에서 확보해야 한다.**
