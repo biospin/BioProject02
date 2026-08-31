@@ -282,10 +282,10 @@ Markers `[CITE-I1]`–`[CITE-I9]` in the text resolve here. Every entry was chec
 
 **[CITE-I9]** Repeated demonstrations that molecular state can be predicted from H&E
 - Coudray, N., Ocampo, P. S., Sakellaropoulos, T., Narula, N., Snuderl, M., Fenyö, D., Moreira, A. L., Razavian, N., & Tsirigos, A. (2018). Classification and mutation prediction from non–small cell lung cancer histopathology images using deep learning. *Nature Medicine, 24*(10), 1559–1567. https://doi.org/10.1038/s41591-018-0177-5
-- Kather, J. N., Pearson, A. T., Halama, N., Jäger, D., Krause, J., Loosen, S. H., et al. (2019). Deep learning can predict microsatellite instability directly from histology in gastrointestinal cancer. *Nature Medicine, 25*(7), 1054–1056. https://doi.org/10.1038/s41591-019-0462-y
-- Kather, J. N., Heij, L. R., Grabsch, H. I., Loeffler, C., Echle, A., Muti, H. S., et al. (2020). Pan-cancer image-based detection of clinically actionable genetic alterations. *Nature Cancer, 1*(8), 789–799. https://doi.org/10.1038/s43018-020-0087-6
-- Naik, N., Madani, A., Esteva, A., et al. (2020). Deep learning-enabled breast cancer hormonal receptor status determination from base-level H&E stains. *Nature Communications, 11*, 5727. https://doi.org/10.1038/s41467-020-19334-3
-- Schmauch, B., Romagnoni, A., Pronier, E., et al. (2020). A deep learning model to predict RNA-Seq expression of tumours from whole slide images. *Nature Communications, 11*, 3877. https://doi.org/10.1038/s41467-020-17678-4
+- Kather, J. N., Pearson, A. T., Halama, N., Jäger, D., Krause, J., Loosen, S. H., ... & Luedde, T. (2019). Deep learning can predict microsatellite instability directly from histology in gastrointestinal cancer. *Nature Medicine, 25*(7), 1054–1056. https://doi.org/10.1038/s41591-019-0462-y
+- Kather, J. N., Heij, L. R., Grabsch, H. I., Loeffler, C., Echle, A., Muti, H. S., ... & Luedde, T. (2020). Pan-cancer image-based detection of clinically actionable genetic alterations. *Nature Cancer, 1*(8), 789–799. https://doi.org/10.1038/s43018-020-0087-6
+- Naik, N., Madani, A., Esteva, A., Keskar, N. S., Press, M. F., Ruderman, D., ... & Socher, R. (2020). Deep learning-enabled breast cancer hormonal receptor status determination from base-level H&E stains. *Nature Communications, 11*(1), 5727. https://doi.org/10.1038/s41467-020-19334-3
+- Schmauch, B., Romagnoni, A., Pronier, E., Saillard, C., Maillé, P., Calderaro, J., ... & Wainrib, G. (2020). A deep learning model to predict RNA-Seq expression of tumours from whole slide images. *Nature Communications, 11*(1), 3877. https://doi.org/10.1038/s41467-020-17678-4
 
 
 **[CITE-I10]** Clinical decision loss of substituting a molecular test — performance alone does not establish clinical acceptability
