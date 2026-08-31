@@ -4,7 +4,7 @@
 > 자동생성(paper-info.yaml 기준) + 갭(인용됐으나 미분석)은 §마지막. 최종갱신 2026-07-17.
 
 
-## §Intro/Related — H&E→분자 예측(선행·스쿱)  (phenotype-prediction, 18편)
+## §Intro/Related — H&E→분자 예측(선행·스쿱)  (phenotype-prediction, 20편)
 
 | 상태 | 문헌 | 연도 | venue | 제목 |
 |---|---|---|---|---|
@@ -26,6 +26,8 @@
 | brief | cho-2026-prostate-br | 2026 | arXiv 2603.20273 | Efficient AI-Driven Multi-Section WSI Analysis for B |
 | brief | lee-2023-receptor-status | 2023 | Cancer Res 83(7_Suppl) AACR | Predicting protein receptor status from H&E-stained  |
 | brief | lee-2022-pdac-survival | 2022 | Cancer Res 82(12_Suppl) AACR | A deep learning based pancreatic adenocarcinoma surv |
+| brief | nam-2020-digitalpath-intro | 2020 | J Pathol Transl Med | Introduction to digital pathology and computer-aided |
+| brief | kim-2023-rckd | 2023 | Bioengineering | RCKD: Response-based cross-task knowledge distillati |
 
 ## §Related/Paper B — H&E→약물·cell-line  (morphology-drug, 9편)
 
