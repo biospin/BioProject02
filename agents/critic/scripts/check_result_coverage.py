@@ -42,6 +42,10 @@ SKIP_NAME_RE = re.compile(
     r"(config|manifest|queue|shard|DONE|watchdog|split_policy|registry\.jsonl)", re.I
 )
 
+# EXCLUDED.md 에서 '제외 확정'으로 인정할 태그. 이 태그가 붙은 줄에 경로가
+# 적혀 있어야만 제외로 센다.
+EXCLUDED_TAG = "[제외확정]"
+
 # 대표 수치로 쓸 키 (성능 지표)
 METRIC_KEYS = (
     "auc", "auroc", "ext_auc", "ext_auprc", "auprc",
@@ -164,11 +168,19 @@ def classify(art: Path, root: Path, manu: str, excluded: str) -> dict:
         else:
             misses.append(f"{key}={val:g}")
 
+    # 제외 인정은 `[제외확정]` 태그가 붙은 줄에서만. 태그를 요구하지 않으면
+    # EXCLUDED.md 에 '반영 예정'으로 적어 둔 항목까지 제외로 읽혀, 이 게이트가
+    # 스스로를 무력화한다.
     exc_hit = None
     if excluded:
-        for token in (rel, parent):
-            if specific(token) and token in excluded:
-                exc_hit = token
+        for line in excluded.splitlines():
+            if EXCLUDED_TAG not in line:
+                continue
+            for token in (rel, parent):
+                if specific(token) and token in line:
+                    exc_hit = token
+                    break
+            if exc_hit:
                 break
 
     if path_hit and not misses:
