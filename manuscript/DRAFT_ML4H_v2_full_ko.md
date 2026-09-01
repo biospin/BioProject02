@@ -56,11 +56,11 @@
 
 | 암종 | 축 | 역할 | AUROC [95% CI] | 홀드아웃 n_pos / 대조 기준선 | 형태학적 상관물 | 판정 |
 |---|---|---|---|---|---|---|
-| 두경부 | HPV | 가시축(바이러스) | 0.959 [0.921–0.986] | 양성 26 | 있음(비각화·basaloid) | **단일 FM·site-disjoint 확증**(모델 무관성·site 교란 미검증) † |
+| 두경부 | HPV | 가시축(바이러스) | 0.959 [0.921–0.986] | 양성 26 | 있음(비각화·basaloid) | **단일 FM·site-disjoint 확증**(모델 무관성·site 교란 미검증) † § |
 | 폐 | LUSC 조직형 | 양성대조 | 0.939 [0.905–0.967] | 양성 153 | 형태 그 자체 | 통과 ‡ |
 | 두경부 | grade | 양성대조 | 0.815 [0.742–0.882] | 양성 41 | 있음 | 통과 |
 | 대장 | BRAF V600E | 회고적 | 0.882 [0.817–0.938] | 양성 15 | 있음(serrated/MSI 동반) | 부합·회고적·검정력부족·탐색(확증 집계 제외) |
-| 위 | MSI-H | 가시축 | 0.860 (개발 0.899) | 양성 24 | 있음(면역) | 미결(1명 부족) |
+| 위 | MSI-H | 가시축 | 0.860 (개발 0.899) | 양성 24 | 있음(면역) | 미결(1명 부족) § |
 | 폐 | EGFR 활성변이 | 등급적 | 0.852 | 양성 15 | 부분 | 미결 |
 | 폐 | KRAS-G12C | 필수축 | 0.681 (subtype-only 0.793) | 양성 14 | 없음(조직형 편중) | 미결 |
 | 위 | ERBB2 증폭 | 필수축(유방 복제) | 0.644 (shuffle 0.641) | 양성 14 | 없음 | 검정력부족·관찰 신호 없음 |
@@ -71,6 +71,7 @@
 
 † HPV 견고성은 3개 파운데이션 모델 중 2개(UNI·UNI2-h)에서만 5-seed 우연배제를 통과했고 Virchow2에서는 사전 기준을 통과하지 못하였다(real 0.9199 < 임계 0.9234, 마진 −0.0035 — 이는 셔플 null 산포가 넓은 것이며 신호 부재가 아니다; R5 참조). <!-- src: experiments/crosscancer/MULTIFM_COMPARISON.md §5; CROSSCHECK_5SEED_MULTIFM.md HPV/virchow2 row --> 또한 site 감사에서 site-label 구조화가 관찰되었다(Cramér's V = 0.378). HPV는 지도 한쪽 끝을 고정한 유일한 검정력 앵커일 뿐 법칙 일반화나 모델 무관 확증이 아니다. <!-- src: experiments/kkkim/20260805_site_audit/site_audit_results.json -->
 ‡ 폐 조직형(양성대조)은 site 감사에서 V(site, label) = 1.000이었다 — TCGA-LUAD/LUSC의 기관코드가 조직형과 100% 일치해 형태 신호와 site 서명이 분리 불가하다. 양성대조를 해석하는 모든 곳에 이 한계를 명시한다. <!-- src: site_audit_results.json -->
+§ HPV·MSI-H 두 축은 타일 subsample 재표집에는 강건하였으나 **슬라이드 단위 재현성은 확보되지 않았다** — 동일 환자의 다중 슬라이드에서 예측이 갈린 사례가 있다(TCGA-QK-A6IF, 0.92 vs 0.001). 종양영역 한정(tumor-only) 기여도 또한 측정하지 않았다. 따라서 이 두 축에서 임상 대체를 주장하려면 (a) 다기관 전향검증, (b) 다중슬라이드 재현성, (c) 종양영역 기여 검증이 선행되어야 한다. <!-- src: BIOP02-141_FINDINGS.md; jamie sign-off 2026-08-14 -->
 
 ### R2. 우리 사전등록 분할에서는 변이축을 정할 수 없다 — 검정력 천장
 
@@ -181,10 +182,10 @@ Lauren diffuse는 원래 양성대조였다. 인환세포와 미만형은 강한
 ## 4. Methods
 
 ### M1. 코호트와 라벨
-유방암(TCGA-BRCA, 약 1,010 진단 슬라이드)[CITE-M1]을 앵커로 삼고 폐·대장·위·두경부를 더한 다섯 암종을 다룬다. 각 코호트의 슬라이드 수는 결과 JSON에 실측되어 있다(대장 523, 폐 1,026, 위 439, 두경부 468). <!-- src: 03_methods.md M1 --> 라벨 출처와 환자 단위 split은 `agents/data/`에서 관리하며, 사전등록된 축 경계는 봉인 문서(`experiments/crosscancer/SUBSTITUTABILITY_LAW_PREREGISTRATION.md`)에 기록되어 있다. 유방 PAM50 endpoint의 경우 manifest 라벨(로컬/genefu, Parker 2009)과 cBioPortal PanCancer Atlas SUBTYPE 라벨은 중첩 환자의 57.0%에서 일치하고(514/902; 43.0% 불일치), cBioPortal 커버리지가 높으므로(97.2%) 로컬 라벨을 쓰기 위한 사전등록 fallback 조건(`split_policy_v0.md §10`)이 충족되지 않았으며, PAM50 라벨 출처의 정본 확정은 미결 정합 항목이다. <!-- src: pam50_source_reconcile_biop02-74.json -->
+유방암(TCGA-BRCA, 약 1,010 진단 슬라이드)[CITE-M1]을 앵커로 삼고 폐(TCGA-LUAD/LUSC)[CITE-M18]·대장(TCGA-COAD/READ)[CITE-M19]·위(TCGA-STAD)[CITE-M20]·두경부(TCGA-HNSC)[CITE-M21]를 더한 다섯 암종을 다룬다. 각 코호트의 슬라이드 수는 결과 JSON에 실측되어 있다(대장 523, 폐 1,026, 위 439, 두경부 468). <!-- src: 03_methods.md M1 --> 라벨 출처와 환자 단위 split은 `agents/data/`에서 관리하며, 사전등록된 축 경계는 봉인 문서(`experiments/crosscancer/SUBSTITUTABILITY_LAW_PREREGISTRATION.md`)에 기록되어 있다. 유방 PAM50 endpoint의 정본 라벨은 Parker 2009 nearest-centroid 계산본(`tcga_brca_pam50_computed.csv`)이다 — `split_policy_v0.md` §10.1(2026-08-20 Leader 결정). manifest 라벨(로컬/genefu[CITE-M22], Parker 2009)과 cBioPortal PanCancer Atlas SUBTYPE 라벨은 중첩 환자의 57.0%에서 일치한다(514/902; 43.0% 불일치). 이 불일치는 오류가 아니라 분류 파생 경로의 차이이며(혼동쌍 LumB↔LumA 141 + Normal↔LumA 101 = 불일치의 62%), 투명하게 보고한다. <!-- src: pam50_source_reconcile_biop02-74.json -->
 
 ### M2. 타일링·임베딩
-각 whole-slide image는 20× 배율에서 256×256 픽셀 타일로 분할하고, 조직 영역은 Otsu 임계[CITE-M4]로 배경과 분리하며, 환자당 최대 5,000 타일로 상한을 두었다. 헤드라인 임베딩은 UNI v1(1024차원)[CITE-M5]이며, 모델 비의존성 검정을 위해 동일 좌표에 Virchow2[CITE-M6](2560차원, CLS 토큰과 mean patch 토큰 결합, register 토큰 제외)와 UNI2-h(1536차원)로도 재추출하였다. 슬라이드 단위 EXAONE Path 2.0[CITE-M7] 인터페이스는 좌표 기반 파이프라인과 비호환이라 견고성 세트에서 제외하였다. 타일은 224×224로 리사이즈하고 ImageNet 통계[CITE-M8]로 채널 정규화하였다. H&E 염색 정규화는 주 파이프라인에 적용하지 않았다. 미보정 염색 변이는 병리 영상에서 알려진 도메인 시프트 원인이므로[CITE-M17], 한계로 기록하고 M10 견고성 점검으로 별도 검증한다. <!-- src: 03_methods.md M2 -->
+각 whole-slide image는 20× 배율에서 256×256 픽셀 타일로 분할하고, 조직 영역은 Otsu 임계[CITE-M4]로 배경과 분리하며, 환자당 최대 5,000 타일로 상한을 두었다. 헤드라인 임베딩은 UNI v1(1024차원)[CITE-M5]이며, 모델 비의존성 검정을 위해 동일 좌표에 Virchow2[CITE-M6](2560차원, CLS 토큰과 mean patch 토큰 결합, register 토큰 제외)와 UNI2-h(1536차원)[CITE-M23]로도 재추출하였다. 슬라이드 단위 EXAONE Path 2.0[CITE-M7] 인터페이스는 좌표 기반 파이프라인과 비호환이라 견고성 세트에서 제외하였다. 타일은 224×224로 리사이즈하고 ImageNet 통계[CITE-M8]로 채널 정규화하였다. H&E 염색 정규화는 주 파이프라인에 적용하지 않았다. 미보정 염색 변이는 병리 영상에서 알려진 도메인 시프트 원인이므로[CITE-M17], 한계로 기록하고 M10 견고성 점검으로 별도 검증한다. <!-- src: 03_methods.md M2 -->
 
 ### M3. 모델·학습
 CLAM-SB attention MIL[CITE-M9]을 사용하였다(hidden 512·attention 256, 40–50 epoch, 시드 42 고정). 예측은 슬라이드 단위로 산출한 뒤 환자 단위로 집계하였다. <!-- src: 03_methods.md M3; experiments/crosscancer/run_mil_cost.py -->
@@ -199,7 +200,7 @@ CLAM-SB attention MIL[CITE-M9]을 사용하였다(hidden 512·attention 256, 40�
 판정 임계는 슬라이드나 관찰값이 아니라 봉인된 사전등록 문서에서만 인용한다. 검정력 규칙(양성 25 미만 → 탐색적 → INCONCLUSIVE)은 결과를 본 뒤 옮기지 않으며 확증과 반증에 대칭으로 적용한다. 모든 산출은 `hypothesis_only`이고 후향적이다. <!-- src: 03_methods.md M6 -->
 
 ### M7. Yale 앵커 (잠정, Critic 대기)
-항HER2 축 점수를 frozen-transfer(앵커 모델을 추가 학습 없이 적용)로 산출하고 Yale 코호트의 pCR을 층화해 AUROC와 부트스트랩 95% 신뢰구간을 구한 뒤 측정 HER2 확률 기준선과 DeLong 검정으로 비교하였다. 사전 비교기준은 Farahmand 등[CITE-M13]의 기준(0.80, 95% CI 0.69–0.88)에 근접·중첩하는 것으로 정의하였다. 잠정 결과는 AUROC 0.533 (95% CI 0.411–0.653)이다. 항HER2 축은 H&E-예측 표현형으로 pCR을 층화하지 못했고, 이는 지도의 HER2 음성과 방향적으로 일관된다. 이 값은 잠정이므로 Abstract나 헤드라인 주장으로 옮기지 않는다. <!-- src: 02_results.md R6 (0.533 [0.411–0.653]); status pending per task instruction -->
+항HER2 축 점수를 frozen-transfer(앵커 모델을 추가 학습 없이 적용)로 산출하고 Yale 코호트[CITE-M25]의 pCR을 층화해 AUROC와 부트스트랩 95% 신뢰구간을 구한 뒤 측정 HER2 확률 기준선과 DeLong 검정으로 비교하였다. 사전 비교기준은 Farahmand 등[CITE-M13]의 기준(0.80, 95% CI 0.69–0.88)에 근접·중첩하는 것으로 정의하였다. 잠정 결과는 AUROC 0.533 (95% CI 0.411–0.653)이다. 항HER2 축은 H&E-예측 표현형으로 pCR을 층화하지 못했고, 이는 지도의 HER2 음성과 방향적으로 일관된다. 이 값은 잠정이므로 Abstract나 헤드라인 주장으로 옮기지 않는다. <!-- src: 02_results.md R6 (0.533 [0.411–0.653]); status pending per task instruction -->
 
 ### M8. 다중 모델 견고성
 각 파운데이션 모델 임베딩 공간에서 파운데이션 모델 간 임베딩 공간은 서로 호환되지 않으므로[CITE-M14], 같은 층위의 비교가 되도록 각 공간에서 CLAM을 처음부터 다시 적합하였다. 판정 기준은 5-seed shuffle-null 우연배제(real AUROC > null 평균 + 2×표준편차, ddof = 1)이며 시드는 42·1·2·3·4를 사용하였다. 결정론은 동일 시드 재실행 2회로 확인하였다(대장 BRAF Virchow2 시드 42 = 0.8798 재현). 정본 결과는 `CROSSCHECK_5SEED_MULTIFM.md`와 `MULTIFM_COMPARISON.md`에 있다. sjpark이 커밋된 소스로부터 독립 재계산하였고(BIOP02-101, 교차검증 PASS), braveji의 최종 다중 FM Critic 서명은 진행 중이다. <!-- src: 03_methods.md M8; MULTIFM_COMPARISON.md header -->
@@ -208,7 +209,7 @@ CLAM-SB attention MIL[CITE-M9]을 사용하였다(hidden 512·attention 256, 40�
 각 endpoint에서 site-disjoint 분할이 라벨을 조직원천기관(TSS)과 교란하는지 정량화하였다. site와 label의 Cramér's V[CITE-M15]와 순열 p, train/test 유병률 시프트, test 양성의 site 집중도 순열검정을 산출하였다. 이는 교란의 필요조건을 보는 분석이며, 모델이 실제로 site를 사용하는지에 대한 최종 판정은 H&E로부터의 site 예측성과 leave-one-site-out 성능으로 한다. <!-- src: 03_methods.md M9; site_audit_results.json -->
 
 ### M10. 염색 정규화 견고성 (유방 앵커)
-앵커 결과가 미보정 H&E 염색 변이의 아티팩트인지 검정하기 위해, 유방 앵커 슬라이드에서 Macenko 염색 정규화[CITE-M16](torchstain 1.3.0, 고정된 조밀조직 참조 타일)로 임베딩을 재추출하고 같은 fold(`split_policy_v0`, fold hash 5995f29d3978b831)에서 ER·HER2·PAM50에 대해 CLAM을 재학습하였다. HER2 표현형 예측은 우연 수준에 머물렀고(AUROC 0.641), ER은 높게 유지(0.917), PAM50은 보존(0.740)되었으며, 앵커 순위 ER > PAM50 > HER2는 정규화 미적용 앵커 순서(표 R1: ER 0.901, PAM50 0.759, HER2 0.599)와 일치한다. 표현형 예측만 재실행했고 라우팅/비용 파이프라인은 재실행하지 않았으며, 염색 정규화 실행에는 shuffle-null을 계산하지 않았다. 이 견고성 점검은 유방 앵커에만 해당하며, 다암종 raw 슬라이드는 소실되어 염색 정규화 재추출은 보류한다. <!-- src: experiments/kkkim/20260819_stain_norm_robustness/RESUME.md; clam_rerun/sjpark/*/metrics.json (0.6408/0.9166/0.7396) -->
+앵커 결과가 미보정 H&E 염색 변이의 아티팩트인지 검정하기 위해, 유방 앵커 슬라이드에서 Macenko 염색 정규화[CITE-M16](torchstain 1.3.0[CITE-M24], 고정된 조밀조직 참조 타일)로 임베딩을 재추출하고 같은 fold(`split_policy_v0`, fold hash 5995f29d3978b831)에서 ER·HER2·PAM50에 대해 CLAM을 재학습하였다. HER2 표현형 예측은 우연 수준에 머물렀고(AUROC 0.641), ER은 높게 유지(0.917), PAM50은 보존(0.740)되었으며, 앵커 순위 ER > PAM50 > HER2는 정규화 미적용 앵커 순서(표 R1: ER 0.901, PAM50 0.759, HER2 0.599)와 일치한다. 표현형 예측만 재실행했고 라우팅/비용 파이프라인은 재실행하지 않았으며, 염색 정규화 실행에는 shuffle-null을 계산하지 않았다. 이 견고성 점검은 유방 앵커에만 해당하며, 다암종 raw 슬라이드는 소실되어 염색 정규화 재추출은 보류한다. <!-- src: experiments/kkkim/20260819_stain_norm_robustness/RESUME.md; clam_rerun/sjpark/*/metrics.json (0.6408/0.9166/0.7396) -->
 
 ---
 
@@ -231,7 +232,7 @@ CLAM-SB attention MIL[CITE-M9]을 사용하였다(hidden 512·attention 256, 40�
 
 ## 미결 항목과 게이트 (kkkim 검토용)
 
-- **저자 대면 메타데이터 미확정** — 저자/순서, 소속, corresponding author + 이메일, funding/acknowledgments(**프로젝트 README에 따라 GPU 제공처 Modulabs를 반드시 명시**), COI, ORCID. `<FILL: 팀 확정>`. 이것이 임계 경로다(BIOP02-114).
+- **저자 메타데이터 — 일부 확정(2026-08-27 회의, BIOP02-114).** 제1저자 = 김가경·이건규 공동(co-first), 교신저자 = 김가경·이건규 공동. Acknowledgements(Pseudo Lab·Modulabs)와 Funding(MSIT/NIPA)은 확정 문구로 반영 완료. **남은 것**: 일부 공저자 영문명·소속 미제출, ORCID, COI 선언, 박상준 Acknowledgement 포함 여부. `<FILL: 소속·ORCID·COI>`
 - **Yale(R6/M7)은 `critic_status: pending`** — 잠정, Abstract/헤드라인에서 제외; 본문 승격은 Critic 서명 후에만.
 - **20-seed HPV/Virchow2 플립 미채택** — braveji 대기(BIOP02-123)로 상태는 "3개 중 2개 모델" 유지.
 - **PAM50 라벨 출처** — cBioPortal과 57.0% 일치; fallback 조건 미충족(커버리지 97.2%). 정본 라벨 출처는 Methods 미결 정합 항목(BIOP02-74).
@@ -240,6 +241,28 @@ CLAM-SB attention MIL[CITE-M9]을 사용하였다(hidden 512·attention 256, 40�
 - **인용**은 `agents/critic/scripts/verify_citations.py`로 기계 검증하기 전까지 잠정(대괄호)이다.
 - ~~**Venue** — npj Precision Oncology vs ML4H 2026~~ **해소 2026-09-01: ML4H 2026** ([`VENUE.md`](VENUE.md)). 남은 것은 형식/분량 제약 `<FILL: ML4H 2026 CFP 원문 — 사람 확정>` 과 그에 따른 압축 목표치다(BIOP02-150).
 - **보고 표준 매핑**(TRIPOD+AI 완료; CLAIM/PROBAST/STROBE 대기) 및 **Table 1(코호트 특성)**을 Supplement로 첨부.
+
+---
+
+## 사사 · 연구비 · 이해상충
+
+### Acknowledgements
+
+> The authors thank Pseudo Lab, a non-profit AI/ML research community, for providing the collaborative environment that brought the authors together and enabled this research.
+
+계산 자원은 모두의연구소(Modulabs)가 제공한 GPU(A6000 ×3)를 사용하였다. <!-- 자원 제공 조건: 프로젝트 README·CLAUDE.md Infrastructure -->
+
+<!-- 박상준(Sangjun Park) Acknowledgement 포함 여부는 미확정. 2026-08-27 회의는 '초기 아이디어 제공·참고문헌 분석' 명시로 결정했으나, kkkim 08-20 메모는 이를 BIOP01 전용으로 지정했다. BIOP02-114에서 확인 필요. -->
+
+### Funding
+
+> This research was supported by the "Open Source AI·SW Developer and Community Support Program" funded by the Ministry of Science and ICT (MSIT), Republic of Korea.
+
+국문: 본 연구는 과학기술정보통신부(MSIT)가 지원하는 "오픈소스 AI·SW 개발자 및 커뮤니티 지원 사업"의 지원을 받아 수행되었다.
+
+### Competing interests
+
+`<FILL: 저자별 COI 선언 — 방법론 연구이면 통상 no competing interests>`
 
 ---
 

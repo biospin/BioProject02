@@ -54,11 +54,11 @@ Every endpoint is reported alongside a shuffle-null (5-seed), a prevalence basel
 
 | Cancer | Axis | Role | AUROC [95% CI] | Holdout n_pos / control baseline | Morphological correlate | Verdict |
 |---|---|---|---|---|---|---|
-| Head and neck | HPV | Legible axis (viral) | 0.959 [0.921–0.986] | 26 positives | Present (non-keratinising, basaloid) | **Single-FM, site-disjoint confirmation** (model-independence and site confounding untested) † |
+| Head and neck | HPV | Legible axis (viral) | 0.959 [0.921–0.986] | 26 positives | Present (non-keratinising, basaloid) | **Single-FM, site-disjoint confirmation** (model-independence and site confounding untested) † § |
 | Lung | LUSC histology | Positive control | 0.939 [0.905–0.967] | 153 positives | Morphology itself | Pass ‡ |
 | Head and neck | Grade | Positive control | 0.815 [0.742–0.882] | 41 positives | Present | Pass |
 | Colorectal | BRAF V600E | Retrospective | 0.882 [0.817–0.938] | 15 positives | Present (serrated/MSI co-occurrence) | Consistent; retrospective, underpowered, exploratory (excluded from confirmation tally) |
-| Gastric | MSI-H | Legible axis | 0.860 (development 0.899) | 24 positives | Present (immune) | Undecided (1 short) |
+| Gastric | MSI-H | Legible axis | 0.860 (development 0.899) | 24 positives | Present (immune) | Undecided (1 short) § |
 | Lung | EGFR activating | Graded | 0.852 | 15 positives | Partial | Undecided |
 | Lung | KRAS-G12C | Required axis | 0.681 (subtype-only 0.793) | 14 positives | Absent (histology skew) | Undecided |
 | Gastric | ERBB2 amplification | Required axis (breast replicate) | 0.644 (shuffle 0.641) | 14 positives | Absent | Underpowered; no observed signal |
@@ -69,6 +69,7 @@ Every endpoint is reported alongside a shuffle-null (5-seed), a prevalence basel
 
 † HPV robustness passed 5-seed chance-exclusion in only 2 of 3 foundation models (UNI and UNI2-h) and did not clear the pre-specified criterion in Virchow2 (real 0.9199 < threshold 0.9234, margin −0.0035 — a wide shuffle-null spread, not signal absence; see R5). <!-- src: experiments/crosscancer/MULTIFM_COMPARISON.md §5; CROSSCHECK_5SEED_MULTIFM.md HPV/virchow2 row --> The site audit also found site-label structuring (Cramér's V = 0.378). HPV is the single powered anchor that fixes one end of the map — not a generalisation of the law and not a model-independent confirmation. <!-- src: experiments/kkkim/20260805_site_audit/site_audit_results.json -->
 ‡ For lung histology (positive control) the site audit gave V(site, label) = 1.000: TCGA-LUAD/LUSC institution codes coincide 100% with histology, so the morphological signal cannot be separated from the site signature. This limit is stated explicitly wherever the positive control is interpreted. <!-- src: site_audit_results.json -->
+§ The HPV and MSI-H axes were robust to tile subsampling, but **slide-level reproducibility was not established** — predictions diverged between multiple slides from the same patient (TCGA-QK-A6IF, 0.92 vs 0.001). Tumour-only regional attribution was likewise not measured. Any clinical substitution claim on these two axes therefore requires (a) multi-centre prospective validation, (b) multi-slide reproducibility, and (c) verification of tumour-region contribution. <!-- src: BIOP02-141_FINDINGS.md; jamie sign-off 2026-08-14 -->
 
 ### R2. Our pre-registered split cannot decide the mutation axes — the power ceiling
 
@@ -179,10 +180,10 @@ The clinical and research implications are as follows. This observational map id
 ## 4. Methods
 
 ### M1. Cohorts and labels
-Breast cancer (TCGA-BRCA, about 1,010 diagnostic slides) [CITE-M1] serves as the anchor, together with lung, colorectal, gastric and head and neck, five cancers in total. Slide counts per cohort are measured in the result JSON files (colorectal 523, lung 1,026, gastric 439, head and neck 468). <!-- src: 03_methods.md M1 --> Label provenance and patient-level splits are managed under `agents/data/`, and the pre-registered axis boundaries are recorded in the sealed document (`experiments/crosscancer/SUBSTITUTABILITY_LAW_PREREGISTRATION.md`). For the breast PAM50 endpoint, the manifest labels (local/genefu, Parker 2009) [CITE-M2] and the cBioPortal PanCancer Atlas SUBTYPE labels [CITE-M3] agree on 57.0 % of overlapping patients (514/902; 43.0 % discordance); because cBioPortal coverage of the cohort is high (97.2 %), the pre-registered fallback condition (`split_policy_v0.md §10`) for using the local labels was not met, and canonicalisation of the PAM50 label source is an open reconciliation item. <!-- src: pam50_source_reconcile_biop02-74.json -->
+Breast cancer (TCGA-BRCA, about 1,010 diagnostic slides) [CITE-M1] serves as the anchor, together with lung (TCGA-LUAD/LUSC) [CITE-M18], colorectal (TCGA-COAD/READ) [CITE-M19], gastric (TCGA-STAD) [CITE-M20] and head and neck (TCGA-HNSC) [CITE-M21], five cancers in total. Slide counts per cohort are measured in the result JSON files (colorectal 523, lung 1,026, gastric 439, head and neck 468). <!-- src: 03_methods.md M1 --> Label provenance and patient-level splits are managed under `agents/data/`, and the pre-registered axis boundaries are recorded in the sealed document (`experiments/crosscancer/SUBSTITUTABILITY_LAW_PREREGISTRATION.md`). For the breast PAM50 endpoint the canonical label source is the Parker 2009 nearest-centroid computation (`tcga_brca_pam50_computed.csv`), per `split_policy_v0.md` §10.1 (Leader decision, 2026-08-20). The manifest labels (local/genefu [CITE-M22], Parker 2009) [CITE-M2] and the cBioPortal PanCancer Atlas SUBTYPE labels [CITE-M3] agree on 57.0 % of overlapping patients (514/902; 43.0 % discordance). That discordance is not an error but a difference in classifier derivation path (the confusion pairs LumB↔LumA 141 and Normal↔LumA 101 account for 62 % of it), and is reported transparently. <!-- src: pam50_source_reconcile_biop02-74.json -->
 
 ### M2. Tiling and embedding
-Each whole-slide image was tiled into 256×256 pixel patches at 20× magnification, tissue was separated from background by Otsu thresholding [CITE-M4], and a cap of 5,000 tiles per patient was imposed. The headline embedding is UNI v1 (1024-d) [CITE-M5]; for the model-independence test the same coordinates were re-extracted with Virchow2 [CITE-M6] (2560-d, CLS token concatenated with mean patch token, register tokens excluded) and UNI2-h (1536-d). The slide-level EXAONE Path 2.0 [CITE-M7] interface is incompatible with the coordinate-based pipeline and was excluded from the robustness set. Tiles were resized to 224×224 and channel-normalised with ImageNet statistics [CITE-M8]. H&E stain normalisation was not applied in the main pipeline. Uncorrected stain variation is a known source of domain shift in histopathology [CITE-M17], so it is recorded as a limitation and probed separately by the robustness check in M10. <!-- src: 03_methods.md M2 -->
+Each whole-slide image was tiled into 256×256 pixel patches at 20× magnification, tissue was separated from background by Otsu thresholding [CITE-M4], and a cap of 5,000 tiles per patient was imposed. The headline embedding is UNI v1 (1024-d) [CITE-M5]; for the model-independence test the same coordinates were re-extracted with Virchow2 [CITE-M6] (2560-d, CLS token concatenated with mean patch token, register tokens excluded) and UNI2-h (1536-d) [CITE-M23]. The slide-level EXAONE Path 2.0 [CITE-M7] interface is incompatible with the coordinate-based pipeline and was excluded from the robustness set. Tiles were resized to 224×224 and channel-normalised with ImageNet statistics [CITE-M8]. H&E stain normalisation was not applied in the main pipeline. Uncorrected stain variation is a known source of domain shift in histopathology [CITE-M17], so it is recorded as a limitation and probed separately by the robustness check in M10. <!-- src: 03_methods.md M2 -->
 
 ### M3. Model and training
 We used CLAM-SB attention MIL [CITE-M9] (hidden 512, attention 256, 40–50 epochs, seed fixed at 42). Predictions were produced per slide and then aggregated per patient. <!-- src: 03_methods.md M3; experiments/crosscancer/run_mil_cost.py -->
@@ -197,7 +198,7 @@ Substitution cost is defined by multiplying the confusion matrix by therapeutic 
 Adjudication thresholds are cited only from the sealed pre-registration document, not from slides or observed values. The power rule (fewer than 25 positives → exploratory → INCONCLUSIVE) is not moved after seeing results and is applied symmetrically to confirmation and refutation. All outputs are `hypothesis_only` and retrospective. <!-- src: 03_methods.md M6 -->
 
 ### M7. The Yale anchor (provisional, Critic pending)
-The anti-HER2 axis score was computed by frozen transfer (the anchor model applied without further training), used to stratify pCR in the Yale cohort, and evaluated by AUROC with bootstrap 95% confidence intervals, then compared with the measured-HER2 probability baseline using DeLong's test [CITE-M12]. The pre-specified benchmark was defined as approaching and overlapping the benchmark of Farahmand and colleagues [CITE-M13] (0.80, 95% CI 0.69 to 0.88). The provisional result is AUROC 0.533 (95% CI 0.411 to 0.653). The anti-HER2 axis did not stratify pCR from the H&E-predicted phenotype, which is directionally consistent with the HER2 negative on the map. This value is provisional and is not carried into the Abstract or headline claims. <!-- src: 02_results.md R6 (0.533 [0.411–0.653]); status pending per task instruction -->
+The anti-HER2 axis score was computed by frozen transfer (the anchor model applied without further training), used to stratify pCR in the Yale cohort [CITE-M25], and evaluated by AUROC with bootstrap 95% confidence intervals, then compared with the measured-HER2 probability baseline using DeLong's test [CITE-M12]. The pre-specified benchmark was defined as approaching and overlapping the benchmark of Farahmand and colleagues [CITE-M13] (0.80, 95% CI 0.69 to 0.88). The provisional result is AUROC 0.533 (95% CI 0.411 to 0.653). The anti-HER2 axis did not stratify pCR from the H&E-predicted phenotype, which is directionally consistent with the HER2 negative on the map. This value is provisional and is not carried into the Abstract or headline claims. <!-- src: 02_results.md R6 (0.533 [0.411–0.653]); status pending per task instruction -->
 
 ### M8. Multi-model robustness
 Because embedding spaces are not interchangeable across foundation models [CITE-M14], CLAM was refitted from scratch in each space so that the comparison is made at the same level. The adjudication criterion is 5-seed shuffle-null chance-exclusion (real AUROC > null mean + 2 × standard deviation, ddof = 1), with seeds 42, 1, 2, 3 and 4. Determinism was verified by 2 re-runs at identical seeds (colorectal BRAF Virchow2 seed 42 = 0.8798 reproduced). Canonical results are in `CROSSCHECK_5SEED_MULTIFM.md` and `MULTIFM_COMPARISON.md`. sjpark independently recomputed from committed source (BIOP02-101, cross-check PASS); braveji's final multi-FM Critic sign-off is in progress. <!-- src: 03_methods.md M8; MULTIFM_COMPARISON.md header -->
@@ -206,7 +207,7 @@ Because embedding spaces are not interchangeable across foundation models [CITE-
 For each endpoint we quantified whether the site-disjoint split confounds the label with the tissue source site (TSS). We computed Cramér's V [CITE-M15] between site and label with a permutation p-value, the train/test prevalence shift, and a permutation test of the site concentration of test positives. This analysis examines a necessary condition for confounding; the final adjudication of whether the model actually uses site rests on site predictability from H&E and on leave-one-site-out performance. <!-- src: 03_methods.md M9; site_audit_results.json -->
 
 ### M10. Stain-normalisation robustness (breast anchor)
-To test whether the anchor results are an artefact of uncorrected H&E stain variation, embeddings were re-extracted from the breast-anchor slides with Macenko stain normalisation [CITE-M16] (torchstain 1.3.0, a fixed dense-tissue reference tile), and CLAM was re-trained on the same folds (`split_policy_v0`, fold hash 5995f29d3978b831) for ER, HER2 and PAM50. The HER2 phenotype prediction remained near chance (AUROC 0.641), ER stayed high (0.917) and PAM50 was preserved (0.740); the anchor rank ER > PAM50 > HER2 matches the non-normalised anchor ordering (Table R1: ER 0.901, PAM50 0.759, HER2 0.599). Only phenotype prediction was re-run, not the routing/cost pipeline, and no shuffle-null was computed for the stain-normalised runs. This robustness check covers the breast anchor only; cross-cancer raw slides were lost and re-extraction under stain normalisation is deferred. <!-- src: experiments/kkkim/20260819_stain_norm_robustness/RESUME.md; clam_rerun/sjpark/*/metrics.json (0.6408/0.9166/0.7396) -->
+To test whether the anchor results are an artefact of uncorrected H&E stain variation, embeddings were re-extracted from the breast-anchor slides with Macenko stain normalisation [CITE-M16] (torchstain 1.3.0 [CITE-M24], a fixed dense-tissue reference tile), and CLAM was re-trained on the same folds (`split_policy_v0`, fold hash 5995f29d3978b831) for ER, HER2 and PAM50. The HER2 phenotype prediction remained near chance (AUROC 0.641), ER stayed high (0.917) and PAM50 was preserved (0.740); the anchor rank ER > PAM50 > HER2 matches the non-normalised anchor ordering (Table R1: ER 0.901, PAM50 0.759, HER2 0.599). Only phenotype prediction was re-run, not the routing/cost pipeline, and no shuffle-null was computed for the stain-normalised runs. This robustness check covers the breast anchor only; cross-cancer raw slides were lost and re-extraction under stain normalisation is deferred. <!-- src: experiments/kkkim/20260819_stain_norm_robustness/RESUME.md; clam_rerun/sjpark/*/metrics.json (0.6408/0.9166/0.7396) -->
 
 ---
 
@@ -229,7 +230,7 @@ To test whether the anchor results are an artefact of uncorrected H&E stain vari
 
 ## Open items and gates (for kkkim review)
 
-- **Author-facing metadata unconfirmed** — authors/order, affiliation, corresponding author + email, funding/acknowledgments (**GPU provider Modulabs must be named**, per project README), COI, ORCID. `<FILL: 팀 확정>`. This is the critical path (BIOP02-114).
+- **Author metadata — partly settled (meeting of 2026-08-27, BIOP02-114).** First authors: Ka-Kyung Kim and Geon gyu Lee (co-first); corresponding authors: the same two, jointly. Acknowledgements (Pseudo Lab, Modulabs) and Funding (MSIT/NIPA) are now in the manuscript in their agreed wording. **Outstanding**: some co-author names/affiliations not yet submitted, ORCID, COI declarations, and whether Sangjun Park is acknowledged here. `<FILL: affiliations, ORCID, COI>`
 - **Yale (R6/M7) is `critic_status: pending`** — provisional, kept out of Abstract/headline; body promotion only after Critic sign-off.
 - **20-seed HPV/Virchow2 flip not adopted** — status stays "2 of 3 models" pending braveji (BIOP02-123).
 - **PAM50 label source** — 57.0 % concordance with cBioPortal; fallback condition not met (coverage 97.2 %). Canonical label source is an open Methods reconciliation item (BIOP02-74).
@@ -238,6 +239,26 @@ To test whether the anchor results are an artefact of uncorrected H&E stain vari
 - **Citations** are provisional (brackets) until machine-verified by `agents/critic/scripts/verify_citations.py`.
 - ~~**Venue** — npj Precision Oncology vs ML4H 2026~~ **RESOLVED 2026-09-01: ML4H 2026** ([`VENUE.md`](VENUE.md)). Still open: format/length constraints `<FILL: ML4H 2026 CFP 원문 — 사람 확정>` and the resulting compression target (BIOP02-150).
 - **Reporting-standard mappings** (TRIPOD+AI done; CLAIM/PROBAST/STROBE pending) and **Table 1 (cohort characteristics)** to be attached as Supplement.
+
+---
+
+## Acknowledgements, funding and competing interests
+
+### Acknowledgements
+
+The authors thank Pseudo Lab, a non-profit AI/ML research community, for providing the collaborative environment that brought the authors together and enabled this research.
+
+Computation used GPUs (A6000 x3) provided by Modulabs. <!-- resource-provision condition: project README / CLAUDE.md Infrastructure -->
+
+<!-- Inclusion of Sangjun Park in the acknowledgements is unsettled: the 2026-08-27 meeting resolved to name him for the initial idea and reference analysis, but the kkkim note of 08-20 scoped that to BIOP01 only. To confirm in BIOP02-114. -->
+
+### Funding
+
+This research was supported by the "Open Source AI-SW Developer and Community Support Program" funded by the Ministry of Science and ICT (MSIT), Republic of Korea.
+
+### Competing interests
+
+`<FILL: per-author COI declaration - typically none for a methodological study>`
 
 ---
 
