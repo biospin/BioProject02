@@ -25,9 +25,12 @@ version:
   type: published
   peer_reviewed: true
   note: >
-    저자명단·서지 = Crossref 확정(vol 64). Abstract 본문 = WebSearch snippet +
-    우리 positioning 문서 2026-07-10_novelty-scoop-analysis.md에서 DOI/설계 교차확인.
-    표-단위 정확 AUC는 Springer paywall로 미확보(정성 인용만).
+    2026-09-02 전문 기반 재분석 완료. Europe PMC JATS 전문(sources/*_pmc.xml)과
+    출판 PDF(11p, CC-BY 4.0)를 확보해 Table 1(13 FM x 8 평가), Table 2(11 클래스 x 4 요인 + RPD),
+    Table 3(단변량/다변량/공선성) 값을 전부 원문에서 옮겼다. 이전 판본의
+    "표-단위 정확 AUC 미확보" 제약은 해소됨. 다만 Supplementary(Table S1-S9, Figure S1-S3)는
+    별도 PDF(1.76 MB)로 미확보라 아키텍처별 클래스별 원값(Table S4 등)은 여전히 미확인.
+    이전 판본의 오기 정정: TCGA는 FFPE가 아니라 flash-frozen만 사용(원문이 FFPE를 명시적으로 제외).
 citation:
   key: fernandez-romero-2026-domaingen
   short_id: DomainGen
@@ -39,7 +42,12 @@ sources:
   paper:
     url: "https://link.springer.com/article/10.1007/s11517-026-03590-4"
     doi: "10.1007/s11517-026-03590-4"
-    status: verified (abstract via WebSearch; internal cross-ref)
+    status: verified (full text; Europe PMC JATS XML + publisher PDF, CC-BY 4.0)
+    fulltext:
+      xml: "sources/fernandez-romero-2026-domaingen_pmc.xml"
+      pdf: "sources/fernandez-romero-2026-domaingen.pdf"
+      pages: "64(6):2321-2331"
+      supplementary: "미확보 (Supplementary file 1, pdf 1.76 MB). Table S1-S9, Figure S1-S3 포함"
 importance:
   level: 상
   perspective: >
@@ -57,4 +65,11 @@ priority:
     pivot to the substitution-cost decision frame (our novelty).
 workflow:
   created: "2026-07-17"
-  last_updated: "2026-07-17"
+  last_updated: "2026-09-02"
+  outputs:
+    - fernandez-romero-2026-domaingen_abstract.md
+    - fernandez-romero-2026-domaingen_core.md
+    - fernandez-romero-2026-domaingen_lens-academic.md
+    - fernandez-romero-2026-domaingen_lens-industry.md
+    - fernandez-romero-2026-domaingen_methodology-brief.md
+    - fernandez-romero-2026-domaingen_comparison-with-biop02.md
