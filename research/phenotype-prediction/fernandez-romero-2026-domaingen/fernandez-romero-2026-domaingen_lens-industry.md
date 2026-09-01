@@ -38,7 +38,7 @@
 
 - PAM50 macro-F1, ER/PR/HER2 PR-AUC. AUROC는 쓰지 않는다.
 - RPD = (Q_CV − Q_HO) / Q_CV. 정의가 단순해 우리 파이프라인에서도 그대로 계산할 수 있다. 다만 우리 지표는 AUROC이므로 같은 이름을 붙여 나란히 놓으면 오해를 부른다. 재계산한다면 우리 쪽에서도 macro-F1과 PR-AUC를 따로 뽑아야 한다.
-- `원문 미확인:` 아키텍처별 클래스별 원값(Table S4), 염색 정규화 세부(Table S5), 유병률(Table S6), 코사인 거리(Table S7), 형태 유사도 행렬(Table S8), 일치도(Table S9)는 모두 Supplementary PDF(1.76 MB)에 있고 이 폴더에 없다. 필요하면 별도로 받아야 한다.
+- ~~Supplementary 미확보~~ → **해소됨**(2026-09-02). `sources/..._supplementary.pdf`를 확보해 Table S1~S9와 Figure S1~S3을 전부 `_core.md`·`_methodology-brief.md`에 옮겼다. 남은 `원문 미확인:` 항목은 FM 임베딩 차원, FM 가중치 버전 식별자, bag size 최적값, stain matrix 성분값, 형태 유사도 행렬 B(c,c') 원소값 다섯 가지다.
 
 ## 염색 정규화 재현 세부
 

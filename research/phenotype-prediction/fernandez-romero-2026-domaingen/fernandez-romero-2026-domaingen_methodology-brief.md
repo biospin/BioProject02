@@ -1,6 +1,8 @@
 # Fernandez-Romero et al., 2026 (MBEC domain generalisation) — methodology-brief
 
 > 근거: `sources/` 전문. 2026-09-02 전문 기반 재작성. 분할, 지표, 통계 절차를 우리 원고에서 인용·대조할 수 있는 수준까지 옮긴다.
+>
+> **2026-09-02 보강**: Supplementary PDF(10p)를 확보해 학습 하이퍼파라미터(Table S2), Optuna 최적 구성(Table S3), 염색 정규화 원값(Table S5)을 채웠다. 클래스별 원값 표는 `_core.md`에 옮겨 두었다.
 
 ## A. 실험 파이프라인 4단계
 
@@ -30,6 +32,51 @@
 - 10-fold 교차검증(MCCV 아님)으로 TCGA에서 학습하고 CPTAC을 독립 hold-out으로 평가한다.
 - 하이퍼파라미터는 아키텍처마다 따로 최적화한다. PathBench-MIL + Optuna, 50 trial, pruning, validation(학습셋의 10%)에서 mean average precision 최대화. 탐색 변수는 z_dim(32~512)과 bag size(8~256).
 - 타일은 256×256 px / 128 µm @ 20×로 고정. 염색 정규화는 이 단계에서 적용하지 않는다.
+
+### baseline CLAM 학습 설정 (Table S2)
+
+FM 13종 선별 단계에서 쓴 고정 설정이다. 조기 종료는 patience 20 epoch, min delta 0.001이다.
+
+| Parameter | MCCV(내부) | HO(외부) |
+|---|---|---|
+| seed | 42 | 42 |
+| dropout | 0.7 | 0.7 |
+| learning rate | 0.0001 | 0.0001 |
+| weight decay | 0.0001 | 0.0001 |
+| bag loss | cross-entropy | cross-entropy |
+| instance loss | cross-entropy | cross-entropy |
+| patches per bag | 64 | 64 |
+| model size | big | big |
+| training fraction | 0.8 | 0.85 |
+| validation fraction | 0.1 | 0.15 |
+| test fraction | 0.1 | 0 |
+
+- seed가 42 하나로 고정되어 있다. MCCV 10회의 무작위성은 분할 재추출에서 나오고 초기화에서는 나오지 않는다.
+- HO 열의 test fraction이 0이라는 것은 TCGA를 전량 학습·검증에 쓰고 시험은 CPTAC에서만 한다는 뜻이다. 본문의 "85% training, 15% validation" 서술과 맞는다.
+- patches per bag 64는 baseline 값이고, Optuna 단계에서는 bag size를 8~256에서 다시 찾는다.
+
+### Optuna 최적 구성 (Table S3)
+
+검증셋에서 mean average precision을 최대화해 고른 값이다. `z_dim`은 MIL 쪽 투영 차원이지 FM 출력 차원이 아니다.
+
+| Task | Model | z_dim | dropout |
+|---|---|---|---|
+| ER | CLAM | 233 | 0.737 |
+| ER | DSMIL | 57 | 0.747 |
+| ER | TransMIL | 499 | 0.565 |
+| HER2 | CLAM | 317 | 0.756 |
+| HER2 | DSMIL | 121 | 0.514 |
+| HER2 | TransMIL | 325 | 0.534 |
+| PR | CLAM | 33 | 0.543 |
+| PR | DSMIL | 329 | 0.475 |
+| PR | TransMIL | 439 | 0.652 |
+| PAM50 | CLAM | 255 | 0.549 |
+| PAM50 | DSMIL | 311 | 0.631 |
+| PAM50 | TransMIL | 472 | 0.597 |
+
+- z_dim이 33에서 499까지 흩어져 있고 과제·모델 사이에 규칙이 보이지 않는다. PR-CLAM의 33과 ER-TransMIL의 499가 양 끝이다. 탐색 범위(32~512)의 경계에 붙은 값이 여럿이라, 50 trial이 수렴할 만큼 충분했는지는 원문만으로 판단할 수 없다.
+- dropout은 0.475~0.756으로 baseline의 0.7보다 대체로 낮다.
+- **표에 없는 것**: bag size의 최적값은 Table S3에 실리지 않는다. 본문이 탐색 변수로 명시했으나 결과는 공개되지 않아 `원문 미확인:`으로 남는다.
 
 ### 외부 검증
 
@@ -62,6 +109,7 @@ RPD(Q, c) = (Q_c^CV − Q_c^HO) / Q_c^CV     (Q_c^CV > 0)
 ### 1. 염색 변이 이득 Δn
 
 - Macenko 정규화를 패치 단위로, 특징 추출 직전에 적용한다. SlideFlow population-level preset v3, stain matrix는 3×2(H·E 벡터 × RGB), 기준 최대 농도 [1.766, 1.280], TCGA 450 슬라이드 약 50,000 패치의 Macenko 분해 평균에서 추정.
+- **기준 슬라이드는 없다.** 흔히 쓰는 단일 참조 슬라이드 방식이 아니라 모집단 평균을 목표로 삼는 방식이다. 우리가 "그들이 어떤 슬라이드를 기준으로 삼았나"를 묻는다면 답은 "특정 슬라이드가 아니라 TCGA 450장의 평균"이다. 3×2 행렬의 성분값 자체는 공개되지 않아 `원문 미확인:`으로 남는다.
 - 정규화 TCGA로 학습, 정규화 CPTAC으로 평가.
 - `n_c = Perf_c(normalised) − Perf_c(original)`, 외부 성능 기준, 3개 MIL 평균.
 
@@ -79,7 +127,7 @@ RPD(Q, c) = (Q_c^CV − Q_c^HO) / Q_c^CV     (Q_c^CV > 0)
 
 - baseline CLAM이 고른 패치 중 클래스 중심점에 가장 가까운 25장을 뽑는다. PAM50 125장(5×25), IHC 150장(3 마커 × 2 상태 × 25장)씩 코호트마다.
 - 병리 두 명이 라벨과 예측에 눈가림된 채 독립 주석. 특징 여섯 가지: 튜불 형성(1~3), 핵 다형성(1~3), 유사분열 수(개수), 종양 괴사(유무), 림프구 침윤(유무), 다형핵구 침윤(유무). 합의 절차 없이 두 사람 점수의 산술 평균을 최종값으로 쓴다.
-- 일치도는 순서형에 선형 가중 κw, 이분형에 Cohen's κ. 결과는 κw 0.152~0.289, κ 0.177~0.321(Landis-Koch 기준 slight~fair).
+- 일치도는 순서형에 선형 가중 κw, 이분형에 Cohen's κ. 패치 275장을 이미지 식별자로 맞춰 계산했다. Table S9 실측값은 튜불 형성 κw=0.289(fair), 핵 다형성 κw=0.285(fair), 유사분열 κw=0.152(slight), 괴사 κ=0.177(slight), 림프구 침윤 κ=0.185(slight), 다형핵구 침윤 κ=0.321(fair)이다. 여섯 가지 모두 moderate(0.41)에 닿지 못한다.
 - 코호트 간 특징 분포를 Mann-Whitney U로 비교하고 효과크기는 rank-biserial r_rb. 클래스 쌍마다 BH 보정(α=0.05).
 - `B(c,c') = Σ_{i=1..6} |r_rb,i^(c,c')|`, 유의한 특징만(BH q<0.05) 더한다. 대각 B(c,c)는 코호트 사이 같은 클래스의 형태 이질성, 비대각은 클래스를 가로지른 유사도.
 - `B̃_c = min_{d≠c} B(c,d) − B(c,c)`. 양수면 자기 자신과의 코호트 간 일관성이 다른 클래스와의 유사도보다 크다는 뜻이고, 음수면 외부 코호트의 그 클래스가 자기보다 다른 클래스와 더 닮았다는 뜻이다.
@@ -117,5 +165,7 @@ RPD(Q, c) = (Q_c^CV − Q_c^HO) / Q_c^CV     (Q_c^CV > 0)
 
 ### 열린 항목
 
-- `원문 미확인:` 아키텍처별 클래스별 원값(Table S4)이 없으므로, 그들 클래스별 내부·외부 절대 성능을 인용하려면 Supplementary PDF를 따로 받아야 한다. 지금 인용 가능한 클래스 단위 값은 Table 2의 RPD와 네 요인뿐이다.
+- ~~아키텍처별 클래스별 원값(Table S4) 미확보~~ → **해소됨**. Supplementary를 확보해 `_core.md`에 33행 전부 옮겼다. 그들 클래스별 내부·외부 절대 성능을 이제 정확히 인용할 수 있다.
+- 다만 인용 범위에 한 가지 제약이 남는다. **Table S4는 Virchow v2 하나 위에서만 계산되었다.** FM 13종을 클래스 단위로 가로지르는 표는 논문에 없으므로, "FM별 클래스별 성능"을 인용하려는 계획은 성립하지 않는다.
+- `원문 미확인:`으로 남는 방법론 항목은 넷이다. FM 임베딩 차원, FM 가중치 버전 식별자, bag size 최적값, stain matrix 성분값.
 - 우리 쪽 macro-F1·PR-AUC 재계산 여부는 미결정. 재계산하면 그들 표와 같은 자에 올릴 수 있으나, 헤드라인을 예측 정확도로 되돌릴 위험이 있어 보조 표로만 검토한다.
