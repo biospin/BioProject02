@@ -3,7 +3,7 @@
 > **Status.** Updated full draft for **kkkim (Leader) review** and team circulation ahead of ML4H 2026. This is a *review draft*, not a submission. Built on top of the v1 full draft ([`DRAFT_paperC_full_en.md`](DRAFT_paperC_full_en.md)) and the detailed section skeletons ([`sections/`](sections/)), refreshed against the latest result files (multi-FM 5-seed, BIOP02-147 stain-normalisation, PAM50 label-source reconciliation). Change log = [`DRAFT_ML4H_v2_CHANGELOG.md`](DRAFT_ML4H_v2_CHANGELOG.md).
 > **All numbers are measured** from result files; each headline value carries an inline `<!-- src: ... -->` comment so kkkim can cross-check. No number was introduced from memory or from slides. Status `hypothesis_only`, retrospective, `critic_status: pending`.
 > **Claim discipline.** Paper C is a pre-registered five-cancer study (breast anchor + lung, colorectal, gastric, head and neck — a deliberate boundary, not an open pan-cancer atlas). This is **not** a drug-response-prediction model (no drug structure input, hypothesis-only output). Headline claims stay **provisional** until the pre-registered law and held-out tests clear Critic sign-off.
-> **Venue note.** Prior project artifacts targeted npj Precision Oncology + medRxiv ([`SUBMISSION_PREP.md`](SUBMISSION_PREP.md) L4). This draft is written as a **venue-neutral full IMRaD** manuscript so it can serve either target; **ML4H 2026 length/format constraints are `<FILL: ML4H 2026 CFP 원문 — 사람 확정>`** and a 29 KB IMRaD draft likely needs compression for a workshop-style venue (Leader decision).
+> **Venue note.** Target venue is **ML4H 2026 (NeurIPS workshop)**, decided 2026-09-01 — see [`VENUE.md`](VENUE.md), the single source for venue. Earlier artifacts targeted npj Precision Oncology + medRxiv; that no longer applies to this manuscript. **ML4H 2026 length/format constraints remain `<FILL: ML4H 2026 CFP 원문 — 사람 확정>`**; this 29 KB full IMRaD draft will need compression for a workshop venue (BIOP02-150).
 > **Author-facing metadata is unconfirmed.** Authors, order, affiliation, corresponding author/email, funding/acknowledgments (GPU provider), and COI are all `<FILL: 팀 확정>` and must be settled by the team before any public release.
 
 ---
@@ -236,7 +236,7 @@ To test whether the anchor results are an artefact of uncorrected H&E stain vari
 - **Stain-normalisation covers breast anchor only** — cross-cancer headline (HPV, lung) not stain-verified (raw lost).
 - **braveji 7-point Critic final sign-off (BIOP02-75)** pending for the whole Paper C.
 - **Citations** are provisional (brackets) until machine-verified by `agents/critic/scripts/verify_citations.py`.
-- **Venue** — npj Precision Oncology vs ML4H 2026: format/length constraints `<FILL: ML4H 2026 CFP 원문 — 사람 확정>`; compression likely needed for a workshop venue (Leader decision).
+- ~~**Venue** — npj Precision Oncology vs ML4H 2026~~ **RESOLVED 2026-09-01: ML4H 2026** ([`VENUE.md`](VENUE.md)). Still open: format/length constraints `<FILL: ML4H 2026 CFP 원문 — 사람 확정>` and the resulting compression target (BIOP02-150).
 - **Reporting-standard mappings** (TRIPOD+AI done; CLAIM/PROBAST/STROBE pending) and **Table 1 (cohort characteristics)** to be attached as Supplement.
 
 ---

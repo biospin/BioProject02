@@ -32,6 +32,8 @@
 
 ## 타깃 저널 수준 (반드시 먼저 읽기)
 
+제출처는 [VENUE.md](VENUE.md) 하나만 본다 — 현재 **ML4H 2026 (NeurIPS 워크숍)**. 아래 두 가이드는 npj Precision Oncology 기준이라 형식·분량 근거로는 쓰지 않는다.
+
 집필 전 [TARGET_JOURNAL_GUIDE.md](TARGET_JOURNAL_GUIDE.md)와 [WRITING_TARGET_GUIDE.md](WRITING_TARGET_GUIDE.md)를 읽는다. 후자는 npj Precision Oncology에 실린 우수 H&E→분자 논문 4편을 정독해 논리·포맷·표·그림 골격을 해부한 문서다. 거기서 나온 **우리가 아직 없어서 만들어야 할 3가지(임팩트 순)**:
 
 1. **코호트 특성표(Table 1)** — 5암종 n·라벨 유병률·split. (modal 논문의 거의 필수 본문 표)

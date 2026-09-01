@@ -64,7 +64,7 @@
 ## (c) Key judgment points for kkkim
 
 1. **Yale demotion** — is BIOP02-80/Critic still pending? If it has since signed off, R6 can be re-promoted and 0.533 returned to the Abstract. As of the sources read, it is pending, so v2 holds it out.
-2. **Venue: npj-PO vs ML4H 2026** — every existing artifact targets npj-PO + medRxiv; only the task names ML4H. A 29 KB full IMRaD likely needs compression for ML4H. Decide target before format work; ML4H CFP numbers must be confirmed by a human (do not use search summaries as spec — same rule as `TARGET_JOURNAL_GUIDE.md` L15).
+2. ~~**Venue: npj-PO vs ML4H 2026**~~ **RESOLVED 2026-09-01 → ML4H 2026** ([`VENUE.md`](VENUE.md)). Original note: every existing artifact targets npj-PO + medRxiv; only the task names ML4H. A 29 KB full IMRaD likely needs compression for ML4H. Decide target before format work; ML4H CFP numbers must be confirmed by a human (do not use search summaries as spec — same rule as `TARGET_JOURNAL_GUIDE.md` L15).
 3. **PAM50 label source** — fallback for local/genefu labels was not authorised (cBioPortal coverage high). Since PAM50 is the only anchor endpoint clearing a valid baseline both internally and externally, which label set is canonical materially affects that claim. Needs a Methods decision, not a writer's guess.
 4. **CRC BRAF split** — v2 uses 0.882 [0.817–0.938] (holdout161) in Table R1 and 0.868 (holdout151) in Table R5, both annotated. Confirm this is the intended split assignment; v1's 0.868 [0.780–0.938] pair was inconsistent.
 5. **Stain-norm scope** — the check defends the breast HER2 negative but **not** the cross-cancer headline (HPV, lung), which are the results most exposed to a scanner/stain-artefact reviewer objection. Accept as an honest limitation, or fund cross-cancer re-extraction (RunPod, per project notes). Note two intrinsic scope limits now stated in R3/M10: the stain-norm run re-ran only *phenotype prediction*, not the routing/cost pipeline; and it carries no shuffle-null, so "near chance" rests on the value + ER/PAM50 comparison, not a null.
@@ -76,4 +76,4 @@
 - **Verified against files:** all Table R1/R2/R5 numbers, HPV/lung/HER2/ERBB2/KRAS/MSI/Lauren values, stain-norm triplet (metrics.json), PAM50 reconcile JSON, CRC BRAF point+CI provenance, multi-FM 2/3 & 3/3 FAIL framing, 20-seed non-adoption.
 - **Not independently recomputed (writing task, no analysis run):** none of the AUROCs were re-derived — they were quoted from result files as the task requires.
 - **Provenance-ambiguous, reported qualitatively:** stain-norm before/after (baseline anchor value 0.599 vs same-fold 0.5509).
-- **Not resolved by writer (flagged for humans):** author metadata, Yale sign-off, PAM50 canonical source, ML4H format, venue choice.
+- **Not resolved by writer (flagged for humans):** author metadata, Yale sign-off, PAM50 canonical source, ML4H format. *(venue choice — RESOLVED 2026-09-01 → ML4H 2026, see [`VENUE.md`](VENUE.md))*

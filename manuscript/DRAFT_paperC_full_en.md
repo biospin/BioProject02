@@ -3,7 +3,7 @@
 > **Status**: English rendering of the Korean full draft ([`DRAFT_paperC_full_ko.md`](DRAFT_paperC_full_ko.md)) v2. Korean first → team review → English, per the team decision. KO/EN parity is machine-checked with `agents/critic/scripts/manuscript_parity_ko_en.py`.
 > **All numbers are measured** (UNI canonical, from result files); none were introduced here. Status `hypothesis_only`, retrospective, `critic_status: pending`.
 > **Section owners** (SECTION_ASSIGNMENT_paperC.md): Abstract/Intro/Discussion = lead author, Results/Methods = kkkim (numbers and provenance), R5/R6 = sjpark, R7/cost = braveji, Table1/external validation = jamie.
-> Target: npj Precision Oncology (IMRaD, assertive Results subheadings). Citations are provisional until `verify_citations.py` passes.
+> ⚠️ Superseded — venue is now **ML4H 2026**, see [`VENUE.md`](VENUE.md). ~~Target: npj Precision Oncology (IMRaD, assertive Results subheadings).~~ Citations are provisional until `verify_citations.py` passes.
 > **v2 revision (2026-08-06)**: incorporates the 2-round cross-examined consensus of the 3-way GPT/Gemini council and the TE review. "Decision map" → "observed spectrum", contributions downgraded, scope of the HPV verdict made explicit, "directionally consistent law" removed, operating-point dependence stated, leakage vs confounding separated, misassignment-cost terminology defined and unified. No number changed.
 
 ---

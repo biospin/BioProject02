@@ -3,7 +3,7 @@
 > **성격**: 문장 골격([`DRAFT_paperC_sentence-skeleton_ko.md`](DRAFT_paperC_sentence-skeleton_ko.md))을 연결 산문으로 확장한 **완전 초안**. 국문 우선 작성 → 팀 리뷰 → 영문화(정합 검증 `agents/critic/scripts/manuscript_parity_ko_en.py`).
 > **수치는 전부 실측**(UNI 정본, 결과 파일 근거)이며 새로 만든 값이 없다. 상태 `hypothesis_only`·후향적·`critic_status: pending`.
 > **섹션 오너**(SECTION_ASSIGNMENT_paperC.md): Abstract·Intro·Discussion=주저자, Results·Methods=kkkim(수치·근거), R5/R6=박세진, R7/cost=braveji, Table1·외부검증=류재면.
-> 타깃: npj Precision Oncology(IMRaD, Results 주장형 소제목). 인용은 `verify_citations.py` 통과 후 확정.
+> ⚠️ 무효 — 제출처는 **ML4H 2026**이다([`VENUE.md`](VENUE.md)). ~~타깃: npj Precision Oncology(IMRaD, Results 주장형 소제목).~~ 인용은 `verify_citations.py` 통과 후 확정.
 > **v2 개정(2026-08-06)**: GPT·Gemini 3자 카운슬 2라운드 교차검증 합의안 + 서정한(TE) 리뷰 반영. "결정지도→관찰 스펙트럼", 기여 강등, HPV 판정 범위 명시, "방향적으로 일관" 삭제, operating point 의존성 명시, leakage↔confounding 구분, 오배정률 용어 정의·통일. 수치 변경 없음.
 
 ---

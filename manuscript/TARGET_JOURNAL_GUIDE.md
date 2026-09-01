@@ -1,8 +1,12 @@
 # 타깃 저널 집필 가이드 — npj Precision Oncology (그 수준 이상으로)
 
+> ⚠️ **제출처 변경됨 (2026-09-01).** 현재 제출처는 **ML4H 2026 (NeurIPS 워크숍)** 이다 — [`VENUE.md`](VENUE.md).
+> 이 문서의 npj Precision Oncology 기준(§1 타깃, §2 분량 무제한, §4 주장형 소제목)은 **현재 원고에 적용하지 않는다.**
+> 내용은 폐기하지 않는다. 후속 저널 투고를 결정하면 그대로 쓴다.
+
 이 문서는 우리 원고를 타깃 저널에 실린 우수 논문과 같거나 그 이상 수준으로 쓰기 위한 기준선이다. 저널의 공식 규정과, 실제로 그 저널에 실린 H&E→분자 예측 논문들의 de facto 관행(논리·포맷·표·그림)을 함께 담는다.
 
-## 1. 타깃 저널 (확정)
+## 1. 타깃 저널 (~~확정~~ — 2026-09-01 무효. 현행 제출처는 [`VENUE.md`](VENUE.md))
 
 - **주 타깃: npj Precision Oncology** (Nature Portfolio, 완전 Open Access, 온라인 전용). 모달 IF ~6–12. 근거 [../research/paperC-positioning/FLAGSHIP_PLAN.md:55-57](../research/paperC-positioning/FLAGSHIP_PLAN.md), [../research/README.md:8](../research/README.md).
 - **스트레치: Nature Communications / npj Digital Medicine / Med** — 사전등록 법칙이 예측적으로 서고 3암종이 깨끗하며 AI 결정레이어가 "새 능력"으로 읽힐 때.

@@ -3,7 +3,7 @@
 > **v2 변경**: GPT 카운슬 1차 검토 12건 전부 반영 — 과대주장 톤다운(사전등록 "확증 강도"→규율, "삼중 증명"→일관된 음성, "항상 실패/증명"→일관 실패), R4↔Discussion Lauren 내부모순 해소, R2 정직축소(B) 유지.
 
 > 성격: **문단 미완성, 주요 문장 단위**. 각 문장은 그대로 논문에 들어갈 load-bearing 문장(연결·수식은 나중). 숫자는 전부 실측(UNI 헤드라인 정본, 2026-07-23 폐 완료 반영). 상태 `hypothesis_only`·후향적. 표는 완성해 둠.
-> 출처: PAPER_DIRECTION(paperC), manuscript/sections/*, RESULTS_SUMMARY, MULTIFM_COMPARISON. 저널=npj Precision Oncology(IMRaD, Results 주장형 소제목).
+> 출처: PAPER_DIRECTION(paperC), manuscript/sections/*, RESULTS_SUMMARY, MULTIFM_COMPARISON. 저널=~~npj Precision Oncology(IMRaD, Results 주장형 소제목)~~ → **ML4H 2026** ([`VENUE.md`](VENUE.md)).
 
 제목(가안): **"When can H&E substitute for molecular testing? A cross-cancer decision map of morphological substitutability"**
 

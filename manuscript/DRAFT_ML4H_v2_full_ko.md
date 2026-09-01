@@ -5,7 +5,7 @@
 > **상태.** ML4H 2026을 앞둔 **kkkim(Leader) 검토** 및 팀 회람용 갱신 완전 초안이다. 제출본이 아니라 *검토 초안*이다. v1 완전 초안([`DRAFT_paperC_full_en.md`](DRAFT_paperC_full_en.md))과 상세 섹션 골격([`sections/`](sections/)) 위에, 최신 결과 파일(다중 FM 5-seed, BIOP02-147 염색 정규화, PAM50 라벨 출처 정합)에 맞춰 갱신하였다. 변경 내역 = [`DRAFT_ML4H_v2_CHANGELOG.md`](DRAFT_ML4H_v2_CHANGELOG.md).
 > **모든 수치는 결과 파일에서 실측**한 값이며, 각 헤드라인 값에는 kkkim이 대조할 수 있도록 인라인 `<!-- src: ... -->` 주석이 붙어 있다. 기억이나 슬라이드에서 옮긴 수치는 하나도 없다. 상태 `hypothesis_only`, 후향적, `critic_status: pending`.
 > **claim 규율.** Paper C는 사전등록된 다섯 암종 연구다(유방 앵커 + 폐·대장·위·두경부 — 열린 pan-cancer 아틀라스가 아니라 의도된 경계). 이는 약물 반응 예측(DRP) 모델이 **아니다**(약물 구조 입력 없음, 가설-전용 산출). 헤드라인 주장은 사전등록 법칙과 held-out 검정이 Critic 서명을 통과하기 전까지 **잠정**으로 유지한다.
-> **Venue 주기.** 기존 프로젝트 산출물은 npj Precision Oncology + medRxiv를 타깃했다([`SUBMISSION_PREP.md`](SUBMISSION_PREP.md) L4). 이 초안은 두 타깃 어느 쪽에도 쓸 수 있도록 **venue-중립 완전 IMRaD**로 작성했으며, **ML4H 2026 분량/형식 제약은 `<FILL: ML4H 2026 CFP 원문 — 사람 확정>`**이다. 29 KB IMRaD 초안은 워크숍형 venue에는 압축이 필요할 것이다(Leader 결정).
+> **Venue 주기.** 제출처는 **ML4H 2026 (NeurIPS 워크숍)**으로 확정했다(2026-09-01). 제출처의 유일한 기준은 [`VENUE.md`](VENUE.md)다. 기존 산출물이 타깃하던 npj Precision Oncology + medRxiv는 이 원고에 더는 적용하지 않는다. **ML4H 2026 분량/형식 제약은 여전히 `<FILL: ML4H 2026 CFP 원문 — 사람 확정>`**이며, 29 KB 완전 IMRaD 초안은 워크숍 분량에 맞춰 압축이 필요하다(BIOP02-150).
 > **저자 대면 메타데이터는 미확정.** 저자·저자순서·소속·corresponding author/이메일·funding/acknowledgments(GPU 제공처)·COI가 모두 `<FILL: 팀 확정>`이며, 공개 전 팀이 확정해야 한다.
 
 ---
@@ -238,7 +238,7 @@ CLAM-SB attention MIL[CITE-M9]을 사용하였다(hidden 512·attention 256, 40�
 - **염색 정규화는 유방 앵커에만** — 다암종 헤드라인(HPV, 폐)은 염색 미검증(raw 소실).
 - **braveji 7-point Critic 최종 서명(BIOP02-75)** — Paper C 전체에 대해 대기 중.
 - **인용**은 `agents/critic/scripts/verify_citations.py`로 기계 검증하기 전까지 잠정(대괄호)이다.
-- **Venue** — npj Precision Oncology vs ML4H 2026: 형식/분량 제약 `<FILL: ML4H 2026 CFP 원문 — 사람 확정>`; 워크숍 venue에는 압축 필요 가능(Leader 결정).
+- ~~**Venue** — npj Precision Oncology vs ML4H 2026~~ **해소 2026-09-01: ML4H 2026** ([`VENUE.md`](VENUE.md)). 남은 것은 형식/분량 제약 `<FILL: ML4H 2026 CFP 원문 — 사람 확정>` 과 그에 따른 압축 목표치다(BIOP02-150).
 - **보고 표준 매핑**(TRIPOD+AI 완료; CLAIM/PROBAST/STROBE 대기) 및 **Table 1(코호트 특성)**을 Supplement로 첨부.
 
 ---

@@ -1,7 +1,7 @@
 # 제출 준비 — Supplementary 인벤토리 · 플랫폼 사전 준비 (BIOP02-76)
 
 **작성:** braveji (Orchestrator) · 2026-08-19 · 기한 2026-08-26
-**타깃:** npj Precision Oncology (+ medRxiv preprint 동시)
+**타깃:** [`VENUE.md`](VENUE.md) 참조 — 현재 **ML4H 2026 (NeurIPS 워크숍)**. *(작성 시점 2026-08-19 타깃은 npj Precision Oncology + medRxiv 였다.)*
 **근거:** [`TARGET_JOURNAL_GUIDE.md`](TARGET_JOURNAL_GUIDE.md) · [`DRAFT_paperC_full_ko.md`](DRAFT_paperC_full_ko.md) L186–202 · [`SECTION_ASSIGNMENT_paperC.md`](SECTION_ASSIGNMENT_paperC.md)
 
 > **이 티켓은 본문·완료조건이 비어 있었다.** 범위를 저널 가이드와 원고가 스스로 "예정"이라 적은 항목에서 역산해 정의했다. 아래 3절이 그 결과다.
