@@ -303,3 +303,13 @@ INFRA_PRIVATE.md
 biop02_infra.local
 
 
+
+# 논문 분석 하네스 — 원문 바이너리는 커밋하지 않는다 (BP01 규약 이식).
+# 추출 텍스트(fulltext_extracted.txt)·URL·bib 만 커밋해 재현 경로를 남긴다.
+# 이 저장소는 public 이므로 출판사 PDF 를 올리지 않는다.
+research/**/sources/*.pdf
+research/**/sources/*.PDF
+research/**/sources/*_pmc.xml
+research/**/sources/*.xlsx
+research/**/sources/*.docx
+research/**/sources/*.zip

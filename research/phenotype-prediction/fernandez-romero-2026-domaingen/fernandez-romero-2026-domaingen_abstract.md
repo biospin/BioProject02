@@ -1,27 +1,31 @@
-# fernandez-romero-2026-domaingen — Abstract
+# Fernandez-Romero et al., 2026 — Domain generalisation in BC molecular classification — Abstract 분석
+
+> 근거 자료: `sources/fernandez-romero-2026-domaingen_pmc.xml`(Europe PMC JATS 전문) + `sources/fernandez-romero-2026-domaingen.pdf`(본문 11p). 2026-09-02 전문 재분석으로 갱신했고, 그 전 판본은 초록만 보고 작성된 것이라 수치가 비어 있었다.
+>
+> 표기: `해석:` / `계산값:` / `원문 미확인:`(본문·표에서 찾지 못함, 대개 Supplementary PDF 소재).
 
 ## 서지
-- **Title:** Domain generalisation challenges in breast cancer molecular classification using foundation models: a cross-cohort exploratory study
-- **Authors:** Jesus Fernandez-Romero, Pablo Ramos-Berciano, Manuel Perez-Perez, David Benavides, Antonio Robles-Frias, Jorge Garcia-Gutierrez, Laura Macias-Garcia (Crossref 확정)
-- **Venue:** Medical & Biological Engineering & Computing (Med Biol Eng Comput), 2026 (vol 64)
-- **DOI:** [10.1007/s11517-026-03590-4](https://doi.org/10.1007/s11517-026-03590-4)
 
-## 초록 요약
-분자 분류는 유방암 치료를 안내하지만 PAM50과 면역조직화학(IHC)은 여전히 비싸고 많은
-세팅에서 이용 불가하다. Pathology foundation model(FM)과 multiple instance learning(MIL)의
-결합은 H&E 슬라이드만으로 분자 아형을 예측할 가능성을 보였으나, 대부분의 선행연구는
-**internal validation만** 보고했다. 본 연구는 **13개 FM × 3개의 상보적 MIL 아키텍처**를
-PAM50 아형 예측과 IHC 바이오마커(ER/PR/HER2) 예측에 대해 평가했다 — **TCGA-BRCA(n=1,079)
-교차검증** 후 **CPTAC-BRCA(n=120) 외부검증**.
+- **Title**: Domain generalisation challenges in breast cancer molecular classification using foundation models: a cross-cohort exploratory study
+- **Authors**: Jesus Fernandez-Romero, Pablo Ramos-Berciano, Manuel Perez-Perez, David Benavides, Antonio Robles-Frias, Jorge Garcia-Gutierrez, Laura Macias-Garcia
+- **Venue**: *Medical & Biological Engineering & Computing* **64(6):2321–2331** (2026)
+- **DOI**: [10.1007/s11517-026-03590-4](https://doi.org/10.1007/s11517-026-03590-4) · PMC13269319 · PMID 42113320 · CC-BY 4.0
+- **소속**: Universidad de Sevilla, Hospital Universitario Virgen de Valme (스페인 세비야)
+- **Citation key**: `fernandez-romero-2026-domaingen`
+- **Funding**: MICIU/AEI PID2023-147688OA-I00, Data-pl(PID2022-138486OB-I00), SENSOLIVE(PLSQ_00162). 이해상충 없음 선언.
 
-핵심 결과: **Virchow v2**가 전체 최고 성능을 냈으나, **외부검증에서 심각한 열화(degradation)**를
-보였고 이 붕괴는 **3개 MIL 아키텍처 전반에서 일관**되게 나타났으며 특히 **HER2-enriched·
-Normal-like PAM50 아형**과 **HER2-positive IHC 예측**에서 두드러졌다. 즉 in-domain 예측은
-강하지만 도메인 시프트(코호트·염색·특징공간)에서 무너진다는 것이 주된 메시지다.
-(표-단위 정확 AUC는 paywall로 미확보 — 정성 인용만 가능.)
+## Abstract 요약
 
-## 우리 논문에서의 역할
-- **SCOOP (최근접).** 우리가 former 유방 "Paper A"로 하려던 서술적 실험(H&E FM+MIL → ER/PR/HER2/PAM50 예측 + TCGA→CPTAC 외부검증 + multi-FM 비교)을 **동일 설계로 이미 출판** — 우리의 HER2 외부 실패까지 재현. 이 논문이 유방을 standalone 예측 논문에서 **flagship Paper C(치환비용 결정지도)의 anchor로 흡수**하게 만든 직접 원인이다.
-- **인용 방식:** 정성 한 줄로 양보 — "H&E→분자 예측 + 외부검증 열화는 이미 출판됨[Fernandez-Romero 2026], 특히 HER2-enriched/Normal-like 붕괴는 우리 HER2 reject와 일관" — 그 뒤 곧바로 **결정-가치(substitutability) 프레임**으로 전환.
-- **포지셔닝 지지/위협:** 예측 정확도를 헤드라인으로 삼으면 **정면 스쿱**(위협). 그러나 우리의 novelty(형태 예측이 *언제* 분자검사를 값싸게 대체 가능한가의 결정지도)는 이 논문이 다루지 **않으므로**, 오히려 "예측은 포화됐다"는 우리 전제를 **강화**하는 증거로 재활용된다.
-- **사전등록 법칙 연결:** 이 논문의 CPTAC 도메인 붕괴는 우리 SUBSTITUTABILITY_LAW의 "저비용 대체는 in-domain 조건부, cross-domain에는 보정·기권 필요" 조항의 외부 근거로 인용됨.
+- **한 문장 요약**: 병리 foundation model(FM) 13종과 MIL 아키텍처 3종을 PAM50 아형과 ER/PR/HER2 예측에 붙여 TCGA-BRCA(n=1,079)에서 교차검증하고 CPTAC-BRCA(n=120)로 외부검증한 뒤, 코호트 간 성능 열화(RPD)를 네 가지 도메인 시프트 요인으로 회귀해 원인을 나눈 탐색적 연구.
+- **문제의식**: 대부분의 선행연구가 같은 기관 내부 검증만 보고하고 외부 코호트를 시험하지 않아, 도메인 일반화가 검증되지 않은 채로 남아 있다.
+- **핵심 방법**: 13 FM(SOTA 12종 + ResNet-50 baseline)을 baseline CLAM으로 먼저 선별하고, 최고 FM 하나(Virchow v2)에 Optuna로 최적화한 CLAM, TransMIL, DSMIL 3종을 붙여 열화 패턴이 아키텍처 의존인지 확인한다. 지표는 PAM50 macro-F1, ER/PR/HER2 PR-AUC.
+- **주요 결과**: Virchow v2가 종합 1위(mean rank 2.00)지만 외부검증에서 심한 열화를 보이고, 그 열화는 3개 MIL 전부에서 같은 방향으로 나타난다. HER2-enriched와 Normal-like 아형, HER2-양성 IHC에서 특히 크다.
+- **요인분해**: 네 요인 중 염색 변이(Δn), 특징공간 발산(d), 형태 분리도(B̃)가 단변량에서 유의하고 유병률 시프트(Δp)는 유의하지 않다(q=0.615). 최종 다변량 모형 `RPD ~ Δn + d`가 RPD 분산의 80.0%를 설명한다(R²=0.800, R²adj=0.750, F=16.03, q=0.005).
+- **저자 스스로의 한정**: 클래스 수준 관측치가 11개뿐이라 회귀는 탐색적이고 가설 생성 수준이라고 본문에 명시한다.
+
+## 우리 논문(BIOP02 Paper C)에서의 역할
+
+- **최근접 스쿱**: 우리가 유방 단독 예측 논문(구 Paper A)으로 하려던 설계, 곧 H&E FM+MIL로 PAM50과 ER/PR/HER2를 예측하고 TCGA에서 학습해 CPTAC로 외부검증하는 구성이 같은 코호트, 같은 동기로 이미 출판되었다. 유방을 flagship Paper C(치환비용 결정지도)로 흡수하게 만든 직접 원인이 이 논문이다.
+- **인용 방식**: 예측 정확도를 헤드라인으로 삼지 않는다. "H&E에서 분자 아형을 예측하는 일과 그 외부 열화는 이미 보고되었다[Fernandez-Romero 2026]"로 한 줄 양보한 뒤 곧바로 결정가치(치환비용) 프레임으로 넘어간다.
+- **동시에 우리 전제의 근거**: 이 논문의 외부 붕괴는 "예측만으로는 취약하므로 치환에는 계량 가능한 비용이 따르고 보정과 기권이 필요하다"는 SUBSTITUTABILITY_LAW의 외부 근거로 쓸 수 있다.
+- **분할 설계 차이가 새로 확보된 대조축**: 전문에서 확인한 바로는 이 논문의 내부 검증이 환자 층화만 하고 기관(tissue source site)을 통제하지 않는다. 우리는 사전 고정된 site-disjoint 분할을 쓴다. 상세 대조는 `_comparison-with-biop02.md`.

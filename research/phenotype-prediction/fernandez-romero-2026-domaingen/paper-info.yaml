@@ -25,9 +25,28 @@ version:
   type: published
   peer_reviewed: true
   note: >
-    저자명단·서지 = Crossref 확정(vol 64). Abstract 본문 = WebSearch snippet +
-    우리 positioning 문서 2026-07-10_novelty-scoop-analysis.md에서 DOI/설계 교차확인.
-    표-단위 정확 AUC는 Springer paywall로 미확보(정성 인용만).
+    2026-09-02 전문 기반 재분석 완료. Europe PMC JATS 전문(sources/*_pmc.xml)과
+    출판 PDF(11p, CC-BY 4.0)를 확보해 Table 1(13 FM x 8 평가), Table 2(11 클래스 x 4 요인 + RPD),
+    Table 3(단변량/다변량/공선성) 값을 전부 원문에서 옮겼다. 이전 판본의
+    "표-단위 정확 AUC 미확보" 제약은 해소됨.
+    이전 판본의 오기 정정: TCGA는 FFPE가 아니라 flash-frozen만 사용(원문이 FFPE를 명시적으로 제외).
+
+    2026-09-02 2차 보강: Supplementary PDF(10p)를 확보해 Table S1-S9와 Figure S1-S3을
+    전부 옮겼다. pdftotext -layout(poppler)로 추출했고 pdfplumber는 booktabs 표를
+    인식하지 못해 사용하지 않았다. 표에 적힌 값끼리 산술 검산해 S4 33/33, S5 33/33,
+    S6 11/11, S7 11/11이 일치했고, S4+S5에서 계산한 클래스별 평균이 본문 Table 2와
+    11/11 일치해 행 정렬을 검증했다. 본문과 supplementary 사이에 숫자가 어긋나는
+    사례는 없었다.
+    확정된 사실 셋: (1) Table S1은 FM을 12종만 싣고, 본문의 "13종"은 여기에 ImageNet
+    ResNet-50 baseline을 더한 수다. (2) HER2-enriched의 RPD=1.000은 세 아키텍처 모두
+    CPTAC F1이 정확히 0.000이기 때문이다. (3) FM별 클래스별 성능 격자(13 x 3 x 클래스)는
+    논문에 존재하지 않는다. 클래스 단위 값은 최고 FM(Virchow v2) 위에서만 계산되었다.
+    표기 어긋남 셋(값 모순 아님): 본문은 12 FM을 "July 2023-January 2025"로 묶지만
+    Table S1의 CTransPath/RetCCL은 Dec 2021이다. Table S4 캡션은 TCGA 열을 "hold-out
+    test score"라 적고 본문은 10-fold CV 평균이라 적는다. Table S9의 n=275가 어느
+    코호트인지 밝히지 않는다.
+    남은 미확인 다섯: FM 임베딩 차원, FM 가중치 버전 식별자, Optuna bag size 최적값,
+    SlideFlow v3 stain matrix 성분값, 형태 유사도 행렬 B(c,c') 원소값.
 citation:
   key: fernandez-romero-2026-domaingen
   short_id: DomainGen
@@ -39,7 +58,12 @@ sources:
   paper:
     url: "https://link.springer.com/article/10.1007/s11517-026-03590-4"
     doi: "10.1007/s11517-026-03590-4"
-    status: verified (abstract via WebSearch; internal cross-ref)
+    status: verified (full text; Europe PMC JATS XML + publisher PDF, CC-BY 4.0)
+    fulltext:
+      xml: "sources/fernandez-romero-2026-domaingen_pmc.xml"
+      pdf: "sources/fernandez-romero-2026-domaingen.pdf"
+      pages: "64(6):2321-2331"
+      supplementary: "sources/fernandez-romero-2026-domaingen_supplementary.pdf (10p, 1.8 MB, 2026-09-02 확보). Table S1-S9, Figure S1-S3 전량 추출 완료"
 importance:
   level: 상
   perspective: >
@@ -57,4 +81,11 @@ priority:
     pivot to the substitution-cost decision frame (our novelty).
 workflow:
   created: "2026-07-17"
-  last_updated: "2026-07-17"
+  last_updated: "2026-09-02"
+  outputs:
+    - fernandez-romero-2026-domaingen_abstract.md
+    - fernandez-romero-2026-domaingen_core.md
+    - fernandez-romero-2026-domaingen_lens-academic.md
+    - fernandez-romero-2026-domaingen_lens-industry.md
+    - fernandez-romero-2026-domaingen_methodology-brief.md
+    - fernandez-romero-2026-domaingen_comparison-with-biop02.md
