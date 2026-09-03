@@ -1,11 +1,11 @@
 {
  "track": "HEADNECK_HNSC",
- "purpose": "5-seed shuffle-null robustness (BLOCKER-1)",
+ "purpose": "20-seed shuffle-null robustness (BLOCKER-1)",
  "fm": "virchow2",
  "feature_dim": 2560,
  "claim_level": "hypothesis_only",
  "critic_status": "pending",
- "criterion": "real_auroc > null_mean + 2*null_sd (5 seed, ddof=1)",
+ "criterion": "real_auroc > null_mean + 2*null_sd (20 seed, ddof=1)",
  "shuffle_seeds": [
   42,
   1,
