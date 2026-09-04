@@ -232,7 +232,7 @@ CLAM-SB attention MIL[CITE-M9]을 사용하였다(hidden 512·attention 256, 40�
 
 ## 미결 항목과 게이트 (kkkim 검토용)
 
-- **저자 메타데이터 — 일부 확정(2026-08-27 회의, BIOP02-114).** 제1저자 = 김가경·이건규 공동(co-first), 교신저자 = 김가경·이건규 공동. Acknowledgements(Pseudo Lab·Modulabs)와 Funding(MSIT/NIPA)은 확정 문구로 반영 완료. **남은 것**: 일부 공저자 영문명·소속 미제출, ORCID, COI 선언, 박상준 Acknowledgement 포함 여부. `<FILL: 소속·ORCID·COI>`
+- **저자 메타데이터 — 일부 확정(2026-08-27 회의, BIOP02-114).** 제1저자 = 김가경·이건규 공동(co-first), 교신저자 = 김가경·이건규 공동. Acknowledgements(Pseudo Lab·Modulabs)와 Funding(MSIT/NIPA)은 확정 문구로 반영 완료. **남은 것**: 일부 공저자 영문명·소속 미제출, ORCID, COI 선언. `<FILL: 소속·ORCID·COI>`
 - **Yale(R6/M7)은 `critic_status: pending`** — 잠정, Abstract/헤드라인에서 제외; 본문 승격은 Critic 서명 후에만.
 - **20-seed HPV/Virchow2 플립 미채택** — braveji 대기(BIOP02-123)로 상태는 "3개 중 2개 모델" 유지.
 - **PAM50 라벨 출처** — cBioPortal과 57.0% 일치; fallback 조건 미충족(커버리지 97.2%). 정본 라벨 출처는 Methods 미결 정합 항목(BIOP02-74).
@@ -252,7 +252,7 @@ CLAM-SB attention MIL[CITE-M9]을 사용하였다(hidden 512·attention 256, 40�
 
 계산 자원은 모두의연구소(Modulabs)가 제공한 GPU(A6000 ×3)를 사용하였다. <!-- 자원 제공 조건: 프로젝트 README·CLAUDE.md Infrastructure -->
 
-<!-- 박상준(Sangjun Park) Acknowledgement 포함 여부는 미확정. 2026-08-27 회의는 '초기 아이디어 제공·참고문헌 분석' 명시로 결정했으나, kkkim 08-20 메모는 이를 BIOP01 전용으로 지정했다. BIOP02-114에서 확인 필요. -->
+<!-- 박상준(Sangjun Park)은 BIOP02 사사에 넣지 않는다 — BIOP01 전용. Leader 확정 2026-09-02, BIOP02-114. -->
 
 ### Funding
 

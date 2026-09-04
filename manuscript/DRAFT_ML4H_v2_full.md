@@ -230,7 +230,7 @@ To test whether the anchor results are an artefact of uncorrected H&E stain vari
 
 ## Open items and gates (for kkkim review)
 
-- **Author metadata — partly settled (meeting of 2026-08-27, BIOP02-114).** First authors: Ka-Kyung Kim and Geon gyu Lee (co-first); corresponding authors: the same two, jointly. Acknowledgements (Pseudo Lab, Modulabs) and Funding (MSIT/NIPA) are now in the manuscript in their agreed wording. **Outstanding**: some co-author names/affiliations not yet submitted, ORCID, COI declarations, and whether Sangjun Park is acknowledged here. `<FILL: affiliations, ORCID, COI>`
+- **Author metadata — partly settled (meeting of 2026-08-27, BIOP02-114).** First authors: Ka-Kyung Kim and Geon gyu Lee (co-first); corresponding authors: the same two, jointly. Acknowledgements (Pseudo Lab, Modulabs) and Funding (MSIT/NIPA) are now in the manuscript in their agreed wording. **Outstanding**: some co-author names/affiliations not yet submitted, ORCID, COI declarations. `<FILL: affiliations, ORCID, COI>`
 - **Yale (R6/M7) is `critic_status: pending`** — provisional, kept out of Abstract/headline; body promotion only after Critic sign-off.
 - **20-seed HPV/Virchow2 flip not adopted** — status stays "2 of 3 models" pending braveji (BIOP02-123).
 - **PAM50 label source** — 57.0 % concordance with cBioPortal; fallback condition not met (coverage 97.2 %). Canonical label source is an open Methods reconciliation item (BIOP02-74).
@@ -250,7 +250,7 @@ The authors thank Pseudo Lab, a non-profit AI/ML research community, for providi
 
 Computation used GPUs (A6000 x3) provided by Modulabs. <!-- resource-provision condition: project README / CLAUDE.md Infrastructure -->
 
-<!-- Inclusion of Sangjun Park in the acknowledgements is unsettled: the 2026-08-27 meeting resolved to name him for the initial idea and reference analysis, but the kkkim note of 08-20 scoped that to BIOP01 only. To confirm in BIOP02-114. -->
+<!-- Sangjun Park is not acknowledged in BIOP02 - BIOP01 only. Settled by the Leader on 2026-09-02, BIOP02-114. -->
 
 ### Funding
 
