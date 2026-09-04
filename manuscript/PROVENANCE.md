@@ -43,3 +43,7 @@
 | `P36` | 03_methods.md M9; site_audit_results.json |
 | `P37` | experiments/kkkim/20260819_stain_norm_robustness/RESUME.md; clam_rerun/sjpark/*/metrics.json (0.6408/0.9166/0.7396) |
 | `P38` | CROSSCHECK_5SEED_MULTIFM.md, MULTIFM_COMPARISON.md (5-seed 정본). 여기 대장 BRAF 행은 5-seed holdout151 값(0.8676 등)으로, 표 R1의 holdout161 라우팅 값 0.882와 다른 분할이다 — 같은 마커, CI 일관. |
+
+## 분할 해시
+
+`split_policy_v0` 정본 fold hash = `5995f29d3978b831` (2026-07-11 lock, train 707 / val 152 / test 151)

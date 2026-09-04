@@ -201,16 +201,16 @@ CLAM-SB attention MIL[CITE-M9]을 사용하였다(hidden 512·attention 256, 40�
 판정 임계는 슬라이드나 관찰값이 아니라 봉인된 사전등록 문서에서만 인용한다. 검정력 규칙(양성 25 미만 → 탐색적 → INCONCLUSIVE)은 결과를 본 뒤 옮기지 않으며 확증과 반증에 대칭으로 적용한다. 모든 산출은 `hypothesis_only`이고 후향적이다. <!-- prov: P33 -->
 
 ### M7. Yale 앵커 (잠정, Critic 대기)
-항HER2 축 점수를 frozen-transfer(앵커 모델을 추가 학습 없이 적용)로 산출하고 Yale 코호트[CITE-M25]의 pCR을 층화해 AUROC와 부트스트랩 95% 신뢰구간을 구한 뒤 측정 HER2 확률 기준선과 DeLong 검정으로 비교하였다. 사전 비교기준은 Farahmand 등[CITE-M13]의 기준(0.80, 95% CI 0.69–0.88)에 근접·중첩하는 것으로 정의하였다. 잠정 결과는 AUROC 0.533 (95% CI 0.411–0.653)이다. 항HER2 축은 H&E-예측 표현형으로 pCR을 층화하지 못했고, 이는 지도의 HER2 음성과 방향적으로 일관된다. 이 값은 잠정이므로 Abstract나 헤드라인 주장으로 옮기지 않는다. <!-- prov: P34 -->
+항HER2 축 점수를 frozen-transfer(앵커 모델을 추가 학습 없이 적용)로 산출하고 Yale 코호트[CITE-M25]의 pCR을 층화해 AUROC와 부트스트랩 95% 신뢰구간을 구한 뒤 측정 HER2 확률 기준선과 DeLong 검정으로 비교하였다. 사전 비교기준은 Farahmand 등[CITE-M13]의 기준(0.80, 95% CI 0.69–0.88)에 근접·중첩하는 것으로 정의하였다. 결과는 R6에 보고한다. 이 앵커는 잠정이므로 Abstract나 헤드라인 주장으로 옮기지 않는다. <!-- prov: P34 -->
 
 ### M8. 다중 모델 견고성
-각 파운데이션 모델 임베딩 공간에서 파운데이션 모델 간 임베딩 공간은 서로 호환되지 않으므로[CITE-M14], 같은 층위의 비교가 되도록 각 공간에서 CLAM을 처음부터 다시 적합하였다. 판정 기준은 5-seed shuffle-null 우연배제(real AUROC > null 평균 + 2×표준편차, ddof = 1)이며 시드는 42·1·2·3·4를 사용하였다. 결정론은 동일 시드 재실행 2회로 확인하였다(대장 BRAF Virchow2 시드 42 = 0.8798 재현). 정본 결과는 `CROSSCHECK_5SEED_MULTIFM.md`와 `MULTIFM_COMPARISON.md`에 있다. 커밋된 소스로부터 독립 재계산이 이루어졌으며(교차검증 PASS), 최종 다중 FM Critic 서명은 진행 중이다. <!-- BIOP02-101 --> <!-- prov: P35 -->
+각 파운데이션 모델 임베딩 공간에서 파운데이션 모델 간 임베딩 공간은 서로 호환되지 않으므로[CITE-M14], 같은 층위의 비교가 되도록 각 공간에서 CLAM을 처음부터 다시 적합하였다. 판정 기준은 5-seed shuffle-null 우연배제(real AUROC > null 평균 + 2×표준편차, ddof = 1)이며 시드는 42·1·2·3·4를 사용하였다. 결정론은 동일 시드 재실행 2회로 확인하였다(재현 값은 표 R5). 정본 결과는 `CROSSCHECK_5SEED_MULTIFM.md`와 `MULTIFM_COMPARISON.md`에 있다. 커밋된 소스로부터 독립 재계산이 이루어졌으며(교차검증 PASS), 최종 다중 FM Critic 서명은 진행 중이다. <!-- BIOP02-101 --> <!-- prov: P35 -->
 
 ### M9. site/batch 교란 감사
 각 endpoint에서 site-disjoint 분할이 라벨을 조직원천기관(TSS)과 교란하는지 정량화하였다. site와 label의 Cramér's V[CITE-M15]와 순열 p, train/test 유병률 시프트, test 양성의 site 집중도 순열검정을 산출하였다. 이는 교란의 필요조건을 보는 분석이며, 모델이 실제로 site를 사용하는지에 대한 최종 판정은 H&E로부터의 site 예측성과 leave-one-site-out 성능으로 한다. <!-- prov: P36 -->
 
 ### M10. 염색 정규화 견고성 (유방 앵커)
-앵커 결과가 미보정 H&E 염색 변이의 아티팩트인지 검정하기 위해, 유방 앵커 슬라이드에서 Macenko 염색 정규화[CITE-M16](torchstain 1.3.0[CITE-M24], 고정된 조밀조직 참조 타일)로 임베딩을 재추출하고 같은 fold(`split_policy_v0`, fold hash 5995f29d3978b831)에서 ER·HER2·PAM50에 대해 CLAM을 재학습하였다. HER2 표현형 예측은 우연 수준에 머물렀고(AUROC 0.641), ER은 높게 유지(0.917), PAM50은 보존(0.740)되었으며, 앵커 순위 ER > PAM50 > HER2는 정규화 미적용 앵커 순서(표 R1: ER 0.901, PAM50 0.759, HER2 0.599)와 일치한다. 표현형 예측만 재실행했고 라우팅/비용 파이프라인은 재실행하지 않았으며, 염색 정규화 실행에는 shuffle-null을 계산하지 않았다. 이 견고성 점검은 유방 앵커에만 해당하며, 다암종 raw 슬라이드는 소실되어 염색 정규화 재추출은 보류한다. <!-- prov: P37 -->
+앵커 결과가 미보정 H&E 염색 변이의 아티팩트인지 검정하기 위해, 유방 앵커 슬라이드에서 Macenko 염색 정규화[CITE-M16](torchstain 1.3.0[CITE-M24], 고정된 조밀조직 참조 타일)로 임베딩을 재추출하고 같은 fold(`split_policy_v0`)에서 <!-- fold hash 는 PROVENANCE.md --> ER·HER2·PAM50에 대해 CLAM을 재학습하였다. 결과와 정규화 미적용 앵커와의 대조는 R3에 보고한다. 표현형 예측만 재실행했고 라우팅/비용 파이프라인은 재실행하지 않았으며, 염색 정규화 실행에는 shuffle-null을 계산하지 않았다. 이 견고성 점검은 유방 앵커에만 해당하며, 다암종 raw 슬라이드는 소실되어 염색 정규화 재추출은 보류한다. <!-- prov: P37 -->
 
 ---
 
