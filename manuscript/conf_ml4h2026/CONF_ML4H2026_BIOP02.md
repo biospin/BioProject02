@@ -189,26 +189,19 @@ To test whether the anchor results are an artefact of uncorrected H&E stain vari
 
 ## Figures and Tables
 
-Main text carries one figure. At four pages, a larger figure set cannot be accommodated, and the remaining panels are supporting rather than load-bearing, so they are placed in the appendix where there is no length limit.
+The main text carries exactly one figure: Figure 1, the observed map overlaying misassignment loss on the confusion matrix weighted by therapeutic distance (`figures/fig01_cost_map.pdf`). This figure fixes both ends of the spectrum in a single panel.
 
-**Figure 1 (main text)** Observed map overlaying misassignment loss on the confusion matrix weighted by therapeutic distance. This is the central result of the paper: it fixes both ends of the spectrum in one panel.
-`figures/fig01_cost_map.pdf`
+The remaining figures are placed in the appendix, where the CFP imposes no length limit.
 
-**Appendix figures**
+**Figure A1** Per-axis misassignment loss and the confidence interval of the headline contrast (`figures/figA1_axis_cost.pdf`).
 
-**Figure A1** Per-axis misassignment loss and the confidence interval of the headline contrast.
-`figures/figA1_axis_cost.pdf`
+**Figure A2** Power ceiling, holdout positives per axis and the boundary of decidability (R2, Table R2) (`figures/figA2_power_ceiling.pdf`).
 
-**Figure A2** Power ceiling: holdout positives per axis and the boundary of decidability (R2, Table R2).
-`figures/figA2_power_ceiling.pdf`
+**Figure A3** Site confounding audit, site-label association per endpoint (R1 footnote, Appendix C M9) (`figures/figA3_site_confounding.pdf`).
 
-**Figure A3** Site confounding audit: site-label association per endpoint (R1 footnote, Appendix C M9).
-`figures/figA3_site_confounding.pdf`
+**Figure A4** Multi-model comparison, order preservation across UNI, Virchow2 and UNI2-h and the diverging single endpoints (Appendix A, Table R5) (`<FILL: not yet rendered>`).
 
-**Figure A4** Multi-model comparison: order preservation across UNI, Virchow2 and UNI2-h, and the diverging single endpoints (Appendix A, Table R5).
-`<FILL: 아직 렌더되지 않음>`
-
-A pipeline schematic was dropped rather than newly drawn. No such figure exists in the repository, and the pipeline is fully described in M1 and M4.
+The pipeline schematic was dropped rather than newly drawn, because no such figure exists and the pipeline is fully described in M1 and M4.
 
 <!-- CONDENSATION LOG -->
 
@@ -236,10 +229,14 @@ R7: Moved spatial-transcriptomics detail to Appendix B. Left a main-text pointer
 
 Discussion: Compressed overall interpretation while keeping safety of substitution as the criterion, HER2 and KRAS as dangerous substitution axes, Lauren exclusion, retrospective hypothesis-level status, site/batch confounding limits, stain-variation limits, model-independence caveat, PAM50 provenance, and clinical non-recommendation. Added the requested Fernandez-Romero 2026 positioning as convergent prior work and convergent HER2-axis evidence without priority claims.
 
-Methods: Main text retains only cohort definitions, evaluation design, cost frame and claim discipline. Moved tiling, embedding, model/training, pCR anchor, multi-model robustness, site audit and stain-normalisation implementation to Appendix C. Removed visible repository paths and sealed-document filenames for double-blind compliance.
+Methods: Main text retains only cohort definitions, evaluation design, cost frame and claim discipline. Moved tiling, embedding, model/training, pCR anchor, multi-model robustness, site audit and stain-normalisation implementation to Appendix C. Removed visible repository paths and internal provenance filenames for double-blind compliance.
 
 Appendix A: Contains detailed R5 content and Table R5. Preserved all model-specific numbers and caveats.
 
 Appendix B: Contains detailed R7 spatial-transcriptomics content. Preserved hypothesis-only status, all spatial-transcriptomics numbers, and all biological and substrate limitations.
 
 Appendix C: Contains M2, M3 and M7–M10 methods moved from the main text. Removed repository paths and internal provenance filenames. Kept citation markers and all numeric values exactly as copied from the source.
+
+Revision note: Restored the R1 caveats for HPV, LUSC histology and gastric Lauren; added the requested first-mention citations; removed remaining em-dash table-caption styling; cut the Abstract definition clause and final validation sentence; rewrote the Figures and Tables section around one main-text figure plus appendix figures; and updated the R1 figure reference to Figure 1 and Figure A1.
+
+Main-text word count excluding appendix and condensation log: approximately 3,180 words.
