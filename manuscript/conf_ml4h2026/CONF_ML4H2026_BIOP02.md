@@ -22,7 +22,7 @@ We tested about fifteen endpoints across five cancers under pre-registration. Ex
 
 ### R1. Substitution-Cost Spectrum
 
-This section converts per-axis substitutability into cost. The central figure overlays cost on the confusion matrix weighted by therapeutic distance; per-axis cost and the confidence interval of the headline contrast are shown separately.
+This section converts per-axis substitutability into cost. Figure 1 overlays cost on the confusion matrix weighted by therapeutic distance; per-axis cost and the confidence interval of the headline contrast are shown in Figure A1.
 
 In the holdout of the primary model UNI [CITE-M5], head and neck HPV reached AUROC 0.959 [0.921–0.986] with 26 positives, above the pre-registered threshold of 0.80. This axis is shaped by viral infection rather than by a mutation, and may extend the law's morphological-correlate clause to non-keratinising, basaloid morphology, but confirmation is confined to HPV. Positive controls behaved as expected: lung LUSC histology 0.939 [0.905–0.967] with 153 positives, and head and neck grade 0.815 [0.742–0.882] with 41 positives.
 
@@ -189,17 +189,26 @@ To test whether the anchor results are an artefact of uncorrected H&E stain vari
 
 ## Figures and Tables
 
-**Fig1** Pipeline schematic: H&E → embedding → phenotype → routing misassignment rate.
+Main text carries one figure. At four pages, a larger figure set cannot be accommodated, and the remaining panels are supporting rather than load-bearing, so they are placed in the appendix where there is no length limit.
 
-**Fig2** Observed map overlaying misassignment loss on confusion × distance.
+**Figure 1 (main text)** Observed map overlaying misassignment loss on the confusion matrix weighted by therapeutic distance. This is the central result of the paper: it fixes both ends of the spectrum in one panel.
+`figures/fig01_cost_map.pdf`
 
-**Fig3** Per-axis misassignment loss and confidence interval of the headline contrast.
+**Appendix figures**
 
-**Fig4** Power ceiling: holdout positives per axis and the boundary of decidability.
+**Figure A1** Per-axis misassignment loss and the confidence interval of the headline contrast.
+`figures/figA1_axis_cost.pdf`
 
-**Fig5** HER2 misassignment detail: treatment-category misassignment rates by routing scheme.
+**Figure A2** Power ceiling: holdout positives per axis and the boundary of decidability (R2, Table R2).
+`figures/figA2_power_ceiling.pdf`
 
-**SFig1** Multi-model comparison: order preservation across UNI, Virchow2 and UNI2-h and diverging cells.
+**Figure A3** Site confounding audit: site-label association per endpoint (R1 footnote, Appendix C M9).
+`figures/figA3_site_confounding.pdf`
+
+**Figure A4** Multi-model comparison: order preservation across UNI, Virchow2 and UNI2-h, and the diverging single endpoints (Appendix A, Table R5).
+`<FILL: 아직 렌더되지 않음>`
+
+A pipeline schematic was dropped rather than newly drawn. No such figure exists in the repository, and the pipeline is fully described in M1 and M4.
 
 <!-- CONDENSATION LOG -->
 
