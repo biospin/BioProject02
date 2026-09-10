@@ -303,3 +303,8 @@ INFRA_PRIVATE.md
 biop02_infra.local
 
 
+
+# LaTeX 중간산출물
+manuscript/conf_ml4h2026/*.aux
+manuscript/conf_ml4h2026/*.log
+manuscript/conf_ml4h2026/*.out
