@@ -154,7 +154,7 @@ data version that produced it.
 했으나 커버리지가 97.2%로 "부족"이 아닌데 전 코호트가 계산본을 사용)도 결론이 났다. **결정:
 Parker 2009 계산본(`tcga_brca_pam50_computed.csv`)을 정본으로 유지**하고 cBioPortal로 전환하지
 않는다 — 분석이 이미 이 라벨로 검증됐고(manifest 1009/1009 일치) Parker centroid는 PAM50 정본
-분류기이기 때문. 57.0% 불일치는 오류가 아니라 로컬 계산본 vs curated atlas의 파생 차이이며 위
+분류기이기 때문. 57.0% 일치(514/902)이고 나머지 43.0% 불일치(388/902)는 오류가 아니라 로컬 계산본 vs curated atlas의 파생 차이이며 위
 Methods 본문에 투명성 항목으로 보고했다. `split_policy_v0.md` §10 문구도 실사용에 맞게 정정
 (§10.1 신설). 재현 스크립트=`agents/data/scripts/pam50_source_reconcile.py`.*
 

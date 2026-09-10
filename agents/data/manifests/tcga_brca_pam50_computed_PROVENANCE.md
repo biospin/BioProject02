@@ -10,7 +10,7 @@
 - 행수: 1218 case (TCGA barcode). 값: LumA/LumB/HER2/Basal/Normal.
 - confidence: min 0.808 · max 0.925 · mean 0.867 (전부 고신뢰 구간).
 
-## 소스 정체 (jamie의 57% 불일치 규명)
+## 소스 정체 (jamie의 57.0% 일치율 규명)
 **cBioPortal의 curated study가 아니라, Parker 2009 PAM50 nearest-centroid classifier로 발현에서 계산한 라벨이다.**
 - 근거 문헌: Parker et al. 2009, JCO, PAM50 (DOI `10.1200/JCO.2008.18.1370`). 요약 = `research/datasets-benchmarks/parker-2009-pam50/parker-2009-pam50_brief.md`.
 - `pam50_confidence` 컬럼(centroid 상관 기반)이 계산본임을 방증.
