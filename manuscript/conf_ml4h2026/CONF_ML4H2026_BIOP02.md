@@ -30,7 +30,7 @@ At the illegible end, breast HER2 was 0.599, effectively at chance; in this coho
 
 Every endpoint is reported alongside a shuffle-null, a prevalence baseline and a pixel-mean baseline; lung mutation axes also carry a subtype-only baseline. Epistemic status differs by cohort: lung, gastric and head and neck were sealed-forward tests with predictions committed before results, whereas colorectal was analysed after results were already available and is excluded from the tally of powered, sealed confirmations.
 
-**Table R1 — Observed substitution-cost spectrum (UNI canonical). Cost is treatment misassignment loss.**
+**Table R1. Observed substitution-cost spectrum (UNI canonical). Cost is treatment misassignment loss.**
 
 | Cancer | Axis | Role | AUROC [95% CI] | Holdout n_pos / control baseline | Morphological correlate | Verdict |
 |---|---|---|---|---|---|---|
@@ -53,7 +53,7 @@ Clinically important mutation and amplification axes repeatedly fell short of th
 
 The threshold was not adjusted after the fact. Gastric MSI came one patient short at 24, and we did not lower the criterion from 25 to 24. Deciding substitutability of mutation axes will therefore require institutional cohorts or prospective collection, and until then the middle of the map is left open.
 
-**Table R2 — Power ceiling**
+**Table R2. Power ceiling**
 
 | Axis | Holdout positives | Verdict |
 |---|---|---|
@@ -142,7 +142,7 @@ Two kinds of negative must be distinguished. Gastric Lauren fails chance-exclusi
 
 Head and neck EGFR amplification shows that clearing chance-exclusion is not itself evidence of signal. It is formally recorded as passing in UNI2-h, yet its real AUROC is 0.505, essentially chance; the shuffle-null spread was narrow, so the threshold sat correspondingly low.
 
-**Table R5 — Multiple foundation models (5-seed canonical)**
+**Table R5. Multiple foundation models (5-seed canonical)**
 
 | Endpoint | UNI | Virchow2 | UNI2-h | 5-seed chance-exclusion |
 |---|---|---|---|---|
