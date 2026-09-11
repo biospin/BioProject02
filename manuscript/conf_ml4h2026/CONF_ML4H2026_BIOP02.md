@@ -1,20 +1,19 @@
+```markdown
 # Safety of Substitution: Cost-Aware Evaluation of H&E-Based Molecular Test Replacement Across Five Cancers
 
 ## Abstract
 
-That a tumour's molecular phenotype can be predicted from haematoxylin-and-eosin (H&E) histology, and that such a prediction may clinically replace molecular testing, are different claims. We propose a cost-of-substitution frame that converts prediction errors into the misassignment cost of a pre-specified treatment routing. Across five cancers (breast as the anchor plus lung, colorectal, gastric and head and neck), we sealed and tested a pre-registered morphological-correlate law under one protocol, but powered confirmation is limited. The observed spectrum is fixed by measurement at two ends: head and neck HPV, a morphology-legible viral axis, reached holdout AUROC 0.959 and was the only powered, non-control positive result in the pre-registered holdout of the primary model UNI; lung LUSC histology reached 0.939 as a positive control. By contrast, breast HER2 showed no signal supporting substitution in this cohort and routing definition, with AUROC 0.599 and anti-HER2 misassignment rate 1.00. The underlying HER2 phenotype prediction remained near chance under H&E stain normalisation, so the HER2 negative is not an artefact of stain variation, although the routing/cost step itself was not re-run under normalisation. Most clinically important mutation and amplification axes are exploratory because holdout positives fall short of 25 under our pre-registered site-disjoint split. Some exploratory results are compatible with the morphological-correlate hypothesis, but we lacked the power to establish the direction of the law across mutation and amplification axes. We propose safety of substitution, not predictability, as the decision criterion.
+That a tumour's molecular phenotype can be predicted from haematoxylin-and-eosin (H&E) histology, and that such a prediction may clinically replace molecular testing, are different claims. We propose a cost-of-substitution frame that converts prediction errors into the misassignment cost of a pre-specified treatment routing. Across five cancers (breast as the anchor plus lung, colorectal, gastric and head and neck), we sealed and tested a pre-registered morphological-correlate law under one protocol, but powered confirmation is limited. The observed spectrum is fixed by measurement at two ends: head and neck HPV, a morphology-legible viral axis, reached holdout AUROC 0.959 and was the only powered, non-control positive result in the pre-registered holdout of the primary model UNI; lung LUSC histology reached 0.939 as a positive control. By contrast, breast HER2 showed no signal supporting substitution in this cohort and routing definition, with AUROC 0.599 and anti-HER2 misassignment rate 1.00. The underlying HER2 phenotype prediction remained near chance under H&E stain normalisation, so the HER2 negative is not an artefact of stain variation, although the routing/cost step itself was not re-run under normalisation. Most clinically important mutation and amplification axes are exploratory because holdout positives fall short of 25 under our pre-registered site-disjoint split. Some exploratory results are compatible with the morphological-correlate hypothesis, but we lacked the power to establish the direction of the law across mutation and amplification axes. We propose safety of substitution, not predictability, as the decision criterion for this retrospective, cohort-level map.
 
 ## 1. Introduction
 
 AI analysis of histopathological H&E images has expanded across organs as digital pathology has spread [CITE-I1], with weakly supervised multiple-instance learning and pathology foundation models supporting work in urological cancers, breast cancer, pancreatic cancer and other settings [CITE-I2] [CITE-I3] [CITE-I4] [CITE-I5] [CITE-I6]. A persistent target has been molecular-state prediction from images, because IHC staining and tissue-destructive molecular tests are generally costly and slow, whereas H&E is relatively inexpensive and already acquired in routine care [CITE-I7]. Molecular tests guide diagnosis, prognosis and treatment across cancer types [CITE-I8], and molecular state can often be predicted from H&E [CITE-I9].
 
-Prediction alone, however, does not establish that a molecular test can be replaced. The same AUROC can have different clinical consequences depending on which treatment decision the error changes [CITE-I10] [CITE-I11]. We therefore ask when H&E substitution is safe, not simply when a label is predictable.
-
-Our frame converts prediction errors into the misassignment cost of treatment routing. It does not predict drug response and takes no drug structure as input. It operationalises only the substitution cost from marker to treatment assignment.
+Prediction alone, however, does not establish that a molecular test can be replaced. The same AUROC can have different clinical consequences depending on which treatment decision the error changes [CITE-I10] [CITE-I11]. We therefore ask when H&E substitution is safe, not simply when a label is predictable. Our frame converts prediction errors into the misassignment cost of treatment routing. It does not predict drug response and takes no drug structure as input. It operationalises only the substitution cost from marker to treatment assignment.
 
 We test a pre-registered morphological-correlate law across five cancers: breast as the anchor plus lung, colorectal, gastric and head and neck. The law states that H&E can cheaply stand in for a test only when the molecular alteration has a morphological correlate recognisable at H&E resolution. These cancers are a deliberate boundary, not an open pan-cancer atlas expansion; and sealing predictions before results provides claim discipline rather than automatic confirmatory strength.
 
-This paper makes four contributions. First, it introduces a cost-of-substitution frame and applies one pre-registered protocol across five cancers to separate confirmable axes from undecided ones. Second, it reports an honest negative anchor: breast HER2 shows no signal supporting H&E-based substitution, and this negative is robust to H&E stain normalisation at the phenotype-prediction level. Third, it explicitly adjudicates insufficient power on mutation and amplification axes rather than reporting only axes that score high. Fourth, it frames a different question from single-cohort breast prediction [CITE-I12], including Fernandez-Romero 2026 [CITE-I12], and from drug-sensitivity prediction [CITE-I13]: when substitution for a molecular test is safe.
+This paper introduces a cost-of-substitution frame, applies one pre-registered protocol across five cancers, reports an honest negative anchor for breast HER2, adjudicates insufficient power on mutation and amplification axes rather than reporting only high-scoring axes, and frames a different question from single-cohort breast prediction [CITE-I12], including Fernandez-Romero 2026 [CITE-I12], and from drug-sensitivity prediction [CITE-I13]: when substitution for a molecular test is safe.
 
 ## 2. Results
 
@@ -45,24 +44,13 @@ Every endpoint is reported alongside a shuffle-null, a prevalence baseline and a
 | Breast | HER2 | Anchor | 0.599 | near-random | Absent | No signal supporting substitution; negative anchor |
 | Gastric | Lauren diffuse | Original positive control | 0.536 (development 0.963) | pixel-mean 0.631 | Weakly present | Site-split case (R4) |
 
-HPV robustness passed 5-seed chance-exclusion in only 2 of 3 foundation models: UNI and UNI2-h [CITE-M23] passed, while Virchow2 [CITE-M6] did not clear the pre-specified criterion (real 0.9199 < threshold 0.9234, margin −0.0035). The site audit also found site-label structuring (Cramér's V = 0.378). HPV is therefore the single powered anchor that fixes one end of the map, not a generalisation of the law and not a model-independent confirmation. For lung histology, V(site, label) = 1.000, so morphology and site signature cannot be separated. The HPV and MSI-H axes were robust to tile subsampling, but slide-level reproducibility was not established; predictions diverged between multiple slides from the same patient (TCGA-QK-A6IF, 0.92 vs 0.001). Clinical substitution on these axes therefore requires multi-centre prospective validation, multi-slide reproducibility and verification of tumour-region contribution.
+HPV robustness passed 5-seed chance-exclusion in only 2 of 3 foundation models: UNI and UNI2-h [CITE-M23] passed, while Virchow2 [CITE-M6] did not clear the pre-specified criterion (real 0.9199 < threshold 0.9234, margin −0.0035). The site audit also found site-label structuring (Cramér's V = 0.397). HPV is therefore the single powered anchor that fixes one end of the map, not a generalisation of the law and not a model-independent confirmation. For lung histology, V(site, label) = 1.000, so morphology and site signature cannot be separated. The HPV and MSI-H axes were robust to tile subsampling, but slide-level reproducibility was not established; predictions diverged between multiple slides from the same patient (TCGA-QK-A6IF, 0.92 vs 0.001). Clinical substitution on these axes therefore requires multi-centre prospective validation, multi-slide reproducibility and verification of tumour-region contribution.
 
 ### R2. Power Ceiling
 
 Clinically important mutation and amplification axes repeatedly fell short of the threshold of twenty-five positives in the pre-registered holdout. In the single site-disjoint split we chose, most actionable mutations were not adequately powered. We do not generalise this to public data being impossible in principle; power might be recovered with grouped or leave-one-site-out cross-validation, which we treat as exploratory.
 
-The threshold was not adjusted after the fact. Gastric MSI came one patient short at 24, and we did not lower the criterion from 25 to 24. Deciding substitutability of mutation axes will therefore require institutional cohorts or prospective collection, and until then the middle of the map is left open.
-
-**Table R2. Power ceiling**
-
-| Axis | Holdout positives | Verdict |
-|---|---|---|
-| Lung EGFR activating | 15 | Undecided |
-| Lung KRAS-G12C | 14 | Undecided |
-| Gastric ERBB2 amplification | 14 | Underpowered; no observed signal |
-| Gastric MSI-H | 24 | Undecided (1 short of threshold) |
-| Gastric EBV | 7 | Exploratory |
-| Head and neck EGFR amplification | 17 | Undecided |
+The affected axes were lung EGFR activating, 15 positives; lung KRAS-G12C, 14 positives; gastric ERBB2 amplification, 14 positives; gastric MSI-H, 24 positives; gastric EBV, 7 positives; and head and neck EGFR amplification, 17 positives; full verdicts are in Appendix A, Table R2. The threshold was not adjusted after the fact. Gastric MSI came one patient short at 24, and we did not lower the criterion from 25 to 24. Deciding substitutability of mutation axes will therefore require institutional cohorts or prospective collection, and until then the middle of the map is left open.
 
 ### R3. Breast Anchor
 
@@ -78,29 +66,23 @@ Lauren diffuse was originally a positive control. Signet-ring and diffuse-type t
 
 We therefore describe this case as a methodological instance in which site-disjoint evaluation correctly blocked shortcut learning, and confine the low-confidence verdict to gastric Lauren. MSI in the same cohort remains valid. We do not write that H&E cannot see Lauren. The representative cases for the thesis that predictability and substitutability are different claims are breast HER2 and lung KRAS.
 
-### R5. Foundation Models
+### R5-R7. Appendix-Supported Checks
 
-Foundation-model robustness is moved to Appendix A. In brief, lung endpoint ordering was preserved across UNI, Virchow2 and UNI2-h (histology > EGFR > KRAS; Spearman 1.000 against UNI for both newer models), and the principal negatives reproduced. However, individual molecular axes did not clear chance-exclusion in all models: HPV passed in UNI and UNI2-h but not Virchow2, and colorectal BRAF passed in UNI and Virchow2 but not UNI2-h. This is rank stability and negative-result reproducibility, not model independence of the law.
+R5 foundation-model robustness is in Appendix A, Table R5. In brief, lung endpoint ordering was preserved across UNI, Virchow2 and UNI2-h (histology > EGFR > KRAS; Spearman 1.000 against UNI for both newer models), and the principal negatives reproduced. However, individual molecular axes did not clear chance-exclusion in all models: HPV passed in UNI and UNI2-h but not Virchow2, and colorectal BRAF passed in UNI and Virchow2 but not UNI2-h. This is rank stability and negative-result reproducibility, not model independence of the law.
 
-### R6. External Treatment-Outcome Anchor
+R6 external treatment-outcome anchoring is retained only as a pending pointer, with method and provisional value in Appendix C. The anti-HER2 axis score was computed by frozen transfer and used to stratify pathological complete response in an external cohort, evaluated by AUROC with bootstrap confidence intervals and compared against a measured-HER2 probability baseline with DeLong's test [CITE-M12]. This result is `critic_status: pending` and is not promoted to the Abstract or headline claims. Directionally, the anti-HER2 axis did not stratify pCR from the H&E-predicted phenotype, consistent with the retrospective map's HER2 negative.
 
-As an exploratory check, the anti-HER2 axis score was computed by frozen transfer and used to stratify pathological complete response in an external cohort, evaluated by AUROC with bootstrap confidence intervals and compared against a measured-HER2 probability baseline with DeLong's test [CITE-M12]. This result is `critic_status: pending` and is not promoted to the Abstract or headline claims. It is retained as a pending pointer only: the anti-HER2 axis did not stratify pCR from the H&E-predicted phenotype, directionally consistent with the retrospective map's HER2 negative. Full method and the provisional value are in Appendix C.
-
-### R7. Spatial Mechanism
-
-Spatial transcriptomics analyses are moved to Appendix B because they are `hypothesis_only` and Critic pending. In brief, HER2-positive tumours showed low-expression tumour regions that may help explain subtype-routing error, but mRNA differs from protein and amplification, a spot is not a cell, and the spatial cohort is not the same cohort. The colorectal spatial correlate did not emerge at Visium resolution, leaving that mechanism open.
+R7 spatial transcriptomics analyses are in Appendix B because they are `hypothesis_only` and Critic pending. In brief, HER2-positive tumours showed low-expression tumour regions that may help explain subtype-routing error, but mRNA differs from protein and amplification, a spot is not a cell, and the spatial cohort is not the same cohort. The colorectal spatial correlate did not emerge at Visium resolution, leaving that mechanism open.
 
 ## 3. Discussion
 
-Our map takes safety of substitution, not predictability, as its criterion. The core of the frame is that the boundary differs by axis and that this boundary is quantified as clinical cost.
+Our map takes safety of substitution, not predictability, as its criterion. The frame flags axes where H&E substitution is dangerous, such as breast HER2 and lung KRAS, and separates them from axes that are undecided or artefactual. Gastric Lauren is excluded from the dangerous-substitution list because it is a site-split artefact rather than an absence of morphology.
 
-Identifying axes not legible in morphology is useful in itself. The frame flags axes where H&E substitution is dangerous, such as breast HER2 and lung KRAS. Gastric Lauren is excluded from this list because it is a site-split artefact rather than an absence of morphology.
-
-In breast HER2, routing from predicted subtype failed consistently in this cohort and routing definition, indicating as cost a region where molecular testing remains necessary. We state the scheme dependence of per-axis cost and restrict robust claims to the anti-HER2 misassignment rate of 1.00 and the confidence interval of the contrast. This negative is not a stain artefact at the phenotype-prediction level: under stain normalisation on the breast anchor, HER2 remained near chance while ER and PAM50 were preserved. The external treatment-outcome anchor is directionally consistent with the HER2 negative, but remains `critic_status: pending`.
+In breast HER2, routing from predicted subtype failed consistently in this cohort and routing definition, indicating as cost a region where molecular testing remains necessary. We state the scheme dependence of per-axis cost and restrict robust claims to the anti-HER2 misassignment rate of 1.00 and the confidence interval of the contrast. This negative is not a stain artefact at the phenotype-prediction level; the external treatment-outcome anchor is directionally consistent with it, but remains `critic_status: pending`.
 
 Fernandez-Romero 2026 [CITE-I12] is convergent prior work on the HER2 axis rather than a priority boundary. The difference is the question asked: they quantify how much performance drops across breast cohorts, whereas we ask when substitution for a molecular test is safe. The output metric also differs: they report macro-F1/PR-AUC degradation, while we report misassignment rate against a pre-defined treatment-routing rule. The scope differs as well: their study is breast-only, whereas ours uses breast as an anchor plus lung, colorectal, gastric and head and neck. Finally, their split design is patient-stratified random cross-validation, while ours is pre-registered site-disjoint evaluation with sealed scoring. Any causal explanation for the difference in degradation is only a hypothesis, because metrics, foundation models and inclusion criteria differ.
 
-The limits are placed in front. All results are retrospective, cohort-level and `hypothesis_only`; they are not claims of individual-level benefit. The site-disjoint split prevented leakage in which slides from the same tissue source site enter both training and evaluation, but label-institution coupling remains and limits interpretation as pure morphology. The audit confirmed site-label structuring in multiple endpoints: lung histology at V = 1.000, head and neck HPV at V = 0.378, gastric Lauren with prevalence shifting from 0.46 to 0.88, and lung EGFR and KRAS with significant site-label association. This is a necessary condition for confounding, not proof that the model reads site. Site predictability from H&E and leave-one-site-out performance are needed to adjudicate the confounding question.
+The limits are placed in front. All results are retrospective, cohort-level and `hypothesis_only`; they are not claims of individual-level benefit. The site-disjoint split prevented leakage in which slides from the same tissue source site enter both training and evaluation, but label-institution coupling remains and limits interpretation as pure morphology. The audit confirmed site-label structuring in multiple endpoints already described above, including lung histology at V = 1.000 and head and neck HPV at V = 0.397. This is a necessary condition for confounding, not proof that the model reads site. Site predictability from H&E and leave-one-site-out performance are needed to adjudicate the confounding question.
 
 Stain variation is a separate limit. H&E stain normalisation was not applied in the main pipeline; uncorrected stain variation is a known source of domain shift in pathology imaging [CITE-M17]. The breast-anchor robustness check preserved the HER2-negative pattern, but the cross-cancer headline axes, head and neck HPV and lung histology, were not stain-verified. The two headline results most vulnerable to scanner or stain critique therefore carry site-confounding flags and are not yet stain-verified.
 
@@ -110,27 +92,22 @@ PAM50 provenance is stated explicitly because the endpoint carries weight in the
 
 Clinically, this observational map identifies negative axes where H&E substitution is clearly dangerous, undecided axes that present data cannot adjudicate, and morphology-legible axes that justify prospective validation. The paper makes no clinical recommendation and no claim of wholesale replacement. Its contribution is not beating the gold standard, but making predictable, as a map, when inexpensive H&E can pre-screen or triage molecular testing and when it cannot.
 
-## 4. Methods
+## 4. M5. Cost-of-Substitution Frame
 
-### M1. Cohorts and Labels
+Substitution cost is defined by multiplying the confusion matrix by therapeutic distance, giving the misassignment cost incurred where the treatment chosen from the measured marker and the treatment chosen from the H&E-predicted marker diverge. The lead indicator is the distance-independent misroute rate. This frame does not predict drug response and takes no drug structure as input. Cohorts and labels (M1), evaluation design (M4) and claim discipline (M6) are moved in full to Appendix C.
 
-Breast cancer (TCGA-BRCA, about 1,010 diagnostic slides) [CITE-M1] served as the anchor, together with lung (TCGA-LUAD/LUSC) [CITE-M18], colorectal (TCGA-COAD/READ) [CITE-M19], gastric (TCGA-STAD) [CITE-M20] and head and neck (TCGA-HNSC) [CITE-M21], five cancers in total. Slide counts per cohort were measured in result JSON files: colorectal 523, lung 1,026, gastric 439, head and neck 468.
+## Appendix A. Results Tables and R5 Foundation-Model Robustness
 
-For the breast PAM50 endpoint, the canonical analysis endpoint is CLAM-MB, uni_v1, 4-class (`pam50_clam_mb_uni_v1_4class`). The labels use a nearest-centroid computation [CITE-M2] as implemented in genefu [CITE-M22]. The manifest labels and cBioPortal PanCancer Atlas SUBTYPE labels [CITE-M3] agree on 57.0 % of overlapping patients (514/902; 43.0 % discordance). The discordance is reported transparently.
+**Table R2. Power ceiling**
 
-### M4. Evaluation Design
-
-All evaluation was performed on a site-disjoint holdout. Slides from the same tissue source site were prevented from entering training and evaluation simultaneously, blocking leakage via institutional fingerprints [CITE-M10]; validation and test were combined for power. Three controls were used: a shuffle-null, a prevalence baseline (0.5) and a subtype-only or pixel-mean baseline. Confidence intervals are reported as 1,000-fold bootstrap 95% CIs [CITE-M11]; where patient clustering matters, CIs were recomputed at the patient level.
-
-### M5. Cost-of-Substitution Frame
-
-Substitution cost is defined by multiplying the confusion matrix by therapeutic distance, giving the misassignment cost incurred where the treatment chosen from the measured marker and the treatment chosen from the H&E-predicted marker diverge. The lead indicator is the distance-independent misroute rate. This frame does not predict drug response and takes no drug structure as input.
-
-### M6. Claim Discipline
-
-Adjudication thresholds are cited only from the sealed pre-registration document, not from slides or observed values. The power rule, fewer than 25 positives → exploratory → INCONCLUSIVE, is not moved after seeing results and is applied symmetrically to confirmation and refutation. All outputs are `hypothesis_only` and retrospective.
-
-## Appendix A. R5 Foundation-Model Robustness
+| Axis | Holdout positives | Verdict |
+|---|---|---|
+| Lung EGFR activating | 15 | Undecided |
+| Lung KRAS-G12C | 14 | Undecided |
+| Gastric ERBB2 amplification | 14 | Underpowered; no observed signal |
+| Gastric MSI-H | 24 | Undecided (1 short of threshold) |
+| Gastric EBV | 7 | Exploratory |
+| Head and neck EGFR amplification | 17 | Undecided |
 
 Holding slides, site-disjoint holdout and endpoints fixed, we retrained CLAM after swapping only the embedding space: UNI 1024-d, Virchow2 2560-d and UNI2-h 1536-d. The claim concerns ordering, not absolute values, and not model independence of individual axes.
 
@@ -163,13 +140,27 @@ By contrast, the spatial correlate predicted in colorectal did not emerge at Vis
 
 ## Appendix C. Additional Methods
 
+### M1. Cohorts and Labels
+
+Breast cancer (TCGA-BRCA, about 1,010 diagnostic slides) [CITE-M1] served as the anchor, together with lung (TCGA-LUAD/LUSC) [CITE-M18], colorectal (TCGA-COAD/READ) [CITE-M19], gastric (TCGA-STAD) [CITE-M20] and head and neck (TCGA-HNSC) [CITE-M21], five cancers in total. Slide counts per cohort were measured in result JSON files: colorectal 523, lung 1,026, gastric 439, head and neck 468.
+
+For the breast PAM50 endpoint, the canonical analysis endpoint is CLAM-MB, uni_v1, 4-class (`pam50_clam_mb_uni_v1_4class`). The labels use a nearest-centroid computation [CITE-M2] as implemented in genefu [CITE-M22]. The manifest labels and cBioPortal PanCancer Atlas SUBTYPE labels [CITE-M3] agree on 57.0 % of overlapping patients (514/902; 43.0 % discordance). The discordance is reported transparently.
+
 ### M2. Tiling and Embedding
 
-Each whole-slide image was tiled into 256×256 pixel patches at 20× magnification, tissue was separated from background by Otsu thresholding [CITE-M4], and a cap of 5,000 tiles per patient was imposed. The headline embedding is UNI v1 (1024-d) [CITE-M5]. For the model-independence test, the same coordinates were re-extracted with Virchow2 [CITE-M6] (2560-d, CLS token concatenated with mean patch token, register tokens excluded) and UNI2-h (1536-d) [CITE-M23]. The slide-level EXAONE Path 2.0 [CITE-M7] interface is incompatible with the coordinate-based pipeline and was excluded from the robustness set. Tiles were resized to 224×224 and channel-normalised with ImageNet statistics [CITE-M8]. H&E stain normalisation was not applied in the main pipeline.
+Each whole-slide image was tiled into 256×256 pixel patches at 20× magnification, tissue was separated from background by Otsu thresholding [CITE-M4], and a cap of 5,000 tiles per patient was imposed. The headline embedding is UNI v1 (1024-d) [CITE-M5]. For the model-independence test, the same coordinates were re-extracted with Virchow2 [CITE-M6] (2560-d, CLS token concatenated with mean patch token, register tokens excluded) and UNI2-h (1536-d) [CITE-M23]. The slide-level EXAONE Path 2.0 [CITE-M7] interface is incompatible with the coordinate-based pipeline and was excluded from the robustness set. Tiles were resized to 224×224 and channel-normalised with ImageNet [CITE-M8] training-set statistics, using the standard torchvision constants. H&E stain normalisation was not applied in the main pipeline.
 
 ### M3. Model and Training
 
 We used CLAM-SB attention MIL [CITE-M9] with hidden 512, attention 256, 40–50 epochs and seed fixed at 42. Predictions were produced per slide and then aggregated per patient.
+
+### M4. Evaluation Design
+
+All evaluation was performed on a site-disjoint holdout. Slides from the same tissue source site were prevented from entering training and evaluation simultaneously, blocking leakage via institutional fingerprints [CITE-M10]; validation and test were combined for power. Three controls were used: a shuffle-null, a prevalence baseline (0.5) and a subtype-only or pixel-mean baseline. Confidence intervals are reported as 1,000-fold bootstrap 95% CIs [CITE-M11]; where patient clustering matters, CIs were recomputed at the patient level.
+
+### M6. Claim Discipline
+
+Adjudication thresholds are cited only from the sealed pre-registration document, not from slides or observed values. The power rule, fewer than 25 positives → exploratory → INCONCLUSIVE, is not moved after seeing results and is applied symmetrically to confirmation and refutation. All outputs are `hypothesis_only` and retrospective.
 
 ### M7. External pCR Anchor
 
@@ -187,56 +178,39 @@ For each endpoint, we quantified whether the site-disjoint split confounds the l
 
 To test whether the anchor results are an artefact of uncorrected H&E stain variation, embeddings were re-extracted from the breast-anchor slides with Macenko stain normalisation [CITE-M16], torchstain 1.3.0 [CITE-M24], and a fixed dense-tissue reference tile. CLAM was re-trained on the same folds for ER, HER2 and PAM50. Only phenotype prediction was re-run, not the routing/cost pipeline, and no shuffle-null was computed for the stain-normalised runs. This robustness check covers the breast anchor only; cross-cancer re-extraction under stain normalisation is deferred.
 
-## Figures and Tables
-
-The main text carries exactly one figure: Figure 1, the observed map overlaying misassignment loss on the confusion matrix weighted by therapeutic distance (`figures/fig01_cost_map.pdf`). This figure fixes both ends of the spectrum in a single panel.
-
-The remaining figures are placed in the appendix, where the CFP imposes no length limit.
-
-**Figure A1** Per-axis misassignment loss and the confidence interval of the headline contrast (`figures/figA1_axis_cost.pdf`).
-
-**Figure A2** Power ceiling, holdout positives per axis and the boundary of decidability (R2, Table R2) (`figures/figA2_power_ceiling.pdf`).
-
-**Figure A3** Site confounding audit, site-label association per endpoint (R1 footnote, Appendix C M9) (`figures/figA3_site_confounding.pdf`).
-
-**Figure A4** Multi-model comparison, order preservation across UNI, Virchow2 and UNI2-h and the diverging single endpoints (Appendix A, Table R5) (`<FILL: not yet rendered>`).
-
-The pipeline schematic was dropped rather than newly drawn, because no such figure exists and the pipeline is fully described in M1 and M4.
-
 <!-- CONDENSATION LOG -->
 
-Main-text word count excluding appendix and this log: approximately 3,180 words.
+Main-text word count excluding appendix and this log: approximately 2,560 words.
 
-Abstract: Trimmed prose while retaining the distinction between predictability and substitution, five-cancer scope, HPV positive, HER2 negative, stain-normalisation caveat, power limitation, retrospective status and prospective-validation requirement. Deleted only circulation comments.
+Abstract: Restored retrospective status in the final sentence without adding a sentence. Retained the distinction between predictability and substitution, five-cancer scope, HPV positive, HER2 negative, stain-normalisation caveat and power limitation.
 
-Introduction: Compressed background literature and contribution list. Kept the cost-of-substitution frame, five-cancer boundary, claim-discipline caveat and distinction from prior breast prediction and drug-sensitivity work. Deleted only venue/team-circulation framing and redundant prose.
+Introduction: Compressed background and contribution prose. Kept the cost-of-substitution frame, five-cancer boundary, claim-discipline caveat and distinction from prior breast prediction and drug-sensitivity work.
 
-R0: Converted from a numbered subsection into an untitled lead-in paragraph as requested. Kept the single powered non-control confirmation, the undecided mutation/amplification axes, and the explicit non-claim that the law was validated across five cancers.
+R0: Kept as the Results lead-in paragraph. Preserved the single powered non-control confirmation, the undecided mutation/amplification axes, and the explicit non-claim that the law was validated across five cancers.
 
-R1: Kept the spectrum, Table R1, HPV caveats, positive controls, HER2 negative, ERBB2 null comparison, KRAS subtype-only baseline and epistemic-status distinction. Shortened figure narration. Deleted only duplicate provenance comments and internal review notes.
+R1: Kept Table R1 in full. Corrected site-label structuring from Cramér's V = 0.378 to Cramér's V = 0.397. Preserved HPV caveats, positive controls, HER2 negative, ERBB2 null comparison, KRAS subtype-only baseline and epistemic-status distinction.
 
-R2: Kept the twenty-five-positive rule, all Table R2 axes and the refusal to lower 25 to 24. Moved exploratory split alternatives into brief text rather than expanded supplement discussion. Deleted no substantive limitation.
+R2: Moved Table R2 to Appendix A. Kept the R2 prose, named all six axes with their counts in the main text, added the appendix pointer, and retained the refusal to lower 25 to 24.
 
-R3: Kept anti-HER2 misassignment rate, scheme dependence, contrast caveat, stain-normalisation robustness, and the limits that routing/cost was not re-run and no shuffle-null was computed. Deleted only internal change-note text.
+R3: Kept anti-HER2 misassignment rate, scheme dependence, contrast caveat, stain-normalisation robustness, and the limits that routing/cost was not re-run and no shuffle-null was computed. The endocrine-therapy routing-cost parenthetical (0.378 versus 0.035; 0.105 versus 0.510) was not changed.
 
-R4: Kept the site-split artefact interpretation, all numeric comparisons, and the warning not to interpret Lauren as morphology-invisible. Deleted only draft-history phrasing.
+R4: Kept the site-split artefact interpretation, all numeric comparisons, and the warning not to interpret Lauren as morphology-invisible.
 
-R5: Moved detailed foundation-model robustness to Appendix A. Left the main-text defence against model artefact: lung ordering preserved, negatives reproduced, but individual axes vary by model and the law is not model-independent.
+R5-R7: Merged into one subsection. Preserved the R5 status as ordering stability rather than model independence, the R6 `critic_status: pending` external anchor, and the R7 `hypothesis_only` spatial work with Critic pending. Main text points to Appendix A, Appendix B and Appendix C.
 
-R6: Kept in the main text as provisional and Critic pending, with no headline promotion. Moved method detail to Appendix C. Deleted the external cohort institution name for double-blind compliance.
+Discussion: Removed repeated reporting of values already given in Results and Methods while keeping the same limitations, boundary conditions and the full Fernandez-Romero 2026 positioning argument. Corrected head and neck HPV from V = 0.378 to V = 0.397.
 
-R7: Moved spatial-transcriptomics detail to Appendix B. Left a main-text pointer and preserved the hypothesis-only and Critic-pending limits.
+Methods: Collapsed the section to M5 only. M1, M4 and M6 were moved in full to Appendix C, with an explicit pointer in the main text.
 
-Discussion: Compressed overall interpretation while keeping safety of substitution as the criterion, HER2 and KRAS as dangerous substitution axes, Lauren exclusion, retrospective hypothesis-level status, site/batch confounding limits, stain-variation limits, model-independence caveat, PAM50 provenance, and clinical non-recommendation. Added the requested Fernandez-Romero 2026 positioning as convergent prior work and convergent HER2-axis evidence without priority claims.
-
-Methods: Main text retains only cohort definitions, evaluation design, cost frame and claim discipline. Moved tiling, embedding, model/training, pCR anchor, multi-model robustness, site audit and stain-normalisation implementation to Appendix C. Removed visible repository paths and internal provenance filenames for double-blind compliance.
-
-Appendix A: Contains detailed R5 content and Table R5. Preserved all model-specific numbers and caveats.
+Appendix A: Now contains Table R2 and detailed R5 foundation-model robustness with Table R5. Figure A4 was dropped; Table R5 carries the multi-model comparison numerically.
 
 Appendix B: Contains detailed R7 spatial-transcriptomics content. Preserved hypothesis-only status, all spatial-transcriptomics numbers, and all biological and substrate limitations.
 
-Appendix C: Contains M2, M3 and M7–M10 methods moved from the main text. Removed repository paths and internal provenance filenames. Kept citation markers and all numeric values exactly as copied from the source.
+Appendix C: Contains M1, M2, M3, M4 and M6–M10. M2 now reads: channel-normalised with ImageNet [CITE-M8] training-set statistics, using the standard torchvision constants.
 
-Revision note: Restored the R1 caveats for HPV, LUSC histology and gastric Lauren; added the requested first-mention citations; removed remaining em-dash table-caption styling; cut the Abstract definition clause and final validation sentence; rewrote the Figures and Tables section around one main-text figure plus appendix figures; and updated the R1 figure reference to Figure 1 and Figure A1.
+Figures and Tables: Deleted the descriptive block from the main text. Figure 1 remains referenced in R1; appendix figure descriptions are no longer listed in a separate main-text block.
 
-Main-text word count excluding appendix and condensation log: approximately 3,180 words.
+Revision note: Moved Table R2 to Appendix A; moved M1, M4 and M6 to Appendix C in full; merged R5, R6 and R7; dropped Figure A4 and pointed to Table R5; removed the Figures and Tables block; corrected the two specified Cramér's V instances; and retained Table R1 in full as the empirical spine.
+
+Main-text word count excluding appendix and condensation log: approximately 2,560 words.
+

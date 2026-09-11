@@ -71,6 +71,24 @@ while i < len(lines):
             body.append(r"\end{abstract}"); continue
         cmd = {2: "section", 3: "subsection", 4: "subsubsection"}[lvl]
         body.append("\\%s*{%s}" % (cmd, txt)); i += 1; continue
+    # 그림: **Figure 1 (main text)** ... `figures/xxx.pdf` 형태를 float 으로
+    mfig = re.match(r"^\*\*(Figure\s+\d+)[^*]*\*\*\s*(.*)", l)
+    if mfig and "figures/" in "\n".join(lines[i:i+3]):
+        cap_lines = [mfig.group(2)]
+        j = i + 1
+        while j < len(lines) and lines[j].strip() and not lines[j].startswith(("#", "|", "**")):
+            cap_lines.append(lines[j].strip()); j += 1
+        cap = " ".join(cap_lines)
+        mpath = re.search(r"`(figures/[^`]+\.pdf)`", cap)
+        if mpath:
+            path = mpath.group(1)
+            cap = re.sub(r"\(?\s*`figures/[^`]+\.pdf`\s*\)?", "", cap).strip()
+            body.append(r"\begin{figure}[t]\centering")
+            body.append(r"\includegraphics[width=\columnwidth]{%s}" % path)
+            body.append(r"\caption{%s}" % esc(cap))
+            body.append(r"\end{figure}")
+            i = j; continue
+
     if l.startswith("|"):                       # 표
         rows = []
         while i < len(lines) and lines[i].startswith("|"):

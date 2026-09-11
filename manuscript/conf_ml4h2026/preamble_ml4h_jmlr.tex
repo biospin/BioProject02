@@ -1,0 +1,32 @@
+% ML4H 2026 공식 클래스 프리앰블 (jmlr + pmlr 옵션)
+%
+% Overleaf 없이 저장소 안에서 조판이 재현된다.
+% jmlr 은 CTAN/TeX Live 정식 패키지라 tectonic 이 번들에서
+% jmlr.cls · jmlrutils.sty 를 자동으로 받아온다. 로컬 .cls 파일 불필요.
+%
+% 사용법: CONF_ML4H2026_BIOP02.tex 의 \documentclass ~ \maketitle 구간을
+%         이 파일 내용으로 교체한다. 본문은 손대지 않아도 그대로 컴파일된다.
+%         (본문이 템플릿 의존 명령을 쓰지 않도록 만들어 두었기 때문)
+%
+% 이중맹검: 저자·소속·사사는 camera-ready 에만 넣는다. 아래 \author 를
+%           제출 전에 실명으로 바꾸지 말 것.
+
+\PassOptionsToPackage{sort}{natbib}
+\PassOptionsToPackage{hidelinks}{hyperref}
+\documentclass[pmlr,twocolumn,10pt]{jmlr}
+
+\usepackage{booktabs,array,graphicx}
+\usepackage{amsmath,amssymb}
+
+\jmlryear{2026}
+\jmlrworkshop{Machine Learning for Health (ML4H) 2026}
+\jmlrvolume{}
+\jmlrproceedings{ML4H}{Machine Learning for Health}
+
+\title[Safety of Substitution]{Safety of Substitution: Cost-Aware Evaluation
+  of H\&E-Based Molecular Test Replacement Across Five Cancers}
+
+\author{\Name{Anonymous Author(s)}}
+
+\begin{document}
+\maketitle
