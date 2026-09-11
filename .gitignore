@@ -308,3 +308,6 @@ biop02_infra.local
 manuscript/conf_ml4h2026/*.aux
 manuscript/conf_ml4h2026/*.log
 manuscript/conf_ml4h2026/*.out
+
+# 제출본 PDF 는 저장소에 넣지 않는다. 이중맹검 제출물이 public 저장소에 올라가면 검색으로 저자가 드러난다.
+manuscript/**/*.pdf
