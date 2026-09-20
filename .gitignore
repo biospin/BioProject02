@@ -308,3 +308,7 @@ biop02_infra.local
 manuscript/conf_ml4h2026/*.aux
 manuscript/conf_ml4h2026/*.log
 manuscript/conf_ml4h2026/*.out
+
+# 논문 원문 (research/<paper>/sources/). 분석 결과물만 커밋하고 원문은 로컬 참조용으로 둔다.
+# 라이선스가 허용하더라도 용량 때문에 제외한다. 재취득은 paper-info.yaml 의 DOI 로.
+research/**/sources/
